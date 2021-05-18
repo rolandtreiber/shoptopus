@@ -1,0 +1,220 @@
+models:
+  Models/User:
+    name: string:100
+    role_id: tinyInteger default:0
+    email: string:150 unique
+    email_verified_at: timestamp
+    password: string
+    client_ref: string:12 nullable index
+    language_id: id foreign:languages
+    relationships:
+      HasMany: PaymentSource, Payment, Order
+      HasOne: Cart, Language
+
+  Models/Product:
+    name: string:100
+    price: decimal
+    status: tinyInteger
+    purchase_count: unsignedBigInteger
+    stock: unsignedBigInteger
+    backup_stock: unsignedBigInteger nullable
+    relationships:
+      HasMany: ProductTag, ProductCategory, ProductAttribute, ProductVariant
+
+  Models/AccessToken:
+    tinyInteger: type default:0
+    token: string:120
+    user_id: id foreign:users nullable
+    issuer_user_id: id foreign:users
+    expiry: dateTime
+
+  Models/PaymentSource:
+    user_id: id foreign:users
+    name: string:100
+    source_id: string:150 nullable
+    exp_month: string:2 nullable
+    exp_year: string:4 nullable
+    last_four: string:4 nullable
+    brand: string:50 nullable
+    stripe_user_id: string:120 nullable
+    payment_method_id: tinyInteger
+    relationships:
+      HasMany: Payment
+
+  Models/Payment:
+    payable_type: string nullable
+    payable_id: unsignedBigInteger nullable
+    payment_source_id: id foreign:payment_sources
+    user_id: id foreign:users
+    decimal: amount
+    status: tinyInteger default:0
+    payment_ref: string:150
+    method_ref: string:150
+    type: tinyInteger
+    description: string:250 nullable
+
+  Models/SystemSetting:
+    key: string:60
+    value: longText
+    type: tinyInteger default:0
+
+  Models/Language:
+    name: string:100
+
+  Models/Content:
+    contentable_type: string nullable
+    contentable_id: unsignedBigInteger nullable
+    language_id: id foreign:languages
+    type: tinyInteger
+    text: text
+
+  Models/FileContent:
+    url: string
+    fileable_type: string nullable
+    fileable_id: unsignedBigInteger nullable
+    title: string nullable
+    description: string nullable
+
+  Models/EventLog:
+    message: string:200
+    type: tinyInteger
+    notification: boolean default:true
+    user_id: id foreign:users
+    actioned: boolean default:false
+    data: text
+
+  Models/ProductVariant:
+    product_id: id foreign:products nullable
+    data: text
+    price: decimal
+
+  Models/Cart:
+    user_id: id foreign:users nullable
+    ip_address: string:100
+    relationships:
+      BelongsTo: User
+
+  Models/DiscountRule:
+    discountable_type: string nullable
+    discountable_id: unsignedBigInteger nullable
+    type: tinyInteger
+    amount: decimal
+    valid_from: datetime
+    valid_until: datetime
+
+  Models/VoucherCode:
+    code: string:100
+
+  Models/ProductCategory:
+    parent_id: id foreign:product_categories nullable
+    softdeletes
+
+  Models/ProductTag:
+    softdeletes
+
+  Models/ProductAttribute:
+    softdeletes
+
+  Models/ProductAttributeOption:
+    softdeletes
+
+  Models/DeliveryType:
+    status: tinyInteger
+    relationships:
+      HasMany: DeliveryRule
+
+  Models/DeliveryRule:
+    delivery_type_id: id foreign:delivery_types nullable
+    status: tinyInteger
+    relationships:
+      BelongsTo: DeliveryType
+
+seeders: User, AccessToken, PaymentSource, Payment, Product, ProductCategory, ProductAttribute, ProductAttributeOption, SystemSetting, Content, FileContent, EventLog, DeliveryType, DeliveryRule, DiscountRule, VoucherCode, ProductTag
+
+controllers:
+  Api\Auth:
+    register:
+      respond: 204
+
+    login:
+      respond: 204
+
+    passwordReminder:
+      respond: 204
+
+  User:
+    index:
+      respond: 204
+
+    update:
+      validate: name, email
+
+    store:
+      validate: name, email
+
+    destroy:
+      delete: user
+
+  Product:
+    index:
+      respond: 204
+
+    update:
+      validate: name, price
+
+    store:
+      validate: name, price
+
+    destroy:
+      delete: product
+
+  Cart:
+    index:
+      respond: 204
+
+    update:
+      respond: 204
+
+    store:
+      respond: 204
+
+    destroy:
+      delete: product
+
+  Admin:
+    index:
+      respond: 204
+
+    dashboard:
+      respond: 204
+
+  ProductCategory:
+    index:
+      respond: 204
+
+  ProductTag:
+    index:
+      respond: 204
+
+  Language:
+    index:
+      respond: 204
+
+  DeliveryType:
+    index:
+      respond: 204
+
+  DeliveryRule:
+    index:
+      respond: 204
+
+    store:
+      validate: delivery_type_id
+
+  VoucherCode:
+    index:
+      respond: 204
+
+  DiscountRule:
+    index:
+      respond: 204
