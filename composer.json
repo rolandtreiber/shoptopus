@@ -10,11 +10,16 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.40",
-        "laravel/tinker": "^2.5"
+        "laravel/passport": "^10.1",
+        "laravel/tinker": "^2.5",
+        "owen-it/laravel-auditing": "^12.0",
+        "s-ichikawa/laravel-sendgrid-driver": "^3.0",
+        "sendgrid/sendgrid": "^7.9"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel-shift/blueprint": "^1.24",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
@@ -46,7 +51,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/passport"
+            ]
         }
     },
     "config": {
