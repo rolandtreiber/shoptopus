@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateEventLogsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::disableForeignKeyConstraints();
+
+        Schema::create('event_logs', function (Blueprint $table) {
+            $table->id();
+            $table->string('message', 200);
+            $table->tinyInteger('type');
+            $table->boolean('notification')->default(true);
+            $table->foreignId('user_id')->constrained();
+            $table->boolean('actioned')->default(false);
+            $table->text('data');
+            $table->timestamps();
+        });
+
+        Schema::enableForeignKeyConstraints();
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('event_logs');
+    }
+}
