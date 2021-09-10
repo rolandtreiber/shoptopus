@@ -19,6 +19,7 @@
         "s-ichikawa/laravel-sendgrid-driver": "^3.0",
         "sendgrid/sendgrid": "^7.9",
         "spatie/laravel-permission": "^5.1",
+        "spatie/laravel-searchable": "^1.10",
         "spatie/laravel-translatable": "^5.0"
     },
     "require-dev": {

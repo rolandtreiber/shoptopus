@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory;
     use HasTranslations;
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'short_description', 'description'];
 
     /**
      * The attributes that are mass assignable.
@@ -20,6 +20,8 @@ class Product extends Model
      */
     protected $fillable = [
         'name',
+        'short_description',
+        'description',
         'price',
         'status',
         'purchase_count',
