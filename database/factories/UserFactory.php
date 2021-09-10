@@ -3,9 +3,9 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
-use App\Language;
+use App\Models\Language;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserFactory extends Factory
 {
@@ -28,7 +28,7 @@ class UserFactory extends Factory
             'role_id' => $this->faker->numberBetween(-8, 8),
             'email' => $this->faker->safeEmail,
             'email_verified_at' => $this->faker->dateTime(),
-            'password' => $this->faker->password,
+            'password' => Hash::make('shop'),
             'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}'),
             'language_id' => Language::factory(),
         ];

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+/**
+ * @method static find(int|string|null $getUserIdentifier)
+ */
+class User  extends Authenticatable
 {
     use HasFactory;
 
@@ -71,8 +74,4 @@ class User extends Model
         return $this->hasOne(\App\Language::class);
     }
 
-    public function language()
-    {
-        return $this->belongsTo(\App\Language::class);
-    }
 }
