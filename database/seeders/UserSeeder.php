@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 
 class UserSeeder extends Seeder
 {
@@ -17,11 +18,11 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            ['u1@mail.com', 'Test User 1'],
-            ['u2@mail.com', 'Test User 2'],
-            ['u3@mail.com', 'Test User 3'],
-            ['u4@mail.com', 'Test User 4'],
-            ['u5@mail.com', 'Test User 5'],
+            ['superadmin@m.com', 'Super Admin Mary'],
+            ['admin@m.com', 'Admin Jane'],
+            ['storemanager@m.com', 'Store Manager Alan'],
+            ['storeassistant@m.com', 'Store Assistant Joe'],
+            ['customer@m.com', 'Customer Lianne'],
         ];
 
         foreach ($users as $user) {
@@ -33,7 +34,18 @@ class UserSeeder extends Seeder
             ])->create();
         }
 
+        User::find(1)->assignRole(Role::findByName('super_admin'));
+        User::find(2)->assignRole(Role::findByName('admin'));
+        User::find(3)->assignRole(Role::findByName('store_manager'));
+        User::find(4)->assignRole(Role::findByName('store_assistant'));
+        User::find(4)->assignRole(Role::findByName('customer'));
         User::factory()->count(15)->create();
+
+        $customerRole = Role::findByName('customer');
+
+        for ($i = 5; $i < 21; $i++) {
+            User::find($i)->assignRole($customerRole);
+        }
 
     }
 }

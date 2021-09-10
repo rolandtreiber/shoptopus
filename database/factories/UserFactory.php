@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Language;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -21,7 +20,7 @@ class UserFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name,
@@ -29,8 +28,7 @@ class UserFactory extends Factory
             'email' => $this->faker->safeEmail,
             'email_verified_at' => $this->faker->dateTime(),
             'password' => Hash::make('shop'),
-            'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}'),
-            'language_id' => Language::factory(),
+            'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}')
         ];
     }
 }

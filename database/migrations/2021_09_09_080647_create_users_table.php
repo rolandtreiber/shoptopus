@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at');
             $table->string('password');
             $table->string('client_ref', 12)->nullable()->index();
-            $table->foreignId('language_id')->constrained();
             $table->timestamps();
         });
 

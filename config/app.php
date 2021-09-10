@@ -82,6 +82,16 @@ return [
 
     'locale' => 'en',
 
+    'locales_supported' => [
+        'en' => ['English'],
+        'de' => ['Deutsch']
+    ],
+
+    'default_currency' => [
+        'name' => 'GBP',
+        'symbol' => '£'
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
