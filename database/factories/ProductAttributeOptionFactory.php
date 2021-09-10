@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Traits\IsTranslateableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\ProductAttributeOption;
 
 class ProductAttributeOptionFactory extends Factory
 {
+    use IsTranslateableFactory;
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -20,10 +22,12 @@ class ProductAttributeOptionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
+        $translations = $this->getTranslated($this->faker, ['name'], ['short']);
+
         return [
-            
+            'name' => $translations['name']
         ];
     }
 }

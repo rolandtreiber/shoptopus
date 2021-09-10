@@ -4,8 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @method static count()
+ */
 class Product extends Model
 {
     use HasFactory;
@@ -43,24 +48,27 @@ class Product extends Model
         'backup_stock' => 'integer',
     ];
 
-
-    public function productTags()
+    /**
+     * @return BelongsToMany
+     */
+    public function productTags(): BelongsToMany
     {
-        return $this->hasMany(\App\ProductTag::class);
+        return $this->belongsToMany(ProductTag::class);
     }
 
-    public function productCategories()
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
     {
-        return $this->hasMany(\App\ProductCategory::class);
+        return $this->belongsToMany(ProductCategory::class);
     }
 
-    public function productAttributes()
+    /**
+     * @return HasMany
+     */
+    public function productVariants(): HasMany
     {
-        return $this->hasMany(\App\ProductAttribute::class);
-    }
-
-    public function productVariants()
-    {
-        return $this->hasMany(\App\ProductVariant::class);
+        return $this->hasMany(ProductVariant::class);
     }
 }

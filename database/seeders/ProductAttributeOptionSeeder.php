@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\ProductAttributeOption;
+use App\Models\ProductAttributeOption;
 use Illuminate\Database\Seeder;
 
 class ProductAttributeOptionSeeder extends Seeder
@@ -14,6 +14,14 @@ class ProductAttributeOptionSeeder extends Seeder
      */
     public function run()
     {
-        ProductAttributeOption::factory()->count(5)->create();
+        for ($i = 1; $i < 6; $i++) {
+            $optionCount = rand(2,10);
+            ProductAttributeOption::factory()
+                ->state([
+                    'product_attribute_id' => $i
+                ])
+                ->count($optionCount)->create();
+
+        }
     }
 }

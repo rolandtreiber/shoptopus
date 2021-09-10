@@ -18,7 +18,10 @@ class CreateProductVariantsTable extends Migration
         Schema::create('product_variants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->nullable()->constrained();
-            $table->text('data');
+            $table->foreignId('product_attribute_id')->nullable()->constrained();
+            $table->foreignId('product_attribute_option_id')->nullable()->constrained();
+            $table->text('data')->nullable();
+            $table->text('description')->nullable();
             $table->decimal('price');
             $table->timestamps();
         });

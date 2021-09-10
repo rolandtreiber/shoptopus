@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\ProductAttribute;
+use App\Models\ProductAttribute;
 use Illuminate\Database\Seeder;
 
 class ProductAttributeSeeder extends Seeder

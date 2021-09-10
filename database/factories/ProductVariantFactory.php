@@ -2,13 +2,15 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
+use App\Traits\IsTranslateableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\ProductVariant;
-use App\Product;
 
 class ProductVariantFactory extends Factory
 {
+    use IsTranslateableFactory;
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -21,12 +23,15 @@ class ProductVariantFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
+        $translations = $this->getTranslated($this->faker, ['description'], ['medium']);
+
         return [
-            'product_id' => Product::factory(),
-            'data' => $this->faker->text,
-            'price' => $this->faker->randomFloat(0, 0, 9999999999.),
+            'product_id' => 1,
+            'data' => 'Some important data',
+            'description' => $translations['description'],
+            'price' => $this->faker->numberBetween(10, 50),
         ];
     }
 }

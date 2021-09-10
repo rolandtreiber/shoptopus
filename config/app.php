@@ -84,7 +84,8 @@ return [
 
     'locales_supported' => [
         'en' => ['English'],
-        'de' => ['Deutsch']
+        'de' => ['Deutsch'],
+        'fr' => ['Francois']
     ],
 
     'default_currency' => [
