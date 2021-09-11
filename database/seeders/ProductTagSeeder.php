@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\ProductTag;
+use App\Models\ProductTag;
 use Illuminate\Database\Seeder;
 
 class ProductTagSeeder extends Seeder
@@ -14,6 +14,6 @@ class ProductTagSeeder extends Seeder
      */
     public function run()
     {
-        ProductTag::factory()->count(5)->create();
+        ProductTag::factory()->count(50)->create();
     }
 }

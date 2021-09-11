@@ -5,7 +5,6 @@ namespace Database\Factories;
 use App\Traits\IsTranslateableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ProductCategory;
-use Illuminate\Support\Facades\Log;
 
 class ProductCategoryFactory extends Factory
 {

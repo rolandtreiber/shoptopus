@@ -10,6 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ * @method static find(int $productId)
  */
 class Product extends Model
 {
@@ -62,6 +63,14 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductTag::class);
     }
 
     /**
