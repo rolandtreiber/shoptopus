@@ -32,4 +32,8 @@ final class Permissions extends Enum
     const CanShop = 'can-shop';
     const CanActAsCustomer = 'can-act-as-customer';
 
+    // Seller
+    const OwnProductsCanUpdate = 'own-products.can.create';
+    const OwnProductsCanDelete = 'own-products.can.delete';
+
 }

@@ -3,11 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -84,5 +82,13 @@ class Product extends SearchableModel
     public function productVariants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function filecontents()
+    {
+        return $this->morphMany('App\Models\FileContent', 'fileable');
     }
 }

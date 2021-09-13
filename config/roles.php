@@ -40,6 +40,12 @@ return [
         Permissions::ProductsCanDelete,
         Permissions::CanActAsCustomer,
     ],
+    'seller' => [
+        Permissions::ProductsCanCreate,
+        Permissions::OwnProductsCanUpdate,
+        Permissions::OwnProductsCanDelete,
+        Permissions::CanActAsCustomer,
+    ],
     'customer' => [
         Permissions::CanShop,
         Permissions::CanViewOwnAccount,

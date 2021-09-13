@@ -17,7 +17,6 @@ class Content extends Model
     protected $fillable = [
         'contentable_type',
         'contentable_id',
-        'language_id',
         'type',
         'text',
     ];
@@ -33,10 +32,4 @@ class Content extends Model
         'language_id' => 'integer',
         'type' => 'integer',
     ];
-
-
-    public function language()
-    {
-        return $this->belongsTo(\App\Language::class);
-    }
 }
