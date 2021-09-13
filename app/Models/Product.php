@@ -13,6 +13,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static find(int $productId)
  * @method static filtered(array[] $array)
  * @property mixed $name
+ * @property mixed $price
  */
 class Product extends SearchableModel
 {
@@ -20,6 +21,8 @@ class Product extends SearchableModel
     use HasTranslations;
 
     public $translatable = ['name', 'short_description', 'description'];
+
+    protected $appends = ['final_price'];
 
     /**
      * The attributes that are mass assignable.
@@ -45,12 +48,19 @@ class Product extends SearchableModel
     protected $casts = [
         'id' => 'integer',
         'name' => 'object',
-        'price' => 'decimal',
         'status' => 'integer',
         'purchase_count' => 'integer',
         'stock' => 'integer',
         'backup_stock' => 'integer',
     ];
+
+    /**
+     *
+     */
+    public function getFinalPriceAttribute()
+    {
+        return $this->price;
+    }
 
     /**
      * @return BelongsToMany

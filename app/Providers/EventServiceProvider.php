@@ -2,11 +2,15 @@
 
 namespace App\Providers;
 
+use App\Models\OrderProduct;
 use App\Models\User;
+use App\Observers\OrderProductObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,5 +33,6 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
+        OrderProduct::observe(OrderProductObserver::class);
     }
 }

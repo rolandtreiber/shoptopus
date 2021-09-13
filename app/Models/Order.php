@@ -6,17 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Translatable\HasTranslations;
 
 /**
- * @method static find($variant)
+ * @method static find(int $selectedCartId)
+ * @property int|mixed $user_id
  */
-class ProductVariant extends Model
+class Order extends Model
 {
     use HasFactory;
-    use HasTranslations;
-
-    public $translatable = ['description'];
 
     /**
      * The attributes that are mass assignable.
@@ -24,10 +21,7 @@ class ProductVariant extends Model
      * @var array
      */
     protected $fillable = [
-        'product_id',
-        'description',
-        'data',
-        'price',
+        'user_id'
     ];
 
     /**
@@ -37,24 +31,22 @@ class ProductVariant extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'product_id' => 'integer',
-        'price' => 'decimal',
+        'user_id' => 'integer',
     ];
 
     /**
      * @return BelongsTo
      */
-    public function product(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(User::class);
     }
 
     /**
      * @return BelongsToMany
      */
-    public function attributes(): BelongsToMany
+    public function products(): BelongsToMany
     {
-        return $this->belongsToMany(ProductAttribute::class);
+        return $this->belongsToMany(Product::class)->using(OrderProduct::class);
     }
-
 }
