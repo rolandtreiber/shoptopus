@@ -40,7 +40,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->routes(function () {
             $files = [
                 'auth.php',
-                'admin.php'
+                'admin.php',
+                'public.php'
             ];
 
             foreach ($files as $file) {

@@ -28,7 +28,8 @@ class UserFactory extends Factory
             'email' => $this->faker->safeEmail,
             'email_verified_at' => $this->faker->dateTime(),
             'password' => Hash::make('shop'),
-            'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}')
+            'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}'),
+            'temporary' => false
         ];
     }
 }

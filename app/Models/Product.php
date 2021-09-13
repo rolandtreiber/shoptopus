@@ -13,9 +13,10 @@ use Spatie\Translatable\HasTranslations;
 /**
  * @method static count()
  * @method static find(int $productId)
+ * @method static filtered(array[] $array)
  * @property mixed $name
  */
-class Product extends Model
+class Product extends SearchableModel
 {
     use HasFactory;
     use HasTranslations;

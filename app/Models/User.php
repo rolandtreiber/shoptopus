@@ -9,6 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static find(int|string|null $getUserIdentifier)
+ * @property mixed $id
  */
 class User  extends Authenticatable
 {

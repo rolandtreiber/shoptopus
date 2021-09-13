@@ -7,7 +7,7 @@ trait IsTranslateableFactory {
     /**
      * @param $faker
      * @param array $fields
-     * @param String $type
+     * @param array $types
      * @return array
      */
     public function getTranslated($faker, array $fields, array $types): array
