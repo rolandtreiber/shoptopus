@@ -17,7 +17,11 @@ class CreateDeliveryTypesTable extends Migration
 
         Schema::create('delivery_types', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('status');
+            $table->string('name');
+            $table->text('description');
+            $table->tinyInteger('status')->default(1);
+            $table->boolean('enabled_by_default_on_creation')->default(true);
+            $table->decimal('price')->default(0);
             $table->timestamps();
         });
 

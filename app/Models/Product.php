@@ -95,10 +95,26 @@ class Product extends SearchableModel
     }
 
     /**
+     * @return BelongsToMany
+     */
+    public function attributes(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductAttribute::class);
+    }
+
+    /**
      * @return MorphMany
      */
     public function filecontents()
     {
         return $this->morphMany('App\Models\FileContent', 'fileable');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function discountRules(): BelongsToMany
+    {
+        return $this->belongsToMany(DiscountRule::class);
     }
 }

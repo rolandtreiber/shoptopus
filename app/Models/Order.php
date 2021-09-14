@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 /**
  * @method static find(int $selectedCartId)
  * @property int|mixed $user_id
+ * @property int|mixed $delivery_type_id
  */
 class Order extends Model
 {

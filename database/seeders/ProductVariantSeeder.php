@@ -16,7 +16,7 @@ class ProductVariantSeeder extends Seeder
      */
     public function run()
     {
-        $variableProductCount = Product::count();
+        $variableProductCount = Product::count()-4;
 
         $used = [];
         for ($i = 0; $i < $variableProductCount; $i++) {
@@ -31,6 +31,14 @@ class ProductVariantSeeder extends Seeder
 
         foreach (ProductVariant::all() as $productVariant) {
             $productVariant->attributes()->attach(rand(1, ProductAttribute::count()));
+        }
+
+        for ($i = 0; $i < 3; $i++) {
+            do {
+                $productId = rand(1, Product::count());
+            } while (in_array($productId, $used));
+            $used[] = $productId;
+            Product::find($productId)->attributes()->attach(rand(1, ProductAttribute::count()));
         }
 
     }

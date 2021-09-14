@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
@@ -27,6 +28,7 @@ class OrderSeeder extends Seeder
             $selectedUserId = random_int(1, $ordersToCreate);
             $order = new Order();
             $order->user_id = $selectedUserId;
+            $order->delivery_type_id = random_int(1, DeliveryType::count());
             $order->save();
 
             $usedProductTypes = [];

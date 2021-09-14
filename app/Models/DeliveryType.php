@@ -4,10 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Translatable\HasTranslations;
 
+/**
+ * @method static count()
+ */
 class DeliveryType extends Model
 {
     use HasFactory;
+    use HasTranslations;
+
+    public $translatable = ['name', 'description'];
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +38,6 @@ class DeliveryType extends Model
 
     public function deliveryRules()
     {
-        return $this->hasMany(\App\DeliveryRule::class);
+        return $this->hasMany(DeliveryRule::class);
     }
 }

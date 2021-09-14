@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
 
@@ -38,6 +39,14 @@ class ProductCategory extends Model
 
     public function parent()
     {
-        return $this->belongsTo(\App\ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function discountRules(): BelongsToMany
+    {
+        return $this->belongsToMany(DiscountRule::class);
     }
 }

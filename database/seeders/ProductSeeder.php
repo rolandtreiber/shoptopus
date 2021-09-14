@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\DiscountRule;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
@@ -44,6 +45,15 @@ class ProductSeeder extends Seeder
             }
         }
 
+        $discounted = [];
+        $discountedCount = random_int(1, round(Product::count() / 2));
+        for ($i = 1; $i < $discountedCount; $i++) {
+            do {
+                $productId = rand(1, Product::count());
+            } while (in_array($productId, $discounted));
+            $discounted[] = $productId;
+            Product::find($productId)->discountRules()->attach(DiscountRule::find(random_int(1, DiscountRule::count())));
+        }
 
     }
 }

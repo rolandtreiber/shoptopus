@@ -17,8 +17,6 @@ class CreateDiscountRulesTable extends Migration
 
         Schema::create('discount_rules', function (Blueprint $table) {
             $table->id();
-            $table->string('discountable_type')->nullable();
-            $table->unsignedBigInteger('discountable_id')->nullable();
             $table->tinyInteger('type');
             $table->decimal('amount');
             $table->dateTime('valid_from');

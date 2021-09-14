@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeliveryRule extends Model
 {
@@ -16,6 +17,12 @@ class DeliveryRule extends Model
      */
     protected $fillable = [
         'delivery_type_id',
+        'lat',
+        'lon',
+        'min_weight',
+        'max_weight',
+        'min_distance',
+        'max_distance',
         'status',
     ];
 
@@ -30,14 +37,12 @@ class DeliveryRule extends Model
         'status' => 'integer',
     ];
 
-
-    public function deliveryType()
+    /**
+     * @return BelongsTo
+     */
+    public function deliveryType(): BelongsTo
     {
-        return $this->belongsTo(\App\DeliveryType::class);
+        return $this->belongsTo(DeliveryType::class);
     }
 
-    public function deliveryType()
-    {
-        return $this->belongsTo(\App\DeliveryType::class);
-    }
 }
