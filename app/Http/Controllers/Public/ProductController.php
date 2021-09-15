@@ -16,6 +16,6 @@ class ProductController extends Controller
      */
     public function list(ListRequest $request): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::filtered([['id', 4]])->paginate($request->paginate));
+        return ProductResource::collection(Product::filtered([['id', '946735b9-00cc-484a-ac60-4c33ba937f31']])->paginate($request->paginate));
     }
 }

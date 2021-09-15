@@ -23,6 +23,9 @@ class CreateDiscountRuleProductTable extends Migration
         Schema::table('model_has_roles', function (Blueprint $table) {
            $table->uuid('model_id')->change();
         });
+        Schema::table('oauth_access_tokens', function (Blueprint $table) {
+            $table->uuid('user_id')->change();
+        });
     }
 
     /**

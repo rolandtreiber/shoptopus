@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductVariant;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductVariantSeeder extends Seeder
 {
@@ -32,17 +33,23 @@ class ProductVariantSeeder extends Seeder
         }
 
         foreach (ProductVariant::all() as $productVariant) {
-            $attribute = ProductAttribute::find(rand(1, ProductAttribute::count()));
-            $options = $attribute->options;
-            $implementedOptionsCount = random_int(1, sizeof($options));
-            $usedOptions = [];
-            for ($i = 0;$i < $implementedOptionsCount;$i++) {
+            $attributesToImplementCount = rand(1, ProductAttribute::count());
+            $usedAttributes = [];
+            for ($n = 0; $n < $attributesToImplementCount; $n++) {
+                do {
+                    $attributeId = rand(1, ProductAttribute::count());
+                } while (in_array($attributeId, $usedAttributes));
+                $usedAttributes[] = $attributeId;
+                $attribute = ProductAttribute::find($attributeId);
+                $options = $attribute->options;
                 do {
                     $optionId = random_int(1, sizeof($options));
-                } while (in_array($optionId, $usedOptions));
-                $usedOptions[] = $optionId;
-                $selectedOptionId = $options[$optionId-1]->id;
-                $productVariant->attributes()->attach($attribute->id, ['product_attribute_option_id' => $selectedOptionId]);
+                } while (DB::table('product_attribute_product_variant')
+                    ->where('product_variant_id', $productVariant->id)
+                    ->where('product_attribute_id', $attribute->id)
+                    ->where('product_attribute_option_id', $optionId)
+                    ->first());
+                $productVariant->attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
             }
         }
 
@@ -51,7 +58,9 @@ class ProductVariantSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $used));
             $used[] = $productId;
-            (new Product())->findNth($productId)->attributes()->attach(rand(1, ProductAttribute::count()));
+            $attribute = ProductAttribute::find(rand(1, ProductAttribute::count()));
+            $options = $attribute->options;
+            (new Product())->findNth($productId)->attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
         }
 
     }

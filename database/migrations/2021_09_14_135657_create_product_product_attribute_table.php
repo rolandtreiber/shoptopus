@@ -18,6 +18,7 @@ class CreateProductProductAttributeTable extends Migration
             $table->id();
             $table->foreignIdFor(Product::class, 'product_id');
             $table->foreignId('product_attribute_id')->constrained('product_attributes');
+            $table->foreignId('product_attribute_option_id')->nullable()->constrained('product_attribute_options');
         });
     }
 

@@ -41,8 +41,8 @@ class ProductVariant extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'product_id' => 'integer',
-        'price' => 'decimal',
+        'product_id' => 'string',
+        'price' => 'decimal:2',
     ];
 
     /**
@@ -58,7 +58,7 @@ class ProductVariant extends Model implements Auditable
      */
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(ProductAttribute::class);
+        return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(VariantAttribute::class);
     }
 
 }

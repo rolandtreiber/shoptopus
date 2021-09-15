@@ -58,6 +58,8 @@ class Product extends SearchableModel implements Auditable
         'purchase_count' => 'integer',
         'stock' => 'integer',
         'backup_stock' => 'integer',
+        'price' => 'decimal:2',
+        'final_price' => 'decimal:2'
     ];
 
     /**
@@ -105,7 +107,7 @@ class Product extends SearchableModel implements Auditable
      */
     public function attributes(): BelongsToMany
     {
-        return $this->belongsToMany(ProductAttribute::class);
+        return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(ProductProductAttribute::class);
     }
 
     /**
