@@ -2,19 +2,23 @@
 
 namespace App\Models;
 
+use App\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static find($variant)
  */
-class ProductVariant extends Model
+class ProductVariant extends Model implements Auditable
 {
     use HasFactory;
     use HasTranslations;
+    use HasFiles;
+    use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['description'];
 

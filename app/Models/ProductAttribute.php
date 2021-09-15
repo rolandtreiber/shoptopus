@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use App\Traits\HasFile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
  */
-class ProductAttribute extends Model
+class ProductAttribute extends Model implements Auditable
 {
-    use HasFactory, SoftDeletes, HasTranslations;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile;
+    use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['name'];
 
@@ -33,4 +38,12 @@ class ProductAttribute extends Model
     protected $casts = [
         'id' => 'integer',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->HasMany(ProductAttributeOption::class);
+    }
 }

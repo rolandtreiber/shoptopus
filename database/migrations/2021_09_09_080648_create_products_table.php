@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->text('name');
             $table->text('short_description');
             $table->longtext('description');

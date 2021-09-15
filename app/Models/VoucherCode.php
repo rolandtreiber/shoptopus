@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasFile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class VoucherCode extends Model
+class VoucherCode extends Model implements Auditable
 {
     use HasFactory;
+    use HasFile;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.

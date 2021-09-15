@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,9 +16,9 @@ class CreateOrderProductTable extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->constrained('orders');
-            $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('product_variant_id')->nullable()->constrained('product_variants');
+            $table->foreignUuid('order_id')->nullable()->constrained('orders')->nullOnDelete();
+            $table->foreignUuid('product_id')->nullable()->constrained('products')->nullOnDelete();
+            $table->foreignId('product_variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
             $table->integer('amount')->default(1);
             $table->text('name');
             $table->decimal('unit_price')->default(0);

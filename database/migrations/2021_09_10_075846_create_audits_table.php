@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ class CreateAuditsTable extends Migration
 
             $table->bigIncrements('id');
             $table->string('user_type')->nullable();
-            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreignIdFor(User::class, 'user_id')->nullable();
             $table->string('event');
             $table->morphs('auditable');
             $table->text('old_values')->nullable();

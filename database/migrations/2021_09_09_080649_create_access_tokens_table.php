@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -19,8 +20,8 @@ class CreateAccessTokensTable extends Migration
             $table->id();
             $table->string('tinyInteger')->default('0');
             $table->string('token', 120);
-            $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('issuer_user_id')->constrained('users');
+            $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignIdFor(User::class, 'issuer_user_id');
             $table->dateTime('expiry');
             $table->timestamps();
         });

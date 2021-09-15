@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +21,7 @@ class CreateEventLogsTable extends Migration
             $table->string('message', 200);
             $table->tinyInteger('type');
             $table->boolean('notification')->default(true);
-            $table->foreignId('user_id')->constrained();
+            $table->foreignIdFor(User::class, 'user_id')->constrained();
             $table->boolean('actioned')->default(false);
             $table->text('data');
             $table->timestamps();

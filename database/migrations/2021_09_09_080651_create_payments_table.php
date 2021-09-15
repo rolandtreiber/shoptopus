@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\PaymentSource;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,11 +18,11 @@ class CreatePaymentsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('payments', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('payable_type')->nullable();
             $table->unsignedBigInteger('payable_id')->nullable();
-            $table->foreignId('payment_source_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignIdFor(PaymentSource::class, 'payment_source_id');
+            $table->foreignIdFor(User::class, 'user_id');
             $table->string('decimal');
             $table->tinyInteger('status')->default(0);
             $table->string('payment_ref', 150);

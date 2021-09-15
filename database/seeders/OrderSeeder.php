@@ -25,7 +25,7 @@ class OrderSeeder extends Seeder
         $ordersToCreate = random_int(1, $users);
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
-            $selectedUserId = random_int(1, $ordersToCreate);
+            $selectedUserId = (new User())->findNth(random_int(1, $ordersToCreate))->id;
             $order = new Order();
             $order->user_id = $selectedUserId;
             $order->delivery_type_id = random_int(1, DeliveryType::count());
@@ -38,7 +38,8 @@ class OrderSeeder extends Seeder
                     $selectedProductId = random_int(1, $products);
                 } while (in_array($selectedProductId, $usedProductTypes));
                 $usedProductTypes[] = $selectedProductId;
-                $order->products()->attach($selectedProductId, ['amount' => random_int(1, 10)]);
+                $uuid = (new Product())->findNth($selectedProductId)->id;
+                $order->products()->attach($uuid, ['amount' => random_int(1, 10)]);
             }
         }
     }

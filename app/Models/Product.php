@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasFiles;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -15,10 +18,13 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $name
  * @property mixed $price
  */
-class Product extends SearchableModel
+class Product extends SearchableModel implements Auditable
 {
     use HasFactory;
     use HasTranslations;
+    use HasFiles;
+    use HasUUID;
+    use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['name', 'short_description', 'description'];
 
@@ -46,7 +52,7 @@ class Product extends SearchableModel
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'name' => 'object',
         'status' => 'integer',
         'purchase_count' => 'integer',

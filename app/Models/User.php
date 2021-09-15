@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Traits\HasFile;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -12,11 +15,14 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static count()
  * @property mixed $id
  */
-class User  extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use HasApiTokens;
     use HasFactory;
     use HasRoles;
+    use HasFile;
+    use HasUUID;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -48,7 +54,7 @@ class User  extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'role_id' => 'integer',
         'email_verified_at' => 'timestamp',
         'language_id' => 'integer',

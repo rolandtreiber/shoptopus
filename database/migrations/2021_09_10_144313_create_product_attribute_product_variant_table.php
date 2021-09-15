@@ -17,6 +17,8 @@ class CreateProductAttributeProductVariantTable extends Migration
             $table->id();
             $table->foreignId('product_attribute_id')->constrained('product_attributes')->cascadeOnDelete();
             $table->foreignId('product_variant_id')->constrained('product_variants')->cascadeOnDelete();
+            $table->unsignedBigInteger('product_attribute_option_id');
+            $table->foreign('product_attribute_option_id', 'variant_attribute_option_id')->references('id')->on('product_attribute_options')->cascadeOnDelete();
         });
     }
 

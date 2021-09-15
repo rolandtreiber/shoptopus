@@ -34,17 +34,18 @@ class UserSeeder extends Seeder
             ])->create();
         }
 
-        User::find(1)->assignRole(Role::findByName('super_admin'));
-        User::find(2)->assignRole(Role::findByName('admin'));
-        User::find(3)->assignRole(Role::findByName('store_manager'));
-        User::find(4)->assignRole(Role::findByName('store_assistant'));
-        User::find(4)->assignRole(Role::findByName('customer'));
+        $users = User::all();
+        $users[0]->assignRole(Role::findByName('super_admin'));
+        $users[1]->assignRole(Role::findByName('admin'));
+        $users[2]->assignRole(Role::findByName('store_manager'));
+        $users[3]->assignRole(Role::findByName('store_assistant'));
+        $users[3]->assignRole(Role::findByName('customer'));
         User::factory()->count(15)->create();
 
         $customerRole = Role::findByName('customer');
 
         for ($i = 5; $i < 21; $i++) {
-            User::find($i)->assignRole($customerRole);
+            (new User())->findNth($i)->assignRole($customerRole);
         }
 
     }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Product;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ class CreateProductProductAttributeTable extends Migration
     {
         Schema::create('product_product_attribute', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignIdFor(Product::class, 'product_id');
             $table->foreignId('product_attribute_id')->constrained('product_attributes');
         });
     }
