@@ -27,7 +27,9 @@ class ProductDetailResource extends JsonResource
             'backup_stock' => $this->backup_stock,
             'final_price' => $this->final_price,
             'attributes' => AttributeResource::collection($this->attributes),
-            'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get())
+            'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get()),
+            'tags' => $this->tags,
+            'categories' => $this->categories
         ];
     }
 }
