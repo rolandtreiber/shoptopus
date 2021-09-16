@@ -23,7 +23,7 @@ class CreatePaymentsTable extends Migration
             $table->unsignedBigInteger('payable_id')->nullable();
             $table->foreignIdFor(PaymentSource::class, 'payment_source_id');
             $table->foreignIdFor(User::class, 'user_id');
-            $table->string('decimal');
+            $table->decimal('amount');
             $table->tinyInteger('status')->default(0);
             $table->string('payment_ref', 150);
             $table->string('method_ref', 150);

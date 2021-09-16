@@ -50,6 +50,10 @@ class CreatePermissionTables extends Migration
             }
         });
 
+//        Schema::table('oauth_access_tokens', function (Blueprint $table) {
+//            $table->uuid('user_id')->change();
+//        });
+
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames, $teams) {
             $table->unsignedBigInteger(PermissionRegistrar::$pivotPermission);
 
@@ -112,6 +116,10 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary([PermissionRegistrar::$pivotPermission, PermissionRegistrar::$pivotRole], 'role_has_permissions_permission_id_role_id_primary');
+        });
+
+        Schema::table('model_has_roles', function (Blueprint $table) {
+            $table->uuid('model_id')->change();
         });
 
         app('cache')
