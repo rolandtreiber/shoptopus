@@ -18,7 +18,7 @@ class CreateContentsTable extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->string('contentable_type')->nullable();
-            $table->unsignedBigInteger('contentable_id')->nullable();
+            $table->uuid('contentable_id')->nullable();
             $table->foreignId('language_id')->constrained();
             $table->tinyInteger('type');
             $table->text('text');

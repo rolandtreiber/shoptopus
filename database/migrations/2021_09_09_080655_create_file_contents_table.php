@@ -19,7 +19,7 @@ class CreateFileContentsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('url');
             $table->string('fileable_type')->nullable();
-            $table->unsignedBigInteger('fileable_id')->nullable();
+            $table->uuid('fileable_id')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

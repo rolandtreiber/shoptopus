@@ -19,7 +19,7 @@ trait ProcessRequest
      * @param $deleteCurrent
      * @param int $type
      */
-    public function saveFiles($request, $modelClass, $modelId, $deleteCurrent, int $type = AttachmentTypes::General): void
+    public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): void
     {
         if ($deleteCurrent) {
             $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->get();
@@ -36,7 +36,6 @@ trait ProcessRequest
                     $attachment->fileable_type = $modelClass;
                     $attachment->fileable_id = $modelId;
                     $attachment->url = $url;
-                    $attachment->type = $type;
                     $attachment->save();
                 }
             }

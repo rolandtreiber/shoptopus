@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\ProductStoreRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Message;
@@ -38,20 +39,32 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ProductStoreRequest $request
      * @return string[]
      */
     public function create(ProductStoreRequest $request): array
     {
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
-//        if ($request->hasFile('image')) {
-//            $headerImage = $request->file('image');
-//            $image = $this->saveFileAndGetUrl($headerImage);
-//            $data['image'] = $image;
-//        }
         $product = new Product();
         $product->fill($data);
         $product->save();
         $this->saveFiles($request, Product::class, $product->id, false);
         return ['status' => 'Success'];
-    }}
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param ProductUpdateRequest $request
+     * @param Product $product
+     * @return string[]
+     */
+    public function update(ProductUpdateRequest $request, Product $product): array
+    {
+        $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
+        $product->fill($data);
+        $product->save();
+        $this->saveFiles($request, Product::class, $product->id, false);
+        return ['status' => 'Success'];
+    }
+}
