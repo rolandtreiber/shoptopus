@@ -16,7 +16,7 @@ class CreateProductAttributesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('product_attributes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->text('name');
             $table->softDeletes();
             $table->timestamps();

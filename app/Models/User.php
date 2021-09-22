@@ -55,9 +55,9 @@ class User extends Authenticatable implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'role_id' => 'integer',
+        'role_id' => 'string',
         'email_verified_at' => 'timestamp',
-        'language_id' => 'integer',
+        'language_id' => 'string',
     ];
 
 

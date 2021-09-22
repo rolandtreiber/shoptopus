@@ -17,8 +17,8 @@ class CreateProductVariantsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('product_variants', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Product::class, 'product_id');
+            $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('product_id')->nullable()->constrained('products')->cascadeOnDelete();
             $table->text('data')->nullable();
             $table->text('description')->nullable();
             $table->decimal('price');

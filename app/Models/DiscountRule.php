@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DiscountRule extends Model
 {
     use HasFactory;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -29,8 +31,8 @@ class DiscountRule extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'discountable_id' => 'integer',
+        'id' => 'string',
+        'discountable_id' => 'string',
         'type' => 'integer',
         'amount' => 'decimal',
         'valid_from' => 'datetime',

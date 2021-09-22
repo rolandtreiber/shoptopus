@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use Illuminate\Database\Seeder;
 
@@ -14,11 +15,16 @@ class ProductAttributeOptionSeeder extends Seeder
      */
     public function run()
     {
+        $used = [];
         for ($i = 1; $i < 6; $i++) {
+            do {
+                $attributeId = (new ProductAttribute())->findNthId(rand(0, ProductAttribute::count()));
+            } while (in_array($attributeId, $used));
+            $used[] = $attributeId;
             $optionCount = rand(2,10);
             ProductAttributeOption::factory()
                 ->state([
-                    'product_attribute_id' => $i
+                    'product_attribute_id' => $attributeId
                 ])
                 ->count($optionCount)->create();
 

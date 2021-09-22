@@ -16,12 +16,16 @@ class CreateProductCategoriesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('product_categories', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('parent_id')->nullable()->constrained('product_categories');
+            $table->uuid('id')->unique()->primary();
+            $table->uuid('parent_id')->nullable();
             $table->text('name');
             $table->text('description');
             $table->softDeletes();
             $table->timestamps();
+        });
+
+        Schema::table('product_categories', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('product_categories')->nullOnDelete();
         });
 
         Schema::enableForeignKeyConstraints();

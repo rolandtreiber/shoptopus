@@ -17,6 +17,7 @@ use Spatie\Translatable\HasTranslations;
  * @method static filtered(array[] $array)
  * @property mixed $name
  * @property mixed $price
+ * @property mixed $id
  */
 class Product extends SearchableModel implements Auditable
 {

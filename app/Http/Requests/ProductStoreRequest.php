@@ -21,11 +21,15 @@ class ProductStoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string', 'max:100'],
             'price' => ['required', 'numeric'],
+            'short_description' => ['required', 'json'],
+            'description' => ['required', 'json'],
+            'stock' => ['sometimes', 'numeric'],
+            'backup_stock' => ['sometimes', 'numeric']
         ];
     }
 }

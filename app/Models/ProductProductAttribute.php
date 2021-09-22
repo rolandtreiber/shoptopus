@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
 class ProductProductAttribute extends MorphPivot
 {
+    use HasUUID;
+
     protected $appends = ['option'];
 
     protected $fillable = [

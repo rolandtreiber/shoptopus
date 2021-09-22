@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFile;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,6 +13,7 @@ use Spatie\Translatable\HasTranslations;
 class ProductAttributeOption extends Model implements Auditable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
+    use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['name'];
@@ -31,6 +33,6 @@ class ProductAttributeOption extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
     ];
 }

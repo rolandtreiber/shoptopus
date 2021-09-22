@@ -16,7 +16,7 @@ class CreateProductTagsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('product_tags', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('name');
             $table->softDeletes();
             $table->timestamps();

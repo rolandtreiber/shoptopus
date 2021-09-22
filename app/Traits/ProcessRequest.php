@@ -83,13 +83,13 @@ trait ProcessRequest
         return $url;
     }
 
-    public function getProcessed($request, $dateFields = [])
+    public function getProcessed($request, $dateFields = [], $jsonFields = [])
     {
         $data = $request->toArray();
         foreach ($data as $key => $field) {
-            if ($key === 'query') {
+            if (in_array($key , $jsonFields)) {
                 $query = json_decode($field, true);
-                $data['query'] = $query;
+                $data[$key] = $query;
             }
             if ($key === 'location') {
                 $location = json_decode($field, true);

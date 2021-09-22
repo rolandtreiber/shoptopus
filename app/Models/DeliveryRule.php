@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class DeliveryRule extends Model implements Auditable
 {
     use HasFactory;
+    use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
     /**
@@ -34,8 +36,8 @@ class DeliveryRule extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'delivery_type_id' => 'integer',
+        'id' => 'string',
+        'delivery_type_id' => 'string',
         'status' => 'integer',
     ];
 

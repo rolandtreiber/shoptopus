@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFiles;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Cart extends Model implements Auditable
 {
     use HasFactory;
+    use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
     /**
@@ -35,8 +37,8 @@ class Cart extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
+        'id' => 'string',
+        'user_id' => 'string',
     ];
 
     /**

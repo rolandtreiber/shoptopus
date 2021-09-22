@@ -16,7 +16,7 @@ class CreateFileContentsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('file_contents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('url');
             $table->string('fileable_type')->nullable();
             $table->unsignedBigInteger('fileable_id')->nullable();

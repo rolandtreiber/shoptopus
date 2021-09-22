@@ -3,12 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasFile;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class VoucherCode extends Model implements Auditable
 {
+    use HasUUID;
+
     use HasFactory;
     use HasFile;
     use \OwenIt\Auditing\Auditable;
@@ -28,6 +31,6 @@ class VoucherCode extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
     ];
 }

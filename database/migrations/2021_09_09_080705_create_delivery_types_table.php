@@ -16,7 +16,7 @@ class CreateDeliveryTypesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('delivery_types', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('name');
             $table->text('description');
             $table->tinyInteger('status')->default(1);

@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SystemSetting extends Model
 {
     use HasFactory;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +28,7 @@ class SystemSetting extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'type' => 'integer',
     ];
 }

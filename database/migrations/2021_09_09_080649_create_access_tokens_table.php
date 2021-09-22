@@ -17,11 +17,11 @@ class CreateAccessTokensTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('access_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('tinyInteger')->default('0');
             $table->string('token', 120);
-            $table->foreignIdFor(User::class, 'user_id');
-            $table->foreignIdFor(User::class, 'issuer_user_id');
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('issuer_user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->dateTime('expiry');
             $table->timestamps();
         });

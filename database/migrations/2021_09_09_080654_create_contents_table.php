@@ -16,7 +16,7 @@ class CreateContentsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('contents', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('contentable_type')->nullable();
             $table->unsignedBigInteger('contentable_id')->nullable();
             $table->foreignId('language_id')->constrained();

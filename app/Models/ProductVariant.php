@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFiles;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,6 +19,7 @@ class ProductVariant extends Model implements Auditable
     use HasFactory;
     use HasTranslations;
     use HasFiles;
+    use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['description'];
@@ -40,7 +42,7 @@ class ProductVariant extends Model implements Auditable
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'product_id' => 'string',
         'price' => 'decimal:2',
     ];

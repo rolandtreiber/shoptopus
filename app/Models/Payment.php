@@ -38,9 +38,9 @@ class Payment extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'payable_id' => 'integer',
-        'payment_source_id' => 'integer',
-        'user_id' => 'integer',
+        'payable_id' => 'string',
+        'payment_source_id' => 'string',
+        'user_id' => 'string',
         'status' => 'integer',
         'type' => 'integer',
     ];

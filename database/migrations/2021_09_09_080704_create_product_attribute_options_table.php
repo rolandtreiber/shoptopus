@@ -16,8 +16,8 @@ class CreateProductAttributeOptionsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('product_attribute_options', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('product_attribute_id')->nullable()->constrained();
+            $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('product_attribute_id')->nullable()->constrained();
             $table->text('name');
             $table->softDeletes();
             $table->timestamps();

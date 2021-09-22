@@ -18,7 +18,7 @@ class CreatePaymentSourcesTable extends Migration
 
         Schema::create('payment_sources', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('name', 100);
             $table->string('source_id', 150)->nullable();
             $table->string('exp_month', 2)->nullable();

@@ -95,7 +95,7 @@ return [
     |
     */
 
-    'threshold' => 0,
+    'threshold' => 10,
 
     /*
     |--------------------------------------------------------------------------
@@ -120,7 +120,7 @@ return [
     'drivers' => [
         'database' => [
             'table'      => 'audits',
-            'connection' => null,
+            'connection' => 'logs',
         ],
     ],
 

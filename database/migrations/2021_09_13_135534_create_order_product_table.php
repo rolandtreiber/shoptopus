@@ -15,10 +15,10 @@ class CreateOrderProductTable extends Migration
     public function up()
     {
         Schema::create('order_product', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->foreignUuid('order_id')->nullable()->constrained('orders')->nullOnDelete();
             $table->foreignUuid('product_id')->nullable()->constrained('products')->nullOnDelete();
-            $table->foreignId('product_variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
+            $table->foreignUuid('product_variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
             $table->integer('amount')->default(1);
             $table->text('name');
             $table->decimal('unit_price')->default(0);

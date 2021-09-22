@@ -41,4 +41,10 @@ trait HasUUID
     {
         return $this->offset($n-1)->take(1)->first();
     }
+
+    public function findNthId($n)
+    {
+        return $this->offset($n-1)->take(1)->first()->id;
+    }
+
 }

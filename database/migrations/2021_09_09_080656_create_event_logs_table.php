@@ -17,11 +17,11 @@ class CreateEventLogsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('event_logs', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('message', 200);
             $table->tinyInteger('type');
             $table->boolean('notification')->default(true);
-            $table->foreignIdFor(User::class, 'user_id')->constrained();
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->boolean('actioned')->default(false);
             $table->text('data');
             $table->timestamps();

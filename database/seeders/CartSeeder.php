@@ -25,7 +25,7 @@ class CartSeeder extends Seeder
         $used = [];
         for ($i = 0; $i < $cartsToPopulate; $i++) {
             do {
-                $selectedCartId = random_int(1, $carts);
+                $selectedCartId = (new Cart)->findNthId(rand(1, $carts));
             } while (in_array($selectedCartId, $used));
             $used[] = $selectedCartId;
             $selectedCart = Cart::find($selectedCartId);
@@ -34,7 +34,7 @@ class CartSeeder extends Seeder
             $productTypesToAddCount = random_int(1, $products);
             for ($n = 0; $n < $productTypesToAddCount; $n++) {
                 do {
-                    $selectedProductId = random_int(1, $products);
+                    $selectedProductId = (new Product)->findNthId(random_int(1, $products));
                 } while (in_array($selectedProductId, $usedProductTypes));
                 $usedProductTypes[] = $selectedProductId;
                 $selectedCart->products()->attach($selectedProductId, ['amount' => random_int(1, 10)]);

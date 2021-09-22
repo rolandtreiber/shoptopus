@@ -16,7 +16,7 @@ class CreateSystemSettingsTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('system_settings', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->string('key', 60);
             $table->longText('value');
             $table->tinyInteger('type')->default(0);

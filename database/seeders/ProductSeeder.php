@@ -22,15 +22,15 @@ class ProductSeeder extends Seeder
         Product::factory()->count(25)->create();
 
         foreach (Product::all() as $product) {
-            $product->categories()->attach(rand(1, ProductCategory::count()));
+            $product->categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
         }
 
-        $taggedCount = Product::count();
+        $taggedCount = Product::count()-1;
 
         $used = [];
         for ($i = 0; $i < $taggedCount; $i++) {
             do {
-                $productId = rand(1, Product::count());
+                $productId = rand(1, Product::count()-1);
             } while (in_array($productId, $used));
             $used[] = $productId;
 
@@ -38,7 +38,7 @@ class ProductSeeder extends Seeder
             $usedTags = [];
             for ($n = 1;$n < $tagsCount; $n++) {
                 do {
-                    $tagId = rand(1, ProductTag::count());
+                    $tagId = (new ProductTag)->findNthId(rand(1, ProductTag::count()-1));
                 } while (in_array($tagId, $usedTags));
                 $usedTags[] = $tagId;
                 (new Product())->findNth($productId)->tags()->attach($tagId);

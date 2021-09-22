@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
@@ -12,6 +13,7 @@ use Spatie\Translatable\HasTranslations;
 class DeliveryType extends Model
 {
     use HasFactory;
+    use HasUUID;
     use HasTranslations;
 
     public $translatable = ['name', 'description'];
@@ -31,7 +33,7 @@ class DeliveryType extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id' => 'string',
         'status' => 'integer',
     ];
 

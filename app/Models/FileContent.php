@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 class FileContent extends Model
 {
     use HasFactory;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -35,7 +37,7 @@ class FileContent extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'fileable_id' => 'integer',
+        'id' => 'string',
+        'fileable_id' => 'string',
     ];
 }

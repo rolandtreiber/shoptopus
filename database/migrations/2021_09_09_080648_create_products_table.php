@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProductStatuses;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,10 +22,10 @@ class CreateProductsTable extends Migration
             $table->text('short_description');
             $table->longtext('description');
             $table->decimal('price');
-            $table->tinyInteger('status');
-            $table->unsignedBigInteger('purchase_count');
-            $table->unsignedBigInteger('stock');
-            $table->unsignedBigInteger('backup_stock')->nullable();
+            $table->tinyInteger('status')->default(ProductStatuses::Provisional);
+            $table->unsignedBigInteger('purchase_count')->default(0);
+            $table->unsignedBigInteger('stock')->default(0);
+            $table->unsignedBigInteger('backup_stock')->nullable()->default(0);
             $table->timestamps();
         });
 

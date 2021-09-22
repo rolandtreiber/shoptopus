@@ -16,7 +16,7 @@ class CreateDiscountRulesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('discount_rules', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->unique()->primary();
             $table->tinyInteger('type');
             $table->decimal('amount');
             $table->dateTime('valid_from');

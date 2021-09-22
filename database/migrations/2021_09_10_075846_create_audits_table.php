@@ -21,9 +21,9 @@ class CreateAuditsTable extends Migration
 
             $table->bigIncrements('id');
             $table->string('user_type')->nullable();
-            $table->foreignIdFor(User::class, 'user_id')->nullable();
+            $table->uuid('user_id')->nullable();
             $table->string('event');
-            $table->morphs('auditable');
+            $table->uuidMorphs('auditable');
             $table->text('old_values')->nullable();
             $table->text('new_values')->nullable();
             $table->text('url')->nullable();

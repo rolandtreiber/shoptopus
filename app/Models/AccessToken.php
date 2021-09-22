@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AccessToken extends Model
 {
     use HasFactory;
+    use HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -28,9 +30,9 @@ class AccessToken extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'user_id' => 'integer',
-        'issuer_user_id' => 'integer',
+        'id' => 'string',
+        'user_id' => 'string',
+        'issuer_user_id' => 'string',
         'expiry' => 'datetime',
     ];
 

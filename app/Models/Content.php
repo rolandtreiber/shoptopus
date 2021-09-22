@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFiles;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -10,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 class Content extends Model implements Auditable
 {
     use HasFactory, HasFiles;
+    use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
     /**
@@ -31,8 +33,8 @@ class Content extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'contentable_id' => 'integer',
-        'language_id' => 'integer',
+        'contentable_id' => 'string',
+        'language_id' => 'string',
         'type' => 'integer',
     ];
 }

@@ -15,10 +15,10 @@ class CreateProductProductAttributeTable extends Migration
     public function up()
     {
         Schema::create('product_product_attribute', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(Product::class, 'product_id');
-            $table->foreignId('product_attribute_id')->constrained('product_attributes');
-            $table->foreignId('product_attribute_option_id')->nullable()->constrained('product_attribute_options');
+            $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('product_id')->nullable()->constrained('products')->cascadeOnDelete();
+            $table->foreignUuid('product_attribute_id')->constrained('product_attributes');
+            $table->foreignUuid('product_attribute_option_id')->nullable()->constrained('product_attribute_options');
         });
     }
 

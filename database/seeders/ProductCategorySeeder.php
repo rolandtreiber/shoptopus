@@ -21,10 +21,10 @@ class ProductCategorySeeder extends Seeder
 
         $subCategoriesCount = rand(5, 30);
         for ($i = 0; $i < $subCategoriesCount + 1; $i++) {
-            $parentId = rand(1, ProductCategory::count()-1);
+            $parentId = (new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1));
             ProductCategory::factory()->state(['parent_id' => $parentId])->create();
         }
 
-        ProductCategory::find(random_int(1, ProductCategory::count()))->discountRules()->attach(DiscountRule::find(random_int(1, DiscountRule::count())));
+        (new ProductCategory)->findNth(random_int(1, ProductCategory::count()))->discountRules()->attach((new DiscountRule)->findNthId(random_int(1, DiscountRule::count() -1 )));
     }
 }

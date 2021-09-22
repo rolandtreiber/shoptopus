@@ -16,8 +16,8 @@ class CreateDeliveryRulesTable extends Migration
         Schema::disableForeignKeyConstraints();
 
         Schema::create('delivery_rules', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('delivery_type_id')->nullable()->constrained();
+            $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('delivery_type_id')->nullable()->constrained();
             $table->json('postcodes')->nullable();
             $table->decimal('min_weight')->nullable();
             $table->decimal('max_weight')->nullable();

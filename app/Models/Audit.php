@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Audit extends Model
 {
+    use HasUUID;
+
     protected $connection = 'logs';
 
     /**
@@ -30,6 +33,11 @@ class Audit extends Model
     ];
 
     protected $with = ['auditable', 'user'];
+
+    protected $casts = [
+        'id' => 'string',
+        'auditable_id' => 'string',
+    ];
 
     /**
      * @return BelongsTo

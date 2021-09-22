@@ -21,8 +21,8 @@ class CreatePaymentsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('payable_type')->nullable();
             $table->unsignedBigInteger('payable_id')->nullable();
-            $table->foreignIdFor(PaymentSource::class, 'payment_source_id');
-            $table->foreignIdFor(User::class, 'user_id');
+            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('payment_source_id')->nullable()->constrained('payment_sources')->nullOnDelete();
             $table->decimal('amount');
             $table->tinyInteger('status')->default(0);
             $table->string('payment_ref', 150);

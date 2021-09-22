@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 use Spatie\Translatable\HasTranslations;
 
@@ -15,6 +16,7 @@ use Spatie\Translatable\HasTranslations;
 class OrderProduct extends MorphPivot
 {
     use HasTranslations;
+    use HasUUID;
 
     protected $table = 'order_products';
 
