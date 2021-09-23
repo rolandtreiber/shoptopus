@@ -67,4 +67,15 @@ class ProductController extends Controller
         $this->saveFiles($request, Product::class, $product->id, false);
         return ['status' => 'Success'];
     }
+
+    /**
+     * @param Product $product
+     * @return string[]
+     */
+    public function delete(Product $product): array
+    {
+        $product->deleteWithAttachments();
+        return ['status' => 'Success'];
+    }
+
 }

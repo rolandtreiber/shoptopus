@@ -5,12 +5,14 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property mixed|string $url
  * @property int|mixed $type
  * @property mixed $fileable_id
  * @property mixed $fileable_type
+ * @property mixed|string $file_name
  * @method static where(string $string, $modelClass)
  */
 class FileContent extends Model
@@ -28,6 +30,8 @@ class FileContent extends Model
         'fileable_type',
         'fileable_id',
         'title',
+        'url',
+        'file_name',
         'description',
     ];
 
@@ -40,4 +44,5 @@ class FileContent extends Model
         'id' => 'string',
         'fileable_id' => 'string',
     ];
+
 }

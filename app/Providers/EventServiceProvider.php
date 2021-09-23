@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\FileContent;
 use App\Models\OrderProduct;
 use App\Models\User;
+use App\Observers\FileContentObserver;
 use App\Observers\OrderProductObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
@@ -34,5 +36,6 @@ class EventServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         OrderProduct::observe(OrderProductObserver::class);
+        FileContent::observe(FileContentObserver::class);
     }
 }

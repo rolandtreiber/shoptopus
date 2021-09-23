@@ -30,12 +30,13 @@ trait ProcessRequest
 
         if ($request->hasFile('attachments')) {
             foreach ($request->attachments as $attachment) {
-                $url = $this->saveFileAndGetUrl($attachment);
-                if ($url) {
+                $file = $this->saveFileAndGetUrl($attachment);
+                if ($file) {
                     $attachment = new FileContent();
                     $attachment->fileable_type = $modelClass;
                     $attachment->fileable_id = $modelId;
-                    $attachment->url = $url;
+                    $attachment->url = $file['url'];
+                    $attachment->file_name = $file['file_name'];
                     $attachment->save();
                 }
             }
@@ -58,11 +59,10 @@ trait ProcessRequest
      * @param $file
      * @param int $sizeX
      * @param int $sizeY
-     * @return string
+     * @return array|null
      */
-    public function saveFileAndGetUrl($file, int $sizeX = 6000, int $sizeY = 4000): string
+    public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
     {
-        $url = '';
         $imageFormats = ['jpg', 'jpeg', 'gif', 'png'];
         if (in_array($file->extension(), $imageFormats, true)) {
             $img = Image::make($file->path());
@@ -78,8 +78,12 @@ trait ProcessRequest
                 Storage::disk('digitalocean')->put($filename, $image, ['visibility' => 'public']);
                 $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$filename;
             }
+            return [
+                'url' => $url,
+                'file_name' => $filename
+            ];
         }
-        return $url;
+        return null;
     }
 
     public function getProcessed($request, $dateFields = [], $jsonFields = [])
