@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductResource;
 use App\Models\Product;
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product->save();
         $this->saveFiles($request, Product::class, $product->id, true);
         if ($request->product_attributes) {
-            $this->handleAttributes($product, $request->product_attributes);
+            $this->handleAttributes($product, $request);
         }
 
         return ['status' => 'Success'];
@@ -63,16 +63,16 @@ class ProductController extends Controller
      *
      * @param ProductUpdateRequest $request
      * @param Product $product
-     * @return string[]
+     * @return ProductResource
      */
-    public function update(ProductUpdateRequest $request, Product $product): array
+    public function update(ProductUpdateRequest $request, Product $product): ProductResource
     {
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
         $this->saveFiles($request, Product::class, $product->id, true);
         $this->handleAttributes($product, $request);
-        return ['status' => 'Success'];
+        return new ProductResource($product);
     }
 
     /**

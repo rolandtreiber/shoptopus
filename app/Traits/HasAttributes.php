@@ -8,7 +8,7 @@ trait HasAttributes {
 
     /**
      * @param $model
-     * @param array $attributeIds
+     * @param $request
      */
     public function handleAttributes($model, $request)
     {

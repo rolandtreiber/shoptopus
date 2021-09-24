@@ -112,14 +112,6 @@ class Product extends SearchableModel implements Auditable
     }
 
     /**
-     * @return MorphMany
-     */
-    public function filecontents()
-    {
-        return $this->morphMany('App\Models\FileContent', 'fileable');
-    }
-
-    /**
      * @return BelongsToMany
      */
     public function discountRules(): BelongsToMany
