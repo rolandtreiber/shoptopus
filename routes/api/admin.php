@@ -31,7 +31,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::patch('/', [ProductController::class, 'update'])->name('admin.api.update.product');
 
                 // Product Variants
-                Route::get('/variants', [ProductController::class, 'show'])->name('admin.api.show.product-variants');
+                Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.api.show.product-variants');
                 Route::group(['prefix' => 'variant'], function () {
                     Route::post('/', [ProductVariantController::class, 'create'])->name('admin.api.create.product-variant');
                     Route::group(['prefix' => '{variant}'], function () {

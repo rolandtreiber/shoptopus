@@ -8,15 +8,14 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductResource;
-use App\Models\Message;
 use App\Models\Product;
+use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
-    use ProcessRequest;
+    use ProcessRequest, HasAttributes;
 
     /**
      * @param ListRequest $request
@@ -24,7 +23,10 @@ class ProductController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return ProductResource::collection(Product::filtered([['id' => 4]])->paginate(25));
+        return ProductResource::collection(Product::filtered([
+//            ['id', '>=', '9476d4cf-bc20-4585-9d6b-4138bfcbff55'],
+//            ['name->en', 'like', '%volupt%']
+        ])->paginate(25));
     }
 
     /**
@@ -48,7 +50,11 @@ class ProductController extends Controller
         $product = new Product();
         $product->fill($data);
         $product->save();
-        $this->saveFiles($request, Product::class, $product->id, false);
+        $this->saveFiles($request, Product::class, $product->id, true);
+        if ($request->product_attributes) {
+            $this->handleAttributes($product, $request->product_attributes);
+        }
+
         return ['status' => 'Success'];
     }
 
@@ -64,7 +70,8 @@ class ProductController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
-        $this->saveFiles($request, Product::class, $product->id, false);
+        $this->saveFiles($request, Product::class, $product->id, true);
+        $this->handleAttributes($product, $request);
         return ['status' => 'Success'];
     }
 

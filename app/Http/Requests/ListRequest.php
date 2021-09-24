@@ -14,10 +14,11 @@ class ListRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'locale' => 'sometimes',
-            'search' => 'sometimes',
-            'page' => 'required',
-            'paginate' => 'required'
+            'locale' => ['sometimes'],
+            'search' => ['sometimes'],
+            'filters' => ['sometimes', 'array'],
+            'page' => ['required'],
+            'paginate' => ['required']
         ];
     }
 }

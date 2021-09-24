@@ -14,7 +14,7 @@ use Spatie\Translatable\HasTranslations;
 /**
  * @method static find($variant)
  */
-class ProductVariant extends Model implements Auditable
+class ProductVariant extends SearchableModel implements Auditable
 {
     use HasFactory;
     use HasTranslations;

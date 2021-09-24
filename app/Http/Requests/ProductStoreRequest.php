@@ -29,7 +29,8 @@ class ProductStoreRequest extends FormRequest
             'short_description' => ['required', 'json'],
             'description' => ['required', 'json'],
             'stock' => ['sometimes', 'numeric'],
-            'backup_stock' => ['sometimes', 'numeric']
+            'backup_stock' => ['sometimes', 'numeric'],
+            'product_attributes' => ['sometimes', 'array']
         ];
     }
 }

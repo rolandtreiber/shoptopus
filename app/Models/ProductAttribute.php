@@ -14,6 +14,7 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ * @method static find(mixed $attributeId)
  */
 class ProductAttribute extends Model implements Auditable
 {
