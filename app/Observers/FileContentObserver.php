@@ -3,19 +3,17 @@
 namespace App\Observers;
 
 use App\Models\FileContent;
-use Illuminate\Support\Facades\Storage;
+use App\Traits\ProcessRequest;
 
 class FileContentObserver
 {
+    use ProcessRequest;
+
     /**
      * @param FileContent $fileContent
      */
     public function deleting(FileContent $fileContent): void
     {
-        if (env('APP_ENV') === 'local') {
-            Storage::disk('uploads')->delete($fileContent->file_name);
-        } else {
-            Storage::disk('uploads')->delete($fileContent->file_name);
-        }
+        $this->deleteCurrentFile($fileContent->file_name);
     }
 }

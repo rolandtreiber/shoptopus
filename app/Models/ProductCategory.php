@@ -6,6 +6,7 @@ use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -13,8 +14,12 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ * @method static filtered(array $array, \Illuminate\Http\Request $request)
+ * @method static root()
+ * @property mixed|string[]|null $menu_image
+ * @property mixed|string[]|null $header_image
  */
-class ProductCategory extends Model implements Auditable
+class ProductCategory extends SearchableModel implements Auditable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
@@ -28,6 +33,10 @@ class ProductCategory extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
+        'name',
+        'description',
+        'menu_image',
+        'header_image',
         'parent_id',
     ];
 
@@ -39,10 +48,12 @@ class ProductCategory extends Model implements Auditable
     protected $casts = [
         'id' => 'string',
         'parent_id' => 'string',
+        'menu_image' => 'object',
+        'header_image' => 'object',
     ];
 
 
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class);
     }
@@ -53,5 +64,10 @@ class ProductCategory extends Model implements Auditable
     public function discountRules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class);
+    }
+
+    public function scopeRoot($query)
+    {
+        return $query->whereNull('parent_id');
     }
 }

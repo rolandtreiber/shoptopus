@@ -4,15 +4,15 @@ namespace App\Providers;
 
 use App\Models\FileContent;
 use App\Models\OrderProduct;
+use App\Models\ProductCategory;
 use App\Models\User;
 use App\Observers\FileContentObserver;
 use App\Observers\OrderProductObserver;
+use App\Observers\ProductCategoryObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Log;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -36,6 +36,7 @@ class EventServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         OrderProduct::observe(OrderProductObserver::class);
+        ProductCategory::observe(ProductCategoryObserver::class);
         FileContent::observe(FileContentObserver::class);
     }
 }

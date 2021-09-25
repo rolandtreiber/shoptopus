@@ -20,6 +20,8 @@ class CreateProductCategoriesTable extends Migration
             $table->uuid('parent_id')->nullable();
             $table->text('name');
             $table->text('description');
+            $table->json('menu_image')->nullable();
+            $table->json('header_image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

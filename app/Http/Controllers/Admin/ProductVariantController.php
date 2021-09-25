@@ -23,6 +23,7 @@ class ProductVariantController extends Controller
 
     /**
      * @param ListRequest $request
+     * @param Product $product
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request, Product $product): AnonymousResourceCollection
@@ -85,6 +86,7 @@ class ProductVariantController extends Controller
 
     /**
      * @param Product $product
+     * @param ProductVariant $variant
      * @return string[]
      */
     public function delete(Product $product, ProductVariant $variant): array
