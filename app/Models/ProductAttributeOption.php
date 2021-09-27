@@ -10,7 +10,15 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
-class ProductAttributeOption extends Model implements Auditable
+/**
+ * @property mixed $image
+ * @property mixed $id
+ * @property mixed $type
+ * @property mixed $product_attribute_id
+ * @property mixed $common_value
+ * @mixin SearchableModel
+ */
+class ProductAttributeOption extends SearchableModel implements Auditable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
@@ -24,7 +32,9 @@ class ProductAttributeOption extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'image',
+        'common_value'
     ];
 
     /**
@@ -34,5 +44,6 @@ class ProductAttributeOption extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
+        'image' => 'object'
     ];
 }

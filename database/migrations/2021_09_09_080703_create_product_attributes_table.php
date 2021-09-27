@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\ProductAttributeTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,6 +19,8 @@ class CreateProductAttributesTable extends Migration
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->text('name');
+            $table->tinyInteger('type')->default(ProductAttributeTypes::Text);
+            $table->json('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

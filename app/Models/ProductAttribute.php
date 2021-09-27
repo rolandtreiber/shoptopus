@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Requests\ListRequest;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,8 +16,14 @@ use Spatie\Translatable\HasTranslations;
 /**
  * @method static count()
  * @method static find(mixed $attributeId)
+ * @method static filtered(array $array, ListRequest $request)
+ * @property string $id
+ * @property mixed $options
+ * @property mixed $image
+ * @property mixed $type
+ * @property string $product_attribute_id
  */
-class ProductAttribute extends Model implements Auditable
+class ProductAttribute extends SearchableModel implements Auditable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
@@ -30,7 +37,9 @@ class ProductAttribute extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'image',
+        'type'
     ];
 
     /**
@@ -40,6 +49,7 @@ class ProductAttribute extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
+        'image' => 'object',
     ];
 
     /**

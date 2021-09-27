@@ -18,7 +18,9 @@ class CreateProductAttributeOptionsTable extends Migration
         Schema::create('product_attribute_options', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->foreignUuid('product_attribute_id')->nullable()->constrained();
+            $table->json('image')->nullable();
             $table->text('name');
+            $table->string('common_value')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

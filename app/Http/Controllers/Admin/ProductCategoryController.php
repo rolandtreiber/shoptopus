@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductCategoryStoreRequest;
 use App\Http\Requests\Admin\ProductCategoryUpdateRequest;
-use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductCategoryDetailResource;
 use App\Http\Resources\Admin\ProductCategoryListResource;

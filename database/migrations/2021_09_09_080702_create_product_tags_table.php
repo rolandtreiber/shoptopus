@@ -18,6 +18,9 @@ class CreateProductTagsTable extends Migration
         Schema::create('product_tags', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->string('name');
+            $table->text('description')->nullable();
+            $table->json('badge')->nullable();
+            $table->tinyInteger('display_badge')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });

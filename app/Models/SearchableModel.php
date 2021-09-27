@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Http\Requests\ListRequest;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static filtered(array[] $array, \App\Http\Requests\ListRequest $request)
+ */
 abstract class SearchableModel extends Model {
 
     public function scopeFiltered($query, $filters, ListRequest $request = null)

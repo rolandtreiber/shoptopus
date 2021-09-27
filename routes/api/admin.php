@@ -12,7 +12,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\DeliveryRuleController;
 use App\Http\Controllers\DiscountRuleController;
 use App\Http\Controllers\OrderController;
-use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\ProductTagController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VoucherCodeController;
@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::patch('/', [ProductAttributeController::class, 'update'])->name('admin.api.update.product-attribute');
 
                 // Attribute options
-                Route::get('/options', [ProductAttributeOptionController::class, 'show'])->name('admin.api.show.product-attribute-options');
+                Route::get('/options', [ProductAttributeOptionController::class, 'index'])->name('admin.api.show.product-attribute-options');
                 Route::group(['prefix' => 'option'], function () {
                     Route::post('/', [ProductAttributeOptionController::class, 'create'])->name('admin.api.create.product-attribute-option');
                     Route::group(['prefix' => '{option}'], function () {
