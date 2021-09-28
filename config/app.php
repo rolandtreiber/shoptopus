@@ -90,7 +90,8 @@ return [
 
     'default_currency' => [
         'name' => 'GBP',
-        'symbol' => '£'
+        'symbol' => '£',
+        'side' => 'left'
     ],
 
     /*

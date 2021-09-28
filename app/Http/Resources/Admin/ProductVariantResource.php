@@ -17,7 +17,6 @@ class ProductVariantResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'data' => $this->data,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
             'attributes' => AttributeResource::collection($this->attributes)

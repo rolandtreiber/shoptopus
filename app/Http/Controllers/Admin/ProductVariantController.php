@@ -8,7 +8,7 @@ use App\Http\Requests\Admin\ProductVariantUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
-use App\Http\Resources\Admin\ProductResource;
+use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductVariantResource;
 use App\Models\Product;
 use App\Models\ProductVariant;

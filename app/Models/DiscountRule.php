@@ -2,14 +2,28 @@
 
 namespace App\Models;
 
+use App\Enums\DiscountTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Translatable\HasTranslations;
 
-class DiscountRule extends Model
+/**
+ * @property string $id
+ * @property mixed $type
+ * @property mixed $amount
+ * @property mixed $valid_from
+ * @property mixed $valid_until
+ * @property mixed $products
+ * @property mixed $categories
+ */
+class DiscountRule extends SearchableModel
 {
     use HasFactory;
     use HasUUID;
+    use HasTranslations;
+
+    public $translatable = ['name'];
 
     /**
      * The attributes that are mass assignable.
@@ -17,10 +31,9 @@ class DiscountRule extends Model
      * @var array
      */
     protected $fillable = [
-        'discountable_type',
-        'discountable_id',
         'type',
         'amount',
+        'name',
         'valid_from',
         'valid_until',
     ];
@@ -32,10 +45,42 @@ class DiscountRule extends Model
      */
     protected $casts = [
         'id' => 'string',
-        'discountable_id' => 'string',
         'type' => 'integer',
-        'amount' => 'decimal',
+        'amount' => 'decimal:2',
+        'name' => 'string',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
     ];
+
+    public function getAmount($type, $amount): string
+    {
+        switch ($type) {
+            case DiscountTypes::Percentage:
+                return $amount.'%';
+            case DiscountTypes::Amount:
+                if (config('app.default_currency.side') === 'left') {
+                    return config('app.default_currency.symbol') . $amount;
+                } else {
+                    return $amount.config('app.default_currency.symbol');
+                }
+        }
+        return $amount;
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductCategory::class);
+    }
+
 }

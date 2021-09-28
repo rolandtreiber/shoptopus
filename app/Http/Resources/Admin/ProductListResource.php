@@ -2,10 +2,14 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductResource extends JsonResource
+/**
+ * @mixin Product
+ */
+class ProductListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

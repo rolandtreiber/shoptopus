@@ -18,6 +18,7 @@ class CreateDiscountRulesTable extends Migration
         Schema::create('discount_rules', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->tinyInteger('type');
+            $table->text('name');
             $table->decimal('amount');
             $table->dateTime('valid_from');
             $table->dateTime('valid_until');

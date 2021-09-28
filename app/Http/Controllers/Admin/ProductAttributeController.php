@@ -5,13 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductAttributeStoreRequest;
 use App\Http\Requests\Admin\ProductAttributeUpdateRequest;
-use App\Http\Requests\Admin\ProductCategoryStoreRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductAttributeDetailResource;
 use App\Http\Resources\Admin\ProductAttributeListResource;
-use App\Http\Resources\Admin\ProductCategoryDetailResource;
 use App\Models\ProductAttribute;
-use App\Models\ProductCategory;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
