@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int|mixed $user_id
  * @property int|mixed $delivery_type_id
  * @property int $status
+ * @property mixed $address_id
  */
 class Order extends SearchableModel
 {

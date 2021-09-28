@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\Product;
@@ -19,16 +20,20 @@ class OrderSeeder extends Seeder
      */
     public function run()
     {
-        $users = User::count();
+        $userIds = User::role('customer')->pluck('id');
         $products = Product::count();
 
-        $ordersToCreate = random_int(1, $users);
+        $ordersToCreate = random_int(1, sizeof($userIds));
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
-            $selectedUserId = (new User())->findNth(random_int(1, $ordersToCreate))->id;
+            $selectedUser = User::find($userIds[random_int(1, $ordersToCreate)]);
+            $selectedUserId = $selectedUser->id;
             $order = new Order();
             $order->user_id = $selectedUserId;
             $order->delivery_type_id = (new DeliveryType)->findNthId(random_int(1, DeliveryType::count()));
+            $userAddresses = $selectedUser->addresses;
+            $selectedAddress = random_int(0, sizeof($userAddresses) - 1);
+            $order->address_id = $userAddresses[$selectedAddress]->id;
             $order->save();
 
             $usedProductTypes = [];

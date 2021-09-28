@@ -63,27 +63,27 @@ class User extends Authenticatable implements Auditable
 
     public function paymentSources()
     {
-        return $this->hasMany(\App\PaymentSource::class);
+        return $this->hasMany(PaymentSource::class);
     }
 
     public function payments()
     {
-        return $this->hasMany(\App\Payment::class);
+        return $this->hasMany(Payment::class);
     }
 
     public function orders()
     {
-        return $this->hasMany(\App\Models\Order::class);
+        return $this->hasMany(Order::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 
     public function cart()
     {
-        return $this->hasOne(\App\Cart::class);
-    }
-
-    public function language()
-    {
-        return $this->hasOne(\App\Language::class);
+        return $this->hasOne(Cart::class);
     }
 
 }

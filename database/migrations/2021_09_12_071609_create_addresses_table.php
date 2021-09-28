@@ -1,12 +1,10 @@
 <?php
 
-use App\Enums\OrderStatuses;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrdersTable extends Migration
+class CreateAddressesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,13 +13,17 @@ class CreateOrdersTable extends Migration
      */
     public function up()
     {
-        Schema::create('orders', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->foreignUuid('user_id')->nullable()->constrained();
-            $table->foreignUuid('delivery_type_id')->nullable()->constrained();
-            $table->foreignUuid('voucher_code_id')->nullable()->constrained();
-            $table->foreignUuid('address_id')->constrained();
-            $table->integer('status')->default(OrderStatuses::Paid);
+            $table->string('name')->nullable();
+            $table->string('address_line_1');
+            $table->string('address_line_2');
+            $table->string('town');
+            $table->string('post_code');
+            $table->decimal('lat')->nullable();
+            $table->decimal('lon')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -33,6 +35,6 @@ class CreateOrdersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('orders');
+        Schema::dropIfExists('addresses');
     }
 }
