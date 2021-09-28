@@ -12,14 +12,15 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ * @property mixed $badge
  */
-class ProductTag extends Model implements Auditable
+class ProductTag extends SearchableModel implements Auditable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
-    public $translatable = ['name'];
+    public $translatable = ['name', 'description'];
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +28,10 @@ class ProductTag extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
+        'description',
+        'display_badge',
+        'badge'
     ];
 
     /**
@@ -37,5 +41,7 @@ class ProductTag extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
+        'badge' => 'object',
+        'display_badge' => 'boolean'
     ];
 }

@@ -7,12 +7,14 @@ use App\Models\OrderProduct;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
+use App\Models\ProductTag;
 use App\Models\User;
 use App\Observers\FileContentObserver;
 use App\Observers\OrderProductObserver;
 use App\Observers\ProductAttributeObserver;
 use App\Observers\ProductAttributeOptionObserver;
 use App\Observers\ProductCategoryObserver;
+use App\Observers\ProductTagObserver;
 use App\Observers\UserObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -42,6 +44,7 @@ class EventServiceProvider extends ServiceProvider
         OrderProduct::observe(OrderProductObserver::class);
         ProductCategory::observe(ProductCategoryObserver::class);
         ProductAttribute::observe(ProductAttributeObserver::class);
+        ProductTag::observe(ProductTagObserver::class);
         ProductAttributeOption::observe(ProductAttributeOptionObserver::class);
         FileContent::observe(FileContentObserver::class);
     }
