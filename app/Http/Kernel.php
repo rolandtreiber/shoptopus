@@ -9,6 +9,7 @@ use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SetLocaleMiddleware;
+use App\Http\Middleware\SuperUser;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
 use App\Http\Middleware\VerifyCsrfToken;
@@ -87,6 +88,7 @@ class Kernel extends HttpKernel
         'throttle' => ThrottleRequests::class,
         'verified' => EnsureEmailIsVerified::class,
         'admin' => Admin::class,
-        'set.locale' => SetLocale::class
+        'set.locale' => SetLocale::class,
+        'super_user' => SuperUser::class
     ];
 }

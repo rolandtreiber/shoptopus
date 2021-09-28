@@ -11,7 +11,7 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DeliveryRuleController;
 use App\Http\Controllers\DiscountRuleController;
-use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\ProductTagController;
 use App\Http\Controllers\UserController;
@@ -104,13 +104,10 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Orders
         Route::get('orders', [OrderController::class, 'index'])->name('admin.api.index.orders');
-        Route::group(['prefix' => 'order'], function () {
-            Route::post('/', [OrderController::class, 'create'])->name('admin.api.create.order');
-            Route::group(['prefix' => '{order}'], function () {
-                Route::get('/', [OrderController::class, 'show'])->name('admin.api.show.order');
-                Route::delete('/', [OrderController::class, 'delete'])->name('admin.api.delete.order');
-                Route::patch('/', [OrderController::class, 'update'])->name('admin.api.update.order');
-            });
+        Route::group(['prefix' => 'order/{order}'], function () {
+            Route::get('/', [OrderController::class, 'show'])->name('admin.api.show.order');
+            Route::middleware(['super_user'])->delete('/', [OrderController::class, 'delete'])->name('admin.api.delete.order');
+            Route::patch('/', [OrderController::class, 'updateStatus'])->name('admin.api.update-status.order');
         });
 
         // Payments

@@ -12,8 +12,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static find(int $selectedCartId)
  * @property int|mixed $user_id
  * @property int|mixed $delivery_type_id
+ * @property int $status
  */
-class Order extends Model
+class Order extends SearchableModel
 {
     use HasFactory, HasUUID;
 
@@ -34,6 +35,7 @@ class Order extends Model
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
+        'status' => 'integer'
     ];
 
     /**
