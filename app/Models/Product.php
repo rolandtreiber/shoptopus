@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Collection;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
@@ -63,11 +65,52 @@ class Product extends SearchableModel implements Auditable
     ];
 
     /**
-     *
+     * @param $discounts
+     */
+    private function calculateDiscountAmount($discounts)
+    {
+        if (config('shoptopus.discount_rules.allow_discount_stacking') === true) {
+            // Discounts stacked and all applied
+            return array_sum($discounts);
+        } else {
+            // Only one discount applied. It is either the lowest or the highest
+            switch (config('shoptopus.discount_rules.applied_discount')) {
+                case 'highest':
+                    return max($discounts);
+                default:
+                    return min($discounts);
+            }
+        }
+    }
+
+    /**
+     * Calculate the final price
      */
     public function getFinalPriceAttribute()
     {
-        return $this->price;
+        $discountRules = $this->discountRules->map(function($rule) {
+            return [
+                'id' => $rule->id,
+                'amount' => $rule->amount,
+                'type' => $rule->type,
+            ];
+        })->toArray();
+        $categoriesWithDiscountRules = $this->categories()->get();
+        foreach ($categoriesWithDiscountRules as $category) {
+            $discountRules = array_merge($discountRules, $category->discountRules->map(function($rule) use ($discountRules) {
+                return [
+                    'id' => $rule->id,
+                    'amount' => $rule->amount,
+                    'type' => $rule->type,
+                ];
+            })->toArray());
+        }
+        $basePrice = $this->price;
+        $discounts = array_map(function($rule) use ($basePrice) {
+            return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
+        }, array_unique($discountRules, SORT_REGULAR));
+        dd($this->calculateDiscountAmount($discounts));
+        return $this->price - $this->calculateDiscountAmount($discounts);
     }
 
     /**

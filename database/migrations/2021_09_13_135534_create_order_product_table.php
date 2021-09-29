@@ -22,7 +22,8 @@ class CreateOrderProductTable extends Migration
             $table->integer('amount')->default(1);
             $table->text('name');
             $table->decimal('unit_price')->default(0);
-            $table->decimal('price')->default(0);
+            $table->decimal('full_price')->default(0);
+            $table->decimal('final_price')->default(0);
         });
     }
 

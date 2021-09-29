@@ -22,6 +22,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $image
  * @property mixed $type
  * @property string $product_attribute_id
+ * @property double $price
  */
 class ProductAttribute extends SearchableModel implements Auditable
 {

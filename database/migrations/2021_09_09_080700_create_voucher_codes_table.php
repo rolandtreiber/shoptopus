@@ -17,8 +17,13 @@ class CreateVoucherCodesTable extends Migration
 
         Schema::create('voucher_codes', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->tinyInteger('type');
+            $table->decimal('amount');
             $table->string('code', 100);
+            $table->dateTime('valid_from');
+            $table->dateTime('valid_until');
             $table->timestamps();
+
         });
 
         Schema::enableForeignKeyConstraints();

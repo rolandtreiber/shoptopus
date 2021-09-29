@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
         $used = [];
         for ($i = 0; $i < $taggedCount; $i++) {
             do {
-                $productId = rand(1, Product::count()-1);
+                $productId = random_int(1, Product::count()-1);
             } while (in_array($productId, $used));
             $used[] = $productId;
 
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $discounted));
             $discounted[] = $productId;
-            (new Product())->findNth($productId)->discountRules()->attach(DiscountRule::find(random_int(1, DiscountRule::count())));
+            (new Product())->findNth($productId)->discountRules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
         }
 
     }

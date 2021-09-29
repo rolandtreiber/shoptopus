@@ -14,8 +14,9 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static find($variant)
- * @property mixed $id
- * @property mixed $product_id
+ * @property string $id
+ * @property string $product_id
+ * @property double $price
  */
 class ProductVariant extends SearchableModel implements Auditable
 {
@@ -26,6 +27,8 @@ class ProductVariant extends SearchableModel implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['description'];
+
+    protected $appends = ['final_price'];
 
     /**
      * The attributes that are mass assignable.
@@ -49,6 +52,14 @@ class ProductVariant extends SearchableModel implements Auditable
         'product_id' => 'string',
         'price' => 'decimal:2',
     ];
+
+    /**
+     * Calculate the final price
+     */
+    public function getFinalPriceAttribute()
+    {
+        return $this->price;
+    }
 
     /**
      * @return BelongsTo

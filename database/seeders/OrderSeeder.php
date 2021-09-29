@@ -7,6 +7,7 @@ use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\VoucherCode;
 use Exception;
 use Illuminate\Database\Seeder;
 
@@ -23,7 +24,7 @@ class OrderSeeder extends Seeder
         $userIds = User::role('customer')->pluck('id');
         $products = Product::count();
 
-        $ordersToCreate = random_int(1, sizeof($userIds));
+        $ordersToCreate = random_int(1, 20);
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
             $selectedUser = User::find($userIds[random_int(1, $ordersToCreate)]);
@@ -34,6 +35,11 @@ class OrderSeeder extends Seeder
             $userAddresses = $selectedUser->addresses;
             $selectedAddress = random_int(0, sizeof($userAddresses) - 1);
             $order->address_id = $userAddresses[$selectedAddress]->id;
+            $hasVoucherCode = random_int(0, 50) < 15;
+            if ($hasVoucherCode) {
+                $voucherCodeIds = VoucherCode::all()->pluck('id');
+                $order->voucher_code_id = $voucherCodeIds[random_int(0, sizeof($voucherCodeIds)-1)];
+            }
             $order->save();
 
             $usedProductTypes = [];

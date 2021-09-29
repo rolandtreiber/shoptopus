@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 
+/**
+ * @property mixed|string $code
+ * @property int $type
+ * @property float $amount
+ * @method static where(string $string, string $code)
+ */
 class VoucherCode extends Model implements Auditable
 {
     use HasUUID;
@@ -22,7 +28,11 @@ class VoucherCode extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
-        'code',
+        'type',
+        'amount',
+        'name',
+        'valid_from',
+        'valid_until'
     ];
 
     /**
@@ -32,5 +42,9 @@ class VoucherCode extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
+        'type' => 'integer',
+        'amount' => 'decimal:2',
+        'valid_from' => 'datetime',
+        'valid_until' => 'datetime',
     ];
 }

@@ -21,7 +21,8 @@
         "sendgrid/sendgrid": "^7.9",
         "spatie/laravel-permission": "^5.1",
         "spatie/laravel-searchable": "^1.10",
-        "spatie/laravel-translatable": "^5.0"
+        "spatie/laravel-translatable": "^5.0",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

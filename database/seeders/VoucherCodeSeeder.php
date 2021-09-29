@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\VoucherCode;
+use App\Models\VoucherCode;
 use Illuminate\Database\Seeder;
 
 class VoucherCodeSeeder extends Seeder

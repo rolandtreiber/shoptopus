@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\DiscountTypes;
+use App\Helpers\GeneralHelper;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @method static find(int $selectedCartId)
@@ -14,6 +17,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property int|mixed $delivery_type_id
  * @property int $status
  * @property mixed $address_id
+ * @property VoucherCode|null $voucherCode
+ * @property string $id
+ * @property string|null $voucher_code_id
+ * @property int $originalPrice
+ * @property float $original_price
+ * @property float $total_price
  */
 class Order extends SearchableModel
 {
@@ -25,7 +34,10 @@ class Order extends SearchableModel
      * @var array
      */
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'status',
+        'original_price',
+        'total_price'
     ];
 
     /**
@@ -36,7 +48,9 @@ class Order extends SearchableModel
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
-        'status' => 'integer'
+        'status' => 'integer',
+        'original_price' => 'decimal:2',
+        'total_price' => 'decimal:2'
     ];
 
     /**
@@ -52,6 +66,41 @@ class Order extends SearchableModel
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->using(OrderProduct::class);
+        return $this->belongsToMany(Product::class)->withPivot(['full_price', 'unit_price', 'final_price'])->using(OrderProduct::class);
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function voucherCode(): BelongsTo
+    {
+        return $this->belongsTo(VoucherCode::class);
+    }
+
+    public function recalculatePrices()
+    {
+        $dispatcher = Order::getEventDispatcher();
+        Order::unsetEventDispatcher();
+        $finalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
+        $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
+        $this->original_price = $originalPrice;
+        $voucherCode = $this->voucherCode;
+        if ($voucherCode) {
+            switch (config('shoptopus.voucher_code_basis')) {
+                case 'full_price':
+                    $basis = $originalPrice;
+                    break;
+                case 'final_price':
+                    $basis = $finalPrice;
+                    break;
+                default:
+                    $basis = $finalPrice;
+            }
+            $this->total_price = GeneralHelper::getDiscountedValue($voucherCode->type, $voucherCode->amount, $basis);
+        } else {
+            $this->total_price = $finalPrice;
+        }
+        $this->save();
+        Order::setEventDispatcher($dispatcher);
     }
 }

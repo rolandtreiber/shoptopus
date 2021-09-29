@@ -21,6 +21,8 @@ class CreateOrdersTable extends Migration
             $table->foreignUuid('delivery_type_id')->nullable()->constrained();
             $table->foreignUuid('voucher_code_id')->nullable()->constrained();
             $table->foreignUuid('address_id')->constrained();
+            $table->decimal('original_price')->default(0);
+            $table->decimal('total_price')->default(0);
             $table->integer('status')->default(OrderStatuses::Paid);
             $table->timestamps();
         });
