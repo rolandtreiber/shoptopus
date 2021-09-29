@@ -21,7 +21,9 @@ class ProductListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->getTranslations('name')
+            'name' => $this->getTranslations('name'),
+            'price' => $this->price,
+            'final_price' => $this->final_price
         ];
     }
 }

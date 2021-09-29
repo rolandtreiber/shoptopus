@@ -19,6 +19,13 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $name
  * @property mixed $price
  * @property mixed $id
+ * @property float $final_price
+ * @property int $status
+ * @property int $stock
+ * @property int $purchase_count
+ * @property int $backup_stock
+ * @property \Illuminate\Database\Eloquent\Collection $tags
+ * @property Collection $categories
  */
 class Product extends SearchableModel implements Auditable
 {
@@ -66,6 +73,7 @@ class Product extends SearchableModel implements Auditable
 
     /**
      * @param $discounts
+     * @return float|int|mixed
      */
     private function calculateDiscountAmount($discounts)
     {
@@ -106,11 +114,14 @@ class Product extends SearchableModel implements Auditable
             })->toArray());
         }
         $basePrice = $this->price;
-        $discounts = array_map(function($rule) use ($basePrice) {
-            return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
-        }, array_unique($discountRules, SORT_REGULAR));
-        dd($this->calculateDiscountAmount($discounts));
-        return $this->price - $this->calculateDiscountAmount($discounts);
+        if (sizeof($discountRules) > 0) {
+            $discounts = array_map(function($rule) use ($basePrice) {
+                return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
+            }, array_unique($discountRules, SORT_REGULAR));
+            return $this->price - $this->calculateDiscountAmount($discounts);
+        } else {
+            return $this->price;
+        }
     }
 
     /**

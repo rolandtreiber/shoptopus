@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Product
+ */
 class ProductDetailResource extends JsonResource
 {
     /**
@@ -21,15 +25,15 @@ class ProductDetailResource extends JsonResource
             'description' =>$this->getTranslations('description'),
             'short_description' => $this->getTranslations('short_description'),
             'price' => $this->price,
+            'final_price' => $this->final_price,
             'status' => $this->status,
             'stock' => $this->stock,
             'purchase_count' => $this->purchase_count,
             'backup_stock' => $this->backup_stock,
-            'final_price' => $this->final_price,
             'attributes' => AttributeResource::collection($this->attributes),
             'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get()),
-            'tags' => $this->tags,
-            'categories' => $this->categories
+            'tags' => ProductTagResource::collection($this->tags),
+            'categories' => ProductCategoryListResource::collection($this->categories)
         ];
     }
 }
