@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuditController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DeliveryRuleController;
+use App\Http\Controllers\DeliveryTypeController;
 use App\Http\Controllers\DiscountRuleController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -133,14 +134,25 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
             });
         });
 
-        // Delivery Rules
-        Route::get('delivery-rules', [DeliveryRuleController::class, 'index'])->name('admin.api.index.delivery-rules');
-        Route::group(['prefix' => 'delivery-rule'], function () {
-            Route::post('/', [DeliveryRuleController::class, 'create'])->name('admin.api.create.delivery-rule');
-            Route::group(['prefix' => '{deliveryRule}'], function () {
-                Route::get('/', [DeliveryRuleController::class, 'show'])->name('admin.api.show.delivery-rule');
-                Route::delete('/', [DeliveryRuleController::class, 'delete'])->name('admin.api.delete.delivery-rule');
-                Route::patch('/', [DeliveryRuleController::class, 'update'])->name('admin.api.update.delivery-rule');
+        // Delivery Types
+        Route::get('delivery-types', [DeliveryTypeController::class, 'index'])->name('admin.api.index.delivery-types');
+        Route::group(['prefix' => 'delivery-type'], function () {
+            Route::post('/', [DeliveryTypeController::class, 'create'])->name('admin.api.create.delivery-type');
+            Route::group(['prefix' => '{deliveryType}'], function () {
+                Route::get('/', [DeliveryTypeController::class, 'show'])->name('admin.api.show.delivery-type');
+                Route::delete('/', [DeliveryTypeController::class, 'delete'])->name('admin.api.delete.delivery-type');
+                Route::patch('/', [DeliveryTypeController::class, 'update'])->name('admin.api.update.delivery-type');
+
+                Route::get('delivery-rules', [DeliveryRuleController::class, 'index'])->name('admin.api.index.delivery-rules');
+                Route::group(['prefix' => 'delivery-rule'], function () {
+                    Route::post('/', [DeliveryRuleController::class, 'create'])->name('admin.api.create.delivery-rule');
+                    Route::group(['prefix' => '{deliveryRule}'], function () {
+                        Route::get('/', [DeliveryRuleController::class, 'show'])->name('admin.api.show.delivery-rule');
+                        Route::delete('/', [DeliveryRuleController::class, 'delete'])->name('admin.api.delete.delivery-rule');
+                        Route::patch('/', [DeliveryRuleController::class, 'update'])->name('admin.api.update.delivery-rule');
+                    });
+                });
+
             });
         });
 

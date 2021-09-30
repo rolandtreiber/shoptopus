@@ -8,7 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class DeliveryRule extends Model implements Auditable
+/**
+ * @property mixed|string $delivery_type_id
+ * @property string $id
+ * @property string|array $postcodes
+ * @property int|null $min_weight
+ * @property int|null $max_weight
+ * @property int|null $min_distance
+ * @property int|null $max_distance
+ * @property float|null $lat
+ * @property float|null $lon
+ * @property int $status
+ */
+class DeliveryRule extends SearchableModel implements Auditable
 {
     use HasFactory;
     use HasUUID;
@@ -21,6 +33,7 @@ class DeliveryRule extends Model implements Auditable
      */
     protected $fillable = [
         'delivery_type_id',
+        'postcodes',
         'lat',
         'lon',
         'min_weight',
@@ -39,6 +52,7 @@ class DeliveryRule extends Model implements Auditable
         'id' => 'string',
         'delivery_type_id' => 'string',
         'status' => 'integer',
+        'postcodes' => 'array'
     ];
 
     /**

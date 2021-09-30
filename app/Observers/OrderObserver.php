@@ -14,7 +14,7 @@ class OrderObserver
      */
     public function updating(Order $order)
     {
-        if($order->isDirty('voucher_code_id')){
+        if($order->isDirty('voucher_code_id') || $order->isDirty('delivery_rule_id')){
             $order->recalculatePrices();
         }
     }

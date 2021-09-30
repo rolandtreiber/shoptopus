@@ -77,6 +77,14 @@ class Order extends SearchableModel
         return $this->belongsTo(VoucherCode::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
+    public function deliveryRule(): BelongsTo
+    {
+        return $this->belongsTo(DeliveryRule::class);
+    }
+
     public function recalculatePrices()
     {
         $dispatcher = Order::getEventDispatcher();

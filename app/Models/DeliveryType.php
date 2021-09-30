@@ -5,12 +5,18 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ * @property string $id
+ * @property mixed $deliveryRules
+ * @property mixed $status
+ * @property mixed $enabled_by_default_on_creation
+ * @property mixed $price
  */
-class DeliveryType extends Model
+class DeliveryType extends SearchableModel
 {
     use HasFactory;
     use HasUUID;
@@ -37,8 +43,10 @@ class DeliveryType extends Model
         'status' => 'integer',
     ];
 
-
-    public function deliveryRules()
+    /**
+     * @return HasMany
+     */
+    public function deliveryRules(): HasMany
     {
         return $this->hasMany(DeliveryRule::class);
     }
