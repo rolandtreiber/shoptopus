@@ -5,16 +5,21 @@ namespace App\Models;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * @property mixed|string $code
  * @property int $type
  * @property float $amount
- * @method static where(string $string, string $code)
- */
-class VoucherCode extends Model implements Auditable
+ * @property string $id
+ * @property mixed $valid_from
+ * @property mixed $valid_until
+ * @mixin Builder
+*/
+class VoucherCode extends SearchableModel implements Auditable
 {
     use HasUUID;
 
@@ -47,4 +52,12 @@ class VoucherCode extends Model implements Auditable
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
     ];
+
+    /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
 }

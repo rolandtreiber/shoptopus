@@ -11,7 +11,7 @@ class VoucherCodeObserver
     /**
      * @param VoucherCode $voucherCode
      */
-    public function saving(VoucherCode $voucherCode)
+    public function creating(VoucherCode $voucherCode)
     {
         do {
             $code = GeneralHelper::generateRandomString(10, RandomStringModes::UppercaseAndNumbers);
