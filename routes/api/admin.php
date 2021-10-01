@@ -1,22 +1,23 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeOptionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\ReportController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuditController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\DeliveryRuleController;
-use App\Http\Controllers\DeliveryTypeController;
-use App\Http\Controllers\DiscountRuleController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuditController;
+use App\Http\Controllers\Admin\CartController;
+use App\Http\Controllers\Admin\DeliveryRuleController;
+use App\Http\Controllers\Admin\DeliveryTypeController;
+use App\Http\Controllers\Admin\DiscountRuleController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
-use App\Http\Controllers\ProductTagController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VoucherCodeController;
+use App\Http\Controllers\Admin\ProductTagController;
+use App\Http\Controllers\Admin\VoucherCodeController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () {
@@ -164,6 +165,28 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::get('/', [DiscountRuleController::class, 'show'])->name('admin.api.show.discount-rule');
                 Route::delete('/', [DiscountRuleController::class, 'delete'])->name('admin.api.delete.discount-rule');
                 Route::patch('/', [DiscountRuleController::class, 'update'])->name('admin.api.update.discount-rule');
+            });
+        });
+
+        // Users
+        Route::get('users', [UserController::class, 'index'])->name('admin.api.index.users');
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('/', [UserController::class, 'create'])->name('admin.api.create.user');
+            Route::group(['prefix' => '{user}'], function () {
+                Route::get('/', [UserController::class, 'show'])->name('admin.api.show.user');
+                Route::delete('/', [UserController::class, 'delete'])->name('admin.api.delete.user');
+                Route::patch('/', [UserController::class, 'update'])->name('admin.api.update.user');
+            });
+        });
+
+        // Customers
+        Route::get('customers', [CustomerController::class, 'index'])->name('admin.api.index.customers');
+        Route::group(['prefix' => 'customer'], function () {
+            Route::post('/', [CustomerController::class, 'create'])->name('admin.api.create.customer');
+            Route::group(['prefix' => '{customer}'], function () {
+                Route::get('/', [CustomerController::class, 'show'])->name('admin.api.show.customer');
+                Route::delete('/', [CustomerController::class, 'delete'])->name('admin.api.delete.customer');
+                Route::patch('/', [CustomerController::class, 'update'])->name('admin.api.update.customer');
             });
         });
 

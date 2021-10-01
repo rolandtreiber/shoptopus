@@ -2,17 +2,24 @@
 
 namespace App\Models;
 
+use App\Http\Requests\ListRequest;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static find(int|string|null $getUserIdentifier)
  * @method static count()
+ * @method static role(mixed $role)
+ * @method filtered(array $array, ListRequest $request)
+ * @method static systemUsers()
  * @property mixed $id
  */
 class User extends Authenticatable implements Auditable
@@ -60,28 +67,78 @@ class User extends Authenticatable implements Auditable
         'language_id' => 'string',
     ];
 
+    public function scopeSystemUsers($query)
+    {
+        $roleIds = Role::whereNotIn('name', ['customer'])->pluck('id');
 
-    public function paymentSources()
+        foreach ($roleIds as $roleId) {
+            $query->orWhereHas('roles', function($query) use ($roleId){
+                $query->where('roles.id', $roleId);
+            });
+        }
+
+        return $query;
+    }
+
+    public function scopeFiltered($query, $filters, ListRequest $request = null)
+    {
+        if ($request && $request->filters) {
+            foreach ($request->filters as $key => $value) {
+                if (json_decode($value) && is_array(json_decode($value))) {
+                    $decodedValue = json_decode($value);
+                    $filters[] = [$key, $decodedValue[0], $decodedValue[1]];
+                } else {
+                    $filters[] = [$key, $value];
+                }
+            }
+        }
+        foreach ($filters as $filter) {
+            if (sizeof($filter) === 2) {
+                $query->where($filter[0], $filter[1]);
+            }
+            if (sizeof($filter) === 3) {
+                $query->where($filter[0], $filter[1], $filter[2]);
+            }
+        }
+        return $query;
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function paymentSources(): HasMany
     {
         return $this->hasMany(PaymentSource::class);
     }
 
-    public function payments()
+    /**
+     * @return HasMany
+     */
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function orders()
+    /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function addresses()
+    /**
+     * @return HasMany
+     */
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
-    public function cart()
+    /**
+     * @return HasOne
+     */
+    public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
     }

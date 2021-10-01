@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductTagStoreRequest;
 use App\Http\Requests\Admin\ProductTagUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -24,7 +25,7 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param ProductTag $attribute
+     * @param ProductTag $tag
      * @return ProductTagResource
      */
     public function show(ProductTag $tag): ProductTagResource

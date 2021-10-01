@@ -31,6 +31,10 @@ class DeliveryType extends SearchableModel
      */
     protected $fillable = [
         'status',
+        'name',
+        'description',
+        'enabled_by_default_on_creation',
+        'price'
     ];
 
     /**
@@ -41,6 +45,8 @@ class DeliveryType extends SearchableModel
     protected $casts = [
         'id' => 'string',
         'status' => 'integer',
+        'enabled_by_default_on_creation' => 'boolean',
+        'price' => 'decimal:2'
     ];
 
     /**

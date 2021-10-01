@@ -18,7 +18,7 @@ class ListRequest extends FormRequest
             'search' => ['sometimes'],
             'filters' => ['sometimes', 'array'],
             'page' => ['required'],
-            'paginate' => ['required']
+            'paginate' => ['required'],
         ];
     }
 }

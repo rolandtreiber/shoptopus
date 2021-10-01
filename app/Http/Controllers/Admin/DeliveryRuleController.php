@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\RuleDoesNotBelongToTypeException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\DeliveryRuleUpdateRequest;
 use App\Http\Requests\DeliveryRuleStoreRequest;
 use App\Http\Requests\ListRequest;

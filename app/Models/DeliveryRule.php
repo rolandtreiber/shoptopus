@@ -52,7 +52,13 @@ class DeliveryRule extends SearchableModel implements Auditable
         'id' => 'string',
         'delivery_type_id' => 'string',
         'status' => 'integer',
-        'postcodes' => 'array'
+        'postcodes' => 'array',
+        'lat' => 'decimal:6',
+        'lon' => 'decimal:6',
+        'min_weight' => 'integer',
+        'max_weight' => 'integer',
+        'min_distance' => 'integer',
+        'max_distance' => 'integer',
     ];
 
     /**
