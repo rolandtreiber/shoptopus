@@ -27,7 +27,7 @@ class OrderSeeder extends Seeder
         $ordersToCreate = random_int(1, 20);
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
-            $selectedUser = User::find($userIds[random_int(1, $ordersToCreate)]);
+            $selectedUser = User::find($userIds[random_int(1, sizeof($userIds)-1)]);
             $selectedUserId = $selectedUser->id;
             $order = new Order();
             $order->user_id = $selectedUserId;

@@ -171,11 +171,11 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         // Users
         Route::get('users', [UserController::class, 'index'])->name('admin.api.index.users');
         Route::group(['prefix' => 'user'], function () {
-            Route::post('/', [UserController::class, 'create'])->name('admin.api.create.user');
+            Route::post('/', [UserController::class, 'create'])->middleware(['role:super_admin'])->name('admin.api.create.user');
             Route::group(['prefix' => '{user}'], function () {
                 Route::get('/', [UserController::class, 'show'])->name('admin.api.show.user');
-                Route::delete('/', [UserController::class, 'delete'])->name('admin.api.delete.user');
-                Route::patch('/', [UserController::class, 'update'])->name('admin.api.update.user');
+                Route::delete('/', [UserController::class, 'delete'])->middleware(['own_or_super_admin'])->name('admin.api.delete.user');
+                Route::patch('/', [UserController::class, 'update'])->middleware(['own_or_super_admin'])->name('admin.api.update.user');
             });
         });
 

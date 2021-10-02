@@ -19,17 +19,19 @@ class UserFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     * @throws \Exception
      */
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'role_id' => $this->faker->numberBetween(-8, 8),
+            'first_name' => $this->faker->firstName,
+            'last_name' => $this->faker->lastName,
+            'prefix' => $this->faker->randomElement(config('users.available_prefixes')),
             'email' => $this->faker->safeEmail,
             'email_verified_at' => $this->faker->dateTime(),
             'password' => Hash::make('shop'),
-            'client_ref' => $this->faker->regexify('[A-Za-z0-9]{12}'),
-            'temporary' => false
+            'temporary' => false,
+            'phone' => $this->faker->phoneNumber
         ];
     }
 }

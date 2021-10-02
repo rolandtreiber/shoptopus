@@ -8,6 +8,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -20,7 +21,17 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static role(mixed $role)
  * @method filtered(array $array, ListRequest $request)
  * @method static systemUsers()
- * @property mixed $id
+ * @property string $id
+ * @property string|null $email
+ * @property string|null $email_verified_at
+ * @property string|null $avatar
+ * @property mixed|string $password
+ * @property string $first_name
+ * @property string $last_name
+ * @property string|null $prefix
+ * @property mixed|string $name
+ * @property mixed|string $initials
+ * @property string $client_ref
  */
 class User extends Authenticatable implements Auditable
 {
@@ -29,6 +40,7 @@ class User extends Authenticatable implements Auditable
     use HasRoles;
     use HasFile;
     use HasUUID;
+    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     /**
@@ -37,13 +49,15 @@ class User extends Authenticatable implements Auditable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'role_id',
+        'first_name',
+        'last_name',
+        'prefix',
         'email',
         'email_verified_at',
         'password',
         'client_ref',
         'language_id',
+        'avatar',
     ];
 
     /**
@@ -62,9 +76,8 @@ class User extends Authenticatable implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'role_id' => 'string',
         'email_verified_at' => 'timestamp',
-        'language_id' => 'string',
+        'avatar' => 'object'
     ];
 
     public function scopeSystemUsers($query)
