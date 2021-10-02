@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
+/**
+ * @property string $id
+ * @property string $name
+ * @property string $address_line_1
+ * @property string|null $address_line_2
+ * @property string $town
+ * @property string $post_code
+ * @property float|null $lat
+ * @property float|null $lon
+ */
 class Address extends Model implements Auditable
 {
     use HasFactory, SoftDeletes;
@@ -35,7 +45,7 @@ class Address extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'lat' => 'decimal',
-        'lon' => 'decimal'
+        'lat' => 'decimal:6',
+        'lon' => 'decimal:6'
     ];
 }

@@ -32,6 +32,11 @@ use Spatie\Permission\Traits\HasRoles;
  * @property mixed|string $name
  * @property mixed|string $initials
  * @property string $client_ref
+ * @property Address[] $addresses
+ * @property Order[] $orders
+ * @property Payment[] $payments
+ * @property PaymentSource[] $paymentSources
+ * @property Cart|null $cart
  */
 class User extends Authenticatable implements Auditable
 {

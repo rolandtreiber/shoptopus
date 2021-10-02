@@ -29,6 +29,7 @@ class CustomerController extends Controller
      */
     public function show(User $customer): CustomerDetailResource
     {
+        $customer->load('cart.products');
         return new CustomerDetailResource($customer);
     }
 }

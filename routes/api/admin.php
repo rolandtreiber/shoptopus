@@ -181,13 +181,8 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Customers
         Route::get('customers', [CustomerController::class, 'index'])->name('admin.api.index.customers');
-        Route::group(['prefix' => 'customer'], function () {
-            Route::post('/', [CustomerController::class, 'create'])->name('admin.api.create.customer');
-            Route::group(['prefix' => '{customer}'], function () {
-                Route::get('/', [CustomerController::class, 'show'])->name('admin.api.show.customer');
-                Route::delete('/', [CustomerController::class, 'delete'])->name('admin.api.delete.customer');
-                Route::patch('/', [CustomerController::class, 'update'])->name('admin.api.update.customer');
-            });
+        Route::group(['prefix' => 'customer/{customer}'], function () {
+            Route::get('/', [CustomerController::class, 'show'])->name('admin.api.show.customer');
         });
 
         // Carts

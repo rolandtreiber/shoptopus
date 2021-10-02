@@ -14,6 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property mixed $user_id
  * @method static count()
  * @method static find(int $selectedCartId)
+ * @property mixed $updated_at
  */
 class Cart extends Model implements Auditable
 {
@@ -54,6 +55,6 @@ class Cart extends Model implements Auditable
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class);
+        return $this->belongsToMany(Product::class)->withPivot(['amount', 'product_variant_id']);
     }
 }
