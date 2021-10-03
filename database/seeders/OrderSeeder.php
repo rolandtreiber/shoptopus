@@ -2,9 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PaymentStatuses;
+use App\Enums\PaymentTypes;
 use App\Models\Address;
 use App\Models\DeliveryType;
 use App\Models\Order;
+use App\Models\Payment;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\VoucherCode;
@@ -24,7 +27,7 @@ class OrderSeeder extends Seeder
         $userIds = User::role('customer')->pluck('id');
         $products = Product::count();
 
-        $ordersToCreate = random_int(1, 20);
+        $ordersToCreate = random_int(10, 50);
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
             $selectedUser = User::find($userIds[random_int(1, sizeof($userIds)-1)]);
@@ -51,6 +54,16 @@ class OrderSeeder extends Seeder
                 $usedProductTypes[] = $selectedProductId;
                 $order->products()->attach($selectedProductId, ['amount' => random_int(1, 10)]);
             }
+
+            $order = Order::find($order->id);
+            $payment = new Payment();
+            $payment->amount = $order->total_price;
+            $payment->user_id = $selectedUser->id;
+            $payment->payable_type = Order::class;
+            $payment->payable_id = $order->id;
+            $payment->status = PaymentStatuses::Settled;
+            $payment->type = PaymentTypes::Payment;
+            $payment->save();
         }
     }
 }

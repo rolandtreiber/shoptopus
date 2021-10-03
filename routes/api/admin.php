@@ -115,12 +115,12 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         // Payments
         Route::get('payments', [PaymentController::class, 'index'])->name('admin.api.index.payments');
         Route::group(['prefix' => 'payment'], function () {
-            Route::post('/', [PaymentController::class, 'create'])->name('admin.api.create.payment');
+            Route::post('/', [PaymentController::class, 'create'])->middleware('super_user')->name('admin.api.create.payment');
             Route::group(['prefix' => '{payment}'], function () {
                 Route::get('/', [PaymentController::class, 'show'])->name('admin.api.show.payment');
-                Route::delete('/', [PaymentController::class, 'delete'])->name('admin.api.delete.payment');
-                Route::patch('/', [PaymentController::class, 'update'])->name('admin.api.update.payment');
-                Route::delete('/refund', [PaymentController::class, 'refund'])->name('admin.api.refund.payment');
+                Route::delete('/', [PaymentController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.payment');
+                Route::patch('/', [PaymentController::class, 'update'])->middleware('super_user')->name('admin.api.update.payment');
+                Route::delete('/refund', [PaymentController::class, 'refund'])->middleware('super_user')->name('admin.api.refund.payment');
             });
         });
 

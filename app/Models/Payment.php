@@ -4,10 +4,23 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Payment extends Model implements Auditable
+/**
+ * @property string $id
+ * @property mixed|string[]|null $proof
+ * @property float|mixed $amount
+ * @property string $user_id
+ * @property mixed|string $payable_type
+ * @property mixed|string $payable_id
+ * @property int|mixed $status
+ * @property int|mixed $type
+ * @property mixed|string $description
+ * @property string $created_at
+ * @property User $user
+ */
+class Payment extends SearchableModel implements Auditable
 {
     use HasFactory;
     use HasUUID;
@@ -27,7 +40,9 @@ class Payment extends Model implements Auditable
         'status',
         'payment_ref',
         'method_ref',
+        'proof',
         'type',
+        'amount',
         'description',
     ];
 
@@ -43,16 +58,17 @@ class Payment extends Model implements Auditable
         'user_id' => 'string',
         'status' => 'integer',
         'type' => 'integer',
+        'proof' => 'object'
     ];
 
 
-    public function paymentSource()
+    public function paymentSource(): BelongsTo
     {
-        return $this->belongsTo(\App\PaymentSource::class);
+        return $this->belongsTo(PaymentSource::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
     }
 }

@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use App\Models\Payment;
+use Illuminate\Foundation\Http\FormRequest;
+
+/**
+ * @mixin Payment
+ */
+class PaymentUpdateRequest extends FormRequest
+{
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            //
+        ];
+    }
+}

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -23,6 +24,12 @@ use Illuminate\Support\Facades\DB;
  * @property int $originalPrice
  * @property float $original_price
  * @property float $total_price
+ * @property mixed $created_at
+ * @property Address $address
+ * @property User $user
+ * @property Product[] $products
+ * @property mixed $pivot
+ * @property Payment[] $payments
  */
 class Order extends SearchableModel
 {
@@ -62,11 +69,27 @@ class Order extends SearchableModel
     }
 
     /**
+     * @return BelongsTo
+     */
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot(['full_price', 'unit_price', 'final_price'])->using(OrderProduct::class);
+        return $this->belongsToMany(Product::class)->withPivot(['name', 'amount', 'full_price', 'unit_price', 'final_price'])->using(OrderProduct::class);
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function payments(): MorphMany
+    {
+        return $this->morphMany(Payment::class, 'payable');
     }
 
     /**

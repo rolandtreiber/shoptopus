@@ -102,4 +102,17 @@ class GeneralHelper {
         }
         return $discounted > 0 ? $discounted : 0;
     }
+
+    /**
+     * @param $amount
+     * @return string
+     */
+    public static function displayPrice($amount): string
+    {
+        if (config('app.default_currency.side') === 'left') {
+            return config('app.default_currency.symbol') . $amount;
+        } else {
+            return $amount . config('app.default_currency.symbol');
+        }
+    }
 }

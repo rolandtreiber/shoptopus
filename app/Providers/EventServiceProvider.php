@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\FileContent;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Payment;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
@@ -14,6 +15,7 @@ use App\Models\VoucherCode;
 use App\Observers\FileContentObserver;
 use App\Observers\OrderObserver;
 use App\Observers\OrderProductObserver;
+use App\Observers\PaymentObserver;
 use App\Observers\ProductAttributeObserver;
 use App\Observers\ProductAttributeOptionObserver;
 use App\Observers\ProductCategoryObserver;
@@ -53,5 +55,6 @@ class EventServiceProvider extends ServiceProvider
         FileContent::observe(FileContentObserver::class);
         VoucherCode::observe(VoucherCodeObserver::class);
         Order::observe(OrderObserver::class);
+        Payment::observe(PaymentObserver::class);
     }
 }

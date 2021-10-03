@@ -2,16 +2,14 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Helpers\GeneralHelper;
-use App\Models\Order;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 /**
- * @mixin Order
+ * @mixin Payment
  */
-class OrderListResource extends JsonResource
+class PaymentListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -23,8 +21,11 @@ class OrderListResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            'total_price' => GeneralHelper::displayPrice($this->total_price)
+            'description' => $this->description,
+            'type' => $this->type,
+            'status' => $this->status,
+            'crated_at' => $this->created_at,
+            'user' => new UserListResource($this->user)
         ];
     }
 }
