@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\VoucherCodeController;
+use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () {
@@ -206,6 +207,17 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::delete('/', [RatingController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.rating');
             });
         }
+
+        // Carts
+        Route::get('banners', [BannerController::class, 'index'])->name('admin.api.index.banners');
+        Route::group(['prefix' => 'banner'], function () {
+            Route::post('/', [BannerController::class, 'create'])->name('admin.api.create.banner');
+            Route::group(['prefix' => '{banner}'], function () {
+                Route::get('/', [BannerController::class, 'show'])->name('admin.api.show.banner');
+                Route::delete('/', [BannerController::class, 'delete'])->name('admin.api.delete.banner');
+                Route::patch('/', [BannerController::class, 'update'])->name('admin.api.update.banner');
+            });
+        });
 
     });
 });

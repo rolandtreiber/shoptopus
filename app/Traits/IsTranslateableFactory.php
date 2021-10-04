@@ -20,7 +20,7 @@ trait IsTranslateableFactory {
             foreach ($supportedLocales as $localeKey => $localeValue) {
                 switch ($types[$typeCount]) {
                     case 'word':
-                        $value[$localeKey] = $faker->word();
+                        $value[$localeKey] = $faker->word(true);
                         break;
                     case 'short':
                         $value[$localeKey] = $faker->words(5, true);
