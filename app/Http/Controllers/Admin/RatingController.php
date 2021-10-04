@@ -3,84 +3,46 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ListRequest;
+use App\Http\Resources\Admin\PaymentDetailResource;
+use App\Http\Resources\Admin\PaymentListResource;
+use App\Http\Resources\Admin\RatingDetailResource;
+use App\Http\Resources\Admin\RatingListResource;
+use App\Models\Payment;
 use App\Models\Rating;
+use App\Traits\ProcessRequest;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class RatingController extends Controller
 {
+    use ProcessRequest;
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param ListRequest $request
+     * @return AnonymousResourceCollection
      */
-    public function index()
+    public function index(ListRequest $request): AnonymousResourceCollection
     {
-        //
+        return RatingListResource::collection(Rating::filtered([], $request)->paginate(25));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param Rating $rating
+     * @return RatingDetailResource
      */
-    public function create()
+    public function show(Rating $rating): RatingDetailResource
     {
-        //
+        return new RatingDetailResource($rating);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Rating $rating
+     * @return string[]
      */
-    public function store(Request $request)
+    public function delete(Rating $rating): array
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Rating  $rating
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Rating $rating)
-    {
-        //
+        $rating->delete();
+        return ['status' => 'Success'];
     }
 }

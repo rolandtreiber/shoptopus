@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\ProductStatuses;
+use App\Facades\Module;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -26,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('purchase_count')->default(0);
             $table->unsignedBigInteger('stock')->default(0);
             $table->unsignedBigInteger('backup_stock')->nullable()->default(0);
+            Module::enabled('ratings') && $table->float('rating')->nullable();
             $table->timestamps();
         });
 

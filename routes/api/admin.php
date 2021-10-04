@@ -1,11 +1,13 @@
 <?php
 
+use App\Facades\Module;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeOptionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AdminController;
@@ -195,6 +197,15 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::patch('/', [CartController::class, 'update'])->name('admin.api.update.cart');
             });
         });
+
+        // Ratings
+        if (Module::enabled('ratings')) {
+            Route::get('ratings', [RatingController::class, 'index'])->name('admin.api.index.ratings');
+            Route::group(['prefix' => 'rating/{rating}'], function () {
+                Route::get('/', [RatingController::class, 'show'])->name('admin.api.show.rating');
+                Route::delete('/', [RatingController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.rating');
+            });
+        }
 
     });
 });

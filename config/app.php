@@ -189,6 +189,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         App\Providers\PassportServiceProvider::class,
+        App\Providers\ModuleServiceProvider::class
 
     ],
 
@@ -242,6 +243,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Module' => App\Facades\Module::class
 
     ],
 

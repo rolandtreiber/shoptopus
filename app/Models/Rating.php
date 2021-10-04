@@ -5,13 +5,50 @@ namespace App\Models;
 use App\Traits\HasFiles;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Rating extends Model implements Auditable
+/**
+ * @property mixed $ratable
+ */
+class Rating extends SearchableModel implements Auditable
 {
     use HasFactory;
     use HasFiles;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'ratable_type',
+        'ratable_id',
+        'rating',
+        'description',
+        'title',
+        'language_prefix',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'id' => 'string',
+        'ratable_id' => 'string',
+        'ratable_type' => 'string',
+    ];
+
+
+    /**
+     * @return MorphTo
+     */
+    public function ratable(): MorphTo
+    {
+        return $this->morphTo();
+    }
 }

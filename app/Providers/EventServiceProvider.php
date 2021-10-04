@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Facades\Module;
 use App\Models\FileContent;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -10,6 +11,7 @@ use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\Rating;
 use App\Models\User;
 use App\Models\VoucherCode;
 use App\Observers\FileContentObserver;
@@ -20,6 +22,7 @@ use App\Observers\ProductAttributeObserver;
 use App\Observers\ProductAttributeOptionObserver;
 use App\Observers\ProductCategoryObserver;
 use App\Observers\ProductTagObserver;
+use App\Observers\RatingObserver;
 use App\Observers\UserObserver;
 use App\Observers\VoucherCodeObserver;
 use Illuminate\Auth\Events\Registered;
@@ -56,5 +59,6 @@ class EventServiceProvider extends ServiceProvider
         VoucherCode::observe(VoucherCodeObserver::class);
         Order::observe(OrderObserver::class);
         Payment::observe(PaymentObserver::class);
+        Module::enabled('ratings') && Rating::observe(RatingObserver::class);
     }
 }

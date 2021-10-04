@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
+use App\Traits\HasRatings;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -32,6 +33,7 @@ class Product extends SearchableModel implements Auditable
     use HasFactory;
     use HasTranslations;
     use HasFiles;
+    use HasRatings;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
 
@@ -53,6 +55,7 @@ class Product extends SearchableModel implements Auditable
         'purchase_count',
         'stock',
         'backup_stock',
+        'rating'
     ];
 
     /**
@@ -68,7 +71,8 @@ class Product extends SearchableModel implements Auditable
         'stock' => 'integer',
         'backup_stock' => 'integer',
         'price' => 'decimal:2',
-        'final_price' => 'decimal:2'
+        'final_price' => 'decimal:2',
+        'rating' => 'decimal:2'
     ];
 
     /**

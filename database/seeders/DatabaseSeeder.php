@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Facades\Module;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,5 +30,7 @@ class DatabaseSeeder extends Seeder
             CartSeeder::class,
             OrderSeeder::class,
         ]);
+
+        Module::enabled('ratings') && $this->call([RatingSeeder::class]);
     }
 }

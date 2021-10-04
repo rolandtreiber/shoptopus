@@ -42,7 +42,9 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "Tests\\": "tests/",
+            "App\\Services\\Module\\": "app/Services/Module/",
+            "App\\Facades\\": "app/Facades/"
         }
     },
     "scripts": {
