@@ -3,6 +3,7 @@
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateAuditsTable extends Migration
@@ -16,8 +17,8 @@ class CreateAuditsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::connection('logs')->create('audits', function (Blueprint $table) {
-            $primaryDbName = DB::connection('mysql')->getDatabaseName();
+        Schema::connection(config('app.env') === "testing" ? 'sqlite_logs' : 'logs')->create('audits', function (Blueprint $table) {
+            $primaryDbName = DB::connection(config('app.env') === "testing" ? 'sqlite' : 'mysql')->getDatabaseName();
 
             $table->bigIncrements('id');
             $table->string('user_type')->nullable();
@@ -30,7 +31,7 @@ class CreateAuditsTable extends Migration
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 1023)->nullable();
             $table->string('tags')->nullable();
-            $table->foreign('user_id')->references('id')->on($primaryDbName . '.users')->nullOnDelete();
+            config('app.env') !== "testing" && $table->foreign('user_id')->references('id')->on($primaryDbName . '.users')->nullOnDelete();
             $table->timestamps();
 
             $table->index(['user_id', 'user_type']);
@@ -46,6 +47,6 @@ class CreateAuditsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('audits');
+        Schema::connection(config('app.env') === "testing" ? 'sqlite_logs' : 'logs')->dropIfExists('audits');
     }
 }

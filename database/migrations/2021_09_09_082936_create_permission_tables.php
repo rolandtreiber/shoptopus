@@ -11,6 +11,7 @@ class CreatePermissionTables extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws Exception
      */
     public function up()
     {

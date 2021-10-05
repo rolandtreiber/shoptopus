@@ -18,5 +18,9 @@ return [
         'ratings' => true,
         'marketplace' => true,
         'payments' => true,
+    ],
+    'super_user' => [
+        'name' => env('SUPER_USER_NAME', 'Super User'),
+        'email' => env('SUPER_USER_EMAIL', 'superuser@email.com')
     ]
 ];

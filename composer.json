@@ -27,6 +27,7 @@
     "require-dev": {
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "jasonmccreary/laravel-test-assertions": "^2.0",
         "laravel-shift/blueprint": "^1.24",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
