@@ -25,7 +25,7 @@ class UserDetailResource extends JsonResource
             'name' => $this->name,
             'prefix' => $this->prefix,
             'first_name' => $this->first_name,
-            'last_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'initials' => $this->initials,
             'email' => $this->email,
             'email_verified' => $this->email_verified_at !== null,
