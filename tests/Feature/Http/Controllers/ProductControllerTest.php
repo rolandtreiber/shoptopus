@@ -22,7 +22,7 @@ class ProductControllerTest extends TestCase
     /**
      * @test
      */
-    public function index_responds_with()
+    public function test_can_list_products()
     {
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -40,7 +40,42 @@ class ProductControllerTest extends TestCase
     /**
      * @test
      */
-    public function update_uses_form_request_validation()
+    public function test_can_create_product()
+    {
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->post(route('admin.api.create.product'), [
+            'name' => json_encode([
+                'en' => 'Test Product',
+                'de' => 'Test Produkt'
+            ]),
+            'price' => 12.50,
+            'short_description' => json_encode([
+                'en' => 'Short Description',
+                'de' => 'Kurz Bezeichnung'
+            ]),
+            'description' => json_encode([
+                'en' => 'Longer Description',
+                'de' => 'Langer Bezeichnung'
+            ])
+        ]);
+        $response->assertCreated();
+        $jsonResponse = $response->json();
+        $productId = $jsonResponse['data']['id'];
+        $product = Product::find($productId);
+        $this->assertNotNull($product);
+        $this->assertEquals('Test Product', $product->setLocale('en')->name);
+        $this->assertEquals('Test Produkt', $product->setLocale('de')->name);
+        $this->assertEquals('Short Description', $product->setLocale('en')->short_description);
+        $this->assertEquals('Kurz Bezeichnung', $product->setLocale('de')->short_description);
+        $this->assertEquals('Longer Description', $product->setLocale('en')->description);
+        $this->assertEquals('Langer Bezeichnung', $product->setLocale('de')->description);
+        $this->assertEquals(12.50, $product->price);
+    }
+
+    /**
+     * @test
+     */
+    public function test_update_product_uses_form_request_validation()
     {
         $this->assertActionUsesFormRequest(
             ProductController::class,
@@ -49,26 +84,45 @@ class ProductControllerTest extends TestCase
         );
     }
 
-    //    /**
-//     * @test
-//     */
-//    public function update_behaves_as_expected()
-//    {
-//        $product = Product::factory()->create();
-//        $name = $this->faker->name;
-//        $price = $this->faker->randomFloat(/** decimal_attributes **/);
-//
-//        $response = $this->put(route('product.update', $product), [
-//            'name' => $name,
-//            'price' => $price,
-//        ]);
-//    }
-//
-//
+    public function test_can_update_product()
+    {
+        $product = Product::factory()->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->post(route('admin.api.create.product', [
+            'product' => $product->id
+        ]), [
+            'name' => json_encode([
+                'en' => 'Updated Test Product',
+                'de' => 'Aktualisiert Test Produkt'
+            ]),
+            'price' => 12.33,
+            'short_description' => json_encode([
+                'en' => 'Updated Short Description',
+                'de' => 'Aktualisiert Kurz Bezeichnung'
+            ]),
+            'description' => json_encode([
+                'en' => 'Updated Longer Description',
+                'de' => 'Aktualisiert Langer Bezeichnung'
+            ])
+        ]);
+        $response->assertCreated();
+        $jsonResponse = $response->json();
+        $productId = $jsonResponse['data']['id'];
+        $product = Product::find($productId);
+        $this->assertEquals('Updated Test Product', $product->setLocale('en')->name);
+        $this->assertEquals('Aktualisiert Test Produkt', $product->setLocale('de')->name);
+        $this->assertEquals('Updated Short Description', $product->setLocale('en')->short_description);
+        $this->assertEquals('Aktualisiert Kurz Bezeichnung', $product->setLocale('de')->short_description);
+        $this->assertEquals('Updated Longer Description', $product->setLocale('en')->description);
+        $this->assertEquals('Aktualisiert Langer Bezeichnung', $product->setLocale('de')->description);
+        $this->assertEquals(12.33, $product->price);
+
+    }
+
     /**
      * @test
      */
-    public function store_uses_form_request_validation()
+    public function test_store_product_uses_form_request_validation()
     {
         $this->assertActionUsesFormRequest(
             ProductController::class,
@@ -76,26 +130,11 @@ class ProductControllerTest extends TestCase
             ProductStoreRequest::class
         );
     }
-//
-//    /**
-//     * @test
-//     */
-//    public function store_behaves_as_expected()
-//    {
-//        $name = $this->faker->name;
-//        $price = $this->faker->randomFloat(/** decimal_attributes **/);
-//
-//        $response = $this->post(route('product.store'), [
-//            'name' => $name,
-//            'price' => $price,
-//        ]);
-//    }
-//
-//
+
     /**
      * @test
      */
-    public function destroy_deletes()
+    public function test_destroy_product_deletes()
     {
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
