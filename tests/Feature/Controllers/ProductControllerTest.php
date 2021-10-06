@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers;
+namespace Tests\Feature\Controllers;
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Requests\Admin\ProductStoreRequest;
@@ -13,7 +13,8 @@ use Tests\CreatesApplication;
 use Tests\TestCase;
 
 /**
- * @see \App\Http\Controllers\ProductController
+ * @group products
+ * @see \App\Http\Controllers\Admin\ProductController
  */
 class ProductControllerTest extends TestCase
 {

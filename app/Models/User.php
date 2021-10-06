@@ -21,6 +21,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static role(mixed $role)
  * @method filtered(array $array, ListRequest $request)
  * @method static systemUsers()
+ * @method static customers()
  * @property string $id
  * @property string|null $email
  * @property string|null $email_verified_at
@@ -95,6 +96,12 @@ class User extends Authenticatable implements Auditable
             });
         }
 
+        return $query;
+    }
+
+    public function scopeCustomers($query)
+    {
+        $query->role('customer');
         return $query;
     }
 

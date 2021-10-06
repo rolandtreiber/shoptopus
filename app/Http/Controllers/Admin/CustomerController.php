@@ -20,7 +20,7 @@ class CustomerController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return UserListResource::collection(User::role('customer')->filtered([], $request)->paginate(25));
+        return UserListResource::collection(User::customers()->filtered([], $request)->paginate(25));
     }
 
     /**
