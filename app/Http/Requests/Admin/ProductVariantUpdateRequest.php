@@ -17,7 +17,7 @@ class ProductVariantUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'price' => ['sometimes', 'numeric']
         ];
     }
 }

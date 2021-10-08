@@ -5,6 +5,7 @@ namespace Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
@@ -19,6 +20,10 @@ abstract class TestCase extends BaseTestCase
         $this->refreshApplication();
         $this->runDatabaseMigrations();
         $this->seed();
+        Config::set('locales_supported', [
+                'en' => ['English'],
+                'de' => ['Deutsch']
+            ]);
     }
 
     /**
@@ -37,4 +42,5 @@ abstract class TestCase extends BaseTestCase
         });
         return $unAuthorizedUsers->random();
     }
+
 }

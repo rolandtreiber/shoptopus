@@ -28,7 +28,7 @@ class ProductVariantController extends Controller
      */
     public function index(ListRequest $request, Product $product): AnonymousResourceCollection
     {
-        return ProductVariantResource::collection(ProductVariant::filtered([['product_id', $product->id]], $request)->paginate(25));
+        return ProductVariantResource::collection(ProductVariant::filtered([['product_id', $product->id]], $request)->paginate($request->paginate));
     }
 
     /**

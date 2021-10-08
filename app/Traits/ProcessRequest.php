@@ -48,7 +48,7 @@ trait ProcessRequest
      */
     public function deleteCurrentFile($name): void
     {
-        if (env('APP_ENV') === 'local') {
+        if (env('APP_ENV') === 'local' || config('app.env') === 'testing') {
             Storage::disk('uploads')->delete($name);
         } else {
             Storage::disk('digitalocean')->delete($name);
@@ -71,7 +71,7 @@ trait ProcessRequest
             $image = $img->resize($sizeX, $sizeY, function ($const) {
                 $const->aspectRatio();
             })->encode('jpg',80);
-            if (config('app.env') === 'local') {
+            if (config('app.env') === 'local' || config('app.env') === 'testing') {
                 Storage::disk('uploads')->put($filename, $image);
                 $url = config('app.url').'/uploads/'.$filename;
             } else {

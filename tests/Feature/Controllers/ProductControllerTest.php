@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\CreatesApplication;
 use Tests\TestCase;
@@ -43,6 +45,7 @@ class ProductControllerTest extends TestCase
      */
     public function test_can_create_product()
     {
+        Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product'), [
             'name' => json_encode([
@@ -57,8 +60,16 @@ class ProductControllerTest extends TestCase
             'description' => json_encode([
                 'en' => 'Longer Description',
                 'de' => 'Langer Bezeichnung'
-            ])
+            ]),
+            'attachments' => [
+                UploadedFile::fake()->image('product_image1.jpg'),
+                UploadedFile::fake()->image('product_image2.jpg')
+            ]
         ]);
+        $productId = $response->json()['data']['id'];
+        $product = Product::find($productId);
+        Storage::disk('uploads')->assertExists($product->fileContents[0]->file_name);
+        Storage::disk('uploads')->assertExists($product->fileContents[1]->file_name);
         $response->assertCreated();
         $jsonResponse = $response->json();
         $productId = $jsonResponse['data']['id'];
@@ -87,6 +98,8 @@ class ProductControllerTest extends TestCase
 
     public function test_can_update_product()
     {
+        Storage::fake('uploads');
+
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product', [
@@ -104,12 +117,18 @@ class ProductControllerTest extends TestCase
             'description' => json_encode([
                 'en' => 'Updated Longer Description',
                 'de' => 'Aktualisiert Langer Bezeichnung'
-            ])
+            ]),
+            'attachments' => [
+                UploadedFile::fake()->image('product_image1.jpg'),
+                UploadedFile::fake()->image('product_image2.jpg')
+            ]
         ]);
         $response->assertCreated();
         $jsonResponse = $response->json();
         $productId = $jsonResponse['data']['id'];
         $product = Product::find($productId);
+        Storage::disk('uploads')->assertExists($product->fileContents[0]->file_name);
+        Storage::disk('uploads')->assertExists($product->fileContents[1]->file_name);
         $this->assertEquals('Updated Test Product', $product->setLocale('en')->name);
         $this->assertEquals('Aktualisiert Test Produkt', $product->setLocale('de')->name);
         $this->assertEquals('Updated Short Description', $product->setLocale('en')->short_description);
