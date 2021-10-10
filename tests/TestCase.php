@@ -18,12 +18,12 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->refreshApplication();
+        config(['app.locales_supported' => [
+            'en' => ['English'],
+            'de' => ['Deutsch']
+        ]]);
         $this->runDatabaseMigrations();
         $this->seed();
-        Config::set('locales_supported', [
-                'en' => ['English'],
-                'de' => ['Deutsch']
-            ]);
     }
 
     /**

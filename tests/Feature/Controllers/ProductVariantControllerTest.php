@@ -29,7 +29,7 @@ class ProductVariantControllerTest extends TestCase
             'product_id' => $product->id
         ])->count(3)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
-        $response = $this->get(route('admin.api.show.product-variants', [
+        $response = $this->get(route('admin.api.index.product-variants', [
             'product' => $product->id,
             'page' => 1,
             'paginate' => 20,
@@ -148,7 +148,7 @@ class ProductVariantControllerTest extends TestCase
         ])->create();
         $productVariant->attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
-        $response = $this->get(route('admin.api.update.product-variant', [
+        $response = $this->get(route('admin.api.show.product-variant', [
             'product' => $product->id,
             'variant' => $productVariant->id
         ]));
