@@ -39,7 +39,6 @@ class ProductAttribute extends SearchableModel implements Auditable
      */
     protected $fillable = [
         'name',
-        'image',
         'type'
     ];
 

@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class Admin
      * @param Request $request
      * @param Closure $next
      * @return mixed
-     * @throws AuthenticationException
+     * @throws AuthorizationException
      */
     public function handle(Request $request, Closure $next)
     {
@@ -22,7 +23,7 @@ class Admin
         if ($user->hasRole(['admin', 'super_admin', 'store_manager', 'store_assistant'])) {
             return $next($request);
         } else {
-            throw new AuthenticationException();
+            throw new AuthorizationException();
         }
     }
 }

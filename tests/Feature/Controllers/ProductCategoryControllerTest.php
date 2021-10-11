@@ -2,12 +2,9 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\Product;
 use App\Models\ProductCategory;
-use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
