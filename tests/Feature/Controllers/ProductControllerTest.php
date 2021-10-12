@@ -6,10 +6,12 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Models\Product;
+use App\Models\ProductTag;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Testing\Fluent\AssertableJson;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\CreatesApplication;
 use Tests\TestCase;
@@ -38,6 +40,29 @@ class ProductControllerTest extends TestCase
                     'final_price' => $product->final_price
                 ]]
         );
+    }
+
+    /**
+     * @test
+     */
+    public function test_products_can_be_filtered_by_tags()
+    {
+        $products = Product::factory()->count(2)->create();
+        $tag = ProductTag::factory()->create();
+        $products[0]->tags()->attach($tag);
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.index.products', [
+            'tags' => [$tag->id],
+            'page' => 1,
+            'paginate' => 20,
+            'filters' => []
+        ]));
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->where('data.0.id', $products[0]->id)
+                ->has('data', 1)
+                ->etc()
+            );
     }
 
     /**

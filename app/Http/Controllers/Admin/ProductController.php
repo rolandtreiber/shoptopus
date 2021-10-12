@@ -26,7 +26,7 @@ class ProductController extends Controller
         return ProductListResource::collection(Product::filtered([
 //            ['id', '>=', '9476d4cf-bc20-4585-9d6b-4138bfcbff55'],
 //            ['name->en', 'like', '%volupt%']
-        ], $request)->paginate($request->paginate));
+        ], $request)->whereHasTags($request->tags)->whereHasCategories($request->categories)->paginate($request->paginate));
     }
 
     /**

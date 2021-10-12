@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
@@ -125,6 +126,30 @@ class Product extends SearchableModel implements Auditable
             return $this->price - $this->calculateDiscountAmount($discounts);
         } else {
             return $this->price;
+        }
+    }
+
+    /**
+     * @param $query
+     * @param array|null $tags
+     */
+    public function scopeWhereHasTags($query, ?array $tags)
+    {
+        if ($tags && count($tags) > 0) {
+            $productIdsWithTags = DB::table('product_product_tag')->whereIn('product_tag_id', $tags)->pluck('product_id');
+            $query->whereIn('id', $productIdsWithTags);
+        }
+    }
+
+    /**
+     * @param $query
+     * @param array|null $categories
+     */
+    public function scopeWhereHasCategories($query, ?array $categories)
+    {
+        if ($categories && count($categories) > 0) {
+            $productIdsWithTags = DB::table('product_product_category')->whereIn('product_category_id', $categories)->pluck('product_id');
+            $query->whereIn('id', $productIdsWithTags);
         }
     }
 

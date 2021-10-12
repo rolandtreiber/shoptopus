@@ -30,8 +30,7 @@ class ProductTag extends SearchableModel implements Auditable
     protected $fillable = [
         'name',
         'description',
-        'display_badge',
-        'badge'
+        'display_badge'
     ];
 
     /**
