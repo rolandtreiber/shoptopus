@@ -53,9 +53,6 @@ class ProductAttributeControllerTest extends TestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-attribute', [
             'attribute' => $attribute->id,
-            'page' => 1,
-            'paginate' => 20,
-            'filters' => []
         ]));
         $response->assertJsonFragment([
             'id' => $attribute->id

@@ -22,6 +22,11 @@ abstract class TestCase extends BaseTestCase
             'en' => ['English'],
             'de' => ['Deutsch']
         ]]);
+        config(['app.default_currency' => [
+            'name' => 'GBP',
+            'symbol' => '£',
+            'side' => 'left'
+        ]]);
         $this->runDatabaseMigrations();
         $this->seed();
     }

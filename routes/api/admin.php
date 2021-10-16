@@ -163,11 +163,11 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         // Discount Rules
         Route::get('discount-rules', [DiscountRuleController::class, 'index'])->name('admin.api.index.discount-rules');
         Route::group(['prefix' => 'discount-rule'], function () {
-            Route::post('/', [DiscountRuleController::class, 'create'])->name('admin.api.create.discount-rule');
+            Route::post('/', [DiscountRuleController::class, 'create'])->middleware('super_user')->name('admin.api.create.discount-rule');
             Route::group(['prefix' => '{discountRule}'], function () {
                 Route::get('/', [DiscountRuleController::class, 'show'])->name('admin.api.show.discount-rule');
-                Route::delete('/', [DiscountRuleController::class, 'delete'])->name('admin.api.delete.discount-rule');
-                Route::patch('/', [DiscountRuleController::class, 'update'])->name('admin.api.update.discount-rule');
+                Route::delete('/', [DiscountRuleController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.discount-rule');
+                Route::patch('/', [DiscountRuleController::class, 'update'])->middleware('super_user')->name('admin.api.update.discount-rule');
             });
         });
 
