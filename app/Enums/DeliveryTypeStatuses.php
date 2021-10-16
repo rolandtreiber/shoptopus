@@ -9,8 +9,8 @@ use BenSampo\Enum\Enum;
  * @method static static OptionTwo()
  * @method static static OptionThree()
  */
-final class ChatSessionTypes extends Enum
+final class DeliveryTypeStatuses extends Enum
 {
-    const ChatRoom =    1;
-    const OneToOne =    2;
+    const Enabled =     1;
+    const Disabled =    0;
 }
