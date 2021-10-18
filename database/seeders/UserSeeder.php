@@ -23,6 +23,7 @@ class UserSeeder extends Seeder
             ['storemanager@m.com', 'Store Manager Alan'],
             ['storeassistant@m.com', 'Store Assistant Joe'],
             ['customer@m.com', 'Customer Lianne'],
+            ['auditor@m.com', 'Auditor Bob'],
         ];
 
         foreach ($users as $user) {
@@ -40,6 +41,7 @@ class UserSeeder extends Seeder
         $users[2]->assignRole(Role::findByName('store_manager'));
         $users[3]->assignRole(Role::findByName('store_assistant'));
         $users[3]->assignRole(Role::findByName('customer'));
+        $users[5]->assignRole(Role::findByName('auditor'));
         User::factory()->count(15)->create();
 
         $customerRole = Role::findByName('customer');

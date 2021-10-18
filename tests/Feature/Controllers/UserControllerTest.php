@@ -29,7 +29,7 @@ class UserControllerTest extends TestCase
         ]));
         $response->assertOk();
         $users = $response->json()['data'];
-        $this->assertCount(4, $response->json()['data']);
+        $this->assertCount(5, $response->json()['data']);
         foreach ($users as $user) {
             $this->assertContains($user['id'], $systemUserIds);
         }

@@ -49,5 +49,8 @@ return [
     'customer' => [
         Permissions::CanShop,
         Permissions::CanViewOwnAccount,
+    ],
+    'auditor' => [
+        Permissions::CanAccessAuditables
     ]
 ];

@@ -5,8 +5,6 @@ namespace Tests\Feature\Controllers;
 use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryType;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 

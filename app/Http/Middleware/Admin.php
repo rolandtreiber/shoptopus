@@ -20,7 +20,7 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         $user = Auth()->user();
-        if ($user->hasRole(['admin', 'super_admin', 'store_manager', 'store_assistant'])) {
+        if ($user->hasRole(['admin', 'super_admin', 'store_manager', 'store_assistant', 'auditor'])) {
             return $next($request);
         } else {
             throw new AuthorizationException();

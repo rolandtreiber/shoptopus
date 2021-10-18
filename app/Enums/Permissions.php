@@ -36,4 +36,7 @@ final class Permissions extends Enum
     const OwnProductsCanUpdate = 'own-products.can.create';
     const OwnProductsCanDelete = 'own-products.can.delete';
 
+    // Seller
+    const CanAccessAuditables = 'auditables.can.view';
+
 }
