@@ -4,18 +4,11 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property string $background_image
+ */
 class BannerStoreRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return false;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +17,10 @@ class BannerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['required', 'json'],
+            'description' => ['required', 'json'],
+            'button_text' => ['sometimes', 'json'],
+            'button_url' => ['sometimes'],
         ];
     }
 }

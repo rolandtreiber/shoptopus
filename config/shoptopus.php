@@ -6,6 +6,7 @@ return [
     'header_image_dimensions' => [2000, 1200],
     'product_image_dimensions' => [1024, 768],
     'payment_proof_image_dimensions' => [1024, 768],
+    'banner_image_dimensions' => [2048, 768],
 
     'discount_rules' => [
         'allow_discount_stacking' => false,

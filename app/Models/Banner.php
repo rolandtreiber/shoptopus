@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property mixed|string[]|null $background_image
+ */
 class Banner extends SearchableModel implements Auditable
 {
     use HasFactory;
