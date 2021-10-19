@@ -31,7 +31,6 @@ class Banner extends SearchableModel implements Auditable
     protected $fillable = [
         'title',
         'description',
-        'background_image',
         'show_button',
         'button_text',
         'button_url',

@@ -18,7 +18,10 @@ class BannerUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['json'],
+            'description' => ['json'],
+            'button_text' => ['json'],
+            'button_url' => ['sometimes']
         ];
     }
 }
