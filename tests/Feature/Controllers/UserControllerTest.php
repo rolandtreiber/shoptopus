@@ -3,11 +3,6 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Spatie\Permission\Exceptions\UnauthorizedException;
-use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 /**
@@ -29,7 +24,7 @@ class UserControllerTest extends TestCase
         ]));
         $response->assertOk();
         $users = $response->json()['data'];
-        $this->assertCount(5, $response->json()['data']);
+        $this->assertCount(6, $response->json()['data']);
         foreach ($users as $user) {
             $this->assertContains($user['id'], $systemUserIds);
         }

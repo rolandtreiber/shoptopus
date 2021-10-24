@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Admin;
 
 use App\Enums\AccessTokenTypes;
-use App\Mail\UserPasswordResetEmail;
+use App\Mail\Admin\UserPasswordResetEmail;
 use App\Models\AccessToken;
 use App\Models\User;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -16,8 +16,8 @@ class UserPasswordReset
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $user;
-    public $token;
+    public User $user;
+    public string $token;
     /**
      * Create the event listener.
      *

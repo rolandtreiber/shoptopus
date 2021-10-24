@@ -50,6 +50,12 @@ class UserSeeder extends Seeder
             (new User())->findNth($i)->assignRole($customerRole);
         }
 
+        /** @var User $user */
+        $user = User::factory()->state([
+            'email' => 'rolandtreiber@gmail.com'
+        ])->create();
+        $user->assignRole(Role::findByName('super_admin'));
+        $user->assignRole(Role::findByName('customer'));
     }
 }
 

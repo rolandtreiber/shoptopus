@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserStatuses;
+use App\Enums\AuthFlows;
+use App\Events\Admin\UserPasswordReset;
 use App\Http\Requests\Auth\EmailConfirmationRequest;
 use App\Models\AccessToken;
 use App\Enums\AccessTokenTypes;
-use App\Enums\RandomStringModes;
 use App\Enums\TokenCheckOutcomeTypes;
-use App\Enums\UserRoles;
-use App\Events\UserPasswordReset;
-use App\Events\UserSignup;
+use App\Events\Admin\UserSignup;
 use App\Exceptions\ApiValidationFailedException;
-use App\Helpers\GeneralHelper;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\PasswordResetRequest;
 use App\Http\Requests\Auth\SignupRequest;
@@ -94,10 +91,10 @@ class AuthController extends Controller
     }
 
     /**
-     * @param $token
+     * @param EmailConfirmationRequest $request
      * @return string[]
      */
-    public function confirmEmail(EmailConfirmationRequest $request)
+    public function confirmEmail(EmailConfirmationRequest $request): array
     {
         $token = $request->email_confirmation_token;
         $accessToken = AccessToken::where('token', '=', $token)->where('type', AccessTokenTypes::EmailConfirmation)->first();
@@ -155,7 +152,7 @@ class AuthController extends Controller
     {
         $user = User::where('email', '=', $request->email)->first();
         if ($user) {
-            event(new UserPasswordReset($user));
+            $request->flow === AuthFlows::Admin && event(new UserPasswordReset($user));
         }
         return [
             'status' => 'success',

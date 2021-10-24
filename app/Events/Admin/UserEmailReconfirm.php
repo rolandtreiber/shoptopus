@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Admin;
 
 use App\Enums\AccessTokenTypes;
-use App\Mail\WelcomeEmail;
 use App\Models\AccessToken;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 
-class UserSignup
+class UserEmailReconfirm
 {
     public $user;
     public $token;
@@ -30,7 +28,5 @@ class UserSignup
         $confirmToken->expiry = $expiry;
         $confirmToken->save();
         $this->token = $confirmToken;
-        Mail::to(trim($user->email))->send(new WelcomeEmail($user, $confirmToken->token));
     }
-
 }

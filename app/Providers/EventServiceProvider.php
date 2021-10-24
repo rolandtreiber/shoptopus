@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Facades\Module;
+use App\Models\AccessToken;
 use App\Models\Banner;
 use App\Models\FileContent;
 use App\Models\Order;
@@ -15,6 +16,7 @@ use App\Models\ProductTag;
 use App\Models\Rating;
 use App\Models\User;
 use App\Models\VoucherCode;
+use App\Observers\AccessTokenObserver;
 use App\Observers\BannerObserver;
 use App\Observers\FileContentObserver;
 use App\Observers\OrderObserver;
@@ -52,6 +54,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
+        AccessToken::observe(AccessTokenObserver::class);
         OrderProduct::observe(OrderProductObserver::class);
         ProductCategory::observe(ProductCategoryObserver::class);
         ProductAttribute::observe(ProductAttributeObserver::class);

@@ -5,7 +5,16 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
+/**
+ * @property mixed|string $token
+ * @property int|mixed $type
+ * @property Carbon|mixed $expiry
+ * @property string $issuer_user_id
+ * @property string $user_id
+ */
 class AccessToken extends Model
 {
     use HasFactory;
@@ -36,14 +45,29 @@ class AccessToken extends Model
         'expiry' => 'datetime',
     ];
 
-
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
     }
 
-    public function issuerUser()
+    /**
+     * @return BelongsTo
+     */
+    public function issuerUser(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkExpiry(): bool
+    {
+        $now = \Carbon\Carbon::now();
+        $expiry = Carbon::parse($this->expiry);
+        return $expiry > $now;
     }
 }

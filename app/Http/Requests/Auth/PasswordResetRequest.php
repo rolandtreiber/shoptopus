@@ -19,6 +19,7 @@ final class PasswordResetRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'flow' => 'required',
             'email' => 'required|email'
         ];
     }

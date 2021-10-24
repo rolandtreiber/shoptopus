@@ -53,6 +53,8 @@ return [
     */
 
     'url' => env('APP_URL', 'http://localhost'),
+    'frontend_url_admin' => env('FRONTEND_URL_ADMIN', 'http://localhost'),
+    'frontend_url_public' => env('FRONTEND_URL_PUBLIC', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
@@ -189,7 +191,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         OwenIt\Auditing\AuditingServiceProvider::class,
         App\Providers\PassportServiceProvider::class,
-        App\Providers\ModuleServiceProvider::class
+        App\Providers\ModuleServiceProvider::class,
+        Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class
 
     ],
 

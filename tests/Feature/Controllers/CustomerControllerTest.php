@@ -28,7 +28,7 @@ class CustomerControllerTest extends TestCase
             'paginate' => 20,
         ]));
         $customers = $response->json()['data'];
-        $this->assertCount(17, $response->json()['data']);
+        $this->assertCount(18, $response->json()['data']);
         foreach ($customers as $customer) {
             $this->assertContains('customer', $customer['roles']);
         }
