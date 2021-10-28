@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory()->count(25)->create();
+        Product::factory()->count(25)->hasFilecontents(rand(1, 3))->create();
 
         foreach (Product::all() as $product) {
             $product->categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));

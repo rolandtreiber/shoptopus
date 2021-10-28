@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\AuthFlows;
 use App\Events\Admin\UserPasswordReset;
 use App\Http\Requests\Auth\EmailConfirmationRequest;
+use App\Http\Resources\Admin\UserDetailResource;
 use App\Models\AccessToken;
 use App\Enums\AccessTokenTypes;
 use App\Enums\TokenCheckOutcomeTypes;
@@ -195,6 +196,14 @@ class AuthController extends Controller
             'status' => 'success',
             'message' => 'Your password was reset successfully. You can now log in.',
         ];
+    }
+
+    /**
+     * @return UserDetailResource
+     */
+    public function getAuthenticatedUser(): UserDetailResource
+    {
+        return new UserDetailResource(Auth()->user());
     }
 
 }

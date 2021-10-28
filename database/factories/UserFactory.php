@@ -31,7 +31,11 @@ class UserFactory extends Factory
             'email_verified_at' => $this->faker->dateTime(),
             'password' => Hash::make('shop'),
             'temporary' => false,
-            'phone' => $this->faker->phoneNumber
+            'phone' => $this->faker->phoneNumber,
+            'avatar' => [
+                'url' => $this->faker->imageUrl(450, 450),
+                'file_name' => $this->faker->word
+            ]
         ];
     }
 }

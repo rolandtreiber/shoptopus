@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\FileContentResource;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,7 +24,8 @@ class ProductVariantResource extends JsonResource
             'id' => $this->id,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
-            'attributes' => AttributeResource::collection($this->attributes)
+            'attributes' => AttributeResource::collection($this->attributes),
+            'images' => FileContentResource::collection($this->fileContents)
         ];
     }
 }

@@ -23,10 +23,11 @@ class FileContentFactory extends Factory
     public function definition()
     {
         return [
-            'url' => $this->faker->url,
+            'url' => $this->faker->imageUrl(1200, 1200),
             'fileable_type' => $this->faker->word,
             'fileable_id' => $this->faker->randomNumber(),
             'title' => $this->faker->sentence(4),
+            'file_name' => $this->faker->word,
             'description' => $this->faker->text,
         ];
     }

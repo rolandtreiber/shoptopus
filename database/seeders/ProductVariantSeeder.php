@@ -29,7 +29,7 @@ class ProductVariantSeeder extends Seeder
             $uuid = (new Product())->findNth($productId)->id;
             ProductVariant::factory()->state([
                 'product_id' => $uuid
-            ])->count(rand(5, 15))->create();
+            ])->count(rand(5, 15))->hasFilecontents(rand(1, 3))->create();
         }
 
         foreach (ProductVariant::all() as $productVariant) {
