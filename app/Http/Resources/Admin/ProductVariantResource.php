@@ -3,12 +3,12 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\FileContentResource;
-use App\Models\ProductAttribute;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin ProductAttribute
+ * @mixin ProductVariant
  */
 class ProductVariantResource extends JsonResource
 {
@@ -22,10 +22,11 @@ class ProductVariantResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'stock' => $this->stock,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
             'attributes' => AttributeResource::collection($this->attributes),
-            'images' => FileContentResource::collection($this->fileContents)
+            'images' => FileContentResource::collection($this->fileContents),
         ];
     }
 }

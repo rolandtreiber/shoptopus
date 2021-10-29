@@ -40,6 +40,7 @@ class ProductVariant extends SearchableModel implements Auditable
         'description',
         'data',
         'price',
+        'stock'
     ];
 
     /**
@@ -75,6 +76,14 @@ class ProductVariant extends SearchableModel implements Auditable
     public function attributes(): BelongsToMany
     {
         return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(VariantAttribute::class);
+    }
+
+    public function updateParentStock() {
+        /** @var Product $product */
+        $product = $this->product;
+        $variantSumStock = $product->productVariants->pluck('stock')->sum();
+        $product->stock = $variantSumStock;
+        $product->save();
     }
 
 }

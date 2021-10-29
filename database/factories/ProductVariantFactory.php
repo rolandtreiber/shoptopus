@@ -31,6 +31,7 @@ class ProductVariantFactory extends Factory
             'product_id' => 1,
             'data' => 'Some important data',
             'description' => $translations['description'],
+            'stock' => $this->faker->numberBetween(0, 30),
             'price' => $this->faker->numberBetween(10, 50),
         ];
     }

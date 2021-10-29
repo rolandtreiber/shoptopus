@@ -26,6 +26,8 @@ class ProductListResource extends JsonResource
             'final_price' => $this->final_price,
             'cover_photo_url' => $this->coverPhoto ? $this->coverPhoto->url : null,
             'status' => $this->status,
+            'stock' => $this->stock,
+            'variants' => $this->productVariants()->count(),
             'updated_at' => $this->updated_at
         ];
     }

@@ -92,7 +92,7 @@ class Product extends SearchableModel implements Auditable
      */
     public function getUpdatedAtAttribute($date): string
     {
-        return Carbon::parse($date)->diffForHumans();
+        return Carbon::parse($date)->format('Y-m-d H:i:s');
     }
 
     /**
