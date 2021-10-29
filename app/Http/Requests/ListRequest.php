@@ -19,6 +19,8 @@ class ListRequest extends FormRequest
         return [
             'locale' => ['sometimes'],
             'search' => ['sometimes'],
+            'sort_by_field' => ['sometimes'],
+            'sort_by_type' => ['sometimes'],
             'filters' => ['sometimes', 'array'],
             'page' => ['required'],
             'paginate' => ['required'],

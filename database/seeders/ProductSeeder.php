@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        Product::factory()->count(25)->hasFilecontents(rand(1, 3))->create();
+        Product::factory()->count(55)->hasFilecontents(rand(1, 3))->create();
 
         foreach (Product::all() as $product) {
             $product->categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
@@ -55,5 +55,11 @@ class ProductSeeder extends Seeder
             (new Product())->findNth($productId)->discountRules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
         }
 
+        Product::all()->map(function (Product $product) {
+            $images = $product->fileContents->pluck('id')->toArray();
+            $selectedImageId = $images[random_int(0, count($images)-1)];
+            $product->cover_photo_id = $selectedImageId;
+            $product->save();
+        });
     }
 }

@@ -9,6 +9,8 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -28,6 +30,10 @@ use Spatie\Translatable\HasTranslations;
  * @property int $backup_stock
  * @property \Illuminate\Database\Eloquent\Collection $tags
  * @property Collection $categories
+ * @property \Illuminate\Database\Eloquent\Collection $fileContents
+ * @property string $cover_photo_id
+ * @property FileContent $coverPhoto
+ * @property string $updated_at
  */
 class Product extends SearchableModel implements Auditable
 {
@@ -56,7 +62,8 @@ class Product extends SearchableModel implements Auditable
         'purchase_count',
         'stock',
         'backup_stock',
-        'rating'
+        'rating',
+        'cover_photo_id'
     ];
 
     /**
@@ -73,8 +80,20 @@ class Product extends SearchableModel implements Auditable
         'backup_stock' => 'integer',
         'price' => 'decimal:2',
         'final_price' => 'decimal:2',
-        'rating' => 'decimal:2'
+        'rating' => 'decimal:2',
+        'cover_photo_id' => 'string'
     ];
+
+    /**
+     * Updated at accessor
+     *
+     * @param $date
+     * @return string
+     */
+    public function getUpdatedAtAttribute($date): string
+    {
+        return Carbon::parse($date)->diffForHumans();
+    }
 
     /**
      * @param $discounts
@@ -199,5 +218,10 @@ class Product extends SearchableModel implements Auditable
     public function discountRules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class);
+    }
+
+    public function coverPhoto(): HasOne
+    {
+        return $this->hasOne(FileContent::class, 'id', 'cover_photo_id');
     }
 }

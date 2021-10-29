@@ -27,6 +27,8 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('purchase_count')->default(0);
             $table->unsignedBigInteger('stock')->default(0);
             $table->unsignedBigInteger('backup_stock')->nullable()->default(0);
+            $table->uuid('cover_photo_id')->nullable();
+            $table->foreign('cover_photo_id')->references('id')->on('file_contents')->cascadeOnDelete();
             Module::enabled('ratings') && $table->float('rating')->nullable();
             $table->timestamps();
         });

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Http\Resources\Common\FileContentResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -25,7 +24,9 @@ class ProductListResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'price' => $this->price,
             'final_price' => $this->final_price,
-            'images' => FileContentResource::collection($this->fileContents)
+            'cover_photo_url' => $this->coverPhoto ? $this->coverPhoto->url : null,
+            'status' => $this->status,
+            'updated_at' => $this->updated_at
         ];
     }
 }

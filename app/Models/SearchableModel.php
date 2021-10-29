@@ -30,6 +30,9 @@ abstract class SearchableModel extends Model {
                 $query->where($filter[0], $filter[1], $filter[2]);
             }
         }
+        if ($request && $request->sort_by_field && $request->sort_by_type) {
+            $query->orderBy($request->sort_by_field, $request->sort_by_type);
+        }
         return $query;
     }
 
