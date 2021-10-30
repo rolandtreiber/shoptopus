@@ -27,7 +27,11 @@ abstract class SearchableModel extends Model {
                 $query->where($filter[0], $filter[1]);
             }
             if (sizeof($filter) === 3) {
-                $query->where($filter[0], $filter[1], $filter[2]);
+                if ($filter[1] !== 'like') {
+                    $query->where($filter[0], $filter[1], $filter[2]);
+                } else {
+                    $query->where($filter[0], $filter[1], "%".$filter[2]."%");
+                }
             }
         }
         if ($request && $request->sort_by_field && $request->sort_by_type) {

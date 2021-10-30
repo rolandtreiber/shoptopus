@@ -85,9 +85,15 @@ return [
     'locale' => 'en',
 
     'locales_supported' => [
-        'en' => ['English'],
-        'de' => ['Deutsch'],
-        'fr' => ['Francais']
+        'en' => [
+            'label' => 'English'
+        ],
+        'de' => [
+            'label' => 'Deutsch'
+        ],
+        'fr' => [
+            'label' => 'Francais'
+        ]
     ],
 
     'default_currency' => [

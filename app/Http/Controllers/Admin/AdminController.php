@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Common\ApplicationMetaInformationResource;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -15,4 +16,5 @@ class AdminController extends Controller
     {
         return response()->noContent();
     }
+
 }
