@@ -46,7 +46,10 @@ class CustomerControllerTest extends TestCase
         ]));
         $response->assertJsonFragment([
                 "id" => $customer->id,
-                "avatar" => $customer->avatar,
+                "avatar" => [
+                    'url' => $customer->avatar->url,
+                    'file_name' => $customer->avatar->file_name
+                    ],
                 "name" => $customer->name,
                 "prefix" => $customer->prefix,
                 "first_name" => $customer->first_name,

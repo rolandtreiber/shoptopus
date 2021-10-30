@@ -42,7 +42,10 @@ class UserControllerTest extends TestCase
         ]));
         $response->assertJsonFragment([
             "id" => $systemUser->id,
-            "avatar" => $systemUser->avatar,
+            "avatar" => [
+                'url' => $systemUser->avatar->url,
+                'file_name' => $systemUser->avatar->file_name
+            ],
             "name" => $systemUser->name,
             "prefix" => $systemUser->prefix,
             "first_name" => $systemUser->first_name,

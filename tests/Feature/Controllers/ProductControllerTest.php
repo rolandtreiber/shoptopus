@@ -32,14 +32,15 @@ class ProductControllerTest extends TestCase
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.products', ['page' => 1, 'paginate' => 20, 'filters' => []]));
-        $response->assertJsonFragment([
-                [
-                    'id' => $product->id,
-                    'name' => $product->getTranslations('name'),
-                    'price' => $product->price,
-                    'final_price' => $product->final_price
-                ]]
-        );
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->where('data.0.id', $product->id)
+                ->where('data.0.name', $product->getTranslations('name'))
+                ->where('data.0.price', $product->price)
+                ->where('data.0.final_price', $product->final_price)
+                ->has('data', 1)
+                ->etc()
+            );
     }
 
     /**
