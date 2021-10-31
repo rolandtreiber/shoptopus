@@ -6,6 +6,7 @@ use App\Enums\DiscountTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Carbon;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -83,4 +84,25 @@ class DiscountRule extends SearchableModel
         return $this->belongsToMany(ProductCategory::class);
     }
 
+    /**
+     * @param $query
+     */
+    public function scopeValid($query)
+    {
+        $now = Carbon::now();
+        $query->where('valid_from', '<=', $now)->where('valid_until', '>=', $now);
+        return $query;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isValid(): bool
+    {
+        $now = Carbon::now();
+        if ($now >= $this->valid_from && $now <= $this->valid_until) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -67,7 +67,7 @@ class ProductCategory extends SearchableModel implements Auditable
      */
     public function discountRules(): BelongsToMany
     {
-        return $this->belongsToMany(DiscountRule::class);
+        return $this->belongsToMany(DiscountRule::class)->valid();
     }
 
     public function scopeRoot($query)

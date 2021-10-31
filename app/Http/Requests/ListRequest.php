@@ -21,6 +21,7 @@ class ListRequest extends FormRequest
             'search' => ['sometimes'],
             'sort_by_field' => ['sometimes'],
             'sort_by_type' => ['sometimes'],
+            'view' => ['sometimes'],
             'filters' => ['sometimes', 'array'],
             'page' => ['required'],
             'paginate' => ['required'],

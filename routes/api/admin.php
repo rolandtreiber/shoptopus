@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Products
         Route::get('products', [ProductController::class, 'index'])->name('admin.api.index.products');
+        Route::get('products/summary', [ProductController::class, 'summary'])->name('admin.api.index.products-page-summary');
         Route::group(['prefix' => 'product'], function () {
             Route::post('/', [ProductController::class, 'create'])->name('admin.api.create.product');
             Route::group(['prefix' => '{product}'], function () {

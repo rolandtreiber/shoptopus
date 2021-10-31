@@ -26,7 +26,8 @@ class DiscountRuleListResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'amount' => $this->getAmount($this->type, $this->amount),
             'valid_from' => Carbon::parse($this->valid_from)->format('Y-m-d H:i'),
-            'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i')
+            'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
+            'valid' => $this->isValid()
         ];
     }
 }

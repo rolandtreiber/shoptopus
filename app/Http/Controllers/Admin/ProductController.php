@@ -8,6 +8,7 @@ use App\Http\Requests\ListRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductListResource;
+use App\Http\Resources\Admin\ProductPageSummaryResource;
 use App\Models\Product;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
@@ -26,7 +27,15 @@ class ProductController extends Controller
         return ProductListResource::collection(Product::filtered([
 //            ['id', '>=', '9476d4cf-bc20-4585-9d6b-4138bfcbff55'],
 //            ['name->en', 'like', '%volupt%']
-        ], $request)->whereHasTags($request->tags)->whereHasCategories($request->categories)->paginate($request->paginate));
+        ], $request)->view($request->view)->whereHasTags($request->tags)->whereHasCategories($request->categories)->paginate($request->paginate));
+    }
+
+    /**
+     * @return ProductPageSummaryResource
+     */
+    public function summary(): ProductPageSummaryResource
+    {
+        return new ProductPageSummaryResource(null);
     }
 
     /**

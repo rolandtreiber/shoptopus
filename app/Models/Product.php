@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatuses;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
 use App\Traits\HasRatings;
@@ -93,6 +94,21 @@ class Product extends SearchableModel implements Auditable
     public function getUpdatedAtAttribute($date): string
     {
         return Carbon::parse($date)->format('Y-m-d H:i:s');
+    }
+
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'active':
+                $query->where('status', ProductStatuses::Active);
+                break;
+            case 'discontinued':
+                $query->where('status', ProductStatuses::Discontinued);
+                break;
+            case 'provisional':
+                $query->where('status', ProductStatuses::Provisional);
+                break;
+        }
     }
 
     /**
@@ -217,7 +233,7 @@ class Product extends SearchableModel implements Auditable
      */
     public function discountRules(): BelongsToMany
     {
-        return $this->belongsToMany(DiscountRule::class);
+        return $this->belongsToMany(DiscountRule::class)->valid();
     }
 
     public function coverPhoto(): HasOne
