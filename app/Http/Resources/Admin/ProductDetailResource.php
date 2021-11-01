@@ -5,6 +5,7 @@ namespace App\Http\Resources\Admin;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 /**
  * @mixin Product
@@ -33,7 +34,9 @@ class ProductDetailResource extends JsonResource
             'attributes' => AttributeResource::collection($this->attributes),
             'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get()),
             'tags' => ProductTagResource::collection($this->tags),
-            'categories' => ProductCategoryListResource::collection($this->categories)
+            'categories' => ProductCategoryListResource::collection($this->categories),
+            'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
+            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d')
         ];
     }
 }
