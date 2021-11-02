@@ -33,6 +33,7 @@ class ProductDetailResource extends JsonResource
             'backup_stock' => $this->backup_stock,
             'attributes' => AttributeResource::collection($this->attributes),
             'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get()),
+            'sku' => $this->sku,
             'tags' => ProductTagResource::collection($this->tags),
             'categories' => ProductCategoryListResource::collection($this->categories),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),

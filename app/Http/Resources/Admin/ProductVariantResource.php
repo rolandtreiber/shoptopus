@@ -30,7 +30,8 @@ class ProductVariantResource extends JsonResource
             'images' => FileContentResource::collection($this->fileContents),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
-            'image' => $this->coverImage() ? $this->coverImage() : $this->product->coverImage()
+            'image' => $this->coverImage() ? $this->coverImage() : $this->product->coverImage(),
+            'sku' => $this->sku,
         ];
     }
 }

@@ -18,6 +18,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $id
  * @property string $product_id
  * @property double $price
+ * @property mixed $sku
  */
 class ProductVariant extends SearchableModel implements Auditable
 {
@@ -41,7 +42,8 @@ class ProductVariant extends SearchableModel implements Auditable
         'description',
         'data',
         'price',
-        'stock'
+        'stock',
+        'sku'
     ];
 
     /**

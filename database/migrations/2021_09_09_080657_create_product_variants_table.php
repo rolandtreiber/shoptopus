@@ -21,6 +21,7 @@ class CreateProductVariantsTable extends Migration
             $table->foreignUuid('product_id')->nullable()->constrained('products')->cascadeOnDelete();
             $table->text('data')->nullable();
             $table->unsignedBigInteger('stock')->default(0);
+            $table->string('sku', 50)->unique()->nullable();
             $table->text('description')->nullable();
             $table->decimal('price');
             $table->timestamps();

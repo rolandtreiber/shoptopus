@@ -35,6 +35,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $cover_photo_id
  * @property FileContent $coverPhoto
  * @property string $updated_at
+ * @property mixed $sku
  */
 class Product extends SearchableModel implements Auditable
 {
@@ -64,7 +65,8 @@ class Product extends SearchableModel implements Auditable
         'stock',
         'backup_stock',
         'rating',
-        'cover_photo_id'
+        'cover_photo_id',
+        'sku'
     ];
 
     /**
