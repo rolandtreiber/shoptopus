@@ -37,7 +37,9 @@ class ProductDetailResource extends JsonResource
             'tags' => ProductTagResource::collection($this->tags),
             'categories' => ProductCategoryListResource::collection($this->categories),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
-            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d')
+            'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
+            'images' => $this->images(),
+            'pdfs' => $this->pdfs()
         ];
     }
 }

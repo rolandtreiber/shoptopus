@@ -2,6 +2,7 @@
 
 use App\Facades\Module;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeOptionController;
@@ -217,6 +218,16 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                 Route::get('/', [BannerController::class, 'show'])->name('admin.api.show.banner');
                 Route::delete('/', [BannerController::class, 'delete'])->name('admin.api.delete.banner');
                 Route::patch('/', [BannerController::class, 'update'])->name('admin.api.update.banner');
+            });
+        });
+
+        // Files
+        Route::group(['prefix' => 'files'], function () {
+            Route::post('/', [FileController::class, 'create'])->name('admin.api.create.file');
+            Route::group(['prefix' => '{file}'], function () {
+                Route::get('/', [FileController::class, 'show'])->name('admin.api.show.file');
+                Route::delete('/', [FileController::class, 'delete'])->name('admin.api.delete.file');
+                Route::patch('/', [FileController::class, 'update'])->name('admin.api.update.file');
             });
         });
 

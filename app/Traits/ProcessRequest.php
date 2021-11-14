@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use App\Enums\AttachmentTypes;
+use App\Enums\FileTypes;
 use App\Models\FileContent;
+use Illuminate\Http\File;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -22,7 +24,7 @@ trait ProcessRequest
     public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): void
     {
         if ($deleteCurrent) {
-            $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->get();
+            $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->where('type', FileTypes::Image)->get();
             foreach ($attachments as $attachment) {
                 $attachment->delete();
             }
@@ -37,6 +39,7 @@ trait ProcessRequest
                     $attachment->fileable_id = $modelId;
                     $attachment->url = $file['url'];
                     $attachment->file_name = $file['file_name'];
+                    $attachment->type = $file['type'];
                     $attachment->save();
                 }
             }
@@ -63,34 +66,77 @@ trait ProcessRequest
      */
     public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
     {
+        // Images
         $imageFormats = ['jpg', 'jpeg', 'gif', 'png'];
+        $spreadsheetFormats = ['xls', 'xlsx', 'csv'];
+        $textFormats = ['txt', 'doc', 'docx'];
+        $audioFormats = ['mp3', 'wma', 'wav', 'ogg'];
+        $videoFormats = ['avi', 'mpg', 'mpeg'];
+        $fileType = FileTypes::Other;
         if (in_array($file->extension(), $imageFormats, true)) {
             $img = Image::make($file->path());
             $img->orientate();
-            $filename = Str::random(40).'.jpg';
-            $image = $img->resize($sizeX, $sizeY, function ($const) {
+            $fileName = Str::random(40) . '.jpg';
+            $data = $img->resize($sizeX, $sizeY, function ($const) {
                 $const->aspectRatio();
-            })->encode('jpg',80);
+            })->encode('jpg', 80);
             if (config('app.env') === 'local' || config('app.env') === 'testing') {
-                Storage::disk('uploads')->put($filename, $image);
-                $url = config('app.url').'/uploads/'.$filename;
+                Storage::disk('uploads')->put($fileName, $data);
+                $url = config('app.url') . '/uploads/' . $fileName;
             } else {
-                Storage::disk('digitalocean')->put($filename, $image, ['visibility' => 'public']);
-                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$filename;
+                Storage::disk('digitalocean')->put($fileName, $data, ['visibility' => 'public']);
+                $url = config('filesystems.disks.digitalocean.endpoint') . '/' . config('filesystems.disks.digitalocean.bucket') . '/' . $fileName;
             }
-            return [
-                'url' => $url,
-                'file_name' => $filename
-            ];
+        } else {
+            $fileName = Str::random(40) . '.' . strtolower($file->extension());
+            /** @var File $data */
+            $data = $file;
+            if (config('app.env') === 'local' || config('app.env') === 'testing') {
+                Storage::disk('uploads')->put($fileName, $data->getContent());
+                $url = config('app.url') . '/uploads/' . $fileName;
+            } else {
+                Storage::disk('digitalocean')->put($fileName, $data->getContent(), ['visibility' => 'public']);
+                $url = config('filesystems.disks.digitalocean.endpoint') . '/' . config('filesystems.disks.digitalocean.bucket') . '/' . $fileName;
+            }
         }
-        return null;
+
+        // PDF
+        if (strtolower($file->extension()) === 'pdf') {
+            $fileType = FileTypes::Pdf;
+        }
+
+        // Spreadsheet
+        if (in_array(strtolower($file->extension()), $spreadsheetFormats, true)) {
+            $fileType = FileTypes::Spreadsheet;
+        }
+
+        // Text
+        if (in_array(strtolower($file->extension()), $textFormats, true)) {
+            $fileType = FileTypes::TextDocument;
+        }
+
+        // Audio
+        if (in_array(strtolower($file->extension()), $audioFormats, true)) {
+            $fileType = FileTypes::Audio;
+        }
+
+        // Video
+        if (in_array(strtolower($file->extension()), $videoFormats, true)) {
+            $fileType = FileTypes::Video;
+        }
+
+        return [
+            'type' => $fileType,
+            'url' => $url,
+            'file_name' => $fileName
+        ];
     }
 
     public function getProcessed($request, $dateFields = [], $jsonFields = [])
     {
         $data = $request->toArray();
         foreach ($data as $key => $field) {
-            if (in_array($key , $jsonFields)) {
+            if (in_array($key, $jsonFields)) {
                 $query = json_decode($field, true);
                 $data[$key] = $query;
             }
