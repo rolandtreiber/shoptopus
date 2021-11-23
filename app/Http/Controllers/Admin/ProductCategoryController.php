@@ -29,7 +29,7 @@ class ProductCategoryController extends Controller
             $dataset = ProductCategory::root()->filtered([], $request);
         }
 
-        return ProductCategoryListResource::collection($dataset->paginate($request->paginate));
+        return ProductCategoryListResource::collection($dataset->availability($request->view)->paginate($request->paginate));
     }
 
     /**

@@ -27,7 +27,8 @@ class ProductCategoryFactory extends Factory
         return [
             'parent_id' => null,
             'name' => $translations['name'],
-            'description' => $translations['description']
+            'description' => $translations['description'],
+            'enabled' => $this->faker->boolean
         ];
     }
 }

@@ -39,7 +39,8 @@ class ProductAttribute extends SearchableModel implements Auditable
      */
     protected $fillable = [
         'name',
-        'type'
+        'type',
+        'enabled'
     ];
 
     /**
@@ -50,6 +51,7 @@ class ProductAttribute extends SearchableModel implements Auditable
     protected $casts = [
         'id' => 'string',
         'image' => 'object',
+        'enabled' => 'boolean'
     ];
 
     /**

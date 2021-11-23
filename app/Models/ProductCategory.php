@@ -4,21 +4,27 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
+use Carbon\Traits\Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Http\Request;
 use OwenIt\Auditing\Contracts\Auditable;
+use Ramsey\Collection\Collection;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
- * @method static filtered(array $array, \Illuminate\Http\Request $request)
+ * @method static filtered(array $array, Request $request)
  * @method static root()
  * @property mixed|string[]|null $menu_image
  * @property mixed|string[]|null $header_image
+ * @property boolean $enabled
+ * @property Collection $children
+ * @property Date $updated_at
  */
 class ProductCategory extends SearchableModel implements Auditable
 {
@@ -36,6 +42,7 @@ class ProductCategory extends SearchableModel implements Auditable
     protected $fillable = [
         'name',
         'description',
+        'enabled',
         'parent_id',
     ];
 
@@ -49,6 +56,7 @@ class ProductCategory extends SearchableModel implements Auditable
         'parent_id' => 'string',
         'menu_image' => 'object',
         'header_image' => 'object',
+        'enabled' => 'boolean'
     ];
 
 

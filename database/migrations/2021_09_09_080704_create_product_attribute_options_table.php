@@ -21,6 +21,7 @@ class CreateProductAttributeOptionsTable extends Migration
             $table->json('image')->nullable();
             $table->text('name');
             $table->string('common_value')->nullable();
+            $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

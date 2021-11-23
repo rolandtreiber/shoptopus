@@ -33,7 +33,8 @@ class ProductAttributeOption extends SearchableModel implements Auditable
      */
     protected $fillable = [
         'name',
-        'common_value'
+        'common_value',
+        'enabled'
     ];
 
     /**
@@ -43,6 +44,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'image' => 'object'
+        'image' => 'object',
+        'enabled' => 'boolean'
     ];
 }

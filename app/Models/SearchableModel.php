@@ -2,16 +2,30 @@
 
 namespace App\Models;
 
+use App\Enums\AvailabilityStatuses;
 use App\Http\Requests\ListRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @method static filtered(array[] $array, \App\Http\Requests\ListRequest $request)
  */
 abstract class SearchableModel extends Model {
 
+    public function scopeAvailability($query, $enabled) {
+            switch ($enabled) {
+                case 'enabled':
+                    $query->where('enabled', AvailabilityStatuses::Enabled);
+                    break;
+                case 'disabled':
+                    $query->where('enabled', AvailabilityStatuses::Disabled);
+                    break;
+            }
+    }
+
     public function scopeFiltered($query, $filters, ListRequest $request = null)
     {
+
         if ($request && $request->filters) {
             foreach ($request->filters as $key => $value) {
                 if (json_decode($value) && is_array(json_decode($value))) {
@@ -27,10 +41,57 @@ abstract class SearchableModel extends Model {
                 $query->where($filter[0], $filter[1]);
             }
             if (sizeof($filter) === 3) {
-                if ($filter[1] !== 'like') {
-                    $query->where($filter[0], $filter[1], $filter[2]);
+                $operator = '=';
+                $value = "%" . $filter[2] . "%";
+                switch ($filter[1]) {
+                    case 'isPresent':
+                        $operator = '!=';
+                        $value = "";
+                        break;
+                    case 'isBlank':
+                        $operator = '=';
+                        $value = "";
+                        break;
+                    case 'endsWith':
+                        $operator = 'like';
+                        $value = "%" . $filter[2];
+                        break;
+                    case 'startsWith':
+                        $operator = 'like';
+                        $value = $filter[2] . "%";
+                        break;
+                    case 'notContains':
+                        $operator = 'not like';
+                        $value = "%" . $filter[2] . "%";
+                        break;
+                    case 'notEqual':
+                        $operator = '!=';
+                        $value = $filter[2];
+                        break;
+                    case 'equasl':
+                        $operator = '=';
+                        $value = $filter[2];
+                        break;
+                    case 'greaterThan':
+                    case 'isAfter':
+                        $operator = '>=';
+                        $value = $filter[2];
+                        break;
+                    case 'lessThan':
+                    case 'isBefore':
+                        $operator = '<=';
+                        $value = $filter[2];
+                        break;
+                    case 'contains':
+                        $operator = 'LIKE';
+                        $value = "%" . $filter[2] . "%";
+                        break;
+                }
+
+                if (in_array($filter[1], ['isAfter', 'isBefore'])) {
+                    $query->whereDate($filter[0], $operator, Carbon::parse($value));
                 } else {
-                    $query->where($filter[0], $filter[1], "%".$filter[2]."%");
+                    $query->where($filter[0], $operator, $value);
                 }
             }
         }

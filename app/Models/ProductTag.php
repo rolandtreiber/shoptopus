@@ -12,7 +12,7 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
- * @property mixed $badge
+ * @property string $badge
  */
 class ProductTag extends SearchableModel implements Auditable
 {
@@ -30,7 +30,8 @@ class ProductTag extends SearchableModel implements Auditable
     protected $fillable = [
         'name',
         'description',
-        'display_badge'
+        'display_badge',
+        'enabled'
     ];
 
     /**
@@ -41,6 +42,7 @@ class ProductTag extends SearchableModel implements Auditable
     protected $casts = [
         'id' => 'string',
         'badge' => 'object',
-        'display_badge' => 'boolean'
+        'display_badge' => 'boolean',
+        'enabled' => 'boolean'
     ];
 }

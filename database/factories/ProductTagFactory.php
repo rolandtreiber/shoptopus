@@ -26,7 +26,8 @@ class ProductTagFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
         return [
             'name' => $translations['name'],
-            'description' => $translations['description']
+            'description' => $translations['description'],
+            'enabled' => $this->faker->boolean
         ];
     }
 }

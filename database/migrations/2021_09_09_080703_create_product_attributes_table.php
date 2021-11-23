@@ -21,6 +21,7 @@ class CreateProductAttributesTable extends Migration
             $table->text('name');
             $table->tinyInteger('type')->default(ProductAttributeTypes::Text);
             $table->json('image')->nullable();
+            $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });

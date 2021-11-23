@@ -27,7 +27,8 @@ class ProductAttributeFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['name'], ['short']);
 
         return [
-            'name' => $translations['name']
+            'name' => $translations['name'],
+            'enabled' => $this->faker->boolean
         ];
     }
 }
