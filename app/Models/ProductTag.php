@@ -5,14 +5,17 @@ namespace App\Models;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Date;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
  * @property string $badge
+ * @property boolean $display_badge
+ * @property boolean $enabled
+ * @property Date $updated_at
  */
 class ProductTag extends SearchableModel implements Auditable
 {
@@ -43,6 +46,6 @@ class ProductTag extends SearchableModel implements Auditable
         'id' => 'string',
         'badge' => 'object',
         'display_badge' => 'boolean',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 }

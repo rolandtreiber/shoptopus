@@ -21,7 +21,7 @@ class ProductTagController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return ProductTagResource::collection(ProductTag::filtered([], $request)->paginate(25));
+        return ProductTagResource::collection(ProductTag::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
     /**

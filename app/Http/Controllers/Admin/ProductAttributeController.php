@@ -22,7 +22,7 @@ class ProductAttributeController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return ProductAttributeListResource::collection(ProductAttribute::filtered([], $request)->paginate(25));
+        return ProductAttributeListResource::collection(ProductAttribute::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
     /**
