@@ -19,6 +19,7 @@ class FileContentResource extends JsonResource
             'id' => $this->id,
             'url' => $this->url,
             'title' => $this->title,
+            'file_name' => $this->file_name,
             'description' => $this->description
         ];
     }

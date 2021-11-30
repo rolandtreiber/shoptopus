@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\FileStoreRequest;
 use App\Http\Requests\Admin\FileUpdateRequest;
-use App\Http\Resources\Admin\FileContentResource;
+use App\Http\Requests\ListRequest;
+use App\Http\Resources\Common\FileContentResource;
 use App\Models\FileContent;
+use App\Models\User;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -14,6 +16,15 @@ use Illuminate\Support\Collection;
 class FileController extends Controller
 {
     use ProcessRequest;
+
+    /**
+     * @param ListRequest $request
+     * @return AnonymousResourceCollection
+     */
+    public function index(ListRequest $request): AnonymousResourceCollection
+    {
+        return FileContentResource::collection(FileContent::filtered([], $request)->paginate($request->paginate));
+    }
 
     /**
      * @param $model

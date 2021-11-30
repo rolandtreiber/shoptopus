@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property mixed|string $file_name
  * @method static where(string $string, $modelClass)
  */
-class FileContent extends Model
+class FileContent extends SearchableModel
 {
     use HasFactory;
     use HasUUID;

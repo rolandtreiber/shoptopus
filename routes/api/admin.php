@@ -222,7 +222,8 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Files
-        Route::group(['prefix' => 'files'], function () {
+        Route::get('files', [FileController::class, 'index'])->name('admin.api.index.files');
+        Route::group(['prefix' => 'file'], function () {
             Route::post('/', [FileController::class, 'create'])->name('admin.api.create.file');
             Route::group(['prefix' => '{file}'], function () {
                 Route::get('/', [FileController::class, 'show'])->name('admin.api.show.file');

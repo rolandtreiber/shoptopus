@@ -18,7 +18,7 @@ class FileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required', 'file']
+            'file' => ['sometimes', 'file']
         ];
     }
 }
