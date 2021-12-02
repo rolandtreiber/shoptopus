@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\ProductStatuses;
 use App\Http\Requests\ListRequest;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
+use App\Traits\Searchable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -33,6 +36,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property mixed|string $name
  * @property mixed|string $initials
  * @property string $client_ref
+ * @property boolean $is_favorite
  * @property Address[] $addresses
  * @property Order[] $orders
  * @property Payment[] $payments
@@ -48,6 +52,7 @@ class User extends Authenticatable implements Auditable
     use HasUUID;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +69,7 @@ class User extends Authenticatable implements Auditable
         'client_ref',
         'language_id',
         'avatar',
+        'is_favorite'
     ];
 
     /**
@@ -83,7 +89,8 @@ class User extends Authenticatable implements Auditable
     protected $casts = [
         'id' => 'string',
         'email_verified_at' => 'timestamp',
-        'avatar' => 'object'
+        'avatar' => 'object',
+        'is_favorite' => 'boolean'
     ];
 
     public function scopeSystemUsers($query)
@@ -91,7 +98,7 @@ class User extends Authenticatable implements Auditable
         $roleIds = Role::whereNotIn('name', ['customer'])->pluck('id');
 
         foreach ($roleIds as $roleId) {
-            $query->orWhereHas('roles', function($query) use ($roleId){
+            $query->orWhereHas('roles', function ($query) use ($roleId) {
                 $query->where('roles.id', $roleId);
             });
         }
@@ -99,32 +106,24 @@ class User extends Authenticatable implements Auditable
         return $query;
     }
 
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'returning':
+                $query->has('orders', '>', 1);
+                break;
+            case 'ordered_recently':
+                $query->whereHas('orders', function ($q) {
+                    $q->where('created_at', '>=', Carbon::now()->subMonth());
+                });
+                break;
+        }
+    }
+
+
     public function scopeCustomers($query)
     {
         $query->role('customer');
-        return $query;
-    }
-
-    public function scopeFiltered($query, $filters, ListRequest $request = null)
-    {
-        if ($request && $request->filters) {
-            foreach ($request->filters as $key => $value) {
-                if (json_decode($value) && is_array(json_decode($value))) {
-                    $decodedValue = json_decode($value);
-                    $filters[] = [$key, $decodedValue[0], $decodedValue[1]];
-                } else {
-                    $filters[] = [$key, $value];
-                }
-            }
-        }
-        foreach ($filters as $filter) {
-            if (sizeof($filter) === 2) {
-                $query->where($filter[0], $filter[1]);
-            }
-            if (sizeof($filter) === 3) {
-                $query->where($filter[0], $filter[1], $filter[2]);
-            }
-        }
         return $query;
     }
 

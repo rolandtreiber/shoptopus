@@ -25,13 +25,10 @@ class CustomerControllerTest extends TestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.customers', [
             'page' => 1,
-            'paginate' => 20,
+            'paginate' => 100,
         ]));
         $customers = $response->json()['data'];
         $this->assertCount(18, $response->json()['data']);
-        foreach ($customers as $customer) {
-            $this->assertContains('customer', $customer['roles']);
-        }
     }
 
     /**

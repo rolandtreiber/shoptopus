@@ -35,7 +35,8 @@ class UserFactory extends Factory
             'avatar' => [
                 'url' => $this->faker->imageUrl(450, 450),
                 'file_name' => $this->faker->word
-            ]
+            ],
+            'is_favorite' => $this->faker->boolean
         ];
     }
 }
