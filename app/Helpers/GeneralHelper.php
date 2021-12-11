@@ -89,6 +89,20 @@ class GeneralHelper {
         return $timestampFormatted;
     }
 
+    public static function getDiscountValue($type, $amount) {
+        switch ($type) {
+            case DiscountTypes::Amount:
+                if (config('app.default_currency.side') === 'left') {
+                    return config('app.default_currency.symbol') . $amount;
+                } else {
+                    return $amount . config('app.default_currency.symbol');
+                }
+            case DiscountTypes::Percentage:
+                return $amount.'%';
+            default:
+        }
+    }
+
     public static function getDiscountedValue($type, $amount, $basis) {
         $discounted = 0;
         switch ($type) {

@@ -22,7 +22,7 @@ class VoucherCodeController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return VoucherCodeListResource::collection(VoucherCode::filtered([], $request)->paginate(25));
+        return VoucherCodeListResource::collection(VoucherCode::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
     /**
