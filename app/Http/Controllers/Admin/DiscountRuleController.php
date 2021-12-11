@@ -22,7 +22,7 @@ class DiscountRuleController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return DiscountRuleListResource::collection(DiscountRule::filtered([], $request)->paginate(25));
+        return DiscountRuleListResource::collection(DiscountRule::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
     /**

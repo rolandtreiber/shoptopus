@@ -22,6 +22,7 @@ class CreateDiscountRulesTable extends Migration
             $table->decimal('amount');
             $table->dateTime('valid_from');
             $table->dateTime('valid_until');
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
 

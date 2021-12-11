@@ -23,7 +23,7 @@ class PaymentController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return PaymentListResource::collection(Payment::filtered([], $request)->paginate(25));
+        return PaymentListResource::collection(Payment::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
     /**

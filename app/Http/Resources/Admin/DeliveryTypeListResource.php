@@ -25,6 +25,7 @@ class DeliveryTypeListResource extends JsonResource
             'description' => $this->getTranslations('description'),
             'status' => $this->status,
             'enabled_by_default_on_creation' => $this->enabled_by_default_on_creation,
+            'enabled' => $this->enabled,
             'price' => $this->price
         ];
     }

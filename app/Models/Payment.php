@@ -2,9 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -61,6 +63,16 @@ class Payment extends SearchableModel implements Auditable
         'proof' => 'object'
     ];
 
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'payment':
+                $query->where('type', PaymentTypes::Payment);
+                break;
+            case 'refund':
+                $query->where('type', PaymentTypes::Refund);
+        }
+    }
 
     public function paymentSource(): BelongsTo
     {

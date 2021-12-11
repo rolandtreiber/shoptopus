@@ -30,7 +30,7 @@ class DeliveryTypeFactory extends Factory
         return [
             'name' => $translations['name'],
             'description' => $translations['description'],
-            'status' => $this->faker->randomElement([DeliveryTypeStatuses::Disabled, DeliveryTypeStatuses::Enabled]),
+            'enabled' => $this->faker->boolean,
             'enabled_by_default_on_creation' => $this->faker->boolean,
             'price' => $this->faker->randomFloat(2, 0, 12)
         ];

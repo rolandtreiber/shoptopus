@@ -53,27 +53,34 @@ class DiscountRule extends SearchableModel
         'valid_until' => 'datetime',
     ];
 
-    public function getAmount($type, $amount): string
-    {
-        switch ($type) {
-            case DiscountTypes::Percentage:
-                return $amount.'%';
-            case DiscountTypes::Amount:
-                if (config('app.default_currency.side') === 'left') {
-                    return config('app.default_currency.symbol') . $amount;
-                } else {
-                    return $amount.config('app.default_currency.symbol');
-                }
-        }
-        return $amount;
-    }
-
     /**
      * @return BelongsToMany
      */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
+    }
+
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'active':
+                $query->whereDate('valid_from', '<=', \Carbon\Carbon::today())
+                    ->whereDate('valid_until', '>=', Carbon::today());
+                break;
+            case 'not_started':
+                $query->whereDate('valid_from', '>', Carbon::today());
+                break;
+            case 'expired':
+                $query->whereDate('valid_until', '<', Carbon::today());
+                break;
+            case 'all_inactive':
+                $query->where(function($q) {
+                    $q->whereDate('valid_from', '>', Carbon::today())
+                        ->orWhereDate('valid_until', '<', Carbon::today());
+                });
+                break;
+        }
     }
 
     /**

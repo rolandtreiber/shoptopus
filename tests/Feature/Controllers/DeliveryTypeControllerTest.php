@@ -54,7 +54,7 @@ class DeliveryTypeControllerTest extends TestCase
             ->assertJson(fn (AssertableJson $json) =>
             $json->where('data.id', $deliveryType->id)
                 ->where('data.price', $deliveryType->price)
-                ->where('data.status', $deliveryType->status)
+                ->where('data.enabled', $deliveryType->enabled)
                 ->where('data.enabled_by_default_on_creation', $deliveryType->enabled_by_default_on_creation)
                 ->etc());
     }
@@ -84,7 +84,7 @@ class DeliveryTypeControllerTest extends TestCase
         $this->assertEquals('Express Ubernacht', $rule->setLocale('de')->name);
         $this->assertEquals('Very quick', $rule->setLocale('en')->description);
         $this->assertEquals('Sehr schnell', $rule->setLocale('de')->description);
-        $this->assertEquals(DeliveryTypeStatuses::Enabled, $rule->status);
+        $this->assertEquals(true, $rule->enabled);
         $this->assertEquals(15, $rule->price);
     }
 
@@ -106,6 +106,7 @@ class DeliveryTypeControllerTest extends TestCase
                 'en' => 'Very quick UPDATED',
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
+            'enabled' => true,
             'price' => 15,
             'status' => DeliveryTypeStatuses::Enabled
         ]);
@@ -116,7 +117,7 @@ class DeliveryTypeControllerTest extends TestCase
         $this->assertEquals('Express Ubernacht AKTUALISIERT', $rule->setLocale('de')->name);
         $this->assertEquals('Very quick UPDATED', $rule->setLocale('en')->description);
         $this->assertEquals('Sehr schnell AKTUALISIERT', $rule->setLocale('de')->description);
-        $this->assertEquals(DeliveryTypeStatuses::Enabled, $rule->status);
+        $this->assertEquals(true, $rule->enabled);
         $this->assertEquals(15, $rule->price);
     }
 

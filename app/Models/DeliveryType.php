@@ -15,6 +15,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $deliveryRules
  * @property mixed $status
  * @property mixed $enabled_by_default_on_creation
+ * @property boolean $enabled
  * @property mixed $price
  */
 class DeliveryType extends SearchableModel
@@ -32,11 +33,11 @@ class DeliveryType extends SearchableModel
      * @var array
      */
     protected $fillable = [
-        'status',
         'name',
         'description',
         'enabled_by_default_on_creation',
-        'price'
+        'price',
+        'enabled'
     ];
 
     /**
@@ -46,9 +47,9 @@ class DeliveryType extends SearchableModel
      */
     protected $casts = [
         'id' => 'string',
-        'status' => 'integer',
         'enabled_by_default_on_creation' => 'boolean',
-        'price' => 'decimal:2'
+        'price' => 'decimal:2',
+        'enabled' => 'boolean'
     ];
 
     /**

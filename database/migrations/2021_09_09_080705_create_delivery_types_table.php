@@ -19,8 +19,8 @@ class CreateDeliveryTypesTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('name');
             $table->text('description');
-            $table->tinyInteger('status')->default(1);
             $table->boolean('enabled_by_default_on_creation')->default(true);
+            $table->boolean('enabled')->default(true);
             $table->decimal('price')->default(0);
             $table->softDeletes();
             $table->timestamps();

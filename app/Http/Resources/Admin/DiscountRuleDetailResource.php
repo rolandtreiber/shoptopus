@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Helpers\GeneralHelper;
 use App\Models\DiscountRule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,7 +25,7 @@ class DiscountRuleDetailResource extends JsonResource
             'id' => $this->id,
             'type' => $this->type,
             'name' => $this->getTranslations('name'),
-            'amount' => $this->getAmount($this->type, $this->amount),
+            'amount' => GeneralHelper::getDiscountValue($this->type, $this->amount),
             'valid_from' => Carbon::parse($this->valid_from)->format('Y-m-d H:i'),
             'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
             'products' => ProductListResource::collection($this->products),
