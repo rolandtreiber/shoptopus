@@ -20,6 +20,7 @@ class CreateCartsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->string('ip_address', 100)->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 

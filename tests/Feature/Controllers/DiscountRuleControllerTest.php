@@ -139,7 +139,7 @@ class DiscountRuleControllerTest extends TestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.discount-rule', $rule));
 
-        $this->assertDeleted($rule);
+        $this->assertSoftDeleted($rule);
     }
 
     /**

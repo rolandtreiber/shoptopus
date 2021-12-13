@@ -6,15 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductVariantStoreRequest;
 use App\Http\Requests\Admin\ProductVariantUpdateRequest;
 use App\Http\Requests\ListRequest;
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Resources\Admin\ProductDetailResource;
-use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductVariantResource;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductVariantController extends Controller

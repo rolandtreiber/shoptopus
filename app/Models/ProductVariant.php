@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
@@ -27,6 +28,7 @@ class ProductVariant extends SearchableModel implements Auditable
     use HasFiles;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     public $translatable = ['description'];
 

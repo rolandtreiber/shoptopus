@@ -140,7 +140,7 @@ class BannerControllerTest extends TestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.banner', $banner));
 
-        $this->assertDeleted($banner);
+        $this->assertSoftDeleted($banner);
     }
 
     /**

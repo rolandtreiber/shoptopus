@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class PaymentSource extends Model implements Auditable
@@ -12,6 +13,7 @@ class PaymentSource extends Model implements Auditable
     use HasFactory;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

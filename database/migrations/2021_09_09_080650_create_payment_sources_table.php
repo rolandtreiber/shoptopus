@@ -27,6 +27,7 @@ class CreatePaymentSourcesTable extends Migration
             $table->string('brand', 50)->nullable();
             $table->string('stripe_user_id', 120)->nullable();
             $table->tinyInteger('payment_method_id');
+            $table->softDeletes();
             $table->timestamps();
         });
 

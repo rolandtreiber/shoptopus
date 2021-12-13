@@ -20,6 +20,7 @@ class CreateSystemSettingsTable extends Migration
             $table->string('key', 60);
             $table->longText('value');
             $table->tinyInteger('type')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
 

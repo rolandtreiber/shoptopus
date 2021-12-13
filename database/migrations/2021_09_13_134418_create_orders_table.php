@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('original_price')->default(0);
             $table->decimal('total_price')->default(0);
             $table->integer('status')->default(OrderStatuses::Paid);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

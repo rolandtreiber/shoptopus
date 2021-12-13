@@ -175,7 +175,7 @@ class ProductVariantControllerTest extends TestCase
             'variant' => $productVariant->id
         ]));
 
-        $this->assertDeleted($productVariant);
+        $this->assertSoftDeleted($productVariant);
     }
 
     // Unhappy

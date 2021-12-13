@@ -186,6 +186,6 @@ class ProductControllerTest extends TestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.product', $product));
 
-        $this->assertDeleted($product);
+        $this->assertSoftDeleted($product);
     }
 }

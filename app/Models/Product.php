@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -45,6 +46,7 @@ class Product extends SearchableModel implements Auditable
     use HasRatings;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     public $translatable = ['name', 'short_description', 'description'];
 

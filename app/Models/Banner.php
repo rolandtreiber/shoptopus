@@ -6,6 +6,7 @@ use App\Traits\HasFiles;
 use App\Traits\HasRatings;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
@@ -19,6 +20,7 @@ class Banner extends SearchableModel implements Auditable
     use HasFiles;
     use HasRatings;
     use HasUUID;
+    use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
 
     public $translatable = ['title', 'description', 'button_text'];

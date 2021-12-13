@@ -23,6 +23,9 @@ class CreateRatingsTable extends Migration
             $table->string('language_prefix')->nullable();
             $table->string('description')->nullable();
             $table->string('title')->nullable();
+            $table->boolean('enabled')->default(true);
+            $table->boolean('verified')->default(true);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

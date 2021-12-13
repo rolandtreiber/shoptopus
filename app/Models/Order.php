@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 /**
@@ -34,6 +35,7 @@ use Illuminate\Support\Facades\DB;
 class Order extends SearchableModel
 {
     use HasFactory, HasUUID;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

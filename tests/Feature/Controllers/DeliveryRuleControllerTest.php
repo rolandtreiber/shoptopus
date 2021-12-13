@@ -151,7 +151,7 @@ class DeliveryRuleControllerTest extends TestCase
             $deliveryRule
         ]));
 
-        $this->assertDeleted($deliveryRule);
+        $this->assertSoftDeleted($deliveryRule);
     }
 
     /**

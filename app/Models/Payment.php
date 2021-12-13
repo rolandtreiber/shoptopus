@@ -6,6 +6,7 @@ use App\Enums\PaymentTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -27,6 +28,7 @@ class Payment extends SearchableModel implements Auditable
     use HasFactory;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -6,6 +6,7 @@ use App\Enums\DiscountTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Spatie\Translatable\HasTranslations;
 
@@ -23,6 +24,7 @@ class DiscountRule extends SearchableModel
     use HasFactory;
     use HasUUID;
     use HasTranslations;
+    use SoftDeletes;
 
     public $translatable = ['name'];
 

@@ -6,6 +6,7 @@ use App\Traits\HasFiles;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
@@ -17,6 +18,7 @@ class Rating extends SearchableModel implements Auditable
     use HasFiles;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
