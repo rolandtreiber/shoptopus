@@ -20,7 +20,7 @@ class RatingController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return RatingListResource::collection(Rating::filtered([], $request)->paginate(25));
+        return RatingListResource::collection(Rating::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
     /**
