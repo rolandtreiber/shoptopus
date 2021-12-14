@@ -3,10 +3,11 @@
 namespace App\Models;
 
 use App\Enums\FileTypes;
+use App\Enums\ProductStatuses;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @property mixed|string $url
@@ -14,12 +15,18 @@ use Illuminate\Database\Eloquent\Builder;
  * @property mixed $fileable_id
  * @property mixed $fileable_type
  * @property mixed|string $file_name
- * @method static where(string $string, $modelClass)
+ * @property string $id
+ * @property string $title
+ * @property string $description
+ * @mixin Builder
  */
 class FileContent extends SearchableModel
 {
     use HasFactory;
     use HasUUID;
+    use HasTranslations;
+
+    public $translatable = ['title', 'description'];
 
     /**
      * The attributes that are mass assignable.
@@ -50,6 +57,33 @@ class FileContent extends SearchableModel
     protected $hidden = [
         'fileable_id', 'fileable_type', 'created_at'
     ];
+
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'image':
+                $query->where('type', FileTypes::Image);
+                break;
+            case 'video':
+                $query->where('type', FileTypes::Video);
+                break;
+            case 'audio':
+                $query->where('type', FileTypes::Audio);
+                break;
+            case 'pdf':
+                $query->where('type', FileTypes::Pdf);
+                break;
+            case 'spreadsheet':
+                $query->where('type', FileTypes::Spreadsheet);
+                break;
+            case 'textdocument':
+                $query->where('type', FileTypes::TextDocument);
+                break;
+            case 'other':
+                $query->where('type', FileTypes::Other);
+                break;
+        }
+    }
 
     /**
      * @param $query

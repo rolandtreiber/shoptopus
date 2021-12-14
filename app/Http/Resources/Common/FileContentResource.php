@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources\Common;
 
+use App\Models\FileContent;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin FileContent
+ */
 class FileContentResource extends JsonResource
 {
     /**
@@ -18,9 +22,10 @@ class FileContentResource extends JsonResource
         return [
             'id' => $this->id,
             'url' => $this->url,
-            'title' => $this->title,
+            'title' => $this->getTranslations('title'),
             'file_name' => $this->file_name,
-            'description' => $this->description
+            'description' => $this->getTranslations('description'),
+            'type' => $this->type
         ];
     }
 }

@@ -20,7 +20,7 @@ class BannerController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return BannerResource::collection(Banner::filtered([], $request)->paginate($request->paginate));
+        return BannerResource::collection(Banner::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
     /**

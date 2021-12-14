@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Traits\IsTranslateableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\FileContent;
 
 class FileContentFactory extends Factory
 {
+    use IsTranslateableFactory;
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -22,13 +24,15 @@ class FileContentFactory extends Factory
      */
     public function definition()
     {
+        $translated = $this->getTranslated($this->faker, ['title', 'description'], ['short', 'medium']);
+
         return [
             'url' => $this->faker->imageUrl(1200, 1200),
             'fileable_type' => $this->faker->word,
             'fileable_id' => $this->faker->randomNumber(),
-            'title' => $this->faker->sentence(4),
+            'title' => $translated['title'],
             'file_name' => $this->faker->word,
-            'description' => $this->faker->text,
+            'description' => $translated['description'],
         ];
     }
 }

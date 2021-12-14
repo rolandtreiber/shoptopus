@@ -23,7 +23,7 @@ class FileController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return FileContentResource::collection(FileContent::filtered([], $request)->paginate($request->paginate));
+        return FileContentResource::collection(FileContent::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
     /**

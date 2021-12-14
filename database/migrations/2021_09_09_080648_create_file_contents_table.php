@@ -22,8 +22,8 @@ class CreateFileContentsTable extends Migration
             $table->string('file_name');
             $table->string('fileable_type')->nullable();
             $table->uuid('fileable_id')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            $table->text('title')->nullable();
+            $table->text('description')->nullable();
             $table->tinyInteger('type')->default(FileTypes::Image);
             $table->timestamps();
         });
