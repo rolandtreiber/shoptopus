@@ -26,6 +26,7 @@ class CustomerListResource extends JsonResource
             'prefix' => $this->prefix,
             'first_name' => $this->first_name,
             'last_name' => $this->first_name,
+            'phone' => $this->phone,
             'initials' => $this->initials,
             'email' => $this->email,
             'email_verified' => $this->email_verified_at !== null,
