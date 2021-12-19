@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\ProductCategoryUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductCategoryDetailResource;
 use App\Http\Resources\Admin\ProductCategoryListResource;
+use App\Http\Resources\Admin\ProductCategorySelectResource;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Traits\ProcessRequest;
@@ -40,6 +41,14 @@ class ProductCategoryController extends Controller
     public function show(Product $product, ProductCategory $category): ProductCategoryDetailResource
     {
         return new ProductCategoryDetailResource($category);
+    }
+
+    /**
+     * @return AnonymousResourceCollection
+     */
+    public function getSelectData(): AnonymousResourceCollection
+    {
+        return ProductCategorySelectResource::collection(ProductCategory::where('enabled', 1)->get());
     }
 
     /**

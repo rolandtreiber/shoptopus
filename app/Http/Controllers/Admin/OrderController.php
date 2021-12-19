@@ -22,7 +22,7 @@ class OrderController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return OrderListResource::collection(Order::filtered([], $request)->paginate(25));
+        return OrderListResource::collection(Order::filtered([], $request)->search($request->search)->view($request->view)->paginate($request->paginate));
     }
 
     /**

@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Enums\DiscountTypes;
+use App\Enums\OrderStatuses;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasUUID;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,6 +33,7 @@ use Illuminate\Support\Facades\DB;
  * @property Product[] $products
  * @property mixed $pivot
  * @property Payment[] $payments
+ * @property Carbon $updated_at
  */
 class Order extends SearchableModel
 {
@@ -61,6 +64,37 @@ class Order extends SearchableModel
         'original_price' => 'decimal:2',
         'total_price' => 'decimal:2'
     ];
+
+    public function scopeSearch($query, $search)
+    {
+        $query->whereHas('user', function($q) use($search) {
+            $q->where('name', 'like', '%'.$search.'%');
+        });
+    }
+
+    public function scopeView($query, $view)
+    {
+        switch ($view) {
+            case 'paid':
+                $query->where('status', OrderStatuses::Paid);
+                break;
+            case 'processing':
+                $query->where('status', OrderStatuses::Processing);
+                break;
+            case 'in_transit':
+                $query->where('status', OrderStatuses::InTransit);
+                break;
+            case 'completed':
+                $query->where('status', OrderStatuses::Completed);
+                break;
+            case 'on_hold':
+                $query->where('status', OrderStatuses::OnHold);
+                break;
+            case 'cancelled':
+                $query->where('status', OrderStatuses::Cancelled);
+                break;
+        }
+    }
 
     /**
      * @return BelongsTo
@@ -105,9 +139,9 @@ class Order extends SearchableModel
     /**
      * @return BelongsTo
      */
-    public function deliveryRule(): BelongsTo
+    public function deliveryType(): BelongsTo
     {
-        return $this->belongsTo(DeliveryRule::class);
+        return $this->belongsTo(DeliveryType::class);
     }
 
     public function recalculatePrices()

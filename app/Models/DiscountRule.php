@@ -18,6 +18,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $valid_until
  * @property mixed $products
  * @property mixed $categories
+ * @property boolean $enabled
  */
 class DiscountRule extends SearchableModel
 {
@@ -39,6 +40,7 @@ class DiscountRule extends SearchableModel
         'name',
         'valid_from',
         'valid_until',
+        'enabled'
     ];
 
     /**
@@ -53,6 +55,7 @@ class DiscountRule extends SearchableModel
         'name' => 'string',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
+        'enabled' => 'boolean'
     ];
 
     /**
@@ -68,7 +71,8 @@ class DiscountRule extends SearchableModel
         switch ($view) {
             case 'active':
                 $query->whereDate('valid_from', '<=', \Carbon\Carbon::today())
-                    ->whereDate('valid_until', '>=', Carbon::today());
+                    ->whereDate('valid_until', '>=', Carbon::today())
+                    ->where('enabled', 1);
                 break;
             case 'not_started':
                 $query->whereDate('valid_from', '>', Carbon::today());
@@ -79,7 +83,7 @@ class DiscountRule extends SearchableModel
             case 'all_inactive':
                 $query->where(function($q) {
                     $q->whereDate('valid_from', '>', Carbon::today())
-                        ->orWhereDate('valid_until', '<', Carbon::today());
+                        ->orWhereDate('valid_until', '<', Carbon::today())->orWhere('enabled', 0);
                 });
                 break;
         }

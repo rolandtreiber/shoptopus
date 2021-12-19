@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Product Categories
         Route::get('product-categories', [ProductCategoryController::class, 'index'])->name('admin.api.index.product-categories');
+        Route::get('product-categories/select-data', [ProductCategoryController::class, 'getSelectData'])->name('admin.api.index.product-categories-select');
         Route::group(['prefix' => 'product-category'], function () {
             Route::post('/', [ProductCategoryController::class, 'create'])->name('admin.api.create.product-category');
             Route::group(['prefix' => '{category}'], function () {

@@ -28,7 +28,8 @@ class DiscountRuleListResource extends JsonResource
             'value' => GeneralHelper::getDiscountValue($this->type, $this->amount),
             'valid_from' => Carbon::parse($this->valid_from)->format('Y-m-d H:i'),
             'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
-            'valid' => $this->isValid()
+            'valid' => $this->isValid(),
+            'enabled' => $this->enabled
         ];
     }
 }
