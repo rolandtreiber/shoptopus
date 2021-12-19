@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "fbe0ce0a-6f06-4a1a-8456-1e0596ec0df0",
+		"name": "Public",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/products?page=1&paginate=20&lang=fr",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"products"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "paginate",
+							"value": "20"
+						},
+						{
+							"key": "lang",
+							"value": "fr"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

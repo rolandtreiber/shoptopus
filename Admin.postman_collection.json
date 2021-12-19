@@ -1,0 +1,6216 @@
+{
+	"info": {
+		"_postman_id": "ec62c9c9-71cc-455f-9737-f022e628a2ba",
+		"name": "Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Summary",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/products/summary",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products",
+								"summary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined) {",
+									"    const products = jsonData.data",
+									"    const selectedProduct = products[getRandomInt(products.length)]",
+									"    pm.environment.set(\"product_id\", selectedProduct.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/products?page=1&paginate=15&search=25&sort_by_field=name->de&sort_by_type=ASC&view=discontinued",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "15"
+								},
+								{
+									"key": "search",
+									"value": "25"
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"contains\", \"aspernatur\"]",
+									"disabled": true
+								},
+								{
+									"key": "sort_by_field",
+									"value": "name->de"
+								},
+								{
+									"key": "sort_by_type",
+									"value": "ASC"
+								},
+								{
+									"key": "view",
+									"value": "discontinued"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const productId = jsonData.data.id",
+									"    pm.environment.set(\"product_id\", productId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"Test Product\", \"de\": \"Test Produkt\"}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "short_description",
+									"value": "{\"en\": \"Test Product\", \"de\": \"Test Produkt\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "product_attributes[9476d4cf-85ae-4917-8b59-7e16a8c0dea9]",
+									"value": "9476d4cf-a10f-435c-8ebc-cca59fdffcf9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"Test Product_\", \"de\": \"Test Produkt_\"}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "short_description",
+									"value": "{\"en\": \"Test Product_\", \"de\": \"Test Produkt_\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "attachments[]",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG"
+								},
+								{
+									"key": "product_attributes[9476d4cf-85ae-4917-8b59-7e16a8c0dea9]",
+									"value": "9476d4cf-a8b3-469d-88a6-922c6eac2b22",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"product_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product Variants",
+			"item": [
+				{
+					"name": "List Product Variants",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const productVariants = jsonData.data",
+									"    const selectedProductVariant = productVariants[getRandomInt(productVariants.length)]",
+									"    pm.environment.set(\"product_variant_id\", selectedProductVariant.id)",
+									"",
+									"    const attributes = selectedProductVariant.attributes",
+									"    if (attributes.length > 0) {",
+									"        const selectedAttribute = attributes[getRandomInt(attributes.length)]",
+									"",
+									"        const attributeOptionId = selectedAttribute.option.id",
+									"        pm.environment.set(\"attribute_id\", selectedAttribute.id)",
+									"        pm.environment.set(\"attribute_option_id\", attributeOptionId)",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variants?page=1&paginate=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}",
+								"variants"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "20"
+								},
+								{
+									"key": "search",
+									"value": "25",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "9476d4d4-182d-45ed-9481-07335689b928",
+									"disabled": true
+								},
+								{
+									"key": "filters[price]",
+									"value": "[\">\", \"20.00\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product Variant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variant/{{product_variant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}",
+								"variant",
+								"{{product_variant_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Product Variant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const productVariantId = jsonData.data.id",
+									"    pm.environment.set(\"product_variant_id\", productVariantId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "price",
+									"value": "16.20",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variant",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}",
+								"variant"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Variant",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "price",
+									"value": "14",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "attachments[]",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6323.JPG"
+								},
+								{
+									"key": "product_attributes[9476d4cf-85ae-4917-8b59-7e16a8c0dea9]",
+									"value": "9476d4cf-a8b3-469d-88a6-922c6eac2b22",
+									"type": "text"
+								},
+								{
+									"key": "stock",
+									"value": "51",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variant/{{product_variant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}",
+								"variant",
+								"{{product_variant_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Variant",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"product_variant_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variant/{{product_variant_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product",
+								"{{product_id}}",
+								"variant",
+								"{{product_variant_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product Categories",
+			"item": [
+				{
+					"name": "List Product Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const productCategories = jsonData.data",
+									"    const selectedProductCategory = productCategories[getRandomInt(productCategories.length)]",
+									"    pm.environment.set(\"product_category_id\", selectedProductCategory.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-categories?page=1&paginate=20&view=enabled",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-categories"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "search",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								},
+								{
+									"key": "paginate",
+									"value": "20"
+								},
+								{
+									"key": "view",
+									"value": "enabled"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Select Product Categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-categories/select-data",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-categories",
+								"select-data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-category/{{product_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-category",
+								"{{product_category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Product Category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const productCategoryId = jsonData.data.id",
+									"    pm.environment.set(\"product_category_id\", productCategoryId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"New category\", \"de\": \"Neue Kategorie\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"New category\", \"de\": \"Neue Kategorie\"}",
+									"type": "text"
+								},
+								{
+									"key": "menu_image",
+									"type": "file",
+									"src": "/home/roland/Downloads/0_xMaFF2hSXpf_kIfG.jpg"
+								},
+								{
+									"key": "header_image",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-category",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\": \"Updated category\", \"de\": \"Aktualisierte Kategorie\"}",
+									"type": "text"
+								},
+								{
+									"key": "menu_image",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6323.JPG"
+								},
+								{
+									"key": "header_image",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-category/{{product_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-category",
+								"{{product_category_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Attribute",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"product_category_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-category/{{product_category_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-category",
+								"{{product_category_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product Attributes",
+			"item": [
+				{
+					"name": "List Product Attributes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const productAttributes = jsonData.data",
+									"    const selectedProductAttribute = productAttributes[getRandomInt(productAttributes.length)]",
+									"    pm.environment.set(\"attribute_id\", selectedProductAttribute.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attributes?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attributes"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product Attribute",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"",
+									"if (jsonData.data !== undefined) {",
+									"",
+									"    // Setting the attribute id",
+									"    if (jsonData.data.id !== undefined) {",
+									"        pm.environment.set(\"attribute_id\", jsonData.data.id)",
+									"        console.log(\"Setting attribute_id to: \"+jsonData.data.id)",
+									"    }",
+									"",
+									"    // Setting the attribute option id if the attribute has any options",
+									"    if (jsonData.data.options !== undefined && jsonData.data.options.length > 0) {",
+									"        const options = jsonData.data.options;",
+									"        const selectedAttributeOptionId = options[getRandomInt(options.length)].id",
+									"        pm.environment.set(\"attribute_option_id\", selectedAttributeOptionId)",
+									"        console.log(\"Setting attribute_option_id to: \"+selectedAttributeOptionId)",
+									"    }",
+									"",
+									"}",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Product Attribute",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const productCategoryId = jsonData.data.id",
+									"    pm.environment.set(\"attribute_id\", productCategoryId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"Color\", \"de\": \"Farbe\"}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG"
+								},
+								{
+									"key": "type",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Attribute",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\": \"Updated Color\", \"de\": \"Aktialisierte Farbe\"}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/roland/Downloads/0_xMaFF2hSXpf_kIfG.jpg"
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Attribute",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"attribute_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product Attribute Options",
+			"item": [
+				{
+					"name": "List Product Attribute Options",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const attributeOptions = jsonData.data",
+									"    const selectedAttributeOption = attributeOptions[getRandomInt(attributeOptions.length)]",
+									"    pm.environment.set(\"attribute_option_id\", selectedAttributeOption.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}/options?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}",
+								"options"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product Attribute Option",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}/option/{{attribute_option_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}",
+								"option",
+								"{{attribute_option_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Product Attribute Option",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const attributeOptionId = jsonData.data.id",
+									"    pm.environment.set(\"attribute_option_id\", attributeOptionId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"Red\", \"de\": \"Rot\", \"fr\": \"Rouge\"}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/roland/Pictures/Screenshot_2021-09-23_07-19-02.png"
+								},
+								{
+									"key": "common_value",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}/option",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}",
+								"option"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Attribute Option",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\": \"Black\", \"de\": \"Schwarz\", \"fr\": \"Noir\"}",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6323.JPG"
+								},
+								{
+									"key": "common_value",
+									"value": "Test",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}/option/{{attribute_option_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}",
+								"option",
+								"{{attribute_option_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Attribute Option",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"attribute_option_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-attribute/{{attribute_id}}/option/{{attribute_option_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-attribute",
+								"{{attribute_id}}",
+								"option",
+								"{{attribute_option_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Product Tags",
+			"item": [
+				{
+					"name": "List Product Tags",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const productCategories = jsonData.data",
+									"    const selectedProductCategory = productCategories[getRandomInt(productCategories.length)]",
+									"    pm.environment.set(\"product_tag_id\", selectedProductCategory.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-tags?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-tags"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Product Tag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-tag/{{product_tag_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-tag",
+								"{{product_tag_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Product Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const productTagId = jsonData.data.id",
+									"    pm.environment.set(\"product_tag_id\", productTagId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"Vegan\", \"de\": \"Vegan\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Plant based\", \"de\": \"auf pflanzlicher Basis\"}",
+									"type": "text"
+								},
+								{
+									"key": "badge",
+									"type": "file",
+									"src": "/home/roland/Downloads/3708391-middle.png"
+								},
+								{
+									"key": "display_badge",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-tag",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product Tag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "description",
+									"value": "{\"en\": \"No meat\", \"de\": \"Ohne Fleisch\"}",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\": \"Updated Vegan Tag\", \"de\": \"Aktualisierte Vegan Tag\"}",
+									"type": "text"
+								},
+								{
+									"key": "badge",
+									"type": "file",
+									"src": "/home/roland/Downloads/3708391-middle.png"
+								},
+								{
+									"key": "display_badge",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-tag/{{product_tag_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-tag",
+								"{{product_tag_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product Tag",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"product_tag_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/product-tag/{{product_tag_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"product-tag",
+								"{{product_tag_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "List Orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const orders = jsonData.data",
+									"    const selectedOrder = orders[getRandomInt(orders.length)]",
+									"    pm.environment.set(\"order_id\", selectedOrder.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/orders?page=1&paginate=25&view=paid",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "25"
+								},
+								{
+									"key": "search",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								},
+								{
+									"key": "view",
+									"value": "paid"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/order/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "status",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/order/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"order_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/order/{{order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"order",
+								"{{order_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Discount Rules",
+			"item": [
+				{
+					"name": "List Discount Rules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const discountRules = jsonData.data",
+									"    const selectedDiscountRule = discountRules[getRandomInt(discountRules.length)]",
+									"    pm.environment.set(\"discount_rule_id\", selectedDiscountRule.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/discount-rules?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"discount-rules"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Discount Rule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/discount-rule/{{discount_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"discount-rule",
+								"{{discount_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Discount Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const discountRuleId = jsonData.data.id",
+									"    pm.environment.set(\"discount_rule_id\", discountRuleId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\": \"5% off\", \"de\": \"5% Rabatt\"}",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "valid_from",
+									"value": "2021-11-12",
+									"type": "text"
+								},
+								{
+									"key": "valid_until",
+									"value": "2022-01-01",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/discount-rule",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"discount-rule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Discount Rule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\": \"5.5% off\", \"de\": \"5.5% Rabatt\"}",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "5.5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/discount-rule/{{discount_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"discount-rule",
+								"{{discount_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Discount Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"discount_rule_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/discount-rule/{{discount_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"discount-rule",
+								"{{discount_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Voucher Codes",
+			"item": [
+				{
+					"name": "List Voucher Codes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const voucherCodes = jsonData.data",
+									"    const selectedVoucherCode = voucherCodes[getRandomInt(voucherCodes.length)]",
+									"    pm.environment.set(\"voucher_code_id\", selectedVoucherCode.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/voucher-codes?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"voucher-codes"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Voucher Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/voucher-code/{{voucher_code_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"voucher-code",
+								"{{voucher_code_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Voucher Code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const voucherCodeId = jsonData.data.id",
+									"    pm.environment.set(\"voucher_code_id\", voucherCodeId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "amount",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "valid_from",
+									"value": "2021-11-12",
+									"type": "text"
+								},
+								{
+									"key": "valid_until",
+									"value": "2022-01-01",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/voucher-code",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"voucher-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Voucher Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "5.5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/voucher-code/{{voucher_code_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"voucher-code",
+								"{{voucher_code_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Voucher Code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"voucher_code_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/voucher-code/{{voucher_code_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"voucher-code",
+								"{{voucher_code_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Delivery Types",
+			"item": [
+				{
+					"name": "List Delivery Types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const delieryTypes = jsonData.data",
+									"    const selectedDeliveryType = delieryTypes[getRandomInt(delieryTypes.length)]",
+									"    pm.environment.set(\"delivery_type_id\", selectedDeliveryType.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-types?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-types"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Delivery Type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Delivery Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const deliveryTypeId = jsonData.data.id",
+									"    pm.environment.set(\"delivery_type_id\", deliveryTypeId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "{\"en\":\"Express\",\"de\":\"Ubernacht\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\":\"Next day\",\"de\":\"Nachste Tag\"}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "15",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Delivery Type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{\"en\":\"Express\",\"de\":\"Ubernacht\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\":\"Next day\",\"de\":\"Nachste Tag\"}",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "16.50",
+									"type": "text"
+								},
+								{
+									"key": "enabled_by_default_on_creation",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Delivery Type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"delivery_type_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Delivery Rules",
+			"item": [
+				{
+					"name": "List Delivery Rules",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const delieryTypes = jsonData.data",
+									"    const selectedDeliveryType = delieryTypes[getRandomInt(delieryTypes.length)]",
+									"    pm.environment.set(\"delivery_type_id\", selectedDeliveryType.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}/delivery-rules?page=1&paginate=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}",
+								"delivery-rules"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Delivery Rule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}/delivery-rule/{{delivery_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}",
+								"delivery-rule",
+								"{{delivery_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Delivery Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const deliveryRuleId = jsonData.data.id",
+									"    pm.environment.set(\"delivery_rule_id\", deliveryRuleId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "postcodes[]",
+									"value": "BS10",
+									"type": "text"
+								},
+								{
+									"key": "postcodes[]",
+									"value": "BS16",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}/delivery-rule",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}",
+								"delivery-rule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Delivery Rule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "max_weight",
+									"value": "15000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}/delivery-rule/{{delivery_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}",
+								"delivery-rule",
+								"{{delivery_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Delivery Rule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"delivery_rule_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/delivery-type/{{delivery_type_id}}/delivery-rule/{{delivery_rule_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"delivery-type",
+								"{{delivery_type_id}}",
+								"delivery-rule",
+								"{{delivery_rule_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "List Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const users = jsonData.data",
+									"    const selectedUser = users[getRandomInt(users.length)]",
+									"    pm.environment.set(\"user_id\", selectedUser.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/users?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name]",
+									"value": "[\"LIKE\", \"%Mary%\"]",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/user/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const userId = jsonData.data.id",
+									"    pm.environment.set(\"user_id\", userId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Smith",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "js2@email.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/Users/roland/Documents/4.resize_700x.jpg"
+								},
+								{
+									"key": "roles[]",
+									"value": "store_assistant",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "max_weight",
+									"value": "15000",
+									"type": "text"
+								},
+								{
+									"key": "roles[]",
+									"value": "store_manager",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Norman",
+									"type": "text"
+								},
+								{
+									"key": "prefix",
+									"value": "Dr",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"user_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user",
+								"{{user_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "List Customers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const customers = jsonData.data",
+									"    const selectedCustomer = customers[getRandomInt(customers.length)]",
+									"    pm.environment.set(\"customer_id\", selectedCustomer.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/customers?page=1&paginate=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Customers - from the app",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const customers = jsonData.data",
+									"    const selectedCustomer = customers[getRandomInt(customers.length)]",
+									"    pm.environment.set(\"customer_id\", selectedCustomer.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/customers?page=1&paginate=20&sort_by_type=desc&sort_by_field=created_at&view=all&filters[first_name]=[\"contains\",\"Sop\"]",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "20"
+								},
+								{
+									"key": "sort_by_type",
+									"value": "desc"
+								},
+								{
+									"key": "sort_by_field",
+									"value": "created_at"
+								},
+								{
+									"key": "view",
+									"value": "all"
+								},
+								{
+									"key": "filters[first_name]",
+									"value": "[\"contains\",\"Sop\"]"
+								},
+								{
+									"key": "search",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/customer/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"customer",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const userId = jsonData.data.id",
+									"    pm.environment.set(\"customer_id\", userId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Smith",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "js@email.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/roland/Downloads/3708391-middle.png"
+								},
+								{
+									"key": "roles[]",
+									"value": "store_assistant",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "max_weight",
+									"value": "15000",
+									"type": "text"
+								},
+								{
+									"key": "roles[]",
+									"value": "customer",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Norman",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "prefix",
+									"value": "Dr",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"customer_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/user/{{customer_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"user",
+								"{{customer_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Payments",
+			"item": [
+				{
+					"name": "List Payments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const payments = jsonData.data",
+									"    const selectedPayment = payments[getRandomInt(payments.length)]",
+									"    pm.environment.set(\"payment_id\", selectedPayment.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/payments?page=1&paginate=2&search=2",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"payments"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[parent_id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/payment/{{payment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"payment",
+								"{{payment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const paymentId = jsonData.data.id",
+									"    pm.environment.set(\"payment_id\", paymentId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "John",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Smith",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "js@email.com",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/roland/Downloads/3708391-middle.png"
+								},
+								{
+									"key": "roles[]",
+									"value": "store_assistant",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/payment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "max_weight",
+									"value": "15000",
+									"type": "text"
+								},
+								{
+									"key": "roles[]",
+									"value": "customer",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Norman",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "prefix",
+									"value": "Dr",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "/home/roland/Downloads/SAM_6330.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/payment/{{payment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"payment",
+								"{{payment_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Payment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"payment_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/payment/{{payment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"payment",
+								"{{payment_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Banners",
+			"item": [
+				{
+					"name": "List Banners",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const banners = jsonData.data",
+									"    const selectedBanner = banners[getRandomInt(banners.length)]",
+									"    pm.environment.set(\"banner_id\", selectedBanner.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/banners?page=1&paginate=20&search=25",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"banners"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "20"
+								},
+								{
+									"key": "search",
+									"value": "25"
+								},
+								{
+									"key": "filters[id]",
+									"value": "9476d4d4-182d-45ed-9481-07335689b928",
+									"disabled": true
+								},
+								{
+									"key": "filters[price]",
+									"value": "[\">\", \"20.00\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Banner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/banner/{{banner_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"banner",
+								"{{banner_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Banner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const bannerId = jsonData.data.id",
+									"    pm.environment.set(\"banner_id\", bannerId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "{\"en\": \"New Products\", \"de\": \"Neue Produkte\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description\", \"de\": \"Bezeichnung\"}",
+									"type": "text"
+								},
+								{
+									"key": "button_text",
+									"value": "{\"en\": \"Check it out\", \"de\": \"Clciken Sie hier\"}",
+									"type": "text"
+								},
+								{
+									"key": "button_url",
+									"value": "https://google.com",
+									"type": "text"
+								},
+								{
+									"key": "background_image",
+									"type": "file",
+									"src": "/home/rolandt/Downloads/photo-1471879832106-c7ab9e0cee23.jpeg"
+								},
+								{
+									"key": "show_button",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/banner",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"banner"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Banner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "{\"en\": \"New Products UPDATED\", \"de\": \"Neue Produkte AKTUALISIERT\"}",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "{\"en\": \"Description UPDATED\", \"de\": \"Bezeichnung AKTUALISIERT\"}",
+									"type": "text"
+								},
+								{
+									"key": "button_text",
+									"value": "{\"en\": \"Check it out NOW\", \"de\": \"Clciken Sie hier JETZT\"}",
+									"type": "text"
+								},
+								{
+									"key": "button_url",
+									"value": "https://google.com",
+									"type": "text"
+								},
+								{
+									"key": "background_image",
+									"type": "file",
+									"src": "/home/rolandt/Downloads/road-1072821__480.jpg"
+								},
+								{
+									"key": "show_button",
+									"value": "0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/banner/{{banner_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"banner",
+								"{{banner_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Banner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"banner_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/banner/{{banner_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"banner",
+								"{{banner_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Ratings",
+			"item": [
+				{
+					"name": "List Ratings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const ratings = jsonData.data",
+									"    const selectedRating = ratings[getRandomInt(ratings.length)]",
+									"    pm.environment.set(\"rating_id\", selectedRating.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/ratings?page=1&paginate=2&search=2&filters[rating]=4",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"ratings"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "2"
+								},
+								{
+									"key": "search",
+									"value": "2"
+								},
+								{
+									"key": "filters[rating]",
+									"value": "4"
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show Rating",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/rating/{{rating_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"rating",
+								"{{rating_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Rating",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"rating_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/rating/{{rating_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"rating",
+								"{{rating_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "List Files",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"function getRandomInt(max) {",
+									"  return Math.floor(Math.random() * max);",
+									"}",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.length > 0) {",
+									"    const files = jsonData.data",
+									"    const selectedFile = files[getRandomInt(files.length)]",
+									"    pm.environment.set(\"file_id\", selectedFile.id)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/files?page=1&paginate=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"files"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "paginate",
+									"value": "20"
+								},
+								{
+									"key": "search",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "filters[rating]",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "filters[id]",
+									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"disabled": true
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show File",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/admin/file/{{file_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"file",
+								"{{file_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.data !== undefined && jsonData.data.id !== undefined) {",
+									"    const fileId = jsonData.data.id",
+									"    pm.environment.set(\"file_id\", fileId)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "model",
+									"value": "Product",
+									"type": "text"
+								},
+								{
+									"key": "id",
+									"value": "94df7b48-e3c7-432e-9829-6a42409d81b1\n",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/roland/Documents/Roland_Treiber_CV_and_tech_overview.pdf",
+									"disabled": true
+								},
+								{
+									"key": "files[]",
+									"type": "file",
+									"src": "/Users/roland/Documents/New Schedule of Personal Terms (multi company).docx",
+									"disabled": true
+								},
+								{
+									"key": "files[]",
+									"type": "file",
+									"src": "/Users/roland/Documents/new_user_credentials.csv",
+									"disabled": true
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/roland/Downloads/msn_messenger_chat.mp3"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/file",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"file"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update File",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/roland/Downloads/5d8283c26f24eb2d2e66dbf7.jpeg"
+								},
+								{
+									"key": "_method",
+									"value": "PATCH",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/file/{{file_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"file",
+								"{{file_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete File",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"",
+									"if (jsonData.status !== undefined && jsonData.status === 'Success') {",
+									"    pm.environment.set(\"file_id\", null)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "_method",
+								"value": "PATCH",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{base_url}}/api/admin/files/{{file_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"admin",
+								"files",
+								"{{file_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Miscellaneous",
+			"item": [
+				{
+					"name": "Meta information",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/meta",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"meta"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
