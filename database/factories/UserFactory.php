@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'prefix' => $this->faker->randomElement(config('users.available_prefixes')),
-            'email' => $this->faker->safeEmail,
+            'email' => $this->faker->unique()->email,
             'email_verified_at' => $this->faker->dateTime(),
             'password' => Hash::make('shop'),
             'temporary' => false,

@@ -85,7 +85,8 @@ class DiscountRuleControllerTest extends TestCase
             'type' => DiscountTypes::Percentage,
             'amount' => 5,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
+            'enabled' => true
         ]);
         $response->assertCreated();
         $ruleId = $response->json()['data']['id'];
