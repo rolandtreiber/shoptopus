@@ -21,7 +21,7 @@ class ProductTagStoreRequest extends FormRequest
             'name' => ['required', 'json'],
             'description' => ['required', 'json'],
             'badge' => ['sometimes'],
-            'display_badge' => ['sometimes']
+            'display_badge' => ['sometimes', 'boolean']
         ];
     }
 }
