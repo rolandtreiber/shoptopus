@@ -2,14 +2,10 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @mixin ProductCategory
- */
-class ProductCategoryDetailResource extends JsonResource
+class ProductCategorySimpleListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -25,10 +21,8 @@ class ProductCategoryDetailResource extends JsonResource
             'description' => $this->getTranslations('description'),
             'menu_image' => $this->menu_image ? $this->menu_image->url : null,
             'header_image' => $this->header_image ? $this->header_image->url : null,
-            'parent_id' => $this->parent_id,
-            'children' => ProductCategoryListResource::collection($this->children),
-            'products' => ProductListResource::collection($this->products),
-            'enabled' => $this->enabled
+            'enabled' => $this->enabled,
+            'updated_at' => $this->updated_at
         ];
     }
 }

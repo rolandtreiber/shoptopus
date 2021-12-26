@@ -13,6 +13,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Log;
 
 class ProductCategoryController extends Controller
 {
@@ -27,7 +28,11 @@ class ProductCategoryController extends Controller
         if (isset($request->filters["parent_id"])) {
             $dataset = ProductCategory::filtered([], $request);
         } else {
-            $dataset = ProductCategory::root()->filtered([], $request);
+            if ($request->filters) {
+                $dataset = ProductCategory::filtered([], $request);
+            } else {
+                $dataset = ProductCategory::root()->filtered([], $request);
+            }
         }
 
         return ProductCategoryListResource::collection($dataset->availability($request->view)->paginate($request->paginate));

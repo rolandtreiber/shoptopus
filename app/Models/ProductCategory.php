@@ -25,6 +25,7 @@ use Spatie\Translatable\HasTranslations;
  * @property boolean $enabled
  * @property Collection $children
  * @property Date $updated_at
+ * @property mixed $id
  */
 class ProductCategory extends SearchableModel implements Auditable
 {
@@ -81,5 +82,13 @@ class ProductCategory extends SearchableModel implements Auditable
     public function scopeRoot($query)
     {
         return $query->whereNull('parent_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
     }
 }
