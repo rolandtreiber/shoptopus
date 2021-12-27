@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Enums\AvailabilityStatuses;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -66,7 +68,8 @@ class ProductCategory extends SearchableModel implements Auditable
 
     public function children(): HasMany
     {
-        return $this->hasMany(ProductCategory::class, 'parent_id', 'id')->whereNotNull('parent_id');
+        $result = $this->hasMany(ProductCategory::class, 'parent_id', 'id')->whereNotNull('parent_id');
+        return $result;
     }
 
     /**
@@ -74,7 +77,7 @@ class ProductCategory extends SearchableModel implements Auditable
      */
     public function setChildrenIds(): ProductCategory
     {
-        $this->allChildIds = [$this->id, ...$this->children->map(function(ProductCategory $category) {
+        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
             return $category->setChildrenIds()->allChildIds;
         })->toArray()];
         return $this;
@@ -85,11 +88,11 @@ class ProductCategory extends SearchableModel implements Auditable
      */
     public function childrenIds(): array
     {
-        $this->allChildIds = [$this->id, ...$this->children->map(function(ProductCategory $category) {
+        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
             return [$category->id, ...$category->setChildrenIds()->allChildIds];
         })->toArray()];
 
-        return [$this->id, ...$this->children->map(function(ProductCategory $category) {
+        return [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
             return $category->setChildrenIds()->allChildIds;
         })];
     }

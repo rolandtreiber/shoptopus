@@ -19,6 +19,9 @@ class ProductCategoryListResource extends JsonResource
      */
     public function toArray($request): array
     {
+        $this->load(['children' => function($q) use ($request) {
+            $q->availability($request->view);
+        }]);
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
