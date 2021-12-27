@@ -26,8 +26,9 @@ class ProductCategoryDetailResource extends JsonResource
             'menu_image' => $this->menu_image ? $this->menu_image->url : null,
             'header_image' => $this->header_image ? $this->header_image->url : null,
             'parent_id' => $this->parent_id,
+            'tree' => $this->tree(),
             'children' => ProductCategoryListResource::collection($this->children),
-            'products' => ProductListResource::collection($this->products),
+            'products' => ProductListResource::collection($this->products()->get()),
             'enabled' => $this->enabled
         ];
     }

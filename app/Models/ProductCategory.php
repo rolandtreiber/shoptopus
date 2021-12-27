@@ -6,14 +6,13 @@ use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use OwenIt\Auditing\Contracts\Auditable;
-use Ramsey\Collection\Collection;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -60,7 +59,6 @@ class ProductCategory extends SearchableModel implements Auditable
         'enabled' => 'boolean'
     ];
 
-
     public function parent(): BelongsTo
     {
         return $this->belongsTo(ProductCategory::class);
@@ -69,6 +67,43 @@ class ProductCategory extends SearchableModel implements Auditable
     public function children(): HasMany
     {
         return $this->hasMany(ProductCategory::class, 'parent_id', 'id')->whereNotNull('parent_id');
+    }
+
+    /**
+     * @return $this
+     */
+    public function setChildrenIds(): ProductCategory
+    {
+        $this->allChildIds = [$this->id, ...$this->children->map(function(ProductCategory $category) {
+            return $category->setChildrenIds()->allChildIds;
+        })->toArray()];
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function childrenIds(): array
+    {
+        $this->allChildIds = [$this->id, ...$this->children->map(function(ProductCategory $category) {
+            return [$category->id, ...$category->setChildrenIds()->allChildIds];
+        })->toArray()];
+
+        return [$this->id, ...$this->children->map(function(ProductCategory $category) {
+            return $category->setChildrenIds()->allChildIds;
+        })];
+    }
+
+    /**
+     * Recursively selects all descendants and turns them into an array.
+     * The array then can be used in the frontend filtering by category anywhere down the tree.
+     * @return mixed
+     */
+    public function tree()
+    {
+        $childIds = $this->childrenIds();
+        array_walk_recursive($childIds, function($a) use (&$return) { $return[] = $a; });
+        return $return;
     }
 
     /**
@@ -85,10 +120,15 @@ class ProductCategory extends SearchableModel implements Auditable
     }
 
     /**
+     * @param bool $immediate
      * @return BelongsToMany
      */
-    public function products(): BelongsToMany
+    public function products($immediate = false)
     {
-        return $this->belongsToMany(Product::class);
+        if ($immediate) {
+            return $this->belongsToMany(Product::class);
+        } else {
+            return Product::whereHasCategories($this->tree());
+        }
     }
 }
