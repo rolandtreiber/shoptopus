@@ -24,7 +24,8 @@ class ProductAttributeDetailResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'type' => $this->type,
             'image' => $this->image ? $this->image->url : null,
-            'options' => ProductAttributeOptionListResource::collection($this->options)
+            'options' => ProductAttributeOptionListResource::collection($this->options),
+            'enabled' => $this->enabled,
         ];
     }
 }

@@ -63,7 +63,7 @@ class ProductAttributeController extends Controller
         $data = $this->getProcessed($request, [], ['name']);
         isset($attribute->image) && $this->deleteCurrentFile($attribute->image->file_name);
         $attribute->fill($data);
-        $request->hasFile('image') && $attribute->image = $this->saveFileAndGetUrl($request->image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]);
+        $attribute->image = $request->hasFile('image') ? $this->saveFileAndGetUrl($request->image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]) : null;
         $attribute->save();
 
         return new ProductAttributeDetailResource($attribute);
