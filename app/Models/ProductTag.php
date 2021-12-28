@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Date;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -48,4 +49,12 @@ class ProductTag extends SearchableModel implements Auditable
         'display_badge' => 'boolean',
         'enabled' => 'boolean',
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
 }

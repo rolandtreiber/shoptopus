@@ -4,7 +4,6 @@ namespace App\Traits;
 
 use App\Http\Requests\ListRequest;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
 trait Searchable {
 
