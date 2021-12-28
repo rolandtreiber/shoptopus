@@ -193,6 +193,22 @@ class Product extends SearchableModel implements Auditable
     }
 
     /**
+     * @param $query
+     * @param array|null $attributeOptions
+     */
+    public function scopeWhereHasAttributeOptions($query, ?array $attributeOptions)
+    {
+        if ($attributeOptions && count($attributeOptions) > 0) {
+            $productIdsWithAttributeOptions = DB::table('product_product_attribute')->whereIn('product_attribute_option_id', $attributeOptions)->pluck('product_id');
+            $productIdsWithVariantWithAttributeOptions = DB::table('product_attribute_product_variant')
+                ->whereIn('product_attribute_option_id', $attributeOptions)
+                ->join('product_variants', 'product_attribute_product_variant.product_variant_id', '=', 'product_variants.id')
+                ->pluck('product_variants.product_id');
+            $query->whereIn('id', $productIdsWithAttributeOptions->merge($productIdsWithVariantWithAttributeOptions)->unique());
+        }
+    }
+
+    /**
      * @return BelongsToMany
      */
     public function productTags(): BelongsToMany

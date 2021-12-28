@@ -52,7 +52,7 @@ trait Searchable {
                         $operator = '!=';
                         $value = $filter[2];
                         break;
-                    case 'equasl':
+                    case 'equal':
                         $operator = '=';
                         $value = $filter[2];
                         break;

@@ -6,52 +6,716 @@
 	},
 	"item": [
 		{
-			"name": "List Products",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/signup",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Recovery",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/password-recovery",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"password-recovery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Password Reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/password-reset",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"password-reset"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Products List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/products?page=1&paginate=25&sort_by_field=id&sort_by_type=ASC&view=sale&categories[]=CATEGORY_ID&tags[]=TAG_ID&attribute_options[]=ATTRIBUTE_OPTION_ID&filters[name->en]=[\"contains\", \"word\"]",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"products"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page"
+								},
+								{
+									"key": "paginate",
+									"value": "25",
+									"description": "Results per page"
+								},
+								{
+									"key": "sort_by_field",
+									"value": "id",
+									"description": "Sort by field"
+								},
+								{
+									"key": "sort_by_type",
+									"value": "ASC",
+									"description": "Sort by type"
+								},
+								{
+									"key": "view",
+									"value": "sale",
+									"description": "Any particular scope"
+								},
+								{
+									"key": "categories[]",
+									"value": "CATEGORY_ID",
+									"description": "Array of category ids (the tree function in the Category model returns the array of the ids of all downstream children of a category as well as the category id itself) - this was designed to work with this filter"
+								},
+								{
+									"key": "tags[]",
+									"value": "TAG_ID",
+									"description": "Array of tag ids to filter the results by"
+								},
+								{
+									"key": "attribute_options[]",
+									"value": "ATTRIBUTE_OPTION_ID",
+									"description": "Array of attribute option ids. Filtering by this returns all products that either themselves have any of the specified attribute option or any of their variant do."
+								},
+								{
+									"key": "filters[name->en]",
+									"value": "[\"contains\", \"word\"]"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/product/{{public_product_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"product",
+								"{{public_product_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Addresses",
+					"item": [
 						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
+							"name": "List Addresses",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/addresses",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Address",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "_method",
+											"value": "PATCH",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/public/account/address/{{public_address_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"address",
+										"{{public_address_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Address",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/address",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"address"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Address",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/address/{{public_address_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"address",
+										"{{public_address_id}}"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "{{base_url}}/api/products?page=1&paginate=20&lang=fr",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"api",
-						"products"
-					],
-					"query": [
+				{
+					"name": "Orders",
+					"item": [
 						{
-							"key": "page",
-							"value": "1"
+							"name": "List orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/orders",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"orders"
+									]
+								}
+							},
+							"response": []
 						},
 						{
-							"key": "paginate",
-							"value": "20"
-						},
-						{
-							"key": "lang",
-							"value": "fr"
+							"name": "Show Order Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/order/{{public_order_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"order",
+										"{{public_order_id}}"
+									]
+								}
+							},
+							"response": []
 						}
 					]
+				},
+				{
+					"name": "Payment Sources",
+					"item": [
+						{
+							"name": "List Payment Sources",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/payment-sources",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"payment-sources"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Payment Source",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/payment-source/{{public_payment_source_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"payment-source",
+										"{{public_payment_source_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Payment Source",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/payment-source/{{public_payment_source_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"payment-source",
+										"{{public_payment_source_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Payment Source",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "_method",
+											"value": "PATCH",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/public/account/payment-source/{{public_payment_source_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"payment-source",
+										"{{public_payment_source_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "bearer",
+						"bearer": [
+							{
+								"key": "token",
+								"value": "{{token}}",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "Get User Cart",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/cart",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"cart"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Product to Cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/public/account/cart/product/{{public_cart_product_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"cart",
+										"product",
+										"{{public_cart_product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product in Cart",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "_method",
+											"value": "PATCH",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/public/account/cart/product/{{public_cart_cart_product_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"cart",
+										"product",
+										"{{public_cart_cart_product_id}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Product from Cart",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "_method",
+											"value": "PATCH",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/api/public/account/cart/product/{{public_cart_cart_product_id}}",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"public",
+										"account",
+										"cart",
+										"product",
+										"{{public_cart_cart_product_id}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/account/dashboard",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"account",
+								"dashboard"
+							]
+						}
+					},
+					"response": []
 				}
+			],
+			"auth": {
+				"type": "bearer"
 			},
-			"response": []
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Checkout",
+			"item": [
+				{
+					"name": "Get Checkout Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/account/checkout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"account",
+								"checkout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Process Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/public/account/cart/checkout/{{public_order_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"account",
+								"cart",
+								"checkout",
+								"{{public_order_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Guest Checkout",
+			"item": []
 		}
 	]
 }

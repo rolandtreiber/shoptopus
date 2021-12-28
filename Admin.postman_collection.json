@@ -87,7 +87,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/products?page=1&paginate=15&search=25&sort_by_field=name->de&sort_by_type=ASC&view=discontinued",
+							"raw": "{{base_url}}/api/admin/products?page=1&paginate=15&sort_by_field=name->de&sort_by_type=ASC&view=discontinued&attribute_options[]=95341814-0676-4de1-bd26-f48fd462d247",
 							"host": [
 								"{{base_url}}"
 							],
@@ -107,7 +107,8 @@
 								},
 								{
 									"key": "search",
-									"value": "25"
+									"value": "25",
+									"disabled": true
 								},
 								{
 									"key": "filters[name->en]",
@@ -125,6 +126,45 @@
 								{
 									"key": "view",
 									"value": "discontinued"
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-d1b2-420c-a9eb-b100e74b5e2e",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-df29-447d-967c-1e9c68175c46",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-e5b0-4bee-a259-88e19100f46f",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-ecd4-4679-b81a-dd71180f0728",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-ef8a-40b8-8eca-8c44b6661a49",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-d54b-47e5-adaa-cd6282594ac6",
+									"disabled": true
+								},
+								{
+									"key": "categories[]",
+									"value": "95341813-e3a6-4d54-a9a4-f1e2b21b03be",
+									"disabled": true
+								},
+								{
+									"key": "attribute_options[]",
+									"value": "95341814-0676-4de1-bd26-f48fd462d247"
 								}
 							]
 						}
@@ -448,7 +488,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variants?page=1&paginate=20",
+							"raw": "{{base_url}}/api/admin/product/{{product_id}}/variants?page=1&paginate=20&filters[price]=[\"greaterThan\", 20.00]",
 							"host": [
 								"{{base_url}}"
 							],
@@ -480,8 +520,7 @@
 								},
 								{
 									"key": "filters[price]",
-									"value": "[\">\", \"20.00\"]",
-									"disabled": true
+									"value": "[\"greaterThan\", 20.00]"
 								}
 							]
 						}
@@ -845,7 +884,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								},
 								{
@@ -1266,7 +1305,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								}
 							]
@@ -1665,7 +1704,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								}
 							]
@@ -2023,12 +2062,12 @@
 								},
 								{
 									"key": "filters[id]",
-									"value": "947ac348-a3d6-48a5-be28-e519e8725916",
+									"value": "95341813-b17b-4ebf-9cad-79a40ec69ed4",
 									"disabled": true
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"max\"]",
 									"disabled": true
 								}
 							]
@@ -2125,7 +2164,7 @@
 								{
 									"key": "badge",
 									"type": "file",
-									"src": "/home/roland/Downloads/3708391-middle.png"
+									"src": "/Users/roland/Documents/syncbinicon.png"
 								},
 								{
 									"key": "display_badge",
@@ -2359,7 +2398,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/orders?page=1&paginate=25&view=paid",
+							"raw": "{{base_url}}/api/admin/orders?page=1&paginate=25&filters[user.name]=[\"contains\", \"Mason\"]&view=paid",
 							"host": [
 								"{{base_url}}"
 							],
@@ -2393,9 +2432,8 @@
 									"disabled": true
 								},
 								{
-									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
-									"disabled": true
+									"key": "filters[user.name]",
+									"value": "[\"contains\", \"Mason\"]"
 								},
 								{
 									"key": "view",
@@ -2672,7 +2710,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"%dolorem%\"]",
 									"disabled": true
 								}
 							]
@@ -2998,7 +3036,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/voucher-codes?page=1&paginate=2&search=2",
+							"raw": "{{base_url}}/api/admin/voucher-codes?page=1&paginate=2&search=2&filters[code]=[\"contains\", \"ZGR\"]",
 							"host": [
 								"{{base_url}}"
 							],
@@ -3031,9 +3069,8 @@
 									"disabled": true
 								},
 								{
-									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
-									"disabled": true
+									"key": "filters[code]",
+									"value": "[\"contains\", \"ZGR\"]"
 								}
 							]
 						}
@@ -3382,7 +3419,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								}
 							]
@@ -4073,12 +4110,12 @@
 								},
 								{
 									"key": "filters[name]",
-									"value": "[\"LIKE\", \"%Mary%\"]",
+									"value": "[\"contains\", \"Mary\"]",
 									"disabled": true
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								}
 							]
@@ -4449,7 +4486,7 @@
 								},
 								{
 									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
+									"value": "[\"contains\", \"dolorem\"]",
 									"disabled": true
 								}
 							]
@@ -4894,7 +4931,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/payments?page=1&paginate=2&search=2",
+							"raw": "{{base_url}}/api/admin/payments?page=1&paginate=2&search=2&filters[amount]=[\"greaterThan\", \"250\"]",
 							"host": [
 								"{{base_url}}"
 							],
@@ -4927,9 +4964,8 @@
 									"disabled": true
 								},
 								{
-									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
-									"disabled": true
+									"key": "filters[amount]",
+									"value": "[\"greaterThan\", \"250\"]"
 								}
 							]
 						}
@@ -5271,7 +5307,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/banners?page=1&paginate=20&search=25",
+							"raw": "{{base_url}}/api/admin/banners?page=1&paginate=20&search=25&filters[total_clicks]=[\"greaterThan\", 50]",
 							"host": [
 								"{{base_url}}"
 							],
@@ -5299,9 +5335,8 @@
 									"disabled": true
 								},
 								{
-									"key": "filters[price]",
-									"value": "[\">\", \"20.00\"]",
-									"disabled": true
+									"key": "filters[total_clicks]",
+									"value": "[\"greaterThan\", 50]"
 								}
 							]
 						}
@@ -5651,7 +5686,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/admin/ratings?page=1&paginate=2&search=2&filters[rating]=4",
+							"raw": "{{base_url}}/api/admin/ratings?page=1&paginate=2&search=2&filters[rating]=4&filters[rating]=[\"greaterThan\", 3]",
 							"host": [
 								"{{base_url}}"
 							],
@@ -5683,9 +5718,8 @@
 									"disabled": true
 								},
 								{
-									"key": "filters[name->en]",
-									"value": "[\"LIKE\", \"%dolorem%\"]",
-									"disabled": true
+									"key": "filters[rating]",
+									"value": "[\"greaterThan\", 3]"
 								}
 							]
 						}
