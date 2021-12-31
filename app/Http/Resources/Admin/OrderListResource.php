@@ -29,6 +29,7 @@ class OrderListResource extends JsonResource
             'status' => $this->status,
             'user' => $this->user->name,
             'delivery_type' => $this->deliveryType->getTranslations('name'),
+            'delivery' => $this->delivery,
             'town' => $this->address->town
         ];
     }

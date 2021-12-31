@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Enums\OrderStatuses;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -59,4 +62,44 @@ class DeliveryType extends SearchableModel
     {
         return $this->hasMany(DeliveryRule::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderCount(): int
+    {
+        return DB::table('orders')
+            ->where('delivery_type_id', $this->id)
+            ->whereIn('status', [
+                OrderStatuses::Paid,
+                OrderStatuses::Processing,
+                OrderStatuses::Completed,
+                OrderStatuses::OnHold])
+            ->count();
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalRevenue(): int
+    {
+        return DB::table('orders')
+            ->select('delivery')
+            ->where('delivery_type_id', $this->id)
+            ->whereIn('status', [
+                OrderStatuses::Paid,
+                OrderStatuses::Processing,
+                OrderStatuses::Completed,
+                OrderStatuses::OnHold])
+            ->sum('delivery');
+    }
+
 }

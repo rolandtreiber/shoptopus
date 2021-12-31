@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\DB;
  * @property User $user
  * @property Product[] $products
  * @property mixed $pivot
+ * @property float $delivery
  * @property Payment[] $payments
  * @property Carbon $updated_at
  */
