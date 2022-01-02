@@ -15,13 +15,16 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $order
  * @property float|mixed $full_price
  * @property float|mixed $final_price
+ * @property float|mixed $original_unit_price
+ * @property float|mixed $unit_discount
+ * @property float|mixed $total_discount
  */
 class OrderProduct extends MorphPivot
 {
     use HasTranslations;
     use HasUUID;
 
-    protected $table = 'order_products';
+    protected $table = 'order_product';
 
     public $translatable = ['name'];
 

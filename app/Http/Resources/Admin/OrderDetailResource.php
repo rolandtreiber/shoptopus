@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use App\Helpers\GeneralHelper;
 use App\Http\Resources\Common\AddressResource;
+use App\Models\DeliveryType;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,6 +23,8 @@ class OrderDetailResource extends JsonResource
      */
     public function toArray($request): array
     {
+        /** @var DeliveryType $dt */
+        $dt = $this->deliveryType;
         return [
             'id' => $this->id,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
@@ -29,7 +32,12 @@ class OrderDetailResource extends JsonResource
             'address' => new AddressResource($this->address),
             'products' => OrderProductResource::collection($this->products),
             'user' => new UserListResource($this->user),
-            'payments' => PaymentListResource::collection($this->payments)
+            'payments' => PaymentListResource::collection($this->payments),
+            'delivery' => $this->delivery,
+            'delivery_type' => [
+                'name' => $dt->getTranslations('name'),
+                'description' => $dt->getTranslations('description')
+            ]
         ];
     }
 }

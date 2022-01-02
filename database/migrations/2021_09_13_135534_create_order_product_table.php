@@ -21,9 +21,12 @@ class CreateOrderProductTable extends Migration
             $table->foreignUuid('product_variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
             $table->integer('amount')->default(1);
             $table->text('name');
+            $table->decimal('original_unit_price')->default(0);
             $table->decimal('unit_price')->default(0);
             $table->decimal('full_price')->default(0);
             $table->decimal('final_price')->default(0);
+            $table->decimal('unit_discount')->default(0);
+            $table->decimal('total_discount')->default(0);
         });
     }
 

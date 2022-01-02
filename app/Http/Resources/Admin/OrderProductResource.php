@@ -23,12 +23,17 @@ class OrderProductResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' => $this->id,
+            'id' => $this->pivot->id,
+            'product_id' => $this->pivot->product_id,
             'name' => $this->pivot->name,
             'variant' => $this->pivot->product_variant_id ? new ProductVariantResource(ProductVariant::find($this->pivot->product_variant_id)) : null,
             'amount' => $this->pivot->amount,
-            'unit_price' => $this->pivot->unit_price,
-            'final_price' => $this->pivot->final_price,
+            'original_unit_price' => round((float) $this->pivot->original_unit_price, 2),
+            'unit_price' => round((float) $this->pivot->unit_price, 2),
+            'full_price' => round((float) $this->pivot->full_price, 2),
+            'final_price' => round((float) $this->pivot->final_price, 2),
+            'unit_discount' => round((float) $this->pivot->unit_discount, 2),
+            'total_discount' => round((float) $this->pivot->total_discount, 2)
         ];
     }
 }

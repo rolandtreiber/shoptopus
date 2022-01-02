@@ -27,6 +27,9 @@ class OrderProductObserver
         $orderProduct->unit_price = $finalPrice;
         $orderProduct->full_price = round($fullPrice * $orderProduct->amount, 2);
         $orderProduct->final_price = round($finalPrice * $orderProduct->amount, 2);
+        $orderProduct->original_unit_price = round($product->price, 2);
+        $orderProduct->unit_discount = round($product->price - $finalPrice, 2);
+        $orderProduct->total_discount = round(($fullPrice * $orderProduct->amount) - ($finalPrice * $orderProduct->amount), 2);
     }
 
     public function saved(OrderProduct $orderProduct)
