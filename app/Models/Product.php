@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Enums\ProductStatuses;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
-use App\Traits\HasRatings;
+use App\Traits\HasEventLogs;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -43,7 +43,7 @@ class Product extends SearchableModel implements Auditable
     use HasFactory;
     use HasTranslations;
     use HasFiles;
-    use HasRatings;
+    use HasEventLogs;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;

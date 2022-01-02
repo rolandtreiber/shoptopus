@@ -37,7 +37,8 @@ class OrderDetailResource extends JsonResource
             'delivery_type' => [
                 'name' => $dt->getTranslations('name'),
                 'description' => $dt->getTranslations('description')
-            ]
+            ],
+            'event_logs' => EventLogResource::collection($this->eventLogs)
         ];
     }
 }

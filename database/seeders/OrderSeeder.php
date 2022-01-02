@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\OrderStatuses;
 use App\Enums\PaymentStatuses;
 use App\Enums\PaymentTypes;
 use App\Models\Address;
@@ -34,6 +35,7 @@ class OrderSeeder extends Seeder
             $selectedUserId = $selectedUser->id;
             $order = new Order();
             $order->user_id = $selectedUserId;
+            $order->status = OrderStatuses::Paid;
             $order->delivery_type_id = (new DeliveryType)->findNthId(random_int(1, DeliveryType::count()));
             $userAddresses = $selectedUser->addresses;
             $selectedAddress = random_int(0, sizeof($userAddresses) - 1);

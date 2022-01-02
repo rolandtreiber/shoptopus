@@ -20,9 +20,8 @@ class CreateEventLogsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('message', 200);
             $table->tinyInteger('type');
-            $table->boolean('notification')->default(true);
-            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->boolean('actioned')->default(false);
+            $table->string('eventable_type')->nullable();
+            $table->uuid('eventable_id')->nullable();
             $table->text('data');
             $table->timestamps();
         });

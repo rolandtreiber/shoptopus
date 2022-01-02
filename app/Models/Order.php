@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DiscountTypes;
 use App\Enums\OrderStatuses;
 use App\Helpers\GeneralHelper;
+use App\Traits\HasEventLogs;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,6 +41,7 @@ class Order extends SearchableModel
 {
     use HasFactory, HasUUID;
     use SoftDeletes;
+    use HasEventLogs;
 
     /**
      * The attributes that are mass assignable.

@@ -6,6 +6,11 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $message
+ * @property int $type
+ * @property mixed $data
+ */
 class EventLog extends Model
 {
     use HasFactory;
@@ -19,10 +24,9 @@ class EventLog extends Model
     protected $fillable = [
         'message',
         'type',
-        'notification',
-        'user_id',
-        'actioned',
         'data',
+        'eventable_type',
+        'eventable_id',
     ];
 
     /**
@@ -33,14 +37,6 @@ class EventLog extends Model
     protected $casts = [
         'id' => 'string',
         'type' => 'integer',
-        'notification' => 'boolean',
-        'user_id' => 'string',
-        'actioned' => 'boolean',
+        'data' => 'object',
     ];
-
-
-    public function user()
-    {
-        return $this->belongsTo(\App\User::class);
-    }
 }
