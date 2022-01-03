@@ -28,6 +28,8 @@ class AddressResource extends JsonResource
             'post_code' => $this->post_code,
             'lat' => $this->lat,
             'lon' => $this->lon,
+            'country' => $this->country,
+            'composite' => $this->getComposite()
         ];
     }
 }

@@ -17,6 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $post_code
  * @property float|null $lat
  * @property float|null $lon
+ * @property string $country
  */
 class Address extends Model implements Auditable
 {
@@ -34,6 +35,7 @@ class Address extends Model implements Auditable
         'post_code',
         'address_line_1',
         'address_line_2',
+        'country',
         'lat',
         'lon'
     ];
@@ -48,4 +50,18 @@ class Address extends Model implements Auditable
         'lat' => 'decimal:6',
         'lon' => 'decimal:6'
     ];
+
+
+    /**
+     * @return string[]
+     */
+    public function getComposite(): array
+    {
+        $textValue = $this->address_line_1 . ", " . $this->address_line_2 . ", " . $this->town . ", " . $this->post_code;
+        $url = "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z";
+        return [
+            'text' => $textValue,
+            'url' => $url
+        ];
+    }
 }

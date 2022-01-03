@@ -78,17 +78,38 @@ class ProductVariant extends SearchableModel implements Auditable
     /**
      * @return BelongsToMany
      */
-    public function attributes(): BelongsToMany
+    public function productVariantAttributes(): BelongsToMany
     {
         return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(VariantAttribute::class);
     }
 
-    public function updateParentStock() {
+    public function updateParentStock()
+    {
         /** @var Product $product */
         $product = $this->product;
         $variantSumStock = $product->productVariants->pluck('stock')->sum();
         $product->stock = $variantSumStock;
         $product->save();
+    }
+
+    /**
+     * @return array
+     */
+    public function getNameAttribute(): array
+    {
+        $attributes = $this->productVariantAttributes;
+        $languages = config('app.locales_supported');
+        $elements = [];
+        foreach ($languages as $languageKey => $language) {
+            $text = $this->product->setLocale($languageKey)->name . ' - ';
+            $attributeTexts = [];
+            foreach ($attributes as $attribute) {
+                $option = $attribute->pivot->option;
+                $attributeTexts[] =  '(' . $attribute->setLocale($languageKey)->name . ') ' . $option->setLocale($languageKey)->name;
+            }
+            $elements[$languageKey] = $text . implode(', ', $attributeTexts);
+        }
+        return $elements;
     }
 
 }

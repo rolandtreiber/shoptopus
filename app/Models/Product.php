@@ -6,6 +6,7 @@ use App\Enums\ProductStatuses;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
 use App\Traits\HasEventLogs;
+use App\Traits\HasRatings;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -43,6 +44,7 @@ class Product extends SearchableModel implements Auditable
     use HasFactory;
     use HasTranslations;
     use HasFiles;
+    use HasRatings;
     use HasEventLogs;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
@@ -243,7 +245,7 @@ class Product extends SearchableModel implements Auditable
     /**
      * @return BelongsToMany
      */
-    public function attributes(): BelongsToMany
+    public function productAttributes(): BelongsToMany
     {
         return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(ProductProductAttribute::class);
     }
@@ -260,4 +262,28 @@ class Product extends SearchableModel implements Auditable
     {
         return $this->hasOne(FileContent::class, 'id', 'cover_photo_id');
     }
+
+    /**
+     * @return array
+     */
+    public function getAttributedTranslatedNameAttribute(): array
+    {
+        $attributes = $this->productAttributes;
+        if (!$attributes || count($attributes) === 0) {
+            return $this->getTranslations('name');
+        }
+        $languages = config('app.locales_supported');
+        $elements = [];
+        foreach ($languages as $languageKey => $language) {
+            $text = $this->setLocale($languageKey)->name . ' - ';
+            $attributeTexts = [];
+            foreach ($attributes as $attribute) {
+                $option = $attribute->pivot->option;
+                $attributeTexts[] =  '(' . $attribute->setLocale($languageKey)->name . ') ' . $option->setLocale($languageKey)->name;
+            }
+            $elements[$languageKey] = $text . implode(', ', $attributeTexts);
+        }
+        return $elements;
+    }
+
 }

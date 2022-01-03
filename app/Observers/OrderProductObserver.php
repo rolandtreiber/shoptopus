@@ -16,14 +16,16 @@ class OrderProductObserver
 
         $variant = null;
         if ($orderProduct->product_variant_id) {
-            $variant = ProductVariant::find($variant);
+            $variant = ProductVariant::find($orderProduct->product_variant_id);
             if ($product->price !== $variant->price) {
                 $finalPrice = $variant->final_price;
                 $fullPrice = $variant->price;
             }
+            $orderProduct->name = $variant->name;
+        } else {
+            $orderProduct->name = $product->attributedTranslatedName;
         }
 
-        $orderProduct->name = $product->getTranslations('name');
         $orderProduct->unit_price = $finalPrice;
         $orderProduct->full_price = round($fullPrice * $orderProduct->amount, 2);
         $orderProduct->final_price = round($finalPrice * $orderProduct->amount, 2);

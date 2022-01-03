@@ -18,7 +18,7 @@ class ProductVariantSeeder extends Seeder
      */
     public function run()
     {
-        $variableProductCount = Product::count()-4;
+        $variableProductCount = Product::count() / 2;
 
         $used = [];
         for ($i = 0; $i < $variableProductCount; $i++) {
@@ -49,7 +49,7 @@ class ProductVariantSeeder extends Seeder
                     ->where('product_attribute_id', $attribute->id)
                     ->where('product_attribute_option_id', $optionId)
                     ->first());
-                $productVariant->attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
+                $productVariant->productVariantAttributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
             }
         }
 
@@ -61,7 +61,7 @@ class ProductVariantSeeder extends Seeder
             $used[] = $productId;
             $attribute = ProductAttribute::find((new ProductAttribute)->findNthId(rand(1, ProductAttribute::count())));
             $options = $attribute->options;
-            Product::find($productId)->attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
+            Product::find($productId)->productAttributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
         }
 
     }

@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\Product;
 use App\Models\ProductAttribute;
 
 trait HasAttributes {
@@ -12,12 +13,25 @@ trait HasAttributes {
      */
     public function handleAttributes($model, $request)
     {
-        $model->attributes()->detach();
-        if ($request->product_attributes) {
-            foreach ($request->product_attributes as $attributeId => $attributeOptionId) {
-                $attribute = ProductAttribute::find($attributeId);
-                if ($attribute) {
-                    $model->attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
+        $modelClass = get_class($model);
+        if ($modelClass === Product::class) {
+            $model->productAttributes()->detach();
+            if ($request->product_attributes) {
+                foreach ($request->product_attributes as $attributeId => $attributeOptionId) {
+                    $attribute = ProductAttribute::find($attributeId);
+                    if ($attribute) {
+                        $model->productAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
+                    }
+                }
+            }
+        } else {
+            $model->productVariantAttributes()->detach();
+            if ($request->product_attributes) {
+                foreach ($request->product_attributes as $attributeId => $attributeOptionId) {
+                    $attribute = ProductAttribute::find($attributeId);
+                    if ($attribute) {
+                        $model->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
+                    }
                 }
             }
         }

@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
@@ -40,17 +42,22 @@ class PaymentSource extends Model implements Auditable
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
-        'payment_method_id' => 'string',
+        'payment_method_id' => 'integer',
     ];
 
-
-    public function payments()
+    /**
+     * @return HasMany
+     */
+    public function payments(): HasMany
     {
-        return $this->hasMany(\App\Payment::class);
+        return $this->hasMany(Payment::class);
     }
 
-    public function user()
+    /**
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(\App\User::class);
+        return $this->belongsTo(User::class);
     }
 }

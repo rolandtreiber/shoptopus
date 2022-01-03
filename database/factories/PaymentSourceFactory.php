@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Enums\PaymentMethods;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\PaymentSource;
-use App\User;
 
 class PaymentSourceFactory extends Factory
 {
@@ -21,7 +21,7 @@ class PaymentSourceFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'user_id' => User::factory(),
@@ -32,7 +32,12 @@ class PaymentSourceFactory extends Factory
             'last_four' => $this->faker->regexify('[A-Za-z0-9]{4}'),
             'brand' => $this->faker->regexify('[A-Za-z0-9]{50}'),
             'stripe_user_id' => $this->faker->regexify('[A-Za-z0-9]{120}'),
-            'payment_method_id' => $this->faker->numberBetween(-8, 8),
+            'payment_method_id' => $this->faker->randomElement([
+                PaymentMethods::Stripe,
+                PaymentMethods::PayPal,
+                PaymentMethods::ApplePay,
+                PaymentMethods::GooglePay
+            ]),
         ];
     }
 }

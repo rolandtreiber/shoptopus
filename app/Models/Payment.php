@@ -22,6 +22,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property mixed|string $description
  * @property string $created_at
  * @property User $user
+ * @property string $payment_ref
+ * @property string $method_ref
  */
 class Payment extends SearchableModel implements Auditable
 {

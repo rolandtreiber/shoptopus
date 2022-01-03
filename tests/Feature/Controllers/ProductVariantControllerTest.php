@@ -81,7 +81,7 @@ class ProductVariantControllerTest extends TestCase
         $this->assertEquals(12.9, $productVariant->price);
         $this->assertEquals('Test Variant', $productVariant->setLocale('en')->description);
         $this->assertEquals('Test Variante', $productVariant->setLocale('de')->description);
-        $this->assertTrue($productVariant->attributes->contains($attribute));
+        $this->assertTrue($productVariant->productVariantAttributes->contains($attribute));
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductVariantControllerTest extends TestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->attributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
+        $productVariant->productVariantAttributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
@@ -129,8 +129,8 @@ class ProductVariantControllerTest extends TestCase
         $this->assertEquals(11.12, $productVariant->price);
         $this->assertEquals('Updated Test Variant', $productVariant->setLocale('en')->description);
         $this->assertEquals('Aktualisiert Test Variante', $productVariant->setLocale('de')->description);
-        $this->assertTrue($productVariant->attributes->contains($attribute2));
-        $this->assertFalse($productVariant->attributes->contains($attribute1));
+        $this->assertTrue($productVariant->productVariantAttributes->contains($attribute2));
+        $this->assertFalse($productVariant->productVariantAttributes->contains($attribute1));
     }
 
     /**
@@ -146,7 +146,7 @@ class ProductVariantControllerTest extends TestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
+        $productVariant->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-variant', [
             'product' => $product->id,
@@ -205,7 +205,7 @@ class ProductVariantControllerTest extends TestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
+        $productVariant->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
             'product' => $product->id,

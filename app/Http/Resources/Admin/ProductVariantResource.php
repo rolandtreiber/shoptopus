@@ -26,7 +26,7 @@ class ProductVariantResource extends JsonResource
             'stock' => $this->stock,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
-            'attributes' => AttributeResource::collection($this->attributes),
+            'attributes' => AttributeResource::collection($this->productVariantAttributes),
             'images' => FileContentResource::collection($this->fileContents),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),

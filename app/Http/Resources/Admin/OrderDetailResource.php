@@ -32,8 +32,9 @@ class OrderDetailResource extends JsonResource
             'address' => new AddressResource($this->address),
             'products' => OrderProductResource::collection($this->products),
             'user' => new UserListResource($this->user),
-            'payments' => PaymentListResource::collection($this->payments),
+            'payments' => PaymentRelationResource::collection($this->payments),
             'delivery' => $this->delivery,
+            'status' => $this->status,
             'delivery_type' => [
                 'name' => $dt->getTranslations('name'),
                 'description' => $dt->getTranslations('description')

@@ -21,8 +21,9 @@ class CreateAddressesTable extends Migration
             $table->string('address_line_2');
             $table->string('town');
             $table->string('post_code');
-            $table->decimal('lat')->nullable();
-            $table->decimal('lon')->nullable();
+            $table->string('country')->default('UK');
+            $table->string('lat')->nullable();
+            $table->string('lon')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -9,9 +9,11 @@ use App\Models\Address;
 use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\PaymentSource;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\VoucherCode;
+use Database\Factories\PaymentSourceFactory;
 use Exception;
 use Illuminate\Database\Seeder;
 
@@ -31,6 +33,7 @@ class OrderSeeder extends Seeder
         $ordersToCreate = random_int(10, 50);
 
         for ($i = 0; $i < $ordersToCreate; $i++) {
+            /** @var User $selectedUser */
             $selectedUser = User::find($userIds[random_int(1, sizeof($userIds)-1)]);
             $selectedUserId = $selectedUser->id;
             $order = new Order();
@@ -51,21 +54,36 @@ class OrderSeeder extends Seeder
             $productTypesToAddCount = random_int(1, $products);
             for ($n = 0; $n < $productTypesToAddCount; $n++) {
                 do {
-                    $selectedProductId = (new Product)->findNthId(random_int(1, $products));
-                } while (in_array($selectedProductId, $usedProductTypes));
-                $usedProductTypes[] = $selectedProductId;
-                $order->products()->attach($selectedProductId, ['amount' => random_int(1, 10)]);
+                    $selectedProduct = (new Product)->findNth(random_int(1, $products));
+                } while (in_array($selectedProduct->id, $usedProductTypes));
+                $usedProductTypes[] = $selectedProduct->id;
+                $variants = $selectedProduct->productVariants;
+                if (count($variants) > 0) {
+                    $selectedProductVariant = $variants[random_int(0, count($variants)-1)];
+                    $order->products()->attach($selectedProduct->id, ['amount' => random_int(1, 10), 'product_variant_id' => $selectedProductVariant->id]);
+                } else {
+                    $order->products()->attach($selectedProduct->id, ['amount' => random_int(1, 10)]);
+                }
             }
 
             $order = Order::find($order->id);
-            $payment = new Payment();
-            $payment->amount = $order->total_price;
-            $payment->user_id = $selectedUser->id;
-            $payment->payable_type = Order::class;
-            $payment->payable_id = $order->id;
-            $payment->status = PaymentStatuses::Settled;
-            $payment->type = PaymentTypes::Payment;
-            $payment->save();
+            $sources = $selectedUser->paymentSources;
+            if (sizeof($sources) > 0) {
+                $paymentSourceId = $sources[random_int(0, $selectedUser->paymentSources()->count()-1)]->id;
+            } else {
+                $paymentSource = PaymentSource::factory()->state(['user_id' => $selectedUserId])->create();
+                $paymentSourceId = $paymentSource->id;
+            }
+
+            Payment::factory()->state([
+                'amount' => $order->total_price,
+                'user_id' => $selectedUser->id,
+                'payment_source_id' => $paymentSourceId,
+                'payable_type' => Order::class,
+                'payable_id' => $order->id,
+                'status' => PaymentStatuses::Settled,
+                'type' => PaymentTypes::Payment
+            ])->create();
         }
     }
 }

@@ -33,7 +33,7 @@ class OrderController extends Controller
      */
     public function show(Order $order): OrderDetailResource
     {
-        return new OrderDetailResource($order);
+        return new OrderDetailResource($order->load('payments.paymentSource'));
     }
 
     /**

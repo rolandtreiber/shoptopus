@@ -21,6 +21,6 @@ class VariantAttribute extends MorphPivot
 
     public function getOptionAttribute()
     {
-        return $this->hasOne(ProductAttributeOption::class, 'id', 'product_attribute_option_id')->get();
+        return $this->hasOne(ProductAttributeOption::class, 'id', 'product_attribute_option_id')->first();
     }
 }
