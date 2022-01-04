@@ -24,7 +24,7 @@ class ProductAttributeFactory extends Factory
      */
     public function definition(): array
     {
-        $translations = $this->getTranslated($this->faker, ['name'], ['short']);
+        $translations = $this->getTranslated($this->faker, ['name'], ['word']);
 
         return [
             'name' => $translations['name'],

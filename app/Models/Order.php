@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\DB;
  * @property float $delivery
  * @property Payment[] $payments
  * @property Carbon $updated_at
+ * @property float $total_discount
+ * @property float $subtotal
  */
 class Order extends SearchableModel
 {
@@ -52,7 +54,9 @@ class Order extends SearchableModel
         'user_id',
         'status',
         'original_price',
-        'total_price'
+        'subtotal',
+        'total_price',
+        'total_discount'
     ];
 
     /**
@@ -65,7 +69,9 @@ class Order extends SearchableModel
         'user_id' => 'string',
         'status' => 'integer',
         'original_price' => 'decimal:2',
-        'total_price' => 'decimal:2'
+        'subtotal' => 'decimal:2',
+        'total_price' => 'decimal:2',
+        'total_discount' => 'decimal:2'
     ];
 
     public function scopeSearch($query, $search)
@@ -151,8 +157,14 @@ class Order extends SearchableModel
     {
         $dispatcher = Order::getEventDispatcher();
         Order::unsetEventDispatcher();
-        $finalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
+
+        $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
         $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
+        $discount = DB::table('order_product')->where('order_id', $this->id)->sum('total_discount');
+        $total = $subTotal + $this->delivery;
+
+        $this->total_discount = $discount;
+        $this->subtotal = $subTotal;
         $this->original_price = $originalPrice;
         $voucherCode = $this->voucherCode;
         if ($voucherCode) {
@@ -161,14 +173,14 @@ class Order extends SearchableModel
                     $basis = $originalPrice;
                     break;
                 case 'final_price':
-                    $basis = $finalPrice;
+                    $basis = $total;
                     break;
                 default:
-                    $basis = $finalPrice;
+                    $basis = $total;
             }
             $this->total_price = GeneralHelper::getDiscountedValue($voucherCode->type, $voucherCode->amount, $basis);
         } else {
-            $this->total_price = $finalPrice;
+            $this->total_price = $total;
         }
         $this->save();
         Order::setEventDispatcher($dispatcher);

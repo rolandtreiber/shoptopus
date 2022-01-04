@@ -140,8 +140,11 @@ class Product extends SearchableModel implements Auditable
     /**
      * Calculate the final price
      */
-    public function getFinalPriceAttribute()
+    public function getFinalPriceAttribute($price = null)
     {
+        if (!$price) {
+            $price = $this->price;
+        }
         $discountRules = $this->discountRules->map(function($rule) {
             return [
                 'id' => $rule->id,
@@ -159,14 +162,14 @@ class Product extends SearchableModel implements Auditable
                 ];
             })->toArray());
         }
-        $basePrice = $this->price;
+        $basePrice = $price;
         if (sizeof($discountRules) > 0) {
             $discounts = array_map(function($rule) use ($basePrice) {
                 return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
             }, array_unique($discountRules, SORT_REGULAR));
-            return $this->price - $this->calculateDiscountAmount($discounts);
+            return $price - $this->calculateDiscountAmount($discounts);
         } else {
-            return $this->price;
+            return $price;
         }
     }
 

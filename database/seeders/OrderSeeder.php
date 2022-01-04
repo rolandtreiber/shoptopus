@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\OrderStatuses;
 use App\Enums\PaymentStatuses;
 use App\Enums\PaymentTypes;
-use App\Models\Address;
 use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\Payment;
@@ -13,7 +12,6 @@ use App\Models\PaymentSource;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\VoucherCode;
-use Database\Factories\PaymentSourceFactory;
 use Exception;
 use Illuminate\Database\Seeder;
 

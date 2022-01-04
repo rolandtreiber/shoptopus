@@ -30,7 +30,7 @@ class OrderProductResource extends JsonResource
         return [
             'id' => $this->pivot->id,
             'product_id' => $this->pivot->product_id,
-            'name' => $productVariant ? $productVariant->name : $product->getTranslations('name'),
+            'name' => $this->pivot->getTranslations('name'),
             'variant' => $productVariant,
             'sku' => $productVariant ? $productVariant->sku : $this->sku,
             'amount' => $this->pivot->amount,

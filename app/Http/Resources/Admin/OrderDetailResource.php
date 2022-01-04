@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Helpers\GeneralHelper;
 use App\Http\Resources\Common\AddressResource;
 use App\Models\DeliveryType;
 use App\Models\Order;
@@ -28,17 +27,22 @@ class OrderDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            'total_price' => GeneralHelper::displayPrice($this->total_price),
+            'updated_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'original_price' => (float) $this->original_price,
+            'total_price' => (float) $this->total_price,
+            'total_discount' => (float) $this->total_discount,
+            'subtotal' => (float) $this->subtotal,
+            'delivery' => (float) $this->delivery,
             'address' => new AddressResource($this->address),
-            'products' => OrderProductResource::collection($this->products),
             'user' => new UserListResource($this->user),
             'payments' => PaymentRelationResource::collection($this->payments),
-            'delivery' => $this->delivery,
             'status' => $this->status,
+            'voucher_code' => new VoucherCodeListResource($this->voucherCode),
             'delivery_type' => [
                 'name' => $dt->getTranslations('name'),
                 'description' => $dt->getTranslations('description')
             ],
+            'products' => OrderProductResource::collection($this->products),
             'event_logs' => EventLogResource::collection($this->eventLogs)
         ];
     }

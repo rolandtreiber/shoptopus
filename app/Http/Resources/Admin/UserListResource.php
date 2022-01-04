@@ -25,7 +25,7 @@ class UserListResource extends JsonResource
             'name' => $this->name,
             'prefix' => $this->prefix,
             'first_name' => $this->first_name,
-            'last_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'phone' => $this->phone,
             'initials' => $this->initials,
             'email' => $this->email,
