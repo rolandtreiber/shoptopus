@@ -27,13 +27,11 @@ class UserObserver
     {
         $firstName = $user->first_name;
         $lastName = $user->last_name;
-        $prefix = $user->prefix;
-        if ($prefix) {
-            $user->name = $prefix.' '.$firstName.' '.$lastName;
-        } else {
-            $user->name = $firstName.' '.$lastName;
-        }
-        $user->initials = substr($firstName, 0, 1).substr($lastName, 0, 1);
+        $prefix = $user->prefix ?? '';
+
+        $user->name = trim($prefix . ' ' . $firstName . ' ' . $lastName);
+
+        $user->initials = substr($firstName, 0, 1) . substr($lastName, 0, 1);
     }
 
     /**

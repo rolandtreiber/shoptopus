@@ -13,8 +13,6 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->string('name', 100);
@@ -33,8 +31,6 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -44,6 +40,8 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('users');
+        Schema::enableForeignKeyConstraints();
     }
 }
