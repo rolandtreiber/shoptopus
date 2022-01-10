@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Role;
@@ -45,6 +46,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable implements Auditable
 {
+    use Notifiable;
     use HasApiTokens;
     use HasFactory;
     use HasRoles;
@@ -60,10 +62,12 @@ class User extends Authenticatable implements Auditable
      * @var array
      */
     protected $fillable = [
+        'id',
         'first_name',
         'last_name',
         'prefix',
         'email',
+        'phone',
         'email_verified_at',
         'password',
         'client_ref',
@@ -88,7 +92,7 @@ class User extends Authenticatable implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'email_verified_at' => 'timestamp',
+        'email_verified_at' => 'datetime',
         'avatar' => 'object',
         'is_favorite' => 'boolean'
     ];

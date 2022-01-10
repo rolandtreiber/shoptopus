@@ -198,7 +198,9 @@ return [
         OwenIt\Auditing\AuditingServiceProvider::class,
         App\Providers\PassportServiceProvider::class,
         App\Providers\ModuleServiceProvider::class,
-        Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class
+        Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
+        App\Providers\ServiceServiceProvider::class,
+        App\Providers\RepositoryServiceProvider::class,
 
     ],
 

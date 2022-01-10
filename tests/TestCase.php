@@ -3,32 +3,44 @@
 namespace Tests;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Config;
 use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
-    use DatabaseMigrations;
+//    use DatabaseMigrations;
 
-    protected function setUp(): void
+//    protected function setUp(): void
+//    {
+//        parent::setUp();
+//
+//        $this->refreshApplication();
+//        config(['app.locales_supported' => [
+//            'en' => ['English'],
+//            'de' => ['Deutsch']
+//        ]]);
+//        config(['app.default_currency' => [
+//            'name' => 'GBP',
+//            'symbol' => '£',
+//            'side' => 'left'
+//        ]]);
+//        $this->runDatabaseMigrations();
+//        $this->seed();
+//    }
+
+    /**
+     * @param User|null $user
+     * @param array $scopes
+     * @return $this
+     */
+    protected function signIn(User $user = null, array $scopes = []) : TestCase
     {
-        parent::setUp();
+        $user = $user ?? User::factory()->create();
 
-        $this->refreshApplication();
-        config(['app.locales_supported' => [
-            'en' => ['English'],
-            'de' => ['Deutsch']
-        ]]);
-        config(['app.default_currency' => [
-            'name' => 'GBP',
-            'symbol' => '£',
-            'side' => 'left'
-        ]]);
-        $this->runDatabaseMigrations();
-        $this->seed();
+        //Passport::actingAs($user, $scopes);
+
+        return $this;
     }
 
     /**
