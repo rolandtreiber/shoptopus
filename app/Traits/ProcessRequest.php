@@ -100,6 +100,11 @@ trait ProcessRequest
             }
         }
 
+        // Image
+        if (in_array(strtolower($file->extension()), $imageFormats, true)) {
+            $fileType = FileTypes::Image;
+        }
+
         // PDF
         if (strtolower($file->extension()) === 'pdf') {
             $fileType = FileTypes::Pdf;
