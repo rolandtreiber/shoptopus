@@ -10,3 +10,4 @@ Route::group(['middleware' => ['auth:api', 'set.locale']], function () {
 
 // App meta information
 Route::get('meta', [AppController::class, 'getMetaInformation'])->name('admin.api.get-meta-information');
+Route::get('shared-options', [AppController::class, 'getSharedOptions'])->name('admin.api.get-shared-options');
