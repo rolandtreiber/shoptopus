@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 use App\Models\User;
 use App\Events\UserSignedUp;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;

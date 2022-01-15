@@ -33,17 +33,16 @@ class AuthService implements AuthServiceInterface
             $user = User::where('email', $payload["email"])->firstOrFail();
 
             if(is_null($user->password)) {
-                // Must have signed up with a social account.
-                throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.must_reset_password'));
+                throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.mustResetPassword'));
             }
 
-            if (!$user->hasVerifiedEmail() && isset($payload['must_verify']) && $payload['must_verify']) {
-                $user->sendEmailVerificationNotification();
-                throw new \Exception('User unverified.', Config::get("api_error_codes.services.auth.not_verified"));
-            }
+//            if (!$user->hasVerifiedEmail() && isset($payload['must_verify']) && $payload['must_verify']) {
+//                $user->sendEmailVerificationNotification();
+//                throw new \Exception('User unverified.', Config::get("api_error_codes.services.auth.not_verified"));
+//            }
 
             if (!Hash::check($payload["password"], $user->password)) {
-                throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.login_user_incorrect'));
+                throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
             }
 
             return [

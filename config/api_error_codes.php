@@ -8,6 +8,8 @@ return [
             "verify" => 1002,
             "resendVerification" => 1003,
             "logout" => 1004,
+            "mustResetPassword" => 1005,
+            "loginUserIncorrect" => 1006
         ],
         'user' => [
             "get" => 2000,

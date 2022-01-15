@@ -29,7 +29,7 @@ class UserFactory extends Factory
             'prefix' => null,
 //            'prefix' => $this->faker->randomElement(config('users.available_prefixes')),
             'email_verified_at' => null,
-            'password' => bcrypt('shop'),
+            'password' => bcrypt('password'),
             'temporary' => false,
             'phone' => null,
 //            'phone' => $this->faker->phoneNumber,
