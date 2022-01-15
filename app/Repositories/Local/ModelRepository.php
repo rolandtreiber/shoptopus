@@ -131,9 +131,10 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * create a model
      * @param array $payload
+     * @param bool $returnAsArray
      * @return mixed
      */
-    public function post(array $payload)
+    public function post(array $payload, bool $returnAsArray = true)
     {
         try {
             $model = $this->model->create($payload);
@@ -142,7 +143,9 @@ class ModelRepository implements ModelRepositoryInterface
                 $this->saveRelationships($model->id, $payload);
             }
 
-            return $model->toArray();
+            return $returnAsArray
+                ? $model->toArray()
+                : $model;
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
+use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
 
 abstract class TestCase extends BaseTestCase
@@ -38,7 +39,7 @@ abstract class TestCase extends BaseTestCase
     {
         $user = $user ?? User::factory()->create();
 
-        //Passport::actingAs($user, $scopes);
+        Passport::actingAs($user, $scopes);
 
         return $this;
     }

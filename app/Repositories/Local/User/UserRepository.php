@@ -15,13 +15,20 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     }
 
     /**
-     * get currently authenticated user details.
-     * @return null|array
+     * get the currently authenticated user instance.
+     * @param bool $returnAsArray
+     * @return null|mixed
      */
-    public function getCurrentUser() : ?array
+    public function getCurrentUser(bool $returnAsArray = true)
     {
         try {
-            return Auth::check() ? Auth::user()->fresh()->load('customer')->toArray() : null;
+            $user = Auth::check() ? Auth::user() : null;
+
+            if (!$user) {
+                return null;
+            }
+
+            return $returnAsArray ? $user->toArray() : $user;
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

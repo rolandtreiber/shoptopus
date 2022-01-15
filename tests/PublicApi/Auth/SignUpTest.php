@@ -2,6 +2,7 @@
 
 namespace Tests\PublicApi\Auth;
 
+use Illuminate\Database\Eloquent\Model;
 use Tests\TestCase;
 use App\Models\User;
 use App\Events\UserSignedUp;
@@ -118,10 +119,13 @@ class SignUpTest extends TestCase
     /**
      * @test
      * @group apiPost
+     * @see https://github.com/laravel/framework/issues/19952
      */
     public function it_dispatches_the_correct_event()
     {
+        $initialDispatcher = Event::getFacadeRoot();
         Event::fake();
+        Model::setEventDispatcher($initialDispatcher);
 
         $this->artisan('passport:install');
 

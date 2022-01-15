@@ -97,13 +97,14 @@ class ModelService implements ModelServiceInterface
     /**
      * create a model
      * @param array $payload
+     * @param bool $returnAsArray
      * @return mixed
      * @throws \Exception
      */
-    public function post(array $payload)
+    public function post(array $payload, bool $returnAsArray = true)
     {
         try {
-            return $this->modelRepository->post($payload);
+            return $this->modelRepository->post($payload, $returnAsArray);
         } catch (\Exception $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.post"));

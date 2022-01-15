@@ -4,13 +4,12 @@ namespace App\Services\Local\Auth;
 
 use App\Models\User;
 use App\Events\UserSignedUp;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
-use Illuminate\Support\Str;
 
 class AuthService implements AuthServiceInterface
 {
@@ -68,15 +67,10 @@ class AuthService implements AuthServiceInterface
     public function register(array $payload) : array
     {
         try {
-            $current_user = $this->userService->getCurrentUser();
+            $user = $this->userService->getCurrentUser(false);
 
-            if($current_user) {
-                $user = !($current_user instanceof User)
-                    ? User::findOrFail($current_user['id'])
-                    : $current_user;
-            } else {
+            if(!$user) {
                 $data = [
-                    "id" => Str::uuid(),
                     "first_name" => $payload['first_name'],
                     "last_name" => $payload['last_name'],
                     "email" => $payload['email'],
@@ -84,9 +78,7 @@ class AuthService implements AuthServiceInterface
                     "phone" => $payload['phone'] ?? null
                 ];
 
-                $userData = $this->userService->post($data);
-
-                $user = User::findOrFail($userData['id']);
+                $user = $this->userService->post($data, false);
 
                 UserSignedUp::dispatch($user);
             }

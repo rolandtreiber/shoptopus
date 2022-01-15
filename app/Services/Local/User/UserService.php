@@ -15,14 +15,15 @@ class UserService extends ModelService implements UserServiceInterface
     }
 
     /**
-     * get currently authenticated user details.
-     * @return array|bool
+     * get the currently authenticated user instance.
+     * @param bool $returnAsArray
+     * @return null|mixed
      * @throws \Exception
      */
-    public function getCurrentUser() : ?array
+    public function getCurrentUser(bool $returnAsArray = true)
     {
         try {
-            return $this->modelRepository->getCurrentUser();
+            return $this->modelRepository->getCurrentUser($returnAsArray);
         } catch (\Exception $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getCurrentUser'));

@@ -22,10 +22,11 @@ interface ModelRepositoryInterface {
 
     /**
      * create a model
-     *
      * @param array $payload
+     * @param bool $returnAsArray
+     * @return mixed
      */
-    public function post(array $payload);
+    public function post(array $payload, bool $returnAsArray = true);
 
     /**
      * update a model

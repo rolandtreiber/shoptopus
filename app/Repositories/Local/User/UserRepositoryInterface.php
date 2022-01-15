@@ -5,10 +5,11 @@ namespace App\Repositories\Local\User;
 interface UserRepositoryInterface {
 
     /**
-     * get currently authenticated user details
-     * @return null|array
+     * get the currently authenticated user instance.
+     * @param bool $returnAsArray
+     * @return null|mixed
      */
-    public function getCurrentUser() : ?array;
+    public function getCurrentUser(bool $returnAsArray = true);
 
     /**
      * get a user model by its email
