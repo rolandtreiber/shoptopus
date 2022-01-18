@@ -16,8 +16,8 @@ Route::group([
         Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
         Route::post('register', [AuthController::class, 'register'])->name('api.auth.register');
 
-        Route::post('verify/resend', 'Auth\AuthController@resendVerification')->name('verification.resend');
-        Route::get('verify/{id}', 'Auth\AuthController@verify')->name('verification.verify');
+        Route::post('verify/resend', [AuthController::class, 'resendVerification'])->name('verification.resend');
+        Route::get('verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
 
         //Route::post('admin-login', [AuthController::class, 'adminApiLoginAttempt'])->name('api.login');
 //        Route::post('signup', [AuthController::class, 'apiSignup'])->name('api.auth.signup');

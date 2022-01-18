@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResendVerificationRequest;
 use App\Services\Local\Auth\AuthServiceInterface;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
 
 class AuthController extends Controller
 {
@@ -20,7 +20,8 @@ class AuthController extends Controller
     }
 
     /**
-     * login api
+     * Login
+     *
      * @param LoginRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -28,15 +29,14 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->authService->login($request->validated()));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
 
     /**
-     * register api
+     * Register
+     *
      * @param RegisterRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -44,15 +44,14 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->authService->register($request->validated()));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
 
     /**
-     * resend the verification email
+     * Resend the verification email
+     *
      * @param ResendVerificationRequest $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -60,20 +59,19 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->authService->resendVerification($request->validated()));
-        } catch (\Exception $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
 
     /**
      * Verify the user's email address
+     *
      * @param \Illuminate\Http\Request
-     * @param int $id
+     * @param string $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function verify(Request $request, int $id) : \Illuminate\Http\RedirectResponse
+    public function verify(Request $request, string $id) : \Illuminate\Http\RedirectResponse
     {
         try {
             $uri = 'login';

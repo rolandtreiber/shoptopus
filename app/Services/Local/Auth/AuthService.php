@@ -22,7 +22,8 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * login api
+     * Login
+     *
      * @param array $payload
      * @return array
      * @throws \Exception
@@ -35,11 +36,6 @@ class AuthService implements AuthServiceInterface
             if(is_null($user->password)) {
                 throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.mustResetPassword'));
             }
-
-//            if (!$user->hasVerifiedEmail() && isset($payload['must_verify']) && $payload['must_verify']) {
-//                $user->sendEmailVerificationNotification();
-//                throw new \Exception('User unverified.', Config::get("api_error_codes.services.auth.not_verified"));
-//            }
 
             if (!Hash::check($payload["password"], $user->password)) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
@@ -58,7 +54,8 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * Register api
+     * Register
+     *
      * @param array $payload
      * @return array
      * @throws \Exception
@@ -100,57 +97,8 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * logout api
-     * @return array
-     * @throws \Exception
-     */
-    public function logout() : array
-    {
-        try {
-            $user = User::findOrFail(Auth::id());
-
-            DB::table('oauth_access_tokens')
-                ->where('user_id', $user->id)
-                ->update(['revoked' => true]);
-
-            $user->tokens->each->revoke();
-
-            return ["data" => ["auth" => null]];
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
-        } catch (\Error $e) {
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
-        }
-    }
-
-    /**
-     * Verify the user's email address.
+     * Resend the verification email
      *
-     * @param int $id
-     * @return bool
-     * @throws \Exception
-     */
-    public function verify(int $id) : bool
-    {
-        try {
-            $user = User::findOrFail($id);
-
-            if (!$user->hasVerifiedEmail()) {
-                $user->markEmailAsVerified();
-            }
-
-            return true;
-        } catch (\Exception $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
-        }
-    }
-
-    /**
-     * resend the verification email
      * @param array $payload
      * @return array
      * @throws \Exception
@@ -175,6 +123,57 @@ class AuthService implements AuthServiceInterface
         } catch (\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resendVerification'));
+        }
+    }
+
+    /**
+     * Verify the user's email address.
+     *
+     * @param string $id
+     * @return bool
+     * @throws \Exception
+     */
+    public function verify(string $id) : bool
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->markEmailAsVerified();
+            }
+
+            return true;
+        } catch (\Exception $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
+        } catch (\Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
+        }
+    }
+
+    /**
+     * Logout
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function logout() : array
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+
+            DB::table('oauth_access_tokens')
+                ->where('user_id', $user->id)
+                ->update(['revoked' => true]);
+
+            $user->tokens->each->revoke();
+
+            return ["data" => ["auth" => null]];
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
+        } catch (\Error $e) {
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
         }
     }
 
