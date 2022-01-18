@@ -96,4 +96,18 @@ class AuthController extends Controller
             );
         }
     }
+
+    /**
+     * Logout api
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout() : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->logout());
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
 }

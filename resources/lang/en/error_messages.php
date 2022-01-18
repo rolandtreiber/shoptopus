@@ -11,6 +11,11 @@ return [
     '1005' => "It looks like you've signed up with a social account. Please set a password.",
     '1006' => "Incorrect email or password. Please try again.",
 
+    '1100' => 'Sorry there was a system error, the administrator has been informed.',
+    '1101' => 'Sorry there was a system error, the administrator has been informed.',
+    '1104' => 'Sorry there was a system error, the administrator has been informed.',
+    '1105' => 'An invalid filter has been detected, please amend and try again.',
+
     "2000" => "Sorry there was an error getting this user.",
     "2001" => "Sorry there was an error getting all users.",
     "2002" => "Sorry there was an error creating this user.",

@@ -1,6 +1,15 @@
 <?php
 
 return [
+    'controllers' => [
+        'response' => [
+            "get" => 1100,
+            'generic' => 1101,
+            "pagination" => 1104,
+            "filter" => 1105
+        ]
+    ],
+
     'services' => [
         'auth' => [
             "login" => 1000,

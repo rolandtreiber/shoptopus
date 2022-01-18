@@ -27,4 +27,12 @@ Route::group([
         //Route::post('update-password', [AuthController::class, 'updatePasswordFromResetFlow'])->name('api.update-password-from-reset-flow');
         //Route::post('me', [AuthController::class, 'getAuthenticatedUser'])->name('api.get-authenticated-user');
     });
+
+    Route::group([
+        'name' => 'auth.',
+        'prefix' => 'auth',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::post('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
+    });
 });
