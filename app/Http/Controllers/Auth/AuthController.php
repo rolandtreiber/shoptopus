@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\PasswordResetRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\ResendVerificationRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Services\Local\Auth\AuthServiceInterface;
+use App\Http\Requests\Auth\ResendVerificationRequest;
 
 class AuthController extends Controller
 {
@@ -106,6 +108,36 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->authService->logout());
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Send password reset email
+     *
+     * @param PasswordResetRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function sendPasswordReset(PasswordResetRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->sendPasswordReset($request->validated()));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Reset password
+     *
+     * @param ResetPasswordRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function resetPassword(ResetPasswordRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->resetPassword($request->validated()));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

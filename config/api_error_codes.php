@@ -18,7 +18,9 @@ return [
             "resendVerification" => 1003,
             "logout" => 1004,
             "mustResetPassword" => 1005,
-            "loginUserIncorrect" => 1006
+            "loginUserIncorrect" => 1006,
+            "sendPasswordReset" => 1007,
+            "resetPassword" => 1008,
         ],
         'user' => [
             "get" => 2000,

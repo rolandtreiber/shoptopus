@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatuses;
-use App\Enums\RandomStringModes;
-use App\Helpers\GeneralHelper;
 use App\Http\Requests\ListRequest;
+use App\Notifications\ResetPasswordNotification;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Traits\Searchable;
@@ -84,7 +82,7 @@ class User extends Authenticatable implements Auditable
      * @var array
      */
     protected $hidden = [
-        'password',
+        'password', 'remember_token'
     ];
 
     /**
@@ -171,6 +169,19 @@ class User extends Authenticatable implements Auditable
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
+    }
+
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $url = config('app.frontend_url_public') . '/reset-password?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
     }
 
 }

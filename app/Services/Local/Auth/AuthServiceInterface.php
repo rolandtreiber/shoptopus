@@ -46,4 +46,22 @@ interface AuthServiceInterface {
      */
     public function logout() : array;
 
+    /**
+     * Send password reset email
+     *
+     * @param array $payload
+     * @return array
+     * @throws \Exception
+     */
+    public function sendPasswordReset(array $payload): array;
+
+    /**
+     * Reset password
+     *
+     * @param array $payload
+     * @return array
+     * @throws \Exception
+     */
+    public function resetPassword(array $payload): array;
+
 }

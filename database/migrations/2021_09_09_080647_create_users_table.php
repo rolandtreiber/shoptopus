@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration
             $table->string('client_ref', 12)->nullable()->index();
             $table->boolean('temporary')->default(false);
             $table->boolean('is_favorite')->default(false);
+            $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
         });

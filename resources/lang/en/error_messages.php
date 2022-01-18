@@ -10,6 +10,8 @@ return [
     '1004' => "It looks like you're already logged in, please logout to register.",
     '1005' => "It looks like you've signed up with a social account. Please set a password.",
     '1006' => "Incorrect email or password. Please try again.",
+    '1007' => 'Sorry, there was an error while trying to send you the password reset link.',
+    '1008' => 'Sorry, there was an error while trying to resetting your password.',
 
     '1100' => 'Sorry there was a system error, the administrator has been informed.',
     '1101' => 'Sorry there was a system error, the administrator has been informed.',

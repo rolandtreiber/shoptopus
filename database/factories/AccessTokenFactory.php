@@ -3,9 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\AccessToken;
-use App\User;
+use App\Models\User;
 
 class AccessTokenFactory extends Factory
 {

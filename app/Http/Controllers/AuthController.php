@@ -12,7 +12,7 @@ use App\Enums\TokenCheckOutcomeTypes;
 use App\Events\Admin\UserSignup;
 use App\Exceptions\ApiValidationFailedException;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\PasswordResetRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SignupRequest;
 use App\Http\Requests\Auth\UpdatePasswordFromResetFlowRequest;
 use App\Models\User;
@@ -149,7 +149,7 @@ class AuthController extends Controller
         return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeTypes::Success]);
     }
 
-    public function resetPassword(PasswordResetRequest $request): array
+    public function resetPassword(ResetPasswordRequest $request): array
     {
         $user = User::where('email', '=', $request->email)->first();
         if ($user) {
