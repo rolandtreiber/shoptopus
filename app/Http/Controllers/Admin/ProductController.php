@@ -63,6 +63,12 @@ class ProductController extends Controller
         if ($request->product_attributes) {
             $this->handleAttributes($product, $request);
         }
+        if ($request->product_categories) {
+            $product->handleCategories($request->product_categories);
+        }
+        if ($request->product_tags) {
+            $product->handleTags($request->product_tags);
+        }
 
         return new ProductListResource($product);
     }
@@ -81,7 +87,8 @@ class ProductController extends Controller
         $product->save();
         $this->saveFiles($request, Product::class, $product->id, true);
         $this->handleAttributes($product, $request);
-
+        $product->handleCategories($request->product_categories);
+        $product->handleTags($request->product_tags);
         return new ProductListResource($product);
     }
 
