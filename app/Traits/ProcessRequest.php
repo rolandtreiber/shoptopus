@@ -7,6 +7,7 @@ use App\Enums\FileTypes;
 use App\Models\FileContent;
 use Illuminate\Http\File;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -19,9 +20,9 @@ trait ProcessRequest
      * @param $modelClass
      * @param $modelId
      * @param $deleteCurrent
-     * @param int $type
+     * @return Collection
      */
-    public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): void
+    public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): Collection
     {
         if ($deleteCurrent) {
             $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->where('type', FileTypes::Image)->get();
@@ -29,6 +30,8 @@ trait ProcessRequest
                 $attachment->delete();
             }
         }
+
+        $files = new Collection();
 
         if ($request->hasFile('attachments')) {
             foreach ($request->attachments as $attachment) {
@@ -41,9 +44,12 @@ trait ProcessRequest
                     $attachment->file_name = $file['file_name'];
                     $attachment->type = $file['type'];
                     $attachment->save();
+                    $files->add($attachment);
                 }
             }
         }
+
+        return $files;
     }
 
     /**
