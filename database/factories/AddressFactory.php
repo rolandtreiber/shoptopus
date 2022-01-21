@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,15 +20,16 @@ class AddressFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition() : array
     {
         return [
-            'user_id' => '',
-            'name' => $this->faker->word,
+            'user_id' => User::factory(),
+            'name' => null,
             'address_line_1' => $this->faker->streetAddress,
-            'address_line_2' => '',
-            'post_code' => $this->faker->postcode,
+            'address_line_2' => null,
             'town' => $this->faker->city,
+            'post_code' => $this->faker->postcode,
+            'country' => 'UK',
             'lat' => $this->faker->latitude,
             'lon' => $this->faker->longitude,
         ];

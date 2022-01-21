@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -31,10 +32,11 @@ class Address extends Model implements Auditable
      * @var array
      */
     protected $fillable = [
-        'town',
-        'post_code',
+        'name',
         'address_line_1',
         'address_line_2',
+        'town',
+        'post_code',
         'country',
         'lat',
         'lon'
@@ -50,6 +52,15 @@ class Address extends Model implements Auditable
         'lat' => 'decimal:6',
         'lon' => 'decimal:6'
     ];
+
+    /**
+     * An address belongs to a user
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 
 
     /**

@@ -97,6 +97,33 @@ class User extends Authenticatable implements Auditable
         'is_favorite' => 'boolean'
     ];
 
+    /**
+     * Get the social accounts of the user.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function addresses() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
+
+    /**
+     * Send a password reset notification to the user.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        $url = config('app.frontend_url_public') . '/reset-password?token=' . $token;
+
+        $this->notify(new ResetPasswordNotification($url));
+    }
+
+
+
+
+
+
     public function scopeSystemUsers($query)
     {
         $roleIds = Role::whereNotIn('name', ['customer'])->pluck('id');
@@ -156,32 +183,10 @@ class User extends Authenticatable implements Auditable
     }
 
     /**
-     * @return HasMany
-     */
-    public function addresses(): HasMany
-    {
-        return $this->hasMany(Address::class);
-    }
-
-    /**
      * @return HasOne
      */
     public function cart(): HasOne
     {
         return $this->hasOne(Cart::class);
     }
-
-    /**
-     * Send a password reset notification to the user.
-     *
-     * @param  string  $token
-     * @return void
-     */
-    public function sendPasswordResetNotification($token)
-    {
-        $url = config('app.frontend_url_public') . '/reset-password?token=' . $token;
-
-        $this->notify(new ResetPasswordNotification($url));
-    }
-
 }
