@@ -62,7 +62,9 @@ class ProductController extends Controller
         $product->save();
         $attachments = $this->saveFiles($request, Product::class, $product->id, true);
         $firstImage = $attachments->where('type', FileTypes::Image)->first();
-        $product->cover_photo_id = $firstImage->id;
+        if ($firstImage) {
+            $product->cover_photo_id = $firstImage->id;
+        }
         $product->save();
 
         if ($request->product_attributes) {
