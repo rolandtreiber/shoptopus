@@ -4,27 +4,27 @@ phases:
     commands:
       - |
         export DEBIAN_FRONTEND=noninteractive
-        #Install php7.3
+        #Install php8.1
         apt-get update
         apt-get install -y  software-properties-common
         LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
         apt-get update
         # Install PHP
-        apt-get install -y php7.3\
-                 php7.3-ldap \
-                 php7.3-xml \
-                 php7.3-xmlrpc \
-                 php7.3-zip \
-                 php7.3-mysql \
-                 php7.3-mbstring \
-                 php7.3-mcrypt \
-                 php7.3-gd \
-                 php7.3-readline \
-                 php7.3-opcache \
-                 php7.3-xdebug \
-                 php7.3-dom \
+        apt-get install -y php8.1\
+                 php8.1-ldap \
+                 php8.1-xml \
+                 php8.1-xmlrpc \
+                 php8.1-zip \
+                 php8.1-mysql \
+                 php8.1-mbstring \
+                 php8.1-mcrypt \
+                 php8.1-gd \
+                 php8.1-readline \
+                 php8.1-opcache \
+                 php8.1-xdebug \
+                 php8.1-dom \
                  php-xdebug \
-                 php7.3-curl \
+                 php8.1-curl \
                  unzip
         #Enable xdebug - phpunit uses this for code coverage
         phpenmod xdebug
