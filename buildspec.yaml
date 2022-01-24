@@ -11,6 +11,7 @@ phases:
         apt-get update
         # Install PHP
         apt-get install -y php8.1
+        apt-get install -y php8.1-fpm
         #Enable xdebug - phpunit uses this for code coverage
         phpenmod xdebug
         #Install composer
