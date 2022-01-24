@@ -23,7 +23,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Installing composer deps
-      - composer install --no-progress --no-suggest --with-all-dependencies
+      - composer install --no-progress --no-suggest
       - echo Compiling the application
   post_build:
     commands:
