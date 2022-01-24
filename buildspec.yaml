@@ -19,6 +19,7 @@ phases:
         php composer-setup.php ;
         php -r "unlink('composer-setup.php');" ;
         mv composer.phar /usr/local/bin/composer
+        php -v
   build:
     commands:
       - echo Build started on `date`
