@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'temporary' => false,
             'phone' => $this->faker->phoneNumber,
             'avatar' => [
-                'url' => $this->faker->imageUrl(450, 450),
+                'url' => 'https://picsum.photos/450/450',
                 'file_name' => $this->faker->word
             ],
             'is_favorite' => $this->faker->boolean

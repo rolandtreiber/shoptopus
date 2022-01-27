@@ -35,7 +35,7 @@ class BannerFactory extends Factory
             'title' => $translated['title'],
             'description' => $translated['description'],
             'background_image' => [
-                'url' => $this->faker->imageUrl(1200, 450),
+                'url' => 'https://picsum.photos/1200/450',
                 'file_name' => ''
             ],
             'show_button' => $showButton,

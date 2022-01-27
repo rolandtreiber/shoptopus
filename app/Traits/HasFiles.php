@@ -30,20 +30,6 @@ trait HasFiles {
     }
 
     /**
-     * @return string|null
-     */
-    public function coverImage(): ?string
-    {
-        $imagesCount = DB::table('file_contents')->where('fileable_type', get_class($this))->where('fileable_id', $this->id)->count();
-        if ($imagesCount) {
-            $img = FileContent::where('fileable_type', ProductVariant::class)->where('fileable_id', $this->id)->first();
-            return $img->url;
-        } else {
-            return null;
-        }
-    }
-
-    /**
      * @return Collection
      */
     public function images(): Collection

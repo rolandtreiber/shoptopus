@@ -34,7 +34,6 @@ class ProductDetailResource extends JsonResource
             'backup_stock' => $this->backup_stock,
             'cover_photo' => new FileContentResource($this->coverPhoto),
             'attributes' => AttributeResource::collection($this->productAttributes),
-            'variants' => ProductVariantResource::collection($this->productVariants),
             'sku' => $this->sku,
             'tags' => ProductTagListResource::collection($this->tags),
             'categories' => ProductCategorySelectResource::collection($this->categories),
