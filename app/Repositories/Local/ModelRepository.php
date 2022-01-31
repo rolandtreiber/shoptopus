@@ -21,7 +21,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * get all models
+     * Get all models
+     *
      * @param array $page_formatting
      * @param array $filters
      * @param array $excludeRelationships
@@ -43,12 +44,13 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * get a single model
-     * @param int $id
+     * Get a single model
+     *
+     * @param string $id
      * @param array $excludeRelationships
      * @return array
      */
-    public function get(int $id, array $excludeRelationships = []) : array
+    public function get(string $id, array $excludeRelationships = []) : array
     {
         try {
             $filters = ['id' => $id];
@@ -72,7 +74,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * get a single model by its slug
+     * Get a single model by its slug
+     *
      * @param string $slug
      * @param array $excludeRelationships
      * @return array
@@ -102,34 +105,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * get a single model by its uuid
-     * @param string $uuid
-     * @param array $excludeRelationships
-     * @return array
-     * @throws \Exception
-     */
-    public function getByUuid(string $uuid, array $excludeRelationships = []) : array
-    {
-        try {
-            $filters = ['uuid' => $uuid];
-
-            if ($this->canBeSoftDeleted()) {
-                $filters['deleted_at'] = 'null';
-            }
-
-            $page_formatting = ['limit' => 1];
-
-            $result = $this->getModels($this->getFilters($filters, $this->model_table), $page_formatting, $excludeRelationships);
-
-            return !empty($result) ? $result[0] : [];
-        } catch (\Exception | \Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
-    }
-
-    /**
-     * create a model
+     * Create a model
+     *
      * @param array $payload
      * @param bool $returnAsArray
      * @return mixed
@@ -153,13 +130,14 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * update a model
-     * @param int $id
+     * Update a model
+     *
+     * @param string $id
      * @param array $payload
      * @return mixed
      * @throws \Exception
      */
-    public function update(int $id, array $payload)
+    public function update(string $id, array $payload)
     {
         try {
             $model = $this->model->find($id);
@@ -178,12 +156,13 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * delete a model
-     * @param int $id
+     * Delete a model
+     *
+     * @param string $id
      * @return int
      * @throws \Exception
      */
-    public function delete(int $id) : int
+    public function delete(string $id) : int
     {
         try {
             $query = DB::table($this->model_table)->where('id', $id);
@@ -199,6 +178,7 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Return the models based on the filters and apply page formatting if applicable
+     *
      * @param $filter_vars
      * @param array $page_formatting
      * @param array $excludeRelationships
@@ -233,7 +213,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * Get the records count.
+     * Get the records count
+     *
      * @param $filter_vars
      * @return int
      */
@@ -246,7 +227,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * Determine if the model has an active property.
+     * Determine if the model has an active property
+     *
      * @return bool
      */
     protected function hasActiveProperty() : bool
@@ -255,7 +237,8 @@ class ModelRepository implements ModelRepositoryInterface
     }
 
     /**
-     * Determine if the model has a soft deleted property.
+     * Determine if the model has a soft deleted property
+     *
      * @return bool
      */
     protected function canBeSoftDeleted() : bool

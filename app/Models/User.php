@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Http\Requests\ListRequest;
 use App\Notifications\ResetPasswordNotification;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
@@ -19,31 +18,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 
-/**
- * @method static find(int|string|null $getUserIdentifier)
- * @method static count()
- * @method static role(mixed $role)
- * @method filtered(array $array, ListRequest $request)
- * @method static systemUsers()
- * @method static customers()
- * @property string $id
- * @property string|null $email
- * @property string|null $email_verified_at
- * @property string|null $avatar
- * @property mixed|string $password
- * @property string $first_name
- * @property string $last_name
- * @property string|null $prefix
- * @property mixed|string $name
- * @property mixed|string $initials
- * @property string $client_ref
- * @property boolean $is_favorite
- * @property Address[] $addresses
- * @property Order[] $orders
- * @property Payment[] $payments
- * @property PaymentSource[] $paymentSources
- * @property Cart|null $cart
- */
 class User extends Authenticatable implements Auditable
 {
     use Notifiable;
@@ -118,7 +92,6 @@ class User extends Authenticatable implements Auditable
 
         $this->notify(new ResetPasswordNotification($url));
     }
-
 
 
 

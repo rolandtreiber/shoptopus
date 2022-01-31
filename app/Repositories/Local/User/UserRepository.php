@@ -15,7 +15,8 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     }
 
     /**
-     * get the currently authenticated user instance.
+     * Get the currently authenticated user instance
+     *
      * @param bool $returnAsArray
      * @return null|mixed
      */
@@ -36,7 +37,8 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     }
 
     /**
-     * get a user model by its email
+     * Get a user model by its email
+     *
      * @param string $email
      * @return array
      * @throws \Exception
@@ -58,7 +60,8 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     }
 
     /**
-     * get the columns for selection
+     * Get the columns for selection
+     *
      * @param bool $withTableNamePrefix
      * @return array
      */

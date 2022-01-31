@@ -31,7 +31,7 @@ class CustomerDetailResource extends JsonResource
             'initials' => $this->initials,
             'email' => $this->email,
             'email_verified' => $this->email_verified_at !== null,
-            'addresses' => AddressResource::collection($this->addresses),
+            'address' => AddressResource::collection($this->addresses),
             'orders' => OrderListResource::collection($this->orders),
             'payments' => OrderListResource::collection($this->payments),
             'payment_sources' => OrderListResource::collection($this->paymentSources),

@@ -3,8 +3,10 @@
 namespace App\Services\Local;
 
 interface ModelServiceInterface {
+
     /**
-     * get all models
+     * Get all models
+     *
      * @param array $page_formatting
      * @param array $filters
      * @return array
@@ -12,25 +14,25 @@ interface ModelServiceInterface {
     public function getAll(array $page_formatting = [], array $filters = []) : array;
 
     /**
-     * get a model
-     * @param int $id
+     * Get a single model
+     *
+     * @param string $id
+     * @param array $excludeRelationships
+     * @return mixed
+     * @throws \Exception
      */
-    public function get(int $id);
+    public function get(string $id, array $excludeRelationships = []) : array;
 
     /**
-     * get a model by its slug
+     * Get a model by its slug
+     *
      * @param string $slug
      */
     public function getBySlug(string $slug);
 
     /**
-     * get a model by its uuid
-     * @param string $uuid
-     */
-    public function getByUuid(string $uuid);
-
-    /**
-     * create a model
+     * Create a model
+     *
      * @param array $payload
      * @param bool $returnAsArray
      * @return mixed
@@ -39,15 +41,17 @@ interface ModelServiceInterface {
     public function post(array $payload, bool $returnAsArray = true);
 
     /**
-     * update a model
-     * @param int $id
+     * Update a model
+     *
+     * @param string $id
      * @param array $payload
      */
-    public function update(int $id, array $payload);
+    public function update(string $id, array $payload);
 
     /**
-     * delete a model
-     * @param int $id
+     * Delete a model
+     *
+     * @param string $id
      */
-    public function delete(int $id);
+    public function delete(string $id);
 }

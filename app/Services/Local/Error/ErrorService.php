@@ -2,7 +2,6 @@
 
 namespace App\Services\Local\Error;
 
-//facades
 use Illuminate\Support\Facades\Log;
 
 class ErrorService implements ErrorServiceInterface
@@ -12,7 +11,8 @@ class ErrorService implements ErrorServiceInterface
     }
 
     /**
-     * log an exception
+     * Log an exception
+     *
      * @param $exception
      * @param bool $critical
      * @todo - write critical error code

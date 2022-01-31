@@ -15,7 +15,8 @@ class UserService extends ModelService implements UserServiceInterface
     }
 
     /**
-     * get the currently authenticated user instance.
+     * Get the currently authenticated user instance
+     *
      * @param bool $returnAsArray
      * @return null|mixed
      * @throws \Exception
@@ -34,7 +35,8 @@ class UserService extends ModelService implements UserServiceInterface
     }
 
     /**
-     * get a user model by its email
+     * Get a user model by its email
+     *
      * @param string $email
      * @return mixed
      * @throws \Exception

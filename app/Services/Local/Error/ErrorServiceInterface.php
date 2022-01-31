@@ -5,7 +5,8 @@ namespace App\Services\Local\Error;
 interface ErrorServiceInterface {
 
     /**
-     * log an exception
+     * Log an exception
+     *
      * @param \Exception $exception
      * @param bool $critical
      */

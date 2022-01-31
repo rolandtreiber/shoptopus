@@ -3,16 +3,15 @@
 namespace App\Services\Local\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Str;
 use App\Events\UserSignedUp;
 use App\Models\PasswordReset;
-use App\Notifications\PasswordResetSuccess;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use App\Notifications\PasswordResetSuccess;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
-use Illuminate\Support\Str;
 
 class AuthService implements AuthServiceInterface
 {
@@ -34,7 +33,7 @@ class AuthService implements AuthServiceInterface
     public function login(array $payload) : array
     {
         try {
-            $user = User::where('email', $payload["email"])->firstOrFail();
+            $user = User::whereEmail($payload['email'])->firstOrFail();
 
             if(is_null($user->password)) {
                 throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.mustResetPassword'));
@@ -164,7 +163,7 @@ class AuthService implements AuthServiceInterface
     public function logout() : array
     {
         try {
-            $user = User::findOrFail(Auth::id());
+            $user = $this->userService->getCurrentUser(false);
 
             DB::table('oauth_access_tokens')
                 ->where('user_id', $user->id)
@@ -259,10 +258,10 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * @param $user
+     * @param User $user
      * @return array
      */
-    private function createTokenAndGetAuthResponse($user) : array
+    private function createTokenAndGetAuthResponse(User $user) : array
     {
         return [
             'token' => $user->createToken(Config::get('app.name'))->accessToken,

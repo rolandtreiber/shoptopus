@@ -3,9 +3,9 @@
 namespace Tests;
 
 use App\Models\User;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -31,11 +31,11 @@ abstract class TestCase extends BaseTestCase
 //    }
 
     /**
-     * @param User|null $user
+     * @param \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
      * @param array $scopes
      * @return $this
      */
-    protected function signIn(User $user = null, array $scopes = []) : TestCase
+    protected function signIn($user = null, array $scopes = []) : TestCase
     {
         $user = $user ?? User::factory()->create();
 

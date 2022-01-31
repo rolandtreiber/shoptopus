@@ -18,7 +18,8 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * get all models
+     * Get all models
+     *
      * @param array $page_formatting
      * @param array $filters
      * @return array
@@ -38,15 +39,17 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * get a single model
-     * @param int $id
+     * Get a single model
+     *
+     * @param string $id
+     * @param array $excludeRelationships
      * @return mixed
      * @throws \Exception
      */
-    public function get(int $id)
+    public function get(string $id, array $excludeRelationships = []): array
     {
         try {
-            return $this->modelRepository->get($id);
+            return $this->modelRepository->get($id, $excludeRelationships);
         } catch (\Exception $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
@@ -57,7 +60,8 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * get a single model by its slug
+     * Get a single model by its slug
+     *
      * @param string $slug
      * @return mixed
      * @throws \Exception
@@ -76,26 +80,8 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * get a single model by its slug
-     * @param string $uuid
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getByUuid(string $uuid)
-    {
-        try {
-            return $this->modelRepository->getByUuid($uuid);
-        } catch (\Exception $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
-        }
-    }
-
-    /**
-     * create a model
+     * Create a model
+     *
      * @param array $payload
      * @param bool $returnAsArray
      * @return mixed
@@ -115,13 +101,14 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * update a model
-     * @param int $id
+     * Update a model
+     *
+     * @param string $id
      * @param array $payload
      * @return mixed
      * @throws \Exception
      */
-    public function update(int $id, array $payload)
+    public function update(string $id, array $payload)
     {
         try {
             return $this->modelRepository->update($id, $payload);
@@ -135,12 +122,13 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
-     * delete a model
-     * @param int $id
+     * Delete a model
+     *
+     * @param string $id
      * @return mixed
      * @throws \Exception
      */
-    public function delete(int $id)
+    public function delete(string $id)
     {
         try {
             return $this->modelRepository->delete($id);

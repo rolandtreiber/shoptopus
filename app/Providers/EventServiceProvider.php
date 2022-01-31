@@ -59,6 +59,10 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Event::listen(StatementPrepared::class, function ($event) {
+            $event->statement->setFetchMode(\PDO::FETCH_ASSOC);
+        });
+
         User::observe(UserObserver::class);
         AccessToken::observe(AccessTokenObserver::class);
         OrderProduct::observe(OrderProductObserver::class);

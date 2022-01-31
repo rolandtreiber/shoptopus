@@ -23,15 +23,17 @@ class AddressFactory extends Factory
     public function definition() : array
     {
         return [
-            'user_id' => User::factory(),
-            'name' => null,
-            'address_line_1' => $this->faker->streetAddress,
-            'address_line_2' => null,
+            'address_line_1' => $this->faker->text(80),
             'town' => $this->faker->city,
             'post_code' => $this->faker->postcode,
             'country' => 'UK',
-            'lat' => $this->faker->latitude,
-            'lon' => $this->faker->longitude,
+            'user_id' => null,
+            'name' => null,
+            'address_line_2' => null,
+            'lat' => null,
+            'lon' => null,
+//            'lat' => $this->faker->latitude,
+//            'lon' => $this->faker->longitude,
         ];
     }
 }

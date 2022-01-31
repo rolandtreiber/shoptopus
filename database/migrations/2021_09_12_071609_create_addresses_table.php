@@ -15,13 +15,13 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('user_id')->nullable()->constrained();
-            $table->string('name')->nullable();
             $table->string('address_line_1');
-            $table->string('address_line_2')->nullable();
             $table->string('town');
             $table->string('post_code');
             $table->string('country')->default('UK');
+            $table->foreignUuid('user_id')->nullable()->constrained();
+            $table->string('name')->nullable();
+            $table->string('address_line_2')->nullable();
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
             $table->softDeletes();
