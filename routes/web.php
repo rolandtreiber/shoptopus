@@ -18,29 +18,29 @@ Route::get('/', function () {
 });
 
 
-Route::get('auth/register', 'Api\AuthController@register');
-Route::get('auth/login', 'Api\AuthController@login');
-Route::get('auth/password-reminder', 'Api\AuthController@passwordReminder');
+//Route::get('auth/register', 'Auth\Auth\AuthController@register');
+//Route::get('auth/login', 'Auth\Auth\AuthController@login');
+//Route::get('auth/password-reminder', 'Auth\Auth\AuthController@passwordReminder');
 
-Route::resource('user', 'UserController')->except('create', 'edit', 'show');
-
-Route::resource('product', 'ProductController')->except('create', 'edit', 'show');
-
-Route::resource('cart', 'CartController')->except('create', 'edit', 'show');
-
-Route::get('admin/dashboard', 'AdminController@dashboard');
-Route::resource('admin', 'AdminController')->only('index');
-
-Route::resource('product-category', 'ProductCategoryController')->only('index');
-
-Route::resource('product-tag', 'ProductTagController')->only('index');
-
-Route::resource('language', 'LanguageController')->only('index');
-
-Route::resource('delivery-type', 'DeliveryTypeController')->only('index');
-
-Route::resource('delivery-rule', 'DeliveryRuleController')->only('index', 'store');
-
-Route::resource('voucher-code', 'VoucherCodeController')->only('index');
-
-Route::resource('discount-rule', 'DiscountRuleController')->only('index');
+//Route::resource('user', 'UserController')->except('create', 'edit', 'show');
+//
+//Route::resource('product', 'ProductController')->except('create', 'edit', 'show');
+//
+//Route::resource('cart', 'CartController')->except('create', 'edit', 'show');
+//
+//Route::get('admin/dashboard', 'AdminController@dashboard');
+//Route::resource('admin', 'AdminController')->only('index');
+//
+//Route::resource('product-category', 'ProductCategoryController')->only('index');
+//
+//Route::resource('product-tag', 'ProductTagController')->only('index');
+//
+//Route::resource('language', 'LanguageController')->only('index');
+//
+//Route::resource('delivery-type', 'DeliveryTypeController')->only('index');
+//
+//Route::resource('delivery-rule', 'DeliveryRuleController')->only('index', 'store');
+//
+//Route::resource('voucher-code', 'VoucherCodeController')->only('index');
+//
+//Route::resource('discount-rule', 'DiscountRuleController')->only('index');
