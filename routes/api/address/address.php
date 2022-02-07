@@ -5,6 +5,8 @@ use App\Http\Controllers\Address\AddressController;
 
 Route::group([
     'name' => 'api.',
+    'prefix' => 'api',
+    'middleware' => 'api'
 ], function () {
     Route::group([
         'name' => 'addresses.',
