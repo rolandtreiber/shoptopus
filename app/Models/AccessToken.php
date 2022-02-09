@@ -3,22 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @property mixed|string $token
- * @property int|mixed $type
- * @property Carbon|mixed $expiry
- * @property string $issuer_user_id
- * @property string $user_id
- */
 class AccessToken extends Model
 {
-    use HasFactory;
-    use HasUUID;
+    use HasFactory, HasUUID;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +18,7 @@ class AccessToken extends Model
      * @var array
      */
     protected $fillable = [
-        'tinyInteger',
+        'type',
         'token',
         'user_id',
         'issuer_user_id',
@@ -56,18 +48,18 @@ class AccessToken extends Model
     /**
      * @return BelongsTo
      */
-    public function issuerUser(): BelongsTo
+    public function issuer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'issuer_user_id');
     }
 
     /**
      * @return bool
      */
-    public function checkExpiry(): bool
+    public function hasExpired(): bool
     {
         $now = \Carbon\Carbon::now();
         $expiry = Carbon::parse($this->expiry);
-        return $expiry > $now;
+        return $expiry < $now;
     }
 }

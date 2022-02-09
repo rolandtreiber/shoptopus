@@ -22,7 +22,7 @@ class CreateAccessTokensTable extends Migration
             $table->string('token', 120);
             $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignUuid('issuer_user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->dateTime('expiry');
+            $table->timestamp('expiry');
             $table->timestamps();
         });
 

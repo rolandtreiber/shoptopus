@@ -20,7 +20,7 @@ class CreateAuditsTable extends Migration
         Schema::connection(config('app.env') === "testing" ? 'sqlite_logs' : 'logs')->create('audits', function (Blueprint $table) {
             $primaryDbName = DB::connection(config('app.env') === "testing" ? 'sqlite' : 'mysql')->getDatabaseName();
 
-            $table->bigIncrements('id');
+            $table->id();
             $table->string('user_type')->nullable();
             $table->uuid('user_id')->nullable();
             $table->string('event');

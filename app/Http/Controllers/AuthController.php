@@ -175,7 +175,7 @@ class AuthController extends Controller
             ];
         }
 
-        if (!$accessToken->checkExpiry()) {
+        if (!$accessToken->hasExpired()) {
             return [
                 'status' => 'error',
                 'message' => 'The token has expired.',

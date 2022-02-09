@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\AccessToken;
 use App\Models\User;
+use App\Models\AccessToken;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccessTokenFactory extends Factory
 {
@@ -20,10 +21,10 @@ class AccessTokenFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition() : array
     {
         return [
-            'tinyInteger' => $this->faker->word,
+            'type' => $this->faker->word,
             'token' => $this->faker->regexify('[A-Za-z0-9]{120}'),
             'user_id' => User::factory(),
             'issuer_user_id' => User::factory(),
