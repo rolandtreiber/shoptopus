@@ -27,7 +27,7 @@ class FileContentFactory extends Factory
         $translated = $this->getTranslated($this->faker, ['title', 'description'], ['short', 'medium']);
 
         return [
-            'url' => $this->faker->imageUrl(1200, 1200),
+            'url' => 'https://picsum.photos/1200/1200',
             'fileable_type' => $this->faker->word,
             'fileable_id' => $this->faker->randomNumber(),
             'title' => $translated['title'],

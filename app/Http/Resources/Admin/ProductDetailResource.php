@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\FileContentResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -31,14 +32,14 @@ class ProductDetailResource extends JsonResource
             'stock' => $this->stock,
             'purchase_count' => $this->purchase_count,
             'backup_stock' => $this->backup_stock,
-            'attributes' => AttributeResource::collection($this->attributes),
-            'variants' => ProductVariantResource::collection($this->productVariants()->with('attributes')->get()),
+            'cover_photo' => new FileContentResource($this->coverPhoto),
+            'attributes' => AttributeResource::collection($this->productAttributes),
             'sku' => $this->sku,
-            'tags' => ProductTagResource::collection($this->tags),
-            'categories' => ProductCategoryListResource::collection($this->categories),
+            'tags' => ProductTagListResource::collection($this->tags),
+            'categories' => ProductCategorySelectResource::collection($this->categories),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
-            'images' => $this->images(),
+            'images' => FileContentResource::collection($this->images()),
             'pdfs' => $this->pdfs()
         ];
     }

@@ -289,4 +289,22 @@ class Product extends SearchableModel implements Auditable
         return $elements;
     }
 
+    /**
+     * @param array|null $categoryIds
+     */
+    public function handleCategories(?array $categoryIds = [])
+    {
+        $this->categories()->detach();
+        $this->categories()->sync($categoryIds);
+    }
+
+    /**
+     * @param array|null $tagIds
+     */
+    public function handleTags(?array $tagIds = [])
+    {
+        $this->tags()->detach();
+        $this->tags()->sync($tagIds);
+    }
+
 }

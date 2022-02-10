@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Http\Resources\Common;
+
+use App\Enums\AvailabilityStatuses;
+use App\Models\ProductCategory;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+
+class ProductCategoryNestedTreeResource extends JsonResource
+{
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  Request  $request
+     * @return array
+     */
+    public function toArray($request): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->getTranslations('name'),
+            'parent_id' => $this->parent_id,
+            'children' => ProductCategoryNestedTreeResource::collection($this->children)
+        ];
+    }
+}

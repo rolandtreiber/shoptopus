@@ -20,6 +20,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $product_id
  * @property double $price
  * @property mixed $sku
+ * @property boolean $enabled
  */
 class ProductVariant extends SearchableModel implements Auditable
 {
@@ -57,6 +58,7 @@ class ProductVariant extends SearchableModel implements Auditable
         'id' => 'string',
         'product_id' => 'string',
         'price' => 'decimal:2',
+        'enabled' => 'boolean'
     ];
 
     /**
@@ -110,6 +112,20 @@ class ProductVariant extends SearchableModel implements Auditable
             $elements[$languageKey] = $text . implode(', ', $attributeTexts);
         }
         return $elements;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function coverImage(): ?string
+    {
+        $imagesCount = DB::table('file_contents')->where('fileable_type', get_class($this))->where('fileable_id', $this->id)->count();
+        if ($imagesCount) {
+            $img = FileContent::where('fileable_type', ProductVariant::class)->where('fileable_id', $this->id)->first();
+            return $img->url;
+        } else {
+            return null;
+        }
     }
 
 }

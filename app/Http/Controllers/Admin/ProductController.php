@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\FileTypes;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\ListRequest;
@@ -59,9 +60,21 @@ class ProductController extends Controller
         $product = new Product();
         $product->fill($data);
         $product->save();
-        $this->saveFiles($request, Product::class, $product->id, true);
+        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
+        $firstImage = $attachments->where('type', FileTypes::Image)->first();
+        if ($firstImage) {
+            $product->cover_photo_id = $firstImage->id;
+        }
+        $product->save();
+
         if ($request->product_attributes) {
             $this->handleAttributes($product, $request);
+        }
+        if ($request->product_categories) {
+            $product->handleCategories($request->product_categories);
+        }
+        if ($request->product_tags) {
+            $product->handleTags($request->product_tags);
         }
 
         return new ProductListResource($product);
@@ -79,9 +92,13 @@ class ProductController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
-        $this->saveFiles($request, Product::class, $product->id, true);
+        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
+        $firstImage = $attachments->where('type', FileTypes::Image)->first();
+        $product->cover_photo_id = $firstImage->id;
+        $product->save();
         $this->handleAttributes($product, $request);
-
+        $product->handleCategories($request->product_categories);
+        $product->handleTags($request->product_tags);
         return new ProductListResource($product);
     }
 
