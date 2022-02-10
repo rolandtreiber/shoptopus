@@ -17,10 +17,12 @@ interface ModelRepositoryInterface {
     /**
      * Get a single model
      *
-     * @param string $id
+     * @param $value
+     * @param string $key
      * @param array $excludeRelationships
+     * @return array
      */
-    public function get(string $id, array $excludeRelationships = []);
+    public function get($value, string $key = 'id', array $excludeRelationships = []) : array;
 
     /**
      * Create a model

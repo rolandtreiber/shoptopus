@@ -16,19 +16,12 @@ interface ModelServiceInterface {
     /**
      * Get a single model
      *
-     * @param string $id
+     * @param $value
+     * @param string $key
      * @param array $excludeRelationships
-     * @return mixed
-     * @throws \Exception
+     * @return array
      */
-    public function get(string $id, array $excludeRelationships = []) : array;
-
-    /**
-     * Get a model by its slug
-     *
-     * @param string $slug
-     */
-    public function getBySlug(string $slug);
+    public function get($value, string $key = 'id', array $excludeRelationships = []) : array;
 
     /**
      * Create a model

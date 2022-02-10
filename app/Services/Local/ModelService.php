@@ -41,35 +41,16 @@ class ModelService implements ModelServiceInterface
     /**
      * Get a single model
      *
-     * @param string $id
+     * @param $value
+     * @param string $key
      * @param array $excludeRelationships
-     * @return mixed
+     * @return array
      * @throws \Exception
      */
-    public function get(string $id, array $excludeRelationships = []): array
+    public function get($value, string $key = 'id', array $excludeRelationships = []) : array
     {
         try {
-            return $this->modelRepository->get($id, $excludeRelationships);
-        } catch (\Exception $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
-        }
-    }
-
-    /**
-     * Get a single model by its slug
-     *
-     * @param string $slug
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getBySlug(string $slug)
-    {
-        try {
-            return $this->modelRepository->getBySlug($slug);
+            return $this->modelRepository->get($value, $key, $excludeRelationships);
         } catch (\Exception $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));

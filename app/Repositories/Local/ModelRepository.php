@@ -46,44 +46,15 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Get a single model
      *
-     * @param string $id
+     * @param $value
+     * @param string $key
      * @param array $excludeRelationships
      * @return array
      */
-    public function get(string $id, array $excludeRelationships = []) : array
+    public function get($value, string $key = 'id', array $excludeRelationships = []) : array
     {
         try {
-            $filters = ['id' => $id];
-
-            if ($this->canBeSoftDeleted()) {
-                $filters['deleted_at'] = 'null';
-            }
-
-            if ($this->hasActiveProperty()) {
-                $filters['active'] = 1;
-            }
-            $page_formatting = ['limit' => 1];
-
-            $result = $this->getModels($this->getFilters($filters, $this->model_table), $page_formatting, $excludeRelationships);
-
-            return !empty($result) ? $result[0] : [];
-        } catch (\Exception | \Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
-    }
-
-    /**
-     * Get a single model by its slug
-     *
-     * @param string $slug
-     * @param array $excludeRelationships
-     * @return array
-     */
-    public function getBySlug(string $slug, array $excludeRelationships = []) : array
-    {
-        try {
-            $filters = ['slug' => $slug];
+            $filters = [$key => $value];
 
             if ($this->canBeSoftDeleted()) {
                 $filters['deleted_at'] = 'null';
