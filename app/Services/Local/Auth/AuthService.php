@@ -15,8 +15,8 @@ use App\Services\Local\Error\ErrorServiceInterface;
 
 class AuthService implements AuthServiceInterface
 {
-    private $errorService;
-    private $userService;
+    private ErrorServiceInterface $errorService;
+    private UserServiceInterface $userService;
 
     public function __construct(ErrorServiceInterface $errorService, UserServiceInterface $userServiceInterface) {
         $this->errorService = $errorService;

@@ -18,7 +18,7 @@ class CreateAccessTokensTable extends Migration
 
         Schema::create('access_tokens', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('type')->default('0');
+            $table->string('type');
             $table->string('token', 120);
             $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignUuid('issuer_user_id')->nullable()->constrained('users')->nullOnDelete();

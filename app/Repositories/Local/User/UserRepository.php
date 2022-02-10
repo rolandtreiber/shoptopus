@@ -37,29 +37,6 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     }
 
     /**
-     * Get a user model by its email
-     *
-     * @param string $email
-     * @return array
-     * @throws \Exception
-     */
-    public function getByEmail(string $email) : array
-    {
-        try {
-            $filters = ['email' => $email];
-
-            $page_formatting = ['limit' => 1];
-
-            $result = $this->getModels($this->getFilters($filters, $this->model_table), $page_formatting, []);
-
-            return !empty($result) ? $result[0] : [];
-        } catch (\Exception | \Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
-    }
-
-    /**
      * Get the columns for selection
      *
      * @param bool $withTableNamePrefix

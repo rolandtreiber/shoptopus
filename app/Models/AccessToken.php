@@ -34,7 +34,7 @@ class AccessToken extends Model
         'id' => 'string',
         'user_id' => 'string',
         'issuer_user_id' => 'string',
-        'expiry' => 'datetime',
+        'expiry' => 'datetime'
     ];
 
     /**

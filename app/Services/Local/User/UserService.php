@@ -33,24 +33,4 @@ class UserService extends ModelService implements UserServiceInterface
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getCurrentUser'));
         }
     }
-
-    /**
-     * Get a user model by its email
-     *
-     * @param string $email
-     * @return mixed
-     * @throws \Exception
-     */
-    public function getByEmail(string $email) : array
-    {
-        try {
-            return $this->modelRepository->getByEmail($email);
-        } catch (\Exception $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.user.getByEmail"));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.user.getByEmail"));
-        }
-    }
 }
