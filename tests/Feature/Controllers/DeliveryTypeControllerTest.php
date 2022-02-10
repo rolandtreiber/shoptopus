@@ -6,13 +6,13 @@ use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryType;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group delivery_types
  * @see \App\Http\Controllers\Admin\DeliveryTypeController
  */
-class DeliveryTypeControllerTest extends TestCase
+class DeliveryTypeControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -204,7 +204,7 @@ class DeliveryTypeControllerTest extends TestCase
             'price' => 15,
             'status' => DeliveryTypeStatuses::Enabled
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -228,7 +228,7 @@ class DeliveryTypeControllerTest extends TestCase
             'price' => 'twenty',
             'status' => DeliveryTypeStatuses::Enabled
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
 }

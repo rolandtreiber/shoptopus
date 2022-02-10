@@ -6,13 +6,13 @@ use App\Models\Banner;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group banners
  * @see \App\Http\Controllers\Admin\BannersController
  */
-class BannerControllerTest extends TestCase
+class BannerControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -156,7 +156,7 @@ class BannerControllerTest extends TestCase
             ]),
             'display_badge' => 1
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**

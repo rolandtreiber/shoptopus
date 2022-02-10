@@ -80,8 +80,6 @@ class LoginTest extends TestCase
             'password' => "password"
         ];
 
-        dd($this->sendRequest($data)->json());
-
         $this->sendRequest($data)->assertJsonStructure([
             'data' => [
                 'auth' => [

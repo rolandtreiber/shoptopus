@@ -3,13 +3,13 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\User;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group users
  * @see \App\Http\Controllers\Admin\UserController
  */
-class UserControllerTest extends TestCase
+class UserControllerTest extends AdminControllerTestCase
 {
     /**
      * @test

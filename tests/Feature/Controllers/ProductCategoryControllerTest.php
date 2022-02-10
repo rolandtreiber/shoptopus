@@ -7,13 +7,13 @@ use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group product_categories
  * @see \App\Http\Controllers\Admin\ProductCategoryController
  */
-class ProductCategoryControllerTest extends TestCase
+class ProductCategoryControllerTest extends AdminControllerTestCase
 {
     // Happy
 
@@ -148,7 +148,7 @@ class ProductCategoryControllerTest extends TestCase
                 'de' => 'Test Kategorie Beschreibung'
             ])
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -156,10 +156,9 @@ class ProductCategoryControllerTest extends TestCase
      */
     public function test_product_category_delete_permission()
     {
-        $this->expectException(AuthorizationException::class);
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $productCategory = ProductCategory::factory()->create();
-        $response = $this->delete(route('admin.api.delete.product-category', $productCategory))->json();
+        $response = $this->delete(route('admin.api.delete.product-category', $productCategory));
         $response->assertForbidden();
     }
 

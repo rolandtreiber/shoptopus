@@ -4,16 +4,15 @@ namespace Tests\Feature\Controllers;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Testing\Fluent\AssertableJson;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\CreatesApplication;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group customers
  * @see \App\Http\Controllers\Admin\CustomerController
  */
-class CustomerControllerTest extends TestCase
+class CustomerControllerTest extends AdminControllerTestCase
 {
     use AdditionalAssertions, WithFaker, CreatesApplication;
 

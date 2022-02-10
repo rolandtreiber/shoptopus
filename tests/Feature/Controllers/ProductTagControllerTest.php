@@ -8,13 +8,13 @@ use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group product_tags
  * @see \App\Http\Controllers\Admin\ProductTagController
  */
-class ProductTagControllerTest extends TestCase
+class ProductTagControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -141,7 +141,7 @@ class ProductTagControllerTest extends TestCase
             ]),
             'display_badge' => 1
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**

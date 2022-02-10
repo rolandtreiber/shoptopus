@@ -9,13 +9,13 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group product_variants
  * @see \App\Http\Controllers\Admin\ProductVariantController
  */
-class ProductVariantControllerTest extends TestCase
+class ProductVariantControllerTest extends AdminControllerTestCase
 {
     // Happy
 
@@ -189,7 +189,7 @@ class ProductVariantControllerTest extends TestCase
         $response = $this->post(route('admin.api.create.product-variant', [
             'product' => $product->id
         ]));
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -213,7 +213,7 @@ class ProductVariantControllerTest extends TestCase
         ]), [
             'price' => 'twelve'
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
 }

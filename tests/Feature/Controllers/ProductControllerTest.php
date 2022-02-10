@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\CreatesApplication;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group products
  * @see \App\Http\Controllers\Admin\ProductController
  */
-class ProductControllerTest extends TestCase
+class ProductControllerTest extends AdminControllerTestCase
 {
     use AdditionalAssertions, WithFaker, CreatesApplication;
 

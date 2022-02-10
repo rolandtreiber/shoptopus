@@ -7,13 +7,13 @@ use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group delivery_rules
  * @see \App\Http\Controllers\Admin\DeliveryRuleController
  */
-class DeliveryRuleControllerTest extends TestCase
+class DeliveryRuleControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -235,7 +235,7 @@ class DeliveryRuleControllerTest extends TestCase
             'lat' => 'hello',
             'lon' => -2.5879
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -255,6 +255,6 @@ class DeliveryRuleControllerTest extends TestCase
             'lat' => 51.4545,
             'lon' => 'invalid'
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 }

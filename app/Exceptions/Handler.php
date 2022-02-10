@@ -2,6 +2,10 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
 use App\Traits\APIControllerTrait;
 use Illuminate\Support\Facades\Log;
@@ -73,6 +77,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
-        return $this->errorResponse($e, __("error_messages.0000"));
+        switch (get_class($e)) {
+            case AuthenticationException::class:
+                $status = 401;
+                break;
+            case AuthorizationException::class:
+            case UnauthorizedException::class:
+                $status = 403;
+                break;
+            case ValidationException::class:
+                $status = 422;
+                break;
+            default:
+                $status = 500;
+        }
+        return $this->errorResponse($e, __("error_messages.0000"), null, $status);
     }
 }

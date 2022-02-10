@@ -9,13 +9,13 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group voucher_codes
  * @see \App\Http\Controllers\Admin\VoucherCodeController
  */
-class VoucherCodeControllerTest extends TestCase
+class VoucherCodeControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -186,7 +186,7 @@ class VoucherCodeControllerTest extends TestCase
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -206,6 +206,6 @@ class VoucherCodeControllerTest extends TestCase
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 }

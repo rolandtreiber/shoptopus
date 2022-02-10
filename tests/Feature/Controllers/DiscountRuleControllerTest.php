@@ -7,13 +7,13 @@ use App\Models\DiscountRule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 
 /**
  * @group discount_rules
  * @see \App\Http\Controllers\Admin\DiscountRuleController
  */
-class DiscountRuleControllerTest extends TestCase
+class DiscountRuleControllerTest extends AdminControllerTestCase
 {
     /**
      * @test
@@ -217,7 +217,7 @@ class DiscountRuleControllerTest extends TestCase
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -241,7 +241,7 @@ class DiscountRuleControllerTest extends TestCase
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
 }

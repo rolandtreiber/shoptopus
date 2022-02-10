@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\AuthController;
 
 Route::group([
     'name' => 'api.',
-    'prefix' => 'api',
     'middleware' => 'api'
 ], function () {
     Route::group([

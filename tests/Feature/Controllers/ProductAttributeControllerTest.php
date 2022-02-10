@@ -9,14 +9,14 @@ use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
-use Tests\TestCase;
+use Tests\AdminControllerTestCase;
 use Throwable;
 
 /**
  * @group product_attributes
  * @see \App\Http\Controllers\Admin\ProductAttributeController
  */
-class ProductAttributeControllerTest extends TestCase
+class ProductAttributeControllerTest extends AdminControllerTestCase
 {
     // Happy
 
@@ -220,7 +220,7 @@ class ProductAttributeControllerTest extends TestCase
                 'de' => 'Farbe'
             ]),
         ]);
-        $response->assertStatus(302);
+        $response->assertStatus(422);
     }
 
     /**
@@ -238,7 +238,7 @@ class ProductAttributeControllerTest extends TestCase
                 'de' => 'Rot'
             ]),
         ]);
-        $response->assertStatus(302);    }
+        $response->assertStatus(422);    }
 
     /**
      * @test

@@ -3,17 +3,32 @@
 namespace Tests;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
-abstract class TestCase extends BaseTestCase
+abstract class AdminControllerTestCase extends BaseTestCase
 {
     use CreatesApplication;
+    use DatabaseMigrations;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->refreshApplication();
+        config(['app.locales_supported' => [
+            'en' => ['English'],
+            'de' => ['Deutsch']
+        ]]);
+        config(['app.default_currency' => [
+            'name' => 'GBP',
+            'symbol' => '£',
+            'side' => 'left'
+        ]]);
+        $this->runDatabaseMigrations();
+        $this->seed();
     }
 
     /**
