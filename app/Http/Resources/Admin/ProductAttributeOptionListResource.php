@@ -24,6 +24,7 @@ class ProductAttributeOptionListResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'common_value' => $this->common_value,
             'image' => $this->image ? $this->image->url : null,
+            'enabled' => $this->enabled,
         ];
     }
 }

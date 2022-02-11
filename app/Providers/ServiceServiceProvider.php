@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Local\Report\ReportService;
+use App\Services\Local\Report\ReportServiceInterface;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceServiceProvider extends ServiceProvider
@@ -19,6 +21,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\Auth\AuthServiceInterface', 'App\Services\Local\Auth\AuthService');
         $this->app->bind('App\Services\Local\User\UserServiceInterface', 'App\Services\Local\User\UserService');
         $this->app->bind('App\Services\Local\Address\AddressServiceInterface', 'App\Services\Local\Address\AddressService');
+        $this->app->bind(ReportServiceInterface::class, ReportService::class);
     }
 
 }
