@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\Admin\UserDetailResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
@@ -142,4 +143,13 @@ class AuthController extends Controller
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
+
+    /**
+     * @return UserDetailResource
+     */
+    public function getAuthenticatedUser(): UserDetailResource
+    {
+        return new UserDetailResource(Auth()->user());
+    }
+
 }
