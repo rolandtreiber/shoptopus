@@ -2,8 +2,6 @@
 
 namespace App\Services\Local\Report;
 
-use App\Services\Local\Report\ReportServiceInterface;
-
 use App\Enums\Intervals;
 use App\Enums\Palette;
 use Illuminate\Support\Carbon;
@@ -29,25 +27,60 @@ class ReportService implements ReportServiceInterface {
      * ReportHelper constructor.
      * Sets the palette
      */
-    public function setup(Carbon $start, Carbon $end, $interval)
+    public function setup(Carbon $start = null, Carbon $end = null, $interval = null, $palette = null): ReportService
     {
-        $end->setHours(23)->setMinutes(59)->setSeconds(59);
-        $this->start = $start;
-        $this->end = $end;
-        $this->interval = $interval;
-        $this->setLabelsAndDates();
-        $this->palette = [
-            Palette::Red,
-            Palette::Purple,
-            Palette::DarkBlue,
-            Palette::Aquamarine,
-            Palette::Turquoise,
-            Palette::DarkGreen,
-            Palette::Yellow,
-            Palette::Orange,
-            Palette::LightGray,
-            Palette::DarkGray,
-        ];
+        $this->datasets = [];
+        if ($start && $end && $interval) {
+            $end->setHours(23)->setMinutes(59)->setSeconds(59);
+            $this->start = $start;
+            $this->end = $end;
+            $this->interval = $interval;
+            $this->setLabelsAndDates();
+        }
+        $this->setPalette($palette);
+        return $this;
+    }
+
+    /**
+     * @param array $labels
+     * @return ReportService
+     */
+    public function setLabels(array $labels): ReportService
+    {
+        $this->labels = $labels;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPalette(): array
+    {
+        return $this->palette;
+    }
+
+    /**
+     * @param mixed $palette
+     */
+    public function setPalette($palette = null): ReportService
+    {
+        if ($palette) {
+            $this->palette = $palette;
+        } else {
+            $this->palette = [
+                Palette::Red,
+                Palette::Purple,
+                Palette::DarkBlue,
+                Palette::Aquamarine,
+                Palette::Turquoise,
+                Palette::DarkGreen,
+                Palette::Yellow,
+                Palette::Orange,
+                Palette::LightGray,
+                Palette::DarkGray,
+            ];
+        }
+        return $this;
     }
 
     /**
@@ -306,9 +339,13 @@ class ReportService implements ReportServiceInterface {
      * Appends the dataset to the $datasets array, then empties the array.
      * @return $this
      */
-    public function addDataset(): ReportService
+    public function addDataset(array $dataset = null): ReportService
     {
-        $this->datasets[] = $this->dataset;
+        if ($dataset) {
+            $this->datasets[] = $dataset;
+        } else {
+            $this->datasets[] = $this->dataset;
+        }
         $this->count++;
         $this->dataset = [];
         return $this;

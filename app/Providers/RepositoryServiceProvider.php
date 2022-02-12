@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
-use App\Repositories\Admin\EventLogRepository;
-use App\Repositories\Admin\Interfaces\EventLogRepositoryInterface;
+use App\Repositories\Admin\Eventlog\EventLogRepository;
+use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
+use App\Repositories\Admin\Report\ReportRepository;
+use App\Repositories\Admin\Report\ReportRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -20,5 +22,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Repositories\Local\User\UserRepositoryInterface', 'App\Repositories\Local\User\UserRepository');
         $this->app->bind('App\Repositories\Local\Address\AddressRepositoryInterface', 'App\Repositories\Local\Address\AddressRepository');
         $this->app->bind(EventLogRepositoryInterface::class, EventLogRepository::class);
+        $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
     }
 }

@@ -77,6 +77,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
+        if (env('APP_ENV') === 'local') {
+            return parent::render($request, $e);
+        }
         switch (get_class($e)) {
             case AuthenticationException::class:
                 $status = 401;

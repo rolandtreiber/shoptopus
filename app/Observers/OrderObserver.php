@@ -4,8 +4,8 @@ namespace App\Observers;
 
 use App\Enums\EventLogTypes;
 use App\Models\Order;
-use App\Repositories\Admin\EventLogRepository;
-use App\Repositories\Admin\Interfaces\EventLogRepositoryInterface;
+use App\Repositories\Admin\Eventlog\EventLogRepository;
+use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
 
 class OrderObserver
 {

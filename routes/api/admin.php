@@ -233,5 +233,9 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
             });
         });
 
+        // Reports
+        Route::group(['prefix' => 'reports'], function () {
+            Route::get('overview', [ReportController::class, 'getOverview'])->name('admin.api.show.report.overview');
+        });
     });
 });

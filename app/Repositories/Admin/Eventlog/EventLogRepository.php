@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Repositories\Admin;
+namespace App\Repositories\Admin\Eventlog;
 
 use App\Enums\OrderStatuses;
 use App\Models\EventLog;
 use App\Models\Order;
-use App\Repositories\Admin\Interfaces\EventLogRepositoryInterface;
 
 class EventLogRepository implements EventLogRepositoryInterface {
 

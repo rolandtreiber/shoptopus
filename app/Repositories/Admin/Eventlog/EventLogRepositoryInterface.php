@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Admin\Interfaces;
+namespace App\Repositories\Admin\Eventlog;
 
 interface EventLogRepositoryInterface
 {
