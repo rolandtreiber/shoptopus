@@ -21,7 +21,6 @@ class ReportController extends Controller
      */
     public function getOverview()//: ReportOverviewResource
     {
-        return $this->reportRepository->getOverview();
         return new ReportOverviewResource($this->reportRepository->getOverview());
     }
 

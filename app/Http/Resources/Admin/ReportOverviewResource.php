@@ -16,7 +16,7 @@ class ReportOverviewResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'hello' => 'hello'
+            'orders_by_status_pie_chart_data' => $this['orders_by_status_pie_chart_data']
         ];
     }
 }

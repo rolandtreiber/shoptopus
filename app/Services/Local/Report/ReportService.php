@@ -87,11 +87,26 @@ class ReportService implements ReportServiceInterface {
      * @return array
      * Creates the response array that corresponds to the expected format of the chart vue component.
      */
-    public function getResponse(): array
+    public function getChartjsResponse(): array
     {
         return [
             'labels' => $this->labels,
             'datasets' => $this->datasets
+        ];
+    }
+
+    public function getApexChartsPieResponse(): array
+    {
+        $series = [];
+        if ($this->datasets) {
+            $series = $this->datasets[0]['data'];
+        }
+
+        return [
+            'series' => $series,
+            'chartOptions' => [
+                'labels' => $this->labels
+            ]
         ];
     }
 

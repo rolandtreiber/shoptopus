@@ -48,26 +48,28 @@ class ReportRepository implements ReportRepositoryInterface {
             'backgroundColor' => $bgColor,
             'data' => $count
         ])->setLabels($labels);
-        return $reportService->getResponse();
+        return $reportService->getApexChartsPieResponse();
     }
 
     public function getOverview()
     {
+        $result = [];
         $ordersByStatusChartData = $this->getOrdersByStatusChartData();
-        dd($ordersByStatusChartData);
-        $start = Carbon::now()->subMonths(3);
-        $end = Carbon::now();
-        $data1 = Order::where('created_at', '>=', $start)->where('created_at', '<=', $end)->get();
-        $reportService = $this->reportService->setup($start, $end, Intervals::Week);
-        $reportService->setItems($data1);
-        $reportService->makeReportDatasetByAttribute('status')->addLabel('Status')->addDataset();
+        $result['orders_by_status_pie_chart_data'] = $ordersByStatusChartData;
+//        dd($ordersByStatusChartData);
+//        $start = Carbon::now()->subMonths(3);
+//        $end = Carbon::now();
+//        $data1 = Order::where('created_at', '>=', $start)->where('created_at', '<=', $end)->get();
+//        $reportService = $this->reportService->setup($start, $end, Intervals::Week);
+//        $reportService->setItems($data1);
+//        $reportService->makeReportDatasetByAttribute('status')->addLabel('Status')->addDataset();
 //        $reportService->setItems($data2);
 //        $reportService->makeReportDatasetByNumberOfItems()->addLabel('Users')->addDataset();
 //        $labels = $reportService->getLabels();
 //        $dates = $reportService->getDates();
 //        $items = $reportService->getCurrentItems();
 //        $dataset = $reportService->getCurrentDataSet();
-        return $reportService->getResponse();
+        return $result;
     }
 
     public function getChart(array $data)
@@ -144,7 +146,7 @@ class ReportRepository implements ReportRepositoryInterface {
                     ->addDataset();
             }
         }
-        return $reportService->getResponse();
+        return $reportService->getChartjsResponse();
 
     }
 }

@@ -16,7 +16,8 @@ interface ReportServiceInterface {
     public function clearLabels(): ReportService;
     public function getDates(): array;
     public function getCurrentDataSet(): array;
-    public function getResponse(): array;
+    public function getChartjsResponse(): array;
+    public function getApexChartsPieResponse(): array;
     public function setItems(Collection $items): ReportService;
     public function getCurrentItems();
     public function makeReportDatasetByAttribute($attr, bool $cascade = false): ReportService;
