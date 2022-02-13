@@ -16,7 +16,10 @@ class ReportOverviewResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'orders_by_status_pie_chart_data' => $this['orders_by_status_pie_chart_data']
+            'revenue_over_time' => $this['revenue_over_time'],
+            'user_signups_over_time' => $this['user_signups_over_time'],
+            'orders_by_status_pie_chart_data' => $this['orders_by_status_pie_chart_data'],
+            'products_by_status_pie_chart_data' => $this['products_by_status_pie_chart_data']
         ];
     }
 }

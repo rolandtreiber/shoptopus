@@ -30,7 +30,7 @@ class ReportService implements ReportServiceInterface {
     public function setup(Carbon $start = null, Carbon $end = null, $interval = null, $palette = null): ReportService
     {
         $this->datasets = [];
-        if ($start && $end && $interval) {
+        if ($start && $end && $interval !== null) {
             $end->setHours(23)->setMinutes(59)->setSeconds(59);
             $this->start = $start;
             $this->end = $end;
@@ -68,6 +68,15 @@ class ReportService implements ReportServiceInterface {
             $this->palette = $palette;
         } else {
             $this->palette = [
+                'rgba(49, 129, 237, 1)',
+                'rgba(19, 93, 190, 1)',
+                'rgba(6, 70, 153, 1)',
+                'rgba(71, 148, 235, 1)',
+                'rgba(27, 88, 158, 1)',
+                'rgba(59, 129, 209, 1)',
+                'rgba(90, 155, 230, 1)',
+                'rgba(44, 96, 156, 1)',
+                'rgba(41, 133, 240, 1)',
                 Palette::Red,
                 Palette::Purple,
                 Palette::DarkBlue,
@@ -108,6 +117,48 @@ class ReportService implements ReportServiceInterface {
                 'labels' => $this->labels
             ]
         ];
+    }
+
+    public function getApexChartsResponse(): array
+    {
+        $series = [];
+        foreach ($this->datasets as $dataset) {
+            $series[] = [
+                'name' => $dataset['label'],
+                'data' => $dataset['data']
+            ];
+        }
+
+        return [
+            'series' => $series,
+            'categories' => $this->labels
+        ];
+    }
+
+    public function getApexCompositePieResponse(): array
+    {
+        if ($this->datasets) {
+            $dataset = $this->datasets[0];
+        }
+
+        $series = [];
+        foreach ($dataset['data'] as $index => $data) {
+            $series[] = [
+                'data' => $data,
+                'name' => $dataset['labels'][$index],
+                'color' => $dataset['backgroundColor'][$index]
+            ];
+        }
+
+        return $series;
+    }
+
+    /**
+     * @return array
+     */
+    public function getDatasets(): array
+    {
+        return $this->datasets;
     }
 
     public function randomizeColors($r): ReportService

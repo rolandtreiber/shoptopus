@@ -3,12 +3,16 @@
 namespace App\Repositories\Admin\Report;
 
 use App\Enums\Intervals;
+use App\Enums\OrderStatuses;
 use App\Models\Order;
+use App\Models\User;
+use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class ReportRepository implements ReportRepositoryInterface {
+class ReportRepository implements ReportRepositoryInterface
+{
 
     protected ReportServiceInterface $reportService;
 
@@ -17,21 +21,125 @@ class ReportRepository implements ReportRepositoryInterface {
         $this->reportService = $reportService;
     }
 
-    public function getOrdersByStatusChartData(): array
+    public function getSignupsOverTime(): array
+    {
+        $start = Carbon::now()->subMonth();
+        $end = Carbon::now();
+
+        $service = $this->getChartData([
+            'date_from' => $start,
+            'date_to' => $end,
+            'interval' => Intervals::Day,
+            'models' => [
+                [
+                    'label' => 'Signups',
+                    'model' => User::class,
+                ]
+            ],
+            'cascade' => false,
+            'randomize_colors' => false
+        ]);
+
+        return $service->getApexChartsResponse();
+    }
+
+    public function getRevenueOverTime(): array
+    {
+        $start = Carbon::now()->subMonth();
+        $end = Carbon::now();
+
+        $lengthInDays = $end->diffInDays($start);
+        $shadowStart = $start->copy()->subDays($lengthInDays + 1);
+        $shadowEnd = $end->copy()->subDays($lengthInDays + 1);
+
+        $service = $this->getChartData([
+            'date_from' => $start,
+            'date_to' => $end,
+            'interval' => Intervals::Day,
+            'models' => [
+                [
+                    'label' => 'Completed Orders',
+                    'model' => Order::class,
+                    'attribute' => 'total_price',
+                    'conditions' => [
+                        ['where', 'status', '=', OrderStatuses::Completed]
+                    ]
+                ],
+                [
+                    'label' => 'Paid Orders (Paid, Processing, In Transit)',
+                    'model' => Order::class,
+                    'attribute' => 'total_price',
+                    'conditions' => [
+                        ['whereIn', 'status', [
+                            OrderStatuses::Paid,
+                            OrderStatuses::Processing,
+                            OrderStatuses::InTransit,
+                        ]]
+                    ]
+                ]
+            ],
+            'cascade' => true,
+            'randomize_colors' => false
+        ]);
+
+        return $service->getApexChartsResponse();
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductByStatusChartData(): array
     {
         $reportService = $this->reportService->setup();
-        $orders = DB::table('orders')->select(['orders.status',  DB::raw('count(*) as total')])->groupBy('orders.status')->get();
+        $products = DB::table('products')->select(['products.status', DB::raw('count(*) as total')])->groupBy('products.status')->get();
         $color = 0;
         $count = [];
         $bgColor = [];
         $labels = [];
         $statuses = [
-          1 => 'Paid',
-          2 => 'Processing',
-          3 => 'In Transit',
-          4 => 'Completed',
-          5 => 'On Hold',
-          6 => 'Cancelled'
+            0 => 'Provisional',
+            1 => 'Active',
+            2 => 'Discontinued'
+        ];
+        $palette = $reportService->getPalette();
+        foreach ($products as $product) {
+            $labels[] = $statuses[$product['status']];
+            $count[] = $product['total'];
+            $bgColor[] = $palette[$color];
+            $color++;
+            if ($color == 9) {
+                $color = 0;
+            }
+        }
+
+        $reportService->addDataset([
+            'label' => "Products",
+            'borderColor' => "transparent",
+            'backgroundColor' => $bgColor,
+            'data' => $count,
+            'labels' => $labels
+        ])->setLabels($labels);
+        return $reportService->getApexCompositePieResponse();
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrdersByStatusChartData(): array
+    {
+        $reportService = $this->reportService->setup();
+        $orders = DB::table('orders')->select(['orders.status', DB::raw('count(*) as total')])->groupBy('orders.status')->get();
+        $color = 0;
+        $count = [];
+        $bgColor = [];
+        $labels = [];
+        $statuses = [
+            1 => 'Paid',
+            2 => 'Processing',
+            3 => 'In Transit',
+            4 => 'Completed',
+            5 => 'On Hold',
+            6 => 'Cancelled'
         ];
         $palette = $reportService->getPalette();
         foreach ($orders as $order) {
@@ -39,114 +147,80 @@ class ReportRepository implements ReportRepositoryInterface {
             $count[] = $order['total'];
             $bgColor[] = $palette[$color];
             $color++;
-            if ($color == 9) { $color = 0; }
+            if ($color == 9) {
+                $color = 0;
+            }
         }
 
         $reportService->addDataset([
             'label' => "Orders",
             'borderColor' => "transparent",
             'backgroundColor' => $bgColor,
-            'data' => $count
-        ])->setLabels($labels);
-        return $reportService->getApexChartsPieResponse();
+            'data' => $count,
+            'labels' => $labels
+        ]);
+        return $reportService->getApexCompositePieResponse();
     }
 
-    public function getOverview()
+    /**
+     * @return array
+     */
+    public function getOverview(): array
     {
-        $result = [];
         $ordersByStatusChartData = $this->getOrdersByStatusChartData();
-        $result['orders_by_status_pie_chart_data'] = $ordersByStatusChartData;
-//        dd($ordersByStatusChartData);
-//        $start = Carbon::now()->subMonths(3);
-//        $end = Carbon::now();
-//        $data1 = Order::where('created_at', '>=', $start)->where('created_at', '<=', $end)->get();
-//        $reportService = $this->reportService->setup($start, $end, Intervals::Week);
-//        $reportService->setItems($data1);
-//        $reportService->makeReportDatasetByAttribute('status')->addLabel('Status')->addDataset();
-//        $reportService->setItems($data2);
-//        $reportService->makeReportDatasetByNumberOfItems()->addLabel('Users')->addDataset();
-//        $labels = $reportService->getLabels();
-//        $dates = $reportService->getDates();
-//        $items = $reportService->getCurrentItems();
-//        $dataset = $reportService->getCurrentDataSet();
-        return $result;
+        $productsByStatusChartData = $this->getProductByStatusChartData();
+        $signupsOverTime = $this->getSignupsOverTime();
+        $revenueOverTime = $this->getRevenueOverTime();
+
+        return [
+            'products_by_status_pie_chart_data' => $productsByStatusChartData,
+            'orders_by_status_pie_chart_data' => $ordersByStatusChartData,
+            'user_signups_over_time' => $signupsOverTime,
+            'revenue_over_time' => $revenueOverTime
+        ];
     }
 
-    public function getChart(array $data)
+    /**
+     * @param array $data
+     * @return ReportService
+     */
+    public function getChartData(array $data): ReportService
     {
-        $start = Carbon::parse($data['date_from']);
-        $end = Carbon::parse($data['date_to']);
-        $lengthInDays = $end->diffInDays($start);
-        $shadowStart = $start->copy()->subDays($lengthInDays+1);
-        $shadowEnd = $end->copy()->subDays($lengthInDays+1);
+        $start = $data['date_from'];
+        $end = $data['date_to'];
         $interval = $data['interval'];
-        $type = $data['type'];
+        $cascade = $data['cascade'];
         $reportService = $this->reportService->setup($start, $end, $interval);
         $reportService->randomizeColors($data['randomize_colors']);
-
         $reportService->setShadow(false);
 
-        if ($type !== 'aggregate') {
-            // Timeline or cascade
-            foreach (json_decode($data['models'], true) as $m) {
-                $model = new $m['model'];
-                $shadowData = $model->where('created_at', '>=', $shadowStart)->where('created_at', '<=', $shadowEnd)->get();
-                $data = $model->where('created_at', '>=', $start)->where('created_at', '<=', $end)->get();
-                $reportService->setItems($data);
-                if (!isset($m['attribute'])) {
-                    $reportService->makeReportDatasetByNumberOfItems(true)->addLabel($m['label'])->addDataset();
-                } else {
-                    $reportService->makeReportDatasetByAttribute($m['attribute'], true)->addLabel($m['label'])->addDataset();
-                }
-                $reportService->setShadow(true);
+        foreach ($data['models'] as $m) {
+            $model = new $m['model'];
+            $query = $model->where('created_at', '>=', $start)->where('created_at', '<=', $end);
 
-                $reportService->setItems($shadowData);
-                    $cascade = $type == 'cascade';
-                    if (!isset($m['attribute'])) {
-                        $reportService->makeReportDatasetByNumberOfItems($cascade)->addLabel($m['label'].' (previous period)')->addDataset();
-                    } else {
-                        $reportService->makeReportDatasetByAttribute($m['attribute'], $cascade)->addLabel($m['label'].' (previous period)')->addDataset();
-                    }
-
-            }
-        } else if ($type === 'timeline') {
-            $reportService->clearLabels();
-            $reportService->makeSingleValueDatasetItem('');
-            foreach ($data['models'] as $m) {
-                $model = new $m['model'];
-                $model = $model->where('created_at', '>=', $start)->where('created_at', '<=', $end);
-                $shadowData = $model->where('created_at', '>=', $shadowStart)->where('created_at', '<=', $shadowEnd)->get();
-
+            if (array_key_exists('conditions', $m)) {
                 foreach ($m['conditions'] as $condition) {
-                    switch ($condition['type']) {
-                        case 'where':
-                            $model = $model->where($condition['field'], $condition['operator'], $condition['value']);
-                            $shadowData = $shadowData->where($condition['field'], $condition['operator'], $condition['value']);
-                            break;
+                    switch ($condition[0]) {
                         case 'whereIn':
-                            $model = $model->whereIn($condition['field'], $condition['value']);
-                            $shadowData = $shadowData->where($condition['field'], $condition['operator'], $condition['value']);
+                            $query = $query->whereIn($condition[1], $condition[2]);
                             break;
+                        default:
+                            $query = $query->where($condition[1], $condition[2], $condition[3]);
                     }
                 }
-                if (!isset($m['attribute'])) {
-                    $data = $model->count();
-                    $shadow = $shadowData->count();
-                } else {
-                    $data = $model->sum($m['attribute']);
-                    $shadow = $shadowData->sum($m['attribute']);
-                }
-                $reportService
-                    ->setShadow(false)
-                    ->addSingleLabel($m['label'])
-                    ->addDataToSingleDataset($data)
-                    ->addDataset()
-                    ->setShadow(true)
-                    ->addDataToSingleDataset($shadow)
-                    ->addDataset();
             }
+
+            $data = $query->get();
+
+            $reportService->setItems($data);
+            if (!isset($m['attribute'])) {
+                $reportService->makeReportDatasetByNumberOfItems($cascade)->addLabel($m['label'])->addDataset();
+            } else {
+                $reportService->makeReportDatasetByAttribute($m['attribute'], $cascade)->addLabel($m['label'])->addDataset();
+            }
+            $reportService->setShadow(true);
         }
-        return $reportService->getChartjsResponse();
+        return $reportService;
 
     }
 }
