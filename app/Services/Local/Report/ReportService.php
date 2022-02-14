@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\Report;
 
+use App\Enums\ChartRanges;
 use App\Enums\Intervals;
 use App\Enums\Palette;
 use Illuminate\Support\Carbon;
@@ -428,4 +429,31 @@ class ReportService implements ReportServiceInterface {
         return $this;
     }
 
+    /**
+     * @param int|null $type
+     * @return array
+     */
+    public function getControlsFromType(int $type = null): array
+    {
+        switch ($type) {
+            case ChartRanges::LastWeek:
+                return [
+                    'start' => Carbon::now()->subWeek()->startOfDay(),
+                    'end' => Carbon::now()->endOfDay(),
+                    'interval' => Intervals::Day
+                ];
+            case ChartRanges::LastYear:
+                return [
+                    'start' => Carbon::now()->subYear()->startOfDay(),
+                    'end' => Carbon::now()->endOfDay(),
+                    'interval' => Intervals::Month
+                ];
+            default:
+                return [
+                    'start' => Carbon::now()->subMonth()->startOfDay(),
+                    'end' => Carbon::now()->endOfDay(),
+                    'interval' => Intervals::Day
+                ];
+        }
+    }
 }

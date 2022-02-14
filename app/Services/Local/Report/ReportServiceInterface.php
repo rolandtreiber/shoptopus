@@ -28,5 +28,6 @@ interface ReportServiceInterface {
     public function addDataset(array $dataset = null): ReportService;
     public function addLabel($label): ReportService;
     public function makeReportDatasetByNumberOfItems(bool $cascade = false): ReportService;
+    public function getControlsFromType(int $type): array;
 
 }

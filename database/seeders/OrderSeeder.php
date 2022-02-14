@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\VoucherCode;
 use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
 
 class OrderSeeder extends Seeder
 {
@@ -36,8 +37,9 @@ class OrderSeeder extends Seeder
             $selectedUserId = $selectedUser->id;
             $order = new Order();
             $order->user_id = $selectedUserId;
-            $order->status = OrderStatuses::Paid;
+            $order->status =  random_int(1, 6);
             $order->delivery_type_id = (new DeliveryType)->findNthId(random_int(1, DeliveryType::count()));
+            $order->created_at = Carbon::now()->subDays(random_int(1, 30));
             $userAddresses = $selectedUser->addresses;
             $selectedAddress = random_int(0, sizeof($userAddresses) - 1);
             $order->address_id = $userAddresses[$selectedAddress]->id;

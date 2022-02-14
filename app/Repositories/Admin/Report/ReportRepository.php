@@ -8,7 +8,6 @@ use App\Models\Order;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ReportRepository implements ReportRepositoryInterface
@@ -21,15 +20,15 @@ class ReportRepository implements ReportRepositoryInterface
         $this->reportService = $reportService;
     }
 
-    public function getSignupsOverTime(): array
+    public function getSignupsOverTime(array $controls): array
     {
-        $start = Carbon::now()->subMonth();
-        $end = Carbon::now();
+        $start = $controls['start'];
+        $end = $controls['end'];
 
         $service = $this->getChartData([
             'date_from' => $start,
             'date_to' => $end,
-            'interval' => Intervals::Day,
+            'interval' => $controls['interval'],
             'models' => [
                 [
                     'label' => 'Signups',
@@ -43,19 +42,12 @@ class ReportRepository implements ReportRepositoryInterface
         return $service->getApexChartsResponse();
     }
 
-    public function getRevenueOverTime(): array
+    public function getRevenueOverTime(array $controls): array
     {
-        $start = Carbon::now()->subMonth();
-        $end = Carbon::now();
-
-        $lengthInDays = $end->diffInDays($start);
-        $shadowStart = $start->copy()->subDays($lengthInDays + 1);
-        $shadowEnd = $end->copy()->subDays($lengthInDays + 1);
-
         $service = $this->getChartData([
-            'date_from' => $start,
-            'date_to' => $end,
-            'interval' => Intervals::Day,
+            'date_from' => $controls['start'],
+            'date_to' => $controls['end'],
+            'interval' => $controls['interval'],
             'models' => [
                 [
                     'label' => 'Completed Orders',
@@ -125,10 +117,16 @@ class ReportRepository implements ReportRepositoryInterface
     /**
      * @return array
      */
-    public function getOrdersByStatusChartData(): array
+    public function getOrdersByStatusChartData(array $controls): array
     {
         $reportService = $this->reportService->setup();
-        $orders = DB::table('orders')->select(['orders.status', DB::raw('count(*) as total')])->groupBy('orders.status')->get();
+        $query = DB::table('orders')
+            ->select(['orders.status', DB::raw('count(*) as total')])
+            ->where('orders.created_at', '>=', $controls['start'])
+            ->where('orders.created_at', '<=', $controls['end'])
+            ->groupBy('orders.status');
+
+        $orders = $query->get();
         $color = 0;
         $count = [];
         $bgColor = [];
@@ -163,20 +161,19 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @param array $data
      * @return array
      */
-    public function getOverview(): array
+    public function getOverview(array $data): array
     {
-        $ordersByStatusChartData = $this->getOrdersByStatusChartData();
+        $ordersByStatusChartData = $this->getOrdersByStatusChartData($this->reportService->getControlsFromType((int) $data['orders_overview_chart_range']));
         $productsByStatusChartData = $this->getProductByStatusChartData();
-        $signupsOverTime = $this->getSignupsOverTime();
-        $revenueOverTime = $this->getRevenueOverTime();
+        $signupsOverTime = $this->getSignupsOverTime($this->reportService->getControlsFromType((int) $data['signups_chart_range']));
 
         return [
             'products_by_status_pie_chart_data' => $productsByStatusChartData,
             'orders_by_status_pie_chart_data' => $ordersByStatusChartData,
             'user_signups_over_time' => $signupsOverTime,
-            'revenue_over_time' => $revenueOverTime
         ];
     }
 
@@ -222,5 +219,18 @@ class ReportRepository implements ReportRepositoryInterface
         }
         return $reportService;
 
+    }
+
+    /**
+     * @param array $data
+     * @return array[]
+     */
+    public function getSales(array $data): array
+    {
+        $revenueOverTime = $this->getRevenueOverTime($this->reportService->getControlsFromType((int) $data['revenue_over_time_range']));
+
+        return [
+            'revenue_over_time' => $revenueOverTime
+        ];
     }
 }

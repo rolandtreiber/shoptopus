@@ -14,6 +14,7 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     * @throws \Exception
      */
     public function run(): void
     {
@@ -31,7 +32,8 @@ class UserSeeder extends Seeder
                 'name' => $user[1],
                 'email' => $user[0],
                 'email_verified_at' => Carbon::now(),
-                'password' => Hash::make('shop')
+                'password' => Hash::make('shop'),
+                'created_at' => Carbon::now()->subDays(random_int(1, 30))
             ])->create();
         }
 
