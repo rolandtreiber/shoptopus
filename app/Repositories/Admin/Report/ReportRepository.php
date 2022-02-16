@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Admin\Report;
 
-use App\Enums\Intervals;
 use App\Enums\OrderStatuses;
+use App\Enums\ProductStatuses;
+use App\Http\Resources\Admin\ProductCategorySelectResource;
 use App\Models\Order;
+use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
@@ -75,6 +77,64 @@ class ReportRepository implements ReportRepositoryInterface
         ]);
 
         return $service->getApexChartsResponse();
+    }
+
+    /**
+     * @return array
+     */
+    public function getProductBreakdown(array $controls, $categoryId = null): array
+    {
+        $topLevelCategories = ProductCategory::where('enabled', 1)->whereNull('parent_id')->select('id', 'name')->get();
+
+        if (!$categoryId && $topLevelCategories !== null) {
+            $categoryId = $topLevelCategories->first()->id;
+        }
+
+        $reportService = $this->reportService->setup();
+        $products = DB::table('order_product')
+            ->leftJoin('products as product', 'order_product.product_id', 'product.id')
+            ->leftJoin('product_product_category as ppc', function($join) use ($categoryId) {
+                $join->on('ppc.product_id', 'product.id');
+                $join->where('ppc.product_category_id', $categoryId);
+            })
+            ->leftJoin('product_categories', 'ppc.product_category_id', 'product_categories.id')
+            ->leftJoin('orders as order', 'order_product.order_id', 'order.id')
+            ->whereNotNull('ppc.product_category_id')
+            ->where('order.created_at', '>=', $controls['start'])
+            ->where('order.created_at', '<=', $controls['end'])
+            ->select(['ppc.product_category_id', 'product_categories.name as category_name', 'product.name', DB::raw('count(*) as total')])
+            ->groupBy('product.name')
+            ->get();
+
+        $color = 0;
+        $count = [];
+        $bgColor = [];
+        $labels = [];
+        $palette = $reportService->getPalette();
+        foreach ($products as $product) {
+            $labels[] = $product['name'];
+            $count[] = $product['total'];
+            $bgColor[] = $palette[$color];
+            $color++;
+            if ($color == 9) {
+                $color = 0;
+            }
+        }
+
+        $reportService->addDataset([
+            'label' => "Products",
+            'borderColor' => "transparent",
+            'backgroundColor' => $bgColor,
+            'data' => $count,
+            'labels' => $labels
+        ])->setLabels($labels);
+
+        $data = $reportService->getApexBarChartsResponse();
+
+        return [
+            'categories' => $topLevelCategories,
+            'data' => $data
+        ];
     }
 
     /**
@@ -161,6 +221,37 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @return array
+     */
+    public function getTotalOverviewValues(): array
+    {
+        $unsold = DB::table('products')
+            ->leftJoin('product_variants as pv', function($join) {
+                $join->on('products.id', 'pv.product_id')
+                    ->where('pv.enabled', 1);
+            })->select([
+                DB::raw('CASE WHEN SUM(pv.price) IS NOT NULL THEN (SUM(pv.price) * SUM(pv.stock)) ELSE (SUM(products.price) * SUM(products.stock)) END AS value'),
+            ])->where('products.status', ProductStatuses::Active)->groupBy('products.id')->pluck('value')->sum();
+
+        $ordersTotal = DB::table('orders')->whereIn('status', [
+            OrderStatuses::Completed,
+            OrderStatuses::Paid,
+            OrderStatuses::InTransit])
+            ->select([
+                DB::raw('SUM(orders.total_price) as revenue'),
+                DB::raw('SUM(orders.delivery) as delivery'),
+                DB::raw('SUM(orders.total_discount) as discount'),
+            ])->first();
+
+        return [
+            'unrealized_revenue' => $unsold,
+            'total_revenue' => $ordersTotal['revenue'],
+            'total_delivery' => $ordersTotal['delivery'],
+            'total_discount' => $ordersTotal['discount'],
+        ];
+    }
+
+    /**
      * @param array $data
      * @return array
      */
@@ -228,9 +319,16 @@ class ReportRepository implements ReportRepositoryInterface
     public function getSales(array $data): array
     {
         $revenueOverTime = $this->getRevenueOverTime($this->reportService->getControlsFromType((int) $data['revenue_over_time_range']));
+        $productsBreakdown = $this->getProductBreakdown(
+            $this->reportService->getControlsFromType((int) $data['products_breakdown_time_range']),
+            array_key_exists('category_id', $data) ? $data['category_id'] : null
+        );
+        $totalOverviewValues = $this->getTotalOverviewValues();
 
         return [
-            'revenue_over_time' => $revenueOverTime
+            'revenue_over_time' => $revenueOverTime,
+            'products_breakdown' => $productsBreakdown,
+            'totals' => $totalOverviewValues
         ];
     }
 }

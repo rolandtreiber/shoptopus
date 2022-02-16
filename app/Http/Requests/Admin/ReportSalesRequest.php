@@ -14,7 +14,8 @@ class ReportSalesRequest extends FormRequest
     public function rules()
     {
         return [
-            'revenue_over_time_range' => 'required'
+            'revenue_over_time_range' => 'required',
+            'products_breakdown_time_range' => 'required'
         ];
     }
 }

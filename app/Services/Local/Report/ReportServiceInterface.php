@@ -29,5 +29,6 @@ interface ReportServiceInterface {
     public function addLabel($label): ReportService;
     public function makeReportDatasetByNumberOfItems(bool $cascade = false): ReportService;
     public function getControlsFromType(int $type): array;
+    public function getApexBarChartsResponse(): array;
 
 }

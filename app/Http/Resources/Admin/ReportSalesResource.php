@@ -17,6 +17,8 @@ class ReportSalesResource extends JsonResource
     {
         return [
             'revenue_over_time' => $this['revenue_over_time'],
+            'products_breakdown' => $this['products_breakdown'],
+            'totals' => $this['totals']
         ];
     }
 }

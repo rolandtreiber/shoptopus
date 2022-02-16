@@ -136,6 +136,31 @@ class ReportService implements ReportServiceInterface {
         ];
     }
 
+    public function getApexBarChartsResponse(): array
+    {
+        $series = [];
+        $palette = $this->palette;
+        $i = 0;
+        foreach ($this->datasets as $dataset) {
+            foreach ($dataset['data'] as $data) {
+                $series[] = [
+                    'name' => 'Total',
+                    'data' => $data,
+                    'color' => $palette[$i]
+                ];
+                $i++;
+                if ($i = count($palette)) {
+                    $i = 0;
+                }
+            }
+        }
+
+        return [
+            'series' => $series,
+            'categories' => $this->labels
+        ];
+    }
+
     public function getApexCompositePieResponse(): array
     {
         if ($this->datasets) {
