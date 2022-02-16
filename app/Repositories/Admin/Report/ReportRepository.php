@@ -4,8 +4,9 @@ namespace App\Repositories\Admin\Report;
 
 use App\Enums\OrderStatuses;
 use App\Enums\ProductStatuses;
-use App\Http\Resources\Admin\ProductCategorySelectResource;
 use App\Models\Order;
+use App\Models\Payment;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
@@ -252,6 +253,26 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @return array
+     */
+    public function getOverviewStats(): array
+    {
+        $orders = Order::count();
+        $pendingOrders = Order::view('paid')->count();
+        $products = Product::count();
+        $payments = Payment::count();
+        $customers = User::customers()->count();
+
+        return [
+            'pending_orders' => $pendingOrders,
+            'orders' => $orders,
+            'products' => $products,
+            'payments' => $payments,
+            'customers' => $customers,
+        ];
+    }
+
+    /**
      * @param array $data
      * @return array
      */
@@ -262,6 +283,7 @@ class ReportRepository implements ReportRepositoryInterface
         $signupsOverTime = $this->getSignupsOverTime($this->reportService->getControlsFromType((int) $data['signups_chart_range']));
 
         return [
+            'stats' => $this->getOverviewStats(),
             'products_by_status_pie_chart_data' => $productsByStatusChartData,
             'orders_by_status_pie_chart_data' => $ordersByStatusChartData,
             'user_signups_over_time' => $signupsOverTime,
