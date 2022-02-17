@@ -3,10 +3,9 @@
 namespace Database\Factories;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\VoucherCode;
+use App\Enums\DiscountTypes;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class VoucherCodeFactory extends Factory
 {
@@ -21,20 +20,17 @@ class VoucherCodeFactory extends Factory
      * Define the model's default state.
      *
      * @return array
-     * @throws Exception
      */
     public function definition(): array
     {
-        $validityBasis = Carbon::now()->addDays(random_int(-5, 5));
-        $validityLength = random_int(5, 30);
-        $expiryDate = Carbon::parse($validityBasis)->addDays($validityLength);
+        $valid_from = Carbon::createFromTimeStamp($this->faker->dateTimeBetween('-5 days', '+5 days')->getTimestamp());
 
         return [
-            'code' => '',
-            'valid_from' => $validityBasis,
-            'valid_until' => $expiryDate,
-            'amount' => random_int(1, 15),
-            'type' => random_int(0, 1)
+            'type' => DiscountTypes::Percentage,
+            'amount' => $this->faker->randomElement(range(1,15)),
+            'valid_from' => $valid_from,
+            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5,30))),
+            'enabled' => true
         ];
     }
 }

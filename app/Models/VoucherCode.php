@@ -2,35 +2,18 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatuses;
-use App\Helpers\GeneralHelper;
+use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\GeneralHelper;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @property mixed|string $code
- * @property int $type
- * @property float $amount
- * @property string $id
- * @property mixed $valid_from
- * @property mixed $valid_until
- * @property string $value
- * @mixin Builder
-*/
 class VoucherCode extends SearchableModel implements Auditable
 {
-    use HasUUID;
-
-    use HasFactory;
-    use HasFile;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -40,9 +23,11 @@ class VoucherCode extends SearchableModel implements Auditable
     protected $fillable = [
         'type',
         'amount',
+        'code',
         'name',
         'valid_from',
-        'valid_until'
+        'valid_until',
+        'enabled'
     ];
 
     /**
@@ -52,7 +37,6 @@ class VoucherCode extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'type' => 'integer',
         'amount' => 'decimal:2',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',

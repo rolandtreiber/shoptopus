@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\DiscountTypes;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,11 +18,11 @@ class CreateVoucherCodesTable extends Migration
 
         Schema::create('voucher_codes', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->tinyInteger('type');
+            $table->enum('type', DiscountTypes::getValues())->default(DiscountTypes::Percentage);
             $table->decimal('amount');
             $table->string('code', 100);
-            $table->dateTime('valid_from');
-            $table->dateTime('valid_until');
+            $table->timestamp('valid_from');
+            $table->timestamp('valid_until');
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
