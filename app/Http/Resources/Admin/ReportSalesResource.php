@@ -16,6 +16,7 @@ class ReportSalesResource extends JsonResource
     public function toArray($request): array
     {
         return [
+            'stats' => $this['stats'],
             'revenue_over_time' => $this['revenue_over_time'],
             'products_breakdown' => $this['products_breakdown'],
             'totals' => $this['totals']

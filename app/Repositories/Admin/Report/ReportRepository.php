@@ -253,18 +253,46 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @param $query
+     * @return string
+     */
+    private function getSalesStatsRow($query): string
+    {
+        return $query->sum('total_price') . ' (' . $query->count() . ')';
+    }
+
+    public function getSalesStats(array $controls): array
+    {
+        $start = $controls['start'];
+        $end = $controls['end'];
+
+        $pendingOrdersQuery = Order::view('paid')->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+        $completedOrdersQuery = Order::view('completed')->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+        $processingOrdersQuery = Order::view('processing')->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+        $inTransitOrdersQuery = Order::view('in_transit')->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+        $cancelledOrdersQuery = Order::view('cancelled')->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+
+        return [
+            'pending_orders' => $this->getSalesStatsRow($pendingOrdersQuery),
+            'completed_orders' => $this->getSalesStatsRow($completedOrdersQuery),
+            'processing_orders' => $this->getSalesStatsRow($processingOrdersQuery),
+            'in_transit_orders' => $this->getSalesStatsRow($inTransitOrdersQuery),
+            'cancelled_orders' => $this->getSalesStatsRow($cancelledOrdersQuery),
+        ];
+    }
+
+    /**
      * @return array
      */
     public function getOverviewStats(): array
     {
         $orders = Order::count();
-        $pendingOrders = Order::view('paid')->count();
+
         $products = Product::count();
         $payments = Payment::count();
         $customers = User::customers()->count();
 
         return [
-            'pending_orders' => $pendingOrders,
             'orders' => $orders,
             'products' => $products,
             'payments' => $payments,
@@ -346,8 +374,10 @@ class ReportRepository implements ReportRepositoryInterface
             array_key_exists('category_id', $data) ? $data['category_id'] : null
         );
         $totalOverviewValues = $this->getTotalOverviewValues();
+        $stats = $this->getSalesStats($this->reportService->getControlsFromType((int) $data['revenue_over_time_range']));
 
         return [
+            'stats' => $stats,
             'revenue_over_time' => $revenueOverTime,
             'products_breakdown' => $productsBreakdown,
             'totals' => $totalOverviewValues
