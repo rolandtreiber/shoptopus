@@ -40,28 +40,31 @@ class VoucherCode extends SearchableModel implements Auditable
         'amount' => 'decimal:2',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
+        'enabled' => 'boolean'
     ];
 
     protected $appends = ['value'];
 
     public function scopeView($query, $view)
     {
+        $now = Carbon::now()->toDateTimeString();
+
         switch ($view) {
             case 'active':
-                $query->whereDate('valid_from', '<=', Carbon::today())
-                    ->whereDate('valid_until', '>=', Carbon::today());
+                $query->where('valid_from', '<=', $now)
+                    ->where('valid_until', '>=', $now);
                 break;
             case 'not_started':
-                $query->whereDate('valid_from', '>', \Illuminate\Support\Carbon::today());
+                $query->where('valid_from', '>', $now);
                 break;
             case 'expired':
-                $query->whereDate('valid_until', '<', Carbon::today());
+                $query->where('valid_until', '<', $now);
                 break;
             case 'all_inactive':
-                $query->where(function($q) {
-                    $q->whereDate('valid_from', '>', Carbon::today())
-                        ->orWhereDate('valid_until', '<', Carbon::today());
-                });
+                $query->where(fn($q) =>
+                    $q->where('valid_from', '>', $now)
+                        ->where('valid_until', '<', $now)
+                );
                 break;
         }
     }
