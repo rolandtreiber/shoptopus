@@ -52,8 +52,10 @@ class AddressController extends Controller
         try {
             return response()->json($this->getResponse(
                 [],
-                $this->modelService->get($request->validated()['id'], ['user']),
-                $request)
+                $this->modelService->get(
+                    value: $request->validated()['id'],
+                    excludeRelationships: ['user']
+                ), $request)
             );
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
