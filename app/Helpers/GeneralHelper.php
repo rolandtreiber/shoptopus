@@ -90,14 +90,15 @@ class GeneralHelper {
     }
 
     public static function getDiscountValue($type, $amount) {
+        $value = str_replace('.00', '', $amount);
         switch ($type) {
             case DiscountTypes::Percentage:
-                return $amount.'%';
+                return $value.'%';
             case DiscountTypes::Amount:
                 if (config('app.default_currency.side') === 'left') {
-                    return config('app.default_currency.symbol') . $amount;
+                    return config('app.default_currency.symbol') . $value;
                 } else {
-                    return $amount.config('app.default_currency.symbol');
+                    return $value.config('app.default_currency.symbol');
                 }
         }
         return $amount;
