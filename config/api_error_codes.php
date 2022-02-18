@@ -47,5 +47,12 @@ return [
             "getCurrentUser" => 2005,
             "getNotifications" => 2006,
         ],
+        'voucher_codes' => [
+            "get" => 5000,
+            "getAll" => 5001,
+            "post" => 5002,
+            "update" => 5003,
+            "delete" => 5004,
+        ]
     ]
 ];

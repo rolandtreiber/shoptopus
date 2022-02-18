@@ -37,7 +37,7 @@ class VoucherCode extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'amount' => 'decimal:2',
+        'amount' => 'float',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
         'enabled' => 'boolean'

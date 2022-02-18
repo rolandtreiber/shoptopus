@@ -18,11 +18,11 @@ class CreateVoucherCodesTable extends Migration
 
         Schema::create('voucher_codes', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->enum('type', DiscountTypes::getValues())->default(DiscountTypes::Percentage);
             $table->decimal('amount');
             $table->string('code', 100);
             $table->timestamp('valid_from');
             $table->timestamp('valid_until');
+            $table->enum('type', DiscountTypes::getValues())->default(DiscountTypes::Percentage);
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();

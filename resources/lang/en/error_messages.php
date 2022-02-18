@@ -38,4 +38,10 @@ return [
     "2004" => "Sorry there was an error deleting this user.",
     "2005" => "Sorry there was an error getting the currently authenticated user.",
     "2006" => "Sorry there was an error getting the user's notifications.",
+
+    "5000" => "Sorry there was an error getting this voucher code.",
+    "5001" => "Sorry there was an error getting all voucher codes.",
+    "5002" => "Sorry there was an error creating this voucher code.",
+    "5003" => "Sorry there was an error updating this voucher code.",
+    "5004" => "Sorry there was an error deleting this voucher code.",
 ];
