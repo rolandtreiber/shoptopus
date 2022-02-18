@@ -70,9 +70,10 @@ class VoucherCode extends SearchableModel implements Auditable
     }
 
     /**
+     * Get the orders where the voucher code was used.
      * @return HasMany
      */
-    public function orders(): HasMany
+    public function orders() : HasMany
     {
         return $this->hasMany(Order::class);
     }

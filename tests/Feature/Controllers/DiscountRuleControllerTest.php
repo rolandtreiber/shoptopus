@@ -6,6 +6,7 @@ use App\Enums\DiscountTypes;
 use App\Models\DiscountRule;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
@@ -15,6 +16,8 @@ use Tests\AdminControllerTestCase;
  */
 class DiscountRuleControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */

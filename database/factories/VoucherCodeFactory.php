@@ -28,8 +28,8 @@ class VoucherCodeFactory extends Factory
         return [
             'type' => DiscountTypes::Percentage,
             'amount' => $this->faker->randomFloat(2, 1, 10),
-            'valid_from' => $valid_from,
-            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5,30))),
+            'valid_from' => $valid_from->toDateTimeString(),
+            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5,30)))->toDateTimeString(),
             'enabled' => true
         ];
     }

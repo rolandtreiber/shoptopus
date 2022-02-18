@@ -3,6 +3,7 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\AdminControllerTestCase;
 
 /**
@@ -11,6 +12,7 @@ use Tests\AdminControllerTestCase;
  */
 class UserControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
     /**
      * @test
      */

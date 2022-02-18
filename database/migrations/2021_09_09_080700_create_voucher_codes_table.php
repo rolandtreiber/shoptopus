@@ -20,13 +20,12 @@ class CreateVoucherCodesTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->decimal('amount');
             $table->string('code', 100);
-            $table->timestamp('valid_from');
-            $table->timestamp('valid_until');
+            $table->timestamp('valid_from')->nullable();
+            $table->timestamp('valid_until')->nullable();
             $table->enum('type', DiscountTypes::getValues())->default(DiscountTypes::Percentage);
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
-
         });
 
         Schema::enableForeignKeyConstraints();

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -22,6 +23,8 @@ use Tests\AdminControllerTestCase;
  */
 class ProductControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
+
     use AdditionalAssertions, WithFaker, CreatesApplication;
 
     /**

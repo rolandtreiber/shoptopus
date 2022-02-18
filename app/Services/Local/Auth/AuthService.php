@@ -35,10 +35,6 @@ class AuthService implements AuthServiceInterface
         try {
             $user = User::whereEmail($payload['email'])->firstOrFail();
 
-            if(is_null($user->password)) {
-                throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.mustResetPassword'));
-            }
-
             if (!Hash::check($payload["password"], $user->password)) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
             }

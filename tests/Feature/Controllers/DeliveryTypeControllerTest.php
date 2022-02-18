@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers;
 use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryType;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
@@ -14,6 +15,8 @@ use Tests\AdminControllerTestCase;
  */
 class DeliveryTypeControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */

@@ -6,6 +6,7 @@ use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
@@ -15,6 +16,8 @@ use Tests\AdminControllerTestCase;
  */
 class DeliveryRuleControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
