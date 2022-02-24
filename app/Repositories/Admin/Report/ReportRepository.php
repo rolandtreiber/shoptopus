@@ -11,6 +11,7 @@ use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ReportRepository implements ReportRepositoryInterface
@@ -315,6 +316,10 @@ class ReportRepository implements ReportRepositoryInterface
             'products_by_status_pie_chart_data' => $productsByStatusChartData,
             'orders_by_status_pie_chart_data' => $ordersByStatusChartData,
             'user_signups_over_time' => $signupsOverTime,
+            'pending_orders' => Order::view('paid')->count(),
+            'new_signups' => User::whereDate('created_at', '>=', Carbon::now()->endOfDay()->subDays(3))->count(),
+            'low_stock' => Product::where('stock', '<=', 10)->count(),
+            'todays_orders' => Order::whereDate('created_at', '>=', Carbon::today()->startOfDay())->count()
         ];
     }
 
