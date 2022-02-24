@@ -2,6 +2,7 @@
 
 use App\Facades\Module;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\FileController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
@@ -238,5 +239,9 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
             Route::post('overview', [ReportController::class, 'getOverview'])->name('admin.api.show.report.overview');
             Route::post('sales', [ReportController::class, 'getSales'])->name('admin.api.show.report.sales');
         });
+
+        // Emails
+        Route::get('/get-users', [EmailController::class, 'getUserOptions']);
+        Route::post('/send-email', [EmailController::class, 'sendEmail']);
     });
 });
