@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -78,7 +77,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertCreated();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -109,9 +108,8 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'en' => 'Very quick UPDATED',
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
-            'enabled' => true,
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertOk();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -152,7 +150,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertForbidden();
     }
@@ -176,7 +174,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertForbidden();
     }
@@ -205,7 +203,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertStatus(422);
     }
@@ -229,7 +227,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
             'price' => 'twenty',
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertStatus(422);
     }

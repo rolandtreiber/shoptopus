@@ -61,6 +61,7 @@ class DeliveryType extends SearchableModel
 
     /**
      * @return int
+     * TODO: Use OrderRepo
      */
     public function getOrderCount(): int
     {
@@ -77,6 +78,7 @@ class DeliveryType extends SearchableModel
 
     /**
      * @return int
+     * TODO: Use OrderRepo
      */
     public function getTotalRevenue(): int
     {

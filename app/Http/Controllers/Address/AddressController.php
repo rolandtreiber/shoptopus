@@ -13,12 +13,12 @@ use App\Http\Requests\Address\GetAddressForUserRequest;
 
 class AddressController extends Controller
 {
-    private AddressServiceInterface $modelService;
+    private AddressServiceInterface $addressService;
     private UserServiceInterface $userService;
 
     public function __construct(AddressServiceInterface $addressService, UserServiceInterface $userService)
     {
-        $this->modelService = $addressService;
+        $this->addressService = $addressService;
         $this->userService = $userService;
     }
 
@@ -35,7 +35,7 @@ class AddressController extends Controller
             $filters['user_id'] = $this->userService->getCurrentUser()['id'];
             $filters['deleted_at'] = 'null';
             $page_formatting = $this->getPageFormatting($request);
-            return response()->json($this->getResponse($page_formatting, $this->modelService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse($page_formatting, $this->addressService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -52,7 +52,7 @@ class AddressController extends Controller
         try {
             return response()->json($this->getResponse(
                 [],
-                $this->modelService->get(
+                $this->addressService->get(
                     value: $request->validated()['id'],
                     excludeRelationships: ['user']
                 ), $request)
@@ -71,7 +71,7 @@ class AddressController extends Controller
     public function post(PostRequest $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->modelService->post(
+            $data = $this->addressService->post(
                 array_merge(['user_id' => $this->userService->getCurrentUser()['id']], $request->validated())
             );
             return response()->json($this->postResponse($data));
@@ -90,7 +90,7 @@ class AddressController extends Controller
     public function update(PatchRequest $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->modelService->update($id, $request->validated());
+            $data = $this->addressService->update($id, $request->validated());
             return response()->json($this->putResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -106,7 +106,7 @@ class AddressController extends Controller
     public function delete(DeleteAddressRequest $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $this->modelService->delete($request->validated()['id']);
+            $this->addressService->delete($request->validated()['id']);
             return response()->json($this->deleteResponse());
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

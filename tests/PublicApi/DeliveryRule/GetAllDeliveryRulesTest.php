@@ -1,17 +1,14 @@
 <?php
 
-namespace Tests\PublicApi\DeliveryType;
+namespace Tests\PublicApi\DeliveryRule;
 
 use Tests\TestCase;
-use App\Models\Order;
-use App\Models\DeliveryType;
+use App\Models\DeliveryRule;
 use App\Services\Local\Error\ErrorService;
-use App\Services\Local\Order\OrderService;
-use App\Repositories\Local\Order\OrderRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Repositories\Local\DeliveryType\DeliveryTypeRepository;
+use App\Repositories\Local\DeliveryRule\DeliveryRuleRepository;
 
-class GetAllDeliveryTypesTest extends TestCase
+class GetAllDeliveryRulesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,7 +16,7 @@ class GetAllDeliveryTypesTest extends TestCase
 //     * @test
 //     * @group apiGetAll
 //     */
-//    public function unauthorized_users_are_not_allowed_to_get_all_their_delivery_types()
+//    public function unauthorized_users_are_not_allowed_to_get_all_their_delivery_rules()
 //    {
 //        $res = $this->sendRequest()->json();
 //
@@ -33,8 +30,7 @@ class GetAllDeliveryTypesTest extends TestCase
      */
     public function it_returns_the_correct_format()
     {
-        $this->signIn()
-            ->sendRequest()
+        $this->sendRequest()
             ->assertJsonStructure([
                 'message',
                 'data',
@@ -50,7 +46,7 @@ class GetAllDeliveryTypesTest extends TestCase
      */
     public function it_returns_all_required_fields()
     {
-        DeliveryType::factory()->count(2)->create();
+        DeliveryRule::factory()->count(2)->create();
 
         $res = $this->sendRequest();
 
@@ -67,9 +63,9 @@ class GetAllDeliveryTypesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function soft_deleted_delivery_types_are_not_returned()
+    public function soft_deleted_delivery_rules_are_not_returned()
     {
-        DeliveryType::factory()->count(2)->create([
+        DeliveryRule::factory()->count(2)->create([
             'deleted_at' => now()
         ]);
 
@@ -84,24 +80,24 @@ class GetAllDeliveryTypesTest extends TestCase
      */
     public function it_returns_the_count()
     {
-        DeliveryType::factory()->count(2)->create();
+        DeliveryRule::factory()->count(2)->create();
 
-        $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
+        $this->assertEquals(2, $this->sendRequest()->json('total_records'));
     }
 
     /**
      * @test
      * @group apiGetAll
      */
-    public function delivery_types_can_be_filtered_by_id()
+    public function delivery_rules_can_be_filtered_by_id()
     {
-        DeliveryType::factory()->count(3)->create();
-        $delivery_type = DeliveryType::factory()->create();
+        DeliveryRule::factory()->count(3)->create();
+        $delivery_rule = DeliveryRule::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $delivery_type->id]);
+        $res = $this->sendRequest(['filter[id]' => $delivery_rule->id]);
 
         $this->assertCount(1, $res->json('data'));
-        $this->assertEquals($delivery_type->id, $res->json('data.0.id'));
+        $this->assertEquals($delivery_rule->id, $res->json('data.0.id'));
     }
 
     /**
@@ -110,26 +106,25 @@ class GetAllDeliveryTypesTest extends TestCase
      */
     public function filters_can_accept_multiple_parameters()
     {
-        DeliveryType::factory()->count(3)->create();
-        $delivery_type1 = DeliveryType::factory()->create();
-        $delivery_type2 = DeliveryType::factory()->create();
+        DeliveryRule::factory()->count(3)->create();
+        $delivery_rule1 = DeliveryRule::factory()->create();
+        $delivery_rule2 = DeliveryRule::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$delivery_type1->id, $delivery_type2->id])]);
+        $res = $this->sendRequest(['filter[id]' => implode(',', [$delivery_rule1->id, $delivery_rule2->id])]);
 
         $this->assertCount(2, $res->json('data'));
-        $this->assertEquals($delivery_type1->id, $res->json('data.0.id'));
-        $this->assertEquals($delivery_type2->id, $res->json('data.1.id'));
+        $this->assertEquals($delivery_rule1->id, $res->json('data.0.id'));
+        $this->assertEquals($delivery_rule2->id, $res->json('data.1.id'));
     }
 
-    protected function getModelRepo() : DeliveryTypeRepository
+    protected function getModelRepo() : DeliveryRuleRepository
     {
         $errorService = new ErrorService;
-        $orderService = new OrderService($errorService, new OrderRepository($errorService, new Order));
-        return new DeliveryTypeRepository($errorService, new DeliveryType, $orderService);
+        return new DeliveryRuleRepository($errorService, new DeliveryRule);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.delivery_types.getAll', $data));
+        return $this->getJson(route('api.delivery_rules.getAll', $data));
     }
 }

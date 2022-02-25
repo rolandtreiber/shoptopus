@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\VoucherCode;
+namespace App\Http\Controllers\DeliveryRule;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VoucherCode\PostRequest;
-use App\Http\Requests\VoucherCode\PatchRequest;
-use App\Services\Local\VoucherCode\VoucherCodeServiceInterface;
+use App\Http\Requests\DeliveryRule\PostRequest;
+use App\Http\Requests\DeliveryRule\PatchRequest;
+use App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface;
 
-class VoucherCodeController extends Controller
+class DeliveryRuleController extends Controller
 {
-    private VoucherCodeServiceInterface $voucherCodeService;
+    private DeliveryRuleServiceInterface $deliveryRuleService;
 
-    public function __construct(VoucherCodeServiceInterface $voucherCodeService)
+    public function __construct(DeliveryRuleServiceInterface $deliveryRuleService)
     {
-        $this->voucherCodeService = $voucherCodeService;
+        $this->deliveryRuleService = $deliveryRuleService;
     }
 
     /**
@@ -29,7 +29,7 @@ class VoucherCodeController extends Controller
             $filters = $this->getAndValidateFilters($request);
             $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
             $page_formatting = $this->getPageFormatting($request);
-            return response()->json($this->getResponse($page_formatting, $this->voucherCodeService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse($page_formatting, $this->deliveryRuleService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -45,7 +45,7 @@ class VoucherCodeController extends Controller
     public function get(Request $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->voucherCodeService->get($id), $request));
+            return response()->json($this->getResponse([], $this->deliveryRuleService->get($id), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -60,7 +60,7 @@ class VoucherCodeController extends Controller
     public function post(PostRequest $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->voucherCodeService->post($request->validated());
+            $data = $this->deliveryRuleService->post($request->validated());
             return response()->json($this->postResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -77,7 +77,7 @@ class VoucherCodeController extends Controller
     public function update(PatchRequest $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->voucherCodeService->update($id, $request->validated());
+            $data = $this->deliveryRuleService->update($id, $request->validated());
             return response()->json($this->putResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -93,7 +93,7 @@ class VoucherCodeController extends Controller
     public function delete(string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $this->voucherCodeService->delete($id);
+            $this->deliveryRuleService->delete($id);
             return response()->json($this->deleteResponse());
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

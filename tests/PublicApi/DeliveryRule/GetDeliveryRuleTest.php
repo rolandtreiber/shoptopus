@@ -1,34 +1,32 @@
 <?php
 
-namespace Tests\PublicApi\DeliveryType;
+namespace Tests\PublicApi\DeliveryRule;
 
 use Tests\TestCase;
-use App\Models\Order;
 use App\Models\DeliveryType;
-use App\Services\Local\Order\OrderService;
+use App\Models\DeliveryRule;
 use App\Services\Local\Error\ErrorService;
-use App\Repositories\Local\Order\OrderRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Repositories\Local\DeliveryType\DeliveryTypeRepository;
+use App\Repositories\Local\DeliveryRule\DeliveryRuleRepository;
 
-class GetDeliveryTypeTest extends TestCase
+class GetDeliveryRuleTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $delivery_type;
+    protected $delivery_rule;
 
     public function setUp() : void
     {
         parent::setUp();
 
-        $this->delivery_type = DeliveryType::factory()->create();
+        $this->delivery_rule = DeliveryRule::factory()->create();
     }
 
 //    /**
 //     * @test
 //     * @group apiGet
 //     */
-//    public function unauthenticated_users_are_not_allowed_to_get_delivery_types()
+//    public function unauthenticated_users_are_not_allowed_to_get_delivery_rules()
 //    {
 //        $unAuthenticatedRes = $this->sendRequest()->json();
 //
@@ -40,7 +38,7 @@ class GetDeliveryTypeTest extends TestCase
 //     * @test
 //     * @group apiGet
 //     */
-//    public function unauthorized_users_are_not_allowed_to_get_delivery_types()
+//    public function unauthorized_users_are_not_allowed_to_get_delivery_rules()
 //    {
 //        $res = $this->sendRequest()->json();
 //
@@ -52,9 +50,10 @@ class GetDeliveryTypeTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_can_return_a_delivery_type_by_its_id()
+    public function it_can_return_a_delivery_rule_by_its_id()
     {
-        $this->sendRequest()->assertOk();
+        $this->sendRequest()
+            ->assertOk();
     }
 
     /**
@@ -75,32 +74,31 @@ class GetDeliveryTypeTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_corresponding_orders()
+    public function it_returns_the_corresponding_delivery_types()
     {
-        Order::factory()->count(2)->create([
-            'delivery_type_id' => $this->delivery_type->id
-        ]);
+        $delivery_type = DeliveryType::factory()->create();
+
+        $this->delivery_rule->update(['delivery_type_id' => $delivery_type->id]);
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                array_merge($this->getModelRepo()->getSelectableColumns(false), ['orders'])
+                array_merge($this->getModelRepo()->getSelectableColumns(false), ['delivery_type'])
             ]
         ]);
 
-        $this->assertCount(2, $res->json('data.0.orders'));
+        $this->assertNotEmpty($res->json('data.0.delivery_type'));
     }
 
-    protected function getModelRepo() : DeliveryTypeRepository
+    protected function getModelRepo() : DeliveryRuleRepository
     {
         $errorService = new ErrorService;
-        $orderService = new OrderService($errorService, new OrderRepository($errorService, new Order));
-        return new DeliveryTypeRepository($errorService, new DeliveryType, $orderService);
+        return new DeliveryRuleRepository($errorService, new DeliveryRule);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.delivery_types.get', ['id' => $this->delivery_type->id]));
+        return $this->getJson(route('api.delivery_rules.get', ['id' => $this->delivery_rule->id]));
     }
 }

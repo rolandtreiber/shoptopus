@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DeliveryRule extends SearchableModel implements Auditable
 {
@@ -20,13 +20,14 @@ class DeliveryRule extends SearchableModel implements Auditable
     protected $fillable = [
         'delivery_type_id',
         'postcodes',
-        'lat',
-        'lon',
         'min_weight',
         'max_weight',
         'min_distance',
         'max_distance',
-        'status',
+        'distance_unit',
+        'lat',
+        'lon',
+        'enabled'
     ];
 
     /**
@@ -37,14 +38,14 @@ class DeliveryRule extends SearchableModel implements Auditable
     protected $casts = [
         'id' => 'string',
         'delivery_type_id' => 'string',
-        'status' => 'integer',
         'postcodes' => 'array',
-        'lat' => 'decimal:6',
-        'lon' => 'decimal:6',
         'min_weight' => 'integer',
         'max_weight' => 'integer',
-        'min_distance' => 'integer',
-        'max_distance' => 'integer',
+        'min_distance' => 'float',
+        'max_distance' => 'float',
+        'lat' => 'decimal:6',
+        'lon' => 'decimal:6',
+        'enabled' => 'boolean'
     ];
 
     /**

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\User;
@@ -65,7 +64,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $response
             ->assertJson(fn (AssertableJson $json) =>
             $json->where('data.id', $deliveryRule->id)
-                ->where('data.status', $deliveryRule->status)
+                ->where('data.enabled', $deliveryRule->enabled)
                 ->etc());
     }
 
@@ -81,7 +80,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'deliveryType' => $deliveryType
         ]), [
             'postcodes' => $postCodes,
-            'status' => DeliveryTypeStatuses::Enabled,
+            'enabled' => true,
             'min_weight' => 0,
             'max_weight' => 5000,
             'min_distance' => 10,
@@ -92,7 +91,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $response->assertCreated();
         $deliveryRuleId = $response->json()['data']['id'];
         $rule = DeliveryRule::find($deliveryRuleId);
-        $this->assertEquals(DeliveryTypeStatuses::Enabled, $rule->status);
+        $this->assertTrue($rule->enabled);
         $this->assertEquals($postCodes, $rule->postcodes);
         $this->assertEquals(0, $rule->min_weight);
         $this->assertEquals(5000, $rule->max_weight);
@@ -118,7 +117,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'deliveryRule' => $deliveryRule
         ]), [
             'postcodes' => $postCodes,
-            'status' => DeliveryTypeStatuses::Enabled,
+            'enabled' => true,
             'min_weight' => 0,
             'max_weight' => 5000,
             'min_distance' => 10,
@@ -129,7 +128,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $response->assertOk();
         $deliveryRuleId = $response->json()['data']['id'];
         $rule = DeliveryRule::find($deliveryRuleId);
-        $this->assertEquals(DeliveryTypeStatuses::Enabled, $rule->status);
+        $this->assertTrue($rule->enabled);
         $this->assertEquals($postCodes, $rule->postcodes);
         $this->assertEquals(0, $rule->min_weight);
         $this->assertEquals(5000, $rule->max_weight);
@@ -169,7 +168,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'deliveryType' => $deliveryType
         ]), [
             'postcodes' => $postCodes,
-            'status' => DeliveryTypeStatuses::Enabled,
+            'enabled' => true,
             'min_weight' => 0,
             'max_weight' => 5000,
             'min_distance' => 10,
@@ -196,7 +195,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'deliveryRule' => $deliveryRule
         ]), [
             'postcodes' => $postCodes,
-            'status' => DeliveryTypeStatuses::Enabled,
+            'enabled' => true,
             'min_weight' => 0,
             'max_weight' => 5000,
             'min_distance' => 10,

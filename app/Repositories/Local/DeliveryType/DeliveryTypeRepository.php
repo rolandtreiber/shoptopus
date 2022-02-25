@@ -5,12 +5,33 @@ namespace App\Repositories\Local\DeliveryType;
 use App\Models\DeliveryType;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\Order\OrderServiceInterface;
 
 class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepositoryInterface
 {
-    public function __construct(ErrorServiceInterface $errorService, DeliveryType $model)
+    private OrderServiceInterface $orderService;
+
+    public function __construct(ErrorServiceInterface $errorService, DeliveryType $model, OrderServiceInterface $orderService)
     {
         parent::__construct($errorService, $model);
+
+        $this->orderService = $orderService;
+    }
+
+    /**
+     * Get the orders for the given delivery types
+     *
+     * @param array $deliveryTypeIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getOrders(array $deliveryTypeIds = []) : array
+    {
+        $result = $this->orderService->getAll([], [
+            'delivery_type_id' => implode(',', $deliveryTypeIds)
+        ]);
+
+        return !empty($result['data']) ? $result['data'] : [];
     }
 
     /**
@@ -24,22 +45,22 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
         try {
-//            $ids = collect($result)->pluck('id')->toArray();
-//
-//            foreach ($result as &$model) {
-//                $modelId = (int) $model['id'];
-//
-//                if (!in_array('orders', $excludeRelationships)) {
-//                    $model['orders'] = [];
-//
-//                    foreach ($this->getOrders($ids) as $order) {
-//                        if ((int) $order['voucher_code_id'] === $modelId) {
-//                            unset($order['voucher_code_id']);
-//                            array_push($model['orders'], $order);
-//                        }
-//                    }
-//                }
-//            }
+            $ids = collect($result)->pluck('id')->toArray();
+
+            foreach ($result as &$model) {
+                $modelId = (int) $model['id'];
+
+                if (!in_array('orders', $excludeRelationships)) {
+                    $model['orders'] = [];
+
+                    foreach ($this->getOrders($ids) as $order) {
+                        if ((int) $order['delivery_type_id'] === $modelId) {
+                            unset($order['delivery_type_id']);
+                            array_push($model['orders'], $order);
+                        }
+                    }
+                }
+            }
 
             return $result;
         } catch (\Exception | \Error $e) {

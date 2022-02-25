@@ -12,9 +12,9 @@ class DeliveryTypeController extends Controller
 {
     private DeliveryTypeServiceInterface $modelService;
 
-    public function __construct(DeliveryTypeServiceInterface $addressService)
+    public function __construct(DeliveryTypeServiceInterface $deliveryTypeService)
     {
-        $this->modelService = $addressService;
+        $this->modelService = $deliveryTypeService;
     }
 
     /**

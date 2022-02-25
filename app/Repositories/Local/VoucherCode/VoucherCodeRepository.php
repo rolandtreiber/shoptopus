@@ -9,7 +9,7 @@ use App\Services\Local\Order\OrderServiceInterface;
 
 class VoucherCodeRepository extends ModelRepository implements VoucherCodeRepositoryInterface
 {
-    private $orderService;
+    private OrderServiceInterface $orderService;
 
     public function __construct(ErrorServiceInterface $errorService, VoucherCode $model, OrderServiceInterface $orderService)
     {
