@@ -4,29 +4,13 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-/**
- * @property mixed|string $delivery_type_id
- * @property string $id
- * @property string|array $postcodes
- * @property int|null $min_weight
- * @property int|null $max_weight
- * @property int|null $min_distance
- * @property int|null $max_distance
- * @property float|null $lat
- * @property float|null $lon
- * @property int $status
- */
 class DeliveryRule extends SearchableModel implements Auditable
 {
-    use HasFactory;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -66,7 +50,7 @@ class DeliveryRule extends SearchableModel implements Auditable
     /**
      * @return BelongsTo
      */
-    public function deliveryType(): BelongsTo
+    public function delivery_type(): BelongsTo
     {
         return $this->belongsTo(DeliveryType::class);
     }

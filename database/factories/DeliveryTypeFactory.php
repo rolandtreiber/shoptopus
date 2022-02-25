@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Enums\DeliveryTypeStatuses;
-use App\Traits\IsTranslateableFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\DeliveryType;
+use App\Traits\TranslatableFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DeliveryTypeFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.
@@ -30,8 +29,8 @@ class DeliveryTypeFactory extends Factory
         return [
             'name' => $translations['name'],
             'description' => $translations['description'],
-            'enabled' => $this->faker->boolean,
-            'enabled_by_default_on_creation' => $this->faker->boolean,
+            'enabled' => true,
+            'enabled_by_default_on_creation' => true,
             'price' => $this->faker->randomFloat(2, 0, 12)
         ];
     }

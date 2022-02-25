@@ -2,33 +2,21 @@
 
 namespace App\Models;
 
-use App\Enums\OrderStatuses;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\OrderStatuses;
 use Illuminate\Support\Facades\DB;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @method static count()
- * @property string $id
- * @property mixed $deliveryRules
- * @property mixed $status
- * @property mixed $enabled_by_default_on_creation
- * @property boolean $enabled
- * @property mixed $price
- */
 class DeliveryType extends SearchableModel
 {
-    use HasFactory;
-    use HasUUID;
-    use HasTranslations;
-    use SoftDeletes;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes;
 
-    public $translatable = ['name', 'description'];
+    public array $translatable = [
+        'name', 'description'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -38,9 +26,9 @@ class DeliveryType extends SearchableModel
     protected $fillable = [
         'name',
         'description',
-        'enabled_by_default_on_creation',
         'price',
-        'enabled'
+        'enabled',
+        'enabled_by_default_on_creation'
     ];
 
     /**
@@ -50,15 +38,15 @@ class DeliveryType extends SearchableModel
      */
     protected $casts = [
         'id' => 'string',
-        'enabled_by_default_on_creation' => 'boolean',
-        'price' => 'decimal:2',
-        'enabled' => 'boolean'
+        'price' => 'float',
+        'enabled' => 'boolean',
+        'enabled_by_default_on_creation' => 'boolean'
     ];
 
     /**
      * @return HasMany
      */
-    public function deliveryRules(): HasMany
+    public function delivery_rules(): HasMany
     {
         return $this->hasMany(DeliveryRule::class);
     }
@@ -82,24 +70,25 @@ class DeliveryType extends SearchableModel
                 OrderStatuses::Paid,
                 OrderStatuses::Processing,
                 OrderStatuses::Completed,
-                OrderStatuses::OnHold])
+                OrderStatuses::OnHold
+            ])
             ->count();
     }
 
     /**
-     * @return float
+     * @return int
      */
     public function getTotalRevenue(): int
     {
         return DB::table('orders')
-            ->select('delivery')
+            ->select('delivery_cost')
             ->where('delivery_type_id', $this->id)
             ->whereIn('status', [
                 OrderStatuses::Paid,
                 OrderStatuses::Processing,
                 OrderStatuses::Completed,
                 OrderStatuses::OnHold])
-            ->sum('delivery');
+            ->sum('delivery_cost');
     }
 
 }

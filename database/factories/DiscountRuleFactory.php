@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Enums\DiscountTypes;
-use App\Traits\IsTranslateableFactory;
+use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\DiscountRule;
 
 class DiscountRuleFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.

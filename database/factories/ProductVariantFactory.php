@@ -5,13 +5,13 @@ namespace Database\Factories;
 use App\Enums\RandomStringModes;
 use App\Helpers\GeneralHelper;
 use App\Models\Product;
-use App\Traits\IsTranslateableFactory;
+use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ProductVariant;
 
 class ProductVariantFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.

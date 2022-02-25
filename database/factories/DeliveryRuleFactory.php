@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\DeliveryTypeStatuses;
-use App\Models\DeliveryType;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\DeliveryRule;
+use App\Models\DeliveryType;
+use App\Enums\DeliveryTypeStatuses;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DeliveryRuleFactory extends Factory
 {
