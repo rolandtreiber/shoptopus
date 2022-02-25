@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\DeliveryRule;
+use App\Models\DeliveryRule;
 use Illuminate\Database\Seeder;
 
 class DeliveryRuleSeeder extends Seeder

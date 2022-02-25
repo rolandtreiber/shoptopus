@@ -84,7 +84,7 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
             "{$this->model_table}.subtotal",
             "{$this->model_table}.total_price",
             "{$this->model_table}.total_discount",
-            "{$this->model_table}.delivery",
+            "{$this->model_table}.delivery_cost",
             "{$this->model_table}.status",
             "{$this->model_table}.deleted_at"
         ];
