@@ -17,8 +17,8 @@ class CreateDeliveryTypesTable extends Migration
 
         Schema::create('delivery_types', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('name');
-            $table->text('description');
+            $table->json('name');
+            $table->json('description');
             $table->decimal('price')->default(0);
             $table->boolean('enabled')->default(true);
             $table->boolean('enabled_by_default_on_creation')->default(true);
