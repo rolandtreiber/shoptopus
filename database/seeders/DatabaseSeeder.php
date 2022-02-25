@@ -28,25 +28,26 @@ class DatabaseSeeder extends Seeder
                 ]);
                 break;
             default:
-                $this->call([
-                    BannerSeeder::class,
-                    RoleSeeder::class,
-                    DeliveryTypeSeeder::class,
-                    UserSeeder::class,
-                    AddressSeeder::class,
-                    DiscountRuleSeeder::class,
-                    VoucherCodeSeeder::class,
-                    ProductTagSeeder::class,
-                    ProductCategorySeeder::class,
-                    ProductAttributeSeeder::class,
-                    ProductAttributeOptionSeeder::class,
-                    ProductSeeder::class,
-                    ProductVariantSeeder::class,
-                    CartSeeder::class,
-                    OrderSeeder::class,
-                ]);
-
-                Module::enabled('ratings') && $this->call([RatingSeeder::class]);
+                //
+//                $this->call([
+//                    BannerSeeder::class,
+//                    RoleSeeder::class,
+//                    DeliveryTypeSeeder::class,
+//                    UserSeeder::class,
+//                    AddressSeeder::class,
+//                    DiscountRuleSeeder::class,
+//                    VoucherCodeSeeder::class,
+//                    ProductTagSeeder::class,
+//                    ProductCategorySeeder::class,
+//                    ProductAttributeSeeder::class,
+//                    ProductAttributeOptionSeeder::class,
+//                    ProductSeeder::class,
+//                    ProductVariantSeeder::class,
+//                    CartSeeder::class,
+//                    OrderSeeder::class,
+//                ]);
+//
+//                Module::enabled('ratings') && $this->call([RatingSeeder::class]);
         }
     }
 }
