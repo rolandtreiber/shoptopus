@@ -2,27 +2,17 @@
 
 namespace App\Models;
 
-use App\Traits\HasFiles;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @property mixed $user_id
- * @method static count()
- * @method static find(int $selectedCartId)
- * @property mixed $updated_at
- */
 class Cart extends Model implements Auditable
 {
-    use HasFactory;
-    use HasUUID;
-    use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +22,7 @@ class Cart extends Model implements Auditable
     protected $fillable = [
         'user_id',
         'ip_address',
+        'deleted_at'
     ];
 
     /**
@@ -41,7 +32,7 @@ class Cart extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'user_id' => 'string',
+        'user_id' => 'string'
     ];
 
     /**

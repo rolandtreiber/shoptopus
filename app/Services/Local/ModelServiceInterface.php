@@ -9,9 +9,10 @@ interface ModelServiceInterface {
      *
      * @param array $page_formatting
      * @param array $filters
+     * @param array $excludeRelationships
      * @return array
      */
-    public function getAll(array $page_formatting = [], array $filters = []) : array;
+    public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []) : array;
 
     /**
      * Get a single model

@@ -17,15 +17,15 @@ class CartSeeder extends Seeder
      */
     public function run()
     {
-        $carts = Cart::count();
+        $cartsCount = Cart::count();
         $products = Product::count();
 
-        $cartsToPopulate = random_int(1, $carts);
+        $cartsToPopulate = random_int(1, $cartsCount);
 
         $used = [];
         for ($i = 0; $i < $cartsToPopulate; $i++) {
             do {
-                $selectedCartId = (new Cart)->findNthId(rand(1, $carts));
+                $selectedCartId = (new Cart)->findNthId(rand(1, $cartsCount));
             } while (in_array($selectedCartId, $used));
             $used[] = $selectedCartId;
             $selectedCart = Cart::find($selectedCartId);

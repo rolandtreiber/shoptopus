@@ -27,7 +27,8 @@ class DeliveryRule extends SearchableModel implements Auditable
         'distance_unit',
         'lat',
         'lon',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

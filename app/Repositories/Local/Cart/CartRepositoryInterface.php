@@ -1,17 +1,25 @@
 <?php
 
-namespace App\Repositories\Local\Address;
+namespace App\Repositories\Local\Cart;
 
-interface AddressRepositoryInterface {
+interface CartRepositoryInterface {
 
     /**
-     * Get the users for the given addresses
+     * Get the users for the carts
      *
      * @param array $userIds
      * @return array
      * @throws \Exception
      */
     public function getUsers(array $userIds = []) : array;
+
+    /**
+     * Get the products for the given carts
+     *
+     * @param array $cartIds
+     * @return array
+     */
+    public function getProducts(array $cartIds = []) : array;
 
     /**
      * Get the columns for selection

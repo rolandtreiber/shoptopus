@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Repositories\Local\Address;
+namespace App\Repositories\Local\Cart;
 
-use App\Models\Address;
+use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
-class AddressRepository extends ModelRepository implements AddressRepositoryInterface
+class CartRepository extends ModelRepository implements CartRepositoryInterface
 {
-    public function __construct(ErrorServiceInterface $errorService, Address $model)
+    public function __construct(ErrorServiceInterface $errorService, Cart $model)
     {
         parent::__construct($errorService, $model);
     }
 
     /**
-     * Get the users for the given addresses
+     * Get the users for the carts
      *
      * @param array $userIds
      * @return array
@@ -50,6 +50,23 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     }
 
     /**
+     * Get the products for the given cart
+     *
+     * @param array $cartIds
+     * @return array
+     */
+    public function getProducts(array $cartIds = []) : array
+    {
+        try {
+            return [];
+            //return !empty($result['data']) ? $result['data'] : [];
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result
@@ -60,15 +77,29 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
         try {
-            foreach($result as &$model) {
-                $model['user'] = null;
+            $ids = collect($result)->pluck('id')->toArray();
 
-                if ( ! in_array('user', $excludeRelationships)) {
+            foreach ($result as &$model) {
+                $modelId = (int) $model['id'];
+
+                $model['user'] = null;
+                $model['products'] = [];
+
+                if (!in_array('user', $excludeRelationships)) {
                     $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
 
                     foreach ($users as $user) {
                         if ($user['id'] === $model['user_id']) {
                             $model['user'] = $user;
+                        }
+                    }
+                }
+
+                if (!in_array('products', $excludeRelationships)) {
+                    foreach ($this->getProducts($ids) as $product) {
+                        if ((int) $product['cart_id'] === $modelId) {
+                            unset($product['cart_id']);
+                            array_push($model['products'], $product);
                         }
                     }
                 }
@@ -92,14 +123,7 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
         $columns = [
             "{$this->model_table}.id",
             "{$this->model_table}.user_id",
-            "{$this->model_table}.name",
-            "{$this->model_table}.address_line_1",
-            "{$this->model_table}.address_line_2",
-            "{$this->model_table}.town",
-            "{$this->model_table}.post_code",
-            "{$this->model_table}.country",
-            "{$this->model_table}.lat",
-            "{$this->model_table}.lon",
+            "{$this->model_table}.ip_address",
             "{$this->model_table}.deleted_at"
         ];
 

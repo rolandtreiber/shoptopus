@@ -29,7 +29,8 @@ class Order extends SearchableModel
         'subtotal',
         'total_price',
         'total_discount',
-        'delivery_cost'
+        'delivery_cost',
+        'deleted_at'
     ];
 
     /**

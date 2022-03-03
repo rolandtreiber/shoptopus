@@ -1,25 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Address;
+namespace App\Http\Controllers\Cart;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Address\PostRequest;
-use App\Http\Requests\Address\PatchRequest;
-use App\Services\Local\User\UserServiceInterface;
-use App\Http\Requests\Address\DeleteAddressRequest;
-use App\Services\Local\Address\AddressServiceInterface;
-use App\Http\Requests\Address\GetAddressForUserRequest;
+use App\Http\Requests\Cart\PostRequest;
+use App\Http\Requests\Cart\PatchRequest;
+use App\Services\Local\Cart\CartServiceInterface;
 
-class AddressController extends Controller
+class CartController extends Controller
 {
-    private AddressServiceInterface $addressService;
-    private UserServiceInterface $userService;
+    private CartServiceInterface $voucherCodeService;
 
-    public function __construct(AddressServiceInterface $addressService, UserServiceInterface $userService)
+    public function __construct(CartServiceInterface $voucherCodeService)
     {
-        $this->addressService = $addressService;
-        $this->userService = $userService;
+        $this->voucherCodeService = $voucherCodeService;
     }
 
     /**
@@ -32,10 +27,9 @@ class AddressController extends Controller
     {
         try {
             $filters = $this->getAndValidateFilters($request);
-            $filters['user_id'] = $this->userService->getCurrentUser()['id'];
             $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
             $page_formatting = $this->getPageFormatting($request);
-            return response()->json($this->getResponse($page_formatting, $this->addressService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse($page_formatting, $this->voucherCodeService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -44,13 +38,14 @@ class AddressController extends Controller
     /**
      * Get a single model
      *
-     * @param GetAddressForUserRequest $request
+     * @param Request $request
+     * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(GetAddressForUserRequest $request) : \Illuminate\Http\JsonResponse
+    public function get(Request $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->addressService->get($request->validated()['id']), $request));
+            return response()->json($this->getResponse([], $this->voucherCodeService->get($id), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -65,9 +60,7 @@ class AddressController extends Controller
     public function post(PostRequest $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->addressService->post(
-                array_merge(['user_id' => $this->userService->getCurrentUser()['id']], $request->validated())
-            );
+            $data = $this->voucherCodeService->post($request->validated());
             return response()->json($this->postResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -84,7 +77,7 @@ class AddressController extends Controller
     public function update(PatchRequest $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->addressService->update($id, $request->validated());
+            $data = $this->voucherCodeService->update($id, $request->validated());
             return response()->json($this->putResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -94,13 +87,13 @@ class AddressController extends Controller
     /**
      * Delete a model
      *
-     * @param DeleteAddressRequest $request
+     * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function delete(DeleteAddressRequest $request) : \Illuminate\Http\JsonResponse
+    public function delete(string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $this->addressService->delete($request->validated()['id']);
+            $this->voucherCodeService->delete($id);
             return response()->json($this->deleteResponse());
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

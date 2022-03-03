@@ -54,8 +54,7 @@ class GetVoucherCodeTest extends TestCase
      */
     public function it_can_return_a_voucher_code_by_its_id()
     {
-        $this->signIn()
-            ->sendRequest()
+        $this->sendRequest()
             ->assertOk()
             ->assertSee($this->voucher_code->code);
     }
@@ -66,8 +65,7 @@ class GetVoucherCodeTest extends TestCase
      */
     public function it_returns_all_required_fields()
     {
-        $this->signIn()
-            ->sendRequest()
+        $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
                     $this->getModelRepo()->getSelectableColumns(false)
@@ -79,21 +77,36 @@ class GetVoucherCodeTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_corresponding_orders()
+    public function it_returns_the_associated_orders()
     {
-        Order::factory()->count(2)->create([
-            'voucher_code_id' => $this->voucher_code->id
-        ]);
+        $order = Order::factory()->create(['voucher_code_id' => $this->voucher_code->id]);
 
-        $res = $this->signIn()->sendRequest();
+        $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                array_merge($this->getModelRepo()->getSelectableColumns(false), ['orders'])
+                [
+                    'orders' => [
+                        [
+                            'id',
+                            'user_id',
+                            'delivery_type_id',
+                            'address_id',
+                            'original_price',
+                            'subtotal',
+                            'total_price',
+                            'total_discount',
+                            'delivery_cost',
+                            'status'
+                        ]
+                    ]
+                ]
             ]
         ]);
 
-        $this->assertCount(2, $res->json('data.0.orders'));
+        $order->update(['deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.orders'));
     }
 
     protected function getModelRepo() : VoucherCodeRepository

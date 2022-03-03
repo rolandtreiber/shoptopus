@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\DeliveryRule;
 
 use App\Models\DeliveryRule;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
-use Illuminate\Support\Facades\DB;
 
 class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepositoryInterface
 {
@@ -15,29 +15,31 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     }
 
     /**
-     * Get the deliveryTypes for the given delivery types
+     * Get the delivery types for the given delivery rules
      *
-     * @param array $deliveryRuleIds
+     * @param array $deliveryTypeIds
      * @return array
      * @throws \Exception
      */
-    public function getDeliveryTypes(array $deliveryRuleIds = []) : array
+    public function getDeliveryTypes(array $deliveryTypeIds = []) : array
     {
-        $ids = implode(',', $deliveryRuleIds);
-
-        return DB::select("
-            SELECT
-                dr.delivery_type_id,
-                dt.id,
-                dt.name,
-                dt.description,
-                dt.price,
-                dt.enabled,
-                dt.enabled_by_default_on_creation
-            FROM delivery_rules as dr
-            JOIN delivery_types as dt ON dt.id = dr.delivery_type_id
-            WHERE dr.id IN (?)
-        ", [$ids]);
+        try {
+            return DB::select("
+                SELECT
+                    dt.id,
+                    dt.name,
+                    dt.description,
+                    dt.price,
+                    dt.enabled,
+                    dt.enabled_by_default_on_creation
+                FROM delivery_types AS dt
+                WHERE dt.id IN (?)
+                AND dt.deleted_at IS NULL
+            ", [implode(',', $deliveryTypeIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -51,15 +53,14 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
         try {
-            $ids = collect($result)->pluck('id')->toArray();
-
             foreach ($result as &$model) {
-                $modelId = (int) $model['id'];
+                $model['delivery_type'] = null;
 
                 if (!in_array('delivery_type', $excludeRelationships)) {
-                    foreach ($this->getDeliveryTypes($ids) as $deliveryType) {
-                        if ((int) $deliveryType['delivery_type_id'] === $modelId) {
-                            unset($deliveryType['delivery_type_id']);
+                    $deliveryTypes = $this->getDeliveryTypes(collect($result)->unique('delivery_type_id')->pluck('delivery_type_id')->toArray());
+
+                    foreach ($deliveryTypes as $deliveryType) {
+                        if($deliveryType['id'] === $model['delivery_type_id']) {
                             $model['delivery_type'] = $deliveryType;
                         }
                     }

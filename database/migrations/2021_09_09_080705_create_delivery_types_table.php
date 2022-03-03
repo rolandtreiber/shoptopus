@@ -13,8 +13,6 @@ class CreateDeliveryTypesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('delivery_types', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->json('name');
@@ -25,8 +23,6 @@ class CreateDeliveryTypesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -36,6 +32,8 @@ class CreateDeliveryTypesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('delivery_types');
+        Schema::enableForeignKeyConstraints();
     }
 }

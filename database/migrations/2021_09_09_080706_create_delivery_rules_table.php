@@ -13,8 +13,6 @@ class CreateDeliveryRulesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('delivery_rules', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->foreignUuid('delivery_type_id')->constrained();
@@ -30,8 +28,6 @@ class CreateDeliveryRulesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -41,6 +37,8 @@ class CreateDeliveryRulesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('delivery_rules');
+        Schema::enableForeignKeyConstraints();
     }
 }

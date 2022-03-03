@@ -3,19 +3,49 @@
 namespace App\Repositories\Local\DeliveryType;
 
 use App\Models\DeliveryType;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
-use App\Services\Local\Order\OrderServiceInterface;
 
 class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepositoryInterface
 {
-    private OrderServiceInterface $orderService;
-
-    public function __construct(ErrorServiceInterface $errorService, DeliveryType $model, OrderServiceInterface $orderService)
+    public function __construct(ErrorServiceInterface $errorService, DeliveryType $model)
     {
         parent::__construct($errorService, $model);
+    }
 
-        $this->orderService = $orderService;
+    /**
+     * Get the delivery rules for the given delivery types
+     *
+     * @param array $deliveryTypeIds
+     * @return array
+     * @throws \Exception
+     */
+
+    public function getDeliveryRules(array $deliveryTypeIds = []) : array
+    {
+        try {
+            return DB::select("
+                SELECT
+                    dr.id,
+                    dr.delivery_type_id,
+                    dr.postcodes,
+                    dr.min_weight,
+                    dr.max_weight,
+                    dr.min_distance,
+                    dr.max_distance,
+                    dr.distance_unit,
+                    dr.lat,
+                    dr.lon,
+                    dr.enabled
+                FROM delivery_rules AS dr
+                JOIN delivery_types AS dt ON dt.id IN (?)
+                WHERE dr.deleted_at IS NULL
+            ", [implode(',', $deliveryTypeIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -27,11 +57,28 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
      */
     public function getOrders(array $deliveryTypeIds = []) : array
     {
-        $result = $this->orderService->getAll([], [
-            'delivery_type_id' => implode(',', $deliveryTypeIds)
-        ]);
-
-        return !empty($result['data']) ? $result['data'] : [];
+        try {
+            return DB::select("
+                SELECT
+                    o.id,
+                    o.delivery_type_id,
+                    o.user_id,
+                    o.voucher_code_id,
+                    o.address_id,
+                    o.original_price,
+                    o.subtotal,
+                    o.total_price,
+                    o.total_discount,
+                    o.delivery_cost,
+                    o.status
+                FROM orders AS o
+                JOIN delivery_types AS dt ON dt.id IN (?)
+                WHERE o.deleted_at IS NULL
+            ", [implode(',', $deliveryTypeIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -50,13 +97,23 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
-                if (!in_array('orders', $excludeRelationships)) {
-                    $model['orders'] = [];
+                $model['orders'] = [];
+                $model['delivery_rules'] = [];
 
+                if (!in_array('orders', $excludeRelationships)) {
                     foreach ($this->getOrders($ids) as $order) {
                         if ((int) $order['delivery_type_id'] === $modelId) {
                             unset($order['delivery_type_id']);
                             array_push($model['orders'], $order);
+                        }
+                    }
+                }
+
+                if (!in_array('delivery_rules', $excludeRelationships)) {
+                    foreach ($this->getDeliveryRules($ids) as $deliveryRule) {
+                        if ((int) $deliveryRule['delivery_type_id'] === $modelId) {
+                            unset($deliveryRule['delivery_type_id']);
+                            array_push($model['delivery_rules'], $deliveryRule);
                         }
                     }
                 }

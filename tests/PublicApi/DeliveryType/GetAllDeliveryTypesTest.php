@@ -5,6 +5,7 @@ namespace Tests\PublicApi\DeliveryType;
 use Tests\TestCase;
 use App\Models\Order;
 use App\Models\DeliveryType;
+use App\Models\DeliveryRule;
 use App\Services\Local\Error\ErrorService;
 use App\Services\Local\Order\OrderService;
 use App\Repositories\Local\Order\OrderRepository;
@@ -61,6 +62,84 @@ class GetAllDeliveryTypesTest extends TestCase
         ]);
 
         $this->assertCount(2, $res->json('data'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function it_returns_the_associated_delivery_rules()
+    {
+        $dt = DeliveryType::factory()->has(DeliveryRule::factory()->count(2), 'delivery_rules')->create();
+
+        DeliveryRule::factory()->create([
+            'delivery_type_id' => $dt->first()->id,
+            'deleted_at' => now()
+        ]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'delivery_rules' => [
+                        [
+                            'id',
+                            'postcodes',
+                            'min_weight',
+                            'max_weight',
+                            'min_distance',
+                            'max_distance',
+                            'distance_unit',
+                            'lat',
+                            'lon',
+                            'enabled'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(2, $res->json('data.0.delivery_rules'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function it_returns_the_associated_orders()
+    {
+        $dt =  DeliveryType::factory()->has(Order::factory()->count(2), 'orders')->create();
+
+        Order::factory()->create([
+            'delivery_type_id' => $dt->first()->id,
+            'deleted_at' => now()
+        ]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'orders' => [
+                        [
+                            'id',
+                            'user_id',
+                            'voucher_code_id',
+                            'address_id',
+                            'original_price',
+                            'subtotal',
+                            'total_price',
+                            'total_discount',
+                            'delivery_cost',
+                            'status'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(2, $res->json('data.0.orders'));
     }
 
     /**

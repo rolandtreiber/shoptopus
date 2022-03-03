@@ -5,6 +5,7 @@ namespace Tests\PublicApi\DeliveryType;
 use Tests\TestCase;
 use App\Models\Order;
 use App\Models\DeliveryType;
+use App\Models\DeliveryRule;
 use App\Services\Local\Order\OrderService;
 use App\Services\Local\Error\ErrorService;
 use App\Repositories\Local\Order\OrderRepository;
@@ -75,17 +76,78 @@ class GetDeliveryTypeTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_corresponding_orders()
+    public function it_returns_the_associated_delivery_rules()
     {
-        Order::factory()->count(2)->create([
+        DeliveryRule::factory()->count(2)->create([
             'delivery_type_id' => $this->delivery_type->id
+        ]);
+
+        DeliveryRule::factory()->create([
+            'delivery_type_id' => $this->delivery_type->id,
+            'deleted_at' => now()
         ]);
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                array_merge($this->getModelRepo()->getSelectableColumns(false), ['orders'])
+                [
+                    'delivery_rules' => [
+                        [
+                            'id',
+                            'postcodes',
+                            'min_weight',
+                            'max_weight',
+                            'min_distance',
+                            'max_distance',
+                            'distance_unit',
+                            'lat',
+                            'lon',
+                            'enabled'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(2, $res->json('data.0.delivery_rules'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_the_associated_orders()
+    {
+        Order::factory()->count(2)->create([
+            'delivery_type_id' => $this->delivery_type->id
+        ]);
+
+        Order::factory()->create([
+            'delivery_type_id' => $this->delivery_type->id,
+            'deleted_at' => now()
+        ]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'orders' => [
+                        [
+                            'id',
+                            'user_id',
+                            'voucher_code_id',
+                            'address_id',
+                            'original_price',
+                            'subtotal',
+                            'total_price',
+                            'total_discount',
+                            'delivery_cost',
+                            'status'
+                        ]
+                    ]
+                ]
             ]
         ]);
 

@@ -28,7 +28,8 @@ class DeliveryType extends SearchableModel
         'description',
         'price',
         'enabled',
-        'enabled_by_default_on_creation'
+        'enabled_by_default_on_creation',
+        'deleted_at'
     ];
 
     /**

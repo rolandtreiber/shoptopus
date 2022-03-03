@@ -5,9 +5,7 @@ namespace Tests\PublicApi\Address;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Address;
-use App\Services\Local\User\UserService;
 use App\Services\Local\Error\ErrorService;
-use App\Repositories\Local\User\UserRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Address\AddressRepository;
 
@@ -54,25 +52,39 @@ class GetAllAddressesTest extends TestCase
 
         Address::factory()->count(5)->create(['user_id' => $user->id]);
 
-        $this->signIn($user)
-            ->sendRequest()
-            ->assertJsonStructure([
-                'data' => [
-                    [
+        $this->signIn($user);
+
+        $this->sendRequest()->assertJsonStructure([
+            'data' => [
+                [
+                    'id',
+                    'name',
+                    'address_line_1',
+                    'address_line_2',
+                    'town',
+                    'post_code',
+                    'country',
+                    'lat',
+                    'lon',
+                    'deleted_at',
+                    'user' => [
                         'id',
+                        'first_name',
+                        'last_name',
+                        'email',
                         'name',
-                        'address_line_1',
-                        'address_line_2',
-                        'town',
-                        'post_code',
-                        'country',
-                        'lat',
-                        'lon',
-                        'deleted_at',
-                        'user' => (new UserRepository(new ErrorService, new User))->getSelectableColumns(false)
+                        'initials',
+                        'prefix',
+                        'phone',
+                        'avatar',
+                        'email_verified_at',
+                        'client_ref',
+                        'temporary',
+                        'is_favorite'
                     ]
                 ]
-            ]);
+            ]
+        ]);
 
         $this->assertCount(5, $this->signIn($user)->sendRequest()->json('data'));
     }
@@ -115,11 +127,9 @@ class GetAllAddressesTest extends TestCase
     public function it_returns_all_required_fields()
     {
         $errorService = new ErrorService;
-        $userService = new UserService($errorService, new UserRepository($errorService, new User));
-        $addressRepo = (new AddressRepository($errorService, new Address, $userService));
+        $addressRepo = new AddressRepository($errorService, new Address);
 
         $user = User::factory()->create();
-
         Address::factory()->create(['user_id' => $user->id]);
 
         $this->signIn($user)

@@ -5,10 +5,21 @@ namespace App\Repositories\Local\DeliveryType;
 interface DeliveryTypeRepositoryInterface {
 
     /**
-     * Get the orders for the given voucher code
+     * Get the delivery rules for the given delivery types
      *
      * @param array $deliveryTypeIds
      * @return array
+     * @throws \Exception
+     */
+
+    public function getDeliveryRules(array $deliveryTypeIds = []) : array;
+
+    /**
+     * Get the orders for the given delivery types
+     *
+     * @param array $deliveryTypeIds
+     * @return array
+     * @throws \Exception
      */
     public function getOrders(array $deliveryTypeIds = []) : array;
 

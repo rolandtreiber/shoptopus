@@ -3,7 +3,6 @@
 namespace Tests\PublicApi\DeliveryRule;
 
 use Tests\TestCase;
-use App\Models\DeliveryType;
 use App\Models\DeliveryRule;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,8 +51,7 @@ class GetDeliveryRuleTest extends TestCase
      */
     public function it_can_return_a_delivery_rule_by_its_id()
     {
-        $this->sendRequest()
-            ->assertOk();
+        $this->sendRequest()->assertOk();
     }
 
     /**
@@ -74,21 +72,28 @@ class GetDeliveryRuleTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_corresponding_delivery_types()
+    public function it_returns_the_associated_delivery_type()
     {
-        $delivery_type = DeliveryType::factory()->create();
-
-        $this->delivery_rule->update(['delivery_type_id' => $delivery_type->id]);
-
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                array_merge($this->getModelRepo()->getSelectableColumns(false), ['delivery_type'])
+                [
+                    'delivery_type' => [
+                        'id',
+                        'name',
+                        'description',
+                        'price',
+                        'enabled',
+                        'enabled_by_default_on_creation'
+                    ]
+                ]
             ]
         ]);
 
-        $this->assertNotEmpty($res->json('data.0.delivery_type'));
+        $this->delivery_rule->delivery_type()->update(['deleted_at' => now()]);
+
+        $this->assertNull($this->sendRequest()->json('data.0.delivery_type'));
     }
 
     protected function getModelRepo() : DeliveryRuleRepository

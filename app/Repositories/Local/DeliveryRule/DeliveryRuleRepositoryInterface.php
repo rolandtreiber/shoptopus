@@ -5,13 +5,13 @@ namespace App\Repositories\Local\DeliveryRule;
 interface DeliveryRuleRepositoryInterface {
 
     /**
-     * Get the deliveryTypes for the given delivery types
+     * Get the delivery types for the given delivery rules
      *
-     * @param array $deliveryRuleIds
+     * @param array $deliveryTypeIds
      * @return array
      * @throws \Exception
      */
-    public function getDeliveryTypes(array $deliveryRuleIds = []) : array;
+    public function getDeliveryTypes(array $deliveryTypeIds = []) : array;
 
     /**
      * Get the columns for selection
