@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Enums\AttachmentTypes;
 use App\Enums\FileTypes;
 use App\Models\FileContent;
 use Illuminate\Http\File;
