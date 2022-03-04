@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Enums\ProductAttributeTypes;
 use App\Models\ProductAttribute;
@@ -13,6 +13,7 @@ use Tests\AdminControllerTestCase;
 use Throwable;
 
 /**
+ * @group admin-base-crud
  * @group product_attributes
  * @see \App\Http\Controllers\Admin\ProductAttributeController
  */

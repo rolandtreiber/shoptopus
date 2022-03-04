@@ -1,11 +1,12 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\User;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group users
  * @see \App\Http\Controllers\Admin\UserController
  */

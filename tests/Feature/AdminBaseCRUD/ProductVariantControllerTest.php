@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group product_variants
  * @see \App\Http\Controllers\Admin\ProductVariantController
  */

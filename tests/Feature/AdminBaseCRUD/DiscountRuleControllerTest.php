@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Enums\DiscountTypes;
 use App\Models\DiscountRule;
@@ -10,6 +10,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group discount_rules
  * @see \App\Http\Controllers\Admin\DiscountRuleController
  */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\FileTypes;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
@@ -109,6 +110,24 @@ class ProductController extends Controller
     public function delete(Product $product): array
     {
         $product->deleteWithAttachments();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkArchive(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 

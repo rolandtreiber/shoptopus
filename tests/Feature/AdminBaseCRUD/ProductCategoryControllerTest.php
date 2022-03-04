@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\ProductCategory;
 use App\Models\User;
@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group product_categories
  * @see \App\Http\Controllers\Admin\ProductCategoryController
  */

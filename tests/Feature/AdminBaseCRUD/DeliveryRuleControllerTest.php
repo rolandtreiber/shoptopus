@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryRule;
@@ -10,6 +10,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group delivery_rules
  * @see \App\Http\Controllers\Admin\DeliveryRuleController
  */

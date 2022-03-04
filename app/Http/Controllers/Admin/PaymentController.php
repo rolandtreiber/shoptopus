@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Facades\Module;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\PaymentStoreRequest;
 use App\Http\Requests\Admin\PaymentUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -77,6 +78,15 @@ class PaymentController extends Controller
     public function delete(Payment $payment): array
     {
         $payment->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateStatus(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

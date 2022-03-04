@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\Banner;
 use App\Models\User;
@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group banners
  * @see \App\Http\Controllers\Admin\BannersController
  */

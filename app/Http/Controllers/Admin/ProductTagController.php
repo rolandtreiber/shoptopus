@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\ProductTagStoreRequest;
 use App\Http\Requests\Admin\ProductTagUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -77,6 +78,24 @@ class ProductTagController extends Controller
     public function delete(ProductTag $tag): array
     {
         $tag->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

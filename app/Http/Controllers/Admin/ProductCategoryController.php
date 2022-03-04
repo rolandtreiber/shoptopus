@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\ProductCategoryStoreRequest;
 use App\Http\Requests\Admin\ProductCategoryUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -101,6 +102,24 @@ class ProductCategoryController extends Controller
     public function delete(ProductCategory $category): array
     {
         $category->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

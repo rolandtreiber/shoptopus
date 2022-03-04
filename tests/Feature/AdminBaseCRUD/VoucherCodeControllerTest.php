@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Enums\DiscountTypes;
 use App\Models\User;
@@ -12,6 +12,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group voucher_codes
  * @see \App\Http\Controllers\Admin\VoucherCodeController
  */

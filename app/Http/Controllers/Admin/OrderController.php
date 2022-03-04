@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\OrderStatusUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\OrderDetailResource;
@@ -60,6 +61,15 @@ class OrderController extends Controller
     public function delete(Order $order): array
     {
         $order->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkStatusUpdate(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

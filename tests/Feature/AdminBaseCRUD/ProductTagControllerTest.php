@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\Product;
 use App\Models\ProductTag;
@@ -11,6 +11,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group product_tags
  * @see \App\Http\Controllers\Admin\ProductTagController
  */

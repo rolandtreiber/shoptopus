@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Requests\Admin\ProductStoreRequest;
@@ -17,6 +17,7 @@ use Tests\CreatesApplication;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group products
  * @see \App\Http\Controllers\Admin\ProductController
  */

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\ProductAttributeStoreRequest;
 use App\Http\Requests\Admin\ProductAttributeUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -76,6 +77,24 @@ class ProductAttributeController extends Controller
     public function delete(ProductAttribute $attribute): array
     {
         $attribute->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

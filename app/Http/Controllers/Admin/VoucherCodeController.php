@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\VoucherCodeStoreRequest;
 use App\Http\Requests\Admin\VoucherCodeUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -73,6 +74,42 @@ class VoucherCodeController extends Controller
     public function delete(VoucherCode $voucherCode): array
     {
         $voucherCode->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkExpire(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkStart(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkActivateForPeriod(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\BannerStoreRequest;
 use App\Http\Requests\Admin\BannerUpdateRequest;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
@@ -74,6 +75,24 @@ class BannerController extends Controller
     public function delete(Banner $banner): array
     {
         $banner->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

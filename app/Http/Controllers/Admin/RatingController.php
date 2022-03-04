@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\RatingDetailResource;
 use App\Http\Resources\Admin\RatingListResource;
@@ -39,6 +40,24 @@ class RatingController extends Controller
     public function delete(Rating $rating): array
     {
         $rating->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    {
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkUpdateVerifiedStatus(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 }

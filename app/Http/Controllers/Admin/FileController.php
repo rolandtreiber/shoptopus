@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperationRequest;
 use App\Http\Requests\Admin\FileStoreRequest;
 use App\Http\Requests\Admin\FileUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -110,6 +111,15 @@ class FileController extends Controller
     public function delete(FileContent $file): array
     {
         $file->delete();
+        return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOperationRequest $request
+     * @return string[]
+     */
+    public function bulkDelete(BulkOperationRequest $request): array
+    {
         return ['status' => 'Success'];
     }
 

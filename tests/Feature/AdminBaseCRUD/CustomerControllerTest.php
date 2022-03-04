@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -9,6 +9,7 @@ use Tests\CreatesApplication;
 use Tests\AdminControllerTestCase;
 
 /**
+ * @group admin-base-crud
  * @group customers
  * @see \App\Http\Controllers\Admin\CustomerController
  */
