@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class BulkOperationRequest extends FormRequest
 {
@@ -11,9 +12,9 @@ class BulkOperationRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return Gate::allows('perform-bulk-action');
     }
 
     /**
@@ -21,10 +22,10 @@ class BulkOperationRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            //
+            'ids' => ['required', 'array']
         ];
     }
 }
