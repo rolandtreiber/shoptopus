@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
-use App\Enums\RandomStringModes;
-use App\Helpers\GeneralHelper;
 use App\Models\Cart;
 use App\Models\User;
+use App\Helpers\GeneralHelper;
+use App\Enums\RandomStringModes;
 
 class UserObserver
 {
@@ -14,7 +14,7 @@ class UserObserver
      *
      * @var bool
      */
-    public $afterCommit = true;
+    public bool $afterCommit = true;
 
     /**
      * @param User $user

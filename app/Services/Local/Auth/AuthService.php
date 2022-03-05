@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 use App\Notifications\PasswordResetSuccess;
+use App\Services\Local\Cart\CartServiceInterface;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -17,10 +18,16 @@ class AuthService implements AuthServiceInterface
 {
     private ErrorServiceInterface $errorService;
     private UserServiceInterface $userService;
+    private CartServiceInterface $cartService;
 
-    public function __construct(ErrorServiceInterface $errorService, UserServiceInterface $userServiceInterface) {
+    public function __construct(
+        ErrorServiceInterface $errorService,
+        UserServiceInterface $userServiceInterface,
+        CartServiceInterface $cartService
+    ) {
         $this->errorService = $errorService;
         $this->userService = $userServiceInterface;
+        $this->cartService = $cartService;
     }
 
     /**
@@ -280,7 +287,8 @@ class AuthService implements AuthServiceInterface
             "email" => $user->email,
             "phone" => $user->phone,
             "avatar" => $user->avatar,
-            "is_verified" => $user->hasVerifiedEmail()
+            "is_verified" => $user->hasVerifiedEmail(),
+            "cart" => $this->cartService->getCartForUser($user->id)
         ];
     }
 

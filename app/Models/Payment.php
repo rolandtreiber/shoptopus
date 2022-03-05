@@ -2,35 +2,16 @@
 
 namespace App\Models;
 
-use App\Enums\PaymentTypes;
 use App\Traits\HasUUID;
+use App\Enums\PaymentTypes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 
-/**
- * @property string $id
- * @property mixed|string[]|null $proof
- * @property float|mixed $amount
- * @property string $user_id
- * @property mixed|string $payable_type
- * @property mixed|string $payable_id
- * @property int|mixed $status
- * @property int|mixed $type
- * @property mixed|string $description
- * @property string $created_at
- * @property User $user
- * @property string $payment_ref
- * @property string $method_ref
- */
 class Payment extends SearchableModel implements Auditable
 {
-    use HasFactory;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.

@@ -198,7 +198,32 @@ class RegisterTest extends TestCase
      * @test
      * @group apiPost
      */
-    public function it_returns_the_user_object()
+    public function it_creates_a_cart_for_the_user()
+    {
+        $this->artisan('passport:install');
+
+        Notification::fake();
+
+        $data = [
+            'first_name' => "Istvan",
+            'last_name' => "Lovas",
+            'email' => "loleves@gmail.com",
+            'password' => "password",
+            'password_confirmation' => "password"
+        ];
+
+        $this->sendRequest($data);
+
+        $user = User::firstWhere('email', $data['email']);
+
+        $this->assertNotNull($user->cart);
+    }
+
+    /**
+     * @test
+     * @group apiPost
+     */
+    public function it_returns_the_user_object_and_all_relevant_data()
     {
         $this->artisan('passport:install');
 
@@ -226,7 +251,15 @@ class RegisterTest extends TestCase
                         'email',
                         'phone',
                         'avatar',
-                        'is_verified'
+                        'is_verified',
+                        'cart' => [
+                            'id',
+                            'user_id',
+                            'ip_address',
+                            'user',
+                            'deleted_at',
+                            'products'
+                        ]
                     ]
                 ]
             ]

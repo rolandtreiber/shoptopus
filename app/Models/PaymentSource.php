@@ -3,19 +3,16 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PaymentSource extends Model implements Auditable
 {
-    use HasFactory;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +29,7 @@ class PaymentSource extends Model implements Auditable
         'brand',
         'stripe_user_id',
         'payment_method_id',
+        'deleted_at'
     ];
 
     /**
@@ -42,7 +40,7 @@ class PaymentSource extends Model implements Auditable
     protected $casts = [
         'id' => 'string',
         'user_id' => 'string',
-        'payment_method_id' => 'integer',
+        'payment_method_id' => 'integer'
     ];
 
     /**

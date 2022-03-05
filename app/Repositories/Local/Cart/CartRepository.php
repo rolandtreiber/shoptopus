@@ -15,6 +15,30 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     }
 
     /**
+     * Get the user's cart
+     *
+     * @param string $userId
+     * @return array
+     */
+    public function getCartForUser(string $userId) : array
+    {
+        try {
+            $cart = $this->get($userId, 'user_id', ['user']);
+
+            if (empty($cart)) {
+                $this->post(["user_id" => $userId]);
+
+                $cart = $this->get($userId, 'user_id', ['user']);
+            }
+
+            return $cart;
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the users for the carts
      *
      * @param array $userIds
@@ -58,8 +82,29 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     public function getProducts(array $cartIds = []) : array
     {
         try {
-            return [];
-            //return !empty($result['data']) ? $result['data'] : [];
+            return DB::select("
+                SELECT
+                    cp.cart_id,
+                    cp.product_variant_id,
+                    cp.amount,
+                    p.id,
+                    p.name,
+                    p.short_description,
+                    p.description,
+                    p.price,
+                    p.status,
+                    p.purchase_count,
+                    p.stock,
+                    p.backup_stock,
+                    p.sku,
+                    p.cover_photo_id,
+                    p.rating
+                FROM cart_product as cp
+                JOIN products as p ON p.id = cp.product_id
+                JOIN carts as c ON c.id = cp.cart_id
+                WHERE cp.cart_id IN (?)
+                AND c.deleted_at IS NULL
+            ", [implode(',', $cartIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

@@ -34,7 +34,7 @@ class CustomerDetailResource extends JsonResource
             'address' => AddressResource::collection($this->addresses),
             'orders' => OrderListResource::collection($this->orders),
             'payments' => OrderListResource::collection($this->payments),
-            'payment_sources' => OrderListResource::collection($this->paymentSources),
+            'payment_sources' => OrderListResource::collection($this->payment_sources),
             'cart' => new CartListResource($this->cart)
         ];
     }

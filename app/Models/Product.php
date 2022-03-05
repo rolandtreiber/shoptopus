@@ -14,41 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
-/**
- * @method static count()
- * @method static find(int $productId)
- * @method static filtered(array[] $array)
- * @property mixed $name
- * @property mixed $price
- * @property mixed $id
- * @property float $final_price
- * @property int $status
- * @property int $stock
- * @property int $purchase_count
- * @property int $backup_stock
- * @property \Illuminate\Database\Eloquent\Collection $tags
- * @property Collection $categories
- * @property \Illuminate\Database\Eloquent\Collection $fileContents
- * @property string $cover_photo_id
- * @property FileContent $coverPhoto
- * @property string $updated_at
- * @property mixed $sku
- */
 class Product extends SearchableModel implements Auditable
 {
-    use HasFactory;
-    use HasTranslations;
-    use HasFiles;
-    use HasRatings;
-    use HasEventLogs;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasFactory, HasTranslations, HasFiles, HasRatings, HasEventLogs, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     public $translatable = ['name', 'short_description', 'description'];
 

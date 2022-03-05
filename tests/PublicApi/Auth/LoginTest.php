@@ -96,7 +96,15 @@ class LoginTest extends TestCase
                             'url',
                             'file_name'
                         ],
-                        'is_verified'
+                        'is_verified',
+                        'cart' => [
+                            'id',
+                            'user_id',
+                            'ip_address',
+                            'user',
+                            'deleted_at',
+                            'products'
+                        ]
                     ]
                 ]
             ]

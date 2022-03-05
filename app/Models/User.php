@@ -2,33 +2,25 @@
 
 namespace App\Models;
 
-use App\Notifications\ResetPasswordNotification;
+use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Traits\Searchable;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Passport\HasApiTokens;
-use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Models\Role;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable
 {
-    use Notifiable;
-    use HasApiTokens;
-    use HasFactory;
-    use HasRoles;
-    use HasFile;
-    use HasUUID;
-    use SoftDeletes;
-    use \OwenIt\Auditing\Auditable;
-    use Searchable;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles, HasFile, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +39,8 @@ class User extends Authenticatable implements Auditable
         'client_ref',
         'language_id',
         'avatar',
-        'is_favorite'
+        'is_favorite',
+        'deleted_at'
     ];
 
     /**
@@ -73,11 +66,38 @@ class User extends Authenticatable implements Auditable
 
     /**
      * Get the social accounts of the user.
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return HasMany
      */
-    public function addresses() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function addresses() : HasMany
     {
         return $this->hasMany(Address::class);
+    }
+
+    /**
+     * Get the orders of the user.
+     * @return HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the payment sources of the user.
+     * @return HasMany
+     */
+    public function payment_sources(): HasMany
+    {
+        return $this->hasMany(PaymentSource::class);
+    }
+
+    /**
+     * Get the cart for the user.
+     * @return HasOne
+     */
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Cart::class);
     }
 
     /**
@@ -134,32 +154,8 @@ class User extends Authenticatable implements Auditable
     /**
      * @return HasMany
      */
-    public function paymentSources(): HasMany
-    {
-        return $this->hasMany(PaymentSource::class);
-    }
-
-    /**
-     * @return HasMany
-     */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function orders(): HasMany
-    {
-        return $this->hasMany(Order::class);
-    }
-
-    /**
-     * @return HasOne
-     */
-    public function cart(): HasOne
-    {
-        return $this->hasOne(Cart::class);
     }
 }

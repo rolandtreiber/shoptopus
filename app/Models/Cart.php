@@ -48,6 +48,9 @@ class Cart extends Model implements Auditable
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot(['amount', 'product_variant_id']);
+        return $this->belongsToMany(Product::class)->withPivot([
+            'amount',
+            'product_variant_id'
+        ]);
     }
 }

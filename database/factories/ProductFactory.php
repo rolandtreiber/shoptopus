@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use App\Enums\ProductStatuses;
-use App\Enums\RandomStringModes;
 use App\Helpers\GeneralHelper;
+use App\Enums\RandomStringModes;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Product;
 
 class ProductFactory extends Factory
 {

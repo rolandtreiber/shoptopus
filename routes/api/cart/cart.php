@@ -9,13 +9,11 @@ Route::group([
     'middleware' => 'api'
 ], function () {
     Route::group([
-        'name' => 'carts.',
-        'prefix' => 'carts'
+        'name' => 'cart.',
+        'prefix' => 'cart',
+        'middleware' => 'auth:api'
     ], function () {
-        Route::get('/', [CartController::class, 'getAll'])->name('api.carts.getAll');
-        Route::get('/{id}', [CartController::class, 'get'])->name('api.carts.get');
-        Route::post('/', [CartController::class, 'post'])->name('api.carts.create');
-        Route::patch('/{id}', [CartController::class, 'update'])->name('api.carts.update');
-        Route::delete('/{id}',  [CartController::class, 'delete'])->name('api.carts.delete');
+        Route::get('/{id}', [CartController::class, 'get'])->name('api.cart.get');
+        Route::patch('/{id}', [CartController::class, 'update'])->name('api.cart.update');
     });
 });

@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Enums\PaymentMethods;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\PaymentSource;
+use App\Enums\PaymentMethods;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentSourceFactory extends Factory
 {

@@ -4,7 +4,11 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Address;
+use App\Models\Payment;
+use App\Models\PaymentSource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
@@ -109,5 +113,47 @@ class UserTest extends TestCase
         $this->assertCount(2, $this->user->refresh()->addresses);
 
         $this->assertInstanceOf(Address::class, $this->user->addresses[0]);
+    }
+
+    /** @test */
+    public function it_may_have_many_orders()
+    {
+        $this->assertCount(0, $this->user->orders);
+
+        Order::factory()->count(2)->create(['user_id' => $this->user->id]);
+
+        $this->assertCount(2, $this->user->refresh()->orders);
+
+        $this->assertInstanceOf(Order::class, $this->user->orders[0]);
+    }
+
+    /** @test */
+    public function it_may_have_many_payment_sources()
+    {
+        $this->assertCount(0, $this->user->payment_sources);
+
+        PaymentSource::factory()->count(2)->create(['user_id' => $this->user->id]);
+
+        $this->assertCount(2, $this->user->refresh()->payment_sources);
+
+        $this->assertInstanceOf(PaymentSource::class, $this->user->payment_sources[0]);
+    }
+
+//    /** @test */
+//    public function it_may_have_many_payments()
+//    {
+//        $this->assertCount(0, $this->user->payments);
+//
+//        Payment::factory()->count(2)->create(['user_id' => $this->user->id]);
+//
+//        $this->assertCount(2, $this->user->refresh()->payments);
+//
+//        $this->assertInstanceOf(Payment::class, $this->user->payments[0]);
+//    }
+
+    /** @test */
+    public function a_cart_is_added_for_the_user_on_creation()
+    {
+        $this->assertInstanceOf(Cart::class, $this->user->cart);
     }
 }

@@ -64,9 +64,9 @@ class OrderSeeder extends Seeder
             }
 
             $order = Order::find($order->id);
-            $sources = $selectedUser->paymentSources;
+            $sources = $selectedUser->payment_sources;
             if (sizeof($sources) > 0) {
-                $paymentSourceId = $sources[random_int(0, $selectedUser->paymentSources()->count()-1)]->id;
+                $paymentSourceId = $sources[random_int(0, $selectedUser->payment_sources()->count()-1)]->id;
             } else {
                 $paymentSource = PaymentSource::factory()->state(['user_id' => $selectedUserId])->create();
                 $paymentSourceId = $paymentSource->id;

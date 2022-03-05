@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Product;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Cart;
@@ -35,6 +36,12 @@ class CartTest extends TestCase
     /** @test */
     public function it_may_belongs_to_many_products()
     {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->cart->fresh()->products);
+        $cart = Cart::factory()
+            ->hasAttached(Product::factory()->count(3))
+            ->create();
+
+        $this->assertCount(3, $cart->products);
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $cart->products);
     }
 }

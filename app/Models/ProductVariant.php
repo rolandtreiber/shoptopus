@@ -5,31 +5,16 @@ namespace App\Models;
 use App\Traits\HasFiles;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 
-/**
- * @method static find($variant)
- * @property string $id
- * @property string $product_id
- * @property double $price
- * @property mixed $sku
- * @property boolean $enabled
- */
 class ProductVariant extends SearchableModel implements Auditable
 {
-    use HasFactory;
-    use HasTranslations;
-    use HasFiles;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
+    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     public $translatable = ['description'];
 

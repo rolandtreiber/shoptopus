@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\PaymentSource;
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,8 +19,8 @@ class CreatePaymentsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('payable_type');
             $table->uuid('payable_id');
-            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->foreignUuid('payment_source_id')->nullable()->constrained('payment_sources')->nullOnDelete();
+            $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('payment_source_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('amount');
             $table->json('proof')->nullable();
             $table->tinyInteger('status')->default(0);

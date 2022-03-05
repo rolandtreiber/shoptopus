@@ -5,6 +5,14 @@ namespace App\Repositories\Local\Cart;
 interface CartRepositoryInterface {
 
     /**
+     * Get the user's cart
+     *
+     * @param string $userId
+     * @return array
+     */
+    public function getCartForUser(string $userId) : array;
+
+    /**
      * Get the users for the carts
      *
      * @param array $userIds
@@ -14,7 +22,7 @@ interface CartRepositoryInterface {
     public function getUsers(array $userIds = []) : array;
 
     /**
-     * Get the products for the given carts
+     * Get the products for the given cart
      *
      * @param array $cartIds
      * @return array

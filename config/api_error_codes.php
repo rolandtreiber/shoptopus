@@ -38,6 +38,14 @@ return [
             "delete" => 1304,
             "getByToken" => 1305,
         ],
+        'cart' => [
+            "get" => 1500,
+            "getAll" => 1501,
+            "post" => 1502,
+            "update" => 1503,
+            "delete" => 1504,
+            "getCartForUser" => 1505
+        ],
         'user' => [
             "get" => 2000,
             "getAll" => 2001,
