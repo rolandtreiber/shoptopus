@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Admin\BannerStoreRequest;
 use App\Http\Requests\Admin\BannerUpdateRequest;
-use App\Http\Requests\Admin\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;

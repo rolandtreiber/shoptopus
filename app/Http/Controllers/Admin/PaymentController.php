@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Facades\Module;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\PaymentStoreRequest;
 use App\Http\Requests\Admin\PaymentUpdateRequest;
 use App\Http\Requests\ListRequest;

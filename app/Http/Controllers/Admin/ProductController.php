@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\FileTypes;
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\ProductBulkOperationRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
-use App\Http\Requests\ListRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductPageSummaryResource;
 use App\Models\Product;
+use App\Repositories\Admin\Product\ProductRepositoryInterface;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -19,6 +22,16 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductController extends Controller
 {
     use ProcessRequest, HasAttributes;
+
+    protected ProductRepositoryInterface $productRepository;
+
+    /**
+     * @param ProductRepositoryInterface $productRepository
+     */
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -114,21 +127,29 @@ class ProductController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkArchive(BulkOperationRequest $request): array
+    public function bulkArchive(ProductBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->productRepository->bulkArchive($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkDelete(BulkOperationRequest $request): array
+    public function bulkDelete(ProductBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->productRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
 }

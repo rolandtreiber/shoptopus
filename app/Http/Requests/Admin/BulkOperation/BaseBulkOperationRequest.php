@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\BulkOperation;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
 
-class BulkOperationRequest extends FormRequest
+abstract class BaseBulkOperationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,17 +15,5 @@ class BulkOperationRequest extends FormRequest
     public function authorize(): bool
     {
         return Gate::allows('perform-bulk-action');
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules(): array
-    {
-        return [
-            'ids' => ['required', 'array']
-        ];
     }
 }
