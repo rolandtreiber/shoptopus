@@ -2,11 +2,18 @@
 
 namespace App\Repositories\Admin\Payment;
 
+use Illuminate\Support\Facades\DB;
+
 class PaymentRepository implements PaymentRepositoryInterface
 {
 
     public function bulkUpdateStatus(array $ids, int $status): bool
     {
-        // TODO: Implement bulkUpdateStatus() method.
+        try {
+            DB::table('payments')->whereIn('id', $ids)->update(['status' => $status]);
+            return true;
+        } catch(\Exception $exception) {
+            return false;
+        }
     }
 }

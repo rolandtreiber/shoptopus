@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\ProductTagBulkOperationRequest;
 use App\Http\Requests\Admin\ProductTagStoreRequest;
 use App\Http\Requests\Admin\ProductTagUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -11,12 +13,22 @@ use App\Http\Resources\Admin\ProductTagDetailResource;
 use App\Http\Resources\Admin\ProductTagListResource;
 use App\Http\Resources\Admin\ProductTagResource;
 use App\Models\ProductTag;
+use App\Repositories\Admin\ProductTag\ProductTagRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductTagController extends Controller
 {
     use ProcessRequest;
+    protected ProductTagRepositoryInterface $productTagRepository;
+
+    /**
+     * @param ProductTagRepositoryInterface $productTagRepository
+     */
+    public function __construct(ProductTagRepositoryInterface $productTagRepository)
+    {
+        $this->productTagRepository = $productTagRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -82,20 +94,31 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductTagBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    public function bulkUpdateAvailability(ProductTagBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        $request->validate([
+            'availability' => ['required', 'boolean']
+        ]);
+        if ($this->productTagRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductTagBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkDelete(BulkOperationRequest $request): array
+    public function bulkDelete(ProductTagBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->productTagRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

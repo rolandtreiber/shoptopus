@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\ProductCategoryBulkOperationRequest;
 use App\Http\Requests\Admin\ProductCategoryStoreRequest;
 use App\Http\Requests\Admin\ProductCategoryUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -12,12 +14,22 @@ use App\Http\Resources\Admin\ProductCategoryListResource;
 use App\Http\Resources\Admin\ProductCategorySelectResource;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Repositories\Admin\ProductCategory\ProductCategoryRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductCategoryController extends Controller
 {
     use ProcessRequest;
+    protected ProductCategoryRepositoryInterface $productCategoryRepository;
+
+    /**
+     * @param ProductCategoryRepositoryInterface $productCategoryRepository
+     */
+    public function __construct(ProductCategoryRepositoryInterface $productCategoryRepository)
+    {
+        $this->productCategoryRepository = $productCategoryRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -105,20 +117,31 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductCategoryBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    public function bulkUpdateAvailability(ProductCategoryBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        $request->validate([
+            'availability' => ['required', 'boolean']
+        ]);
+        if ($this->productCategoryRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param ProductCategoryBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkDelete(BulkOperationRequest $request): array
+    public function bulkDelete(ProductCategoryBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->productCategoryRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

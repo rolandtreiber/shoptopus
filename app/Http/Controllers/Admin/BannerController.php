@@ -1,19 +1,32 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BannerStoreRequest;
 use App\Http\Requests\Admin\BannerUpdateRequest;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\BannerBulkOperationRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
+use App\Repositories\Admin\Banner\BannerRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use function config;
 
 class BannerController extends Controller
 {
     use ProcessRequest;
+    protected BannerRepositoryInterface $bannerRepository;
+
+    /**
+     * @param BannerRepositoryInterface $bannerRepository
+     */
+    public function __construct(BannerRepositoryInterface $bannerRepository)
+    {
+        $this->bannerRepository = $bannerRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -79,20 +92,31 @@ class BannerController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param BannerBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkUpdateAvailability(BulkOperationRequest $request): array
+    public function bulkUpdateAvailability(BannerBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        $request->validate([
+            'availability' => ['required', 'boolean']
+        ]);
+        if ($this->bannerRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param BannerBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkDelete(BulkOperationRequest $request): array
+    public function bulkDelete(BannerBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->bannerRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

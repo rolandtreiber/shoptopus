@@ -2,20 +2,31 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\PaymentStatusUpdateBulkOperationRequest;
 use App\Http\Requests\Admin\PaymentStoreRequest;
 use App\Http\Requests\Admin\PaymentUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\PaymentDetailResource;
 use App\Http\Resources\Admin\PaymentListResource;
 use App\Models\Payment;
+use App\Repositories\Admin\Payment\PaymentRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class PaymentController extends Controller
 {
     use ProcessRequest;
+    protected PaymentRepositoryInterface $paymentRepository;
+
+    /**
+     * @param PaymentRepositoryInterface $paymentRepository
+     */
+    public function __construct(PaymentRepositoryInterface $paymentRepository)
+    {
+        $this->paymentRepository = $paymentRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -81,11 +92,15 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param PaymentStatusUpdateBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkUpdateStatus(BulkOperationRequest $request): array
+    public function bulkUpdateStatus(PaymentStatusUpdateBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->paymentRepository->bulkUpdateStatus($request->ids, $request->status)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

@@ -2,20 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Intervals;
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\DiscountRuleBulkOperationRequest;
 use App\Http\Requests\Admin\DiscountRuleStoreRequest;
 use App\Http\Requests\Admin\DiscountRuleUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\DiscountRuleDetailResource;
 use App\Http\Resources\Admin\DiscountRuleListResource;
 use App\Models\DiscountRule;
+use App\Repositories\Admin\DiscountRule\DiscountRuleRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 class DiscountRuleController extends Controller
 {
     use ProcessRequest;
+    protected DiscountRuleRepositoryInterface $discountRuleRepository;
+
+    /**
+     * @param DiscountRuleRepositoryInterface $discountRuleRepository
+     */
+    public function __construct(DiscountRuleRepositoryInterface $discountRuleRepository)
+    {
+        $this->discountRuleRepository = $discountRuleRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -78,38 +92,63 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param DiscountRuleBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkExpire(BulkOperationRequest $request): array
+    public function bulkExpire(DiscountRuleBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->discountRuleRepository->bulkExpire($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param DiscountRuleBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkStart(BulkOperationRequest $request): array
+    public function bulkStart(DiscountRuleBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->discountRuleRepository->bulkStart($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param DiscountRuleBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkActivateForPeriod(BulkOperationRequest $request): array
+    public function bulkActivateForPeriod(DiscountRuleBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        $request->validate([
+            'period' => ['required', Rule::in([
+                Intervals::Day,
+                Intervals::Week,
+                Intervals::Month
+            ])]
+        ]);
+        if ($this->discountRuleRepository->bulkActivateForPeriod($request->ids, $request->period)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
     /**
-     * @param BulkOperationRequest $request
+     * @param DiscountRuleBulkOperationRequest $request
      * @return string[]
+     * @throws BulkOperationException
      */
-    public function bulkDelete(BulkOperationRequest $request): array
+    public function bulkDelete(DiscountRuleBulkOperationRequest $request): array
     {
-        return ['status' => 'Success'];
+        if ($this->discountRuleRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

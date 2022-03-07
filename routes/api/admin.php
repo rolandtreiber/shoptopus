@@ -1,28 +1,28 @@
 <?php
 
 use App\Facades\Module;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuditController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DeliveryRuleController;
+use App\Http\Controllers\Admin\DeliveryTypeController;
+use App\Http\Controllers\Admin\DiscountRuleController;
 use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeOptionController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AuditController;
-use App\Http\Controllers\Admin\CartController;
-use App\Http\Controllers\Admin\DeliveryRuleController;
-use App\Http\Controllers\Admin\DeliveryTypeController;
-use App\Http\Controllers\Admin\DiscountRuleController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductCategoryController;
-use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\VoucherCodeController;
-use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () {
