@@ -2,22 +2,40 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
+use App\Enums\ProductStatuses;
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\BulkOperationsTestCase;
 
 /**
  * @group products-bulk-operations
  * @group bulk-operations
  */
-class ProductsBulkOperationsTest extends TestCase
+class ProductsBulkOperationsTest extends BulkOperationsTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
     public function test_can_archive_multiple_products()
     {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.products.bulk.archive'), [
+            'ids' => $productIds
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('products', [
+            'id' => $productIds[0],
+            'status' => ProductStatuses::Discontinued
+        ]);
+        $this->assertDatabaseHas('products', [
+            'id' => $productIds[1],
+            'status' => ProductStatuses::Discontinued
+        ]);
     }
 
     /**
@@ -25,7 +43,20 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_can_delete_multiple_products()
     {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->delete(route('admin.api.products.bulk.delete'), [
+            'ids' => $productIds
+        ]);
+        $response->assertOk();
+        $this->assertSoftDeleted('products', [
+            'id' => $productIds[0]
+        ]);
+        $this->assertSoftDeleted('products', [
+            'id' => $productIds[1]
+        ]);
     }
 
     /**
@@ -33,7 +64,9 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_archive_validation()
     {
-        $this->assertTrue(true);
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.products.bulk.archive'), []);
+        $response->assertStatus(422);
     }
 
     /**
@@ -41,7 +74,14 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_archive_authorization()
     {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeAssistant);
+        $response = $this->post(route('admin.api.products.bulk.archive'), [
+            'ids' => $productIds
+        ]);
+        $response->assertForbidden();
     }
 
     /**
@@ -49,15 +89,13 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_archive_authentication()
     {
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @test
-     */
-    public function test_bulk_products_archive_not_found_db_changes_rolled_back()
-    {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $response = $this->post(route('admin.api.products.bulk.archive'), [
+            'ids' => $productIds
+        ]);
+        $response->assertStatus(500);
     }
 
     /**
@@ -65,7 +103,11 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_delete_validation()
     {
-        $this->assertTrue(true);
+        $this->signIn($this->superAdmin);
+        $response = $this->delete(route('admin.api.products.bulk.delete'), [
+            'ids' => ['1', '2']
+        ]);
+        $response->assertStatus(422);
     }
 
     /**
@@ -73,7 +115,14 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_delete_authorization()
     {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeAssistant);
+        $response = $this->delete(route('admin.api.products.bulk.delete'), [
+            'ids' => $productIds
+        ]);
+        $response->assertForbidden();
     }
 
     /**
@@ -81,23 +130,12 @@ class ProductsBulkOperationsTest extends TestCase
      */
     public function test_bulk_products_delete_authentication()
     {
-        $this->assertTrue(true);
+        $productIds = Product::factory()->state([
+            'status' => ProductStatuses::Active
+        ])->count(3)->create()->pluck('id')->toArray();
+        $response = $this->delete(route('admin.api.products.bulk.delete'), [
+            'ids' => $productIds
+        ]);
+        $response->assertStatus(500);
     }
-
-    /**
-     * @test
-     */
-    public function test_bulk_products_delete_not_found_handled()
-    {
-        $this->assertTrue(true);
-    }
-
-    /**
-     * @test
-     */
-    public function test_bulk_products_delete_not_found_db_changes_rolled_back()
-    {
-        $this->assertTrue(true);
-    }
-
 }
