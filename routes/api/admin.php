@@ -295,7 +295,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         Route::group(['prefix' => 'files'], function () {
             Route::get('/', [FileController::class, 'index'])->name('admin.api.index.files');
             Route::group(['prefix' => 'bulk'], function () {
-                Route::delete('/', [BannerController::class, 'bulkDelete'])->name('admin.api.files.bulk.delete');
+                Route::delete('/', [FileController::class, 'bulkDelete'])->name('admin.api.files.bulk.delete');
             });
         });
         Route::group(['prefix' => 'file'], function () {
