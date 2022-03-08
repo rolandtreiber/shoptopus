@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
             Route::get('/', [ProductCategoryController::class, 'index'])->name('admin.api.index.product-categories');
             Route::get('select-data', [ProductCategoryController::class, 'getSelectData'])->name('admin.api.index.product-categories-select');
             Route::group(['prefix' => 'bulk'], function () {
-                Route::post('/availability', [ProductCategoryController::class, 'bulkUpdateAvailability'])->name('admin.api.product-categories.bulk.delete');
+                Route::post('/availability', [ProductCategoryController::class, 'bulkUpdateAvailability'])->name('admin.api.product-categories.bulk.update-availability');
                 Route::delete('/', [ProductCategoryController::class, 'bulkDelete'])->name('admin.api.product-categories.bulk.delete');
             });
         });
