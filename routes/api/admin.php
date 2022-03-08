@@ -80,7 +80,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         Route::group(['prefix' => 'product-tags'], function () {
             Route::get('/', [ProductTagController::class, 'index'])->name('admin.api.index.product-tags');
             Route::group(['prefix' => 'bulk'], function () {
-                Route::post('/availability', [ProductTagController::class, 'bulkUpdateAvailability'])->name('admin.api.product-tags.bulk.delete');
+                Route::post('/availability', [ProductTagController::class, 'bulkUpdateAvailability'])->name('admin.api.product-tags.bulk.update-availability');
                 Route::delete('/', [ProductTagController::class, 'bulkDelete'])->name('admin.api.product-tags.bulk.delete');
             });
         });
@@ -97,7 +97,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         Route::group(['prefix' => 'product-attributes'], function () {
             Route::get('/', [ProductAttributeController::class, 'index'])->name('admin.api.index.product-attributes');
             Route::group(['prefix' => 'bulk'], function () {
-                Route::post('/availability', [ProductAttributeController::class, 'bulkUpdateAvailability'])->name('admin.api.product-attributes.bulk.delete');
+                Route::post('/availability', [ProductAttributeController::class, 'bulkUpdateAvailability'])->name('admin.api.product-attributes.bulk.update-availability');
                 Route::delete('/', [ProductAttributeController::class, 'bulkDelete'])->name('admin.api.product-attributes.bulk.delete');
             });
         });
