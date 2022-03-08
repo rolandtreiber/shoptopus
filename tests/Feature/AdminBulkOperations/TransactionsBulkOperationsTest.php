@@ -2,22 +2,41 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
+use App\Enums\PaymentStatuses;
+use App\Models\Payment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\BulkOperationsTestCase;
 
 /**
  * @group transactions-bulk-operations
  * @group bulk-operations
  */
-class TransactionsBulkOperationsTest extends TestCase
+class TransactionsBulkOperationsTest extends BulkOperationsTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
     public function test_can_update_the_status_of_multiple_transactions()
     {
-        $this->assertTrue(true);
+        $transactionIds = Payment::factory()->state([
+            'status' => PaymentStatuses::Pending
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.payments.bulk.status-update'), [
+            'ids' => $transactionIds,
+            'status' => PaymentStatuses::Settled
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('payments', [
+            'id' => $transactionIds[0],
+            'status' => PaymentStatuses::Settled
+        ]);
+        $this->assertDatabaseHas('payments', [
+            'id' => $transactionIds[1],
+            'status' => PaymentStatuses::Settled
+        ]);
     }
 
     /**
@@ -25,7 +44,15 @@ class TransactionsBulkOperationsTest extends TestCase
      */
     public function test_bulk_transactions_status_update_authorization()
     {
-        $this->assertTrue(true);
+        $transactionIds = Payment::factory()->state([
+            'status' => PaymentStatuses::Pending
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeAssistant);
+        $response = $this->post(route('admin.api.payments.bulk.status-update'), [
+            'ids' => $transactionIds,
+            'status' => PaymentStatuses::Settled
+        ]);
+        $response->assertForbidden();
     }
 
     /**
@@ -33,7 +60,14 @@ class TransactionsBulkOperationsTest extends TestCase
      */
     public function test_bulk_transactions_status_update_authentication()
     {
-        $this->assertTrue(true);
+        $transactionIds = Payment::factory()->state([
+            'status' => PaymentStatuses::Pending
+        ])->count(3)->create()->pluck('id')->toArray();
+        $response = $this->post(route('admin.api.payments.bulk.status-update'), [
+            'ids' => $transactionIds,
+            'status' => PaymentStatuses::Settled
+        ]);
+        $response->assertStatus(500);
     }
 
     /**
@@ -41,15 +75,30 @@ class TransactionsBulkOperationsTest extends TestCase
      */
     public function test_bulk_transactions_status_update_not_found_handled()
     {
-        $this->assertTrue(true);
+        $transactionIds = Payment::factory()->state([
+            'status' => PaymentStatuses::Pending
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeManager);
+        $response = $this->post(route('admin.api.payments.bulk.status-update'), [
+            'ids' => [...$transactionIds, 'invalid id'],
+            'status' => PaymentStatuses::Settled
+        ]);
+        $response->assertStatus(422);
     }
 
     /**
      * @test
      */
-    public function test_bulk_transactions_status_update_not_found_db_changes_rolled_back()
+    public function test_bulk_transactions_status_update_validation()
     {
-        $this->assertTrue(true);
+        $transactionIds = Payment::factory()->state([
+            'status' => PaymentStatuses::Pending
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeManager);
+        $response = $this->post(route('admin.api.payments.bulk.status-update'), [
+            'ids' => $transactionIds,
+        ]);
+        $response->assertStatus(422);
     }
 
 }

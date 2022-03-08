@@ -30,6 +30,7 @@ class PaymentFactory extends Factory
             'payable_type' => $this->faker->word,
             'payable_id' => $this->faker->randomNumber(),
             'payment_source_id' => PaymentSource::factory(),
+            'amount' => $this->faker->numberBetween(100, 1000),
             'user_id' => User::factory(),
             'status' => $this->faker->numberBetween(-8, 8),
             'payment_ref' => GeneralHelper::generateRandomString(10, RandomStringModes::UppercaseLowercaseAndNumbers),

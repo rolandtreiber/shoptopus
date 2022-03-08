@@ -2,22 +2,40 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
+use App\Models\Rating;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Tests\BulkOperationsTestCase;
 
 /**
  * @group ratings-bulk-operations
  * @group bulk-operations
  */
-class RatingsBulkOperationsTest extends TestCase
+class RatingsBulkOperationsTest extends BulkOperationsTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
     public function test_can_set_multiple_ratings_verified()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => $ratingIds,
+            'verified' => true
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[0],
+            'verified' => true
+        ]);
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[1],
+            'verified' => true
+        ]);
     }
 
     /**
@@ -25,7 +43,23 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_can_set_multiple_ratings_unverified()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => true
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => $ratingIds,
+            'verified' => false
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[0],
+            'verified' => false
+        ]);
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[1],
+            'verified' => false
+        ]);
     }
 
     /**
@@ -33,7 +67,23 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_can_enable_multiple_ratings()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => $ratingIds,
+            'availability' => true
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[0],
+            'enabled' => true
+        ]);
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[1],
+            'enabled' => true
+        ]);
     }
 
     /**
@@ -41,7 +91,23 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_can_disable_multiple_ratings()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => true
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => $ratingIds,
+            'availability' => false
+        ]);
+        $response->assertOk();
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[0],
+            'enabled' => false
+        ]);
+        $this->assertDatabaseHas('ratings', [
+            'id' => $ratingIds[1],
+            'enabled' => false
+        ]);
     }
 
     /**
@@ -49,7 +115,15 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_verification_update_authorization()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeAssistant);
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => $ratingIds,
+            'verified' => true
+        ]);
+        $response->assertForbidden();
     }
 
     /**
@@ -57,7 +131,14 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_verification_update_authentication()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => $ratingIds,
+            'verified' => true
+        ]);
+        $response->assertStatus(500);
     }
 
     /**
@@ -65,15 +146,30 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_verification_update_not_found_handled()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => [...$ratingIds, 'invalid id'],
+            'verified' => true
+        ]);
+        $response->assertStatus(422);
     }
 
     /**
      * @test
      */
-    public function test_bulk_ratings_verification_update_not_found_db_changes_rolled_back()
+    public function test_bulk_ratings_verification_update_validation()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'verified' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-verified-status'), [
+            'ids' => $ratingIds,
+        ]);
+        $response->assertStatus(422);
     }
 
     /**
@@ -81,7 +177,15 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_availability_update_authorization()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->storeAssistant);
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => $ratingIds,
+            'availability' => true
+        ]);
+        $response->assertForbidden();
     }
 
     /**
@@ -89,7 +193,14 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_availability_update_authentication()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => $ratingIds,
+            'availability' => true
+        ]);
+        $response->assertStatus(500);
     }
 
     /**
@@ -97,15 +208,30 @@ class RatingsBulkOperationsTest extends TestCase
      */
     public function test_bulk_ratings_availability_update_not_found_handled()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => [...$ratingIds, 'invalid id'],
+            'availability' => true
+        ]);
+        $response->assertStatus(422);
     }
 
     /**
      * @test
      */
-    public function test_bulk_ratings_availability_update_not_found_db_changes_rolled_back()
+    public function test_bulk_ratings_availability_update_validation()
     {
-        $this->assertTrue(true);
+        $ratingIds = Rating::factory()->state([
+            'enabled' => false
+        ])->count(3)->create()->pluck('id')->toArray();
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.api.ratings.bulk.update-availability'), [
+            'ids' => $ratingIds,
+        ]);
+        $response->assertStatus(422);
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\PaymentStatuses;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\PaymentStatusUpdateBulkOperationRequest;
@@ -14,6 +15,7 @@ use App\Models\Payment;
 use App\Repositories\Admin\Payment\PaymentRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 class PaymentController extends Controller
 {
@@ -98,6 +100,12 @@ class PaymentController extends Controller
      */
     public function bulkUpdateStatus(PaymentStatusUpdateBulkOperationRequest $request): array
     {
+        $request->validate([
+            'status' => [
+                'required',
+                Rule::in(PaymentStatuses::getValues())
+                ]
+        ]);
         if ($this->paymentRepository->bulkUpdateStatus($request->ids, $request->status)) {
             return ['status' => 'Success'];
         }
