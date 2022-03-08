@@ -15,7 +15,7 @@ class CreateEmailArchivesTable extends Migration
     {
         Schema::create('email_archives', function (Blueprint $table) {
             $table->id();
-            $table->string('addresses');
+            $table->string('address');
             $table->string('subject');
             $table->string('template_id');
             $table->text('content');

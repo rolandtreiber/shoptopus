@@ -2,30 +2,34 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
+use App\Mail\Admin\GenericAdminEmail;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Tests\TestCase;
+use Illuminate\Support\Facades\Mail;
+use Tests\BulkOperationsTestCase;
 
 /**
  * @group customers-bulk-operations
  * @group bulk-operations
  */
-class CustomersBulkOperationsTest extends TestCase
+class CustomersBulkOperationsTest extends BulkOperationsTestCase
 {
+    use RefreshDatabase;
+
     /**
      * @test
      */
     public function test_can_send_email_to_multiple_users()
     {
-        $this->assertTrue(true);
-    }
+        Mail::fake();
+        $emailAddresses = User::factory()->count(2)->create()->pluck('email');
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.customers.send-email'), [
+            'addresses' => $emailAddresses
+        ]);
 
-    /**
-     * @test
-     */
-    public function test_email_service_error_handled()
-    {
-        $this->assertTrue(true);
+        $response->assertOk();
+        Mail::assertSent(GenericAdminEmail::class, 2);
     }
 
     /**
@@ -33,7 +37,20 @@ class CustomersBulkOperationsTest extends TestCase
      */
     public function test_email_archives_created()
     {
-        $this->assertTrue(true);
+        Mail::fake();
+        $emailAddresses = User::factory()->count(2)->create()->pluck('email');
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.customers.send-email'), [
+            'addresses' => $emailAddresses
+        ]);
+
+        $response->assertOk();
+        $this->assertDatabaseHas('email_archives', [
+           'address' => $emailAddresses[0]
+        ]);
+        $this->assertDatabaseHas('email_archives', [
+            'address' => $emailAddresses[1]
+        ]);
     }
 
     /**
@@ -41,7 +58,14 @@ class CustomersBulkOperationsTest extends TestCase
      */
     public function test_bulk_email_validation()
     {
-        $this->assertTrue(true);
+        Mail::fake();
+        $emailAddresses = User::factory()->count(2)->create()->pluck('email');
+        $this->signIn($this->superAdmin);
+        $response = $this->post(route('admin.customers.send-email'), [
+            'addresses' => [...$emailAddresses, 'invalid email address']
+        ]);
+
+        $response->assertStatus(422);
     }
 
     /**
@@ -49,7 +73,13 @@ class CustomersBulkOperationsTest extends TestCase
      */
     public function test_bulk_email_authentication()
     {
-        $this->assertTrue(true);
+        Mail::fake();
+        $emailAddresses = User::factory()->count(2)->create()->pluck('email');
+        $response = $this->post(route('admin.customers.send-email'), [
+            'addresses' => $emailAddresses
+        ]);
+
+        $response->assertStatus(500);
     }
 
     /**
@@ -57,7 +87,14 @@ class CustomersBulkOperationsTest extends TestCase
      */
     public function test_bulk_email_authorization()
     {
-        $this->assertTrue(true);
+        Mail::fake();
+        $emailAddresses = User::factory()->count(2)->create()->pluck('email');
+        $this->signIn(User::factory()->create());
+        $response = $this->post(route('admin.customers.send-email'), [
+            'addresses' => $emailAddresses
+        ]);
+
+        $response->assertForbidden();
     }
 
 }

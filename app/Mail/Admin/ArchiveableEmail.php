@@ -12,7 +12,7 @@ class ArchiveableEmail extends Mailable {
         $archive->subject = $subject;
         $archive->content = $body;
         $archive->template_id = $templateId;
-        $archive->addresses = $recipient;
+        $archive->address = $recipient;
         $archive->save();
     }
 

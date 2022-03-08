@@ -315,6 +315,6 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Emails
         Route::get('/get-users', [EmailController::class, 'getUserOptions']);
-        Route::post('/send-email', [EmailController::class, 'sendEmail']);
+        Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('admin.customers.send-email');
     });
 });
