@@ -40,7 +40,10 @@ class DiscountRuleRepository implements DiscountRuleRepositoryInterface
         $expiry = $this->getDateFromType($type);
 
         try {
-            DB::table('discount_rules')->whereIn('id', $ids)->update(['valid_until' => $expiry]);
+            DB::table('discount_rules')->whereIn('id', $ids)->update([
+                'valid_from' => Carbon::now(),
+                'valid_until' => $expiry
+            ]);
             return true;
         } catch(\Exception $exception) {
             return false;

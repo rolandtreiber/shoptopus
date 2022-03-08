@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests\Admin\BulkOperation;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class VoucherCodeBulkOperationRequest extends FormRequest
+class VoucherCodeBulkOperationRequest extends BaseBulkOperationRequest
 {
     /**
      * Get the validation rules that apply to the request.
