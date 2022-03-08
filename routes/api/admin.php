@@ -188,7 +188,7 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         Route::group(['prefix' => 'delivery-types'], function () {
             Route::get('/', [DeliveryTypeController::class, 'index'])->name('admin.api.index.delivery-types');
             Route::group(['prefix' => 'bulk'], function () {
-                Route::post('/availability', [DeliveryTypeController::class, 'bulkUpdateAvailability'])->name('admin.api.delivery-types.bulk.delete');
+                Route::post('/availability', [DeliveryTypeController::class, 'bulkUpdateAvailability'])->name('admin.api.delivery-types.bulk.update-availability');
                 Route::delete('/', [DeliveryTypeController::class, 'bulkDelete'])->name('admin.api.delivery-types.bulk.delete');
             });
         });
