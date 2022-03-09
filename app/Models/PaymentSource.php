@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class PaymentSource extends Model implements Auditable
 {
@@ -16,6 +18,17 @@ class PaymentSource extends Model implements Auditable
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
+    use HasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['user.last_name', 'name'])
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +56,10 @@ class PaymentSource extends Model implements Auditable
         'id' => 'string',
         'user_id' => 'string',
         'payment_method_id' => 'integer',
+        'exp_month' => 'encrypted',
+        'exp_year' => 'encrypted',
+        'last_four' => 'encrypted',
+        'brand' => 'encrypted'
     ];
 
     /**

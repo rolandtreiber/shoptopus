@@ -23,6 +23,7 @@ class CreateVoucherCodesTable extends Migration
             $table->dateTime('valid_from');
             $table->dateTime('valid_until');
             $table->boolean('enabled')->default(true);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
 

@@ -25,6 +25,7 @@ class CreateRatingsTable extends Migration
             $table->string('title')->nullable();
             $table->boolean('enabled')->default(true);
             $table->boolean('verified')->default(true);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

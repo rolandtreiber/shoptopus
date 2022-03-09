@@ -31,6 +31,7 @@ class CreateProductsTable extends Migration
             $table->uuid('cover_photo_id')->nullable();
             $table->foreign('cover_photo_id')->references('id')->on('file_contents')->nullOnDelete();
             Module::enabled('ratings') && $table->float('rating')->nullable();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

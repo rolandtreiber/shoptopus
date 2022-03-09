@@ -32,6 +32,7 @@
         "shoptopus/excel-import-export": "@dev",
         "spatie/laravel-permission": "^5.1",
         "spatie/laravel-searchable": "^1.10",
+        "spatie/laravel-sluggable": "^3.3",
         "spatie/laravel-translatable": "^5.0"
     },
     "require-dev": {

@@ -24,6 +24,7 @@ class CreateAddressesTable extends Migration
             $table->string('address_line_2')->nullable();
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

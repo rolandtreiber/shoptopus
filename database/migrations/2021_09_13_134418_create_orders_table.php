@@ -27,6 +27,7 @@ class CreateOrdersTable extends Migration
             $table->decimal('total_discount')->default(0);
             $table->decimal('delivery')->default(0);
             $table->integer('status')->default(OrderStatuses::Paid);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -25,6 +25,7 @@ class CreateProductVariantsTable extends Migration
             $table->boolean('enabled')->default(true);
             $table->text('description')->nullable();
             $table->decimal('price');
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

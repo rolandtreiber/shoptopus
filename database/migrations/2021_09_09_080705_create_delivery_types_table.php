@@ -22,6 +22,7 @@ class CreateDeliveryTypesTable extends Migration
             $table->boolean('enabled_by_default_on_creation')->default(true);
             $table->boolean('enabled')->default(true);
             $table->decimal('price')->default(0);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });
