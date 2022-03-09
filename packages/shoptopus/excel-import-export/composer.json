@@ -1,0 +1,25 @@
+{
+    "name": "shoptopus/excel-import-export",
+    "description": "Import and export the database schema supporting foreign keys and translateable fields",
+    "autoload": {
+        "psr-4": {
+            "Shoptopus\\ExcelImportExport\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Roland Treiber",
+            "email": "hello@thecaringdeveloper.com"
+        }
+    ],
+    "require": {
+        "maatwebsite/excel": "^3.1"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Shoptopus\\ExcelImportExport\\ExcelImportExportServiceProvider"
+            ]
+        }
+    }
+}
