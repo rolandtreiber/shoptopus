@@ -82,7 +82,7 @@ class ModelRepository implements ModelRepositoryInterface
      * @param bool $returnAsArray
      * @return mixed
      */
-    public function post(array $payload, bool $returnAsArray = true)
+    public function post(array $payload, bool $returnAsArray = true) : mixed
     {
         try {
             $model = $this->model->create($payload);

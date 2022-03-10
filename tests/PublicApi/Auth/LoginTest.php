@@ -2,6 +2,8 @@
 
 namespace Tests\PublicApi\Auth;
 
+use App\Models\Cart;
+use App\Models\Product;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -102,7 +104,6 @@ class LoginTest extends TestCase
                             'user_id',
                             'ip_address',
                             'user',
-                            'deleted_at',
                             'products'
                         ]
                     ]

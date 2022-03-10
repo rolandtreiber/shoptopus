@@ -27,7 +27,32 @@ interface CartRepositoryInterface {
      * @param array $cartIds
      * @return array
      */
-    public function getProducts(array $cartIds = []) : array;
+    public function getItems(array $cartIds = []) : array;
+
+    /**
+     * Add item to cart.
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function addItem(array $payload) : array;
+
+    /**
+     * Remove item from cart.
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function removeItem(array $payload) : array;
+
+    /**
+     * Merge the user's carts
+     *
+     * @param string $userId
+     * @param string $cartId
+     * @return array
+     */
+    public function mergeUserCarts(string $userId, string $cartId) : array;
 
     /**
      * Get the columns for selection

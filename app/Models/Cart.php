@@ -5,14 +5,13 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Cart extends Model implements Auditable
 {
-    use HasFactory, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,8 +20,7 @@ class Cart extends Model implements Auditable
      */
     protected $fillable = [
         'user_id',
-        'ip_address',
-        'deleted_at'
+        'ip_address'
     ];
 
     /**
@@ -49,7 +47,7 @@ class Cart extends Model implements Auditable
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)->withPivot([
-            'amount',
+            'quantity',
             'product_variant_id'
         ]);
     }

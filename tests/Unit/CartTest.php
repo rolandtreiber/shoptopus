@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Models\Product;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CartTest extends TestCase

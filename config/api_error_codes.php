@@ -40,11 +40,11 @@ return [
         ],
         'cart' => [
             "get" => 1500,
-            "getAll" => 1501,
-            "post" => 1502,
             "update" => 1503,
-            "delete" => 1504,
-            "getCartForUser" => 1505
+            "getCartForUser" => 1505,
+            "addItem" => 1506,
+            "removeItem" => 1507,
+            "mergeUserCarts" => 1508
         ],
         'user' => [
             "get" => 2000,

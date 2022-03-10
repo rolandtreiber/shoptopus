@@ -46,6 +46,10 @@ class AuthService implements AuthServiceInterface
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
             }
 
+            if (isset($payload['cart_id'])) {
+                $this->cartService->mergeUserCarts($payload['cart_id'], $user->id);
+            }
+
             return [
                 "data" => [
                     "auth" => $this->createTokenAndGetAuthResponse($user)

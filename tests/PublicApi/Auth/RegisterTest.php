@@ -257,7 +257,6 @@ class RegisterTest extends TestCase
                             'user_id',
                             'ip_address',
                             'user',
-                            'deleted_at',
                             'products'
                         ]
                     ]

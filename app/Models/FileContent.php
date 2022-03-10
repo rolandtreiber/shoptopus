@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\FileTypes;
-use App\Enums\ProductStatuses;
+use App\Enums\ProductStatus;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;

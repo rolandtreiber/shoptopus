@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatuses;
+use App\Enums\ProductStatus;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
 use App\Traits\HasEventLogs;
@@ -78,13 +78,13 @@ class Product extends SearchableModel implements Auditable
     {
         switch ($view) {
             case 'active':
-                $query->where('status', ProductStatuses::Active);
+                $query->where('status', ProductStatus::Active);
                 break;
             case 'discontinued':
-                $query->where('status', ProductStatuses::Discontinued);
+                $query->where('status', ProductStatus::Discontinued);
                 break;
             case 'provisional':
-                $query->where('status', ProductStatuses::Provisional);
+                $query->where('status', ProductStatus::Provisional);
                 break;
         }
     }

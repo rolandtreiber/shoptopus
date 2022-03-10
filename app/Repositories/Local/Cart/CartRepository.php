@@ -15,6 +15,114 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     }
 
     /**
+     * Add item to cart.
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function addItem(array $payload) : array
+    {
+        try {
+            $cart = $payload['cart_id']
+                ? $this->get($payload['cart_id'])
+                : $this->post([]);
+
+            $cart_product_table = DB::table('cart_product');
+            $cart_product_item = $cart_product_table
+                ->where('cart_id', $cart['id'])
+                ->where('product_id', $payload['product_id']);
+
+            if ($cart_product_item->exists()) {
+                $current_quantity = (int) $cart_product_item->first('quantity')['quantity'];
+
+                $cart_product_table->update([
+                    'quantity' => $current_quantity + $payload['quantity'],
+                    'product_variant_id' => $payload['product_variant_id'] ?? null
+                ]);
+            } else {
+                $cart_product_table->insert([
+                    'cart_id' => $cart['id'],
+                    'product_id' => $payload['product_id'],
+                    'quantity' => $payload['quantity'],
+                    'product_variant_id' => $payload['product_variant_id'] ?? null
+                ]);
+            }
+
+            return $this->get($cart['id']);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * Remove item from cart.
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function removeItem(array $payload) : array
+    {
+        try {
+            $cart = $this->get($payload['cart_id']);
+
+            DB::table('cart_product')
+                ->where('cart_id', $cart['id'])
+                ->where('product_id', $payload['product_id'])
+                ->delete();
+
+            return $this->get($payload['cart_id']);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * Merge the user's carts
+     *
+     * @param string $userId
+     * @param string $cartId
+     * @return array
+     */
+    public function mergeUserCarts(string $userId, string $cartId) : array
+    {
+        try {
+            $cart = $this->getCartForUser($userId);
+
+            $secondary_cart = $this->get($cartId, 'id', ['user']);
+
+            if ($secondary_cart) {
+                $secondary_cart_products = $secondary_cart['products'];
+
+                if(!empty($secondary_cart_products)) {
+                    if (!$cart) {
+                        $cart = $this->post(['user_id' => $userId]);
+                    }
+
+                    foreach($secondary_cart_products as $secondary_cart_product) {
+                        $payload = [
+                            'product_id' => $secondary_cart_product['id'],
+                            'quantity' => $secondary_cart_product['quantity'],
+                            'cart_id' => $cart['id'],
+                            'product_variant_id' => $secondary_cart_product['product_variant_id']
+                        ];
+
+                        $this->addItem($payload);
+                    }
+                }
+
+                $this->delete($cartId);
+            }
+
+            return $this->getCartForUser($userId);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the user's cart
      *
      * @param string $userId
@@ -26,7 +134,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $cart = $this->get($userId, 'user_id', ['user']);
 
             if (empty($cart)) {
-                $this->post(["user_id" => $userId]);
+                $this->post(['user_id' => $userId]);
 
                 $cart = $this->get($userId, 'user_id', ['user']);
             }
@@ -79,14 +187,14 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
      * @param array $cartIds
      * @return array
      */
-    public function getProducts(array $cartIds = []) : array
+    public function getItems(array $cartIds = []) : array
     {
         try {
             return DB::select("
                 SELECT
                     cp.cart_id,
                     cp.product_variant_id,
-                    cp.amount,
+                    cp.quantity,
                     p.id,
                     p.name,
                     p.short_description,
@@ -103,7 +211,6 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 JOIN products as p ON p.id = cp.product_id
                 JOIN carts as c ON c.id = cp.cart_id
                 WHERE cp.cart_id IN (?)
-                AND c.deleted_at IS NULL
             ", [implode(',', $cartIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -141,7 +248,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 }
 
                 if (!in_array('products', $excludeRelationships)) {
-                    foreach ($this->getProducts($ids) as $product) {
+                    foreach ($this->getItems($ids) as $product) {
                         if ((int) $product['cart_id'] === $modelId) {
                             unset($product['cart_id']);
                             array_push($model['products'], $product);
@@ -168,8 +275,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         $columns = [
             "{$this->model_table}.id",
             "{$this->model_table}.user_id",
-            "{$this->model_table}.ip_address",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.ip_address"
         ];
 
         return $withTableNamePrefix

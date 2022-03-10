@@ -37,7 +37,7 @@ class CartSeeder extends Seeder
                     $selectedProductId = (new Product)->findNthId(random_int(1, $products));
                 } while (in_array($selectedProductId, $usedProductTypes));
                 $usedProductTypes[] = $selectedProductId;
-                $selectedCart->products()->attach($selectedProductId, ['amount' => random_int(1, 10)]);
+                $selectedCart->products()->attach($selectedProductId, ['quantity' => random_int(1, 10)]);
             }
         }
     }

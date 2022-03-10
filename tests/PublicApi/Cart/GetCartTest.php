@@ -118,7 +118,7 @@ class GetCartTest extends TestCase
                     'products' => [
                         [
                             'product_variant_id',
-                            'amount',
+                            'quantity',
                             'id',
                             'name',
                             'short_description',

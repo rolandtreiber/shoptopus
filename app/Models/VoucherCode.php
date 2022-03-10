@@ -27,7 +27,8 @@ class VoucherCode extends SearchableModel implements Auditable
         'name',
         'valid_from',
         'valid_until',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

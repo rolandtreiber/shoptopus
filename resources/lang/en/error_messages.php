@@ -32,11 +32,11 @@ return [
     "1304" => "Sorry there was an error deleting this address.",
 
     "1500" => "Sorry there was an error getting this cart.",
-    "1501" => "Sorry there was an error getting all carts.",
-    "1502" => "Sorry there was an error creating this cart.",
     "1503" => "Sorry there was an error updating this cart.",
-    "1504" => "Sorry there was an error deleting this cart.",
     "1505" => "Sorry there was an error getting the cart for the current user.",
+    "1506" => "Sorry there was an error adding the item to the cart.",
+    "1507" => "Sorry there was an error removing the item from the cart.",
+    "1508" => "Sorry there was an error merging your carts.",
 
     "2000" => "Sorry there was an error getting this user.",
     "2001" => "Sorry there was an error getting all users.",
