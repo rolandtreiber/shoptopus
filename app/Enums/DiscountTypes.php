@@ -11,6 +11,6 @@ use BenSampo\Enum\Enum;
  */
 final class DiscountTypes extends Enum
 {
-    const Percentage =   0;
-    const Amount =       1;
+    const Percentage =   1;
+    const Amount =       2;
 }

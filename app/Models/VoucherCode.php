@@ -2,48 +2,18 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatuses;
-use App\Helpers\GeneralHelper;
+use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Helpers\GeneralHelper;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\Builder;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @property mixed|string $code
- * @property int $type
- * @property float $amount
- * @property string $id
- * @property mixed $valid_from
- * @property mixed $valid_until
- * @property string $value
- * @mixin Builder
-*/
 class VoucherCode extends SearchableModel implements Auditable
 {
-    use HasUUID;
-
-    use HasFactory;
-    use HasFile;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasSlug;
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom(['name'])
-            ->saveSlugsTo('slug');
-    }
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -53,9 +23,11 @@ class VoucherCode extends SearchableModel implements Auditable
     protected $fillable = [
         'type',
         'amount',
+        'code',
         'name',
         'valid_from',
-        'valid_until'
+        'valid_until',
+        'enabled'
     ];
 
     /**
@@ -65,40 +37,43 @@ class VoucherCode extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'type' => 'integer',
-        'amount' => 'decimal:2',
+        'amount' => 'float',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
+        'enabled' => 'boolean'
     ];
 
     protected $appends = ['value'];
 
     public function scopeView($query, $view)
     {
+        $now = Carbon::now()->toDateTimeString();
+
         switch ($view) {
             case 'active':
-                $query->whereDate('valid_from', '<=', Carbon::today())
-                    ->whereDate('valid_until', '>=', Carbon::today());
+                $query->where('valid_from', '<=', $now)
+                    ->where('valid_until', '>=', $now);
                 break;
             case 'not_started':
-                $query->whereDate('valid_from', '>', \Illuminate\Support\Carbon::today());
+                $query->where('valid_from', '>', $now);
                 break;
             case 'expired':
-                $query->whereDate('valid_until', '<', Carbon::today());
+                $query->where('valid_until', '<', $now);
                 break;
             case 'all_inactive':
-                $query->where(function($q) {
-                    $q->whereDate('valid_from', '>', Carbon::today())
-                        ->orWhereDate('valid_until', '<', Carbon::today());
-                });
+                $query->where(fn($q) =>
+                    $q->where('valid_from', '>', $now)
+                        ->where('valid_until', '<', $now)
+                );
                 break;
         }
     }
 
     /**
+     * Get the orders where the voucher code was used.
      * @return HasMany
      */
-    public function orders(): HasMany
+    public function orders() : HasMany
     {
         return $this->hasMany(Order::class);
     }

@@ -7,6 +7,7 @@ use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductVariant;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\AdminControllerTestCase;
@@ -18,6 +19,7 @@ use Tests\AdminControllerTestCase;
  */
 class ProductVariantControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
     // Happy
 
     /**

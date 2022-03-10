@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\User;
 use App\Models\AccessToken;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccessTokenFactory extends Factory
@@ -28,7 +29,7 @@ class AccessTokenFactory extends Factory
             'token' => $this->faker->regexify('[A-Za-z0-9]{120}'),
             'user_id' => User::factory(),
             'issuer_user_id' => User::factory(),
-            'expiry' => $this->faker->dateTime(),
+            'expiry' => Carbon::now()->addDays(7)->toDateTimeString(),
         ];
     }
 }

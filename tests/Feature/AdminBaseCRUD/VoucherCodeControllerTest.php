@@ -18,6 +18,7 @@ use Tests\AdminControllerTestCase;
  */
 class VoucherCodeControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
     /**
      * @test
      */

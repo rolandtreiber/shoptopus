@@ -3,6 +3,7 @@
 namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use JMac\Testing\Traits\AdditionalAssertions;
 use Tests\CreatesApplication;
@@ -15,7 +16,7 @@ use Tests\AdminControllerTestCase;
  */
 class CustomerControllerTest extends AdminControllerTestCase
 {
-    use AdditionalAssertions, WithFaker, CreatesApplication;
+    use AdditionalAssertions, WithFaker, CreatesApplication, RefreshDatabase;
 
     /**
      * @test

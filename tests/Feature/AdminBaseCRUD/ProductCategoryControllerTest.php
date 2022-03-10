@@ -5,6 +5,7 @@ namespace Tests\Feature\AdminBaseCRUD;
 use App\Models\ProductCategory;
 use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\AdminControllerTestCase;
@@ -16,6 +17,7 @@ use Tests\AdminControllerTestCase;
  */
 class ProductCategoryControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
     // Happy
 
     /**

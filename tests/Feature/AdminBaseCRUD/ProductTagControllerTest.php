@@ -5,6 +5,7 @@ namespace Tests\Feature\AdminBaseCRUD;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
@@ -17,6 +18,7 @@ use Tests\AdminControllerTestCase;
  */
 class ProductTagControllerTest extends AdminControllerTestCase
 {
+    use RefreshDatabase;
     /**
      * @test
      */
