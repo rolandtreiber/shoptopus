@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -23,13 +25,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property float|null $lon
  * @property int $status
  */
-class DeliveryRule extends SearchableModel implements Auditable
+class DeliveryRule extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.

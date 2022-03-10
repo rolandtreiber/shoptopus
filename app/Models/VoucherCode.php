@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Builder;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -25,7 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $value
  * @mixin Builder
 */
-class VoucherCode extends SearchableModel implements Auditable
+class VoucherCode extends SearchableModel implements Auditable, Exportable
 {
     use HasUUID;
 
@@ -34,6 +36,7 @@ class VoucherCode extends SearchableModel implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.

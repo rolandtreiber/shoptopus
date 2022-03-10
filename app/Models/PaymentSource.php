@@ -9,16 +9,19 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class PaymentSource extends Model implements Auditable
+class PaymentSource extends Model implements Auditable, Exportable
 {
     use HasFactory;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -29,6 +32,28 @@ class PaymentSource extends Model implements Auditable
             ->generateSlugsFrom(['user.last_name', 'name'])
             ->saveSlugsTo('slug');
     }
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'source_id',
+        'exp_month',
+        'exp_year',
+        'last_four',
+        'brand',
+        'stripe_user_id',
+        'payment_method_id',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user'
+    ];
 
     /**
      * The attributes that are mass assignable.

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -27,7 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property boolean $enabled
  * @property Carbon $created_at
  */
-class Rating extends SearchableModel implements Auditable
+class Rating extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasFiles;
@@ -35,6 +37,7 @@ class Rating extends SearchableModel implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.

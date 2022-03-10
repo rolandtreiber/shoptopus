@@ -17,7 +17,8 @@ class ExportRequest extends FormRequest {
     public function rules(): array
     {
         return [
-            'models' => ['required', 'array']
+            'models' => ['required', 'array'],
+            'name' => ['required']
         ];
     }
 }

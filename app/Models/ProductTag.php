@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Date;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -20,12 +22,14 @@ use Spatie\Translatable\HasTranslations;
  * @property boolean $enabled
  * @property Date $updated_at
  */
-class ProductTag extends SearchableModel implements Auditable
+class ProductTag extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use HasSlug;
+    use HasExportable;
+
     /**
      * Get the options for generating the slug.
      */
@@ -37,6 +41,17 @@ class ProductTag extends SearchableModel implements Auditable
     }
 
     public $translatable = ['name', 'description'];
+
+    /**
+     * @var array
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'description',
+        'display_badge',
+        'enabled'
+    ];
 
     /**
      * The attributes that are mass assignable.

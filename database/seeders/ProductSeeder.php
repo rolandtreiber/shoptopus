@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
         Product::factory()->count(55)->hasFilecontents(rand(1, 3))->create();
 
         foreach (Product::all() as $product) {
-            $product->categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
+            $product->productCategories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
         }
 
         $taggedCount = Product::count()-1;

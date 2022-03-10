@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -22,13 +25,15 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $categories
  * @property boolean $enabled
  */
-class DiscountRule extends SearchableModel
+class DiscountRule extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasUUID;
     use HasTranslations;
     use SoftDeletes;
     use HasSlug;
+    use \OwenIt\Auditing\Auditable;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.

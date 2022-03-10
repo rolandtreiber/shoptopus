@@ -30,6 +30,7 @@ class CreatePaymentsTable extends Migration
             $table->string('method_ref', 150)->nullable();
             $table->tinyInteger('type');
             $table->string('description', 250)->nullable();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });
