@@ -7,13 +7,41 @@ use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Helpers\GeneralHelper;
 use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-class VoucherCode extends SearchableModel implements Auditable
+/**
+ * @property mixed|string $code
+ * @property int $type
+ * @property float $amount
+ * @property string $id
+ * @property mixed $valid_from
+ * @property mixed $valid_until
+ * @property string $value
+ * @mixin Builder
+*/
+class VoucherCode extends SearchableModel implements Auditable, Exportable
 {
-    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes;
+    use HasUUID;
+    use HasFactory;
+    use HasFile;
+    use \OwenIt\Auditing\Auditable;
+    use SoftDeletes;
+    use HasSlug;
+    use HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['name'])
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * The attributes that are mass assignable.

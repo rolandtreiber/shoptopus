@@ -15,6 +15,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -41,12 +44,14 @@ use Spatie\Sluggable\SlugOptions;
  * @property float $total_discount
  * @property float $subtotal
  */
-class Order extends SearchableModel
+class Order extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory, HasUUID;
     use SoftDeletes;
     use HasEventLogs;
     use HasSlug;
+    use \OwenIt\Auditing\Auditable;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -57,6 +62,30 @@ class Order extends SearchableModel
             ->generateSlugsFrom(['user.name', 'address.town'])
             ->saveSlugsTo('slug');
     }
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'status',
+        'original_price',
+        'subtotal',
+        'total_price',
+        'total_discount'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user',
+        'address',
+        'products',
+        'payments',
+        'voucherCode',
+        'deliveryType'
+    ];
 
     /**
      * The attributes that are mass assignable.

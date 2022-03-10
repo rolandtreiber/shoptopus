@@ -7,13 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Address extends Model implements Auditable
+class Address extends Model implements Auditable, Exportable
 {
     use HasFactory, SoftDeletes, HasUUID, \OwenIt\Auditing\Auditable;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -24,6 +27,28 @@ class Address extends Model implements Auditable
             ->generateSlugsFrom(['user.name', 'name', 'town'])
             ->saveSlugsTo('slug');
     }
+
+    /**
+     * @var array
+     */
+    protected $exportableFields = [
+        'slug',
+        'town',
+        'post_code',
+        'country',
+        'name',
+        'address_line_1',
+        'address_line_2',
+        'lat',
+        'lon',
+        'google_maps_url',
+        'created_at',
+        'deleted_at',
+    ];
+
+    protected $exportableRelationships = [
+        'user'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -54,6 +79,8 @@ class Address extends Model implements Auditable
         'lon' => 'decimal:6'
     ];
 
+    protected $appends = ['google_maps_url'];
+
     /**
      * An address belongs to a user
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -63,16 +90,11 @@ class Address extends Model implements Auditable
         return $this->belongsTo(User::class);
     }
 
-//    /**
-//     * @return string[]
-//     */
-//    public function getComposite(): array
-//    {
-//        $textValue = $this->address_line_1 . ", " . $this->address_line_2 . ", " . $this->town . ", " . $this->post_code;
-//        $url = "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z";
-//        return [
-//            'text' => $textValue,
-//            'url' => $url
-//        ];
-//    }
+    /**
+     * @return string
+     */
+    public function getGoogleMapsUrlAttribute(): string
+    {
+        return "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z";
+    }
 }

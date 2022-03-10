@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -30,12 +32,27 @@ use Spatie\Translatable\HasTranslations;
  * @property Date $updated_at
  * @property mixed $id
  */
-class ProductCategory extends SearchableModel implements Auditable
+class ProductCategory extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use HasSlug;
+    use HasExportable;
+
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'description',
+        'enabled'
+    ];
+
+    protected $exportableRelationships = [
+        'children',
+        'discountRules',
+        'parent'
+    ];
+
     /**
      * Get the options for generating the slug.
      */
@@ -75,7 +92,7 @@ class ProductCategory extends SearchableModel implements Auditable
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class);
+        return $this->belongsTo(ProductCategory::class, 'id', 'parent_id');
     }
 
     public function children(): HasMany

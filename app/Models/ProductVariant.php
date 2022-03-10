@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -24,7 +26,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $sku
  * @property boolean $enabled
  */
-class ProductVariant extends SearchableModel implements Auditable
+class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasTranslations;
@@ -33,6 +35,7 @@ class ProductVariant extends SearchableModel implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.

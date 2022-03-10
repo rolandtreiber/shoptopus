@@ -17,6 +17,8 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -41,7 +43,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $updated_at
  * @property mixed $sku
  */
-class Product extends SearchableModel implements Auditable
+class Product extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasTranslations;
@@ -52,6 +54,7 @@ class Product extends SearchableModel implements Auditable
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -63,6 +66,29 @@ class Product extends SearchableModel implements Auditable
             ->saveSlugsTo('slug');
     }
 
+    protected $exportableFields = [
+        'name',
+        'slug',
+        'short_description',
+        'description',
+        'price',
+        'status',
+        'purchase_count',
+        'stock',
+        'backup_stock',
+        'rating',
+        'cover_photo_id',
+        'final_price',
+        'sku'
+    ];
+
+    protected $exportableRelationships = [
+        'productCategories',
+        'productAttributes',
+        'productTags',
+        'productVariants',
+        'discountRules'
+    ];
 
     public $translatable = ['name', 'short_description', 'description'];
 
@@ -166,7 +192,7 @@ class Product extends SearchableModel implements Auditable
                 'type' => $rule->type,
             ];
         })->toArray();
-        $categoriesWithDiscountRules = $this->categories()->get();
+        $categoriesWithDiscountRules = $this->productCategories()->get();
         foreach ($categoriesWithDiscountRules as $category) {
             $discountRules = array_merge($discountRules, $category->discountRules->map(function($rule) use ($discountRules) {
                 return [
@@ -238,17 +264,9 @@ class Product extends SearchableModel implements Auditable
     /**
      * @return BelongsToMany
      */
-    public function categories(): BelongsToMany
+    public function productCategories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductTag::class);
     }
 
     /**
@@ -308,8 +326,8 @@ class Product extends SearchableModel implements Auditable
      */
     public function handleCategories(?array $categoryIds = [])
     {
-        $this->categories()->detach();
-        $this->categories()->sync($categoryIds);
+        $this->productCategories()->detach();
+        $this->productCategories()->sync($categoryIds);
     }
 
     /**

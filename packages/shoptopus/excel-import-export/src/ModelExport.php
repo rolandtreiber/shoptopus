@@ -2,11 +2,9 @@
 
 namespace Shoptopus\ExcelImportExport;
 
-use App\Models\Product;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ModelExport implements FromCollection, WithMultipleSheets {
+class ModelExport implements WithMultipleSheets {
 
     private array $modelMap;
 
@@ -15,16 +13,17 @@ class ModelExport implements FromCollection, WithMultipleSheets {
         $this->modelMap = $modelMap;
     }
 
-    public function collection()
-    {
-        return Product::all();
-    }
-
     public function sheets(): array
     {
         $sheets = [];
         foreach ($this->modelMap as $modelClass => $data) {
-            $sheets[] = new ModelSheet($modelClass);
+            $sheets[] = new ModelSheet(
+                $modelClass,
+                $data['model'],
+                $data['exportable'],
+                $data['translatable'],
+                $data['relationships'],
+            );
         }
         return $sheets;
     }

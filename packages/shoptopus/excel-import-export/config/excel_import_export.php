@@ -5,6 +5,7 @@ return [
     'middleware' => '',
     'prefix' => '',
     'ignored_relationships' => [],
-    'model_namespace' => 'App\\Models'
+    'model_namespace' => 'App\\Models',
+    'languages' => ['en']
 
 ];

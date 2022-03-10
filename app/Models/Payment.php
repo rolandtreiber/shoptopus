@@ -6,9 +6,14 @@ use App\Enums\PaymentTypes;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property string $id
@@ -25,12 +30,46 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property string $payment_ref
  * @property string $method_ref
  */
-class Payment extends SearchableModel implements Auditable
+class Payment extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
+    use HasExportable;
+    use HasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['payable.slug'])
+            ->saveSlugsTo('slug');
+    }
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'paymentSource',
+        'status',
+        'payment_ref',
+        'method_ref',
+        'proof',
+        'type',
+        'amount',
+        'description',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -42,7 +81,6 @@ class Payment extends SearchableModel implements Auditable
         'payable_id',
         'payment_source_id',
         'user_id',
-        'decimal',
         'status',
         'payment_ref',
         'method_ref',
@@ -76,6 +114,11 @@ class Payment extends SearchableModel implements Auditable
             case 'refund':
                 $query->where('type', PaymentTypes::Refund);
         }
+    }
+
+    public function payable(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     public function paymentSource(): BelongsTo

@@ -54,7 +54,7 @@ class ProductControllerTest extends AdminControllerTestCase
     {
         $products = Product::factory()->count(2)->create();
         $tag = ProductTag::factory()->create();
-        $products[0]->tags()->attach($tag);
+        $products[0]->productTags()->attach($tag);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.products', [
             'tags' => [$tag->id],

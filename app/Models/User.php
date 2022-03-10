@@ -15,12 +15,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements Auditable, Exportable
 {
     use Notifiable;
     use HasApiTokens;
@@ -32,6 +34,7 @@ class User extends Authenticatable implements Auditable
     use \OwenIt\Auditing\Auditable;
     use Searchable;
     use HasSlug;
+    use HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -42,6 +45,27 @@ class User extends Authenticatable implements Auditable
             ->generateSlugsFrom(['first_name', 'last_name'])
             ->saveSlugsTo('slug');
     }
+
+    /**
+     * @var array
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'prefix',
+        'email',
+        'phone',
+        'email_verified_at',
+        'client_ref',
+        'role_names'
+    ];
+
+    protected $exportableRelationships = [
+        'addresses',
+        'paymentSources',
+        'payments',
+        'orders'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -58,10 +82,11 @@ class User extends Authenticatable implements Auditable
         'email_verified_at',
         'password',
         'client_ref',
-        'language_id',
         'avatar',
         'is_favorite'
     ];
+
+    protected $appends = ['role_names'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -84,6 +109,11 @@ class User extends Authenticatable implements Auditable
         'is_favorite' => 'boolean'
     ];
 
+    public function getRoleNamesAttribute()
+    {
+        return implode(', ', $this->getRoleNames()->toArray());
+    }
+
     /**
      * Get the social accounts of the user.
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -105,10 +135,6 @@ class User extends Authenticatable implements Auditable
 
         $this->notify(new ResetPasswordNotification($url));
     }
-
-
-
-
 
     public function scopeSystemUsers($query)
     {

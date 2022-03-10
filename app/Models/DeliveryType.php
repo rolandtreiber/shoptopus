@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -23,13 +26,15 @@ use Spatie\Translatable\HasTranslations;
  * @property boolean $enabled
  * @property mixed $price
  */
-class DeliveryType extends SearchableModel
+class DeliveryType extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasUUID;
     use HasTranslations;
     use SoftDeletes;
     use HasSlug;
+    use HasExportable;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * Get the options for generating the slug.

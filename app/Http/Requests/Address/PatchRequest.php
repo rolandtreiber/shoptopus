@@ -28,7 +28,7 @@ class PatchRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'user_id'  => 'sometimes|nullable|integer|exists:users,id',
+            'user_id'  => 'sometimes|nullable|exists:users,id',
             'address_line_1' => "sometimes|required|string|min:2|max:255",
             'town' => "sometimes|required|string|min:2|max:255",
             'post_code' => "sometimes|required|string|min:2|max:255",

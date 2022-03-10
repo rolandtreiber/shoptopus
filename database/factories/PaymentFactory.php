@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Enums\PaymentTypes;
 use App\Enums\RandomStringModes;
 use App\Helpers\GeneralHelper;
+use App\Models\Order;
 use App\Models\PaymentSource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -26,9 +27,11 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
+        $order = Order::factory()->create();
+
         return [
-            'payable_type' => $this->faker->word,
-            'payable_id' => $this->faker->randomNumber(),
+            'payable_type' => Order::class,
+            'payable_id' => $order->id,
             'payment_source_id' => PaymentSource::factory(),
             'amount' => $this->faker->numberBetween(100, 1000),
             'user_id' => User::factory(),
