@@ -40,7 +40,11 @@ class AuthService implements AuthServiceInterface
     public function login(array $payload) : array
     {
         try {
-            $user = User::whereEmail($payload['email'])->firstOrFail();
+            $user = User::whereEmail($payload['email'])->first();
+
+            if (!$user) {
+                throw new \Exception('User not found.', Config::get('api_error_codes.services.auth.login_user_incorrect'));
+            }
 
             if (!Hash::check($payload["password"], $user->password)) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));

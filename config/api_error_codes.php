@@ -13,14 +13,15 @@ return [
     'services' => [
         'auth' => [
             "login" => 1000,
-            "register" => 1001,
-            "verify" => 1002,
-            "resendVerification" => 1003,
-            "logout" => 1004,
-            "mustResetPassword" => 1005,
-            "loginUserIncorrect" => 1006,
-            "sendPasswordReset" => 1007,
-            "resetPassword" => 1008,
+            "login_user_incorrect" => 1001,
+            "register" => 1002,
+            "verify" => 1003,
+            "resendVerification" => 1004,
+            "logout" => 1005,
+            "mustResetPassword" => 1006,
+            "loginUserIncorrect" => 1007,
+            "sendPasswordReset" => 1008,
+            "resetPassword" => 1009,
         ],
         'access_token' => [
             "get" => 1200,
