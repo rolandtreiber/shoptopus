@@ -31,9 +31,9 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
-    use HasSlug;
     use HasExportable;
 
+    use HasSlug;
     /**
      * Get the options for generating the slug.
      */

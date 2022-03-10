@@ -59,19 +59,19 @@ class AddressTest extends TestCase
     /** @test */
     public function it_has_a_latitude_field()
     {
-        $this->assertNull($this->address->lat);
+        $this->assertNotNull($this->address->lat);
     }
 
     /** @test */
     public function it_has_a_longitude_field()
     {
-        $this->assertNull($this->address->lon);
+        $this->assertNotNull($this->address->lon);
     }
 
     /** @test */
     public function it_may_belong_to_a_user()
     {
-        $this->assertNull($this->address->user);
+        $this->assertNotNull($this->address->user);
 
         $this->address->update(['user_id' => User::factory()->create()->id]);
 
