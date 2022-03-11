@@ -4,6 +4,7 @@ namespace Shoptopus\ExcelImportExport\Http\Controllers;
 
 use Shoptopus\ExcelImportExport\ExcelImportExportInterface;
 use Shoptopus\ExcelImportExport\Http\Requests\ExportRequest;
+use Shoptopus\ExcelImportExport\Http\Requests\ImportTemplateRequest;
 
 class ImportExportController extends BaseController {
 
@@ -21,6 +22,11 @@ class ImportExportController extends BaseController {
     public function export(ExportRequest $request)
     {
         return $this->excelImportExport->export($request->toArray());
+    }
+
+    public function template(ImportTemplateRequest $request)
+    {
+        return 'hello';
     }
 
 }
