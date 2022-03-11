@@ -30,7 +30,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductAttribute extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
+    use HasFactory, SoftDeletes, HasTranslations;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
     use HasSlug;

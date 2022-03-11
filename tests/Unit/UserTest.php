@@ -56,7 +56,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_has_a_prefix_field()
     {
-        $this->assertNotNull($this->user->prefix);
+        $this->assertNull($this->user->prefix);
     }
 
     /** @test */
@@ -71,7 +71,7 @@ class UserTest extends TestCase
     /** @test */
     public function it_has_a_phone_field()
     {
-        $this->assertNotNull($this->user->phone);
+        $this->assertNull($this->user->phone);
     }
 
     /** @test */

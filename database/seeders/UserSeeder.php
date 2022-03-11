@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Faker\Factory;
 
 class UserSeeder extends Seeder
 {
@@ -26,11 +27,13 @@ class UserSeeder extends Seeder
             ['customer@m.com', 'Customer Lianne'],
             ['auditor@m.com', 'Auditor Bob'],
         ];
-
+        $prefixes = config('users.available_prefixes');
+        $faker = Factory::create();
         foreach ($users as $user) {
             User::factory()->state([
                 'name' => $user[1],
                 'email' => $user[0],
+                'prefix' => $faker->randomElement($prefixes),
                 'email_verified_at' => Carbon::now(),
                 'password' => Hash::make('shop'),
                 'created_at' => Carbon::now()->subDays(random_int(1, 30))
