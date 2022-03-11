@@ -4,25 +4,14 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @property mixed $image
- * @property mixed $id
- * @property mixed $type
- * @property mixed $product_attribute_id
- * @property mixed $common_value
- * @mixin SearchableModel
- */
 class ProductAttributeOption extends SearchableModel implements Auditable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable;
 
     public $translatable = ['name'];
 
@@ -33,7 +22,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable
      */
     protected $fillable = [
         'name',
-        'common_value',
+        'value',
         'enabled'
     ];
 

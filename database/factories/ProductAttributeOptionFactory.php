@@ -31,7 +31,7 @@ class ProductAttributeOptionFactory extends Factory
         return [
             'name' => $translations['name'],
             'enabled' => $this->faker->boolean,
-            'common_value' => random_int(1, 100)
+            'value' => random_int(1, 100)
         ];
     }
 }

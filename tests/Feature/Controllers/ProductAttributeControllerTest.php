@@ -150,7 +150,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
                 'de' => 'Rot'
             ]),
             'image' => UploadedFile::fake()->image('red.jpg'),
-            'common_value' => 1
+            'value' => 1
         ]);
         $attributeOptionId = $response->json()['data']['id'];
         $option = ProductAttributeOption::find($attributeOptionId);
@@ -179,7 +179,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
                 'de' => 'Gelb'
             ]),
             'image' => UploadedFile::fake()->image('red.jpg'),
-            'common_value' => 1
+            'value' => 1
         ]);
         $attributeOptionId = $response->json()['data']['id'];
         $this->assertEquals($option->id, $attributeOptionId);

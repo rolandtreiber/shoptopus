@@ -2,10 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Models\FileContent;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\FileContent;
 use App\Enums\ProductStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

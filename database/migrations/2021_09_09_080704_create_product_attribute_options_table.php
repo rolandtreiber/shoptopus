@@ -20,7 +20,7 @@ class CreateProductAttributeOptionsTable extends Migration
             $table->foreignUuid('product_attribute_id')->nullable()->constrained();
             $table->json('image')->nullable();
             $table->text('name');
-            $table->string('common_value')->nullable();
+            $table->string('value')->nullable();
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();

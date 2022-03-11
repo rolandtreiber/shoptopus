@@ -2,33 +2,16 @@
 
 namespace App\Models;
 
-use App\Http\Requests\ListRequest;
-use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @method static count()
- * @method static find(mixed $attributeId)
- * @method static filtered(array $array, ListRequest $request)
- * @property string $id
- * @property mixed $options
- * @property mixed $image
- * @property mixed $type
- * @property string $product_attribute_id
- * @property double $price
- */
 class ProductAttribute extends SearchableModel implements Auditable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable;
 
     public $translatable = ['name'];
 
@@ -40,6 +23,7 @@ class ProductAttribute extends SearchableModel implements Auditable
     protected $fillable = [
         'name',
         'type',
+        'image',
         'enabled'
     ];
 
@@ -50,7 +34,6 @@ class ProductAttribute extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'image' => 'object',
         'enabled' => 'boolean'
     ];
 
