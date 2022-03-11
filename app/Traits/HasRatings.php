@@ -6,9 +6,6 @@ use App\Facades\Module;
 use App\Models\Rating;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-/**
- * @method morphMany(string $string, string $string1)
- */
 trait HasRatings {
 
     /**
@@ -19,7 +16,7 @@ trait HasRatings {
 //        if (Module::enabled('ratings') === true) {
             return $this->morphMany(Rating::class, 'ratable');
 //        }
-        return null;
+        //return null;
     }
 
 }

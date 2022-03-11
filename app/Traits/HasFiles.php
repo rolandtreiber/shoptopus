@@ -2,15 +2,10 @@
 
 namespace App\Traits;
 
-use App\Models\ProductVariant;
+use App\Models\FileContent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use App\Models\FileContent;
-use Illuminate\Support\Facades\DB;
 
-/**
- * @method morphMany(string $string, string $string1)
- */
 trait HasFiles {
 
     public function deleteWithAttachments()

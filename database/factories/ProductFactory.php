@@ -33,12 +33,13 @@ class ProductFactory extends Factory
             'name' => $translated['name'],
             'short_description' => $translated['short_description'],
             'description' => $translated['description'],
-            'price' => $this->faker->numberBetween(10, 55),
+            'price' => $this->faker->randomFloat(2, 1, 5000),
             'status' => ProductStatus::Provisional,
             'purchase_count' => $this->faker->numberBetween(0, 200),
             'stock' => $this->faker->numberBetween(1, 150),
             'backup_stock' => $this->faker->numberBetween(0, 150),
-            'sku' => GeneralHelper::generateRandomString(10, RandomStringModes::UppercaseAndNumbers)
+            'sku' => GeneralHelper::generateRandomString(10, RandomStringModes::UppercaseAndNumbers),
+            'cover_photo_id' => null
         ];
     }
 }

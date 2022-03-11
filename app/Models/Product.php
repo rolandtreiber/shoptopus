@@ -2,21 +2,21 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatus;
-use App\Helpers\GeneralHelper;
-use App\Traits\HasFiles;
-use App\Traits\HasEventLogs;
-use App\Traits\HasRatings;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Traits\HasFiles;
+use App\Traits\HasRatings;
+use App\Enums\ProductStatus;
+use App\Traits\HasEventLogs;
 use Illuminate\Support\Carbon;
+use App\Helpers\GeneralHelper;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends SearchableModel implements Auditable
 {
@@ -42,7 +42,8 @@ class Product extends SearchableModel implements Auditable
         'backup_stock',
         'rating',
         'cover_photo_id',
-        'sku'
+        'sku',
+        'deleted_at'
     ];
 
     /**
@@ -52,16 +53,16 @@ class Product extends SearchableModel implements Auditable
      */
     protected $casts = [
         'id' => 'string',
-        'name' => 'object',
-        'status' => 'integer',
+        'status' => ProductStatus::class,
         'purchase_count' => 'integer',
         'stock' => 'integer',
         'backup_stock' => 'integer',
-        'price' => 'decimal:2',
-        'final_price' => 'decimal:2',
-        'rating' => 'decimal:2',
+        'price' => 'float',
+        'final_price' => 'float',
+        'rating' => 'float',
         'cover_photo_id' => 'string'
     ];
+
 
     /**
      * Updated at accessor
