@@ -5,7 +5,6 @@ use App\Http\Controllers\VoucherCode\VoucherCodeController;
 
 Route::group([
     'name' => 'api.',
-    'prefix' => 'api',
     'middleware' => 'api'
 ], function () {
     Route::group([

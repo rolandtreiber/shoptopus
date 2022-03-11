@@ -74,11 +74,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->fill($data);
         $product->save();
-        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
-        $firstImage = $attachments->where('type', FileTypes::Image)->first();
-        if ($firstImage) {
-            $product->cover_photo_id = $firstImage->id;
-        }
+        $this->saveFiles($request, Product::class, $product->id, true);
         $product->save();
 
         if ($request->product_attributes) {
@@ -106,9 +102,7 @@ class ProductController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
-        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
-        $firstImage = $attachments->where('type', FileTypes::Image)->first();
-        $product->cover_photo_id = $firstImage->id;
+        $this->saveFiles($request, Product::class, $product->id, true);
         $product->save();
         $this->handleAttributes($product, $request);
         $product->handleCategories($request->product_categories);

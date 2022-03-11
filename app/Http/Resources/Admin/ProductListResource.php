@@ -24,7 +24,7 @@ class ProductListResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'price' => $this->price,
             'final_price' => $this->final_price,
-            'cover_photo_url' => $this->coverPhoto ? $this->coverPhoto->url : null,
+            'cover_photo_url' => $this->cover_photo ? $this->cover_photo->url : null,
             'status' => $this->status,
             'stock' => $this->stock,
             'variants' => $this->productVariants ? $this->productVariants()->count() : [],
