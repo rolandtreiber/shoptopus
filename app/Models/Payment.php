@@ -54,7 +54,6 @@ class Payment extends SearchableModel implements Auditable, Exportable
      */
     protected $exportableFields = [
         'slug',
-        'paymentSource',
         'status',
         'payment_ref',
         'method_ref',
@@ -68,7 +67,8 @@ class Payment extends SearchableModel implements Auditable, Exportable
      * @var string[]
      */
     protected $exportableRelationships = [
-        'user'
+        'user',
+        'paymentSource'
     ];
 
     /**

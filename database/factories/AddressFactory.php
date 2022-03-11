@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Address;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AddressFactory extends Factory
@@ -27,11 +26,11 @@ class AddressFactory extends Factory
             'town' => $this->faker->city,
             'post_code' => $this->faker->postcode,
             'country' => 'UK',
-            'user_id' => User::factory(),
+            'user_id' => null,
             'name' => null,
             'address_line_2' => null,
-            'lat' => $this->faker->latitude,
-            'lon' => $this->faker->longitude,
+            'lat' => null,
+            'lon' => null,
         ];
     }
 }

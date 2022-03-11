@@ -5,10 +5,14 @@ namespace Database\Seeders;
 use Exception;
 use App\Models\User;
 use App\Models\Address;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class AddressSeeder extends Seeder
 {
+    use WithFaker;
+
     /**
      * Run the database seeds.
      *
@@ -17,10 +21,13 @@ class AddressSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Factory::create();
         $customers = User::role('customer')->get();
         foreach ($customers as $customer) {
             Address::factory()->state([
-                'user_id' => $customer->id
+                'user_id' => $customer->id,
+                'lat' => $faker->latitude,
+                'lon' => $faker->longitude
             ])->count(random_int(1, 2))->create();
         }
     }
