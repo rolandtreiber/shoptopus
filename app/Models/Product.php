@@ -38,10 +38,10 @@ use Spatie\Translatable\HasTranslations;
  * @property \Illuminate\Database\Eloquent\Collection $tags
  * @property Collection $categories
  * @property \Illuminate\Database\Eloquent\Collection $fileContents
- * @property string $cover_photo_id
  * @property FileContent $coverPhoto
  * @property string $updated_at
  * @property mixed $sku
+ * @property mixed $cover_photo
  */
 class Product extends SearchableModel implements Auditable, Exportable
 {
@@ -77,7 +77,6 @@ class Product extends SearchableModel implements Auditable, Exportable
         'stock',
         'backup_stock',
         'rating',
-        'cover_photo_id',
         'final_price',
         'sku'
     ];
@@ -109,7 +108,6 @@ class Product extends SearchableModel implements Auditable, Exportable
         'stock',
         'backup_stock',
         'rating',
-        'cover_photo_id',
         'sku'
     ];
 
@@ -128,7 +126,7 @@ class Product extends SearchableModel implements Auditable, Exportable
         'price' => 'decimal:2',
         'final_price' => 'decimal:2',
         'rating' => 'decimal:2',
-        'cover_photo_id' => 'string'
+        'cover_photo' => 'object'
     ];
 
     /**
@@ -291,11 +289,6 @@ class Product extends SearchableModel implements Auditable, Exportable
     public function discountRules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();
-    }
-
-    public function coverPhoto(): HasOne
-    {
-        return $this->hasOne(FileContent::class, 'id', 'cover_photo_id');
     }
 
     /**

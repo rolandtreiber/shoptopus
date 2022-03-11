@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
                     $tagId = (new ProductTag)->findNthId(rand(1, ProductTag::count()-1));
                 } while (in_array($tagId, $usedTags));
                 $usedTags[] = $tagId;
-                (new Product())->findNth($productId)->tags()->attach($tagId);
+                (new Product())->findNth($productId)->productTags()->attach($tagId);
             }
         }
 
@@ -56,9 +56,6 @@ class ProductSeeder extends Seeder
         }
 
         Product::all()->map(function (Product $product) {
-            $images = $product->fileContents->pluck('id')->toArray();
-            $selectedImageId = $images[random_int(0, count($images)-1)];
-            $product->cover_photo_id = $selectedImageId;
             $product->save();
         });
     }
