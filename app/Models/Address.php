@@ -3,20 +3,18 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 
 class Address extends Model implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasUUID, \OwenIt\Auditing\Auditable;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, SoftDeletes, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -91,10 +89,10 @@ class Address extends Model implements Auditable, Exportable
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getGoogleMapsUrlAttribute(): string
+    public function getGoogleMapsUrlAttribute() : ?string
     {
-        return "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z";
+        return $this->lat && $this->lon ? "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z" : null;
     }
 }

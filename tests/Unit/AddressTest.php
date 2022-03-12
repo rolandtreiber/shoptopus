@@ -80,6 +80,21 @@ class AddressTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_google_maps_url_attribute()
+    {
+        $this->assertNull($this->address->google_maps_url);
+
+        $this->address->update([
+            'lat' => 12.34567,
+            'lon' => 12.34567,
+        ]);
+
+        $this->address->refresh();
+
+        $this->assertEquals("https://www.google.com/maps/@".$this->address->lat.",".$this->address->lon.",14z", $this->address->google_maps_url);
+    }
+
+    /** @test */
     public function it_may_belong_to_a_user()
     {
         $this->assertNull($this->address->user);
