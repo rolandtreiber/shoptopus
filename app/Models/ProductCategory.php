@@ -49,7 +49,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
 
     protected $exportableRelationships = [
         'children',
-        'discountRules',
+        'discount_rules',
         'parent'
     ];
 
@@ -141,7 +141,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsToMany
      */
-    public function discountRules(): BelongsToMany
+    public function discount_rules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();
     }

@@ -2,7 +2,11 @@
 
 namespace Tests\Unit;
 
+use App\Models\DiscountRule;
+use App\Models\ProductAttribute;
+use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\ProductVariant;
 use Tests\TestCase;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -198,5 +202,68 @@ class ProductTest extends TestCase
         $this->assertCount(1, $this->product->fresh()->product_tags);
 
         $this->assertInstanceOf(ProductTag::class, $this->product->product_tags()->first());
+    }
+
+    /** @test */
+    public function it_may_have_many_categories()
+    {
+        $this->assertCount(0, $this->product->product_categories);
+
+        $category = ProductCategory::factory()->create();
+
+        $this->product->product_categories()->attach($category->id);
+
+        $this->assertCount(1, $this->product->fresh()->product_categories);
+
+        $this->assertInstanceOf(ProductCategory::class, $this->product->product_categories()->first());
+    }
+
+    /** @test */
+    public function it_may_have_many_attributes()
+    {
+        $this->assertCount(0, $this->product->product_attributes);
+
+        $category = ProductAttribute::factory()->create();
+
+        $this->product->product_attributes()->attach($category->id);
+
+        $this->assertCount(1, $this->product->fresh()->product_attributes);
+
+        $this->assertInstanceOf(ProductAttribute::class, $this->product->product_attributes()->first());
+    }
+
+    /** @test */
+    public function it_may_have_many_valid_discount_rules()
+    {
+        $this->assertCount(0, $this->product->discount_rules);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->assertCount(1, $this->product->fresh()->discount_rules);
+
+        $this->assertInstanceOf(DiscountRule::class, $this->product->discount_rules()->first());
+
+        $discount_rule->update([
+            'valid_until' => now()->subDays(5)->toDateTimeString()
+        ]);
+
+        $this->assertCount(0, $this->product->fresh()->discount_rules);
+    }
+
+    /** @test */
+    public function it_may_have_many_product_variants()
+    {
+        $this->assertCount(0, $this->product->product_variants);
+
+        ProductVariant::factory()->create(['product_id' => $this->product->id]);
+
+        $this->assertCount(1, $this->product->fresh()->product_variants);
+
+        $this->assertInstanceOf(ProductVariant::class, $this->product->product_variants()->first());
     }
 }

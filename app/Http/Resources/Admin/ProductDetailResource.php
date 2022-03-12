@@ -33,7 +33,7 @@ class ProductDetailResource extends JsonResource
             'purchase_count' => $this->purchase_count,
             'backup_stock' => $this->backup_stock,
             'cover_photo' => $this->cover_photo ?: null,
-            'attributes' => AttributeResource::collection($this->productAttributes),
+            'attributes' => AttributeResource::collection($this->product_attributes),
             'sku' => $this->sku,
             'tags' => ProductTagListResource::collection($this->product_tags),
             'categories' => ProductCategorySelectResource::collection($this->product_categories),

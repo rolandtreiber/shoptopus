@@ -15,12 +15,12 @@ trait HasAttributes {
     {
         $modelClass = get_class($model);
         if ($modelClass === Product::class) {
-            $model->productAttributes()->detach();
+            $model->product_attributes()->detach();
             if ($request->product_attributes) {
                 foreach ($request->product_attributes as $attributeId => $attributeOptionId) {
                     $attribute = ProductAttribute::find($attributeId);
                     if ($attribute) {
-                        $model->productAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
+                        $model->product_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
                     }
                 }
             }

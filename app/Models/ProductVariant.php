@@ -96,7 +96,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     {
         /** @var Product $product */
         $product = $this->product;
-        $variantSumStock = $product->productVariants->pluck('stock')->sum();
+        $variantSumStock = $product->product_variants->pluck('stock')->sum();
         $product->stock = $variantSumStock;
         $product->save();
     }

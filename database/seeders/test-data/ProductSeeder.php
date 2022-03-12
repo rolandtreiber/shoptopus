@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $discounted));
             $discounted[] = $productId;
-            (new Product())->findNth($productId)->discountRules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
+            (new Product())->findNth($productId)->discount_rules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
         }
 
         Product::all()->map(function (Product $product) {

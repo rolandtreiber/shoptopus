@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use App\Enums\DiscountType;
+use App\Models\DiscountRule;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\DiscountRule;
 
 class DiscountRuleFactory extends Factory
 {
@@ -27,12 +28,14 @@ class DiscountRuleFactory extends Factory
     {
         $translations = $this->getTranslated($this->faker, ['name'], ['short']);
 
+        $valid_from = Carbon::createFromTimeStamp($this->faker->dateTimeBetween('-5 days', '+5 days')->getTimestamp());
+
         return [
             'type' => $this->faker->randomElement([DiscountType::Amount, DiscountType::Percentage]),
             'amount' => $this->faker->randomFloat(2, 0, 50),
             'name' => $translations['name'],
-            'valid_from' => $this->faker->dateTime(),
-            'valid_until' => $this->faker->dateTime(),
+            'valid_from' => $valid_from->toDateTimeString(),
+            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5,30)))->toDateTimeString(),
         ];
     }
 }
