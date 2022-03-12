@@ -108,7 +108,7 @@ class Product extends SearchableModel implements Auditable, Exportable
      */
     protected $casts = [
         'id' => 'string',
-        'status' => ProductStatus::class,
+        'status' => 'integer',
         'purchase_count' => 'integer',
         'stock' => 'integer',
         'backup_stock' => 'integer',
