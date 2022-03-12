@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Enums\FileTypes;
+use App\Enums\FileType;
 use App\Models\FileContent;
 use Illuminate\Http\File;
 use Illuminate\Support\Carbon;
@@ -24,7 +24,7 @@ trait ProcessRequest
     public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): Collection
     {
         if ($deleteCurrent) {
-            $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->where('type', FileTypes::Image)->get();
+            $attachments = FileContent::where('fileable_type', $modelClass)->where('fileable_id', $modelId)->where('type', FileType::Image)->get();
             foreach ($attachments as $attachment) {
                 $attachment->delete();
             }
@@ -77,7 +77,7 @@ trait ProcessRequest
         $textFormats = ['txt', 'doc', 'docx'];
         $audioFormats = ['mp3', 'wma', 'wav', 'ogg'];
         $videoFormats = ['avi', 'mpg', 'mpeg'];
-        $fileType = FileTypes::Other;
+        $fileType = FileType::Other;
         if (in_array($file->extension(), $imageFormats, true)) {
             $img = Image::make($file->path());
             $img->orientate();
@@ -107,32 +107,32 @@ trait ProcessRequest
 
         // Image
         if (in_array(strtolower($file->extension()), $imageFormats, true)) {
-            $fileType = FileTypes::Image;
+            $fileType = FileType::Image;
         }
 
         // PDF
         if (strtolower($file->extension()) === 'pdf') {
-            $fileType = FileTypes::Pdf;
+            $fileType = FileType::Pdf;
         }
 
         // Spreadsheet
         if (in_array(strtolower($file->extension()), $spreadsheetFormats, true)) {
-            $fileType = FileTypes::Spreadsheet;
+            $fileType = FileType::Spreadsheet;
         }
 
         // Text
         if (in_array(strtolower($file->extension()), $textFormats, true)) {
-            $fileType = FileTypes::TextDocument;
+            $fileType = FileType::TextDocument;
         }
 
         // Audio
         if (in_array(strtolower($file->extension()), $audioFormats, true)) {
-            $fileType = FileTypes::Audio;
+            $fileType = FileType::Audio;
         }
 
         // Video
         if (in_array(strtolower($file->extension()), $videoFormats, true)) {
-            $fileType = FileTypes::Video;
+            $fileType = FileType::Video;
         }
 
         return [

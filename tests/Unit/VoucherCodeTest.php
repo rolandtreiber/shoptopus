@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\Order;
 use App\Models\VoucherCode;
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class VoucherCodeTest extends TestCase
@@ -69,7 +69,7 @@ class VoucherCodeTest extends TestCase
 
         $this->assertEquals('15%', $this->voucher_code->value);
 
-        $this->voucher_code->update(['type' => DiscountTypes::Amount]);
+        $this->voucher_code->update(['type' => DiscountType::Amount]);
 
         $this->assertEquals('£15', $this->voucher_code->fresh()->value);
     }

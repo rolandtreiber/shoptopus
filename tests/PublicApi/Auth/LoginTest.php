@@ -2,6 +2,8 @@
 
 namespace Tests\PublicApi\Auth;
 
+use App\Models\Cart;
+use App\Models\Product;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -71,6 +73,24 @@ class LoginTest extends TestCase
      * @test
      * @group apiPost
      */
+    public function it_returns_the_correct_error_message_when_no_user_is_found()
+    {
+        $data = [
+            'email' => 'lolevesP@gmai.com',
+            'password' => "password"
+        ];
+
+
+        $res = $this->sendRequest($data)->json();
+
+        $this->assertEquals('Incorrect email, password or not verified please try again.', $res['user_message']);
+        $this->assertEquals('User not found.', $res['developer_message']);
+    }
+
+    /**
+     * @test
+     * @group apiPost
+     */
     public function it_returns_the_authenticated_user_with_a_token_upon_successful_login()
     {
         $this->artisan('passport:install');
@@ -96,7 +116,14 @@ class LoginTest extends TestCase
                             'url',
                             'file_name'
                         ],
-                        'is_verified'
+                        'is_verified',
+                        'cart' => [
+                            'id',
+                            'user_id',
+                            'ip_address',
+                            'user',
+                            'products'
+                        ]
                     ]
                 ]
             ]

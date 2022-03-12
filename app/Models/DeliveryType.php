@@ -2,13 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\OrderStatuses;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Enums\OrderStatus;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -16,6 +11,9 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @method static count()
@@ -28,13 +26,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class DeliveryType extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasUUID;
-    use HasTranslations;
-    use SoftDeletes;
-    use HasSlug;
-    use HasExportable;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, HasExportable, \OwenIt\Auditing\Auditable;
 
     /**
      * Get the options for generating the slug.
@@ -46,7 +38,9 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
             ->saveSlugsTo('slug');
     }
 
-    public $translatable = ['name', 'description'];
+    public array $translatable = [
+        'name', 'description'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -56,9 +50,10 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
     protected $fillable = [
         'name',
         'description',
-        'enabled_by_default_on_creation',
         'price',
-        'enabled'
+        'enabled',
+        'enabled_by_default_on_creation',
+        'deleted_at'
     ];
 
     /**
@@ -68,9 +63,9 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
      */
     protected $casts = [
         'id' => 'string',
-        'enabled_by_default_on_creation' => 'boolean',
-        'price' => 'decimal:2',
-        'enabled' => 'boolean'
+        'price' => 'float',
+        'enabled' => 'boolean',
+        'enabled_by_default_on_creation' => 'boolean'
     ];
 
     /**
@@ -91,33 +86,36 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
 
     /**
      * @return int
+     * TODO: Use OrderRepo
      */
     public function getOrderCount(): int
     {
         return DB::table('orders')
             ->where('delivery_type_id', $this->id)
             ->whereIn('status', [
-                OrderStatuses::Paid,
-                OrderStatuses::Processing,
-                OrderStatuses::Completed,
-                OrderStatuses::OnHold])
+                OrderStatus::Paid,
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+                OrderStatus::OnHold
+            ])
             ->count();
     }
 
     /**
-     * @return float
+     * @return int
+     * TODO: Use OrderRepo
      */
     public function getTotalRevenue(): int
     {
         return DB::table('orders')
-            ->select('delivery')
+            ->select('delivery_cost')
             ->where('delivery_type_id', $this->id)
             ->whereIn('status', [
-                OrderStatuses::Paid,
-                OrderStatuses::Processing,
-                OrderStatuses::Completed,
-                OrderStatuses::OnHold])
-            ->sum('delivery');
+                OrderStatus::Paid,
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+                OrderStatus::OnHold])
+            ->sum('delivery_cost');
     }
 
 }

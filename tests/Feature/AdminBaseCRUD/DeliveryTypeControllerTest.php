@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
-use App\Enums\DeliveryTypeStatuses;
 use App\Models\DeliveryType;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -79,7 +78,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertCreated();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -110,9 +109,8 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'en' => 'Very quick UPDATED',
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
-            'enabled' => true,
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertOk();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -140,7 +138,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_type_creation_requires_appropriate_permissions()
+    public function test_delivery_type_creation_requires_appropriate_Permission()
     {
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $response = $this->post(route('admin.api.create.delivery-type'), [
@@ -153,7 +151,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertForbidden();
     }
@@ -161,7 +159,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_type_updating_requires_appropriate_permissions()
+    public function test_delivery_type_updating_requires_appropriate_Permission()
     {
         $deliveryType = DeliveryType::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -177,7 +175,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertForbidden();
     }
@@ -185,7 +183,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_type_deletion_requires_appropriate_permissions()
+    public function test_delivery_type_deletion_requires_appropriate_Permission()
     {
         $deliveryType = DeliveryType::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -206,7 +204,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell'
             ]),
             'price' => 15,
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertStatus(422);
     }
@@ -230,7 +228,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
                 'de' => 'Sehr schnell AKTUALISIERT'
             ]),
             'price' => 'twenty',
-            'status' => DeliveryTypeStatuses::Enabled
+            'enabled' => true
         ]);
         $response->assertStatus(422);
     }

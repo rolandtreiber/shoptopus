@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

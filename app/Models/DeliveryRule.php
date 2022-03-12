@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -27,11 +26,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class DeliveryRule extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasExportable;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
     use HasSlug;
     /**
@@ -52,13 +47,15 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     protected $fillable = [
         'delivery_type_id',
         'postcodes',
-        'lat',
-        'lon',
         'min_weight',
         'max_weight',
         'min_distance',
         'max_distance',
-        'status',
+        'distance_unit',
+        'lat',
+        'lon',
+        'enabled',
+        'deleted_at'
     ];
 
     /**
@@ -69,20 +66,20 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     protected $casts = [
         'id' => 'string',
         'delivery_type_id' => 'string',
-        'status' => 'integer',
         'postcodes' => 'array',
-        'lat' => 'decimal:6',
-        'lon' => 'decimal:6',
         'min_weight' => 'integer',
         'max_weight' => 'integer',
-        'min_distance' => 'integer',
-        'max_distance' => 'integer',
+        'min_distance' => 'float',
+        'max_distance' => 'float',
+        'lat' => 'decimal:6',
+        'lon' => 'decimal:6',
+        'enabled' => 'boolean'
     ];
 
     /**
      * @return BelongsTo
      */
-    public function deliveryType(): BelongsTo
+    public function delivery_type(): BelongsTo
     {
         return $this->belongsTo(DeliveryType::class);
     }

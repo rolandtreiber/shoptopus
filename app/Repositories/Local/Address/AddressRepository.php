@@ -3,23 +3,19 @@
 namespace App\Repositories\Local\Address;
 
 use App\Models\Address;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
-use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 
 class AddressRepository extends ModelRepository implements AddressRepositoryInterface
 {
-    private UserServiceInterface $userService;
-
-    public function __construct(ErrorServiceInterface $errorService, Address $model, UserServiceInterface $userServiceInterface)
+    public function __construct(ErrorServiceInterface $errorService, Address $model)
     {
         parent::__construct($errorService, $model);
-
-        $this->userService = $userServiceInterface;
     }
 
     /**
-     * Get the user for the given address
+     * Get the users for the given addresses
      *
      * @param array $userIds
      * @return array
@@ -27,11 +23,30 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
      */
     public function getUsers(array $userIds = []) : array
     {
-        $result = $this->userService->getAll([], [
-            'id' => implode(',', $userIds)
-        ]);
-
-        return !empty($result['data']) ? $result['data'] : [];
+        try {
+            return DB::select("
+                SELECT
+                    u.id,
+                    u.first_name,
+                    u.last_name,
+                    u.email,
+                    u.name,
+                    u.initials,
+                    u.prefix,
+                    u.phone,
+                    u.avatar,
+                    u.email_verified_at,
+                    u.client_ref,
+                    u.temporary,
+                    u.is_favorite
+                FROM users AS u
+                WHERE u.id IN (?)
+                AND u.deleted_at IS NULL
+            ", [implode(',', $userIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -44,20 +59,26 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
      */
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
-        if (!in_array('user', $excludeRelationships)) {
-            $users = $this->getUsers(collect($result)->pluck('user_id')->toArray());
-
+        try {
             foreach($result as &$model) {
-                $model['user'] = [];
-                foreach ($users as $user) {
-                    if($user['id'] === $model['user_id']) {
-                        $model['user'] = $user;
+                $model['user'] = null;
+
+                if ( ! in_array('user', $excludeRelationships)) {
+                    $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
+
+                    foreach ($users as $user) {
+                        if ($user['id'] === $model['user_id']) {
+                            $model['user'] = $user;
+                        }
                     }
                 }
             }
-        }
 
-        return $result;
+            return $result;
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**

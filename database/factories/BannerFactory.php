@@ -3,12 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Banner;
-use App\Traits\IsTranslateableFactory;
+use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BannerFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.

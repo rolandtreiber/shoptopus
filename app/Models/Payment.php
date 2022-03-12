@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use App\Enums\PaymentTypes;
 use App\Traits\HasUUID;
+use App\Enums\PaymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
@@ -32,12 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Payment extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasExportable;
-    use HasSlug;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable, HasSlug;
 
     /**
      * Get the options for generating the slug.
@@ -109,10 +103,10 @@ class Payment extends SearchableModel implements Auditable, Exportable
     {
         switch ($view) {
             case 'payment':
-                $query->where('type', PaymentTypes::Payment);
+                $query->where('type', PaymentType::Payment);
                 break;
             case 'refund':
-                $query->where('type', PaymentTypes::Refund);
+                $query->where('type', PaymentType::Refund);
         }
     }
 

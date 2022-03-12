@@ -3,23 +3,19 @@
 namespace App\Repositories\Local\VoucherCode;
 
 use App\Models\VoucherCode;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
-use App\Services\Local\Order\OrderServiceInterface;
 
 class VoucherCodeRepository extends ModelRepository implements VoucherCodeRepositoryInterface
 {
-    private $orderService;
-
-    public function __construct(ErrorServiceInterface $errorService, VoucherCode $model, OrderServiceInterface $orderService)
+    public function __construct(ErrorServiceInterface $errorService, VoucherCode $model)
     {
         parent::__construct($errorService, $model);
-
-        $this->orderService = $orderService;
     }
 
     /**
-     * Get the orders for the given voucher code
+     * Get the orders for the given voucher codes
      *
      * @param array $voucherCodeIds
      * @return array
@@ -27,11 +23,28 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
      */
     public function getOrders(array $voucherCodeIds = []) : array
     {
-        $result = $this->orderService->getAll([], [
-            'voucher_code_id' => implode(',', $voucherCodeIds)
-        ]);
-
-        return !empty($result['data']) ? $result['data'] : [];
+        try {
+            return DB::select("
+                SELECT
+                    o.id,
+                    o.user_id,
+                    o.delivery_type_id,
+                    o.voucher_code_id,
+                    o.address_id,
+                    o.original_price,
+                    o.subtotal,
+                    o.total_price,
+                    o.total_discount,
+                    o.delivery_cost,
+                    o.status
+                FROM orders AS o
+                JOIN voucher_codes AS vc ON vc.id IN (?)
+                WHERE o.deleted_at IS NULL
+            ", [implode(',', $voucherCodeIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -50,9 +63,9 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
-                if (!in_array('orders', $excludeRelationships)) {
-                    $model['orders'] = [];
+                $model['orders'] = [];
 
+                if (!in_array('orders', $excludeRelationships)) {
                     foreach ($this->getOrders($ids) as $order) {
                         if ((int) $order['voucher_code_id'] === $modelId) {
                             unset($order['voucher_code_id']);

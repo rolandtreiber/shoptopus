@@ -2,8 +2,8 @@
 
 namespace App\Services\Local\Report;
 
-use App\Enums\ChartRanges;
-use App\Enums\Intervals;
+use App\Enums\ChartRange;
+use App\Enums\Interval;
 use App\Enums\Palette;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -211,7 +211,7 @@ class ReportService implements ReportServiceInterface {
         $endDate = $this->end->copy();
         $rollingDate = $startDate->copy();
         switch ($this->interval) {
-            case Intervals::Day:
+            case Interval::Day:
                 do {
                     $labels[] = $rollingDate->format('m-d');
                     $date = [
@@ -222,7 +222,7 @@ class ReportService implements ReportServiceInterface {
                     $rollingDate->addDay();
                 } while ($rollingDate <= $endDate);
                 break;
-            case Intervals::Week:
+            case Interval::Week:
                 $startDate = $startDate->startOfWeek();
                 $endDate = $endDate->endOfWeek();
                 $rollingDate = $startDate->copy();
@@ -236,7 +236,7 @@ class ReportService implements ReportServiceInterface {
                     $rollingDate->addWeek();
                 } while ($rollingDate <= $endDate);
                 break;
-            case Intervals::Month:
+            case Interval::Month:
                 do {
                     $labels[] = $rollingDate->format('Y-m');
                     $date = [
@@ -247,7 +247,7 @@ class ReportService implements ReportServiceInterface {
                     $rollingDate->addMonth();
                 } while ($rollingDate <= $endDate);
                 break;
-            case Intervals::Year:
+            case Interval::Year:
                 do {
                     $labels[] = $rollingDate->format('Y');
                     $date = [
@@ -461,23 +461,23 @@ class ReportService implements ReportServiceInterface {
     public function getControlsFromType(int $type = null): array
     {
         switch ($type) {
-            case ChartRanges::LastWeek:
+            case ChartRange::LastWeek:
                 return [
                     'start' => Carbon::now()->subWeek()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Intervals::Day
+                    'interval' => Interval::Day
                 ];
-            case ChartRanges::LastYear:
+            case ChartRange::LastYear:
                 return [
                     'start' => Carbon::now()->subYear()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Intervals::Month
+                    'interval' => Interval::Month
                 ];
             default:
                 return [
                     'start' => Carbon::now()->subMonth()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Intervals::Day
+                    'interval' => Interval::Day
                 ];
         }
     }

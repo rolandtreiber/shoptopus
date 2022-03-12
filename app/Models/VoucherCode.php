@@ -28,13 +28,7 @@ use Spatie\Sluggable\SlugOptions;
 */
 class VoucherCode extends SearchableModel implements Auditable, Exportable
 {
-    use HasUUID;
-    use HasFactory;
-    use HasFile;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasSlug;
-    use HasExportable;
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -58,7 +52,8 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable
         'name',
         'valid_from',
         'valid_until',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

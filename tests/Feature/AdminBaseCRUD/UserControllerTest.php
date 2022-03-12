@@ -80,7 +80,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_permissions_required_to_create_user()
+    public function test_Permission_required_to_create_user()
     {
         $this->actingAs($this->getRandomNonSuperAdminOrStoreManager());
         $response = $this->post(route('admin.api.create.user'), [

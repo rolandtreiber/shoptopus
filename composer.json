@@ -14,8 +14,7 @@
         }
     },
     "require": {
-        "php": "^7.4|^8.0",
-        "ext-fileinfo": "*",
+        "php": "^8.0",
         "ext-json": "*",
         "ext-pdo": "*",
         "bensampo/laravel-enum": "^3.4",
@@ -49,7 +48,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Database\\Seeders\\TestData\\": "database/seeders/test-data"
         }
     },
     "autoload-dev": {

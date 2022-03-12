@@ -24,9 +24,9 @@ class CartListResource extends JsonResource
         $totalProductOriginalValue = 0;
         $totalProductCurrentValue = 0;
         foreach ($this->products as $product) {
-            $totalProductCount += $product->pivot->amount;
-            $totalProductOriginalValue += $product->pivot->amount * $product->price;
-            $totalProductCurrentValue += $product->pivot->amount * $product->final_price;
+            $totalProductCount += $product->pivot->quantity;
+            $totalProductOriginalValue += $product->pivot->quantity * $product->price;
+            $totalProductCurrentValue += $product->pivot->quantity * $product->final_price;
         }
 
         return [

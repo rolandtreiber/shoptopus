@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
-use App\Enums\Intervals;
+use App\Enums\Interval;
 use App\Models\VoucherCode;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -88,7 +88,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => $voucherCodeIds,
-            'period' => Intervals::Day
+            'period' => Interval::Day
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('voucher_codes', [
@@ -115,7 +115,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => $voucherCodeIds,
-            'period' => Intervals::Week
+            'period' => Interval::Week
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('voucher_codes', [
@@ -142,7 +142,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => $voucherCodeIds,
-            'period' => Intervals::Month
+            'period' => Interval::Month
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('voucher_codes', [
@@ -236,7 +236,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => $voucherCodeIds,
-            'period' => Intervals::Month
+            'period' => Interval::Month
         ]);
         $response->assertForbidden();
     }
@@ -249,7 +249,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $voucherCodeIds = VoucherCode::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => $voucherCodeIds,
-            'period' => Intervals::Month
+            'period' => Interval::Month
         ]);
         $response->assertStatus(500);
     }
@@ -263,7 +263,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.voucher-codes.bulk.activate-for-period'), [
             'ids' => [...$voucherCodeIds, 'invalid id'],
-            'period' => Intervals::Month
+            'period' => Interval::Month
         ]);
         $response->assertStatus(422);
     }

@@ -2,9 +2,10 @@
 
 namespace Tests;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRole;
 use App\Models\User;
 use Database\Seeders\RoleSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Spatie\Permission\Models\Role;
 
 class BulkOperationsTestCase extends TestCase
@@ -18,10 +19,10 @@ class BulkOperationsTestCase extends TestCase
     {
         parent::setUp();
         $this->seed(RoleSeeder::class);
-        $this->superAdmin = $this->createUser(Role::findByName(UserRoles::SuperAdmin));
-        $this->storeManager = $this->createUser(Role::findByName(UserRoles::StoreManager));
-        $this->storeAssistant = $this->createUser(Role::findByName(UserRoles::StoreAssistant));
-        $this->customer = $this->createUser(Role::findByName(UserRoles::Customer));
+        $this->superAdmin = $this->createUser(Role::findByName(UserRole::SuperAdmin));
+        $this->storeManager = $this->createUser(Role::findByName(UserRole::StoreManager));
+        $this->storeAssistant = $this->createUser(Role::findByName(UserRole::StoreAssistant));
+        $this->customer = $this->createUser(Role::findByName(UserRole::Customer));
     }
 
     /**

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e12800c367fdb21eaf503778f7bff2a0",
+    "content-hash": "280b1c41cf305cce0fd7dec37c55eda5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4852,7 +4852,7 @@
         },
         {
             "name": "shoptopus/excel-import-export",
-            "version": "dev-development",
+            "version": "dev-merging/istvan-to-development",
             "dist": {
                 "type": "path",
                 "url": "packages/shoptopus/excel-import-export",
@@ -11037,8 +11037,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4|^8.0",
-        "ext-fileinfo": "*",
+        "php": "^8.0",
         "ext-json": "*",
         "ext-pdo": "*"
     },

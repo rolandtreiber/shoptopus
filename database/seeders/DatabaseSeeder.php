@@ -3,7 +3,23 @@
 namespace Database\Seeders;
 
 use App\Facades\Module;
+use Database\Seeders\TestData\AddressSeeder;
+use Database\Seeders\TestData\BannerSeeder;
+use Database\Seeders\TestData\CartSeeder;
+use Database\Seeders\TestData\DeliveryTypeSeeder;
+use Database\Seeders\TestData\DiscountRuleSeeder;
+use Database\Seeders\TestData\OrderSeeder;
+use Database\Seeders\TestData\ProductAttributeOptionSeeder;
+use Database\Seeders\TestData\ProductAttributeSeeder;
+use Database\Seeders\TestData\ProductCategorySeeder;
+use Database\Seeders\TestData\ProductSeeder;
+use Database\Seeders\TestData\ProductTagSeeder;
+use Database\Seeders\TestData\ProductVariantSeeder;
+use Database\Seeders\TestData\RatingSeeder;
+use Database\Seeders\TestData\UserSeeder;
+use Database\Seeders\TestData\VoucherCodeSeeder;
 use Illuminate\Database\Seeder;
+use function config;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +44,7 @@ class DatabaseSeeder extends Seeder
                 ]);
                 break;
             default:
+
                 $this->call([
                     BannerSeeder::class,
                     RoleSeeder::class,

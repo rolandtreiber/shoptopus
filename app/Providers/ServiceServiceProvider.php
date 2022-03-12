@@ -23,6 +23,9 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\AccessToken\AccessTokenServiceInterface', 'App\Services\Local\AccessToken\AccessTokenService');
         $this->app->bind('App\Services\Local\Address\AddressServiceInterface', 'App\Services\Local\Address\AddressService');
         $this->app->bind(ReportServiceInterface::class, ReportService::class);
+        $this->app->bind('App\Services\Local\Cart\CartServiceInterface', 'App\Services\Local\Cart\CartService');
+        $this->app->bind('App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface', 'App\Services\Local\DeliveryRule\DeliveryRuleService');
+        $this->app->bind('App\Services\Local\DeliveryType\DeliveryTypeServiceInterface', 'App\Services\Local\DeliveryType\DeliveryTypeService');
         $this->app->bind('App\Services\Local\Order\OrderServiceInterface', 'App\Services\Local\Order\OrderService');
         $this->app->bind('App\Services\Local\VoucherCode\VoucherCodeServiceInterface', 'App\Services\Local\VoucherCode\VoucherCodeService');
     }

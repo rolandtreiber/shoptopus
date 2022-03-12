@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\Intervals;
+use App\Enums\Interval;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
@@ -128,9 +128,9 @@ class DiscountRuleController extends Controller
     {
         $request->validate([
             'period' => ['required', Rule::in([
-                Intervals::Day,
-                Intervals::Week,
-                Intervals::Month
+                Interval::Day,
+                Interval::Week,
+                Interval::Month
             ])]
         ]);
         if ($this->discountRuleRepository->bulkActivateForPeriod($request->ids, $request->period)) {

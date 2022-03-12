@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Enums\Intervals;
+use App\Enums\Interval;
 use App\Exceptions\InvalidTimePeriodException;
 use Illuminate\Support\Carbon;
 
@@ -14,11 +14,11 @@ trait TimeperiodHelperTrait {
     public function getDateFromType($type): Carbon
     {
         switch ($type) {
-            case Intervals::Day:
+            case Interval::Day:
                 return Carbon::now()->endOfDay()->addDay();
-            case Intervals::Week:
+            case Interval::Week:
                 return Carbon::now()->endOfDay()->addWeek();
-            case Intervals::Month:
+            case Interval::Month:
                 return Carbon::now()->endOfDay()->addMonth();
         }
         throw new InvalidTimePeriodException();

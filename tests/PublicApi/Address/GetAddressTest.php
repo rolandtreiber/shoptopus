@@ -69,14 +69,44 @@ class GetAddressTest extends TestCase
     public function it_returns_all_required_fields()
     {
         $errorService = new ErrorService;
-        $userService = new UserService($errorService, new UserRepository($errorService, new User));
-        $addressRepo = (new AddressRepository($errorService, new Address, $userService));
+        $addressRepo = new AddressRepository($errorService, new Address);
 
         $this->signIn($this->user)
             ->sendRequest()
             ->assertJsonStructure([
                 'data' => [
                     $addressRepo->getSelectableColumns(false)
+                ]
+            ]);
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_the_owner_of_the_address()
+    {
+        $this->signIn($this->user)
+            ->sendRequest()
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'user' => [
+                            'id',
+                            'first_name',
+                            'last_name',
+                            'email',
+                            'name',
+                            'initials',
+                            'prefix',
+                            'phone',
+                            'avatar',
+                            'email_verified_at',
+                            'client_ref',
+                            'temporary',
+                            'is_favorite'
+                        ]
+                    ]
                 ]
             ]);
     }

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
-use App\Enums\ProductAttributeTypes;
+use App\Enums\ProductAttributeType;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\User;
@@ -83,7 +83,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
                 'de' => 'Farbe'
             ]),
             'image' => UploadedFile::fake()->image('product_attribute.jpg'),
-            'type' => ProductAttributeTypes::Text
+            'type' => ProductAttributeType::Text
         ]);
         $response->assertCreated();
         $attributeId = $response->json()['data']['id'];
@@ -108,7 +108,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
                 'de' => 'Farbe'
             ]),
             'image' => UploadedFile::fake()->image('product_attribute.jpg'),
-            'type' => ProductAttributeTypes::Text
+            'type' => ProductAttributeType::Text
         ]);
         $attributeId = $response->json()['data']['id'];
         $this->assertEquals($attributeId, $attribute->id);
@@ -246,7 +246,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_deletion_requires_the_right_permissions()
+    public function test_product_attribute_deletion_requires_the_right_Permission()
     {
         $attribute = ProductAttribute::factory()->create();
 
@@ -258,7 +258,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_deletion_requires_the_right_permissions()
+    public function test_product_attribute_option_deletion_requires_the_right_Permission()
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([

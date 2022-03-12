@@ -2,8 +2,8 @@
 
 namespace App\Repositories\Admin\Report;
 
-use App\Enums\OrderStatuses;
-use App\Enums\ProductStatuses;
+use App\Enums\OrderStatus;
+use App\Enums\ProductStatus;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
@@ -58,7 +58,7 @@ class ReportRepository implements ReportRepositoryInterface
                     'model' => Order::class,
                     'attribute' => 'total_price',
                     'conditions' => [
-                        ['where', 'status', '=', OrderStatuses::Completed]
+                        ['where', 'status', '=', OrderStatus::Completed]
                     ]
                 ],
                 [
@@ -67,9 +67,9 @@ class ReportRepository implements ReportRepositoryInterface
                     'attribute' => 'total_price',
                     'conditions' => [
                         ['whereIn', 'status', [
-                            OrderStatuses::Paid,
-                            OrderStatuses::Processing,
-                            OrderStatuses::InTransit,
+                            OrderStatus::Paid,
+                            OrderStatus::Processing,
+                            OrderStatus::InTransit,
                         ]]
                     ]
                 ]
@@ -233,12 +233,12 @@ class ReportRepository implements ReportRepositoryInterface
                     ->where('pv.enabled', 1);
             })->select([
                 DB::raw('CASE WHEN SUM(pv.price) IS NOT NULL THEN (SUM(pv.price) * SUM(pv.stock)) ELSE (SUM(products.price) * SUM(products.stock)) END AS value'),
-            ])->where('products.status', ProductStatuses::Active)->groupBy('products.id')->pluck('value')->sum();
+            ])->where('products.status', ProductStatus::Active)->groupBy('products.id')->pluck('value')->sum();
 
         $ordersTotal = DB::table('orders')->whereIn('status', [
-            OrderStatuses::Completed,
-            OrderStatuses::Paid,
-            OrderStatuses::InTransit])
+            OrderStatus::Completed,
+            OrderStatus::Paid,
+            OrderStatus::InTransit])
             ->select([
                 DB::raw('SUM(orders.total_price) as revenue'),
                 DB::raw('SUM(orders.delivery) as delivery'),

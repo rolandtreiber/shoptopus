@@ -13,14 +13,15 @@ return [
     'services' => [
         'auth' => [
             "login" => 1000,
-            "register" => 1001,
-            "verify" => 1002,
-            "resendVerification" => 1003,
-            "logout" => 1004,
-            "mustResetPassword" => 1005,
-            "loginUserIncorrect" => 1006,
-            "sendPasswordReset" => 1007,
-            "resetPassword" => 1008,
+            "login_user_incorrect" => 1001,
+            "register" => 1002,
+            "verify" => 1003,
+            "resendVerification" => 1004,
+            "logout" => 1005,
+            "mustResetPassword" => 1006,
+            "loginUserIncorrect" => 1007,
+            "sendPasswordReset" => 1008,
+            "resetPassword" => 1009,
         ],
         'access_token' => [
             "get" => 1200,
@@ -37,6 +38,14 @@ return [
             "update" => 1303,
             "delete" => 1304,
             "getByToken" => 1305,
+        ],
+        'cart' => [
+            "get" => 1500,
+            "update" => 1503,
+            "getCartForUser" => 1505,
+            "addItem" => 1506,
+            "removeItem" => 1507,
+            "mergeUserCarts" => 1508
         ],
         'user' => [
             "get" => 2000,

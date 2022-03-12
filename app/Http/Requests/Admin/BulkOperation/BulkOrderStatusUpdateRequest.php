@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Admin\BulkOperation;
 
-use App\Enums\OrderStatuses;
+use App\Enums\OrderStatus;
 use Illuminate\Validation\Rule;
 
 class BulkOrderStatusUpdateRequest extends BaseBulkOperationRequest
@@ -19,7 +19,7 @@ class BulkOrderStatusUpdateRequest extends BaseBulkOperationRequest
             'ids.*' => ['exists:orders,id'],
             'status' => [
                 'required',
-                Rule::in(OrderStatuses::getValues())
+                Rule::in(OrderStatus::getValues())
             ]
         ];
     }
