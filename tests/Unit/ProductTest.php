@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\ProductTag;
 use Tests\TestCase;
 use App\Models\Product;
 use Illuminate\Support\Str;
@@ -188,13 +189,14 @@ class ProductTest extends TestCase
     /** @test */
     public function it_may_have_many_tags()
     {
-        $this->assertCount(0, $this->product->images());
+        $this->assertCount(0, $this->product->product_tags);
 
-        FileContent::factory()->create([
-            'fileable_type' => get_class($this->product),
-            'fileable_id' => $this->product->id
-        ]);
+        $tag = ProductTag::factory()->create();
 
-        $this->assertInstanceOf(FileContent::class, $this->product->images()->first());
+        $this->product->product_tags()->attach($tag->id);
+
+        $this->assertCount(1, $this->product->fresh()->product_tags);
+
+        $this->assertInstanceOf(ProductTag::class, $this->product->product_tags()->first());
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductTag;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductTag;
 
 class ProductTagFactory extends Factory
 {

@@ -70,7 +70,7 @@ class Product extends SearchableModel implements Auditable, Exportable
     ];
 
     protected $exportableRelationships = [
-        'productCategories',
+        'product_categories',
         'productAttributes',
         'product_tags',
         'productVariants',
@@ -116,6 +116,24 @@ class Product extends SearchableModel implements Auditable, Exportable
         'rating' => 'decimal:2',
         'cover_photo' => 'object'
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function product_tags(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductTag::class);
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function product_categories(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductCategory::class);
+    }
+
+
 
 
     /**
@@ -179,7 +197,7 @@ class Product extends SearchableModel implements Auditable, Exportable
                 'type' => $rule->type,
             ];
         })->toArray();
-        $categoriesWithDiscountRules = $this->productCategories()->get();
+        $categoriesWithDiscountRules = $this->product_categories()->get();
         foreach ($categoriesWithDiscountRules as $category) {
             $discountRules = array_merge($discountRules, $category->discountRules->map(function($rule) use ($discountRules) {
                 return [
@@ -241,22 +259,6 @@ class Product extends SearchableModel implements Auditable, Exportable
     }
 
     /**
-     * @return BelongsToMany
-     */
-    public function product_tags(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductTag::class);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function productCategories(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductCategory::class);
-    }
-
-    /**
      * @return HasMany
      */
     public function productVariants(): HasMany
@@ -308,8 +310,8 @@ class Product extends SearchableModel implements Auditable, Exportable
      */
     public function handleCategories(?array $categoryIds = [])
     {
-        $this->productCategories()->detach();
-        $this->productCategories()->sync($categoryIds);
+        $this->product_categories()->detach();
+        $this->product_categories()->sync($categoryIds);
     }
 
     /**
