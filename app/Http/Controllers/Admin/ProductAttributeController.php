@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\ProductAttributeBulkOperationRequest;
 use App\Http\Requests\Admin\ProductAttributeStoreRequest;
 use App\Http\Requests\Admin\ProductAttributeUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductAttributeDetailResource;
 use App\Http\Resources\Admin\ProductAttributeListResource;
 use App\Models\ProductAttribute;
+use App\Repositories\Admin\ProductAttribute\ProductAttributeRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductAttributeController extends Controller
 {
     use ProcessRequest;
+    protected ProductAttributeRepositoryInterface $productAttributeRepository;
+
+    /**
+     * @param ProductAttributeRepositoryInterface $productAttributeRepository
+     */
+    public function __construct(ProductAttributeRepositoryInterface $productAttributeRepository)
+    {
+        $this->productAttributeRepository = $productAttributeRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -77,5 +90,34 @@ class ProductAttributeController extends Controller
     {
         $attribute->delete();
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param ProductAttributeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkUpdateAvailability(ProductAttributeBulkOperationRequest $request): array
+    {
+        $request->validate([
+            'availability' => ['required', 'boolean']
+        ]);
+        if ($this->productAttributeRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+    }
+
+    /**
+     * @param ProductAttributeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkDelete(ProductAttributeBulkOperationRequest $request): array
+    {
+        if ($this->productAttributeRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

@@ -5,7 +5,7 @@ namespace App\Observers;
 use App\Models\Cart;
 use App\Models\User;
 use App\Helpers\GeneralHelper;
-use App\Enums\RandomStringModes;
+use App\Enums\RandomStringMode;
 
 class UserObserver
 {
@@ -22,7 +22,7 @@ class UserObserver
     public function creating(User $user)
     {
         do {
-            $reference = GeneralHelper::generateRandomString(8, RandomStringModes::UppercaseAndNumbers);
+            $reference = GeneralHelper::generateRandomString(8, RandomStringMode::UppercaseAndNumbers);
         } while (User::where('client_ref', $reference)->first());
         $user->client_ref = $reference;
     }

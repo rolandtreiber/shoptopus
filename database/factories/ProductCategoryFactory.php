@@ -23,7 +23,7 @@ class ProductCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $translations = $this->getTranslated($this->faker, ['name', 'description'], ['short', 'medium']);
+        $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
         return [
             'parent_id' => null,
             'name' => $translations['name'],

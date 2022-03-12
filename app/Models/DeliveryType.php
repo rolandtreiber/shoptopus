@@ -3,16 +3,40 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use App\Enums\OrderStatuses;
+use App\Enums\OrderStatus;
 use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class DeliveryType extends SearchableModel
+/**
+ * @method static count()
+ * @property string $id
+ * @property mixed $deliveryRules
+ * @property mixed $status
+ * @property mixed $enabled_by_default_on_creation
+ * @property boolean $enabled
+ * @property mixed $price
+ */
+class DeliveryType extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, HasTranslations, SoftDeletes;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, HasExportable, \OwenIt\Auditing\Auditable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['name'])
+            ->saveSlugsTo('slug');
+    }
 
     public array $translatable = [
         'name', 'description'
@@ -69,10 +93,10 @@ class DeliveryType extends SearchableModel
         return DB::table('orders')
             ->where('delivery_type_id', $this->id)
             ->whereIn('status', [
-                OrderStatuses::Paid,
-                OrderStatuses::Processing,
-                OrderStatuses::Completed,
-                OrderStatuses::OnHold
+                OrderStatus::Paid,
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+                OrderStatus::OnHold
             ])
             ->count();
     }
@@ -87,10 +111,10 @@ class DeliveryType extends SearchableModel
             ->select('delivery_cost')
             ->where('delivery_type_id', $this->id)
             ->whereIn('status', [
-                OrderStatuses::Paid,
-                OrderStatuses::Processing,
-                OrderStatuses::Completed,
-                OrderStatuses::OnHold])
+                OrderStatus::Paid,
+                OrderStatus::Processing,
+                OrderStatus::Completed,
+                OrderStatus::OnHold])
             ->sum('delivery_cost');
     }
 

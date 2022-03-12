@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources\Common;
 
-use App\Enums\AvailabilityStatuses;
+use App\Enums\AvailabilityStatus;
 use App\Http\Resources\Admin\ProductAttributeTreeResource;
 use App\Http\Resources\Admin\ProductTagSelectResource;
 use App\Models\ProductAttribute;
@@ -21,9 +21,9 @@ class SharedOptionsResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $categories = ProductCategoryNestedTreeResource::collection(ProductCategory::availability(AvailabilityStatuses::Enabled)->whereNull('parent_id')->select('id', 'name')->with('children.children.children.children.children.children')->get());
-        $tags = ProductTagSelectResource::collection(ProductTag::availability(AvailabilityStatuses::Enabled)->select('id', 'name')->get());
-        $attributes = ProductAttributeTreeResource::collection(ProductAttribute::availability(AvailabilityStatuses::Enabled)->select('id', 'name', 'type', 'image')->with('options')->get());
+        $categories = ProductCategoryNestedTreeResource::collection(ProductCategory::availability(AvailabilityStatus::Enabled)->whereNull('parent_id')->select('id', 'name')->with('children.children.children.children.children.children')->get());
+        $tags = ProductTagSelectResource::collection(ProductTag::availability(AvailabilityStatus::Enabled)->select('id', 'name')->get());
+        $attributes = ProductAttributeTreeResource::collection(ProductAttribute::availability(AvailabilityStatus::Enabled)->select('id', 'name', 'type', 'image')->with('options')->get());
         return [
             'categories' => $categories,
             'tags' => $tags,

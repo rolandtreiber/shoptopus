@@ -23,6 +23,7 @@ class CreateProductCategoriesTable extends Migration
             $table->boolean('enabled')->default(true);
             $table->json('menu_image')->nullable();
             $table->json('header_image')->nullable();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

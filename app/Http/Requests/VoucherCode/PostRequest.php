@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\VoucherCode;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PostRequest extends FormRequest
@@ -28,7 +28,7 @@ class PostRequest extends FormRequest
             'amount' => "required|regex:/[\d]{1,2}.[\d]{1,2}/",
             'valid_from' => "required|date",
             'valid_until' => "required|date",
-            'type' => 'sometimes|required|in:' . implode(',', DiscountTypes::getValues()),
+            'type' => 'sometimes|required|in:' . implode(',', DiscountType::getValues()),
             'enabled' => 'sometimes|required|boolean'
         ];
     }

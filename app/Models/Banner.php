@@ -8,12 +8,16 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 /**
  * @property mixed|string[]|null $background_image
  */
-class Banner extends SearchableModel implements Auditable
+class Banner extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory;
     use HasTranslations;
@@ -22,8 +26,33 @@ class Banner extends SearchableModel implements Auditable
     use HasUUID;
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
+    use HasSlug;
+    use HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['title'])
+            ->saveSlugsTo('slug');
+    }
 
     public $translatable = ['title', 'description', 'button_text'];
+
+    /**
+     * @var array
+     */
+    protected $exportableFields = [
+        'title',
+        'description',
+        'show_button',
+        'button_text',
+        'button_url',
+        'enabled',
+        'created_at'
+    ];
 
     /**
      * The attributes that are mass assignable.

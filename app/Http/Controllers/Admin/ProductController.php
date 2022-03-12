@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\FileTypes;
+use App\Enums\FileType;
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\ProductBulkOperationRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
-use App\Http\Requests\ListRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductPageSummaryResource;
 use App\Models\Product;
+use App\Repositories\Admin\Product\ProductRepositoryInterface;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -18,6 +22,16 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductController extends Controller
 {
     use ProcessRequest, HasAttributes;
+
+    protected ProductRepositoryInterface $productRepository;
+
+    /**
+     * @param ProductRepositoryInterface $productRepository
+     */
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -60,11 +74,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->fill($data);
         $product->save();
-        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
-        $firstImage = $attachments->where('type', FileTypes::Image)->first();
-        if ($firstImage) {
-            $product->cover_photo_id = $firstImage->id;
-        }
+        $this->saveFiles($request, Product::class, $product->id, true);
         $product->save();
 
         if ($request->product_attributes) {
@@ -92,9 +102,7 @@ class ProductController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
-        $attachments = $this->saveFiles($request, Product::class, $product->id, true);
-        $firstImage = $attachments->where('type', FileTypes::Image)->first();
-        $product->cover_photo_id = $firstImage->id;
+        $this->saveFiles($request, Product::class, $product->id, true);
         $product->save();
         $this->handleAttributes($product, $request);
         $product->handleCategories($request->product_categories);
@@ -110,6 +118,32 @@ class ProductController extends Controller
     {
         $product->deleteWithAttachments();
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param ProductBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkArchive(ProductBulkOperationRequest $request): array
+    {
+        if ($this->productRepository->bulkArchive($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+    }
+
+    /**
+     * @param ProductBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkDelete(ProductBulkOperationRequest $request): array
+    {
+        if ($this->productRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
 }

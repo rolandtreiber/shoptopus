@@ -11,6 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -24,13 +28,35 @@ use Spatie\Translatable\HasTranslations;
  * @property string $product_attribute_id
  * @property double $price
  */
-class ProductAttribute extends SearchableModel implements Auditable
+class ProductAttribute extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
+    use HasFactory, SoftDeletes, HasTranslations;
     use HasUUID;
     use \OwenIt\Auditing\Auditable;
+    use HasSlug;
+    use HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['name'])
+            ->saveSlugsTo('slug');
+    }
 
     public $translatable = ['name'];
+
+    protected $exportableFields = [
+        'slug',
+        'type',
+        'enabled'
+    ];
+
+    protected $exportableRelationships = [
+        'options'
+    ];
 
     /**
      * The attributes that are mass assignable.

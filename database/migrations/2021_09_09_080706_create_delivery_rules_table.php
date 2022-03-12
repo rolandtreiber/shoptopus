@@ -24,6 +24,8 @@ class CreateDeliveryRulesTable extends Migration
             $table->string('distance_unit')->default('mile');
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
+            $table->tinyInteger('status')->default(1);
+            $table->string('slug');
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();

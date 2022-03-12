@@ -3,9 +3,9 @@
 namespace App\Observers;
 
 use App\Models\Order;
-use App\Enums\EventLogTypes;
-use App\Repositories\Admin\EventLogRepository;
-use App\Repositories\Admin\Interfaces\EventLogRepositoryInterface;
+use App\Repositories\Admin\Eventlog\EventLogRepository;
+use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
+use App\Enums\EventLogType;
 
 class OrderObserver
 {
@@ -27,7 +27,7 @@ class OrderObserver
         if ($order->delivery_type) {
             $order->delivery_cost = $order->delivery_type->price;
         }
-        $this->eventLogRepository->create(Order::class, $order, EventLogTypes::StatusChange, ['status' => $order->status]);
+        $this->eventLogRepository->create(Order::class, $order, EventLogType::StatusChange, ['status' => $order->status]);
     }
 
     /**
@@ -44,7 +44,7 @@ class OrderObserver
         }
 
         if($order->isDirty('status')) {
-            $this->eventLogRepository->create(Order::class, $order, EventLogTypes::StatusChange, ['status' => $order->status]);
+            $this->eventLogRepository->create(Order::class, $order, EventLogType::StatusChange, ['status' => $order->status]);
         }
 
     }

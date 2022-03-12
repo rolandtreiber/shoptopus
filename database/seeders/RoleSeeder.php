@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\Permissions;
-use App\Models\User;
+use App\Enums\Permission as PermissionOptions;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -19,7 +18,7 @@ class RoleSeeder extends Seeder
     {
         $roles = config('roles');
 
-        foreach (Permissions::getValues() as $permission) {
+        foreach (PermissionOptions::getValues() as $permission) {
             Permission::create(['name' => $permission]);
         }
 

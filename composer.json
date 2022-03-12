@@ -4,6 +4,15 @@
     "description": "The Laravel Framework.",
     "keywords": ["framework", "laravel"],
     "license": "MIT",
+    "repositories": {
+        "shoptopus/excel-import-export": {
+            "type": "path",
+            "url": "packages/shoptopus/excel-import-export",
+            "options": {
+                "symlink": true
+            }
+        }
+    },
     "require": {
         "php": "^8.0",
         "ext-json": "*",
@@ -19,10 +28,11 @@
         "owen-it/laravel-auditing": "^12.0",
         "s-ichikawa/laravel-sendgrid-driver": "^3.0",
         "sendgrid/sendgrid": "^7.9",
+        "shoptopus/excel-import-export": "@dev",
         "spatie/laravel-permission": "^5.1",
         "spatie/laravel-searchable": "^1.10",
-        "spatie/laravel-translatable": "^5.0",
-        "ext-fileinfo": "*"
+        "spatie/laravel-sluggable": "^3.3",
+        "spatie/laravel-translatable": "^5.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -38,7 +48,8 @@
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
-            "Database\\Seeders\\": "database/seeders/"
+            "Database\\Seeders\\": "database/seeders/",
+            "Database\\Seeders\\TestData\\": "database/seeders/test-data"
         }
     },
     "autoload-dev": {

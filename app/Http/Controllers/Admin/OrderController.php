@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\BulkOrderStatusUpdateRequest;
 use App\Http\Requests\Admin\OrderStatusUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\OrderDetailResource;
 use App\Http\Resources\Admin\OrderListResource;
 use App\Models\Order;
+use App\Repositories\Admin\Order\OrderRepositoryInterface;
 use App\Traits\ProcessRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class OrderController extends Controller
 {
     use ProcessRequest;
+    protected OrderRepositoryInterface $orderRepository;
+
+    public function __construct(OrderRepositoryInterface $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -61,5 +69,18 @@ class OrderController extends Controller
     {
         $order->delete();
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param BulkOrderStatusUpdateRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkStatusUpdate(BulkOrderStatusUpdateRequest $request): array
+    {
+        if ($this->orderRepository->bulkUpdateStatus($request->ids, $request->status)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

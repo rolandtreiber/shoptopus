@@ -205,7 +205,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                     p.stock,
                     p.backup_stock,
                     p.sku,
-                    p.cover_photo_id,
+                    p.cover_photo,
                     p.rating
                 FROM cart_product as cp
                 JOIN products as p ON p.id = cp.product_id

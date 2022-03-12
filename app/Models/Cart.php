@@ -8,10 +8,20 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 
-class Cart extends Model implements Auditable
+/**
+ * @property mixed $user_id
+ * @method static count()
+ * @method static find(int $selectedCartId)
+ * @property mixed $updated_at
+ */
+class Cart extends Model implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, HasExportable;
+
 
     /**
      * The attributes that are mass assignable.

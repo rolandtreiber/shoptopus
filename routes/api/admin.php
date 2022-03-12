@@ -1,35 +1,42 @@
 <?php
 
 use App\Facades\Module;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AuditController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\CartController;
 use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\DeliveryRuleController;
+use App\Http\Controllers\Admin\DeliveryTypeController;
+use App\Http\Controllers\Admin\DiscountRuleController;
+use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
 use App\Http\Controllers\Admin\ProductAttributeOptionController;
+use App\Http\Controllers\Admin\ProductCategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\AuditController;
-use App\Http\Controllers\Admin\CartController;
-use App\Http\Controllers\Admin\DeliveryRuleController;
-use App\Http\Controllers\Admin\DeliveryTypeController;
-use App\Http\Controllers\Admin\DiscountRuleController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductCategoryController;
-use App\Http\Controllers\Admin\ProductTagController;
 use App\Http\Controllers\Admin\VoucherCodeController;
-use App\Http\Controllers\BannerController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () {
     Route::group(['prefix' => 'admin'], function () {
 
         // Products
-        Route::get('products', [ProductController::class, 'index'])->name('admin.api.index.products');
-        Route::get('products/summary', [ProductController::class, 'summary'])->name('admin.api.index.products-page-summary');
+        Route::group(['prefix' => 'products'], function () {
+            Route::get('/', [ProductController::class, 'index'])->name('admin.api.index.products');
+            Route::get('summary', [ProductController::class, 'summary'])->name('admin.api.index.products-page-summary');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/archive', [ProductController::class, 'bulkArchive'])->name('admin.api.products.bulk.archive');
+                Route::delete('/', [ProductController::class, 'bulkDelete'])->name('admin.api.products.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'product'], function () {
             Route::post('/', [ProductController::class, 'create'])->name('admin.api.create.product');
             Route::group(['prefix' => '{product}'], function () {
@@ -52,8 +59,14 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Product Categories
-        Route::get('product-categories', [ProductCategoryController::class, 'index'])->name('admin.api.index.product-categories');
-        Route::get('product-categories/select-data', [ProductCategoryController::class, 'getSelectData'])->name('admin.api.index.product-categories-select');
+        Route::group(['prefix' => 'product-categories'], function () {
+            Route::get('/', [ProductCategoryController::class, 'index'])->name('admin.api.index.product-categories');
+            Route::get('select-data', [ProductCategoryController::class, 'getSelectData'])->name('admin.api.index.product-categories-select');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/availability', [ProductCategoryController::class, 'bulkUpdateAvailability'])->name('admin.api.product-categories.bulk.update-availability');
+                Route::delete('/', [ProductCategoryController::class, 'bulkDelete'])->name('admin.api.product-categories.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'product-category'], function () {
             Route::post('/', [ProductCategoryController::class, 'create'])->name('admin.api.create.product-category');
             Route::group(['prefix' => '{category}'], function () {
@@ -64,7 +77,13 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Product Tags
-        Route::get('product-tags', [ProductTagController::class, 'index'])->name('admin.api.index.product-tags');
+        Route::group(['prefix' => 'product-tags'], function () {
+            Route::get('/', [ProductTagController::class, 'index'])->name('admin.api.index.product-tags');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/availability', [ProductTagController::class, 'bulkUpdateAvailability'])->name('admin.api.product-tags.bulk.update-availability');
+                Route::delete('/', [ProductTagController::class, 'bulkDelete'])->name('admin.api.product-tags.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'product-tag'], function () {
             Route::post('/', [ProductTagController::class, 'create'])->name('admin.api.create.product-tag');
             Route::group(['prefix' => '{tag}'], function () {
@@ -75,7 +94,13 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Product Attributes
-        Route::get('product-attributes', [ProductAttributeController::class, 'index'])->name('admin.api.index.product-attributes');
+        Route::group(['prefix' => 'product-attributes'], function () {
+            Route::get('/', [ProductAttributeController::class, 'index'])->name('admin.api.index.product-attributes');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/availability', [ProductAttributeController::class, 'bulkUpdateAvailability'])->name('admin.api.product-attributes.bulk.update-availability');
+                Route::delete('/', [ProductAttributeController::class, 'bulkDelete'])->name('admin.api.product-attributes.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'product-attribute'], function () {
             Route::post('/', [ProductAttributeController::class, 'create'])->name('admin.api.create.product-attribute');
             Route::group(['prefix' => '{attribute}'], function () {
@@ -111,7 +136,12 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         Route::post('/notifications', [UserController::class, 'clearNotifications'])->name('admin.api.user.clear-notifications');
 
         // Orders
-        Route::get('orders', [OrderController::class, 'index'])->name('admin.api.index.orders');
+        Route::group(['prefix' => 'orders'], function () {
+            Route::get('/', [OrderController::class, 'index'])->name('admin.api.index.orders');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/status', [OrderController::class, 'bulkStatusUpdate'])->name('admin.api.orders.bulk.status-update');
+            });
+        });
         Route::group(['prefix' => 'order/{order}'], function () {
             Route::get('/', [OrderController::class, 'show'])->name('admin.api.show.order');
             Route::middleware(['super_user'])->delete('/', [OrderController::class, 'delete'])->name('admin.api.delete.order');
@@ -119,7 +149,12 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Payments
-        Route::get('payments', [PaymentController::class, 'index'])->name('admin.api.index.payments');
+        Route::group(['prefix' => 'payments'], function () {
+            Route::get('/', [PaymentController::class, 'index'])->name('admin.api.index.payments');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/status', [PaymentController::class, 'bulkUpdateStatus'])->name('admin.api.payments.bulk.status-update');
+            });
+        });
         Route::group(['prefix' => 'payment'], function () {
             Route::post('/', [PaymentController::class, 'create'])->middleware('super_user')->name('admin.api.create.payment');
             Route::group(['prefix' => '{payment}'], function () {
@@ -131,7 +166,15 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Voucher Codes
-        Route::get('voucher-codes', [VoucherCodeController::class, 'index'])->name('admin.api.index.voucher-codes');
+        Route::group(['prefix' => 'voucher-codes'], function () {
+            Route::get('/', [VoucherCodeController::class, 'index'])->name('admin.api.index.voucher-codes');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/expire', [VoucherCodeController::class, 'bulkExpire'])->name('admin.api.voucher-codes.bulk.expire');
+                Route::post('/start', [VoucherCodeController::class, 'bulkStart'])->name('admin.api.voucher-codes.bulk.start');
+                Route::post('/activate', [VoucherCodeController::class, 'bulkActivateForPeriod'])->name('admin.api.voucher-codes.bulk.activate-for-period');
+                Route::delete('/', [VoucherCodeController::class, 'bulkDelete'])->name('admin.api.voucher-codes.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'voucher-code'], function () {
             Route::post('/', [VoucherCodeController::class, 'create'])->name('admin.api.create.voucher-code');
             Route::group(['prefix' => '{voucherCode}'], function () {
@@ -142,7 +185,13 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Delivery Types
-        Route::get('delivery-types', [DeliveryTypeController::class, 'index'])->name('admin.api.index.delivery-types');
+        Route::group(['prefix' => 'delivery-types'], function () {
+            Route::get('/', [DeliveryTypeController::class, 'index'])->name('admin.api.index.delivery-types');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/availability', [DeliveryTypeController::class, 'bulkUpdateAvailability'])->name('admin.api.delivery-types.bulk.update-availability');
+                Route::delete('/', [DeliveryTypeController::class, 'bulkDelete'])->name('admin.api.delivery-types.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'delivery-type'], function () {
             Route::post('/', [DeliveryTypeController::class, 'create'])->middleware('super_user')->name('admin.api.create.delivery-type');
             Route::group(['prefix' => '{deliveryType}'], function () {
@@ -164,7 +213,15 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Discount Rules
-        Route::get('discount-rules', [DiscountRuleController::class, 'index'])->name('admin.api.index.discount-rules');
+        Route::group(['prefix' => 'discount-rules'], function () {
+            Route::get('/', [DiscountRuleController::class, 'index'])->name('admin.api.index.discount-rules');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/expire', [DiscountRuleController::class, 'bulkExpire'])->name('admin.api.discount-rules.bulk.expire');
+                Route::post('/start', [DiscountRuleController::class, 'bulkStart'])->name('admin.api.discount-rules.bulk.start');
+                Route::post('/activate', [DiscountRuleController::class, 'bulkActivateForPeriod'])->name('admin.api.discount-rules.bulk.activate-for-period');
+                Route::delete('/', [DiscountRuleController::class, 'bulkDelete'])->name('admin.api.discount-rules.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'discount-rule'], function () {
             Route::post('/', [DiscountRuleController::class, 'create'])->middleware('super_user')->name('admin.api.create.discount-rule');
             Route::group(['prefix' => '{discountRule}'], function () {
@@ -204,7 +261,13 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
 
         // Ratings
         if (Module::enabled('ratings')) {
-            Route::get('ratings', [RatingController::class, 'index'])->name('admin.api.index.ratings');
+            Route::group(['prefix' => 'ratings'], function () {
+                Route::get('/', [RatingController::class, 'index'])->name('admin.api.index.ratings');
+                Route::group(['prefix' => 'bulk'], function () {
+                    Route::post('/availability', [RatingController::class, 'bulkUpdateAvailability'])->name('admin.api.ratings.bulk.update-availability');
+                    Route::post('/verified-status', [RatingController::class, 'bulkUpdateVerifiedStatus'])->name('admin.api.ratings.bulk.update-verified-status');
+                });
+            });
             Route::group(['prefix' => 'rating/{rating}'], function () {
                 Route::get('/', [RatingController::class, 'show'])->name('admin.api.show.rating');
                 Route::delete('/', [RatingController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.rating');
@@ -212,7 +275,13 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         }
 
         // Carts
-        Route::get('banners', [BannerController::class, 'index'])->name('admin.api.index.banners');
+        Route::group(['prefix' => 'banners'], function () {
+            Route::get('/', [BannerController::class, 'index'])->name('admin.api.index.banners');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::post('/availability', [BannerController::class, 'bulkUpdateAvailability'])->name('admin.api.banners.bulk.update-availability');
+                Route::delete('/', [BannerController::class, 'bulkDelete'])->name('admin.api.banners.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'banner'], function () {
             Route::post('/', [BannerController::class, 'create'])->name('admin.api.create.banner');
             Route::group(['prefix' => '{banner}'], function () {
@@ -223,7 +292,12 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         });
 
         // Files
-        Route::get('files', [FileController::class, 'index'])->name('admin.api.index.files');
+        Route::group(['prefix' => 'files'], function () {
+            Route::get('/', [FileController::class, 'index'])->name('admin.api.index.files');
+            Route::group(['prefix' => 'bulk'], function () {
+                Route::delete('/', [FileController::class, 'bulkDelete'])->name('admin.api.files.bulk.delete');
+            });
+        });
         Route::group(['prefix' => 'file'], function () {
             Route::post('/', [FileController::class, 'create'])->name('admin.api.create.file');
             Route::group(['prefix' => '{file}'], function () {
@@ -233,5 +307,14 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
             });
         });
 
+        // Reports
+        Route::group(['prefix' => 'reports'], function () {
+            Route::post('overview', [ReportController::class, 'getOverview'])->name('admin.api.show.report.overview');
+            Route::post('sales', [ReportController::class, 'getSales'])->name('admin.api.show.report.sales');
+        });
+
+        // Emails
+        Route::get('/get-users', [EmailController::class, 'getUserOptions']);
+        Route::post('/send-email', [EmailController::class, 'sendEmail'])->name('admin.customers.send-email');
     });
 });

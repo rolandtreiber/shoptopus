@@ -129,7 +129,7 @@ class GetCartTest extends TestCase
                             'stock',
                             'backup_stock',
                             'sku',
-                            'cover_photo_id',
+                            'cover_photo',
                             'rating'
                         ]
                     ]

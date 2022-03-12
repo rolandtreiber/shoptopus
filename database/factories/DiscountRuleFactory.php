@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\DiscountRule;
@@ -28,7 +28,7 @@ class DiscountRuleFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['name'], ['short']);
 
         return [
-            'type' => $this->faker->randomElement([DiscountTypes::Amount, DiscountTypes::Percentage]),
+            'type' => $this->faker->randomElement([DiscountType::Amount, DiscountType::Percentage]),
             'amount' => $this->faker->randomFloat(2, 0, 50),
             'name' => $translations['name'],
             'valid_from' => $this->faker->dateTime(),

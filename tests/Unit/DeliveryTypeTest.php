@@ -8,6 +8,9 @@ use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * @group delivery_type
+ */
 class DeliveryTypeTest extends TestCase
 {
     use RefreshDatabase;
@@ -84,13 +87,13 @@ class DeliveryTypeTest extends TestCase
     /** @test */
     public function it_may_have_many_delivery_rules()
     {
-        $this->assertCount(0, $this->delivery_type->delivery_rules);
+        $this->assertCount(0, $this->delivery_type->deliveryRules);
 
         DeliveryRule::factory()->count(2)->create(['delivery_type_id' => $this->delivery_type->id]);
 
-        $this->assertCount(2, $this->delivery_type->refresh()->delivery_rules);
+        $this->assertCount(2, $this->delivery_type->refresh()->deliveryRules);
 
-        $this->assertInstanceOf(DeliveryRule::class, $this->delivery_type->delivery_rules[0]);
+        $this->assertInstanceOf(DeliveryRule::class, $this->delivery_type->deliveryRules[0]);
     }
 
     /** @test */
