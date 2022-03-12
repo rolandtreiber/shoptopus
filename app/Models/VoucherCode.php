@@ -13,8 +13,6 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Builder;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed|string $code
@@ -28,17 +26,7 @@ use Spatie\Sluggable\SlugOptions;
 */
 class VoucherCode extends SearchableModel implements Auditable, Exportable
 {
-    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
-
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom(['name'])
-            ->saveSlugsTo('slug');
-    }
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable;
 
     /**
      * The attributes that are mass assignable.

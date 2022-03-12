@@ -24,7 +24,7 @@ class CreateVoucherCodesTable extends Migration
             $table->timestamp('valid_until')->nullable();
             $table->enum('type', DiscountType::getValues())->default(DiscountType::Percentage);
             $table->boolean('enabled')->default(true);
-            $table->string('slug');
+            //$table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });
