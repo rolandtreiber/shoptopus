@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->text('name');
+            $table->string('slug');
             $table->text('short_description');
             $table->longtext('description');
             $table->decimal('price');
@@ -30,7 +31,6 @@ class CreateProductsTable extends Migration
             $table->string('sku', 50)->unique()->nullable();
             $table->json('cover_photo')->nullable();
             Module::enabled('ratings') && $table->float('rating')->nullable();
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

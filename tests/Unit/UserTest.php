@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Address;
-use App\Models\Payment;
+use Illuminate\Support\Str;
 use App\Models\PaymentSource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -34,6 +34,12 @@ class UserTest extends TestCase
     public function it_has_a_last_name_field()
     {
         $this->assertNotNull($this->user->last_name);
+    }
+
+    /** @test */
+    public function it_has_a_slug_generated_from_its_first_and_last_name()
+    {
+        $this->assertEquals(Str::slug($this->user->first_name . ' ' . $this->user->last_name), $this->user->slug);
     }
 
     /** @test */

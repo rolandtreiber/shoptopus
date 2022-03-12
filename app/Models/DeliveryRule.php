@@ -34,7 +34,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     public function getSlugOptions() : SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['deliveryType.name'])
+            ->generateSlugsFrom(['delivery_type.name'])
             ->saveSlugsTo('slug');
     }
 

@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use Illuminate\Support\Str;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,6 +19,12 @@ class DeliveryRuleTest extends TestCase
         parent::setUp();
 
         $this->delivery_rule = DeliveryRule::factory()->create();
+    }
+
+    /** @test */
+    public function it_has_a_generated_slug()
+    {
+        $this->assertEquals(Str::slug($this->delivery_rule->delivery_type->name), $this->delivery_rule->slug);
     }
 
     /** @test */

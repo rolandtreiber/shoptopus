@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Product;
+use Illuminate\Support\Str;
 use App\Models\FileContent;
 use App\Enums\ProductStatus;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -25,6 +26,12 @@ class ProductTest extends TestCase
     public function it_has_a_name_field()
     {
         $this->assertNotNull($this->product->name);
+    }
+
+    /** @test */
+    public function it_has_a_slug_generated_from_its_name_field()
+    {
+        $this->assertEquals(Str::slug($this->product->name), $this->product->slug);
     }
 
     /** @test */

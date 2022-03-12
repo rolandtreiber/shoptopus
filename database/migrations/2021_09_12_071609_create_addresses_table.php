@@ -18,13 +18,13 @@ class CreateAddressesTable extends Migration
             $table->string('address_line_1');
             $table->string('town');
             $table->string('post_code');
+            $table->string('slug');
             $table->string('country')->default('UK');
             $table->foreignUuid('user_id')->nullable()->constrained();
             $table->string('name')->nullable();
             $table->string('address_line_2')->nullable();
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

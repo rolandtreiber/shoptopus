@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Address;
+use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AddressTest extends TestCase
@@ -18,6 +19,16 @@ class AddressTest extends TestCase
         parent::setUp();
 
         $this->address = Address::factory()->create();
+    }
+
+    /** @test */
+    public function it_has_a_generated_slug()
+    {
+        $string = optional($this->address->user)->name ?? '';
+        $string .= $this->address->name ? ' ' . $this->address->name : '';
+        $string .= $this->address->town ? ' ' . $this->address->town . ' ' : '';
+
+        $this->assertEquals(Str::slug(trim($string)), $this->address->slug);
     }
 
     /** @test */
