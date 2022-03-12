@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
                     $tagId = (new ProductTag)->findNthId(rand(1, ProductTag::count()-1));
                 } while (in_array($tagId, $usedTags));
                 $usedTags[] = $tagId;
-                (new Product())->findNth($productId)->productTags()->attach($tagId);
+                (new Product())->findNth($productId)->product_tags()->attach($tagId);
             }
         }
 

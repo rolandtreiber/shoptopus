@@ -72,7 +72,7 @@ class Product extends SearchableModel implements Auditable, Exportable
     protected $exportableRelationships = [
         'productCategories',
         'productAttributes',
-        'productTags',
+        'product_tags',
         'productVariants',
         'discountRules'
     ];
@@ -243,7 +243,7 @@ class Product extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsToMany
      */
-    public function productTags(): BelongsToMany
+    public function product_tags(): BelongsToMany
     {
         return $this->belongsToMany(ProductTag::class);
     }
@@ -317,8 +317,8 @@ class Product extends SearchableModel implements Auditable, Exportable
      */
     public function handleTags(?array $tagIds = [])
     {
-        $this->productTags()->detach();
-        $this->productTags()->sync($tagIds);
+        $this->product_tags()->detach();
+        $this->product_tags()->sync($tagIds);
     }
 
 }

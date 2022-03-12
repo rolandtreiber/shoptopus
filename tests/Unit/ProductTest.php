@@ -184,4 +184,17 @@ class ProductTest extends TestCase
 
         $this->assertTrue($this->product->cover_photo->url === $first_image->url);
     }
+
+    /** @test */
+    public function it_may_have_many_tags()
+    {
+        $this->assertCount(0, $this->product->images());
+
+        FileContent::factory()->create([
+            'fileable_type' => get_class($this->product),
+            'fileable_id' => $this->product->id
+        ]);
+
+        $this->assertInstanceOf(FileContent::class, $this->product->images()->first());
+    }
 }

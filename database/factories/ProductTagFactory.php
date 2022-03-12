@@ -24,6 +24,7 @@ class ProductTagFactory extends Factory
     public function definition(): array
     {
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
+
         return [
             'name' => $translations['name'],
             'description' => $translations['description'],

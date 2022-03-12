@@ -35,7 +35,7 @@ class ProductDetailResource extends JsonResource
             'cover_photo' => $this->cover_photo ?: null,
             'attributes' => AttributeResource::collection($this->productAttributes),
             'sku' => $this->sku,
-            'tags' => ProductTagListResource::collection($this->productTags),
+            'tags' => ProductTagListResource::collection($this->product_tags),
             'categories' => ProductCategorySelectResource::collection($this->productCategories),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
