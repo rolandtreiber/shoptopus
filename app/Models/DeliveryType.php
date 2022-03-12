@@ -71,7 +71,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
     /**
      * @return HasMany
      */
-    public function delivery_rules(): HasMany
+    public function deliveryRules(): HasMany
     {
         return $this->hasMany(DeliveryRule::class);
     }
