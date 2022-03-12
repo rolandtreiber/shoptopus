@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use App\Models\DiscountRule;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,7 +60,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
             $json->where('data.id', $rule->id)
                 ->where('data.type', $rule->type)
                 ->etc());
-        if ($rule->type === DiscountTypes::Amount) {
+        if ($rule->type === DiscountType::Amount) {
             $response
                 ->assertJson(fn (AssertableJson $json) =>
                 $json->where('data.amount', '£'.$rule->amount)
@@ -86,7 +86,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off',
                 'de' => '5% rabatt'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'amount' => 5,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil,
@@ -97,7 +97,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $rule = DiscountRule::find($ruleId);
         $this->assertEquals('5% off', $rule->setLocale('en')->name);
         $this->assertEquals('5% rabatt', $rule->setLocale('de')->name);
-        $this->assertEquals(DiscountTypes::Percentage, $rule->type);
+        $this->assertEquals(DiscountType::Percentage, $rule->type);
         $this->assertEquals(5, $rule->amount);
         $this->assertEquals($validFrom->format('Y-m-d H:i:s'), $rule->valid_from);
         $this->assertEquals($validUntil->format('Y-m-d H:i:s'), $rule->valid_until);
@@ -119,7 +119,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off UPDATED',
                 'de' => '5% rabatt AKTUALISIERT'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'amount' => 8.5,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
@@ -129,7 +129,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $rule = DiscountRule::find($ruleId);
         $this->assertEquals('5% off UPDATED', $rule->setLocale('en')->name);
         $this->assertEquals('5% rabatt AKTUALISIERT', $rule->setLocale('de')->name);
-        $this->assertEquals(DiscountTypes::Percentage, $rule->type);
+        $this->assertEquals(DiscountType::Percentage, $rule->type);
         $this->assertEquals(8.5, $rule->amount);
         $this->assertEquals($validFrom->format('Y-m-d H:i:s'), $rule->valid_from);
         $this->assertEquals($validUntil->format('Y-m-d H:i:s'), $rule->valid_until);
@@ -150,7 +150,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_creation_requires_appropriate_permissions()
+    public function test_discount_rule_creation_requires_appropriate_Permission()
     {
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $validFrom = Carbon::now();
@@ -160,7 +160,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off',
                 'de' => '5% rabatt'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'amount' => 5,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
@@ -171,7 +171,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_updating_requires_appropriate_permissions()
+    public function test_discount_rule_updating_requires_appropriate_Permission()
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -184,7 +184,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off UPDATED',
                 'de' => '5% rabatt AKTUALISIERT'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'amount' => 8.5,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
@@ -195,7 +195,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_deletion_requires_appropriate_permissions()
+    public function test_discount_rule_deletion_requires_appropriate_Permission()
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -217,7 +217,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off',
                 'de' => '5% rabatt'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -240,7 +240,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
                 'en' => '5% off UPDATED',
                 'de' => '5% rabatt AKTUALISIERT'
             ]),
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'amount' => "Thirty two",
             'valid_from' => $validFrom,
             'valid_until' => $validUntil

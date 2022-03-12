@@ -15,7 +15,7 @@ use App\Http\Requests\Auth\ResendVerificationRequest;
 
 class AuthController extends Controller
 {
-    private $authService;
+    private AuthServiceInterface $authService;
 
     public function __construct(AuthServiceInterface $authService)
     {

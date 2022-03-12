@@ -2,17 +2,15 @@
 
 namespace App\Models;
 
-use App\Traits\HasFiles;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\HasFiles;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Content extends Model implements Auditable
 {
-    use HasFactory, HasFiles;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
+    use HasFactory, HasFiles, HasUUID, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.

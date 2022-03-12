@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Admin\Product;
 
-use App\Enums\ProductStatuses;
+use App\Enums\ProductStatus;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +22,7 @@ class ProductRepository implements ProductRepositoryInterface
     public function bulkArchive(array $ids): bool
     {
         try {
-            DB::table('products')->whereIn('id', $ids)->update(['status' => ProductStatuses::Discontinued]);
+            DB::table('products')->whereIn('id', $ids)->update(['status' => ProductStatus::Discontinued]);
             return true;
         } catch(\Exception $exception) {
             return false;

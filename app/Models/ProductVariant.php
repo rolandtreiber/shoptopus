@@ -5,10 +5,8 @@ namespace App\Models;
 use App\Traits\HasFiles;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -28,14 +26,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasTranslations;
-    use HasFiles;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.

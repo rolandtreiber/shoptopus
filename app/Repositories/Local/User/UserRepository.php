@@ -18,9 +18,9 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
      * Get the currently authenticated user instance
      *
      * @param bool $returnAsArray
-     * @return null|mixed
+     * @return mixed
      */
-    public function getCurrentUser(bool $returnAsArray = true)
+    public function getCurrentUser(bool $returnAsArray = true) : mixed
     {
         try {
             $user = Auth::check() ? Auth::user() : null;

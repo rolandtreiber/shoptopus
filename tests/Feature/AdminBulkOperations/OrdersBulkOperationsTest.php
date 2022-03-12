@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\AdminBulkOperations;
 
-use App\Enums\OrderStatuses;
+use App\Enums\OrderStatus;
 use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\BulkOperationsTestCase;
@@ -21,21 +21,21 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_update_multiple_order_status()
     {
         $orderIds = Order::factory()->state([
-            'status' => OrderStatuses::Paid
+            'status' => OrderStatus::Paid
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
             'ids' => $orderIds,
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('orders', [
             'id' => $orderIds[0],
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $this->assertDatabaseHas('orders', [
             'id' => $orderIds[1],
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
     }
 
@@ -46,7 +46,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $response->assertStatus(422);
     }
@@ -57,12 +57,12 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_order_status_update_authorization()
     {
         $orderIds = Order::factory()->state([
-            'status' => OrderStatuses::Paid
+            'status' => OrderStatus::Paid
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
             'ids' => $orderIds,
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $response->assertForbidden();
     }
@@ -73,11 +73,11 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_order_status_update_authentication()
     {
         $orderIds = Order::factory()->state([
-            'status' => OrderStatuses::Paid
+            'status' => OrderStatus::Paid
         ])->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
             'ids' => $orderIds,
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $response->assertStatus(500);
     }
@@ -90,7 +90,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
             'ids' => ['4321421', '5534643'],
-            'status' => OrderStatuses::InTransit
+            'status' => OrderStatus::InTransit
         ]);
         $response->assertStatus(422);
     }

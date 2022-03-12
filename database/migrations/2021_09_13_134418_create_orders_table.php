@@ -1,7 +1,6 @@
 <?php
 
-use App\Enums\OrderStatuses;
-use App\Models\User;
+use App\Enums\OrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -25,8 +24,8 @@ class CreateOrdersTable extends Migration
             $table->decimal('subtotal')->default(0);
             $table->decimal('total_price')->default(0);
             $table->decimal('total_discount')->default(0);
-            $table->decimal('delivery')->default(0);
-            $table->integer('status')->default(OrderStatuses::Paid);
+            $table->decimal('delivery_cost')->default(0);
+            $table->integer('status')->default(OrderStatus::Paid);
             $table->string('slug');
             $table->softDeletes();
             $table->timestamps();

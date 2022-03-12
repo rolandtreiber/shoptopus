@@ -13,25 +13,23 @@ class CreateDeliveryRulesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('delivery_rules', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('delivery_type_id')->nullable()->constrained();
+            $table->foreignUuid('delivery_type_id')->constrained();
             $table->json('postcodes')->nullable();
-            $table->decimal('min_weight')->nullable();
-            $table->decimal('max_weight')->nullable();
-            $table->decimal('min_distance')->nullable();
-            $table->decimal('max_distance')->nullable();
+            $table->unsignedBigInteger('min_weight')->nullable();
+            $table->unsignedBigInteger('max_weight')->nullable();
+            $table->unsignedBigInteger('min_distance')->nullable();
+            $table->unsignedBigInteger('max_distance')->nullable();
+            $table->string('distance_unit')->default('mile');
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->string('slug');
+            $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -41,6 +39,8 @@ class CreateDeliveryRulesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('delivery_rules');
+        Schema::enableForeignKeyConstraints();
     }
 }

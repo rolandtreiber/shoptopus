@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use App\Models\User;
 use App\Models\VoucherCode;
 use Carbon\Carbon;
@@ -74,7 +74,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
 
         $response = $this->post(route('admin.api.create.voucher-code'), [
             'amount' => 10,
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -82,7 +82,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $voucherCodeId = $response->json()['data']['id'];
         $code = VoucherCode::find($voucherCodeId);
         $this->assertEquals(10, $code->amount);
-        $this->assertEquals(DiscountTypes::Percentage, $code->type);
+        $this->assertEquals(DiscountType::Percentage, $code->type);
         $this->assertEquals($validFrom->format('Y-m-d H:i:s'), $code->valid_from);
         $this->assertEquals($validUntil->format('Y-m-d H:i:s'), $code->valid_until);
     }
@@ -100,7 +100,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'voucherCode' => $voucherCode
         ]), [
             'amount' => 5,
-            'type' => DiscountTypes::Amount,
+            'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -108,7 +108,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $voucherCodeId = $response->json()['data']['id'];
         $code = VoucherCode::find($voucherCodeId);
         $this->assertEquals(5, $code->amount);
-        $this->assertEquals(DiscountTypes::Amount, $code->type);
+        $this->assertEquals(DiscountType::Amount, $code->type);
         $this->assertEquals($validFrom->format('Y-m-d H:i:s'), $code->valid_from);
         $this->assertEquals($validUntil->format('Y-m-d H:i:s'), $code->valid_until);
     }
@@ -128,14 +128,14 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_creation_requires_appropriate_permissions()
+    public function test_voucher_code_creation_requires_appropriate_Permission()
     {
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addMonth();
         $response = $this->post(route('admin.api.create.voucher-code'), [
             'amount' => 10,
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -145,7 +145,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_updating_requires_appropriate_permissions()
+    public function test_voucher_code_updating_requires_appropriate_Permission()
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
@@ -155,7 +155,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'voucherCode' => $voucherCode
         ]), [
             'amount' => 5,
-            'type' => DiscountTypes::Amount,
+            'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -165,7 +165,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_deletion_requires_appropriate_permissions()
+    public function test_voucher_code_deletion_requires_appropriate_Permission()
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
@@ -184,7 +184,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $validUntil = Carbon::now()->addMonth();
 
         $response = $this->post(route('admin.api.create.voucher-code'), [
-            'type' => DiscountTypes::Percentage,
+            'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);
@@ -204,7 +204,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'voucherCode' => $voucherCode
         ]), [
             'amount' => 'thirtytwo',
-            'type' => DiscountTypes::Amount,
+            'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil
         ]);

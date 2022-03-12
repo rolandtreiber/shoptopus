@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Traits\IsTranslateableFactory;
+use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\FileContent;
 
 class FileContentFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.

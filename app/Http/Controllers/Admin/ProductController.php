@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\FileTypes;
+use App\Enums\FileType;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;

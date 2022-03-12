@@ -33,8 +33,7 @@ class GetAllVoucherCodesTest extends TestCase
      */
     public function it_returns_the_correct_format()
     {
-        $this->signIn()
-            ->sendRequest()
+        $this->sendRequest()
             ->assertJsonStructure([
                 'message',
                 'data',
@@ -52,7 +51,7 @@ class GetAllVoucherCodesTest extends TestCase
     {
         VoucherCode::factory()->count(2)->create();
 
-        $res = $this->signIn()->sendRequest();
+        $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
@@ -73,9 +72,46 @@ class GetAllVoucherCodesTest extends TestCase
             'deleted_at' => now()
         ]);
 
-        $res = $this->signIn()->sendRequest();
+        $res = $this->sendRequest();
 
         $this->assertEmpty($res->json('data'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function it_returns_the_associated_orders()
+    {
+        $vc = VoucherCode::factory()->create();
+        $order = Order::factory()->create(['voucher_code_id' => $vc->id]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'orders' => [
+                        [
+                            'id',
+                            'user_id',
+                            'delivery_type_id',
+                            'address_id',
+                            'original_price',
+                            'subtotal',
+                            'total_price',
+                            'total_discount',
+                            'delivery_cost',
+                            'status'
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $order->update(['deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.orders'));
     }
 
     /**

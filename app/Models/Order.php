@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use App\Enums\DiscountTypes;
-use App\Enums\OrderStatuses;
-use App\Helpers\GeneralHelper;
-use App\Traits\HasEventLogs;
 use App\Traits\HasUUID;
+use App\Traits\HasEventLogs;
+use App\Enums\OrderStatus;
+use App\Helpers\GeneralHelper;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
@@ -46,12 +44,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Order extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID;
-    use SoftDeletes;
-    use HasEventLogs;
-    use HasSlug;
-    use \OwenIt\Auditing\Auditable;
-    use HasExportable;
+    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -98,7 +91,9 @@ class Order extends SearchableModel implements Auditable, Exportable
         'original_price',
         'subtotal',
         'total_price',
-        'total_discount'
+        'total_discount',
+        'delivery_cost',
+        'deleted_at'
     ];
 
     /**
@@ -110,10 +105,11 @@ class Order extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'user_id' => 'string',
         'status' => 'integer',
-        'original_price' => 'decimal:2',
-        'subtotal' => 'decimal:2',
-        'total_price' => 'decimal:2',
-        'total_discount' => 'decimal:2'
+        'original_price' => 'float',
+        'subtotal' => 'float',
+        'total_price' => 'float',
+        'total_discount' => 'float',
+        'delivery_cost' => 'float'
     ];
 
     public function scopeSearch($query, $search)
@@ -127,22 +123,22 @@ class Order extends SearchableModel implements Auditable, Exportable
     {
         switch ($view) {
             case 'paid':
-                $query->where('status', OrderStatuses::Paid);
+                $query->where('status', OrderStatus::Paid);
                 break;
             case 'processing':
-                $query->where('status', OrderStatuses::Processing);
+                $query->where('status', OrderStatus::Processing);
                 break;
             case 'in_transit':
-                $query->where('status', OrderStatuses::InTransit);
+                $query->where('status', OrderStatus::InTransit);
                 break;
             case 'completed':
-                $query->where('status', OrderStatuses::Completed);
+                $query->where('status', OrderStatus::Completed);
                 break;
             case 'on_hold':
-                $query->where('status', OrderStatuses::OnHold);
+                $query->where('status', OrderStatus::OnHold);
                 break;
             case 'cancelled':
-                $query->where('status', OrderStatuses::Cancelled);
+                $query->where('status', OrderStatus::Cancelled);
                 break;
         }
     }
@@ -182,7 +178,7 @@ class Order extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsTo
      */
-    public function voucherCode(): BelongsTo
+    public function voucher_code(): BelongsTo
     {
         return $this->belongsTo(VoucherCode::class);
     }
@@ -190,7 +186,7 @@ class Order extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsTo
      */
-    public function deliveryType(): BelongsTo
+    public function delivery_type(): BelongsTo
     {
         return $this->belongsTo(DeliveryType::class);
     }
@@ -203,24 +199,20 @@ class Order extends SearchableModel implements Auditable, Exportable
         $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
         $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
         $discount = DB::table('order_product')->where('order_id', $this->id)->sum('total_discount');
-        $total = $subTotal + $this->delivery;
+        $total = $subTotal + $this->delivery_cost;
 
         $this->total_discount = $discount;
         $this->subtotal = $subTotal;
         $this->original_price = $originalPrice;
-        $voucherCode = $this->voucherCode;
-        if ($voucherCode) {
-            switch (config('shoptopus.voucher_code_basis')) {
-                case 'full_price':
-                    $basis = $originalPrice;
-                    break;
-                case 'final_price':
-                    $basis = $total;
-                    break;
-                default:
-                    $basis = $total;
-            }
-            $this->total_price = GeneralHelper::getDiscountedValue($voucherCode->type, $voucherCode->amount, $basis);
+        $voucher_code = $this->voucher_code;
+        if ($voucher_code) {
+            $basis = match (config('shoptopus.voucher_code_basis'))
+            {
+                'full_price' => $originalPrice,
+                'final_price' => $total,
+                default => $total,
+            };
+            $this->total_price = GeneralHelper::getDiscountedValue($voucher_code->type, $voucher_code->amount, $basis);
         } else {
             $this->total_price = $total;
         }

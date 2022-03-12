@@ -9,8 +9,7 @@ Route::group([
 ], function () {
     Route::group([
         'name' => 'voucher_codes.',
-        'prefix' => 'voucher_codes',
-        'middleware' => 'auth:api'
+        'prefix' => 'voucher_codes'
     ], function () {
         Route::get('/', [VoucherCodeController::class, 'getAll'])->name('api.voucher_codes.getAll');
         Route::get('/{id}', [VoucherCodeController::class, 'get'])->name('api.voucher_codes.get');

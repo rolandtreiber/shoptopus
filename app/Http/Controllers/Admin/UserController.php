@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\RandomStringModes;
+use App\Enums\RandomStringMode;
 use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreRequest;
@@ -49,7 +49,7 @@ class UserController extends Controller
         $user = new User();
         $user->fill($data);
         $request->hasFile('avatar') && $user->avatar = $this->saveFileAndGetUrl($request->avatar, config('shoptopus.user_avatar_dimensions')[0], config('shoptopus.user_avatar_dimensions')[1]);
-        $user->password = Hash::make(GeneralHelper::generateRandomString(8, RandomStringModes::UppercaseLowercaseAndNumbers));
+        $user->password = Hash::make(GeneralHelper::generateRandomString(8, RandomStringMode::UppercaseLowercaseAndNumbers));
         foreach ($request->roles as $role) {
             $user->assignRole($role);
         }

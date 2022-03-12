@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\ProductStatuses;
+use App\Enums\ProductStatus;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFiles;
 use App\Traits\HasEventLogs;
@@ -14,7 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -36,7 +35,6 @@ use Spatie\Translatable\HasTranslations;
  * @property int $purchase_count
  * @property int $backup_stock
  * @property \Illuminate\Database\Eloquent\Collection $tags
- * @property Collection $categories
  * @property \Illuminate\Database\Eloquent\Collection $fileContents
  * @property FileContent $coverPhoto
  * @property string $updated_at
@@ -45,16 +43,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Product extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasTranslations;
-    use HasFiles;
-    use HasRatings;
-    use HasEventLogs;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, HasTranslations, HasFiles, HasRatings, HasEventLogs, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -144,13 +133,13 @@ class Product extends SearchableModel implements Auditable, Exportable
     {
         switch ($view) {
             case 'active':
-                $query->where('status', ProductStatuses::Active);
+                $query->where('status', ProductStatus::Active);
                 break;
             case 'discontinued':
-                $query->where('status', ProductStatuses::Discontinued);
+                $query->where('status', ProductStatus::Discontinued);
                 break;
             case 'provisional':
-                $query->where('status', ProductStatuses::Provisional);
+                $query->where('status', ProductStatus::Provisional);
                 break;
         }
     }
@@ -328,8 +317,8 @@ class Product extends SearchableModel implements Auditable, Exportable
      */
     public function handleTags(?array $tagIds = [])
     {
-        $this->tags()->detach();
-        $this->tags()->sync($tagIds);
+        $this->productTags()->detach();
+        $this->productTags()->sync($tagIds);
     }
 
 }

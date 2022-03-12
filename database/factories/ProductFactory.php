@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Enums\ProductStatuses;
-use App\Enums\RandomStringModes;
-use App\Helpers\GeneralHelper;
-use App\Traits\IsTranslateableFactory;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Product;
+use App\Enums\ProductStatus;
+use App\Helpers\GeneralHelper;
+use App\Enums\RandomStringMode;
+use App\Traits\TranslatableFactory;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.
@@ -34,11 +34,11 @@ class ProductFactory extends Factory
             'short_description' => $translated['short_description'],
             'description' => $translated['description'],
             'price' => $this->faker->numberBetween(10, 55),
-            'status' => $this->faker->randomElement([ProductStatuses::Active, ProductStatuses::Provisional, ProductStatuses::Discontinued]),
+            'status' => ProductStatus::Provisional,
             'purchase_count' => $this->faker->numberBetween(0, 200),
-            'stock' => $this->faker->numberBetween(0, 150),
+            'stock' => $this->faker->numberBetween(1, 150),
             'backup_stock' => $this->faker->numberBetween(0, 150),
-            'sku' => GeneralHelper::generateRandomString(10, RandomStringModes::UppercaseAndNumbers)
+            'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers)
         ];
     }
 }

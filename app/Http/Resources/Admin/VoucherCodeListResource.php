@@ -2,8 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Enums\OrderStatuses;
-use App\Helpers\GeneralHelper;
+use App\Enums\OrderStatus;
 use App\Models\VoucherCode;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -32,11 +31,11 @@ class VoucherCodeListResource extends JsonResource
             'valid_from' => Carbon::parse($this->valid_from),
             'valid_until' => Carbon::parse($this->valid_until),
             'used' => DB::table('orders')->whereIn('status', [
-                OrderStatuses::Completed,
-                OrderStatuses::InTransit,
-                OrderStatuses::Paid,
-                OrderStatuses::Processing,
-                OrderStatuses::OnHold
+                OrderStatus::Completed,
+                OrderStatus::InTransit,
+                OrderStatus::Paid,
+                OrderStatus::Processing,
+                OrderStatus::OnHold
             ])->where('voucher_code_id', $this->id)->count()
         ];
     }

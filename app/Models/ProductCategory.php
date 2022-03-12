@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\AvailabilityStatuses;
+use App\Enums\AvailabilityStatus;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;

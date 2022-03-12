@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Enums\UserRoles;
+use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -29,14 +29,14 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Implicitly grant "Super Admin" role all permissions
+        // Implicitly grant "Super Admin" role all Permission
         // This works in the app by using gate-related functions like auth()->user->can() and @can()
         Gate::before(function ($user) {
-            return $user->hasRole(Role::findByName(UserRoles::SuperAdmin)) ? true : null;
+            return $user->hasRole(Role::findByName(UserRole::SuperAdmin)) ? true : null;
         });
 
         Gate::define('perform-bulk-action', function (User $user) {
-            return $user->hasRole(UserRoles::SuperAdmin) || $user->hasRole(UserRoles::Admin) || $user->hasRole(UserRoles::StoreManager);
+            return $user->hasRole(UserRole::SuperAdmin) || $user->hasRole(UserRole::Admin) || $user->hasRole(UserRole::StoreManager);
         });
 
         if (! $this->app->routesAreCached()) {

@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Enums\DeliveryTypeStatuses;
+use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\DeliveryRule;
 
 class DeliveryRuleFactory extends Factory
 {
@@ -31,7 +30,7 @@ class DeliveryRuleFactory extends Factory
         }
 
         $noMinWeight = $this->faker->boolean;
-        $minWeight = $noMinWeight ? 0 : $this->faker->randomFloat(1000, 5000);
+        $minWeight = $noMinWeight ? 0 : $this->faker->randomNumber(4);
         $maxWeight = $minWeight + 5000;
 
         $noMinDistance = $this->faker->boolean;
@@ -40,14 +39,15 @@ class DeliveryRuleFactory extends Factory
 
         return [
             'delivery_type_id' => DeliveryType::factory(),
-            'status' => $this->faker->randomElement([DeliveryTypeStatuses::Enabled, DeliveryTypeStatuses::Disabled]),
             'postcodes' => $postcodes,
             'min_weight' => $minWeight,
             'max_weight' => $maxWeight,
             'min_distance' => $minDistance,
             'max_distance' => $maxDistance,
+            'distance_unit' => 'mile',
             'lat' => $this->faker->latitude,
-            'lon' => $this->faker->longitude
+            'lon' => $this->faker->longitude,
+            'enabled' => true
         ];
     }
 }

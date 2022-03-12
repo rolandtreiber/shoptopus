@@ -10,11 +10,11 @@ use App\Services\Local\VoucherCode\VoucherCodeServiceInterface;
 
 class VoucherCodeController extends Controller
 {
-    private VoucherCodeServiceInterface $modelService;
+    private VoucherCodeServiceInterface $voucherCodeService;
 
-    public function __construct(VoucherCodeServiceInterface $addressService)
+    public function __construct(VoucherCodeServiceInterface $voucherCodeService)
     {
-        $this->modelService = $addressService;
+        $this->voucherCodeService = $voucherCodeService;
     }
 
     /**
@@ -29,7 +29,7 @@ class VoucherCodeController extends Controller
             $filters = $this->getAndValidateFilters($request);
             $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
             $page_formatting = $this->getPageFormatting($request);
-            return response()->json($this->getResponse($page_formatting, $this->modelService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse($page_formatting, $this->voucherCodeService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -45,7 +45,7 @@ class VoucherCodeController extends Controller
     public function get(Request $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->modelService->get($id), $request));
+            return response()->json($this->getResponse([], $this->voucherCodeService->get($id), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
@@ -60,7 +60,7 @@ class VoucherCodeController extends Controller
     public function post(PostRequest $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->modelService->post($request->validated());
+            $data = $this->voucherCodeService->post($request->validated());
             return response()->json($this->postResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -77,7 +77,7 @@ class VoucherCodeController extends Controller
     public function update(PatchRequest $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $data = $this->modelService->update($id, $request->validated());
+            $data = $this->voucherCodeService->update($id, $request->validated());
             return response()->json($this->putResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
@@ -93,7 +93,7 @@ class VoucherCodeController extends Controller
     public function delete(string $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $this->modelService->delete($id);
+            $this->voucherCodeService->delete($id);
             return response()->json($this->deleteResponse());
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

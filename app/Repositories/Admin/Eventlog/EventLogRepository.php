@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Admin\Eventlog;
 
-use App\Enums\OrderStatuses;
+use App\Enums\OrderStatus;
 use App\Models\EventLog;
 use App\Models\Order;
 
@@ -14,7 +14,7 @@ class EventLogRepository implements EventLogRepositoryInterface {
         switch ($modelClass) {
             case (Order::class):
                 /** @var Order $model */
-                $eventLog->message = 'Order status was updated to ' . OrderStatuses::getKey($model->status);
+                $eventLog->message = 'Order status was updated to ' . OrderStatus::getKey($model->status);
                 $eventLog->type = $type;
                 $eventLog->data = $data;
                 break;

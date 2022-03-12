@@ -28,8 +28,8 @@ class OrderListResource extends JsonResource
             'total_price' => GeneralHelper::displayPrice($this->total_price),
             'status' => $this->status,
             'user' => $this->user->name,
-            'delivery_type' => $this->deliveryType->getTranslations('name'),
-            'delivery' => $this->delivery,
+            'delivery_type' => $this->delivery_type->getTranslations('name'),
+            'delivery_cost' => $this->delivery_cost,
             'town' => $this->address->town
         ];
     }

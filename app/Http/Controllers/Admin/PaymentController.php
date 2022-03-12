@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\PaymentStatuses;
+use App\Enums\PaymentStatus;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\PaymentStatusUpdateBulkOperationRequest;
@@ -103,7 +103,7 @@ class PaymentController extends Controller
         $request->validate([
             'status' => [
                 'required',
-                Rule::in(PaymentStatuses::getValues())
+                Rule::in(PaymentStatus::getValues())
                 ]
         ]);
         if ($this->paymentRepository->bulkUpdateStatus($request->ids, $request->status)) {

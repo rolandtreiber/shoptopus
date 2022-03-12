@@ -13,21 +13,17 @@ class CreateDeliveryTypesTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-
         Schema::create('delivery_types', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('name');
-            $table->text('description');
-            $table->boolean('enabled_by_default_on_creation')->default(true);
-            $table->boolean('enabled')->default(true);
+            $table->json('name');
+            $table->json('description');
             $table->decimal('price')->default(0);
             $table->string('slug');
+            $table->boolean('enabled')->default(true);
+            $table->boolean('enabled_by_default_on_creation')->default(true);
             $table->softDeletes();
             $table->timestamps();
         });
-
-        Schema::enableForeignKeyConstraints();
     }
 
     /**
@@ -37,6 +33,8 @@ class CreateDeliveryTypesTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('delivery_types');
+        Schema::enableForeignKeyConstraints();
     }
 }

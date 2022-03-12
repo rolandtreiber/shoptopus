@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Traits\IsTranslateableFactory;
+use App\Traits\TranslatableFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\ProductAttributeOption;
 
 class ProductAttributeOptionFactory extends Factory
 {
-    use IsTranslateableFactory;
+    use TranslatableFactory;
 
     /**
      * The name of the factory's corresponding model.

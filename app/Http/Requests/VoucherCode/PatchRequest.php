@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\VoucherCode;
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PatchRequest extends FormRequest
@@ -28,7 +28,7 @@ class PatchRequest extends FormRequest
             'amount' => "sometimes|required|regex:/[\d]{1,2}.[\d]{1,2}/",
             'valid_from' => "sometimes|required|date",
             'valid_until' => "sometimes|required|date",
-            'type' => 'sometimes|required|in:' . implode(',', DiscountTypes::getValues()),
+            'type' => 'sometimes|required|in:' . implode(',', DiscountType::getValues()),
             'enabled' => 'sometimes|required|boolean'
         ];
     }
