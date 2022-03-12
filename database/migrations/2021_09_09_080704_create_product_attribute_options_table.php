@@ -22,6 +22,7 @@ class CreateProductAttributeOptionsTable extends Migration
             $table->text('name');
             $table->string('value')->nullable();
             $table->boolean('enabled')->default(true);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

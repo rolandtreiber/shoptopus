@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\FileType;
 use App\Traits\HasUUID;
-use App\Enums\FileTypes;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,25 +48,25 @@ class FileContent extends SearchableModel
     {
         switch ($view) {
             case 'image':
-                $query->where('type', FileTypes::Image);
+                $query->where('type', FileType::Image);
                 break;
             case 'video':
-                $query->where('type', FileTypes::Video);
+                $query->where('type', FileType::Video);
                 break;
             case 'audio':
-                $query->where('type', FileTypes::Audio);
+                $query->where('type', FileType::Audio);
                 break;
             case 'pdf':
-                $query->where('type', FileTypes::Pdf);
+                $query->where('type', FileType::Pdf);
                 break;
             case 'spreadsheet':
-                $query->where('type', FileTypes::Spreadsheet);
+                $query->where('type', FileType::Spreadsheet);
                 break;
             case 'textdocument':
-                $query->where('type', FileTypes::TextDocument);
+                $query->where('type', FileType::TextDocument);
                 break;
             case 'other':
-                $query->where('type', FileTypes::Other);
+                $query->where('type', FileType::Other);
                 break;
         }
     }
@@ -77,7 +77,7 @@ class FileContent extends SearchableModel
      */
     public function scopeImage($query): Builder
     {
-        return $query->where('type', FileTypes::Image);
+        return $query->where('type', FileType::Image);
     }
 
     /**
@@ -86,7 +86,7 @@ class FileContent extends SearchableModel
      */
     public function scopeAudio($query): Builder
     {
-        return $query->where('type', FileTypes::Audio);
+        return $query->where('type', FileType::Audio);
     }
 
     /**
@@ -95,7 +95,7 @@ class FileContent extends SearchableModel
      */
     public function scopeVideo($query): Builder
     {
-        return $query->where('type', FileTypes::Video);
+        return $query->where('type', FileType::Video);
     }
 
     /**
@@ -104,7 +104,7 @@ class FileContent extends SearchableModel
      */
     public function scopePdf($query): Builder
     {
-        return $query->where('type', FileTypes::Pdf);
+        return $query->where('type', FileType::Pdf);
     }
 
     /**
@@ -113,7 +113,7 @@ class FileContent extends SearchableModel
      */
     public function scopeSpreadsheet($query): Builder
     {
-        return $query->where('type', FileTypes::Spreadsheet);
+        return $query->where('type', FileType::Spreadsheet);
     }
 
     /**
@@ -122,7 +122,7 @@ class FileContent extends SearchableModel
      */
     public function scopeDocument($query): Builder
     {
-        return $query->where('type', FileTypes::TextDocument);
+        return $query->where('type', FileType::TextDocument);
     }
 
     /**
@@ -131,7 +131,7 @@ class FileContent extends SearchableModel
      */
     public function scopeOther($query): Builder
     {
-        return $query->where('type', FileTypes::Other);
+        return $query->where('type', FileType::Other);
     }
 
 }

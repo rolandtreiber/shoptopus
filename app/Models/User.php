@@ -6,21 +6,56 @@ use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Traits\Searchable;
-use Spatie\Permission\Models\Role;
-use Laravel\Passport\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Notifications\ResetPasswordNotification;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use App\Notifications\ResetPasswordNotification;
 
-class User extends Authenticatable implements Auditable
+class User extends Authenticatable implements Auditable, Exportable
 {
-    use Notifiable, HasApiTokens, HasFactory, HasRoles, HasFile, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable, Searchable;
+    use Notifiable, HasApiTokens, HasFactory, HasRoles, HasFile, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable, Searchable, HasSlug, HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['first_name', 'last_name'])
+            ->saveSlugsTo('slug');
+    }
+
+    /**
+     * @var array
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'prefix',
+        'email',
+        'phone',
+        'email_verified_at',
+        'client_ref',
+        'role_names'
+    ];
+
+    protected $exportableRelationships = [
+        'addresses',
+        'paymentSources',
+        'payments',
+        'orders'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -37,11 +72,12 @@ class User extends Authenticatable implements Auditable
         'email_verified_at',
         'password',
         'client_ref',
-        'language_id',
         'avatar',
         'is_favorite',
         'deleted_at'
     ];
+
+    protected $appends = ['role_names'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -63,6 +99,11 @@ class User extends Authenticatable implements Auditable
         'avatar' => 'object',
         'is_favorite' => 'boolean'
     ];
+
+    public function getRoleNamesAttribute()
+    {
+        return implode(', ', $this->getRoleNames()->toArray());
+    }
 
     /**
      * Get the social accounts of the user.
@@ -112,10 +153,6 @@ class User extends Authenticatable implements Auditable
 
         $this->notify(new ResetPasswordNotification($url));
     }
-
-
-
-
 
     public function scopeSystemUsers($query)
     {

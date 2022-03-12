@@ -25,6 +25,7 @@ class ProductAttributeOptionDetailResource extends JsonResource
             'product_attribute_id' => $this->product_attribute_id,
             'value' => $this->value,
             'image' => $this->image ? $this->image->url : null,
+            'enabled' => $this->enabled,
         ];
     }
 }

@@ -2,19 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\DeliveryTypeBulkOperationRequest;
 use App\Http\Requests\Admin\DeliveryTypeStoreRequest;
 use App\Http\Requests\Admin\DeliveryTypeUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\DeliveryTypeDetailResource;
 use App\Http\Resources\Admin\DeliveryTypeListResource;
 use App\Models\DeliveryType;
+use App\Repositories\Admin\DeliveryType\DeliveryTypeRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class DeliveryTypeController extends Controller
 {
     use ProcessRequest;
+    protected DeliveryTypeRepositoryInterface $deliveryTypeRepository;
+
+    /**
+     * @param DeliveryTypeRepositoryInterface $deliveryTypeRepository
+     */
+    public function __construct(DeliveryTypeRepositoryInterface $deliveryTypeRepository)
+    {
+        $this->deliveryTypeRepository = $deliveryTypeRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -76,4 +89,32 @@ class DeliveryTypeController extends Controller
         return ['status' => 'Success'];
     }
 
+    /**
+     * @param DeliveryTypeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkUpdateAvailability(DeliveryTypeBulkOperationRequest $request): array
+    {
+        $request->validate([
+            'availability' => ['required', 'boolean']
+        ]);
+        if ($this->deliveryTypeRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+    }
+
+    /**
+     * @param DeliveryTypeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkDelete(DeliveryTypeBulkOperationRequest $request): array
+    {
+        if ($this->deliveryTypeRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+    }
 }

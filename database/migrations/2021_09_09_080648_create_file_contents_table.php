@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\FileTypes;
+use App\Enums\FileType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +23,7 @@ class CreateFileContentsTable extends Migration
             $table->nullableMorphs('fileable');
             $table->text('title')->nullable();
             $table->text('description')->nullable();
-            $table->tinyInteger('type')->default(FileTypes::Image);
+            $table->tinyInteger('type')->default(FileType::Image);
             $table->timestamps();
         });
 

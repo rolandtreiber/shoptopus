@@ -23,6 +23,7 @@ class CreateBannersTable extends Migration
             $table->string('button_url')->nullable();
             $table->boolean('enabled')->default(true);
             $table->unsignedBigInteger('total_clicks')->default(0);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

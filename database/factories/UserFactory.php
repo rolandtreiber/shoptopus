@@ -27,12 +27,10 @@ class UserFactory extends Factory
             'last_name' => $this->faker->lastName,
             'email' => $this->faker->unique()->email,
             'prefix' => null,
-//            'prefix' => $this->faker->randomElement(config('users.available_prefixes')),
             'email_verified_at' => null,
             'password' => bcrypt('password'),
             'temporary' => false,
             'phone' => null,
-//            'phone' => $this->faker->phoneNumber,
             'avatar' => [
                 'url' => 'https://picsum.photos/450/450',
                 'file_name' => $this->faker->word

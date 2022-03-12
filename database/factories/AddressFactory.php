@@ -31,8 +31,6 @@ class AddressFactory extends Factory
             'address_line_2' => null,
             'lat' => null,
             'lon' => null,
-//            'lat' => $this->faker->latitude,
-//            'lon' => $this->faker->longitude,
         ];
     }
 }

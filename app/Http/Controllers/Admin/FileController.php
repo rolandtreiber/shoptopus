@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\DeliveryTypeBulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\FileBulkOperationRequest;
 use App\Http\Requests\Admin\FileStoreRequest;
 use App\Http\Requests\Admin\FileUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Common\FileContentResource;
 use App\Models\FileContent;
-use App\Models\User;
+use App\Repositories\Admin\File\FileRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
@@ -16,6 +19,15 @@ use Illuminate\Support\Collection;
 class FileController extends Controller
 {
     use ProcessRequest;
+    protected FileRepositoryInterface $fileRepository;
+
+    /**
+     * @param FileRepositoryInterface $fileRepository
+     */
+    public function __construct(FileRepositoryInterface $fileRepository)
+    {
+        $this->fileRepository = $fileRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -111,6 +123,19 @@ class FileController extends Controller
     {
         $file->delete();
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param FileBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkDelete(FileBulkOperationRequest $request): array
+    {
+        if ($this->fileRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 
 }

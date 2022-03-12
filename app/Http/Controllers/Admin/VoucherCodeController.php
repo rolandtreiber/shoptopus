@@ -2,19 +2,34 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\Interval;
+use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
+use App\Http\Requests\Admin\BulkOperation\VoucherCodeBulkOperationRequest;
 use App\Http\Requests\Admin\VoucherCodeStoreRequest;
 use App\Http\Requests\Admin\VoucherCodeUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\VoucherCodeDetailResource;
 use App\Http\Resources\Admin\VoucherCodeListResource;
 use App\Models\VoucherCode;
+use App\Repositories\Admin\VoucherCode\VoucherCodeRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Validation\Rule;
 
 class VoucherCodeController extends Controller
 {
     use ProcessRequest;
+    protected VoucherCodeRepositoryInterface $voucherCodeRepository;
+
+    /**
+     * @param VoucherCodeRepositoryInterface $voucherCodeRepository
+     */
+    public function __construct(VoucherCodeRepositoryInterface $voucherCodeRepository)
+    {
+        $this->voucherCodeRepository = $voucherCodeRepository;
+    }
 
     /**
      * @param ListRequest $request
@@ -74,5 +89,66 @@ class VoucherCodeController extends Controller
     {
         $voucherCode->delete();
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param VoucherCodeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkExpire(VoucherCodeBulkOperationRequest $request): array
+    {
+        if ($this->voucherCodeRepository->bulkExpire($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+
+    }
+
+    /**
+     * @param VoucherCodeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkStart(VoucherCodeBulkOperationRequest $request): array
+    {
+        if ($this->voucherCodeRepository->bulkStart($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+
+    }
+
+    /**
+     * @param VoucherCodeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkActivateForPeriod(VoucherCodeBulkOperationRequest $request): array
+    {
+        $request->validate([
+            'period' => ['required', Rule::in([
+                Interval::Day,
+                Interval::Week,
+                Interval::Month
+            ])]
+        ]);
+        if ($this->voucherCodeRepository->bulkActivateForPeriod($request->ids, $request->period)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
+    }
+
+    /**
+     * @param VoucherCodeBulkOperationRequest $request
+     * @return string[]
+     * @throws BulkOperationException
+     */
+    public function bulkDelete(VoucherCodeBulkOperationRequest $request): array
+    {
+        if ($this->voucherCodeRepository->bulkDelete($request->ids)) {
+            return ['status' => 'Success'];
+        }
+        throw new BulkOperationException();
     }
 }

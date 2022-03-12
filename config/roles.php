@@ -1,56 +1,56 @@
 <?php
 
-use App\Enums\Permissions;
+use App\Enums\Permission;
 
 return [
     'super_admin' => [
-        Permissions::CanActAsCustomer,
-        Permissions::UsersCanCreate,
-        Permissions::UsersCanUpdate,
-        Permissions::UsersCanChangeRole,
-        Permissions::UsersCanDelete,
-        Permissions::ProductsCanCreate,
-        Permissions::ProductsCanUpdate,
-        Permissions::ProductsCanDelete,
-        Permissions::DeliveryRulesCanCreate,
-        Permissions::DeliveryRulesCanUpdate,
-        Permissions::DeliveryRulesCanDelete
+        Permission::CanActAsCustomer,
+        Permission::UsersCanCreate,
+        Permission::UsersCanUpdate,
+        Permission::UsersCanChangeRole,
+        Permission::UsersCanDelete,
+        Permission::ProductsCanCreate,
+        Permission::ProductsCanUpdate,
+        Permission::ProductsCanDelete,
+        Permission::DeliveryRulesCanCreate,
+        Permission::DeliveryRulesCanUpdate,
+        Permission::DeliveryRulesCanDelete
     ],
     'admin' => [
-        Permissions::CanActAsCustomer,
-        Permissions::ProductsCanCreate,
-        Permissions::ProductsCanUpdate,
-        Permissions::ProductsCanDelete,
-        Permissions::DeliveryRulesCanCreate,
-        Permissions::DeliveryRulesCanUpdate,
-        Permissions::DeliveryRulesCanDelete
+        Permission::CanActAsCustomer,
+        Permission::ProductsCanCreate,
+        Permission::ProductsCanUpdate,
+        Permission::ProductsCanDelete,
+        Permission::DeliveryRulesCanCreate,
+        Permission::DeliveryRulesCanUpdate,
+        Permission::DeliveryRulesCanDelete
     ],
     'store_manager' => [
-        Permissions::CanActAsCustomer,
-        Permissions::ProductsCanCreate,
-        Permissions::ProductsCanUpdate,
-        Permissions::ProductsCanDelete,
-        Permissions::DeliveryRulesCanCreate,
-        Permissions::DeliveryRulesCanUpdate,
-        Permissions::DeliveryRulesCanDelete
+        Permission::CanActAsCustomer,
+        Permission::ProductsCanCreate,
+        Permission::ProductsCanUpdate,
+        Permission::ProductsCanDelete,
+        Permission::DeliveryRulesCanCreate,
+        Permission::DeliveryRulesCanUpdate,
+        Permission::DeliveryRulesCanDelete
     ],
     'store_assistant' => [
-        Permissions::ProductsCanCreate,
-        Permissions::ProductsCanUpdate,
-        Permissions::ProductsCanDelete,
-        Permissions::CanActAsCustomer,
+        Permission::ProductsCanCreate,
+        Permission::ProductsCanUpdate,
+        Permission::ProductsCanDelete,
+        Permission::CanActAsCustomer,
     ],
     'seller' => [
-        Permissions::ProductsCanCreate,
-        Permissions::OwnProductsCanUpdate,
-        Permissions::OwnProductsCanDelete,
-        Permissions::CanActAsCustomer,
+        Permission::ProductsCanCreate,
+        Permission::OwnProductsCanUpdate,
+        Permission::OwnProductsCanDelete,
+        Permission::CanActAsCustomer,
     ],
     'customer' => [
-        Permissions::CanShop,
-        Permissions::CanViewOwnAccount,
+        Permission::CanShop,
+        Permission::CanViewOwnAccount,
     ],
     'auditor' => [
-        Permissions::CanAccessAuditables
+        Permission::CanAccessAuditables
     ]
 ];

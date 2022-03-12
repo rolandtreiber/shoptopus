@@ -10,11 +10,33 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
-class ProductVariant extends SearchableModel implements Auditable
+/**
+ * @method static find($variant)
+ * @property string $id
+ * @property string $product_id
+ * @property double $price
+ * @property mixed $sku
+ * @property boolean $enabled
+ */
+class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
+    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['product.name'])
+            ->saveSlugsTo('slug');
+    }
 
     public $translatable = ['description'];
 

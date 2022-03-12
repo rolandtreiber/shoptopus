@@ -54,7 +54,7 @@ class RouteServiceProvider extends ServiceProvider
 
             foreach ( File::allFiles(base_path('routes/api')) as $file ) {
                 Route::middleware('api')
-//                    ->prefix('api')
+                    ->prefix('api')
                     ->namespace($this->namespace)
                     ->group($file->getPathname());
             }

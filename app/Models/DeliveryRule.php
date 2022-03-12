@@ -3,14 +3,40 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use OwenIt\Auditing\Contracts\Auditable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-class DeliveryRule extends SearchableModel implements Auditable
+/**
+ * @property mixed|string $delivery_type_id
+ * @property string $id
+ * @property string|array $postcodes
+ * @property int|null $min_weight
+ * @property int|null $max_weight
+ * @property int|null $min_distance
+ * @property int|null $max_distance
+ * @property float|null $lat
+ * @property float|null $lon
+ * @property int $status
+ */
+class DeliveryRule extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['deliveryType.name'])
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * The attributes that are mass assignable.

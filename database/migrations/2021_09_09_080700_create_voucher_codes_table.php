@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\DiscountTypes;
+use App\Enums\DiscountType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -22,8 +22,9 @@ class CreateVoucherCodesTable extends Migration
             $table->string('code', 100);
             $table->timestamp('valid_from')->nullable();
             $table->timestamp('valid_until')->nullable();
-            $table->enum('type', DiscountTypes::getValues())->default(DiscountTypes::Percentage);
+            $table->enum('type', DiscountType::getValues())->default(DiscountType::Percentage);
             $table->boolean('enabled')->default(true);
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

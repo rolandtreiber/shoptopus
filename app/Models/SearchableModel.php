@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\AvailabilityStatuses;
+use App\Enums\AvailabilityStatus;
 use App\Http\Requests\ListRequest;
 use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
@@ -17,10 +17,10 @@ abstract class SearchableModel extends Model {
     public function scopeAvailability($query, $enabled) {
             switch ($enabled) {
                 case 'enabled':
-                    $query->where('enabled', AvailabilityStatuses::Enabled);
+                    $query->where('enabled', AvailabilityStatus::Enabled);
                     break;
                 case 'disabled':
-                    $query->where('enabled', AvailabilityStatuses::Disabled);
+                    $query->where('enabled', AvailabilityStatus::Disabled);
                     break;
             }
     }

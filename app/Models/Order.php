@@ -4,18 +4,81 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use App\Traits\HasEventLogs;
-use App\Enums\OrderStatuses;
+use App\Enums\OrderStatus;
 use App\Helpers\GeneralHelper;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-class Order extends SearchableModel
+/**
+ * @method static find(int $selectedCartId)
+ * @property int|mixed $user_id
+ * @property int|mixed $delivery_type_id
+ * @property int $status
+ * @property mixed $address_id
+ * @property VoucherCode|null $voucherCode
+ * @property string $id
+ * @property string|null $voucher_code_id
+ * @property int $originalPrice
+ * @property float $original_price
+ * @property float $total_price
+ * @property mixed $created_at
+ * @property Address $address
+ * @property User $user
+ * @property Product[] $products
+ * @property mixed $pivot
+ * @property float $delivery
+ * @property Payment[] $payments
+ * @property Carbon $updated_at
+ * @property float $total_discount
+ * @property float $subtotal
+ */
+class Order extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, SoftDeletes, HasEventLogs;
+    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['user.name', 'address.town'])
+            ->saveSlugsTo('slug');
+    }
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'status',
+        'original_price',
+        'subtotal',
+        'total_price',
+        'total_discount'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user',
+        'address',
+        'products',
+        'payments',
+        'voucherCode',
+        'deliveryType'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -60,22 +123,22 @@ class Order extends SearchableModel
     {
         switch ($view) {
             case 'paid':
-                $query->where('status', OrderStatuses::Paid);
+                $query->where('status', OrderStatus::Paid);
                 break;
             case 'processing':
-                $query->where('status', OrderStatuses::Processing);
+                $query->where('status', OrderStatus::Processing);
                 break;
             case 'in_transit':
-                $query->where('status', OrderStatuses::InTransit);
+                $query->where('status', OrderStatus::InTransit);
                 break;
             case 'completed':
-                $query->where('status', OrderStatuses::Completed);
+                $query->where('status', OrderStatus::Completed);
                 break;
             case 'on_hold':
-                $query->where('status', OrderStatuses::OnHold);
+                $query->where('status', OrderStatus::OnHold);
                 break;
             case 'cancelled':
-                $query->where('status', OrderStatuses::Cancelled);
+                $query->where('status', OrderStatus::Cancelled);
                 break;
         }
     }

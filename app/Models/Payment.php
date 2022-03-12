@@ -3,15 +3,67 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use App\Enums\PaymentTypes;
+use App\Enums\PaymentType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
-class Payment extends SearchableModel implements Auditable
+/**
+ * @property string $id
+ * @property mixed|string[]|null $proof
+ * @property float|mixed $amount
+ * @property string $user_id
+ * @property mixed|string $payable_type
+ * @property mixed|string $payable_id
+ * @property int|mixed $status
+ * @property int|mixed $type
+ * @property mixed|string $description
+ * @property string $created_at
+ * @property User $user
+ * @property string $payment_ref
+ * @property string $method_ref
+ */
+class Payment extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable, HasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['payable.slug'])
+            ->saveSlugsTo('slug');
+    }
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'status',
+        'payment_ref',
+        'method_ref',
+        'proof',
+        'type',
+        'amount',
+        'description',
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user',
+        'paymentSource'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -23,7 +75,6 @@ class Payment extends SearchableModel implements Auditable
         'payable_id',
         'payment_source_id',
         'user_id',
-        'decimal',
         'status',
         'payment_ref',
         'method_ref',
@@ -52,11 +103,16 @@ class Payment extends SearchableModel implements Auditable
     {
         switch ($view) {
             case 'payment':
-                $query->where('type', PaymentTypes::Payment);
+                $query->where('type', PaymentType::Payment);
                 break;
             case 'refund':
-                $query->where('type', PaymentTypes::Refund);
+                $query->where('type', PaymentType::Refund);
         }
+    }
+
+    public function payable(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     public function paymentSource(): BelongsTo

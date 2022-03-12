@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Enums\DiscountTypes;
-use App\Enums\RandomStringModes;
+use App\Enums\DiscountType;
+use App\Enums\RandomStringMode;
 use Carbon\Carbon;
 
 class GeneralHelper {
@@ -31,19 +31,19 @@ class GeneralHelper {
     public static function generateRandomString(int $length = 10, int $mode = 0): string
     {
         switch ($mode) {
-            case RandomStringModes::UppercaseLowercaseAndNumbers:
+            case RandomStringMode::UppercaseLowercaseAndNumbers:
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 break;
-            case RandomStringModes::UppercaseAndNumbers:
+            case RandomStringMode::UppercaseAndNumbers:
                 $characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 break;
-            case RandomStringModes::LowecaseAndNumbers:
+            case RandomStringMode::LowecaseAndNumbers:
                 $characters = '0123456789abcdefghijklmnopqrstuvwxyz';
                 break;
-            case RandomStringModes::UppercaseAndLowecase:
+            case RandomStringMode::UppercaseAndLowecase:
                 $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
                 break;
-            case RandomStringModes::NumbersOnly:
+            case RandomStringMode::NumbersOnly:
                 $characters = '0123456789';
                 break;
             default:
@@ -92,9 +92,9 @@ class GeneralHelper {
     public static function getDiscountValue($type, $amount) {
         $value = str_replace('.00', '', $amount);
         switch ($type) {
-            case DiscountTypes::Percentage:
+            case DiscountType::Percentage:
                 return $value.'%';
-            case DiscountTypes::Amount:
+            case DiscountType::Amount:
                 if (config('app.default_currency.side') === 'left') {
                     return config('app.default_currency.symbol') . $value;
                 } else {
@@ -107,10 +107,10 @@ class GeneralHelper {
     public static function getDiscountedValue($type, $amount, $basis) {
         $discounted = 0;
         switch ($type) {
-            case DiscountTypes::Amount:
+            case DiscountType::Amount:
                 $discounted = $basis - $amount;
                 break;
-            case DiscountTypes::Percentage:
+            case DiscountType::Percentage:
                 $discounted = round($basis - (($basis / 100) * $amount), 2);
                 break;
             default:

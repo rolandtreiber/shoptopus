@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AuthFlows;
+use App\Enums\AuthFlow;
 use App\Events\Admin\UserPasswordReset;
 use App\Http\Requests\Auth\EmailConfirmationRequest;
 use App\Http\Resources\Admin\UserDetailResource;
 use App\Models\AccessToken;
 use App\Enums\AccessTokenTypes;
-use App\Enums\TokenCheckOutcomeTypes;
+use App\Enums\TokenCheckOutcomeType;
 use App\Events\Admin\UserSignup;
 use App\Exceptions\ApiValidationFailedException;
 use App\Http\Requests\Auth\LoginRequest;
@@ -139,21 +139,21 @@ class AuthController extends Controller
         $accessToken = AccessToken::where('token', '=', $token)->where('type', AccessTokenTypes::PasswordReset)->first();
         $now = Carbon::now();
         if (!$accessToken) {
-            return view('auth.PasswordResetForm', ['user' => null, 'type' => TokenCheckOutcomeTypes::TokenInvalid]);
+            return view('auth.PasswordResetForm', ['user' => null, 'type' => TokenCheckOutcomeType::TokenInvalid]);
         }
 
         $expiry = Carbon::parse($accessToken->expiry);
         if ($expiry < $now) {
-            return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeTypes::TokenExpired]);
+            return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeType::TokenExpired]);
         }
-        return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeTypes::Success]);
+        return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeType::Success]);
     }
 
     public function resetPassword(ResetPasswordRequest $request): array
     {
         $user = User::where('email', '=', $request->email)->first();
         if ($user) {
-            $request->flow === AuthFlows::Admin && event(new UserPasswordReset($user));
+            $request->flow === AuthFlow::Admin && event(new UserPasswordReset($user));
         }
         return [
             'status' => 'success',

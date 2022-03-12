@@ -11,6 +11,10 @@ use Illuminate\Support\Carbon;
 use App\Helpers\GeneralHelper;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -18,9 +22,61 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Product extends SearchableModel implements Auditable
+/**
+ * @method static count()
+ * @method static find(int $productId)
+ * @method static filtered(array[] $array)
+ * @property mixed $name
+ * @property mixed $price
+ * @property mixed $id
+ * @property float $final_price
+ * @property int $status
+ * @property int $stock
+ * @property int $purchase_count
+ * @property int $backup_stock
+ * @property \Illuminate\Database\Eloquent\Collection $tags
+ * @property \Illuminate\Database\Eloquent\Collection $fileContents
+ * @property FileContent $coverPhoto
+ * @property string $updated_at
+ * @property mixed $sku
+ * @property mixed $cover_photo
+ */
+class Product extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasTranslations, HasFiles, HasRatings, HasEventLogs, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes;
+    use HasFactory, HasTranslations, HasFiles, HasRatings, HasEventLogs, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    protected $exportableFields = [
+        'name',
+        'slug',
+        'short_description',
+        'description',
+        'price',
+        'status',
+        'purchase_count',
+        'stock',
+        'backup_stock',
+        'rating',
+        'final_price',
+        'sku'
+    ];
+
+    protected $exportableRelationships = [
+        'productCategories',
+        'productAttributes',
+        'productTags',
+        'productVariants',
+        'discountRules'
+    ];
 
     public $translatable = ['name', 'short_description', 'description'];
 
@@ -41,7 +97,6 @@ class Product extends SearchableModel implements Auditable
         'stock',
         'backup_stock',
         'rating',
-        'cover_photo_id',
         'sku',
         'deleted_at'
     ];
@@ -57,10 +112,10 @@ class Product extends SearchableModel implements Auditable
         'purchase_count' => 'integer',
         'stock' => 'integer',
         'backup_stock' => 'integer',
-        'price' => 'float',
-        'final_price' => 'float',
-        'rating' => 'float',
-        'cover_photo_id' => 'string'
+        'price' => 'decimal:2',
+        'final_price' => 'decimal:2',
+        'rating' => 'decimal:2',
+        'cover_photo' => 'object'
     ];
 
 
@@ -125,7 +180,7 @@ class Product extends SearchableModel implements Auditable
                 'type' => $rule->type,
             ];
         })->toArray();
-        $categoriesWithDiscountRules = $this->categories()->get();
+        $categoriesWithDiscountRules = $this->productCategories()->get();
         foreach ($categoriesWithDiscountRules as $category) {
             $discountRules = array_merge($discountRules, $category->discountRules->map(function($rule) use ($discountRules) {
                 return [
@@ -197,17 +252,9 @@ class Product extends SearchableModel implements Auditable
     /**
      * @return BelongsToMany
      */
-    public function categories(): BelongsToMany
+    public function productCategories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);
-    }
-
-    /**
-     * @return BelongsToMany
-     */
-    public function tags(): BelongsToMany
-    {
-        return $this->belongsToMany(ProductTag::class);
     }
 
     /**
@@ -232,11 +279,6 @@ class Product extends SearchableModel implements Auditable
     public function discountRules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();
-    }
-
-    public function coverPhoto(): HasOne
-    {
-        return $this->hasOne(FileContent::class, 'id', 'cover_photo_id');
     }
 
     /**
@@ -267,8 +309,8 @@ class Product extends SearchableModel implements Auditable
      */
     public function handleCategories(?array $categoryIds = [])
     {
-        $this->categories()->detach();
-        $this->categories()->sync($categoryIds);
+        $this->productCategories()->detach();
+        $this->productCategories()->sync($categoryIds);
     }
 
     /**
@@ -276,8 +318,8 @@ class Product extends SearchableModel implements Auditable
      */
     public function handleTags(?array $tagIds = [])
     {
-        $this->tags()->detach();
-        $this->tags()->sync($tagIds);
+        $this->productTags()->detach();
+        $this->productTags()->sync($tagIds);
     }
 
 }

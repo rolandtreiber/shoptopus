@@ -70,7 +70,7 @@ class GetAllDeliveryTypesTest extends TestCase
      */
     public function it_returns_the_associated_delivery_rules()
     {
-        $dt = DeliveryType::factory()->has(DeliveryRule::factory()->count(2), 'delivery_rules')->create();
+        $dt = DeliveryType::factory()->has(DeliveryRule::factory()->count(2), 'deliveryRules')->create();
 
         DeliveryRule::factory()->create([
             'delivery_type_id' => $dt->first()->id,

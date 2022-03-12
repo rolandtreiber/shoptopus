@@ -28,8 +28,9 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('stock')->default(0);
             $table->unsignedBigInteger('backup_stock')->nullable()->default(0);
             $table->string('sku', 50)->unique()->nullable();
-            $table->foreignUuid('cover_photo_id')->nullable()->references('id')->on('file_contents')->nullOnDelete();
+            $table->json('cover_photo')->nullable();
             Module::enabled('ratings') && $table->float('rating')->nullable();
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

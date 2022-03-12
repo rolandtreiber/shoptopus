@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Enums\PaymentTypes;
+use App\Enums\PaymentType;
 use App\Helpers\GeneralHelper;
 use App\Models\Payment;
 use Illuminate\Support\Carbon;
@@ -15,7 +15,7 @@ class PaymentObserver
     public function creating(Payment $payment)
     {
         switch ($payment->type) {
-            case PaymentTypes::Refund:
+            case PaymentType::Refund:
                 $descriptionText = 'Refund of '.GeneralHelper::displayPrice($payment->amount).' ';
                 break;
             default:
