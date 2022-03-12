@@ -145,4 +145,43 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf(FileContent::class, $this->product->images()->first());
     }
+
+    /** @test */
+    public function it_creates_a_cover_photo_from_its_existing_images()
+    {
+        $this->assertNull($this->product->cover_photo);
+
+        $first_image = FileContent::factory()->create([
+            'fileable_type' => get_class($this->product),
+            'fileable_id' => $this->product->id
+        ]);
+
+        $this->product->save();
+
+        $this->assertNotNull($this->product->cover_photo);
+
+        $this->assertTrue($this->product->cover_photo->url === $first_image->url);
+    }
+
+    /** @test */
+    public function the_cover_photo_will_always_be_the_first_image()
+    {
+        $first_image = FileContent::factory()->create([
+            'fileable_type' => get_class($this->product),
+            'fileable_id' => $this->product->id
+        ]);
+
+        $this->product->save();
+
+        $this->assertTrue($this->product->cover_photo->url === $first_image->url);
+
+        $second_image = FileContent::factory()->create([
+            'fileable_type' => get_class($this->product),
+            'fileable_id' => $this->product->id
+        ]);
+
+        $this->product->save();
+
+        $this->assertTrue($this->product->cover_photo->url === $first_image->url);
+    }
 }
