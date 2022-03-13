@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductAttribute;
+use App\Enums\ProductAttributeType;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductAttribute;
 
 class ProductAttributeFactory extends Factory
 {
@@ -28,7 +29,9 @@ class ProductAttributeFactory extends Factory
 
         return [
             'name' => $translations['name'],
-            'enabled' => $this->faker->boolean
+            'type' => ProductAttributeType::Text,
+            'image' => null,
+            'enabled' => true
         ];
     }
 }

@@ -19,10 +19,10 @@ class CreateProductAttributesTable extends Migration
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->text('name');
+            $table->string('slug');
             $table->tinyInteger('type')->default(ProductAttributeType::Text);
             $table->json('image')->nullable();
             $table->boolean('enabled')->default(true);
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

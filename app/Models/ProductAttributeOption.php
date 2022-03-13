@@ -18,7 +18,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property mixed $id
  * @property mixed $type
  * @property mixed $product_attribute_id
- * @property mixed $common_value
+ * @property mixed $value
  * @mixin SearchableModel
  */
 class ProductAttributeOption extends SearchableModel implements Auditable, Exportable
@@ -43,7 +43,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
     protected $exportableFields = [
         'slug',
         'name',
-        'common_value',
+        'value',
         'enabled'
     ];
 
@@ -54,7 +54,9 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
      */
     protected $fillable = [
         'name',
+        'product_attribute_id',
         'value',
+        'image',
         'enabled'
     ];
 
@@ -65,7 +67,6 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
      */
     protected $casts = [
         'id' => 'string',
-        'image' => 'object',
         'enabled' => 'boolean'
     ];
 
