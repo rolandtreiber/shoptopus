@@ -21,7 +21,7 @@ class CreateProductTagsTable extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->json('badge')->nullable();
-            $table->tinyInteger('display_badge')->default(0);
+            $table->boolean('display_badge')->default(false);
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();

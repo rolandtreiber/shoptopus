@@ -58,7 +58,8 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'name',
         'description',
         'display_badge',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**
@@ -70,7 +71,7 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'badge' => 'object',
         'display_badge' => 'boolean',
-        'enabled' => 'boolean',
+        'enabled' => 'boolean'
     ];
 
     /**

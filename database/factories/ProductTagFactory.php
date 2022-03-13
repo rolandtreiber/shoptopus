@@ -27,8 +27,11 @@ class ProductTagFactory extends Factory
 
         return [
             'name' => $translations['name'],
-            'description' => $translations['description'],
-            'enabled' => $this->faker->boolean
+            'description' => null,
+//            'description' => $translations['description'],
+            'badge' => null,
+            'display_badge' => false,
+            'enabled' => true
         ];
     }
 }
