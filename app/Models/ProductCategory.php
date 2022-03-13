@@ -67,8 +67,10 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
     protected $fillable = [
         'name',
         'description',
-        'enabled',
+        'menu_image',
+        'header_image',
         'parent_id',
+        'enabled'
     ];
 
     /**
@@ -84,15 +86,56 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
         'enabled' => 'boolean'
     ];
 
+//    /**
+//     * Get one level deep subcategories
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function subcategories() : \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(ProductCategory::class, 'parent_id');
+//    }
+//
+//    /**
+//     * Get all the children categories
+//     * https://laraveldaily.com/eloquent-recursive-hasmany-relationship-with-unlimited-subcategories/
+//     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+//     */
+//    public function children_categories() : \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(ProductCategory::class, 'parent_id')
+//            ->with('subcategories');
+//    }
+//
+//    /**
+//     * Get a collection of recursive categories
+//     * @param int|null $categoryId
+//     * @return mixed
+//     */
+//    public static function tree($categoryId = null)
+//    {
+//        return $categoryId
+//            ? self::where('id', $categoryId)->with('children_categories')->get()
+//            : self::whereNull('parent_id')->with('children_categories')->get();
+//    }
+
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(ProductCategory::class, 'id', 'parent_id');
+        return $this->belongsTo(ProductCategory::class, 'parent_id', 'id');
     }
 
     public function children(): HasMany
     {
-        return $this->hasMany(ProductCategory::class, 'parent_id', 'id')
-            ->whereNotNull('parent_id');
+        return $this->hasMany(ProductCategory::class, 'parent_id', 'id');
+    }
+
+    /**
+     * Add a child category
+     * @param ProductCategory $product_category
+     * @return false|\Illuminate\Database\Eloquent\Model
+     */
+    public function addChildCategory(ProductCategory $product_category) : \Illuminate\Database\Eloquent\Model|bool
+    {
+        return $this->children()->save($product_category);
     }
 
     /**
@@ -149,7 +192,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
      * @param bool $immediate
      * @return BelongsToMany
      */
-    public function products(bool $immediate)
+    public function products(bool $immediate = true) : BelongsToMany
     {
         if ($immediate) {
             return $this->belongsToMany(Product::class);
