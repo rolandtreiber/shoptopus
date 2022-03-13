@@ -3,15 +3,15 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use App\Http\Requests\ListRequest;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Http\Requests\ListRequest;
 use Spatie\Translatable\HasTranslations;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -27,11 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class ProductAttribute extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -82,6 +78,6 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
      */
     public function options(): HasMany
     {
-        return $this->HasMany(ProductAttributeOption::class);
+        return $this->hasMany(ProductAttributeOption::class);
     }
 }

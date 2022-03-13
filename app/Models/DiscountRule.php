@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Carbon;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property string $id
@@ -85,22 +85,23 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
 
     public function scopeView($query, $view)
     {
+        $today = Carbon::today();
         switch ($view) {
             case 'active':
-                $query->whereDate('valid_from', '<=', \Carbon\Carbon::today())
-                    ->whereDate('valid_until', '>=', Carbon::today())
+                $query->whereDate('valid_from', '<=', $today)
+                    ->whereDate('valid_until', '>=', $today)
                     ->where('enabled', 1);
                 break;
             case 'not_started':
-                $query->whereDate('valid_from', '>', Carbon::today());
+                $query->whereDate('valid_from', '>', $today);
                 break;
             case 'expired':
-                $query->whereDate('valid_until', '<', Carbon::today());
+                $query->whereDate('valid_until', '<', $today);
                 break;
             case 'all_inactive':
-                $query->where(function($q) {
-                    $q->whereDate('valid_from', '>', Carbon::today())
-                        ->orWhereDate('valid_until', '<', Carbon::today())->orWhere('enabled', 0);
+                $query->where(function($q) use($today) {
+                    $q->whereDate('valid_from', '>', $today)
+                        ->orWhereDate('valid_until', '<', $today)->orWhere('enabled', 0);
                 });
                 break;
         }

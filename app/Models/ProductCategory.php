@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
-use App\Enums\AvailabilityStatus;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Support\Collection;
 use Spatie\Translatable\HasTranslations;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static count()
@@ -34,11 +32,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductCategory extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
 
     protected $exportableFields = [
         'slug',
@@ -97,8 +91,8 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
 
     public function children(): HasMany
     {
-        $result = $this->hasMany(ProductCategory::class, 'parent_id', 'id')->whereNotNull('parent_id');
-        return $result;
+        return $this->hasMany(ProductCategory::class, 'parent_id', 'id')
+            ->whereNotNull('parent_id');
     }
 
     /**
@@ -155,7 +149,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
      * @param bool $immediate
      * @return BelongsToMany
      */
-    public function products($immediate = false)
+    public function products(bool $immediate)
     {
         if ($immediate) {
             return $this->belongsToMany(Product::class);

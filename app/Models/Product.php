@@ -7,19 +7,19 @@ use App\Traits\HasFiles;
 use App\Traits\HasRatings;
 use App\Enums\ProductStatus;
 use App\Traits\HasEventLogs;
+use Spatie\Sluggable\HasSlug;
 use Illuminate\Support\Carbon;
 use App\Helpers\GeneralHelper;
+use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\DB;
+use Spatie\Translatable\HasTranslations;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 
 /**
  * @method static count()

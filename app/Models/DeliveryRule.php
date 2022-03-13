@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property mixed|string $delivery_type_id

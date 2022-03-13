@@ -4,13 +4,13 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
@@ -23,11 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class ProductAttributeOption extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -73,7 +69,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'enabled' => 'boolean'
     ];
 
-    public function productAttribute(): BelongsTo
+    public function product_attribute(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ProductAttribute::class);
     }

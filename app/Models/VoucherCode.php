@@ -6,12 +6,12 @@ use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Helpers\GeneralHelper;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\Builder;
 use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 
 /**
