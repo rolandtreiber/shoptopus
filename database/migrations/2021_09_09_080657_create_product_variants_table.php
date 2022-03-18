@@ -23,7 +23,7 @@ class CreateProductVariantsTable extends Migration
             $table->string('sku', 50)->unique()->nullable();
             $table->boolean('enabled')->default(true);
             $table->text('description')->nullable();
-            $table->decimal('price');
+            $table->unsignedDecimal('price');
             $table->string('slug');
             $table->softDeletes();
             $table->timestamps();

@@ -62,7 +62,7 @@ class Payment extends SearchableModel implements Auditable, Exportable
      */
     protected $exportableRelationships = [
         'user',
-        'paymentSource'
+        'payment_source'
     ];
 
     /**
@@ -115,7 +115,7 @@ class Payment extends SearchableModel implements Auditable, Exportable
         return $this->morphTo();
     }
 
-    public function paymentSource(): BelongsTo
+    public function payment_source(): BelongsTo
     {
         return $this->belongsTo(PaymentSource::class);
     }

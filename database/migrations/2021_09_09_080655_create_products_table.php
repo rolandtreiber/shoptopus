@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->text('short_description');
             $table->longtext('description');
-            $table->decimal('price');
+            $table->unsignedDecimal('price');
             $table->tinyInteger('status')->default(ProductStatus::Provisional);
             $table->unsignedBigInteger('purchase_count')->default(0);
             $table->unsignedBigInteger('stock')->default(0);

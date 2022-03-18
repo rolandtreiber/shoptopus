@@ -20,11 +20,11 @@ class CreateOrdersTable extends Migration
             $table->foreignUuid('delivery_type_id')->nullable()->constrained();
             $table->foreignUuid('voucher_code_id')->nullable()->constrained();
             $table->foreignUuid('address_id')->constrained();
-            $table->decimal('original_price')->default(0);
-            $table->decimal('subtotal')->default(0);
-            $table->decimal('total_price')->default(0);
-            $table->decimal('total_discount')->default(0);
-            $table->decimal('delivery_cost')->default(0);
+            $table->unsignedDecimal('original_price')->default(0);
+            $table->unsignedDecimal('subtotal')->default(0);
+            $table->unsignedDecimal('total_price')->default(0);
+            $table->unsignedDecimal('total_discount')->default(0);
+            $table->unsignedDecimal('delivery_cost')->default(0);
             $table->integer('status')->default(OrderStatus::Paid);
             $table->string('slug');
             $table->softDeletes();

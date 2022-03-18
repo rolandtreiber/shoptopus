@@ -52,7 +52,7 @@ class User extends Authenticatable implements Auditable, Exportable
 
     protected $exportableRelationships = [
         'addresses',
-        'paymentSources',
+        'payment_sources',
         'payments',
         'orders'
     ];

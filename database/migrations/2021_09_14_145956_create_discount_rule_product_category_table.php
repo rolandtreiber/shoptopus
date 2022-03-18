@@ -17,7 +17,7 @@ class CreateDiscountRuleProductCategoryTable extends Migration
             $table->foreignUuid('discount_rule_id')->constrained('discount_rules');
             $table->foreignUuid('product_category_id')->constrained('product_categories');
 
-            $table->primary(['discount_rule_id', 'product_category_id'], 'product_category_discount_rule');
+            $table->unique(['discount_rule_id', 'product_category_id']);
         });
     }
 

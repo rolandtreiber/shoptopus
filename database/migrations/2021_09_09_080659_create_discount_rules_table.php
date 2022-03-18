@@ -19,7 +19,7 @@ class CreateDiscountRulesTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->tinyInteger('type');
             $table->text('name');
-            $table->decimal('amount');
+            $table->unsignedDecimal('amount');
             $table->dateTime('valid_from');
             $table->dateTime('valid_until');
             $table->boolean('enabled')->default(true);

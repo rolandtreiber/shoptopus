@@ -28,7 +28,7 @@ class PaymentRelationResource extends JsonResource
             'payment_ref' => $this->payment_ref,
             'method_ref' => $this->method_ref,
             'crated_at' => $this->created_at,
-            'source' => new PaymentSourceRelationResource($this->paymentSource)
+            'source' => new PaymentSourceRelationResource($this->payment_source)
         ];
     }
 }

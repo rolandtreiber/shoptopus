@@ -16,17 +16,19 @@ class CreateOrderProductTable extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('order_id')->nullable()->constrained('orders')->nullOnDelete();
-            $table->foreignUuid('product_id')->nullable()->constrained('products')->nullOnDelete();
-            $table->foreignUuid('product_variant_id')->nullable()->constrained('product_variants')->nullOnDelete();
+            $table->foreignUuid('order_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('product_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignUuid('product_variant_id')->nullable()->constrained()->nullOnDelete();
             $table->integer('amount')->default(1);
             $table->text('name');
-            $table->decimal('original_unit_price')->default(0);
-            $table->decimal('unit_price')->default(0);
-            $table->decimal('full_price')->default(0);
-            $table->decimal('final_price')->default(0);
-            $table->decimal('unit_discount')->default(0);
-            $table->decimal('total_discount')->default(0);
+            $table->unsignedDecimal('original_unit_price')->default(0);
+            $table->unsignedDecimal('unit_price')->default(0);
+            $table->unsignedDecimal('full_price')->default(0);
+            $table->unsignedDecimal('final_price')->default(0);
+            $table->unsignedDecimal('unit_discount')->default(0);
+            $table->unsignedDecimal('total_discount')->default(0);
+
+            $table->unique(['order_id', 'product_id']);
         });
     }
 

@@ -70,6 +70,7 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
      */
     protected $casts = [
         'id' => 'string',
+        'image' => 'object',
         'enabled' => 'boolean'
     ];
 

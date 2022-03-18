@@ -67,6 +67,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
      */
     protected $casts = [
         'id' => 'string',
+        'image' => 'object',
         'enabled' => 'boolean'
     ];
 

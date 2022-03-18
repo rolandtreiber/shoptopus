@@ -16,6 +16,8 @@ class CreateDiscountRuleProductTable extends Migration
         Schema::create('discount_rule_product', function (Blueprint $table) {
             $table->foreignUuid('discount_rule_id')->constrained();
             $table->foreignUuid('product_id')->nullable()->constrained()->cascadeOnDelete();
+
+            $table->unique(['discount_rule_id', 'product_id']);
         });
     }
 

@@ -77,6 +77,8 @@ class ProductCategoryController extends Controller
     public function create(ProductCategoryStoreRequest $request): ProductCategoryDetailResource
     {
         $data = $this->getProcessed($request, [], ['name', 'description']);
+        unset($data['header_image']);
+        unset($data['menu_image']);
         $productCategory = new ProductCategory();
         $productCategory->fill($data);
         $request->hasFile('menu_image') && $productCategory->menu_image = $this->saveFileAndGetUrl($request->menu_image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]);
@@ -98,6 +100,8 @@ class ProductCategoryController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'description']);
         isset($category->menu_image) && $this->deleteCurrentFile($category->menu_image->file_name);
         isset($category->header_image) && $this->deleteCurrentFile($category->header_image->file_name);
+        unset($data['header_image']);
+        unset($data['menu_image']);
         $category->fill($data);
         $category->menu_image = $request->hasFile('menu_image') ? $this->saveFileAndGetUrl($request->menu_image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]) : null;
         $category->header_image = $request->hasFile('header_image') ? $this->saveFileAndGetUrl($request->header_image, config('shoptopus.header_image_dimensions')[0], config('shoptopus.header_image_dimensions')[1]) : null;
