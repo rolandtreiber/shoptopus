@@ -64,4 +64,20 @@ interface AuthServiceInterface {
      */
     public function resetPassword(array $payload): array;
 
+    /**
+     * Get the target url to the Auth provider's authentication page
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function getOAuthProviderTargetUrl(array $payload) : array;
+
+    /**
+     * Obtain the user information from the Auth provider
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function handleOAuthProviderCallback(array $payload) : array;
+
 }

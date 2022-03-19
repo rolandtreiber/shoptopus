@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Auth\GetOAuthProviderTargetUrlRequest;
+use App\Http\Requests\Auth\HandleOAuthProviderCallbackRequest;
 use App\Http\Resources\Admin\UserDetailResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -139,6 +141,36 @@ class AuthController extends Controller
     {
         try {
             return response()->json($this->authService->resetPassword($request->validated()));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Get the target url to the Auth provider's authentication page
+     *
+     * @param GetOAuthProviderTargetUrlRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOAuthProviderTargetUrl(GetOAuthProviderTargetUrlRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->getOAuthProviderTargetUrl($request->validated()));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Obtain the user information from the Auth provider
+     *
+     * @param HandleOAuthProviderCallbackRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function handleOAuthProviderCallback(HandleOAuthProviderCallbackRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->handleOAuthProviderCallback($request->validated()));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

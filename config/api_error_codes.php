@@ -22,6 +22,8 @@ return [
             "loginUserIncorrect" => 1007,
             "sendPasswordReset" => 1008,
             "resetPassword" => 1009,
+            "getOAuthProviderTargetUrl" => 1010,
+            "handleOAuthProviderCallback" => 1011,
         ],
         'access_token' => [
             "get" => 1200,

@@ -18,6 +18,9 @@ Route::group([
         Route::post('verify/resend', [AuthController::class, 'resendVerification'])->name('verification.resend');
         Route::get('verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
 
+        Route::get('login/{provider}', [AuthController::class, 'getOAuthProviderTargetUrl'])->name('api.auth.getOAuthProviderTargetUrl');
+        Route::post('login/{provider}/callback', [AuthController::class, 'handleOAuthProviderCallback'])->name('api.auth.handleOAuthProviderCallback');
+
         Route::post('forgot-password', [AuthController::class, 'sendPasswordReset'])
             ->middleware('guest')
             ->name('password.email');

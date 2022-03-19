@@ -10,6 +10,7 @@ use App\Models\Address;
 use App\Models\Payment;
 use Illuminate\Support\Str;
 use App\Models\PaymentSource;
+use App\Models\SocialAccount;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
@@ -162,5 +163,19 @@ class UserTest extends TestCase
     public function a_cart_is_added_for_the_user_on_creation()
     {
         $this->assertInstanceOf(Cart::class, $this->user->cart);
+    }
+
+    /** @test */
+    public function it_may_have_many_social_accounts()
+    {
+        $this->assertCount(0, $this->user->social_accounts);
+
+        SocialAccount::factory()->create(['user_id' => $this->user->id]);
+
+        $this->assertCount(1, $this->user->refresh()->social_accounts);
+
+        $this->assertInstanceOf(SocialAccount::class, $this->user->social_accounts[0]);
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection' , $this->user->social_accounts);
     }
 }
