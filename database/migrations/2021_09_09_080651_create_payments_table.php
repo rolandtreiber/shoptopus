@@ -17,8 +17,7 @@ class CreatePaymentsTable extends Migration
 
         Schema::create('payments', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('payable_type');
-            $table->uuid('payable_id');
+            $table->morphs('payable');
             $table->unsignedDecimal('amount');
             $table->string('slug');
             $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
