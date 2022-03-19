@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Searchable;
 use App\Enums\AvailabilityStatus;
 use App\Http\Requests\ListRequest;
-use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 /**

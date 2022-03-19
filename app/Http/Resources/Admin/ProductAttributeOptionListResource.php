@@ -22,7 +22,7 @@ class ProductAttributeOptionListResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
-            'common_value' => $this->common_value,
+            'value' => $this->value,
             'image' => $this->image ? $this->image->url : null,
             'enabled' => $this->enabled,
         ];

@@ -17,12 +17,12 @@ class CreateProductTagsTable extends Migration
 
         Schema::create('product_tags', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('name');
+            $table->text('name');
+            $table->string('slug');
             $table->text('description')->nullable();
             $table->json('badge')->nullable();
-            $table->tinyInteger('display_badge')->default(0);
+            $table->boolean('display_badge')->default(false);
             $table->boolean('enabled')->default(true);
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

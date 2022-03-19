@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use App\Traits\HasFiles;
-use App\Traits\HasUUID;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
+use App\Traits\HasUUID;
+use App\Traits\HasFiles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $id
@@ -31,13 +31,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Rating extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasFiles;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use SoftDeletes;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.

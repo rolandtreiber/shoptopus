@@ -55,7 +55,7 @@ class OrderSeeder extends Seeder
                     $selectedProduct = (new Product)->findNth(random_int(1, $products));
                 } while (in_array($selectedProduct->id, $usedProductTypes));
                 $usedProductTypes[] = $selectedProduct->id;
-                $variants = $selectedProduct->productVariants;
+                $variants = $selectedProduct->product_variants;
                 if (count($variants) > 0) {
                     $selectedProductVariant = $variants[random_int(0, count($variants)-1)];
                     $order->products()->attach($selectedProduct->id, ['amount' => random_int(1, 10), 'product_variant_id' => $selectedProductVariant->id]);

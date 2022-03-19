@@ -4852,7 +4852,7 @@
         },
         {
             "name": "shoptopus/excel-import-export",
-            "version": "dev-merging/istvan-to-development",
+            "version": "dev-istvan",
             "dist": {
                 "type": "path",
                 "url": "packages/shoptopus/excel-import-export",

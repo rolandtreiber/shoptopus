@@ -17,12 +17,12 @@ class CreateProductAttributeOptionsTable extends Migration
 
         Schema::create('product_attribute_options', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->text('name');
+            $table->string('slug');
+            $table->string('value');
             $table->foreignUuid('product_attribute_id')->nullable()->constrained();
             $table->json('image')->nullable();
-            $table->text('name');
-            $table->string('common_value')->nullable();
             $table->boolean('enabled')->default(true);
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

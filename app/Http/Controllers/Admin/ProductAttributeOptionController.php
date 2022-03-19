@@ -57,6 +57,7 @@ class ProductAttributeOptionController extends Controller
     public function create(ProductAttribute $attribute, ProductAttributeOptionStoreRequest $request): ProductAttributeOptionDetailResource
     {
         $data = $this->getProcessed($request, [], ['name']);
+        unset($data['image']);
         $productAttributeOption = new ProductAttributeOption();
         $productAttributeOption->fill($data);
         $productAttributeOption->product_attribute_id = $attribute->id;
@@ -81,6 +82,7 @@ class ProductAttributeOptionController extends Controller
             throw new OptionDoesNotBelongToAttributeException();
         }
         $data = $this->getProcessed($request, [], ['name']);
+        unset($data['image']);
         isset($option->image) && $this->deleteCurrentFile($option->image->file_name);
         $option->fill($data);
         $request->hasFile('image') && $option->image = $this->saveFileAndGetUrl($request->image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]);

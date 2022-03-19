@@ -2,19 +2,19 @@
 
 namespace App\Models;
 
-use App\Traits\HasFiles;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\DB;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
+use App\Traits\HasFiles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Support\Facades\DB;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static find($variant)
@@ -96,7 +96,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     {
         /** @var Product $product */
         $product = $this->product;
-        $variantSumStock = $product->productVariants->pluck('stock')->sum();
+        $variantSumStock = $product->product_variants->pluck('stock')->sum();
         $product->stock = $variantSumStock;
         $product->save();
     }

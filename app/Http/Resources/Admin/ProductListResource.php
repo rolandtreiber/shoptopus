@@ -27,7 +27,7 @@ class ProductListResource extends JsonResource
             'cover_photo_url' => $this->cover_photo ? $this->cover_photo->url : null,
             'status' => $this->status,
             'stock' => $this->stock,
-            'variants' => $this->productVariants ? $this->productVariants()->count() : [],
+            'variants' => $this->product_variants ? $this->product_variants()->count() : [],
             'updated_at' => $this->updated_at
         ];
     }

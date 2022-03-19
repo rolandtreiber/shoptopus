@@ -25,6 +25,6 @@ class ProductCategorySeeder extends Seeder
             ProductCategory::factory()->state(['parent_id' => $parentId])->create();
         }
 
-        (new ProductCategory)->findNth(random_int(1, ProductCategory::count()))->discountRules()->attach((new DiscountRule)->findNthId(random_int(1, DiscountRule::count() -1 )));
+        (new ProductCategory)->findNth(random_int(1, ProductCategory::count()))->discount_rules()->attach((new DiscountRule)->findNthId(random_int(1, DiscountRule::count() -1 )));
     }
 }

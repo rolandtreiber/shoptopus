@@ -17,7 +17,7 @@ class CreateCartsTable extends Migration
 
         Schema::create('carts', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('ip_address', 100)->nullable();
             $table->timestamps();
         });

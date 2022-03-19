@@ -2,7 +2,6 @@
 
 namespace App\Observers;
 
-use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Traits\ProcessRequest;
 

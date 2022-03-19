@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
         Product::factory()->count(55)->hasFilecontents(rand(1, 3))->create();
 
         foreach (Product::all() as $product) {
-            $product->productCategories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
+            $product->product_categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
         }
 
         $taggedCount = Product::count()-1;
@@ -41,7 +41,7 @@ class ProductSeeder extends Seeder
                     $tagId = (new ProductTag)->findNthId(rand(1, ProductTag::count()-1));
                 } while (in_array($tagId, $usedTags));
                 $usedTags[] = $tagId;
-                (new Product())->findNth($productId)->productTags()->attach($tagId);
+                (new Product())->findNth($productId)->product_tags()->attach($tagId);
             }
         }
 
@@ -52,7 +52,7 @@ class ProductSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $discounted));
             $discounted[] = $productId;
-            (new Product())->findNth($productId)->discountRules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
+            (new Product())->findNth($productId)->discount_rules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
         }
 
         Product::all()->map(function (Product $product) {

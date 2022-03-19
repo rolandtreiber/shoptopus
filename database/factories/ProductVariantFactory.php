@@ -2,12 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Enums\RandomStringMode;
-use App\Helpers\GeneralHelper;
 use App\Models\Product;
+use App\Helpers\GeneralHelper;
+use App\Models\ProductVariant;
+use App\Enums\RandomStringMode;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductVariant;
 
 class ProductVariantFactory extends Factory
 {
@@ -30,7 +30,7 @@ class ProductVariantFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['description'], ['medium']);
 
         return [
-            'product_id' => 1,
+            'product_id' => Product::factory(),
             'data' => 'Some important data',
             'description' => $translations['description'],
             'stock' => $this->faker->numberBetween(0, 30),

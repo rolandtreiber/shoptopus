@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\Order;
+use Illuminate\Support\Str;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -28,6 +29,12 @@ class DeliveryTypeTest extends TestCase
     public function it_has_an_name_field()
     {
         $this->assertNotNull($this->delivery_type->name);
+    }
+
+    /** @test */
+    public function it_has_a_slug_generated_from_its_name()
+    {
+        $this->assertEquals(Str::slug($this->delivery_type->name), $this->delivery_type->slug);
     }
 
     /** @test */

@@ -16,6 +16,8 @@ class CreateDiscountRuleProductCategoryTable extends Migration
         Schema::create('discount_rule_product_category', function (Blueprint $table) {
             $table->foreignUuid('discount_rule_id')->constrained('discount_rules');
             $table->foreignUuid('product_category_id')->constrained('product_categories');
+
+            $table->unique(['discount_rule_id', 'product_category_id']);
         });
     }
 

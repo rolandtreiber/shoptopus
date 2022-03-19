@@ -25,7 +25,7 @@ class VoucherCodeTest extends TestCase
     /** @test */
     public function it_has_a_type_field()
     {
-        $this->assertNotNull($this->voucher_code->type);
+        $this->assertEquals(DiscountType::Percentage, $this->voucher_code->type);
     }
 
     /** @test */

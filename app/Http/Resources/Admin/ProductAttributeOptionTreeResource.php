@@ -18,7 +18,7 @@ class ProductAttributeOptionTreeResource extends JsonResource
         return [
             'id' =>$this->id,
             'name' => $this->getTranslations('name'),
-            'value' => $this->common_value,
+            'value' => $this->value,
             'image' => $this->image,
             'product_attribute_id' => $this->product_attribute_id
         ];

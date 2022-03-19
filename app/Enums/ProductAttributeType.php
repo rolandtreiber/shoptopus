@@ -11,7 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class ProductAttributeType extends Enum
 {
-    const Text =        0;
-    const Image =       1;
-    const Color =       2;
+    const Text =        1;
+    const Image =       2;
+    const Color =       3;
 }

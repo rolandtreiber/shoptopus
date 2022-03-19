@@ -3,15 +3,13 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SystemSetting extends Model
 {
-    use HasFactory;
-    use HasUUID;
-    use SoftDeletes;
+    use HasFactory, HasUUID, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -21,7 +19,7 @@ class SystemSetting extends Model
     protected $fillable = [
         'key',
         'value',
-        'type',
+        'type'
     ];
 
     /**
@@ -31,6 +29,6 @@ class SystemSetting extends Model
      */
     protected $casts = [
         'id' => 'string',
-        'type' => 'integer',
+        'type' => 'integer'
     ];
 }

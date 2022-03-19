@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductCategory;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductCategory;
 
 class ProductCategoryFactory extends Factory
 {
@@ -24,11 +24,12 @@ class ProductCategoryFactory extends Factory
     public function definition(): array
     {
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
+
         return [
-            'parent_id' => null,
             'name' => $translations['name'],
             'description' => $translations['description'],
-            'enabled' => $this->faker->boolean
+            'parent_id' => null,
+            'enabled' => true
         ];
     }
 }

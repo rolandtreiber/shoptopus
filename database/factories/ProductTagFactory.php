@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductTag;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductTag;
 
 class ProductTagFactory extends Factory
 {
@@ -24,10 +24,14 @@ class ProductTagFactory extends Factory
     public function definition(): array
     {
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
+
         return [
             'name' => $translations['name'],
-            'description' => $translations['description'],
-            'enabled' => $this->faker->boolean
+            'description' => null,
+//            'description' => $translations['description'],
+            'badge' => null,
+            'display_badge' => false,
+            'enabled' => true
         ];
     }
 }

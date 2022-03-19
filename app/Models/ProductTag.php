@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Date;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Illuminate\Support\Facades\Date;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
+use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static count()
@@ -24,11 +24,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductTag extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile;
-    use HasUUID;
-    use \OwenIt\Auditing\Auditable;
-    use HasSlug;
-    use HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -62,7 +58,8 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'name',
         'description',
         'display_badge',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**
@@ -74,7 +71,7 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'badge' => 'object',
         'display_badge' => 'boolean',
-        'enabled' => 'boolean',
+        'enabled' => 'boolean'
     ];
 
     /**

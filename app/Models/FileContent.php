@@ -3,28 +3,14 @@
 namespace App\Models;
 
 use App\Enums\FileType;
-use App\Enums\ProductStatus;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-/**
- * @property mixed|string $url
- * @property int|mixed $type
- * @property mixed $fileable_id
- * @property mixed $fileable_type
- * @property mixed|string $file_name
- * @property string $id
- * @property string $title
- * @property string $description
- * @mixin Builder
- */
 class FileContent extends SearchableModel
 {
-    use HasFactory;
-    use HasUUID;
-    use HasTranslations;
+    use HasFactory, HasUUID, HasTranslations;
 
     public $translatable = ['title', 'description'];
 
