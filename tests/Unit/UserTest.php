@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Address;
+use App\Models\Payment;
 use Illuminate\Support\Str;
 use App\Models\PaymentSource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -145,17 +146,17 @@ class UserTest extends TestCase
         $this->assertInstanceOf(PaymentSource::class, $this->user->payment_sources[0]);
     }
 
-//    /** @test */
-//    public function it_may_have_many_payments()
-//    {
-//        $this->assertCount(0, $this->user->payments);
-//
-//        Payment::factory()->count(2)->create(['user_id' => $this->user->id]);
-//
-//        $this->assertCount(2, $this->user->refresh()->payments);
-//
-//        $this->assertInstanceOf(Payment::class, $this->user->payments[0]);
-//    }
+    /** @test */
+    public function it_may_have_many_payments()
+    {
+        $this->assertCount(0, $this->user->payments);
+
+        Payment::factory()->count(2)->create(['user_id' => $this->user->id]);
+
+        $this->assertCount(2, $this->user->refresh()->payments);
+
+        $this->assertInstanceOf(Payment::class, $this->user->payments[0]);
+    }
 
     /** @test */
     public function a_cart_is_added_for_the_user_on_creation()

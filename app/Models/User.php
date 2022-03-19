@@ -124,6 +124,14 @@ class User extends Authenticatable implements Auditable, Exportable
     }
 
     /**
+     * @return HasMany
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Get the payment sources of the user.
      * @return HasMany
      */
@@ -186,13 +194,5 @@ class User extends Authenticatable implements Auditable, Exportable
     {
         $query->role('customer');
         return $query;
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function payments(): HasMany
-    {
-        return $this->hasMany(Payment::class);
     }
 }
