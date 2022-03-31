@@ -25,12 +25,12 @@ trait HasAttributes {
                 }
             }
         } else {
-            $model->productVariantAttributes()->detach();
+            $model->product_variant_attributes()->detach();
             if ($request->product_attributes) {
                 foreach ($request->product_attributes as $attributeId => $attributeOptionId) {
                     $attribute = ProductAttribute::find($attributeId);
                     if ($attribute) {
-                        $model->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
+                        $model->product_variant_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOptionId]);
                     }
                 }
             }

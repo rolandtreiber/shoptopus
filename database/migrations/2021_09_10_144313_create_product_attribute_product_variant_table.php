@@ -15,8 +15,8 @@ class CreateProductAttributeProductVariantTable extends Migration
     {
         Schema::create('product_attribute_product_variant', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('product_attribute_id')->constrained('product_attributes')->cascadeOnDelete();
-            $table->foreignUuid('product_variant_id')->constrained('product_variants')->cascadeOnDelete();
+            $table->foreignUuid('product_attribute_id')->constrained()->cascadeOnDelete();
+            $table->foreignUuid('product_variant_id')->constrained()->cascadeOnDelete();
             $table->uuid('product_attribute_option_id');
             $table->foreign('product_attribute_option_id', 'variant_attribute_option_id')->references('id')->on('product_attribute_options')->cascadeOnDelete();
         });

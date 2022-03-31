@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use App\Models\ProductAttribute;
-use App\Enums\ProductAttributeType;
 use App\Models\ProductAttributeOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 

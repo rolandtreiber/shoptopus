@@ -7,7 +7,7 @@
     <testsuites>
         <testsuite name="PublicApi">
             <directory suffix="Test.php">./tests/PublicApi</directory>
-        </testsuite>ProductAttributeControllerTes
+        </testsuite>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>

@@ -84,7 +84,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $this->assertEquals(12.9, $productVariant->price);
         $this->assertEquals('Test Variant', $productVariant->setLocale('en')->description);
         $this->assertEquals('Test Variante', $productVariant->setLocale('de')->description);
-        $this->assertTrue($productVariant->productVariantAttributes->contains($attribute));
+        $this->assertTrue($productVariant->product_variant_attributes->contains($attribute));
     }
 
     /**
@@ -105,7 +105,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->productVariantAttributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
+        $productVariant->product_variant_attributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
@@ -132,8 +132,8 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $this->assertEquals(11.12, $productVariant->price);
         $this->assertEquals('Updated Test Variant', $productVariant->setLocale('en')->description);
         $this->assertEquals('Aktualisiert Test Variante', $productVariant->setLocale('de')->description);
-        $this->assertTrue($productVariant->productVariantAttributes->contains($attribute2));
-        $this->assertFalse($productVariant->productVariantAttributes->contains($attribute1));
+        $this->assertTrue($productVariant->product_variant_attributes->contains($attribute2));
+        $this->assertFalse($productVariant->product_variant_attributes->contains($attribute1));
     }
 
     /**
@@ -149,7 +149,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
+        $productVariant->product_variant_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-variant', [
             'product' => $product->id,
@@ -208,7 +208,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $productVariant = ProductVariant::factory()->state([
             'product_id' => $product->id
         ])->create();
-        $productVariant->productVariantAttributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
+        $productVariant->product_variant_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
             'product' => $product->id,

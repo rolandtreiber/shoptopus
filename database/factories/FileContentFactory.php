@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\FileType;
 use App\Models\Product;
 use App\Models\FileContent;
 use App\Traits\TranslatableFactory;
@@ -39,6 +40,7 @@ class FileContentFactory extends Factory
             'title' => $translated['title'],
             'file_name' => $this->faker->word,
             'description' => $translated['description'],
+            'type' => FileType::Image
         ];
     }
 }
