@@ -36,11 +36,11 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
                     dr.max_distance,
                     dr.distance_unit,
                     dr.lat,
-                    dr.lon,
-                    dr.enabled
+                    dr.lon
                 FROM delivery_rules AS dr
                 JOIN delivery_types AS dt ON dt.id IN (?)
                 WHERE dr.deleted_at IS NULL
+                AND dr.enabled IS TRUE
             ", [implode(',', $deliveryTypeIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -94,27 +94,34 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
         try {
             $ids = collect($result)->pluck('id')->toArray();
 
+            $deliveryRules = [];
+            $orders = [];
+
+            if (!in_array('delivery_rules', $excludeRelationships)) {
+                $deliveryRules = $this->getDeliveryRules($ids);
+            }
+
+            if (!in_array('orders', $excludeRelationships)) {
+                $orders = $this->getOrders($ids);
+            }
+
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
-                $model['orders'] = [];
                 $model['delivery_rules'] = [];
+                $model['orders'] = [];
 
-                if (!in_array('orders', $excludeRelationships)) {
-                    foreach ($this->getOrders($ids) as $order) {
-                        if ((int) $order['delivery_type_id'] === $modelId) {
-                            unset($order['delivery_type_id']);
-                            array_push($model['orders'], $order);
-                        }
+                foreach ($deliveryRules as $deliveryRule) {
+                    if ((int) $deliveryRule['delivery_type_id'] === $modelId) {
+                        unset($deliveryRule['delivery_type_id']);
+                        array_push($model['delivery_rules'], $deliveryRule);
                     }
                 }
 
-                if (!in_array('delivery_rules', $excludeRelationships)) {
-                    foreach ($this->getDeliveryRules($ids) as $deliveryRule) {
-                        if ((int) $deliveryRule['delivery_type_id'] === $modelId) {
-                            unset($deliveryRule['delivery_type_id']);
-                            array_push($model['delivery_rules'], $deliveryRule);
-                        }
+                foreach ($orders as $order) {
+                    if ((int) $order['delivery_type_id'] === $modelId) {
+                        unset($order['delivery_type_id']);
+                        array_push($model['orders'], $order);
                     }
                 }
             }

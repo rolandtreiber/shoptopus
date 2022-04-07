@@ -29,12 +29,11 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
                     dt.id,
                     dt.name,
                     dt.description,
-                    dt.price,
-                    dt.enabled,
-                    dt.enabled_by_default_on_creation
+                    dt.price
                 FROM delivery_types AS dt
                 WHERE dt.id IN (?)
                 AND dt.deleted_at IS NULL
+                AND dt.enabled IS TRUE
             ", [implode(',', $deliveryTypeIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -53,16 +52,22 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
         try {
+            $delivery_types = [];
+
+            if (!in_array('delivery_type', $excludeRelationships)) {
+                $delivery_types = $this->getDeliveryTypes(collect($result)
+                    ->unique('delivery_type_id')
+                    ->pluck('delivery_type_id')
+                    ->toArray()
+                );
+            }
+
             foreach ($result as &$model) {
                 $model['delivery_type'] = null;
 
-                if (!in_array('delivery_type', $excludeRelationships)) {
-                    $deliveryTypes = $this->getDeliveryTypes(collect($result)->unique('delivery_type_id')->pluck('delivery_type_id')->toArray());
-
-                    foreach ($deliveryTypes as $deliveryType) {
-                        if($deliveryType['id'] === $model['delivery_type_id']) {
-                            $model['delivery_type'] = $deliveryType;
-                        }
+                foreach ($delivery_types as $deliveryType) {
+                    if($deliveryType['id'] === $model['delivery_type_id']) {
+                        $model['delivery_type'] = $deliveryType;
                     }
                 }
             }

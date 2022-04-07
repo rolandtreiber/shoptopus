@@ -41,6 +41,9 @@ return [
     "1507" => "Sorry there was an error removing the item from the cart.",
     "1508" => "Sorry there was an error merging your carts.",
 
+    "1700" => "Sorry there was an error getting this product category.",
+    "1703" => "Sorry there was an error updating this product category.",
+
     "2000" => "Sorry there was an error getting this user.",
     "2001" => "Sorry there was an error getting all users.",
     "2002" => "Sorry there was an error creating this user.",

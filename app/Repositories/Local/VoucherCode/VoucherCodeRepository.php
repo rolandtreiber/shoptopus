@@ -60,17 +60,21 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
         try {
             $ids = collect($result)->pluck('id')->toArray();
 
+            $orders = [];
+
+            if (!in_array('orders', $excludeRelationships)) {
+                $orders = $this->getOrders($ids);
+            }
+
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
                 $model['orders'] = [];
 
-                if (!in_array('orders', $excludeRelationships)) {
-                    foreach ($this->getOrders($ids) as $order) {
-                        if ((int) $order['voucher_code_id'] === $modelId) {
-                            unset($order['voucher_code_id']);
-                            array_push($model['orders'], $order);
-                        }
+                foreach ($orders as $order) {
+                    if ((int) $order['voucher_code_id'] === $modelId) {
+                        unset($order['voucher_code_id']);
+                        array_push($model['orders'], $order);
                     }
                 }
             }

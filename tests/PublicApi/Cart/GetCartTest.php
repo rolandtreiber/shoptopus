@@ -68,7 +68,7 @@ class GetCartTest extends TestCase
         $user = User::factory()->create();
         $this->cart->update(['user_id' => $user->id]);
 
-        $this->signIn();
+        $this->signIn($user);
 
         $res = $this->sendRequest();
 

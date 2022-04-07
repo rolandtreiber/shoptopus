@@ -59,17 +59,21 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
      */
     public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
     {
+        $ids = collect($result)->unique('user_id')->pluck('user_id')->toArray();
+
+        $users = [];
+
         try {
+            if (!in_array('user', $excludeRelationships)) {
+                $users = $this->getUsers($ids);
+            }
+
             foreach($result as &$model) {
                 $model['user'] = null;
 
-                if ( ! in_array('user', $excludeRelationships)) {
-                    $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
-
-                    foreach ($users as $user) {
-                        if ($user['id'] === $model['user_id']) {
-                            $model['user'] = $user;
-                        }
+                foreach ($users as $user) {
+                    if ($user['id'] === $model['user_id']) {
+                        $model['user'] = $user;
                     }
                 }
             }

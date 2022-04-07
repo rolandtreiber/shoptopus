@@ -26,13 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class DiscountRule extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use HasUUID;
-    use HasTranslations;
-    use SoftDeletes;
-    use HasSlug;
-    use \OwenIt\Auditing\Auditable;
-    use HasExportable;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -57,7 +51,8 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
         'name',
         'valid_from',
         'valid_until',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

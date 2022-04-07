@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property string $subject
@@ -16,9 +15,7 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
  */
 class EmailArchive extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory;
-    use \OwenIt\Auditing\Auditable;
-    use HasExportable;
+    use HasFactory, \OwenIt\Auditing\Auditable, HasExportable;
 
-    protected $fillable = ['subject', 'address', 'subject', 'template_id', 'content'];
+    protected $fillable = ['subject', 'address', 'template_id', 'content'];
 }

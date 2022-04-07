@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Repositories\Local\Address;
+namespace App\Repositories\Local\ProductCategory;
 
-interface AddressRepositoryInterface {
+interface ProductCategoryRepositoryInterface {
 
     /**
-     * Get the users for the given addresses
+     * Get the discount rules for the given product categories
      *
-     * @param array $userIds
+     * @param array $productCategoryIds
      * @return array
-     * @throws \Exception
      */
-    public function getUsers(array $userIds = []) : array;
+    public function getDiscountRules(array $productCategoryIds = []) : array;
 
     /**
      * Get the required related models for the given parent

@@ -49,6 +49,10 @@ return [
             "removeItem" => 1507,
             "mergeUserCarts" => 1508
         ],
+        'product_category' => [
+            "get" => 1700,
+            "getAll" => 1701,
+        ],
         'user' => [
             "get" => 2000,
             "getAll" => 2001,

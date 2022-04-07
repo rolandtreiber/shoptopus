@@ -55,6 +55,16 @@ interface CartRepositoryInterface {
     public function mergeUserCarts(string $userId, string $cartId) : array;
 
     /**
+     * Get the required related models for the given parent
+     *
+     * @param $result
+     * @param array $excludeRelationships
+     * @return array
+     * @throws \Exception
+     */
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array;
+
+    /**
      * Get the columns for selection
      *
      * @param bool $withTableNamePrefix
