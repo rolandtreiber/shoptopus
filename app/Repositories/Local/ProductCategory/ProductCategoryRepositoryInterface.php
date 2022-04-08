@@ -13,6 +13,14 @@ interface ProductCategoryRepositoryInterface {
     public function getDiscountRules(array $productCategoryIds = []) : array;
 
     /**
+     * Get the products for the given product categories
+     *
+     * @param array $productCategoryIds
+     * @return array
+     */
+    public function getProducts(array $productCategoryIds = []) : array;
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result

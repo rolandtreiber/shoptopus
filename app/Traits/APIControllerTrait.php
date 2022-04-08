@@ -206,7 +206,7 @@ trait APIControllerTrait
      */
     protected function siteURL() : string
     {
-        if(app()->environment() == 'testing') {
+        if(app()->environment('testing')) {
             return "http://localhost:8000/";
         }
 

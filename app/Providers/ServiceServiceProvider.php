@@ -28,6 +28,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface', 'App\Services\Local\DeliveryRule\DeliveryRuleService');
         $this->app->bind('App\Services\Local\DeliveryType\DeliveryTypeServiceInterface', 'App\Services\Local\DeliveryType\DeliveryTypeService');
         $this->app->bind('App\Services\Local\Order\OrderServiceInterface', 'App\Services\Local\Order\OrderService');
+        $this->app->bind('App\Services\Local\Product\ProductServiceInterface', 'App\Services\Local\Product\ProductService');
         $this->app->bind('App\Services\Local\ProductCategory\ProductCategoryServiceInterface', 'App\Services\Local\ProductCategory\ProductCategoryService');
         $this->app->bind('App\Services\Local\VoucherCode\VoucherCodeServiceInterface', 'App\Services\Local\VoucherCode\VoucherCodeService');
     }
