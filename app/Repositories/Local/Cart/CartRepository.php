@@ -231,28 +231,33 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         try {
             $ids = collect($result)->pluck('id')->toArray();
 
+            $users = [];
+            $items = [];
+
+            if (!in_array('user', $excludeRelationships)) {
+                $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
+            }
+
+            if (!in_array('products', $excludeRelationships)) {
+                $items = $this->getItems($ids);
+            }
+
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
                 $model['user'] = null;
                 $model['products'] = [];
 
-                if (!in_array('user', $excludeRelationships)) {
-                    $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
-
-                    foreach ($users as $user) {
-                        if ($user['id'] === $model['user_id']) {
-                            $model['user'] = $user;
-                        }
+                foreach ($users as $user) {
+                    if ($user['id'] === $model['user_id']) {
+                        $model['user'] = $user;
                     }
                 }
 
-                if (!in_array('products', $excludeRelationships)) {
-                    foreach ($this->getItems($ids) as $product) {
-                        if ((int) $product['cart_id'] === $modelId) {
-                            unset($product['cart_id']);
-                            array_push($model['products'], $product);
-                        }
+                foreach ($items as $product) {
+                    if ((int) $product['cart_id'] === $modelId) {
+                        unset($product['cart_id']);
+                        array_push($model['products'], $product);
                     }
                 }
             }

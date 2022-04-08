@@ -22,6 +22,8 @@ return [
             "loginUserIncorrect" => 1007,
             "sendPasswordReset" => 1008,
             "resetPassword" => 1009,
+            "getOAuthProviderTargetUrl" => 1010,
+            "handleOAuthProviderCallback" => 1011,
         ],
         'access_token' => [
             "get" => 1200,
@@ -46,6 +48,10 @@ return [
             "addItem" => 1506,
             "removeItem" => 1507,
             "mergeUserCarts" => 1508
+        ],
+        'product_category' => [
+            "get" => 1700,
+            "getAll" => 1701,
         ],
         'user' => [
             "get" => 2000,

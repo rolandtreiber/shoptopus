@@ -17,13 +17,13 @@ class CreateProductVariantsTable extends Migration
 
         Schema::create('product_variants', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->foreignUuid('product_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->unsignedDecimal('price');
+            $table->foreignUuid('product_id')->constrained()->cascadeOnDelete();
             $table->text('data')->nullable();
             $table->unsignedBigInteger('stock')->default(0);
             $table->string('sku', 50)->unique()->nullable();
             $table->boolean('enabled')->default(true);
             $table->text('description')->nullable();
-            $table->unsignedDecimal('price');
             $table->string('slug');
             $table->softDeletes();
             $table->timestamps();

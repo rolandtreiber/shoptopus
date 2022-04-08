@@ -49,7 +49,7 @@ class ProductVariantSeeder extends Seeder
                     ->where('product_attribute_id', $attribute->id)
                     ->where('product_attribute_option_id', $optionId)
                     ->first());
-                $productVariant->productVariantAttributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
+                $productVariant->product_variant_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
             }
         }
 

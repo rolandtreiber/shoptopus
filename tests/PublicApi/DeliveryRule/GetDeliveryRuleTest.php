@@ -72,7 +72,7 @@ class GetDeliveryRuleTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_associated_delivery_type()
+    public function it_returns_the_associated_enabled_delivery_type()
     {
         $res = $this->sendRequest();
 
@@ -83,9 +83,7 @@ class GetDeliveryRuleTest extends TestCase
                         'id',
                         'name',
                         'description',
-                        'price',
-                        'enabled',
-                        'enabled_by_default_on_creation'
+                        'price'
                     ]
                 ]
             ]
@@ -94,12 +92,15 @@ class GetDeliveryRuleTest extends TestCase
         $this->delivery_rule->delivery_type()->update(['deleted_at' => now()]);
 
         $this->assertNull($this->sendRequest()->json('data.0.delivery_type'));
+
+        $this->delivery_rule->delivery_type()->update(['deleted_at' => null, 'enabled' => false]);
+
+        $this->assertNull($this->sendRequest()->json('data.0.delivery_type'));
     }
 
     protected function getModelRepo() : DeliveryRuleRepository
     {
-        $errorService = new ErrorService;
-        return new DeliveryRuleRepository($errorService, new DeliveryRule);
+        return new DeliveryRuleRepository(new ErrorService, new DeliveryRule);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

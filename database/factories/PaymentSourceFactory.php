@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\User;
-use App\Models\PaymentSource;
 use App\Enums\PaymentMethod;
+use App\Models\PaymentSource;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentSourceFactory extends Factory
@@ -33,7 +33,7 @@ class PaymentSourceFactory extends Factory
             'name' => $this->faker->words(2, true),
             'source_id' => $this->faker->regexify('[A-Za-z0-9]{150}'),
             'exp_month' => $this->faker->numberBetween(1, 12),
-            'exp_year' => random_int(2021, 2025),
+            'exp_year' => random_int(2022, 2025),
             'last_four' => random_int(1000, 9999),
             'brand' => $this->faker->randomElement($brands),
             'stripe_user_id' => $this->faker->regexify('[A-Za-z0-9]{120}'),

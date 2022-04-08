@@ -50,6 +50,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface', 'App\Repositories\Local\DeliveryRule\DeliveryRuleRepository');
         $this->app->bind('App\Repositories\Local\DeliveryType\DeliveryTypeRepositoryInterface', 'App\Repositories\Local\DeliveryType\DeliveryTypeRepository');
         $this->app->bind('App\Repositories\Local\Order\OrderRepositoryInterface', 'App\Repositories\Local\Order\OrderRepository');
+        $this->app->bind('App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface', 'App\Repositories\Local\ProductCategory\ProductCategoryRepository');
         $this->app->bind('App\Repositories\Local\VoucherCode\VoucherCodeRepositoryInterface', 'App\Repositories\Local\VoucherCode\VoucherCodeRepository');
         $this->app->bind(EventLogRepositoryInterface::class, EventLogRepository::class);
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
