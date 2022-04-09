@@ -26,7 +26,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         try {
             return DB::select("
                 SELECT
-                    drp.id as product_id,
+                    drp.product_id,
                     dr.id,
                     dr.type,
                     dr.name,
@@ -77,6 +77,67 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     }
 
     /**
+     * Get the product tags for the given products
+     *
+     * @param array $productIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getProductTags(array $productIds = []) : array
+    {
+        try {
+            return DB::select("
+                SELECT
+                    ppt.product_id,
+                    pt.id,
+                    pt.name,
+                    pt.slug,
+                    pt.description,
+                    pt.badge,
+                    pt.display_badge
+                FROM product_tags AS pt
+                JOIN product_product_tag AS ppt ON ppt.product_id IN (?)
+                WHERE pt.deleted_at IS NULL
+                AND pt.enabled IS TRUE
+            ", [implode(',', $productIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * Get the product variants
+     *
+     * @param array $productIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getProductVariants(array $productIds = []) : array
+    {
+        try {
+            return DB::select("
+                SELECT
+                    pv.product_id,
+                    pv.id,
+                    pv.slug,
+                    pv.price,
+                    pv.data,
+                    pv.stock,
+                    pv.sku,
+                    pv.description
+                FROM product_variants AS pv
+                WHERE pv.product_id IN (?)
+                AND pv.deleted_at IS NULL
+                AND pv.enabled IS TRUE
+            ", [implode(',', $productIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result
@@ -90,6 +151,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
         $discount_rules = [];
         $product_categories = [];
+        $product_tags = [];
+        $product_variants = [];
 
         if (!in_array('discount_rules', $excludeRelationships)) {
             $discount_rules = $this->getDiscountRules($ids);
@@ -99,12 +162,22 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             $product_categories = $this->getProductCategories($ids);
         }
 
+        if (!in_array('product_tags', $excludeRelationships)) {
+            $product_tags = $this->getProductTags($ids);
+        }
+
+        if (!in_array('product_variants', $excludeRelationships)) {
+            $product_variants = $this->getProductVariants($ids);
+        }
+
         try {
             foreach ($result as &$model) {
                 $modelId = (int) $model['id'];
 
                 $model['discount_rules'] = [];
                 $model['product_categories'] = [];
+                $model['product_tags'] = [];
+                $model['product_variants'] = [];
 
                 foreach ($discount_rules as $discount_rule) {
                     if ((int) $discount_rule['product_id'] === $modelId) {
@@ -113,10 +186,24 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     }
                 }
 
-                foreach ($product_categories as $product) {
-                    if ((int) $product['product_id'] === $modelId) {
-                        unset($product['product_id']);
-                        array_push($model['product_categories'], $product);
+                foreach ($product_categories as $product_category) {
+                    if ((int) $product_category['product_id'] === $modelId) {
+                        unset($product_category['product_id']);
+                        array_push($model['product_categories'], $product_category);
+                    }
+                }
+
+                foreach ($product_tags as $product_tag) {
+                    if ((int) $product_tag['product_id'] === $modelId) {
+                        unset($product_tag['product_id']);
+                        array_push($model['product_tags'], $product_tag);
+                    }
+                }
+
+                foreach ($product_variants as $product_variant) {
+                    if ((int) $product_variant['product_id'] === $modelId) {
+                        unset($product_variant['product_id']);
+                        array_push($model['product_variants'], $product_variant);
                     }
                 }
             }

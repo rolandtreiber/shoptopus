@@ -70,7 +70,8 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
         'menu_image',
         'header_image',
         'parent_id',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

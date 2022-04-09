@@ -120,9 +120,9 @@ class Product extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsToMany
      */
-    public function product_tags(): BelongsToMany
+    public function discount_rules(): BelongsToMany
     {
-        return $this->belongsToMany(ProductTag::class);
+        return $this->belongsToMany(DiscountRule::class)->valid();
     }
 
     /**
@@ -136,19 +136,19 @@ class Product extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsToMany
      */
-    public function product_attributes(): BelongsToMany
+    public function product_tags(): BelongsToMany
     {
-        return $this->belongsToMany(ProductAttribute::class)
-            ->withPivot('product_attribute_option_id')
-            ->using(ProductProductAttribute::class);
+        return $this->belongsToMany(ProductTag::class);
     }
 
     /**
      * @return BelongsToMany
      */
-    public function discount_rules(): BelongsToMany
+    public function product_attributes(): BelongsToMany
     {
-        return $this->belongsToMany(DiscountRule::class)->valid();
+        return $this->belongsToMany(ProductAttribute::class)
+            ->withPivot('product_attribute_option_id')
+            ->using(ProductProductAttribute::class);
     }
 
     /**

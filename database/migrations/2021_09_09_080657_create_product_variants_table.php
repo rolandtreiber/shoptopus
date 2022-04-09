@@ -17,6 +17,7 @@ class CreateProductVariantsTable extends Migration
 
         Schema::create('product_variants', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->string('slug');
             $table->unsignedDecimal('price');
             $table->foreignUuid('product_id')->constrained()->cascadeOnDelete();
             $table->text('data')->nullable();
@@ -24,7 +25,6 @@ class CreateProductVariantsTable extends Migration
             $table->string('sku', 50)->unique()->nullable();
             $table->boolean('enabled')->default(true);
             $table->text('description')->nullable();
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });
