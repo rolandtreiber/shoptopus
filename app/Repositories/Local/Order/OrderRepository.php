@@ -51,7 +51,7 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
 //                    dd($this->getOrders($ids));
 //
 //                    foreach ($this->getOrders($ids) as $order) {
-//                        if ((int) $order['voucher_code_id'] === $modelId) {
+//                        if ($order['voucher_code_id'] === $modelId) {
 //                            unset($order['voucher_code_id']);
 //                            array_push($model['orders'], $order);
 //                        }

@@ -8,6 +8,8 @@ use App\Models\ProductTag;
 use App\Models\DiscountRule;
 use App\Models\ProductVariant;
 use App\Models\ProductCategory;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Product\ProductRepository;
@@ -194,6 +196,71 @@ class GetProductTest extends TestCase
         $pv->update(['enabled' => false, 'deleted_at' => null]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_the_associated_product_attributes_with_their_options()
+    {
+        $pa = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
+        $pa->products()->attach($this->product->id);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'product_attributes' => [
+                        [
+                            'id',
+                            'name',
+                            'slug',
+                            'type',
+                            'image',
+                            'options' => [
+                                [
+                                    'id',
+                                    'name',
+                                    'slug',
+                                    'option_value',
+                                    'image'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $pa->update(['deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        $pa->update(['deleted_at' => null, 'enabled' => false]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
+    {
+        $pa = ProductAttribute::factory()->create();
+        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
+        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
+        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
+        $pa->products()->attach($this->product->id);
+
+        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
+
+        $this->assertEquals(1, sizeof($res));
+
+        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
     }
 
     protected function getModelRepo() : ProductRepository

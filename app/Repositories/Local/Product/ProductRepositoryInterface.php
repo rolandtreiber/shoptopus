@@ -38,6 +38,15 @@ interface ProductRepositoryInterface {
     public function getProductVariants(array $productIds = []) : array;
 
     /**
+     * Get the product attributes for the given products
+     *
+     * @param array $productIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getProductAttributes(array $productIds = []) : array;
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result

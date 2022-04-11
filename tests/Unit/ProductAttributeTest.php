@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Product;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use App\Models\ProductAttribute;
@@ -65,6 +66,20 @@ class ProductAttributeTest extends TestCase
     public function it_has_an_enabled_field()
     {
         $this->assertTrue($this->product_attribute->enabled);
+    }
+
+    /** @test */
+    public function it_may_have_many_products()
+    {
+        $this->assertCount(0, $this->product_attribute->products);
+
+        $product = Product::factory()->create();
+
+        $this->product_attribute->products()->attach($product->id);
+
+        $this->assertCount(1, $this->product_attribute->fresh()->products);
+
+        $this->assertInstanceOf(Product::class, $this->product_attribute->products()->first());
     }
 
     /** @test */

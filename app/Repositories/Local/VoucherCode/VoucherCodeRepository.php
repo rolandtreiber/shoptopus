@@ -38,8 +38,8 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
                     o.delivery_cost,
                     o.status
                 FROM orders AS o
-                JOIN voucher_codes AS vc ON vc.id IN (?)
-                WHERE o.deleted_at IS NULL
+                WHERE o.voucher_code_id IN (?)
+                AND o.deleted_at IS NULL
             ", [implode(',', $voucherCodeIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -67,12 +67,12 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
             }
 
             foreach ($result as &$model) {
-                $modelId = (int) $model['id'];
+                $modelId = $model['id'];
 
                 $model['orders'] = [];
 
                 foreach ($orders as $order) {
-                    if ((int) $order['voucher_code_id'] === $modelId) {
+                    if ($order['voucher_code_id'] === $modelId) {
                         unset($order['voucher_code_id']);
                         array_push($model['orders'], $order);
                     }

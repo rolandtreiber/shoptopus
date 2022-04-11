@@ -35,8 +35,9 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                     dr.valid_until,
                     dr.slug
                 FROM discount_rules AS dr
-                JOIN discount_rule_product_category AS drpc ON drpc.product_category_id IN (?)
-                WHERE dr.deleted_at IS NULL
+                JOIN discount_rule_product_category AS drpc ON drpc.discount_rule_id = dr.id
+                WHERE drpc.product_category_id IN (?)
+                AND dr.deleted_at IS NULL
                 AND dr.enabled = true
             ", [implode(',', $productCategoryIds)]);
         } catch (\Exception | \Error $e) {
@@ -71,8 +72,9 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                     p.sku,
                     p.cover_photo
                 FROM products AS p
-                JOIN product_product_category AS ppc ON ppc.product_category_id IN (?)
-                WHERE p.deleted_at IS NULL
+                JOIN product_product_category AS ppc ON ppc.product_id = p.id
+                WHERE ppc.product_category_id IN (?)
+                AND p.deleted_at IS NULL
             ", [implode(',', $productCategoryIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -105,20 +107,20 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
         try {
             foreach ($result as &$model) {
-                $modelId = (int) $model['id'];
+                $modelId = $model['id'];
 
                 $model['discount_rules'] = [];
                 $model['products'] = [];
 
                 foreach ($discount_rules as $discount_rule) {
-                    if ((int) $discount_rule['product_category_id'] === $modelId) {
+                    if ($discount_rule['product_category_id'] === $modelId) {
                         unset($discount_rule['product_category_id']);
                         array_push($model['discount_rules'], $discount_rule);
                     }
                 }
 
                 foreach ($products as $product) {
-                    if ((int) $product['product_category_id'] === $modelId) {
+                    if ($product['product_category_id'] === $modelId) {
                         unset($product['product_category_id']);
                         array_push($model['products'], $product);
                     }

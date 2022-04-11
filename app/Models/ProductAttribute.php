@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static count()
@@ -60,7 +61,8 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
         'name',
         'type',
         'image',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**
@@ -73,6 +75,16 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
         'image' => 'object',
         'enabled' => 'boolean'
     ];
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products() : BelongsToMany
+    {
+        return $this->belongsToMany(Product::class)
+            ->withPivot('product_attribute_option_id')
+            ->using(ProductProductAttribute::class);
+    }
 
     /**
      * @return HasMany

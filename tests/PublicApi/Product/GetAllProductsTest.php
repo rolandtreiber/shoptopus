@@ -2,12 +2,14 @@
 
 namespace Tests\PublicApi\Product;
 
-use App\Models\ProductCategory;
-use App\Models\ProductTag;
-use App\Models\ProductVariant;
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\ProductTag;
 use App\Models\DiscountRule;
+use App\Models\ProductVariant;
+use App\Models\ProductCategory;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Product\ProductRepository;
@@ -118,8 +120,8 @@ class GetAllProductsTest extends TestCase
      */
     public function it_returns_the_associated_product_categories()
     {
-        $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
+        $pc = ProductCategory::factory()->create();
         $pc->products()->attach($p->id);
 
         $res = $this->sendRequest();
@@ -151,10 +153,77 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function it_returns_the_associated_product_attributes_with_their_options()
+    {
+        $p = Product::factory()->create();
+        $pa = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
+        $pa->products()->attach($p->id);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'product_attributes' => [
+                        [
+                            'id',
+                            'name',
+                            'slug',
+                            'type',
+                            'image',
+                            'options' => [
+                                [
+                                    'id',
+                                    'name',
+                                    'slug',
+                                    'option_value',
+                                    'image'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $pa->update(['deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        $pa->update(['deleted_at' => null, 'enabled' => false]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
+    {
+        $p = Product::factory()->create();
+        $pa = ProductAttribute::factory()->create();
+        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
+        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
+        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
+        $pa->products()->attach($p->id);
+
+        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
+
+        $this->assertEquals(1, sizeof($res));
+
+        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function it_returns_its_product_tags()
     {
-        $pt = ProductTag::factory()->create();
         $p = Product::factory()->create();
+        $pt = ProductTag::factory()->create();
         $p->product_tags()->attach($pt->id);
 
         $res = $this->sendRequest();
