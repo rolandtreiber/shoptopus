@@ -3,6 +3,7 @@
 namespace App\Services\Local\Auth;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Events\UserSignedUp;
 use App\Models\PasswordReset;
@@ -109,6 +110,29 @@ class AuthService implements AuthServiceInterface
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.register'));
         } catch (\Error $e) {
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.register'));
+        }
+    }
+
+    /**
+     * Get the authenticated user's details
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function details(): array
+    {
+        try {
+            $user = User::findOrFail(Auth::id());
+
+            return [
+                "data" => [
+                    "auth" => [
+                        "user" => $this->normalisedUserDetails($user)
+                    ]
+                ]
+            ];
+        } catch (\Exception | \Error $e) {
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.details'));
         }
     }
 

@@ -55,6 +55,20 @@ class AuthController extends Controller
     }
 
     /**
+     * Get the authenticated user details'
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function details() : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->authService->details());
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
      * Resend the verification email
      *
      * @param ResendVerificationRequest $request

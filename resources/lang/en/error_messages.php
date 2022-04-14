@@ -15,6 +15,7 @@ return [
     '1009' => 'Sorry, there was an error while trying to resetting your password.',
     '1010' => "Sorry, there was an error while trying to authenticate with the given provider.",
     '1011' => "Sorry, there was an error while trying to handle the provider callback function.",
+    '1012' => "Sorry, there was an error getting your user details.",
 
     '1100' => 'Sorry there was a system error, the administrator has been informed.',
     '1101' => 'Sorry there was a system error, the administrator has been informed.',

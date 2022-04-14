@@ -24,6 +24,7 @@ return [
             "resetPassword" => 1009,
             "getOAuthProviderTargetUrl" => 1010,
             "handleOAuthProviderCallback" => 1011,
+            "details" => 1012
         ],
         'access_token' => [
             "get" => 1200,

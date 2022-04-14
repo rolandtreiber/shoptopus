@@ -25,8 +25,16 @@ class ProductController extends Controller
     {
         try {
             $filters = $this->getAndValidateFilters($request);
-            $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
-            $page_formatting = $this->getPageFormatting($request);
+            $filters['deleted_at'] = 'null';
+
+            if(empty($page_formatting = $this->getPageFormatting($request))) {
+                $page_formatting = [
+                    'sort' => 'created_at',
+                    'offset' => 0,
+                    'limit' => 12
+                ];
+            }
+
             return response()->json($this->getResponse($page_formatting, $this->productService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
