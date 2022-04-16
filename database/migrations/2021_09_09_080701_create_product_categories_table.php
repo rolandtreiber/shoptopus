@@ -17,15 +17,19 @@ class CreateProductCategoriesTable extends Migration
 
         Schema::create('product_categories', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->uuid('parent_id')->nullable();
             $table->text('name');
             $table->string('slug');
             $table->text('description');
             $table->json('menu_image')->nullable();
             $table->json('header_image')->nullable();
-            $table->foreignUuid('parent_id')->nullable()->references('id')->on('product_categories')->nullOnDelete();
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
+        });
+
+        Schema::table('product_categories', function (Blueprint $table) {
+            $table->foreign('parent_id')->references('id')->on('product_categories')->nullOnDelete();
         });
 
         Schema::enableForeignKeyConstraints();

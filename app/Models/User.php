@@ -107,6 +107,15 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the social accounts of the user.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function social_accounts() : \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SocialAccount::class);
+    }
+
+    /**
+     * Get the social accounts of the user.
      * @return HasMany
      */
     public function addresses() : HasMany
@@ -121,6 +130,14 @@ class User extends Authenticatable implements Auditable, Exportable
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
     }
 
     /**
@@ -186,13 +203,5 @@ class User extends Authenticatable implements Auditable, Exportable
     {
         $query->role('customer');
         return $query;
-    }
-
-    /**
-     * @return HasMany
-     */
-    public function payments(): HasMany
-    {
-        return $this->hasMany(Payment::class);
     }
 }

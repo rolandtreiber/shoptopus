@@ -19,15 +19,18 @@ class AuthService implements AuthServiceInterface
     private ErrorServiceInterface $errorService;
     private UserServiceInterface $userService;
     private CartServiceInterface $cartService;
+    private SocialAccountServiceInterface $socialAccountService;
 
     public function __construct(
         ErrorServiceInterface $errorService,
         UserServiceInterface $userServiceInterface,
-        CartServiceInterface $cartService
+        CartServiceInterface $cartService,
+        SocialAccountServiceInterface $socialAccountServiceInterface
     ) {
         $this->errorService = $errorService;
         $this->userService = $userServiceInterface;
         $this->cartService = $cartService;
+        $this->socialAccountService = $socialAccountServiceInterface;
     }
 
     /**
@@ -265,6 +268,52 @@ class AuthService implements AuthServiceInterface
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resetPassword'));
+        }
+    }
+
+    /**
+     * Get the target url to the Auth provider's authentication page
+     *
+     * @param array $payload
+     * @return array
+     * @throws \Exception
+     */
+    public function getOAuthProviderTargetUrl(array $payload): array
+    {
+        try {
+            return [
+                "data" => [
+                    "targetUrl" => $this->socialAccountService->getOAuthProviderTargetUrl($payload['provider'])
+                ]
+            ];
+        } catch (\Exception | \Error $e) {
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.getOAuthProviderTargetUrl'));
+        }
+    }
+
+    /**
+     * Obtain the user information from the Auth provider
+     *
+     * @param array $payload
+     * @return array
+     * @throws \Exception
+     */
+    public function handleOAuthProviderCallback(array $payload): array
+    {
+        try {
+            $user = User::find($this->socialAccountService->handleOAuthProviderCallback($payload)['id']);
+
+            if (!$user->hasVerifiedEmail()) {
+                $user->sendEmailVerificationNotification();
+            }
+
+            return [
+                "data" => [
+                    "auth" => $this->createTokenAndGetAuthResponse($user)
+                ]
+            ];
+        } catch (\Exception | \Error $e) {
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.handleOAuthProviderCallback'));
         }
     }
 

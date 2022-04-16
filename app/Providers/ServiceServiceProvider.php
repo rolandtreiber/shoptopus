@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
-use Illuminate\Support\ServiceProvider;
 
 class ServiceServiceProvider extends ServiceProvider
 {
@@ -19,6 +19,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\ModelServiceInterface', 'App\Services\ModelService');
 
         $this->app->bind('App\Services\Local\Auth\AuthServiceInterface', 'App\Services\Local\Auth\AuthService');
+        $this->app->bind('App\Services\Local\Auth\SocialAccountServiceInterface', 'App\Services\Local\Auth\SocialAccountService');
         $this->app->bind('App\Services\Local\User\UserServiceInterface', 'App\Services\Local\User\UserService');
         $this->app->bind('App\Services\Local\AccessToken\AccessTokenServiceInterface', 'App\Services\Local\AccessToken\AccessTokenService');
         $this->app->bind('App\Services\Local\Address\AddressServiceInterface', 'App\Services\Local\Address\AddressService');
@@ -27,6 +28,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface', 'App\Services\Local\DeliveryRule\DeliveryRuleService');
         $this->app->bind('App\Services\Local\DeliveryType\DeliveryTypeServiceInterface', 'App\Services\Local\DeliveryType\DeliveryTypeService');
         $this->app->bind('App\Services\Local\Order\OrderServiceInterface', 'App\Services\Local\Order\OrderService');
+        $this->app->bind('App\Services\Local\ProductCategory\ProductCategoryServiceInterface', 'App\Services\Local\ProductCategory\ProductCategoryService');
         $this->app->bind('App\Services\Local\VoucherCode\VoucherCodeServiceInterface', 'App\Services\Local\VoucherCode\VoucherCodeService');
     }
 

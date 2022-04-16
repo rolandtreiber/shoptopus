@@ -78,7 +78,7 @@ class GetAllDeliveryRulesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_delivery_type()
+    public function it_returns_the_associated_enabled_delivery_type()
     {
         $dr = DeliveryRule::factory()->create();
 
@@ -91,15 +91,17 @@ class GetAllDeliveryRulesTest extends TestCase
                         'id',
                         'name',
                         'description',
-                        'price',
-                        'enabled',
-                        'enabled_by_default_on_creation'
+                        'price'
                     ]
                 ]
             ]
         ]);
 
         $dr->delivery_type()->update(['deleted_at' => now()]);
+
+        $this->assertNull($this->sendRequest()->json('data.0.delivery_type'));
+
+        $dr->delivery_type()->update(['deleted_at' => null, 'enabled' => false]);
 
         $this->assertNull($this->sendRequest()->json('data.0.delivery_type'));
     }

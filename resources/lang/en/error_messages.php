@@ -13,6 +13,8 @@ return [
     '1007' => "Incorrect email or password. Please try again.",
     '1008' => 'Sorry, there was an error while trying to send you the password reset link.',
     '1009' => 'Sorry, there was an error while trying to resetting your password.',
+    '1010' => "Sorry, there was an error while trying to authenticate with the given provider.",
+    '1011' => "Sorry, there was an error while trying to handle the provider callback function.",
 
     '1100' => 'Sorry there was a system error, the administrator has been informed.',
     '1101' => 'Sorry there was a system error, the administrator has been informed.',
@@ -38,6 +40,9 @@ return [
     "1506" => "Sorry there was an error adding the item to the cart.",
     "1507" => "Sorry there was an error removing the item from the cart.",
     "1508" => "Sorry there was an error merging your carts.",
+
+    "1700" => "Sorry there was an error getting this product category.",
+    "1703" => "Sorry there was an error updating this product category.",
 
     "2000" => "Sorry there was an error getting this user.",
     "2001" => "Sorry there was an error getting all users.",

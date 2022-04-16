@@ -62,6 +62,8 @@ class ModelRepository implements ModelRepositoryInterface
 
             if ($this->hasActiveProperty()) {
                 $filters['active'] = 1;
+            } else if ($this->hasEnabledProperty()) {
+                $filters['enabled'] = 1;
             }
 
             $page_formatting = ['limit' => 1];
@@ -108,7 +110,7 @@ class ModelRepository implements ModelRepositoryInterface
      * @return mixed
      * @throws \Exception
      */
-    public function update(string $id, array $payload)
+    public function update(string $id, array $payload) : mixed
     {
         try {
             $model = $this->model->find($id);
@@ -205,6 +207,16 @@ class ModelRepository implements ModelRepositoryInterface
     protected function hasActiveProperty() : bool
     {
         return in_array('active', Schema::getColumnListing($this->model_table));
+    }
+
+    /**
+     * Determine if the model has an enabled property
+     *
+     * @return bool
+     */
+    protected function hasEnabledProperty() : bool
+    {
+        return in_array('enabled', Schema::getColumnListing($this->model_table));
     }
 
     /**

@@ -76,15 +76,20 @@ class GetDeliveryTypeTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_associated_delivery_rules()
+    public function it_returns_the_associated_enabled_delivery_rules()
     {
-        DeliveryRule::factory()->count(2)->create([
+        DeliveryRule::factory()->create([
             'delivery_type_id' => $this->delivery_type->id
         ]);
 
         DeliveryRule::factory()->create([
             'delivery_type_id' => $this->delivery_type->id,
             'deleted_at' => now()
+        ]);
+
+        DeliveryRule::factory()->create([
+            'delivery_type_id' => $this->delivery_type->id,
+            'enabled' => false
         ]);
 
         $res = $this->sendRequest();
@@ -102,15 +107,14 @@ class GetDeliveryTypeTest extends TestCase
                             'max_distance',
                             'distance_unit',
                             'lat',
-                            'lon',
-                            'enabled'
+                            'lon'
                         ]
                     ]
                 ]
             ]
         ]);
 
-        $this->assertCount(2, $res->json('data.0.delivery_rules'));
+        $this->assertCount(1, $res->json('data.0.delivery_rules'));
     }
 
     /**

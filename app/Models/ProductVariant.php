@@ -6,7 +6,6 @@ use App\Traits\HasUUID;
 use App\Traits\HasFiles;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -40,7 +39,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
 
     public $translatable = ['description'];
 
-    protected $appends = ['final_price'];
+    protected $appends = ['final_price', 'name'];
 
     /**
      * The attributes that are mass assignable.
@@ -53,7 +52,8 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'data',
         'price',
         'stock',
-        'sku'
+        'sku',
+        'enabled'
     ];
 
     /**
@@ -77,6 +77,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     }
 
     /**
+     * Get the product for the product variant
      * @return BelongsTo
      */
     public function product(): BelongsTo
@@ -85,11 +86,22 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     }
 
     /**
+     * Get the cover image for the product variant
+     * @return null|FileContent
+     */
+    public function cover_image() : ?FileContent
+    {
+        return optional($this->images())->first();
+    }
+
+    /**
      * @return BelongsToMany
      */
-    public function productVariantAttributes(): BelongsToMany
+    public function product_variant_attributes(): BelongsToMany
     {
-        return $this->belongsToMany(ProductAttribute::class)->withPivot('product_attribute_option_id')->using(VariantAttribute::class);
+        return $this->belongsToMany(ProductAttribute::class)
+            ->withPivot('product_attribute_option_id')
+            ->using(VariantAttribute::class);
     }
 
     public function updateParentStock()
@@ -106,9 +118,10 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
      */
     public function getNameAttribute(): array
     {
-        $attributes = $this->productVariantAttributes;
+        $attributes = $this->product_variant_attributes;
         $languages = config('app.locales_supported');
         $elements = [];
+
         foreach ($languages as $languageKey => $language) {
             $text = $this->product->setLocale($languageKey)->name . ' - ';
             $attributeTexts = [];
@@ -120,19 +133,4 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         }
         return $elements;
     }
-
-    /**
-     * @return string|null
-     */
-    public function coverImage(): ?string
-    {
-        $imagesCount = DB::table('file_contents')->where('fileable_type', get_class($this))->where('fileable_id', $this->id)->count();
-        if ($imagesCount) {
-            $img = FileContent::where('fileable_type', ProductVariant::class)->where('fileable_id', $this->id)->first();
-            return $img->url;
-        } else {
-            return null;
-        }
-    }
-
 }

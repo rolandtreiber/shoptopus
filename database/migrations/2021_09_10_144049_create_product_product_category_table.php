@@ -15,8 +15,8 @@ class CreateProductProductCategoryTable extends Migration
     public function up()
     {
         Schema::create('product_product_category', function (Blueprint $table) {
-            $table->foreignUuid('product_id')->nullable()->constrained('products')->cascadeOnDelete();
-            $table->foreignUuid('product_category_id')->constrained('product_categories')->cascadeOnDelete();
+            $table->foreignUuid('product_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignUuid('product_category_id')->constrained()->cascadeOnDelete();
 
             $table->unique(['product_id', 'product_category_id']);
         });

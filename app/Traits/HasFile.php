@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use App\Models\FileContent;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 

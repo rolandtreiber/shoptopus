@@ -30,12 +30,13 @@ class ProductVariantFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['description'], ['medium']);
 
         return [
+            'price' => $this->faker->randomFloat(2, 1, 5000),
             'product_id' => Product::factory(),
-            'data' => 'Some important data',
-            'description' => $translations['description'],
+            'data' => null,
             'stock' => $this->faker->numberBetween(0, 30),
-            'price' => $this->faker->numberBetween(10, 50),
-            'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers)
+            'description' => $translations['description'],
+            'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers),
+            'enabled' => true
         ];
     }
 }

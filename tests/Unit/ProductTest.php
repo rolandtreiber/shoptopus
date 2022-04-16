@@ -139,6 +139,12 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_final_price_attribute()
+    {
+        $this->assertNotNull($this->product->final_price);
+    }
+
+    /** @test */
     public function it_may_have_many_images()
     {
         $this->assertCount(0, $this->product->images());

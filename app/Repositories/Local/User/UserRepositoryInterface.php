@@ -8,9 +8,9 @@ interface UserRepositoryInterface {
      * Get the currently authenticated user instance
      *
      * @param bool $returnAsArray
-     * @return null|mixed
+     * @return mixed
      */
-    public function getCurrentUser(bool $returnAsArray = true);
+    public function getCurrentUser(bool $returnAsArray = true) : mixed;
 
 
     /**

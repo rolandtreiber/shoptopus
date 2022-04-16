@@ -26,11 +26,11 @@ class ProductVariantResource extends JsonResource
             'stock' => $this->stock,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
-            'attributes' => AttributeResource::collection($this->productVariantAttributes),
+            'attributes' => AttributeResource::collection($this->product_variant_attributes),
             'images' => FileContentResource::collection($this->fileContents),
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
-            'image' => $this->coverImage() ? $this->coverImage() : null,
+            'image' => $this->cover_image(),
             'sku' => $this->sku,
             'enabled' => $this->enabled
         ];

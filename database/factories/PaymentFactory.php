@@ -2,11 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Enums\PaymentType;
-use App\Models\PaymentSource;
 use App\Helpers\GeneralHelper;
 use App\Enums\RandomStringMode;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -27,11 +25,11 @@ class PaymentFactory extends Factory
      */
     public function definition(): array
     {
-        $order = Order::factory()->create();
-
         return [
-            'payable_type' => Order::class,
-            'payable_id' => $order->id,
+            'payable_id' => Order::factory(),
+            'payable_type' => function (array $attributes) {
+                return get_class(Order::find($attributes['payable_id']));
+            },
             'user_id' => null,
             'payment_source_id' => null,
 //            'payment_source_id' => PaymentSource::factory(),
