@@ -24,7 +24,9 @@ return [
             "resetPassword" => 1009,
             "getOAuthProviderTargetUrl" => 1010,
             "handleOAuthProviderCallback" => 1011,
-            "details" => 1012
+            "details" => 1012,
+            "must_reset_password" => 1013,
+            "email_address_taken" => 1014
         ],
         'access_token' => [
             "get" => 1200,
@@ -61,7 +63,10 @@ return [
             "update" => 2003,
             "delete" => 2004,
             "getCurrentUser" => 2005,
-            "getNotifications" => 2006,
+            "getNotifications" => 2006
+        ],
+        'notification' => [
+            "markRead" => 3501,
         ],
         'voucher_codes' => [
             "get" => 5000,

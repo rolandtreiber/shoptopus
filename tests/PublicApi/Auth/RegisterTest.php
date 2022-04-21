@@ -258,7 +258,8 @@ class RegisterTest extends TestCase
                             'ip_address',
                             'user',
                             'products'
-                        ]
+                        ],
+                        'notifications'
                     ]
                 ]
             ]

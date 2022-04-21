@@ -3,6 +3,9 @@
 namespace Tests\PublicApi\Auth;
 
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GetUserDetailsTest extends TestCase
@@ -52,11 +55,48 @@ class GetUserDetailsTest extends TestCase
                             'ip_address',
                             'user',
                             'products'
-                        ]
+                        ],
+                        'notifications'
                     ]
                 ]
             ]
         ]);
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function the_notifications_array_contains_all_the_unread_notifications()
+    {
+        $user = User::factory()->create();
+
+        $notificationData = [
+            'type' => "competition-entered",
+            'title' => "You have entered a Competition.",
+            'level' => 'info'
+        ];
+
+        DB::table('notifications')->insert([
+            'id' => Str::uuid(),
+            'type' => 'App\Notifications\YouEnteredACompetition',
+            'notifiable_type' => 'App\Models\User\User',
+            'notifiable_id' =>$user->id,
+            'data' => json_encode($notificationData)
+        ]);
+
+        DB::table('notifications')->insert([
+            'id' => Str::uuid(),
+            'type' => 'App\Notifications\YouEnteredACompetition',
+            'notifiable_type' => 'App\Models\User\User',
+            'notifiable_id' =>$user->id,
+            'data' => json_encode($notificationData),
+            'read_at' => now()
+        ]);
+
+        $notifications = $this->signIn($user)->sendRequest()->json('data.auth.user.notifications');
+
+        $this->assertCount(1, $notifications);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

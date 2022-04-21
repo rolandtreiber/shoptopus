@@ -3,17 +3,19 @@
 namespace App\Services\Local\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Events\UserSignedUp;
+use Illuminate\Http\Request;
 use App\Models\PasswordReset;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
 use App\Notifications\PasswordResetSuccess;
 use App\Services\Local\Cart\CartServiceInterface;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\Notification\NotificationServiceInterface;
 
 class AuthService implements AuthServiceInterface
 {
@@ -21,17 +23,20 @@ class AuthService implements AuthServiceInterface
     private UserServiceInterface $userService;
     private CartServiceInterface $cartService;
     private SocialAccountServiceInterface $socialAccountService;
+    private NotificationServiceInterface $notificationService;
 
     public function __construct(
         ErrorServiceInterface $errorService,
         UserServiceInterface $userServiceInterface,
         CartServiceInterface $cartService,
-        SocialAccountServiceInterface $socialAccountServiceInterface
+        SocialAccountServiceInterface $socialAccountServiceInterface,
+        NotificationServiceInterface $notificationService
     ) {
         $this->errorService = $errorService;
         $this->userService = $userServiceInterface;
         $this->cartService = $cartService;
         $this->socialAccountService = $socialAccountServiceInterface;
+        $this->notificationService = $notificationService;
     }
 
     /**
@@ -50,6 +55,11 @@ class AuthService implements AuthServiceInterface
                 throw new \Exception('User not found.', Config::get('api_error_codes.services.auth.login_user_incorrect'));
             }
 
+            if (is_null($user->password)) {
+                // Must have signed up with a social account.
+                throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.must_reset_password'));
+            }
+
             if (!Hash::check($payload["password"], $user->password)) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
             }
@@ -63,9 +73,8 @@ class AuthService implements AuthServiceInterface
                     "auth" => $this->createTokenAndGetAuthResponse($user)
                 ]
             ];
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), $e->getCode());
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), $e->getCode());
         }
     }
@@ -106,9 +115,13 @@ class AuthService implements AuthServiceInterface
                     "auth" => $this->createTokenAndGetAuthResponse($user)
                 ]
             ];
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.register'));
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+
+            if ($e->getCode() === Config::get('api_error_codes.services.auth.email_address_taken')) {
+                throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.email_address_taken'));
+            }
+
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.register'));
         }
     }
@@ -132,7 +145,52 @@ class AuthService implements AuthServiceInterface
                 ]
             ];
         } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.details'));
+        }
+    }
+
+    /**
+     * Verify the user's email address
+     *
+     * @param Request $request
+     * @param int $id
+     * @return array
+     * @throws \Exception
+     */
+    public function verify(Request $request, int $id) : array
+    {
+        try {
+            $uri = 'login';
+            $message = 'Email has been verified.';
+            $statusCode = 200;
+
+            if (!$request->hasValidSignature()) {
+                $uri = 'verify';
+                $message = 'Invalid/Expired url provided.';
+                $statusCode = 401;
+            } else {
+                $user = User::find($id);
+
+                if (!$user) {
+                    $uri = 'verify';
+                    $message = 'Sorry, there was an error while trying to verify your email address.';
+                    $statusCode = 404;
+                } else {
+                    if (!$user->hasVerifiedEmail()) {
+                        $user->markEmailAsVerified();
+                    }
+                }
+            }
+
+            $url = Config::get('app.frontend_url_public') . "/{$uri}?message=" . urlencode($message) . "&status=" . urlencode($statusCode);
+
+            return [
+                'url' => $url
+            ];
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
         }
     }
 
@@ -143,7 +201,7 @@ class AuthService implements AuthServiceInterface
      * @return array
      * @throws \Exception
      */
-    public function resendVerification(array $payload) : array
+    public function resendVerification(array $payload): array
     {
         try {
             $user = User::whereEmail($payload['email'])->firstOrFail();
@@ -157,38 +215,9 @@ class AuthService implements AuthServiceInterface
             }
 
             return ["data" => ["message" => $message]];
-        } catch (\Exception $e) {
+        } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resendVerification'));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resendVerification'));
-        }
-    }
-
-    /**
-     * Verify the user's email address.
-     *
-     * @param string $id
-     * @return bool
-     * @throws \Exception
-     */
-    public function verify(string $id) : bool
-    {
-        try {
-            $user = User::findOrFail($id);
-
-            if (!$user->hasVerifiedEmail()) {
-                $user->markEmailAsVerified();
-            }
-
-            return true;
-        } catch (\Exception $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
-        } catch (\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
         }
     }
 
@@ -210,9 +239,8 @@ class AuthService implements AuthServiceInterface
             $user->tokens->each->revoke();
 
             return ["data" => ["auth" => null]];
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
-        } catch (\Error $e) {
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
         }
     }
@@ -311,6 +339,7 @@ class AuthService implements AuthServiceInterface
                 ]
             ];
         } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.getOAuthProviderTargetUrl'));
         }
     }
@@ -337,6 +366,7 @@ class AuthService implements AuthServiceInterface
                 ]
             ];
         } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.handleOAuthProviderCallback'));
         }
     }
@@ -344,6 +374,7 @@ class AuthService implements AuthServiceInterface
     /**
      * @param User $user
      * @return array
+     * @throws \Exception
      */
     private function createTokenAndGetAuthResponse(User $user) : array
     {
@@ -357,9 +388,17 @@ class AuthService implements AuthServiceInterface
     /**
      * @param User $user
      * @return array
+     * @throws \Exception
      */
     private function normalisedUserDetails(User $user) : array
     {
+        $notifications = array_map(function($notification) {
+            return [
+                'id' => $notification['id'],
+                'data' => json_decode($notification['data'])
+            ];
+        }, $this->notificationService->getAllUnreadNotificationsForUser($user->id));
+
         return [
             "id" => $user->id,
             "name" => $user->name,
@@ -369,7 +408,8 @@ class AuthService implements AuthServiceInterface
             "phone" => $user->phone,
             "avatar" => $user->avatar,
             "is_verified" => $user->hasVerifiedEmail(),
-            "cart" => $this->cartService->getCartForUser($user->id)
+            "cart" => $this->cartService->getCartForUser($user->id),
+            "notifications" => $notifications
         ];
     }
 

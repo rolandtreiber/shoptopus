@@ -2,6 +2,8 @@
 
 namespace App\Services\Local\Auth;
 
+use Illuminate\Http\Request;
+
 interface AuthServiceInterface {
 
     /**
@@ -32,11 +34,12 @@ interface AuthServiceInterface {
     /**
      * Verify the user's email address
      *
-     * @param string $id
-     * @return bool
+     * @param Request $request
+     * @param int $id
+     * @return array
      * @throws \Exception
      */
-    public function verify(string $id) : bool;
+    public function verify(Request $request, int $id) : array;
 
     /**
      * Logout

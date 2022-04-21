@@ -8,6 +8,8 @@ use App\Traits\HasUUID;
 use App\Traits\Searchable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use App\Traits\NotificationTrait;
+use App\Notifications\VerifyEmail;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
@@ -24,7 +26,18 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable implements Auditable, Exportable
 {
-    use Notifiable, HasApiTokens, HasFactory, HasRoles, HasFile, HasUUID, SoftDeletes, \OwenIt\Auditing\Auditable, Searchable, HasSlug, HasExportable;
+    use Notifiable,
+        NotificationTrait,
+        HasApiTokens,
+        HasFactory,
+        HasRoles,
+        HasFile,
+        HasUUID,
+        SoftDeletes,
+        \OwenIt\Auditing\Auditable,
+        Searchable,
+        HasSlug,
+        HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -169,6 +182,16 @@ class User extends Authenticatable implements Auditable, Exportable
         $url = config('app.frontend_url_public') . '/reset-password?token=' . $token;
 
         $this->notify(new ResetPasswordNotification($url));
+    }
+
+    /**
+     * Send an email verification notification to the user.
+     *
+     * @return void
+     */
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail());
     }
 
     public function scopeSystemUsers($query)
