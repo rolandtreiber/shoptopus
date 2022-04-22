@@ -46,11 +46,11 @@ return [
         ],
         'cart' => [
             "get" => 1500,
-            "update" => 1503,
-            "getCartForUser" => 1505,
-            "addItem" => 1506,
-            "removeItem" => 1507,
-            "mergeUserCarts" => 1508
+            "update" => 1501,
+            "addItem" => 1502,
+            "removeItem" => 1503,
+            "mergeUserCarts" => 1504,
+            "getCartForUser" => 1505
         ],
         'product_category' => [
             "get" => 1700,

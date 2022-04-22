@@ -51,14 +51,19 @@ class CreateAddressTest extends TestCase
      */
     public function authenticated_users_can_create_addresses()
     {
-        $this->assertTrue(true);
-//        $data = Address::factory()->raw();
-//
-//        $this->signIn()
-//            ->sendRequest($data)
-//            ->assertOk();
-//
-//        $this->assertDatabaseHas('addresses', $data);
+        $user = User::factory()->create();
+
+        $data = [
+            'address_line_1' => '10A Couzens Place',
+            'town' => 'Bristol',
+            'post_code' => 'BS34 8PL',
+            'country' => 'UK',
+            'name' => 'home'
+        ];
+
+        $this->signIn($user)->sendRequest($data);
+
+        $this->assertDatabaseHas('addresses', array_merge($data, ['user_id' => $user->id]));
     }
 
     /**
@@ -67,16 +72,12 @@ class CreateAddressTest extends TestCase
      */
     public function it_is_saved_for_the_currently_authenticated_user()
     {
-        $data = Address::factory()->raw(['user_id' => User::factory()->create()->id]);
+        $address = Address::factory()->raw();
 
-        $user = User::factory()->create();
-
-        $this->signIn($user)
-            ->sendRequest($data)
-            ->assertOk();
+        $this->signIn($address['user_id'])->sendRequest($address)->assertOk();
 
         $this->assertDatabaseHas('addresses', [
-            'user_id' => $user->id
+            'user_id' => $address['user_id']
         ]);
     }
 
@@ -91,9 +92,7 @@ class CreateAddressTest extends TestCase
             'lon' => 2000.768
         ]);
 
-        $this->signIn()
-            ->sendRequest($data)
-            ->assertJsonValidationErrors(['lat', 'lon']);
+        $this->signIn()->sendRequest($data)->assertJsonValidationErrors(['lat', 'lon']);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse

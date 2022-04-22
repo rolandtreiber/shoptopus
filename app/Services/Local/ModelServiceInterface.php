@@ -25,6 +25,15 @@ interface ModelServiceInterface {
     public function get($value, string $key = 'id', array $excludeRelationships = []) : array;
 
     /**
+     * Get a single model by its slug
+     *
+     * @param string $slug
+     * @return array
+     * @throws \Exception
+     */
+    public function getBySlug(string $slug) : array;
+
+    /**
      * Create a model
      *
      * @param array $payload

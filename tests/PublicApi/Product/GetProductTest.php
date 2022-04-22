@@ -41,6 +41,18 @@ class GetProductTest extends TestCase
     /**
      * @test
      * @group apiGet
+     * @group apiGetBySlug
+     */
+    public function it_can_return_a_product_by_its_slug()
+    {
+        $this->getJson(route('api.products.getBySlug', ['slug' => $this->product->slug]))
+            ->assertOk()
+            ->assertSee($this->product->slug);
+    }
+
+    /**
+     * @test
+     * @group apiGet
      */
     public function it_returns_all_required_fields()
     {
@@ -251,16 +263,16 @@ class GetProductTest extends TestCase
     public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
     {
         $pa = ProductAttribute::factory()->create();
-        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
+        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
         $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
         $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
         $pa->products()->attach($this->product->id);
 
         $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
 
-        $this->assertEquals(1, sizeof($res));
+        $this->assertCount(1, $res);
 
-        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
+        $this->assertEquals($pao_enabled->id, $res[0]['id']);
     }
 
     protected function getModelRepo() : ProductRepository

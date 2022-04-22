@@ -11,7 +11,6 @@ Route::group([
         'name' => 'cart.',
         'prefix' => 'cart',
     ], function () {
-
         Route::post('/addItem', [CartController::class, 'addItem'])->name('api.cart.addItem');
         Route::delete('/removeItem', [CartController::class, 'removeItem'])->name('api.cart.removeItem');
 

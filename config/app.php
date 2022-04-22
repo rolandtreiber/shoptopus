@@ -56,7 +56,7 @@ return [
     'frontend_url_admin' => env('FRONTEND_URL_ADMIN', 'http://localhost'),
     'frontend_url_public' => env('FRONTEND_URL_PUBLIC', 'http://localhost'),
 
-    'asset_url' => env('ASSET_URL', null),
+    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------

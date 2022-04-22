@@ -95,12 +95,8 @@ class AddressTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_a_user()
+    public function it_belongs_to_a_user()
     {
-        $this->assertNull($this->address->user);
-
-        $this->address->update(['user_id' => User::factory()->create()->id]);
-
-        $this->assertInstanceOf(User::class, $this->address->fresh()->user);
+        $this->assertInstanceOf(User::class, $this->address->user);
     }
 }

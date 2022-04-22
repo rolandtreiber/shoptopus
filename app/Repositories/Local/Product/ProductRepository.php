@@ -4,6 +4,7 @@ namespace App\Repositories\Local\Product;
 
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use App\Enums\ProductAttributeType;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -12,6 +13,45 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function __construct(ErrorServiceInterface $errorService, Product $model)
     {
         parent::__construct($errorService, $model);
+    }
+
+    /**
+     * Get the product attributes for the given products
+     *
+     * @param array $productIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getProductAttributes(array $productIds = []) : array
+    {
+        try {
+            return DB::select("
+                SELECT
+                    ppa.product_id,
+                    ppa.product_attribute_id,
+                    ppa.product_attribute_option_id,
+                    pa.id,
+                    pa.name,
+                    pa.slug,
+                    pa.type,
+                    pa.image,
+                    pao.id as option_id,
+                    pao.product_attribute_id as option_product_attribute_id,
+                    pao.name as option_name,
+                    pao.slug as option_slug,
+                    pao.value as option_value,
+                    pao.image as option_image
+                FROM product_attributes AS pa
+                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id
+                JOIN product_attribute_options AS pao ON pao.product_attribute_id = pa.id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
+                WHERE ppa.product_id IN (?)
+                AND pa.deleted_at IS NULL
+                AND pa.enabled IS TRUE
+            ", [implode(',', $productIds)]);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -128,52 +168,24 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pv.data,
                     pv.stock,
                     pv.sku,
-                    pv.description
+                    pv.description,
+                    pa.id as product_attribute_id,
+                    pa.name as product_attribute_name,
+                    pa.slug as product_attribute_slug,
+                    pa.type as product_attribute_type,
+                    pa.image as product_attribute_image,
+                    pao.id as product_attribute_option_id,
+                    pao.name as product_attribute_option_name,
+                    pao.slug as product_attribute_option_slug,
+                    pao.value as product_attribute_option_value,
+                    pao.image as product_attribute_option_image
                 FROM product_variants AS pv
+                LEFT JOIN product_attribute_product_variant as papv ON papv.product_variant_id = pv.id
+                LEFT JOIN product_attributes AS pa ON pa.id = papv.product_attribute_id AND pa.enabled IS TRUE AND pa.deleted_at IS NULL
+                LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE pv.product_id IN (?)
                 AND pv.deleted_at IS NULL
                 AND pv.enabled IS TRUE
-            ", [implode(',', $productIds)]);
-        } catch (\Exception | \Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
-    }
-
-    /**
-     * Get the product attributes for the given products
-     *
-     * @param array $productIds
-     * @return array
-     * @throws \Exception
-     */
-    public function getProductAttributes(array $productIds = []) : array
-    {
-        try {
-            return DB::select("
-                SELECT
-                    ppa.product_id,
-                    ppa.product_attribute_id,
-                    ppa.product_attribute_option_id,
-                    pa.id,
-                    pa.name,
-                    pa.slug,
-                    pa.type,
-                    pa.image,
-                    pao.id as option_id,
-                    pao.name as option_name,
-                    pao.slug as option_slug,
-                    pao.value as option_value,
-                    pao.image as option_image,
-                    pao.enabled as option_enabled,
-                    pao.deleted_at as option_deleted_at,
-                    pao.product_attribute_id as option_id
-                FROM product_attributes AS pa
-                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id
-                JOIN product_attribute_options AS pao ON pao.product_attribute_id = pa.id
-                WHERE ppa.product_id IN (?)
-                AND pa.deleted_at IS NULL
-                AND pa.enabled IS TRUE
             ", [implode(',', $productIds)]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -193,11 +205,15 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     {
         $ids = collect($result)->pluck('id')->toArray();
 
+        $product_attributes = [];
         $discount_rules = [];
         $product_categories = [];
         $product_tags = [];
         $product_variants = [];
-        $product_attributes = [];
+
+        if (!in_array('product_attributes', $excludeRelationships)) {
+            $product_attributes = $this->getProductAttributes($ids);
+        }
 
         if (!in_array('discount_rules', $excludeRelationships)) {
             $discount_rules = $this->getDiscountRules($ids);
@@ -215,19 +231,62 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             $product_variants = $this->getProductVariants($ids);
         }
 
-        if (!in_array('product_attributes', $excludeRelationships)) {
-            $product_attributes = $this->getProductAttributes($ids);
-        }
-
         try {
             foreach ($result as &$model) {
                 $modelId = $model['id'];
 
+                $model['product_attributes'] = [];
                 $model['discount_rules'] = [];
                 $model['product_categories'] = [];
                 $model['product_tags'] = [];
                 $model['product_variants'] = [];
-                $model['product_attributes'] = [];
+
+                foreach ($product_attributes as $product_attribute) {
+                    if ($product_attribute['product_id'] === $modelId) {
+                        unset($product_attribute['product_id']);
+
+                        $attribute_exists = in_array(
+                            $product_attribute['product_attribute_id'],
+                            array_column($model['product_attributes'], 'id')
+                        );
+
+                        $options_data = [
+                            'id' => $product_attribute['option_id'],
+                            'name' => $product_attribute['option_name'],
+                            'slug' => $product_attribute['option_slug'],
+                            'option_value' => $product_attribute['option_value'],
+                            'image' => $product_attribute['option_image']
+                        ];
+
+                        if (!$attribute_exists) {
+                            $attribute_data = [
+                                'id' => $product_attribute['id'],
+                                'name' => $product_attribute['name'],
+                                'slug' => $product_attribute['slug'],
+                                'type' => $product_attribute['type'],
+                                'image' => $product_attribute['image'],
+                                'options' => []
+                            ];
+
+                            if ($options_data['id']) {
+                                array_push($attribute_data['options'], $options_data);
+                            }
+
+                            array_push($model['product_attributes'], $attribute_data);
+                        } else {
+                            if ($options_data['id']) {
+                                foreach ($model['product_attributes'] as &$attribute) {
+                                    if ($attribute['id'] === $product_attribute['option_product_attribute_id']) {
+
+                                        array_push($attribute['options'], $options_data);
+
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
                 foreach ($discount_rules as $discount_rule) {
                     if ($discount_rule['product_id'] === $modelId) {
@@ -252,56 +311,68 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                 foreach ($product_variants as $product_variant) {
                     if ($product_variant['product_id'] === $modelId) {
-                        unset($product_variant['product_id']);
-                        array_push($model['product_variants'], $product_variant);
-                    }
-                }
 
-                foreach ($product_attributes as $product_attribute) {
-                    if ($product_attribute['product_id'] === $modelId) {
-                        unset($product_attribute['product_id']);
-
-                        $attribute_exists = in_array(
-                            $product_attribute['product_attribute_id'],
-                            array_column($model['product_attributes'], 'id')
-                        );
-
-                        $options_data = [
-                            'id' => $product_attribute['option_id'],
-                            'name' => $product_attribute['option_name'],
-                            'slug' => $product_attribute['option_slug'],
-                            'option_value' => $product_attribute['option_value'],
-                            'image' => $product_attribute['option_image'],
-                            'option_enabled' => (bool) $product_attribute['option_enabled'],
-                            'option_deleted_at' => $product_attribute['option_deleted_at']
-                        ];
-
-                        if (!$attribute_exists) {
-                            $attribute_data = [
-                                'id' => $product_attribute['id'],
-                                'name' => $product_attribute['name'],
-                                'slug' => $product_attribute['slug'],
-                                'type' => $product_attribute['type'],
-                                'image' => $product_attribute['image'],
-                                'options' => []
+                        if (!in_array($product_variant['id'], array_column($model['product_variants'], 'id'))) {
+                            $variantData = [
+                                'id' => $product_variant['id'],
+                                'slug' => $product_variant['slug'],
+                                'price' => $product_variant['price'],
+                                'data' => $product_variant['data'],
+                                'stock' => $product_variant['stock'],
+                                'description' => $product_variant['description'],
+                                'sku' => $product_variant['sku'],
+                                'product_attributes' => []
                             ];
 
-                            if ($options_data['option_enabled'] && is_null($options_data['option_deleted_at'])) {
-                                unset($options_data['option_enabled']);
-                                unset($options_data['option_deleted_at']);
+                            array_push($model['product_variants'], $variantData);
+                        }
 
-                                array_push($attribute_data['options'], $options_data);
+                        $attribute_option = [
+                            'id' => $product_variant['product_attribute_option_id'],
+                            'name' => $product_variant['product_attribute_option_name'],
+                            'slug' => $product_variant['product_attribute_option_slug'],
+                            'option_value' => $product_variant['product_attribute_option_value'],
+                            'image' => $product_variant['product_attribute_option_image']
+                        ];
+
+                        if ($product_variant['product_attribute_id']) {
+                            foreach($model['product_variants'] as &$model_variant) {
+                                if ($model_variant['id'] === $product_variant['id']) {
+                                    if (!in_array($product_variant['product_attribute_id'], array_column($model_variant['product_attributes'], 'id'))) {
+                                        $attributeData = [
+                                            'id' => $product_variant['product_attribute_id'],
+                                            'name' => $product_variant['product_attribute_name'],
+                                            'slug' => $product_variant['product_attribute_slug'],
+                                            'type' => strtolower(ProductAttributeType::fromValue((int) $product_variant['product_attribute_type'])->key),
+                                            'image' => $product_variant['product_attribute_image'],
+                                            'options' => []
+                                        ];
+
+                                        if ($attribute_option['id']) {
+                                            array_push($attributeData['options'], $attribute_option);
+                                        }
+
+                                        array_push($model_variant['product_attributes'], $attributeData);
+                                    } else {
+                                        foreach ($model_variant['product_attributes'] as &$attribute) {
+                                            if ($attribute['id'] === $product_variant['product_attribute_id']) {
+
+                                                array_push($attribute['options'], $attribute_option);
+
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    break;
+                                }
                             }
+                        } else if(is_null($product_variant['product_attribute_id']) && $attribute_option['id']) {
+                            foreach($model['product_variants'] as &$model_variant) {
+                                foreach ($model_variant['product_attributes'] as &$attribute) {
+                                    if ($attribute['id'] === $product_variant['product_attribute_id']) {
 
-                            array_push($model['product_attributes'], $attribute_data);
-                        } else {
-                            if ($options_data['option_enabled'] && is_null($options_data['option_deleted_at'])) {
-                                foreach ($model['product_attributes'] as &$attribute) {
-                                    if ($attribute['id'] === $product_attribute['product_attribute_id']) {
-                                        unset($options_data['option_enabled']);
-                                        unset($options_data['option_deleted_at']);
-
-                                        array_push($attribute['options'], $options_data);
+                                        array_push($attribute['options'], $attribute_option);
 
                                         break;
                                     }

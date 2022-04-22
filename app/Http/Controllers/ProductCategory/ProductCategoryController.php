@@ -25,7 +25,7 @@ class ProductCategoryController extends Controller
     {
         try {
             $filters = $this->getAndValidateFilters($request);
-            $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
+            $filters['deleted_at'] = 'null';
             $page_formatting = $this->getPageFormatting($request);
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
@@ -44,6 +44,22 @@ class ProductCategoryController extends Controller
     {
         try {
             return response()->json($this->getResponse([], $this->productCategoryService->get($id), $request));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Get a single model by its slug
+     *
+     * @param \Illuminate\Http\Request
+     * @param string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBySlug(Request $request, string $slug) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->getResponse([], $this->productCategoryService->getBySlug($slug), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

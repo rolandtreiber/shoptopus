@@ -53,24 +53,13 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
      * @return array
      * @throws \Exception
      */
-    public function getProducts(array $productCategoryIds = []) : array
+    public function getProductIds(array $productCategoryIds = []) : array
     {
         try {
             return DB::select("
                 SELECT
                     ppc.product_category_id,
-                    p.id,
-                    p.slug,
-                    p.name,
-                    p.short_description,
-                    p.description,
-                    p.price,
-                    p.status,
-                    p.purchase_count,
-                    p.stock,
-                    p.backup_stock,
-                    p.sku,
-                    p.cover_photo
+                    p.id
                 FROM products AS p
                 JOIN product_product_category AS ppc ON ppc.product_id = p.id
                 WHERE ppc.product_category_id IN (?)
@@ -102,7 +91,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
         }
 
         if (!in_array('products', $excludeRelationships)) {
-            $products = $this->getProducts($ids);
+            $products = $this->getProductIds($ids);
         }
 
         try {
@@ -110,7 +99,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 $modelId = $model['id'];
 
                 $model['discount_rules'] = [];
-                $model['products'] = [];
+                $model['product_ids'] = [];
 
                 foreach ($discount_rules as $discount_rule) {
                     if ($discount_rule['product_category_id'] === $modelId) {
@@ -121,8 +110,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
                 foreach ($products as $product) {
                     if ($product['product_category_id'] === $modelId) {
-                        unset($product['product_category_id']);
-                        array_push($model['products'], $product);
+                        array_push($model['product_ids'], $product['id']);
                     }
                 }
             }
@@ -149,8 +137,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             "{$this->model_table}.description",
             "{$this->model_table}.menu_image",
             "{$this->model_table}.header_image",
-            "{$this->model_table}.parent_id",
-            "{$this->model_table}.enabled"
+            "{$this->model_table}.parent_id"
         ];
 
         return $withTableNamePrefix

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\PublicApi\Auth;
+namespace Tests\Api\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
@@ -16,7 +16,9 @@ class VerifyEmailTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $this->markTestSkipped();
+
+        $this->user = factory(User::class)->create();
     }
 
     /**

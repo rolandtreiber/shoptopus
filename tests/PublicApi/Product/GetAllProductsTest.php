@@ -79,6 +79,73 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function it_returns_the_associated_product_attributes_with_their_options()
+    {
+        $p = Product::factory()->create();
+        $pa = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
+        $pa->products()->attach($p->id);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'product_attributes' => [
+                        [
+                            'id',
+                            'name',
+                            'slug',
+                            'type',
+                            'image',
+                            'options' => [
+                                [
+                                    'id',
+                                    'name',
+                                    'slug',
+                                    'option_value',
+                                    'image'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $pa->update(['deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        $pa->update(['deleted_at' => null, 'enabled' => false]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
+    {
+        $p = Product::factory()->create();
+        $pa = ProductAttribute::factory()->create();
+        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
+        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
+        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
+        $pa->products()->attach($p->id);
+
+        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
+
+        $this->assertEquals(1, sizeof($res));
+
+        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function it_returns_the_associated_enabled_discount_rules()
     {
         $pc = Product::factory()->create();
@@ -147,73 +214,6 @@ class GetAllProductsTest extends TestCase
         $pc->update(['deleted_at' => now()]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_categories'));
-    }
-
-    /**
-     * @test
-     * @group apiGetAll
-     */
-    public function it_returns_the_associated_product_attributes_with_their_options()
-    {
-        $p = Product::factory()->create();
-        $pa = ProductAttribute::factory()->create();
-        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
-        $pa->products()->attach($p->id);
-
-        $res = $this->sendRequest();
-
-        $res->assertJsonStructure([
-            'data' => [
-                [
-                    'product_attributes' => [
-                        [
-                            'id',
-                            'name',
-                            'slug',
-                            'type',
-                            'image',
-                            'options' => [
-                                [
-                                    'id',
-                                    'name',
-                                    'slug',
-                                    'option_value',
-                                    'image'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]);
-
-        $pa->update(['deleted_at' => now()]);
-
-        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
-
-        $pa->update(['deleted_at' => null, 'enabled' => false]);
-
-        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
-    }
-
-    /**
-     * @test
-     * @group apiGetAll
-     */
-    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
-    {
-        $p = Product::factory()->create();
-        $pa = ProductAttribute::factory()->create();
-        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
-        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
-        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
-        $pa->products()->attach($p->id);
-
-        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
-
-        $this->assertEquals(1, sizeof($res));
-
-        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
     }
 
     /**
@@ -290,6 +290,64 @@ class GetAllProductsTest extends TestCase
         $pv->update(['enabled' => false, 'deleted_at' => null]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants()
+    {
+        $p = Product::factory()->create();
+        $pv = ProductVariant::factory()->create(['product_id' => $p->id]);
+        $pa_valid = ProductAttribute::factory()->create();
+        $pa_disabled = ProductAttribute::factory()->create(['enabled' => false]);
+        $pa_deleted = ProductAttribute::factory()->create(['deleted_at' => now()]);
+        $attribute_options = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa_valid->id]);
+
+        $pv->product_variant_attributes()->attach($pa_valid->id, ['product_attribute_option_id' => $attribute_options[0]->id]);
+        $pv->product_variant_attributes()->attach($pa_disabled->id, ['product_attribute_option_id' => $attribute_options[1]->id]);
+        $pv->product_variant_attributes()->attach($pa_deleted->id, ['product_attribute_option_id' => $attribute_options[2]->id]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'product_variants' => [
+                        [
+                            'product_attributes' => [
+                                [
+                                    'id',
+                                    'name',
+                                    'slug',
+                                    'type',
+                                    'image',
+                                    'options' => [
+                                        [
+                                            'id',
+                                            'name',
+                                            'slug',
+                                            'option_value',
+                                            'image'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes'));
+        $this->assertEquals($pa_valid->id, $res->json('data.0.product_variants.0.product_attributes.0.id'));
+
+        $this->assertCount(3, $res->json('data.0.product_variants.0.product_attributes.0.options'));
+
+        $attribute_options->first()->update(['enabled' => false]);
+
+        $this->assertCount(2, $this->sendRequest()->json('data.0.product_variants.0.product_attributes.0.options'));
     }
 
     /**

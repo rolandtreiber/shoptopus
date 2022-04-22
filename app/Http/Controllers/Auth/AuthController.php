@@ -84,35 +84,18 @@ class AuthController extends Controller
     }
 
     /**
-     * Verify the user's email address
+     * Verify the user's email
      *
-     * @param \Illuminate\Http\Request
-     * @param string $id
-     * @return \Illuminate\Http\RedirectResponse
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function verify(Request $request, string $id) : \Illuminate\Http\RedirectResponse
+    public function verify(Request $request, int $id) : \Illuminate\Http\JsonResponse
     {
         try {
-            $uri = 'login';
-            $message = 'Email has been verified.';
-            $statusCode = 200;
-
-            if (!$request->hasValidSignature()) {
-                $uri = 'verify';
-                $message = "Invalid/Expired url provided.";
-                $statusCode = 401;
-            }
-
-            $this->authService->verify($id);
-
-            return redirect()->away(
-                Config::get('app.frontend_url_public') . "/{$uri}?message=" . urlencode($message) . "&status=" . urlencode($statusCode)
-            );
+            return response()->json($this->authService->verify($request, $id));
         } catch (\Exception | \Error $e) {
-            // User not found
-            return redirect()->away(
-                Config::get('app.frontend_url_public') . "/verify?message=" . urlencode("Invalid/Expired url provided.") . "&status=401"
-            );
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
 

@@ -37,6 +37,18 @@ class GetProductCategoryTest extends TestCase
     /**
      * @test
      * @group apiGet
+     * @group apiGetBySlug
+     */
+    public function it_can_return_a_product_category_by_its_slug()
+    {
+        $this->getJson(route('api.product_categories.getBySlug', ['slug' => $this->product_category->slug]))
+            ->assertOk()
+            ->assertSee($this->product_category->description);
+    }
+
+    /**
+     * @test
+     * @group apiGet
      */
     public function it_returns_all_required_fields()
     {
@@ -52,7 +64,7 @@ class GetProductCategoryTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_the_associated_enabled_discount_rules()
+    public function it_returns_the_associated_discount_rules()
     {
         $dr = DiscountRule::factory()->create();
         $this->product_category->discount_rules()->attach($dr->id);
@@ -88,9 +100,9 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
-     * @group apiGet
+     * @group apiGetAll
      */
-    public function it_returns_the_associated_products()
+    public function it_returns_the_associated_product_ids()
     {
         $p = Product::factory()->create();
         $this->product_category->products()->attach($p->id);
@@ -100,29 +112,16 @@ class GetProductCategoryTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'products' => [
-                        [
-                            'id',
-                            'slug',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo'
-                        ]
-                    ]
+                    'product_ids'
                 ]
             ]
         ]);
 
+        $this->assertEquals($p->id, $res->json('data.0.product_ids.0'));
+
         $p->update(['deleted_at' => now()]);
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.products'));
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_ids'));
     }
 
     protected function getModelRepo() : ProductCategoryRepository

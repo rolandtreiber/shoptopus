@@ -56,4 +56,20 @@ class ProductController extends Controller
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
     }
+
+    /**
+     * Get a single model by its slug
+     *
+     * @param \Illuminate\Http\Request
+     * @param string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getBySlug(Request $request, string $slug) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->getResponse([], $this->productService->getBySlug($slug), $request));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
 }

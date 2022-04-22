@@ -5,6 +5,15 @@ namespace App\Repositories\Local\Product;
 interface ProductRepositoryInterface {
 
     /**
+     * Get the product attributes for the given products
+     *
+     * @param array $productIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getProductAttributes(array $productIds = []) : array;
+
+    /**
      * Get the discount rules for the given products
      *
      * @param array $productIds
@@ -36,15 +45,6 @@ interface ProductRepositoryInterface {
      * @throws \Exception
      */
     public function getProductVariants(array $productIds = []) : array;
-
-    /**
-     * Get the product attributes for the given products
-     *
-     * @param array $productIds
-     * @return array
-     * @throws \Exception
-     */
-    public function getProductAttributes(array $productIds = []) : array;
 
     /**
      * Get the required related models for the given parent

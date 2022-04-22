@@ -3,7 +3,6 @@
 namespace Tests\PublicApi\Address;
 
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Address;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -43,16 +42,12 @@ class DeleteAddressTest extends TestCase
      */
     public function authorised_users_can_delete_their_addresses()
     {
-        $user = User::factory()->create();
-
-        $this->address->update(['user_id' => $user->id]);
-
         $this->assertDatabaseHas('addresses', [
             'id' => $this->address->id,
             'deleted_at' => null
         ]);
 
-        $this->signIn($user)->sendRequest()->assertOk();
+        $this->signIn($this->address->user)->sendRequest()->assertOk();
 
         $this->assertDatabaseHas('addresses', [
             'id' => $this->address->id,

@@ -18,7 +18,7 @@ interface ProductCategoryRepositoryInterface {
      * @param array $productCategoryIds
      * @return array
      */
-    public function getProducts(array $productCategoryIds = []) : array;
+    public function getProductIds(array $productCategoryIds = []) : array;
 
     /**
      * Get the required related models for the given parent

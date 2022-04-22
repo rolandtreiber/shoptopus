@@ -5,10 +5,10 @@ namespace Tests\PublicApi\Auth;
 use Tests\TestCase;
 use App\Models\User;
 use App\Events\UserSignedUp;
+use App\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RegisterTest extends TestCase

@@ -75,7 +75,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_enabled_discount_rules()
+    public function it_returns_the_associated_discount_rules()
     {
         $pc = ProductCategory::factory()->create();
         $dr = DiscountRule::factory()->create();
@@ -114,7 +114,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_products()
+    public function it_returns_the_associated_product_ids()
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
@@ -125,29 +125,16 @@ class GetAllProductCategoriesTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'products' => [
-                        [
-                            'id',
-                            'slug',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo'
-                        ]
-                    ]
+                    'product_ids'
                 ]
             ]
         ]);
 
+        $this->assertEquals($p->id, $res->json('data.0.product_ids.0'));
+
         $p->update(['deleted_at' => now()]);
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.products'));
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_ids'));
     }
 
     /**
