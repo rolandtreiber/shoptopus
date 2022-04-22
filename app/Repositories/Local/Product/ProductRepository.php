@@ -25,6 +25,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function getProductAttributes(array $productIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+
             return DB::select("
                 SELECT
                     ppa.product_id,
@@ -44,10 +46,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 FROM product_attributes AS pa
                 JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id
                 JOIN product_attribute_options AS pao ON pao.product_attribute_id = pa.id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
-                WHERE ppa.product_id IN (?)
+                WHERE ppa.product_id IN ($dynamic_placeholders)
                 AND pa.deleted_at IS NULL
                 AND pa.enabled IS TRUE
-            ", [implode(',', $productIds)]);
+            ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -64,6 +66,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function getDiscountRules(array $productIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+
             return DB::select("
                 SELECT
                     drp.product_id,
@@ -76,10 +80,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     dr.slug
                 FROM discount_rules AS dr
                 JOIN discount_rule_product AS drp ON drp.discount_rule_id = dr.id
-                WHERE drp.product_id IN (?)
+                WHERE drp.product_id IN ($dynamic_placeholders)
                 AND dr.deleted_at IS NULL
                 AND dr.enabled = true
-            ", [implode(',', $productIds)]);
+            ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -96,6 +100,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function getProductCategories(array $productIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+
             return DB::select("
                 SELECT
                     ppc.product_id,
@@ -108,10 +114,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pc.header_image
                 FROM product_categories AS pc
                 JOIN product_product_category AS ppc ON ppc.product_category_id = pc.id
-                WHERE ppc.product_id IN (?)
+                WHERE ppc.product_id IN ($dynamic_placeholders)
                 AND pc.deleted_at IS NULL
                 AND pc.enabled IS TRUE
-            ", [implode(',', $productIds)]);
+            ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -128,6 +134,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function getProductTags(array $productIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+
             return DB::select("
                 SELECT
                     ppt.product_id,
@@ -139,10 +147,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pt.display_badge
                 FROM product_tags AS pt
                 JOIN product_product_tag AS ppt ON ppt.product_tag_id = pt.id
-                WHERE ppt.product_id IN (?)
+                WHERE ppt.product_id IN ($dynamic_placeholders)
                 AND pt.deleted_at IS NULL
                 AND pt.enabled IS TRUE
-            ", [implode(',', $productIds)]);
+            ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -159,6 +167,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function getProductVariants(array $productIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+
             return DB::select("
                 SELECT
                     pv.product_id,
@@ -183,10 +193,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 LEFT JOIN product_attribute_product_variant as papv ON papv.product_variant_id = pv.id
                 LEFT JOIN product_attributes AS pa ON pa.id = papv.product_attribute_id AND pa.enabled IS TRUE AND pa.deleted_at IS NULL
                 LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
-                WHERE pv.product_id IN (?)
+                WHERE pv.product_id IN ($dynamic_placeholders)
                 AND pv.deleted_at IS NULL
                 AND pv.enabled IS TRUE
-            ", [implode(',', $productIds)]);
+            ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

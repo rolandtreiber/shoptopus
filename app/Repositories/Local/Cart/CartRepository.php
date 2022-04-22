@@ -156,6 +156,8 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     public function getUsers(array $userIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($userIds)), ',');
+
             return DB::select("
                 SELECT
                     u.id,
@@ -172,9 +174,9 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                     u.temporary,
                     u.is_favorite
                 FROM users AS u
-                WHERE u.id IN (?)
+                WHERE u.id IN ($dynamic_placeholders)
                 AND u.deleted_at IS NULL
-            ", [implode(',', $userIds)]);
+            ", $userIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -190,6 +192,8 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     public function getItems(array $cartIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($cartIds)), ',');
+
             return DB::select("
                 SELECT
                     cp.cart_id,
@@ -210,8 +214,8 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 FROM products AS p
                 JOIN cart_product AS cp ON cp.product_id = p.id
                 JOIN carts as c ON c.id = cp.cart_id
-                WHERE cp.cart_id IN (?)
-            ", [implode(',', $cartIds)]);
+                WHERE cp.cart_id IN ($dynamic_placeholders)
+            ", $cartIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

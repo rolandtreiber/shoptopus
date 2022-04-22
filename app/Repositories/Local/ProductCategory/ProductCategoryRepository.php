@@ -24,6 +24,8 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     public function getDiscountRules(array $productCategoryIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
+
             return DB::select("
                 SELECT
                     drpc.product_category_id,
@@ -36,10 +38,10 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                     dr.slug
                 FROM discount_rules AS dr
                 JOIN discount_rule_product_category AS drpc ON drpc.discount_rule_id = dr.id
-                WHERE drpc.product_category_id IN (?)
+                WHERE drpc.product_category_id IN ($dynamic_placeholders)
                 AND dr.deleted_at IS NULL
                 AND dr.enabled = true
-            ", [implode(',', $productCategoryIds)]);
+            ", $productCategoryIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -56,15 +58,17 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     public function getProductIds(array $productCategoryIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
+
             return DB::select("
                 SELECT
                     ppc.product_category_id,
                     p.id
                 FROM products AS p
                 JOIN product_product_category AS ppc ON ppc.product_id = p.id
-                WHERE ppc.product_category_id IN (?)
+                WHERE ppc.product_category_id IN ($dynamic_placeholders)
                 AND p.deleted_at IS NULL
-            ", [implode(',', $productCategoryIds)]);
+            ", $productCategoryIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

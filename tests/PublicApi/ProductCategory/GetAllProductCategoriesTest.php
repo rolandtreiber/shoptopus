@@ -118,7 +118,8 @@ class GetAllProductCategoriesTest extends TestCase
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
-        $pc->products()->attach($p->id);
+        $p2 = Product::factory()->create();
+        $pc->products()->attach([$p->id, $p2->id]);
 
         $res = $this->sendRequest();
 
@@ -130,11 +131,11 @@ class GetAllProductCategoriesTest extends TestCase
             ]
         ]);
 
-        $this->assertEquals($p->id, $res->json('data.0.product_ids.0'));
+        $this->assertCount(2, $res->json('data.0.product_ids'));
 
-        $p->update(['deleted_at' => now()]);
+        $p2->update(['deleted_at' => now()]);
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.product_ids'));
+        $this->assertCount(1,$this->sendRequest()->json('data.0.product_ids'));
     }
 
     /**
