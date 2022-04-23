@@ -277,12 +277,12 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
         // Carts
         Route::group(['prefix' => 'banners'], function () {
             Route::get('/', [BannerController::class, 'index'])->name('admin.api.index.banners');
+        });
+        Route::group(['prefix' => 'banner'], function () {
             Route::group(['prefix' => 'bulk'], function () {
                 Route::post('/availability', [BannerController::class, 'bulkUpdateAvailability'])->name('admin.api.banners.bulk.update-availability');
                 Route::delete('/', [BannerController::class, 'bulkDelete'])->name('admin.api.banners.bulk.delete');
             });
-        });
-        Route::group(['prefix' => 'banner'], function () {
             Route::post('/', [BannerController::class, 'create'])->name('admin.api.create.banner');
             Route::group(['prefix' => '{banner}'], function () {
                 Route::get('/', [BannerController::class, 'show'])->name('admin.api.show.banner');
