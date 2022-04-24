@@ -26,6 +26,7 @@ class ProductCategoryController extends Controller
         try {
             $filters = $this->getAndValidateFilters($request);
             $filters['deleted_at'] = 'null';
+            $filters['enabled'] = true;
             $page_formatting = $this->getPageFormatting($request);
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {

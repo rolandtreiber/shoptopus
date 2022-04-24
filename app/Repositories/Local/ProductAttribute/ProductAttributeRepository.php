@@ -1,47 +1,44 @@
 <?php
 
-namespace App\Repositories\Local\ProductCategory;
+namespace App\Repositories\Local\ProductAttribute;
 
-use App\Models\ProductCategory;
+use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
-class ProductCategoryRepository extends ModelRepository implements ProductCategoryRepositoryInterface
+class ProductAttributeRepository extends ModelRepository implements ProductAttributeRepositoryInterface
 {
-    public function __construct(ErrorServiceInterface $errorService, ProductCategory $model)
+    public function __construct(ErrorServiceInterface $errorService, ProductAttribute $model)
     {
         parent::__construct($errorService, $model);
     }
 
     /**
-     * Get the discount rules for the given product categories
+     * Get the product attribute options for the given product attributes
      *
-     * @param array $productCategoryIds
+     * @param array $productAttributeIds
      * @return array
      * @throws \Exception
      */
-    public function getDiscountRules(array $productCategoryIds = []) : array
+    public function getOptions(array $productAttributeIds = []) : array
     {
         try {
-            $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
+            $dynamic_placeholders = trim(str_repeat('?,', count($productAttributeIds)), ',');
 
             return DB::select("
                 SELECT
-                    drpc.product_category_id,
-                    dr.id,
-                    dr.type,
-                    dr.name,
-                    dr.amount,
-                    dr.valid_from,
-                    dr.valid_until,
-                    dr.slug
-                FROM discount_rules AS dr
-                JOIN discount_rule_product_category AS drpc ON drpc.discount_rule_id = dr.id
-                WHERE drpc.product_category_id IN ($dynamic_placeholders)
-                AND dr.deleted_at IS NULL
-                AND dr.enabled IS TRUE
-            ", $productCategoryIds);
+                    pao.product_attribute_id,
+                    pao.id,
+                    pao.name,
+                    pao.slug,
+                    pao.value,
+                    pao.image
+                FROM product_attribute_options AS pao
+                WHERE pao.product_attribute_id IN ($dynamic_placeholders)
+                AND pao.deleted_at IS NULL
+                AND pao.enabled IS TRUE
+            ", $productAttributeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -49,26 +46,26 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     }
 
     /**
-     * Get the products for the given product categories
+     * Get the products for the given product attributes
      *
-     * @param array $productCategoryIds
+     * @param array $productAttributeIds
      * @return array
      * @throws \Exception
      */
-    public function getProductIds(array $productCategoryIds = []) : array
+    public function getProductIds(array $productAttributeIds = []) : array
     {
         try {
-            $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
+            $dynamic_placeholders = trim(str_repeat('?,', count($productAttributeIds)), ',');
 
             return DB::select("
                 SELECT
-                    ppc.product_category_id,
+                    ppa.product_attribute_id,
                     p.id
                 FROM products AS p
-                JOIN product_product_category AS ppc ON ppc.product_id = p.id
-                WHERE ppc.product_category_id IN ($dynamic_placeholders)
+                JOIN product_product_attribute AS ppa ON ppa.product_id = p.id
+                WHERE ppa.product_attribute_id IN ($dynamic_placeholders)
                 AND p.deleted_at IS NULL
-            ", $productCategoryIds);
+            ", $productAttributeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -87,11 +84,11 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     {
         $ids = collect($result)->pluck('id')->toArray();
 
-        $discount_rules = [];
+        $options = [];
         $products = [];
 
-        if (!in_array('discount_rules', $excludeRelationships)) {
-            $discount_rules = $this->getDiscountRules($ids);
+        if (!in_array('options', $excludeRelationships)) {
+            $options = $this->getOptions($ids);
         }
 
         if (!in_array('products', $excludeRelationships)) {
@@ -102,18 +99,19 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             foreach ($result as &$model) {
                 $modelId = $model['id'];
 
-                $model['discount_rules'] = [];
+                $model['options'] = [];
                 $model['product_ids'] = [];
 
-                foreach ($discount_rules as $discount_rule) {
-                    if ($discount_rule['product_category_id'] === $modelId) {
-                        unset($discount_rule['product_category_id']);
-                        array_push($model['discount_rules'], $discount_rule);
+                foreach ($options as $option) {
+                    if ($option['product_attribute_id'] === $modelId) {
+                        unset($option['product_attribute_id']);
+                        array_push($model['options'], $option);
                     }
                 }
 
                 foreach ($products as $product) {
-                    if ($product['product_category_id'] === $modelId) {
+                    if ($product['product_attribute_id'] === $modelId) {
+                        unset($product['product_attribute_id']);
                         array_push($model['product_ids'], $product['id']);
                     }
                 }
@@ -138,10 +136,8 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             "{$this->model_table}.id",
             "{$this->model_table}.name",
             "{$this->model_table}.slug",
-            "{$this->model_table}.description",
-            "{$this->model_table}.menu_image",
-            "{$this->model_table}.header_image",
-            "{$this->model_table}.parent_id"
+            "{$this->model_table}.type",
+            "{$this->model_table}.image"
         ];
 
         return $withTableNamePrefix

@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\PublicApi\ProductCategory;
+namespace Tests\PublicApi\ProductAttribute;
 
 use Tests\TestCase;
 use App\Models\Product;
-use App\Models\DiscountRule;
-use App\Models\ProductCategory;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Repositories\Local\ProductCategory\ProductCategoryRepository;
+use App\Repositories\Local\ProductAttribute\ProductAttributeRepository;
 
-class GetAllProductCategoriesTest extends TestCase
+class GetAllProductAttributesTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -36,13 +36,13 @@ class GetAllProductCategoriesTest extends TestCase
      */
     public function it_returns_all_required_fields()
     {
-        ProductCategory::factory()->count(2)->create();
+        ProductAttribute::factory()->count(2)->create();
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                (new ProductAttributeRepository(new ErrorService, new ProductAttribute))->getSelectableColumns(false)
             ]
         ]);
 
@@ -53,10 +53,10 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function soft_deleted_and_disabled_product_categories_are_not_returned()
+    public function soft_deleted_and_disabled_product_attributes_are_not_returned()
     {
-        ProductCategory::factory()->count(2)->create(['deleted_at' => now()]);
-        ProductCategory::factory()->create(['enabled' => false]);
+        ProductAttribute::factory()->count(2)->create(['deleted_at' => now()]);
+        ProductAttribute::factory()->create(['enabled' => false]);
 
         $this->assertEmpty($this->sendRequest()->json('data'));
     }
@@ -67,7 +67,7 @@ class GetAllProductCategoriesTest extends TestCase
      */
     public function it_returns_the_count()
     {
-        ProductCategory::factory()->count(2)->create();
+        ProductAttribute::factory()->count(2)->create();
 
         $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
     }
@@ -76,39 +76,40 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_discount_rules()
+    public function it_returns_the_associated_options()
     {
-        $pc = ProductCategory::factory()->create();
-        $dr = DiscountRule::factory()->create();
-        $pc->discount_rules()->attach($dr->id);
+        $pa = ProductAttribute::factory()->create();
+        $pao = ProductAttributeOption::factory()->create();
+        $pao2 = ProductAttributeOption::factory()->create();
+        $pa->options()->saveMany([$pao, $pao2]);
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'discount_rules' => [
+                    'options' => [
                         [
                             'id',
-                            'type',
                             'name',
-                            'amount',
-                            'valid_from',
-                            'valid_until',
-                            'slug'
+                            'slug',
+                            'value',
+                            'image'
                         ]
                     ]
                 ]
             ]
         ]);
 
-        $dr->update(['enabled' => false]);
+        $this->assertCount(2, $res->json('data.0.options'));
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
+        $pao->update(['enabled' => false]);
 
-        $dr->update(['enabled' => true, 'deleted_at' => now()]);
+        $this->assertCount(1, $this->sendRequest()->json('data.0.options'));
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
+        $pao->update(['enabled' => true, 'deleted_at' => now()]);
+
+        $this->assertCount(1, $this->sendRequest()->json('data.0.options'));
     }
 
     /**
@@ -117,10 +118,10 @@ class GetAllProductCategoriesTest extends TestCase
      */
     public function it_returns_the_associated_product_ids()
     {
-        $pc = ProductCategory::factory()->create();
+        $pa = ProductAttribute::factory()->create();
         $p = Product::factory()->create();
         $p2 = Product::factory()->create();
-        $pc->products()->attach([$p->id, $p2->id]);
+        $pa->products()->attach([$p->id, $p2->id]);
 
         $res = $this->sendRequest();
 
@@ -136,17 +137,17 @@ class GetAllProductCategoriesTest extends TestCase
 
         $p2->update(['deleted_at' => now()]);
 
-        $this->assertCount(1,$this->sendRequest()->json('data.0.product_ids'));
+        $this->assertCount(1, $this->sendRequest()->json('data.0.product_ids'));
     }
 
     /**
      * @test
      * @group apiGetAll
      */
-    public function product_categories_can_be_filtered_by_id()
+    public function product_attributes_can_be_filtered_by_id()
     {
-        ProductCategory::factory()->count(3)->create();
-        $product_category = ProductCategory::factory()->create();
+        ProductAttribute::factory()->count(3)->create();
+        $product_category = ProductAttribute::factory()->create();
 
         $res = $this->signIn()->sendRequest(['filter[id]' => $product_category->id]);
 
@@ -160,9 +161,9 @@ class GetAllProductCategoriesTest extends TestCase
      */
     public function filters_can_accept_multiple_parameters()
     {
-        ProductCategory::factory()->count(3)->create();
-        $product_category1 = ProductCategory::factory()->create();
-        $product_category2 = ProductCategory::factory()->create();
+        ProductAttribute::factory()->count(3)->create();
+        $product_category1 = ProductAttribute::factory()->create();
+        $product_category2 = ProductAttribute::factory()->create();
 
         $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$product_category1->id, $product_category2->id])]);
 
@@ -173,6 +174,6 @@ class GetAllProductCategoriesTest extends TestCase
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.product_categories.getAll', $data));
+        return $this->getJson(route('api.product_attributes.getAll', $data));
     }
 }

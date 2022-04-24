@@ -46,7 +46,7 @@ class GetAllAddressesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_all_addresses_for_the_userssss()
+    public function it_returns_all_addresses_for_the_user()
     {
         $user = User::factory()->create();
         Address::factory()->count(5)->create(['user_id' => $user->id]);

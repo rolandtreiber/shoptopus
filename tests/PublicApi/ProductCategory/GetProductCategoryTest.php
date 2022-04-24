@@ -55,7 +55,7 @@ class GetProductCategoryTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    $this->getModelRepo()->getSelectableColumns(false)
+                    (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
                 ]
             ]);
     }
@@ -122,11 +122,6 @@ class GetProductCategoryTest extends TestCase
         $p->update(['deleted_at' => now()]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_ids'));
-    }
-
-    protected function getModelRepo() : ProductCategoryRepository
-    {
-        return new ProductCategoryRepository(new ErrorService, new ProductCategory);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

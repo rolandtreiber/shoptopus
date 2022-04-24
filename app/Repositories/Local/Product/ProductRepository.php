@@ -82,7 +82,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 JOIN discount_rule_product AS drp ON drp.discount_rule_id = dr.id
                 WHERE drp.product_id IN ($dynamic_placeholders)
                 AND dr.deleted_at IS NULL
-                AND dr.enabled = true
+                AND dr.enabled IS TRUE
             ", $productIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -273,7 +273,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                                 'id' => $product_attribute['id'],
                                 'name' => $product_attribute['name'],
                                 'slug' => $product_attribute['slug'],
-                                'type' => $product_attribute['type'],
+                                'type' => strtolower(ProductAttributeType::fromValue((int) $product_attribute['type'])->key),
                                 'image' => $product_attribute['image'],
                                 'options' => []
                             ];
