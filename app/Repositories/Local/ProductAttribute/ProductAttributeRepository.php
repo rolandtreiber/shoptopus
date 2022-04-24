@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Local\ProductAttribute;
 
+use App\Enums\ProductAttributeType;
 use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
@@ -99,6 +100,8 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             foreach ($result as &$model) {
                 $modelId = $model['id'];
 
+                $model['type'] = strtolower(ProductAttributeType::fromValue((int) $model['type'])->key);
+                
                 $model['options'] = [];
                 $model['product_ids'] = [];
 
