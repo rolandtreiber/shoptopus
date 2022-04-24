@@ -116,6 +116,19 @@ class GetAllProductAttributesTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function attributes_without_options_are_excluded()
+    {
+        ProductAttribute::factory()->create();
+
+        $res = $this->sendRequest();
+
+        $this->assertEmpty($res->json('data'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function it_returns_the_associated_product_ids()
     {
         $pa = ProductAttribute::factory()->create();

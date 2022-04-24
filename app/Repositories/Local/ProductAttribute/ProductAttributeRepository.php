@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Local\ProductAttribute;
 
-use App\Enums\ProductAttributeType;
 use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
+use App\Enums\ProductAttributeType;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -97,11 +97,11 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
         }
 
         try {
-            foreach ($result as &$model) {
+            foreach ($result as $key => &$model) {
                 $modelId = $model['id'];
 
                 $model['type'] = strtolower(ProductAttributeType::fromValue((int) $model['type'])->key);
-                
+
                 $model['options'] = [];
                 $model['product_ids'] = [];
 
@@ -110,6 +110,12 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                         unset($option['product_attribute_id']);
                         array_push($model['options'], $option);
                     }
+                }
+
+                if(empty($model['options'])) {
+                    array_splice($result, $key, 1);
+
+                    continue;
                 }
 
                 foreach ($products as $product) {
