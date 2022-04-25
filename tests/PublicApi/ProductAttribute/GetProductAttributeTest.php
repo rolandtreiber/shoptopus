@@ -21,6 +21,7 @@ class GetProductAttributeTest extends TestCase
         parent::setUp();
 
         $this->product_attribute = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $this->product_attribute->id]);
     }
 
     /**
@@ -54,10 +55,6 @@ class GetProductAttributeTest extends TestCase
      */
     public function it_returns_the_associated_options()
     {
-        $pao = ProductAttributeOption::factory()->create();
-        $pao2 = ProductAttributeOption::factory()->create();
-        $this->product_attribute->options()->saveMany([$pao, $pao2]);
-
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
@@ -76,15 +73,15 @@ class GetProductAttributeTest extends TestCase
             ]
         ]);
 
-        $this->assertCount(2, $res->json('data.0.options'));
+        $this->assertCount(1, $res->json('data.0.options'));
 
-        $pao->update(['enabled' => false]);
+        $this->product_attribute->options()->first()->update(['enabled' => false]);
 
-        $this->assertCount(1, $this->sendRequest()->json('data.0.options'));
+        $this->assertEmpty($this->sendRequest()->json('data'));
 
-        $pao->update(['enabled' => true, 'deleted_at' => now()]);
+        $this->product_attribute->options()->first()->update(['enabled' => true, 'deleted_at' => now()]);
 
-        $this->assertCount(1, $this->sendRequest()->json('data.0.options'));
+        $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
     /**

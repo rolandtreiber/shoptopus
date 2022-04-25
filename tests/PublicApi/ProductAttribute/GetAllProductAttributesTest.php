@@ -36,8 +36,10 @@ class GetAllProductAttributesTest extends TestCase
      */
     public function it_returns_all_required_fields()
     {
-        ProductAttribute::factory()->count(2)->create();
-
+        $pa = ProductAttribute::factory()->create();
+        $pa2 = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pa2->id]);
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
@@ -67,7 +69,9 @@ class GetAllProductAttributesTest extends TestCase
      */
     public function it_returns_the_count()
     {
-        ProductAttribute::factory()->count(2)->create();
+        $pa = ProductAttribute::factory()->count(2)->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pa[0]->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pa[1]->id]);
 
         $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
     }
@@ -132,6 +136,7 @@ class GetAllProductAttributesTest extends TestCase
     public function it_returns_the_associated_product_ids()
     {
         $pa = ProductAttribute::factory()->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
         $p = Product::factory()->create();
         $p2 = Product::factory()->create();
         $pa->products()->attach([$p->id, $p2->id]);
@@ -159,13 +164,15 @@ class GetAllProductAttributesTest extends TestCase
      */
     public function product_attributes_can_be_filtered_by_id()
     {
-        ProductAttribute::factory()->count(3)->create();
-        $product_category = ProductAttribute::factory()->create();
+        $pas = ProductAttribute::factory()->count(3)->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[0]->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[1]->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[2]->id]);
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $product_category->id]);
+        $res = $this->signIn()->sendRequest(['filter[id]' => $pas[0]->id]);
 
         $this->assertCount(1, $res->json('data'));
-        $this->assertEquals($product_category->id, $res->json('data.0.id'));
+        $this->assertEquals($pas[0]->id, $res->json('data.0.id'));
     }
 
     /**
@@ -174,15 +181,16 @@ class GetAllProductAttributesTest extends TestCase
      */
     public function filters_can_accept_multiple_parameters()
     {
-        ProductAttribute::factory()->count(3)->create();
-        $product_category1 = ProductAttribute::factory()->create();
-        $product_category2 = ProductAttribute::factory()->create();
+        $pas = ProductAttribute::factory()->count(3)->create();
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[0]->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[1]->id]);
+        ProductAttributeOption::factory()->create(['product_attribute_id' => $pas[2]->id]);
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$product_category1->id, $product_category2->id])]);
+        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$pas[0]->id, $pas[1]->id])]);
 
         $this->assertCount(2, $res->json('data'));
-        $this->assertEquals($product_category1->id, $res->json('data.0.id'));
-        $this->assertEquals($product_category2->id, $res->json('data.1.id'));
+        $this->assertEquals($pas[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($pas[1]->id, $res->json('data.1.id'));
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse

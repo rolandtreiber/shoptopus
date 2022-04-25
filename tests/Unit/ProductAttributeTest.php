@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use App\Models\Product;
 use Tests\TestCase;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use App\Models\ProductAttribute;
 use App\Enums\ProductAttributeType;
