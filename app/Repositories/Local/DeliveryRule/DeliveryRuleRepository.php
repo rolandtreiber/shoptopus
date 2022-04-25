@@ -24,6 +24,8 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     public function getDeliveryTypes(array $deliveryTypeIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
+
             return DB::select("
                 SELECT
                     dt.id,
@@ -31,10 +33,10 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
                     dt.description,
                     dt.price
                 FROM delivery_types AS dt
-                WHERE dt.id IN (?)
+                WHERE dt.id IN ($dynamic_placeholders)
                 AND dt.deleted_at IS NULL
                 AND dt.enabled IS TRUE
-            ", [implode(',', $deliveryTypeIds)]);
+            ", $deliveryTypeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

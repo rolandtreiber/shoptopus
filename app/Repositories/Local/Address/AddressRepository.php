@@ -24,6 +24,8 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     public function getUsers(array $userIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($userIds)), ',');
+
             return DB::select("
                 SELECT
                     u.id,
@@ -40,9 +42,9 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
                     u.temporary,
                     u.is_favorite
                 FROM users AS u
-                WHERE u.id IN (?)
+                WHERE u.id IN ($dynamic_placeholders)
                 AND u.deleted_at IS NULL
-            ", [implode(',', $userIds)]);
+            ", $userIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

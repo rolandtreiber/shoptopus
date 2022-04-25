@@ -4,8 +4,8 @@ namespace Tests\PublicApi\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Notifications\VerifyEmail;
 use Illuminate\Support\Facades\Notification;
-use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ResendVerificationEmailTest extends TestCase

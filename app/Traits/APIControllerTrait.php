@@ -181,6 +181,7 @@ trait APIControllerTrait
         $page_formatting = [];
         if ($request->query("page")) { //grab the rest and merge, no slashes.
             $page_formatting = $request->query("page");
+
             if (isset($page_formatting["offset"]) && isset($page_formatting["limit"])) {
                 $page_formatting["offset"] = ($page_formatting["offset"] - 1) * $page_formatting["limit"];
             }
@@ -206,7 +207,7 @@ trait APIControllerTrait
      */
     protected function siteURL() : string
     {
-        if(app()->environment() == 'testing') {
+        if(app()->environment('testing')) {
             return "http://localhost:8000/";
         }
 

@@ -17,13 +17,13 @@ class CreateDiscountRulesTable extends Migration
 
         Schema::create('discount_rules', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->tinyInteger('type');
             $table->text('name');
+            $table->string('slug');
+            $table->tinyInteger('type');
             $table->unsignedDecimal('amount');
             $table->dateTime('valid_from');
             $table->dateTime('valid_until');
             $table->boolean('enabled')->default(true);
-            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -13,5 +13,6 @@ Route::group([
     ], function () {
         Route::get('/', [ProductCategoryController::class, 'getAll'])->name('api.product_categories.getAll');
         Route::get('/{id}', [ProductCategoryController::class, 'get'])->name('api.product_categories.get');
+        Route::get('/slug/{slug}', [ProductCategoryController::class, 'getBySlug'])->name('api.product_categories.getBySlug');
     });
 });

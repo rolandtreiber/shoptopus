@@ -42,7 +42,7 @@ class GetAllProductCategoriesTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                $this->getModelRepo()->getSelectableColumns(false)
+                (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
             ]
         ]);
 
@@ -53,9 +53,10 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function soft_deleted_product_categories_are_not_returned()
+    public function soft_deleted_and_disabled_product_categories_are_not_returned()
     {
         ProductCategory::factory()->count(2)->create(['deleted_at' => now()]);
+        ProductCategory::factory()->create(['enabled' => false]);
 
         $this->assertEmpty($this->sendRequest()->json('data'));
     }
@@ -75,7 +76,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_enabled_discount_rules()
+    public function it_returns_the_associated_discount_rules()
     {
         $pc = ProductCategory::factory()->create();
         $dr = DiscountRule::factory()->create();
@@ -114,40 +115,28 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_products()
+    public function it_returns_the_associated_product_ids()
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
-        $pc->products()->attach($p->id);
+        $p2 = Product::factory()->create();
+        $pc->products()->attach([$p->id, $p2->id]);
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'products' => [
-                        [
-                            'id',
-                            'slug',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo'
-                        ]
-                    ]
+                    'product_ids'
                 ]
             ]
         ]);
 
-        $p->update(['deleted_at' => now()]);
+        $this->assertCount(2, $res->json('data.0.product_ids'));
 
-        $this->assertEmpty($this->sendRequest()->json('data.0.products'));
+        $p2->update(['deleted_at' => now()]);
+
+        $this->assertCount(1,$this->sendRequest()->json('data.0.product_ids'));
     }
 
     /**
@@ -180,11 +169,6 @@ class GetAllProductCategoriesTest extends TestCase
         $this->assertCount(2, $res->json('data'));
         $this->assertEquals($product_category1->id, $res->json('data.0.id'));
         $this->assertEquals($product_category2->id, $res->json('data.1.id'));
-    }
-
-    protected function getModelRepo() : ProductCategoryRepository
-    {
-        return new ProductCategoryRepository(new ErrorService, new ProductCategory);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse

@@ -19,8 +19,8 @@ class CreateAddressesTable extends Migration
             $table->string('town');
             $table->string('post_code');
             $table->string('slug');
+            $table->foreignUuid('user_id')->constrained();
             $table->string('country')->default('UK');
-            $table->foreignUuid('user_id')->nullable()->constrained();
             $table->string('name')->nullable();
             $table->string('address_line_2')->nullable();
             $table->string('lat')->nullable();

@@ -23,7 +23,11 @@ abstract class TestCase extends BaseTestCase
      */
     protected function signIn($user = null, array $scopes = []) : TestCase
     {
-        $user = $user ?? User::factory()->create();
+        if (is_null($user)) {
+            $user = User::factory()->create();
+        } else if (is_string($user)) {
+            $user = User::find($user);
+        }
 
         Passport::actingAs($user, $scopes);
 

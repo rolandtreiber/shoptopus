@@ -20,7 +20,6 @@ class CartController extends Controller
 
     /**
      * Get a single model
-     * TODO: ADMIN/MANAGEMENT CONTROLLER
      *
      * @param Request $request
      * @param string $id
