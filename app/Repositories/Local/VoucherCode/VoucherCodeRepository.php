@@ -24,6 +24,8 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
     public function getOrders(array $voucherCodeIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($voucherCodeIds)), ',');
+
             return DB::select("
                 SELECT
                     o.id,
@@ -38,9 +40,9 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
                     o.delivery_cost,
                     o.status
                 FROM orders AS o
-                JOIN voucher_codes AS vc ON vc.id IN (?)
-                WHERE o.deleted_at IS NULL
-            ", [implode(',', $voucherCodeIds)]);
+                WHERE o.voucher_code_id IN ($dynamic_placeholders)
+                AND o.deleted_at IS NULL
+            ", $voucherCodeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -67,12 +69,12 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
             }
 
             foreach ($result as &$model) {
-                $modelId = (int) $model['id'];
+                $modelId = $model['id'];
 
                 $model['orders'] = [];
 
                 foreach ($orders as $order) {
-                    if ((int) $order['voucher_code_id'] === $modelId) {
+                    if ($order['voucher_code_id'] === $modelId) {
                         unset($order['voucher_code_id']);
                         array_push($model['orders'], $order);
                     }

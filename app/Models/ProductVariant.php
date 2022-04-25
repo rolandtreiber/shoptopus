@@ -53,7 +53,8 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'price',
         'stock',
         'sku',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**

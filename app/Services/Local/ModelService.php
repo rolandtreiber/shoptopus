@@ -62,6 +62,23 @@ class ModelService implements ModelServiceInterface
     }
 
     /**
+     * Get a single model by its slug
+     *
+     * @param string $slug
+     * @return array
+     * @throws \Exception
+     */
+    public function getBySlug(string $slug) : array
+    {
+        try {
+            return $this->modelRepository->get($slug, 'slug');
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
+        }
+    }
+
+    /**
      * Create a model
      *
      * @param array $payload

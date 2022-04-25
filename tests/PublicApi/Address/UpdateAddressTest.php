@@ -3,7 +3,6 @@
 namespace Tests\PublicApi\Address;
 
 use Tests\TestCase;
-use App\Models\User;
 use App\Models\Address;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -45,17 +44,31 @@ class UpdateAddressTest extends TestCase
      */
     public function authorised_users_can_update_their_addresses()
     {
-        $user = User::factory()->create();
+        $data = [
+            'address_line_1' => '10A Couzens Place',
+            'town' => 'Bristol',
+            'post_code' => 'BS34 8PL',
+            'country' => 'UK',
+            'name' => 'home'
+        ];
 
-        $this->address->update(['user_id' => $user->id]);
+        $this->signIn($this->address->user)->sendRequest($data);
 
-        $data = Address::factory()->raw();
+        $this->assertDatabaseHas('addresses', array_merge($data, ['user_id' => $this->address->user->id]));
+    }
 
-        $this->signIn($user)
-            ->sendRequest($data)
-            ->assertOk();
+    /**
+     * @test
+     * @group apiPatch
+     */
+    public function the_longitude_and_latitude_must_match_the_exact_number_of_characters()
+    {
+        $data = Address::factory()->raw([
+            'lat' => 2000,
+            'lon' => 2000.768
+        ]);
 
-        $this->assertDatabaseHas('addresses', $data);
+        $this->signIn($this->address->user)->sendRequest($data)->assertJsonValidationErrors(['lat', 'lon']);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse

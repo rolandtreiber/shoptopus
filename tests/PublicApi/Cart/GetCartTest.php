@@ -4,7 +4,6 @@ namespace Tests\PublicApi\Cart;
 
 use Tests\TestCase;
 use App\Models\Cart;
-use App\Models\User;
 use App\Models\Product;
 use App\Services\Local\Error\ErrorService;
 use App\Repositories\Local\Cart\CartRepository;
@@ -54,7 +53,7 @@ class GetCartTest extends TestCase
             ->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    $this->getModelRepo()->getSelectableColumns(false)
+                    (new CartRepository(new ErrorService, new Cart))->getSelectableColumns(false)
                 ]
             ]);
     }
@@ -65,36 +64,31 @@ class GetCartTest extends TestCase
      */
     public function it_returns_the_associated_user()
     {
-        $user = User::factory()->create();
-        $this->cart->update(['user_id' => $user->id]);
-
-        $this->signIn($user);
-
-        $res = $this->sendRequest();
-
-        $res->assertJsonStructure([
-            'data' => [
-                [
-                    'user' => [
-                        'id',
-                        'first_name',
-                        'last_name',
-                        'email',
-                        'name',
-                        'initials',
-                        'prefix',
-                        'phone',
-                        'avatar',
-                        'email_verified_at',
-                        'client_ref',
-                        'temporary',
-                        'is_favorite'
+        $this->signIn()
+            ->sendRequest()
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'user' => [
+                            'id',
+                            'first_name',
+                            'last_name',
+                            'email',
+                            'name',
+                            'initials',
+                            'prefix',
+                            'phone',
+                            'avatar',
+                            'email_verified_at',
+                            'client_ref',
+                            'temporary',
+                            'is_favorite'
+                        ]
                     ]
                 ]
-            ]
-        ]);
+            ]);
 
-        $user->update(['deleted_at' => now()]);
+        $this->cart->user->update(['deleted_at' => now()]);
 
         $this->assertNull($this->sendRequest()->json('data.0.user'));
     }
@@ -108,40 +102,32 @@ class GetCartTest extends TestCase
         $product = Product::factory()->create(['deleted_at' => now()]);
         $this->cart->products()->attach($product);
 
-        $this->signIn();
-
-        $res = $this->sendRequest();
-
-        $res->assertJsonStructure([
-            'data' => [
-                [
-                    'products' => [
-                        [
-                            'product_variant_id',
-                            'quantity',
-                            'id',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo',
-                            'rating'
+        $this->signIn()
+            ->sendRequest()
+            ->assertJsonStructure([
+                'data' => [
+                    [
+                        'products' => [
+                            [
+                                'product_variant_id',
+                                'quantity',
+                                'id',
+                                'name',
+                                'short_description',
+                                'description',
+                                'price',
+                                'status',
+                                'purchase_count',
+                                'stock',
+                                'backup_stock',
+                                'sku',
+                                'cover_photo',
+                                'rating'
+                            ]
                         ]
                     ]
                 ]
-            ]
-        ]);
-    }
-
-    protected function getModelRepo() : CartRepository
-    {
-        $errorService = new ErrorService;
-        return new CartRepository($errorService, new Cart);
+            ]);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

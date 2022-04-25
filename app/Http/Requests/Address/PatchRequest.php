@@ -28,12 +28,12 @@ class PatchRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'user_id'  => 'sometimes|nullable|exists:users,id',
             'address_line_1' => "sometimes|required|string|min:2|max:255",
             'town' => "sometimes|required|string|min:2|max:255",
             'post_code' => "sometimes|required|string|min:2|max:255",
             'country' => "sometimes|required|string|min:2|max:255",
             'address_line_2' => "sometimes|nullable|string|min:2|max:255",
+            'name' => "sometimes|nullable|string|max:255",
             'lat' => ['sometimes','nullable','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
             'lon' => ['sometimes','nullable','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
         ];

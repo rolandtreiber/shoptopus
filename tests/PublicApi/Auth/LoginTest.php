@@ -4,6 +4,8 @@ namespace Tests\PublicApi\Auth;
 
 use App\Models\Cart;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -123,7 +125,8 @@ class LoginTest extends TestCase
                             'ip_address',
                             'user',
                             'products'
-                        ]
+                        ],
+                        'notifications'
                     ]
                 ]
             ]
@@ -132,23 +135,64 @@ class LoginTest extends TestCase
         $this->assertDatabaseHas('oauth_access_tokens', ['user_id' => $this->user->id]);
     }
 
-//    /**
-//     * @test
-//     * @group apiPost
-//     */
-//    public function users_without_a_password_are_sent_the_correct_error_response()
-//    {
-//        $this->user->update(['password' => null]);
-//
-//        $data = [
-//            'email' => $this->user->email,
-//            'password' => "randompassword"
-//        ];
-//
-//        $res = $this->sendRequest($data)->json();
-//
-//        $this->assertEquals("Please reset your password.", $res['user_message']);
-//    }
+    /**
+     * @test
+     * @group apiPost
+     */
+    public function the_notifications_array_contains_all_the_unread_notifications()
+    {
+        $this->artisan('passport:install');
+
+        $notificationData = [
+            'type' => "competition-entered",
+            'title' => "You have entered a Competition.",
+            'level' => 'info'
+        ];
+
+        DB::table('notifications')->insert([
+            'id' => Str::uuid(),
+            'type' => 'App\Notifications\YouEnteredACompetition',
+            'notifiable_type' => 'App\Models\User\User',
+            'notifiable_id' => $this->user->id,
+            'data' => json_encode($notificationData)
+        ]);
+
+        DB::table('notifications')->insert([
+            'id' => Str::uuid(),
+            'type' => 'App\Notifications\YouEnteredACompetition',
+            'notifiable_type' => 'App\Models\User\User',
+            'notifiable_id' => $this->user->id,
+            'data' => json_encode($notificationData),
+            'read_at' => now()
+        ]);
+
+        $data = [
+            'email' => $this->user->email,
+            'password' => "password"
+        ];
+
+        $notifications = $this->sendRequest($data)->json('data.auth.user.notifications');
+
+        $this->assertCount(1, $notifications);
+    }
+
+    /**
+     * @test
+     * @group apiPost
+     */
+    public function users_without_a_password_are_sent_the_correct_error_response()
+    {
+        $this->user->update(['password' => null]);
+
+        $data = [
+            'email' => $this->user->email,
+            'password' => "randompassword"
+        ];
+
+        $res = $this->sendRequest($data)->json();
+
+        $this->assertEquals("Please reset your password.", $res['user_message']);
+    }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
     {

@@ -25,6 +25,8 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     public function getDeliveryRules(array $deliveryTypeIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
+
             return DB::select("
                 SELECT
                     dr.id,
@@ -38,10 +40,10 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
                     dr.lat,
                     dr.lon
                 FROM delivery_rules AS dr
-                JOIN delivery_types AS dt ON dt.id IN (?)
-                WHERE dr.deleted_at IS NULL
+                WHERE dr.delivery_type_id IN ($dynamic_placeholders)
+                AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
-            ", [implode(',', $deliveryTypeIds)]);
+            ", $deliveryTypeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -58,6 +60,8 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     public function getOrders(array $deliveryTypeIds = []) : array
     {
         try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
+
             return DB::select("
                 SELECT
                     o.id,
@@ -72,9 +76,9 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
                     o.delivery_cost,
                     o.status
                 FROM orders AS o
-                JOIN delivery_types AS dt ON dt.id IN (?)
-                WHERE o.deleted_at IS NULL
-            ", [implode(',', $deliveryTypeIds)]);
+                WHERE o.delivery_type_id IN ($dynamic_placeholders)
+                AND o.deleted_at IS NULL
+            ", $deliveryTypeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -106,20 +110,20 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
             }
 
             foreach ($result as &$model) {
-                $modelId = (int) $model['id'];
+                $modelId = $model['id'];
 
                 $model['delivery_rules'] = [];
                 $model['orders'] = [];
 
                 foreach ($deliveryRules as $deliveryRule) {
-                    if ((int) $deliveryRule['delivery_type_id'] === $modelId) {
+                    if ($deliveryRule['delivery_type_id'] === $modelId) {
                         unset($deliveryRule['delivery_type_id']);
                         array_push($model['delivery_rules'], $deliveryRule);
                     }
                 }
 
                 foreach ($orders as $order) {
-                    if ((int) $order['delivery_type_id'] === $modelId) {
+                    if ($order['delivery_type_id'] === $modelId) {
                         unset($order['delivery_type_id']);
                         array_push($model['orders'], $order);
                     }

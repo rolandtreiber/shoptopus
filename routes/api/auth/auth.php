@@ -45,6 +45,8 @@ Route::group([
         'prefix' => 'auth',
         'middleware' => 'auth:api'
     ], function () {
-        Route::post('logout', [AuthController::class, 'logout'])->name('api.auth.logout')->middleware('auth:api');
+        Route::post('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
+
+        Route::get('details', [AuthController::class, 'details'])->name('api.auth.details');
     });
 });

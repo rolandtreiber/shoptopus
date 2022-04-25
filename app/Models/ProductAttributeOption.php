@@ -61,7 +61,8 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'product_attribute_id',
         'value',
         'image',
-        'enabled'
+        'enabled',
+        'deleted_at'
     ];
 
     /**
