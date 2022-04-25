@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\GeneralHelper;
 use Carbon\Carbon;
 use App\Traits\HasUUID;
 use Spatie\Sluggable\HasSlug;
@@ -39,6 +40,26 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
     }
 
     public $translatable = ['name'];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'amount',
+        'valid_from',
+        'valid_until',
+        'value'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'products',
+        'categories'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -131,4 +152,10 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
         }
         return false;
     }
+
+    public function getValueAttribute()
+    {
+        return GeneralHelper::getDiscountValue($this->type, $this->amount);
+    }
+
 }

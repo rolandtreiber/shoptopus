@@ -69,6 +69,23 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     ];
 
     /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'sku',
+        'final_price'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'product'
+    ];
+
+    /**
      * Calculate the final price
      */
     public function getFinalPriceAttribute()

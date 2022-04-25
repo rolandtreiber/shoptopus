@@ -77,6 +77,29 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     ];
 
     /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'postcodes',
+        'min_weight',
+        'max_weight',
+        'min_distance',
+        'max_distance',
+        'distance_unit',
+        'lat',
+        'lon',
+        'enabled'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'delivery_type'
+    ];
+
+    /**
      * @return BelongsTo
      */
     public function delivery_type(): BelongsTo

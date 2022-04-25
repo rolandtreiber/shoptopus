@@ -8,6 +8,9 @@ use App\Models\ProductTag;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
+/**
+ * @group product_tag
+ */
 class ProductTagTest extends TestCase
 {
     use RefreshDatabase;

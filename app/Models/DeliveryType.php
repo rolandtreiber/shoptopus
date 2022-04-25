@@ -43,6 +43,25 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
     ];
 
     /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'description',
+        'price',
+        'enabled'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'orders',
+        'deliveryRules'
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

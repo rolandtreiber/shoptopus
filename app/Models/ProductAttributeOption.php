@@ -47,6 +47,10 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'enabled'
     ];
 
+    protected $exportableRelationships = [
+        'product_attribute'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

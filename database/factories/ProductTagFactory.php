@@ -26,7 +26,7 @@ class ProductTagFactory extends Factory
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
 
         $description = null;
-        if (env('APP_DEV') !== "testing") {
+        if (env('APP_ENV') !== "testing") {
             $description = $translations['description'];
         }
 

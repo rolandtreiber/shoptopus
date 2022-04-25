@@ -43,6 +43,7 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
 
     protected $exportableFields = [
         'slug',
+        'name',
         'type',
         'enabled'
     ];

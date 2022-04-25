@@ -49,6 +49,10 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'enabled'
     ];
 
+    protected $exportableRelationships = [
+        'products'
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

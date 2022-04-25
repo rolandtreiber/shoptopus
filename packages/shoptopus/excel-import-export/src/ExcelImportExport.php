@@ -146,7 +146,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
         return true;
     }
 
-    public function export(array $config = [])//: \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(array $config = []): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         return $this->generateExportFile($config);
     }

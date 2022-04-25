@@ -62,7 +62,8 @@ class Payment extends SearchableModel implements Auditable, Exportable
      */
     protected $exportableRelationships = [
         'user',
-        'payment_source'
+        'payment_source',
+        'payable'
     ];
 
     /**

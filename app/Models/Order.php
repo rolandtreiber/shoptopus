@@ -76,8 +76,8 @@ class Order extends SearchableModel implements Auditable, Exportable
         'address',
         'products',
         'payments',
-        'voucherCode',
-        'deliveryType'
+        'voucher_code',
+        'delivery_type'
     ];
 
     /**
