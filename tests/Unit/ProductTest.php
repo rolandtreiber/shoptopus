@@ -105,7 +105,7 @@ class ProductTest extends TestCase
     /** @test */
     public function it_has_a_status_field()
     {
-        $this->assertEquals(ProductStatus::Provisional, $this->product->status);
+        $this->assertEquals(ProductStatus::Active, $this->product->status);
     }
 
     /** @test */

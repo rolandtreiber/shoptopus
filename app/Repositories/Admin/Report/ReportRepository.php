@@ -151,9 +151,9 @@ class ReportRepository implements ReportRepositoryInterface
         $bgColor = [];
         $labels = [];
         $statuses = [
-            0 => 'Provisional',
-            1 => 'Active',
-            2 => 'Discontinued'
+            1 => 'Provisional',
+            2 => 'Active',
+            3 => 'Discontinued'
         ];
         $palette = $reportService->getPalette();
         foreach ($products as $product) {
