@@ -31,6 +31,16 @@ class ModelRepository implements ModelRepositoryInterface
     public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []) : array
     {
         try {
+            if ($this->canBeSoftDeleted()) {
+                $filters['deleted_at'] = 'null';
+            }
+
+            if ($this->hasActiveProperty()) {
+                $filters['active'] = 1;
+            } else if ($this->hasEnabledProperty()) {
+                $filters['enabled'] = 1;
+            }
+
             $filter_vars = $this->getFilters($filters, $this->model_table);
 
             return [
@@ -165,16 +175,16 @@ class ModelRepository implements ModelRepositoryInterface
             $order_by_string = $hasPageFormatting ? $this->getOrderByString($page_formatting) : null;
             $query_params = $hasPageFormatting ? $this->getQueryParams($filter_vars, $page_formatting) : null;
 
-//            DB::enableQueryLog();
+            //DB::enableQueryLog();
 
             $sql = "SELECT ";
             $sql .= implode(',', $this->getSelectableColumns());
-            $sql .= " FROM $this->model_table ";
+            $sql .= " FROM $this->model_table";
             $sql .= $filter_vars->filter_string;
             $sql .= $hasPageFormatting ? " $order_by_string LIMIT ?, ?;" : "";
             $result = DB::select($sql, $hasPageFormatting ? $query_params : $filter_vars->query_parameters);
 
-//            dd(DB::getQueryLog());
+            //dd(DB::getQueryLog());
 
             return $result && method_exists($this,'getTheResultWithRelationships')
                 ? $this->getTheResultWithRelationships($result, $excludeRelationships)

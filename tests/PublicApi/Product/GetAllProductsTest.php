@@ -72,7 +72,7 @@ class GetAllProductsTest extends TestCase
     {
         Product::factory()->count(2)->create();
 
-        $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
+        $this->assertEquals(2, $this->sendRequest()->json('total_records'));
     }
 
     /**
@@ -354,12 +354,36 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function products_can_be_filtered_by_category()
+    {
+        $products = Product::factory()->count(5)->create();
+        $category = ProductCategory::factory()->create();
+
+        $res = $this->getJson(route('api.products.getAllInCategory', ['product_category_id' => $category->id]));
+
+        $this->assertEmpty($res->json('data'));
+
+        $products[0]->product_categories()->attach($category->id);
+        $products[1]->product_categories()->attach($category->id);
+
+        $res = $this->getJson(route('api.products.getAllInCategory', ['product_category_id' => $category->id]));
+
+        $this->assertEmpty($res->json('data.0.product_categories'));
+        $this->assertEmpty($res->json('data.1.product_categories'));
+
+        $this->assertCount(2, $res->json('data'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function products_can_be_filtered_by_id()
     {
         Product::factory()->count(3)->create();
         $product = Product::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $product->id]);
+        $res = $this->sendRequest(['filter[id]' => $product->id]);
 
         $this->assertCount(1, $res->json('data'));
         $this->assertEquals($product->id, $res->json('data.0.id'));
@@ -371,15 +395,13 @@ class GetAllProductsTest extends TestCase
      */
     public function filters_can_accept_multiple_parameters()
     {
-        Product::factory()->count(3)->create();
-        $product1 = Product::factory()->create();
-        $product2 = Product::factory()->create();
+        $products = Product::factory()->count(3)->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$product1->id, $product2->id])]);
+        $res = $this->sendRequest(['filter[id]' => implode(',', [$products[0]->id, $products[1]->id])]);
 
         $this->assertCount(2, $res->json('data'));
-        $this->assertEquals($product1->id, $res->json('data.0.id'));
-        $this->assertEquals($product2->id, $res->json('data.1.id'));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
     }
 
     protected function getModelRepo() : ProductRepository

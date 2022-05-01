@@ -16,61 +16,78 @@ trait FilterTrait
         $query_parameters = [];
         $searchableColumns = !is_null($tableName) ? $this->getSearchableColumnsInTable($tableName) : null;
 
-        $tablePrefix = is_null($tableName) ? null : rtrim($tableName, '.') . '.';
-
         if ($filters) {
             $count = 0;
+
             foreach ($filters as $filter_column => $filter_value) {
                 $isSearchQuery = $filter_column === 'search';
-                $isCustomQuery = is_array($filter_value);
-                $filter_column = $tablePrefix ? $tablePrefix . $filter_column : $filter_column;
+                $isCustomQuery = is_array($filter_value) && $filter_column !== 'relation';
+                $isRelationalQuery = is_array($filter_value) && $filter_column === 'relation';
+                $tablePrefix = is_null($tableName) ? null : rtrim($tableName, '.') . '.';
 
-                if ($isCustomQuery) {
-                    $filter_operator = $filter_value['operator'];
-                    $filter_value = $filter_value['value'];
-                }
+                if ($isRelationalQuery) {
+                    $type = $filters['relation']['type'];
+                    $table = $filters['relation']['table'];
+                    $local_pivot_key = $filters['relation']['local_pivot_key'];
+                    $foreign_pivot_key = $filters['relation']['foreign_pivot_key'];
+                    $foreign_pivot_value = $filters['relation']['foreign_pivot_value'];
 
-                if (is_array($filter_value)) {
-                    $filter_value = implode(",", $filter_value);
-                } else if (strtolower($filter_value) === 'true') {
-                    $filter_value = 1;
-                } else if (strtolower($filter_value) === 'false') {
-                    $filter_value = 0;
-                } else if (strtolower($filter_value) === 'null' || $filter_value === null) {
-                    $filter_value = 'NULL';
-                } else if (strtolower($filter_value) === '!null') {
-                    $filter_value = 'NOT NULL';
-                }
-
-                $first_sql_clause = $count === 0 ? "where" : "and";
-
-                if ($filter_value === 'NULL' || $filter_value === 'NOT NULL') {
-                    $filter_string .= " $first_sql_clause $filter_column IS $filter_value";
-                } else {
-                    $dynamic_filters = explode(",", $filter_value);
-                    $dynamic_placeholders = trim(str_repeat('?,', count($dynamic_filters)), ',');
-
-                    if ($isCustomQuery) {
-                        if (strtolower($filter_operator) === 'exclude') {
-                            $filter_string = $filter_string . " $first_sql_clause $filter_column NOT IN ($dynamic_placeholders)";
-                        } else {
-                            $filter_string = $filter_string . " $first_sql_clause $filter_column $filter_operator $dynamic_placeholders";
-                        }
-                    } else {
-                        if ($isSearchQuery) {
-                            $searchableColumns = array_map(function($column) use ($tablePrefix) {
-                                return $tablePrefix . $column;
-                            }, $searchableColumns);
-
-                            $columns = implode(',', $searchableColumns);
-
-                            $filter_string .= " $first_sql_clause CONCAT(' ', $columns) LIKE CONCAT( '%','?','%')";
-                        } else {
-                            $filter_string .= " $first_sql_clause $filter_column IN ($dynamic_placeholders)";
-                        }
+                    if ($type === 'belongsToMany') {
+                        $filter_string .= " JOIN {$table} ON $table.$local_pivot_key = $tablePrefix" . "id";
+                        $filter_string .= " WHERE $table.$foreign_pivot_key = ?";
                     }
 
-                    $query_parameters = array_merge($query_parameters, $dynamic_filters);
+                    array_unshift($query_parameters, $foreign_pivot_value);
+                } else {
+                    if ($isCustomQuery) {
+                        $filter_value = $filter_value['value'];
+                    }
+
+                    if (is_array($filter_value)) {
+                        $filter_value = implode(",", $filter_value);
+                    } else if (strtolower($filter_value) === 'true') {
+                        $filter_value = 1;
+                    } else if (strtolower($filter_value) === 'false') {
+                        $filter_value = 0;
+                    } else if (strtolower($filter_value) === 'null' || $filter_value === null) {
+                        $filter_value = 'NULL';
+                    } else if (strtolower($filter_value) === '!null') {
+                        $filter_value = 'NOT NULL';
+                    }
+
+                    $filter_column = $tablePrefix ? $tablePrefix . $filter_column : $filter_column;
+                    $first_sql_clause = $count === 0 ? "WHERE" : "AND";
+
+                    if ($filter_value === 'NULL' || $filter_value === 'NOT NULL') {
+                        $filter_string .= " $first_sql_clause $filter_column IS $filter_value";
+                    } else {
+                        $dynamic_filters = explode(",", $filter_value);
+                        $dynamic_placeholders = trim(str_repeat('?,', count($dynamic_filters)), ',');
+
+                        if ($isCustomQuery) {
+                            $filter_operator = $filter_value['operator'];
+
+                            if (strtolower($filter_operator) === 'exclude') {
+                                $filter_string = $filter_string . " $first_sql_clause $filter_column NOT IN ($dynamic_placeholders)";
+                            } else {
+                                $filter_string = $filter_string . " $first_sql_clause $filter_column $filter_operator $dynamic_placeholders";
+                            }
+                        } else {
+                            if ($isSearchQuery) {
+                                $searchableColumns = array_map(function($column) use ($tablePrefix) {
+                                    return $tablePrefix . $column;
+                                }, $searchableColumns);
+
+                                $columns = implode(',', $searchableColumns);
+
+                                $filter_string .= " $first_sql_clause CONCAT(' ', $columns) LIKE CONCAT( '%','?','%')";
+                            } else {
+                                $filter_string .= " $first_sql_clause $filter_column IN ($dynamic_placeholders)";
+                            }
+                        }
+
+                        $query_parameters = array_merge($query_parameters, $dynamic_filters);
+                    }
                 }
 
                 $count++;
