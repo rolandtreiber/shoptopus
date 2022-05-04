@@ -20,10 +20,14 @@ trait APIControllerTrait
     {
         $filters = $this->getAndValidateFilters($request);
         $filter_query_param_string = '';
+
         foreach ($filters as $key => $filter_value) {
             if (is_array($filter_value)) {
-                $filter_value = $filter_value['value'];
+                if (array_key_exists('value', $filter_value)) {
+                    $filter_value = $filter_value['value'];
+                }
             }
+
             $filter_query_param_string .= "filter[$key]=$filter_value&";
         }
 
@@ -155,20 +159,37 @@ trait APIControllerTrait
     }
 
     /**
-     * Get and validate the filters from the query string and merge it with the search query
-     * we have this in case of odd nginx setups that have an extra \ on first call
+     * Get and validate the filters from the query string
      *
      * @param Request $request
      * @return array
      */
     protected function getAndValidateFilters(Request $request) : array
     {
-        return $request->query("filter") ?? [];
+        $relation_queries = [];
+        $filters = $request->query('filter') ?? [];
+
+        $options = $request->query('options') ?? [];
+        $categories = $request->query('product_categories') ?? [];
+        $tags = $request->query('product_tags') ?? [];
+
+        if (!empty($options)) {
+            $relation_queries += ['product_attribute_options' => $options];
+        }
+
+        if (!empty($categories)) {
+            $relation_queries += ['product_categories' => $categories];
+        }
+
+        if (!empty($tags)) {
+            $relation_queries += ['product_tags' => $tags];
+        }
+
+        return $relation_queries + $filters;
     }
 
     /**
      * Get and validate the page attributes from the query string
-     * we have this in case of odd nginx setups that have an extra \ on first call
      *
      * @param Request $request
      * @return array
@@ -176,7 +197,7 @@ trait APIControllerTrait
     protected function getPageFormatting(Request $request) : array
     {
         $page_formatting = [];
-        if ($request->query("page")) { //grab the rest and merge, no slashes.
+        if ($request->query("page")) {
             $page_formatting = $request->query("page");
 
             if (isset($page_formatting["offset"]) && isset($page_formatting["limit"])) {

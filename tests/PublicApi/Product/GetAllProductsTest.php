@@ -354,24 +354,105 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_category()
+    public function products_can_be_filtered_by_categories()
     {
         $products = Product::factory()->count(5)->create();
-        $category = ProductCategory::factory()->create();
+        $categories = ProductCategory::factory()->count(2)->create();
 
-        $res = $this->getJson(route('api.products.getAllInCategory', ['product_category_id' => $category->id]));
+        $products[0]->product_categories()->attach($categories[0]->id);
 
-        $this->assertEmpty($res->json('data'));
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+        ]));
 
-        $products[0]->product_categories()->attach($category->id);
-        $products[1]->product_categories()->attach($category->id);
+        $this->assertCount(1, $res->json('data'));
 
-        $res = $this->getJson(route('api.products.getAllInCategory', ['product_category_id' => $category->id]));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
 
-        $this->assertEmpty($res->json('data.0.product_categories'));
-        $this->assertEmpty($res->json('data.1.product_categories'));
+        $products[1]->product_categories()->attach($categories[1]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+        ]));
 
         $this->assertCount(2, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_tags()
+    {
+        $products = Product::factory()->count(5)->create();
+        $tags = ProductTag::factory()->count(2)->create();
+
+        $products[0]->product_tags()->attach($tags[0]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+
+        $products[1]->product_tags()->attach($tags[1]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+        ]));
+
+        $this->assertCount(2, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_multiple_relationships()
+    {
+        $products = Product::factory()->count(5)->create();
+        $categories = ProductCategory::factory()->count(2)->create();
+        $tags = ProductTag::factory()->count(2)->create();
+
+        $products[0]->product_categories()->attach($categories[0]->id);
+        $products[0]->product_tags()->attach($tags[0]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id]),
+            'product_tags' => implode(',', [$tags[0]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_attribute_options()
+    {
+        $products = Product::factory()->count(5)->create();
+
+        $attribute = ProductAttribute::factory()->create();
+        $options = ProductAttributeOption::factory()->count(2)->create(['product_attribute_id' => $attribute->id]);
+        $attribute->products()->attach($products[0]->id, ['product_attribute_option_id' => $options[0]->id]);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'options' => implode(',', [$options[0]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
     }
 
     /**

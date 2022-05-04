@@ -42,7 +42,16 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
  */
 class Product extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasTranslations, HasFiles, HasRatings, HasEventLogs, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
+    use HasFactory,
+        HasTranslations,
+        HasFiles,
+        HasRatings,
+        HasEventLogs,
+        HasUUID,
+        \OwenIt\Auditing\Auditable,
+        SoftDeletes,
+        HasSlug,
+        HasExportable;
 
     /**
      * Get the options for generating the slug.
@@ -275,11 +284,15 @@ class Product extends SearchableModel implements Auditable, Exportable
     public function scopeWhereHasAttributeOptions($query, ?array $attributeOptions)
     {
         if ($attributeOptions && count($attributeOptions) > 0) {
-            $productIdsWithAttributeOptions = DB::table('product_product_attribute')->whereIn('product_attribute_option_id', $attributeOptions)->pluck('product_id');
+            $productIdsWithAttributeOptions = DB::table('product_product_attribute')
+                ->whereIn('product_attribute_option_id', $attributeOptions)
+                ->pluck('product_id');
+
             $productIdsWithVariantWithAttributeOptions = DB::table('product_attribute_product_variant')
                 ->whereIn('product_attribute_option_id', $attributeOptions)
                 ->join('product_variants', 'product_attribute_product_variant.product_variant_id', '=', 'product_variants.id')
                 ->pluck('product_variants.product_id');
+
             $query->whereIn('id', $productIdsWithAttributeOptions->merge($productIdsWithVariantWithAttributeOptions)->unique());
         }
     }

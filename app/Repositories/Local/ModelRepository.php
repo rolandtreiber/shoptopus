@@ -41,7 +41,7 @@ class ModelRepository implements ModelRepositoryInterface
                 $filters['enabled'] = 1;
             }
 
-            $filter_vars = $this->getFilters($filters, $this->model_table);
+            $filter_vars = $this->getFilters($this->model_table, $filters);
 
             return [
                 'data' => $this->getModels($filter_vars, $page_formatting, $excludeRelationships),
@@ -78,7 +78,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             $page_formatting = ['limit' => 1];
 
-            $result = $this->getModels($this->getFilters($filters, $this->model_table), $page_formatting, $excludeRelationships);
+            $result = $this->getModels($this->getFilters($this->model_table, $filters), $page_formatting, $excludeRelationships);
 
             return !empty($result) ? $result[0] : [];
         } catch (\Exception | \Error $e) {

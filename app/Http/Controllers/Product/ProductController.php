@@ -26,37 +26,9 @@ class ProductController extends Controller
         try {
             list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
 
-            return response()->json($this->getResponse($page_formatting, $this->productService->getAll($page_formatting, $filters), $request));
-        } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
-        }
-    }
-
-    /**
-     * Get all models belonging to a category
-     *
-     * @param Request $request
-     * @param string $product_category_id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function getAllInCategory(Request $request, string $product_category_id) : \Illuminate\Http\JsonResponse
-    {
-        try {
-            list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
-
-            $filters['relation'] = [
-                'type' => 'belongsToMany',
-                'table' => 'product_product_category',
-                'local_pivot_key' => 'product_id',
-                'foreign_pivot_key' => 'product_category_id',
-                'foreign_pivot_value' => $product_category_id
-            ];
-
-            return response()->json($this->getResponse(
-                $page_formatting,
-                $this->productService->getAll($page_formatting, $filters, ['product_categories']),
-                $request
-            ));
+            return response()->json(
+                $this->getResponse($page_formatting, $this->productService->getAll($page_formatting, $filters), $request)
+            );
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
