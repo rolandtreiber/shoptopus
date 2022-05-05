@@ -27,7 +27,11 @@ class ProductController extends Controller
             list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
 
             return response()->json(
-                $this->getResponse($page_formatting, $this->productService->getAll($page_formatting, $filters), $request)
+                $this->getResponse($page_formatting, $this->productService->getAll(
+                    $page_formatting,
+                    $filters,
+                    ['product_variants']
+                ), $request)
             );
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

@@ -214,6 +214,63 @@ class GetProductTest extends TestCase
      * @test
      * @group apiGet
      */
+    public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants()
+    {
+        $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+        $pa_valid = ProductAttribute::factory()->create();
+        $pa_disabled = ProductAttribute::factory()->create(['enabled' => false]);
+        $pa_deleted = ProductAttribute::factory()->create(['deleted_at' => now()]);
+        $attribute_options = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa_valid->id]);
+
+        $pv->product_variant_attributes()->attach($pa_valid->id, ['product_attribute_option_id' => $attribute_options[0]->id]);
+        $pv->product_variant_attributes()->attach($pa_disabled->id, ['product_attribute_option_id' => $attribute_options[1]->id]);
+        $pv->product_variant_attributes()->attach($pa_deleted->id, ['product_attribute_option_id' => $attribute_options[2]->id]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'product_variants' => [
+                        [
+                            'product_attributes' => [
+                                [
+                                    'id',
+                                    'name',
+                                    'slug',
+                                    'type',
+                                    'image',
+                                    'options' => [
+                                        [
+                                            'id',
+                                            'name',
+                                            'slug',
+                                            'option_value',
+                                            'image'
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes'));
+        $this->assertEquals($pa_valid->id, $res->json('data.0.product_variants.0.product_attributes.0.id'));
+
+        $this->assertCount(3, $res->json('data.0.product_variants.0.product_attributes.0.options'));
+
+        $attribute_options->first()->update(['enabled' => false]);
+
+        $this->assertCount(2, $this->sendRequest()->json('data.0.product_variants.0.product_attributes.0.options'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
     public function it_returns_the_associated_product_attributes_with_their_options()
     {
         $pa = ProductAttribute::factory()->create();
