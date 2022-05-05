@@ -52,28 +52,31 @@ return [
             "mergeUserCarts" => 1504,
             "getCartForUser" => 1505
         ],
-        'product_category' => [
-            "get" => 1700,
-            "getAll" => 1701,
+        'notification' => [
+            "getAllUnreadNotificationsForUser" => 1900,
+            "markRead" => 1901,
         ],
-        'user' => [
+        'product' => [
             "get" => 2000,
             "getAll" => 2001,
-            "post" => 2002,
-            "update" => 2003,
-            "delete" => 2004,
-            "getCurrentUser" => 2005,
-            "getNotifications" => 2006
+            "getAllInCategory" => 2002,
         ],
-        'notification' => [
-            "markRead" => 3501,
+        'product_attribute' => [
+            "get" => 2100,
+            "getAll" => 2101
         ],
-        'voucher_codes' => [
-            "get" => 5000,
-            "getAll" => 5001,
-            "post" => 5002,
-            "update" => 5003,
-            "delete" => 5004,
+        'product_category' => [
+            "get" => 2200,
+            "getAll" => 2201
+        ],
+        'user' => [
+            "get" => 4000,
+            "getAll" => 4001,
+            "post" => 4002,
+            "update" => 4003,
+            "delete" => 4004,
+            "getCurrentUser" => 4005,
+            "getNotifications" => 4006
         ]
     ]
 ];

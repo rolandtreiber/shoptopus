@@ -29,7 +29,7 @@ class ModelService implements ModelServiceInterface
     public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []) : array
     {
         try {
-            return $this->modelRepository->getAll($page_formatting, $filters);
+            return $this->modelRepository->getAll($page_formatting, $filters, $excludeRelationships);
         } catch (\Exception $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.getAll"));

@@ -44,20 +44,24 @@ return [
     "1504" => "Sorry there was an error merging your carts.",
     "1505" => "Sorry there was an error getting the cart for the current user.",
 
-    "1700" => "Sorry there was an error getting this product category.",
-    "1703" => "Sorry there was an error updating this product category.",
+    "1900" => "Sorry there was an error getting getting all unread notifications.",
+    "1903" => "Sorry there was an error marking the notification read.",
 
-    "2000" => "Sorry there was an error getting this user.",
-    "2001" => "Sorry there was an error getting all users.",
-    "2002" => "Sorry there was an error creating this user.",
-    "2003" => "Sorry there was an error updating this user.",
-    "2004" => "Sorry there was an error deleting this user.",
-    "2005" => "Sorry there was an error getting the currently authenticated user.",
-    "2006" => "Sorry there was an error getting the user's notifications.",
+    "2000" => "Sorry there was an error getting this product.",
+    "2001" => "Sorry there was an error getting all products.",
+    "2002" => "Sorry there was an error getting the products for this category.",
 
-    "5000" => "Sorry there was an error getting this voucher code.",
-    "5001" => "Sorry there was an error getting all voucher codes.",
-    "5002" => "Sorry there was an error creating this voucher code.",
-    "5003" => "Sorry there was an error updating this voucher code.",
-    "5004" => "Sorry there was an error deleting this voucher code.",
+    "2100" => "Sorry there was an error getting this product attribute.",
+    "2103" => "Sorry there was an error getting all product attributes.",
+
+    "2200" => "Sorry there was an error getting this product category.",
+    "2203" => "Sorry there was an error getting all product categories.",
+
+    "4000" => "Sorry there was an error getting this user.",
+    "4001" => "Sorry there was an error getting all users.",
+    "4002" => "Sorry there was an error creating this user.",
+    "4003" => "Sorry there was an error updating this user.",
+    "4004" => "Sorry there was an error deleting this user.",
+    "4005" => "Sorry there was an error getting the currently authenticated user.",
+    "4006" => "Sorry there was an error getting the user's notifications."
 ];
