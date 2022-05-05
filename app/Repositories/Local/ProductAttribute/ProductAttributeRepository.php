@@ -36,6 +36,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                     pao.value,
                     pao.image
                 FROM product_attribute_options AS pao
+                JOIN product_product_attribute AS ppa ON ppa.product_attribute_option_id = pao.id
                 WHERE pao.product_attribute_id IN ($dynamic_placeholders)
                 AND pao.deleted_at IS NULL
                 AND pao.enabled IS TRUE
