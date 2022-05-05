@@ -3,11 +3,19 @@
 namespace Shoptopus\ExcelImportExport;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use ReflectionException;
+use Shoptopus\ExcelImportExport\Exceptions\ExportableModelNotFoundException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ExcelImportExport implements ExcelImportExportInterface {
+
+    private function getClassName($modelName): string
+    {
+        return config('excel_import_export.model_namespace').'\\'.$modelName;
+    }
 
     /**
      * @param $modelNames
@@ -34,7 +42,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
                 $reflectionClass = new \ReflectionClass($className);
                 if (is_subclass_of($className, "Illuminate\Database\Eloquent\Model") && $reflectionClass->implementsInterface(Exportable::class) && !$reflectionClass->isAbstract()) {
                     $classFound = array_filter($modelNames, function($el) use ($className) {
-                        return $className === config('excel_import_export.model_namespace').'\\'.$el;
+                        return $className === $this->getClassName($el);
                     });
                     if ($classFound) {
                         $firstKey = array_key_first($classFound);
@@ -141,13 +149,57 @@ class ExcelImportExport implements ExcelImportExportInterface {
         return Excel::download(new ModelExport($modelMap), $config['name'] . '.xlsx');
     }
 
-    public function import(array $config = []): bool
+    private function validateModel(String $modelName): bool
     {
+        $className = $this->getClassName($modelName);
+        if (class_exists($className)) {
+
+            $reflectionClass = new \ReflectionClass($className);
+            if (is_subclass_of($className, "Illuminate\Database\Eloquent\Model") && $reflectionClass->implementsInterface(Exportable::class) && !$reflectionClass->isAbstract()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private function generateTemplateFile(array $config)
+    {
+        $modelData = $this->getModelTemplateData($config['model']);
+        return Excel::download(new ModelTemplateExport($modelData), $config['name']. ' - TEMPLATE' . '.xlsx');
+    }
+
+    private function getModelTemplateData($model): array
+    {
+        $modelClass = $this->getClassName($model);
+        $modelData['name'] = $model;
+        $modelData['class'] = $modelClass;
+        $modelData['fillable'] = $this->getFillableFields($modelClass);
+        $modelData['exportable'] = $this->getExportableFields($modelClass);
+        $modelData['translatable'] = $this->getTranslatableFields($modelClass);
+        $modelData['relationships'] = $this->getRelationships($modelClass);
+        return $modelData;
+    }
+
+    public function import(UploadedFile $file): bool
+    {
+        Excel::import(new ModelImport(), $file);
         return true;
     }
 
-    public function export(array $config = []): \Symfony\Component\HttpFoundation\BinaryFileResponse
+    public function export(array $config = []): BinaryFileResponse
     {
         return $this->generateExportFile($config);
+    }
+
+    /**
+     * @throws ExportableModelNotFoundException
+     */
+    public function template(array $config = []): BinaryFileResponse
+    {
+        $model = $config['model'];
+        if (!$this->validateModel($model)) {
+            throw new ExportableModelNotFoundException();
+        }
+        return $this->generateTemplateFile($config);
     }
 }

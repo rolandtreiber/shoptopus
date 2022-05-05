@@ -2,9 +2,11 @@
 
 namespace Shoptopus\ExcelImportExport\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Shoptopus\ExcelImportExport\ExcelImportExportInterface;
 use Shoptopus\ExcelImportExport\Http\Requests\ExportRequest;
 use Shoptopus\ExcelImportExport\Http\Requests\ImportTemplateRequest;
+use Shoptopus\ExcelImportExport\Rules\ExcelFileImportValidationRule;
 
 class ImportExportController extends BaseController {
 
@@ -26,7 +28,19 @@ class ImportExportController extends BaseController {
 
     public function template(ImportTemplateRequest $request)
     {
-        return 'hello';
+        return $this->excelImportExport->template($request->toArray());
+    }
+
+    public function import(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $request->validate([
+                'file' => ['required', new ExcelFileImportValidationRule($request->file('file'))],
+            ]);
+            return $this->excelImportExport->import($request->file('file'));
+        } else {
+            return 'no file attached';
+        }
     }
 
 }

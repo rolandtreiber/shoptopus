@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents {
 
@@ -48,17 +49,30 @@ class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function title(): string
     {
         return $this->modelName;
     }
 
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [...$this->fields, ...$this->exportableRelationships];
     }
 
-    private function getRelationshipColumnValue($row, $relationshipName, $data) {
+    /**
+     * @param $row
+     * @param $relationshipName
+     * @param $data
+     * @return string
+     */
+    private function getRelationshipColumnValue($row, $relationshipName, $data): string
+    {
 
         switch ($data['type']) {
             case 'BelongsToMany':
@@ -104,18 +118,18 @@ class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping
         }
 
         return [
-            AfterSheet::class    => function(AfterSheet $event) use ($columns, $slugColumnId) {
+            AfterSheet::class => function(AfterSheet $event) use ($columns, $slugColumnId) {
 
                 $event->sheet->getDelegate()->getStyle('A1:'.$columns[count($this->headings())-1].'1')
                     ->getFill()
-                    ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                    ->setFillType(Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('DD4B39');
 
                 if ($slugColumnId !== null) {
                     $event->sheet->getDelegate()->getStyle($slugColumnId.'2:'.$slugColumnId.(count($this->collection())+1))
                         ->getFill()
-                        ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                        ->setFillType(Fill::FILL_SOLID)
                         ->getStartColor()
                         ->setARGB('EBEBEB');
                 }
