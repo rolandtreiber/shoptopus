@@ -72,7 +72,7 @@ class GetAllProductsTest extends TestCase
     {
         Product::factory()->count(2)->create();
 
-        $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
+        $this->assertEquals(2, $this->sendRequest()->json('total_records'));
     }
 
     /**
@@ -258,96 +258,127 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_its_product_variants()
+    public function it_does_not_contain_the_product_variants()
     {
         $p = Product::factory()->create();
-        $pv = ProductVariant::factory()->create(['product_id' => $p->id]);
+        ProductVariant::factory()->create(['product_id' => $p->id]);
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_variants' => [
-                        [
-                            'id',
-                            'slug',
-                            'price',
-                            'data',
-                            'stock',
-                            'sku',
-                            'description'
-                        ]
-                    ]
+                    'product_variants'
                 ]
             ]
         ]);
-
-        $pv->update(['deleted_at' => now()]);
-
-        $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
-
-        $pv->update(['enabled' => false, 'deleted_at' => null]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
     }
 
     /**
      * @test
-     * @group apiGet
+     * @group apiGetAll
      */
-    public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants()
+    public function products_can_be_filtered_by_categories()
     {
-        $p = Product::factory()->create();
-        $pv = ProductVariant::factory()->create(['product_id' => $p->id]);
-        $pa_valid = ProductAttribute::factory()->create();
-        $pa_disabled = ProductAttribute::factory()->create(['enabled' => false]);
-        $pa_deleted = ProductAttribute::factory()->create(['deleted_at' => now()]);
-        $attribute_options = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa_valid->id]);
+        $products = Product::factory()->count(5)->create();
+        $categories = ProductCategory::factory()->count(2)->create();
 
-        $pv->product_variant_attributes()->attach($pa_valid->id, ['product_attribute_option_id' => $attribute_options[0]->id]);
-        $pv->product_variant_attributes()->attach($pa_disabled->id, ['product_attribute_option_id' => $attribute_options[1]->id]);
-        $pv->product_variant_attributes()->attach($pa_deleted->id, ['product_attribute_option_id' => $attribute_options[2]->id]);
+        $products[0]->product_categories()->attach($categories[0]->id);
 
-        $res = $this->sendRequest();
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+        ]));
 
-        $res->assertJsonStructure([
-            'data' => [
-                [
-                    'product_variants' => [
-                        [
-                            'product_attributes' => [
-                                [
-                                    'id',
-                                    'name',
-                                    'slug',
-                                    'type',
-                                    'image',
-                                    'options' => [
-                                        [
-                                            'id',
-                                            'name',
-                                            'slug',
-                                            'option_value',
-                                            'image'
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]);
+        $this->assertCount(1, $res->json('data'));
 
-        $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes'));
-        $this->assertEquals($pa_valid->id, $res->json('data.0.product_variants.0.product_attributes.0.id'));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
 
-        $this->assertCount(3, $res->json('data.0.product_variants.0.product_attributes.0.options'));
+        $products[1]->product_categories()->attach($categories[1]->id);
 
-        $attribute_options->first()->update(['enabled' => false]);
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+        ]));
 
-        $this->assertCount(2, $this->sendRequest()->json('data.0.product_variants.0.product_attributes.0.options'));
+        $this->assertCount(2, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_tags()
+    {
+        $products = Product::factory()->count(5)->create();
+        $tags = ProductTag::factory()->count(2)->create();
+
+        $products[0]->product_tags()->attach($tags[0]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+
+        $products[1]->product_tags()->attach($tags[1]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+        ]));
+
+        $this->assertCount(2, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_multiple_relationships()
+    {
+        $products = Product::factory()->count(5)->create();
+        $categories = ProductCategory::factory()->count(2)->create();
+        $tags = ProductTag::factory()->count(2)->create();
+
+        $products[0]->product_categories()->attach($categories[0]->id);
+        $products[0]->product_tags()->attach($tags[0]->id);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'product_categories' => implode(',', [$categories[0]->id]),
+            'product_tags' => implode(',', [$tags[0]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function products_can_be_filtered_by_attribute_options()
+    {
+        $products = Product::factory()->count(5)->create();
+
+        $attribute = ProductAttribute::factory()->create();
+        $options = ProductAttributeOption::factory()->count(2)->create(['product_attribute_id' => $attribute->id]);
+        $attribute->products()->attach($products[0]->id, ['product_attribute_option_id' => $options[0]->id]);
+
+        $res = $this->getJson(route('api.products.getAll', [
+            'options' => implode(',', [$options[0]->id])
+        ]));
+
+        $this->assertCount(1, $res->json('data'));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
     }
 
     /**
@@ -359,7 +390,7 @@ class GetAllProductsTest extends TestCase
         Product::factory()->count(3)->create();
         $product = Product::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $product->id]);
+        $res = $this->sendRequest(['filter[id]' => $product->id]);
 
         $this->assertCount(1, $res->json('data'));
         $this->assertEquals($product->id, $res->json('data.0.id'));
@@ -371,15 +402,13 @@ class GetAllProductsTest extends TestCase
      */
     public function filters_can_accept_multiple_parameters()
     {
-        Product::factory()->count(3)->create();
-        $product1 = Product::factory()->create();
-        $product2 = Product::factory()->create();
+        $products = Product::factory()->count(3)->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$product1->id, $product2->id])]);
+        $res = $this->sendRequest(['filter[id]' => implode(',', [$products[0]->id, $products[1]->id])]);
 
         $this->assertCount(2, $res->json('data'));
-        $this->assertEquals($product1->id, $res->json('data.0.id'));
-        $this->assertEquals($product2->id, $res->json('data.1.id'));
+        $this->assertEquals($products[0]->id, $res->json('data.0.id'));
+        $this->assertEquals($products[1]->id, $res->json('data.1.id'));
     }
 
     protected function getModelRepo() : ProductRepository

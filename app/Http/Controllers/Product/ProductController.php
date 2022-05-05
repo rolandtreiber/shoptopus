@@ -24,18 +24,15 @@ class ProductController extends Controller
     public function getAll(Request $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $filters = $this->getAndValidateFilters($request);
-            $filters['deleted_at'] = 'null';
+            list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
 
-            if(empty($page_formatting = $this->getPageFormatting($request))) {
-                $page_formatting = [
-                    'sort' => 'created_at',
-                    'offset' => 0,
-                    'limit' => 12
-                ];
-            }
-
-            return response()->json($this->getResponse($page_formatting, $this->productService->getAll($page_formatting, $filters), $request));
+            return response()->json(
+                $this->getResponse($page_formatting, $this->productService->getAll(
+                    $page_formatting,
+                    $filters,
+                    ['product_variants']
+                ), $request)
+            );
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

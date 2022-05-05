@@ -31,10 +31,10 @@ class AddressController extends Controller
     public function getAll(Request $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $filters = $this->getAndValidateFilters($request);
+            list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
+
             $filters['user_id'] = $this->userService->getCurrentUser()['id'];
-            $filters['deleted_at'] = $filters['deleted_at'] ?? 'null';
-            $page_formatting = $this->getPageFormatting($request);
+
             return response()->json($this->getResponse($page_formatting, $this->addressService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

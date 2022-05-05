@@ -20,6 +20,7 @@ class NotificationService implements NotificationServiceInterface
      *
      * @param null $userId
      * @return array
+     * @throws \Exception
      */
     public function getAllUnreadNotificationsForUser($userId = null) : array
     {
@@ -33,7 +34,7 @@ class NotificationService implements NotificationServiceInterface
                 : [];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
-            throw $e;
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.notification.getAllUnreadNotificationsForUser'));
         }
     }
 
@@ -47,13 +48,9 @@ class NotificationService implements NotificationServiceInterface
     public function markRead(array $payload) : array
     {
         try {
-            DB::table('notifications')
-                ->where('id', $payload['id'])
-                ->update(['read_at'=> now()]);
+            DB::table('notifications')->where('id', $payload['id'])->update(['read_at'=> now()]);
 
-            return [
-                "message" => "Success"
-            ];
+            return ["message" => "Success"];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.notification.markRead'));

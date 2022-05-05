@@ -24,10 +24,8 @@ class ProductCategoryController extends Controller
     public function getAll(Request $request) : \Illuminate\Http\JsonResponse
     {
         try {
-            $filters = $this->getAndValidateFilters($request);
-            $filters['deleted_at'] = 'null';
-            $filters['enabled'] = true;
-            $page_formatting = $this->getPageFormatting($request);
+            list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
+
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
