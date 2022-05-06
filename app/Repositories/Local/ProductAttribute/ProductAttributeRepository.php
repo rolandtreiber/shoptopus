@@ -10,6 +10,8 @@ use App\Services\Local\Error\ErrorServiceInterface;
 
 class ProductAttributeRepository extends ModelRepository implements ProductAttributeRepositoryInterface
 {
+    public ?string $product_category_id = null;
+
     public function __construct(ErrorServiceInterface $errorService, ProductAttribute $model)
     {
         parent::__construct($errorService, $model);
@@ -25,6 +27,8 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     public function getAllForProductCategory(string $product_category_id, array $page_formatting = []) : array
     {
         try {
+            $this->product_category_id = $product_category_id;
+
             $filter_string = " JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = product_attributes.id";
             $filter_string .= " JOIN product_product_category AS ppc ON ppc.product_id = ppa.product_id";
             $filter_string .= " WHERE ppc.product_category_id IN (?)";
@@ -51,28 +55,35 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
      *
      * @param array $productAttributeIds
      * @return array
-     * @throws \Exception
      */
     public function getOptions(array $productAttributeIds = []) : array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($productAttributeIds)), ',');
 
-            return DB::select("
-                SELECT
-                    pao.product_attribute_id,
-                    pao.id,
-                    pao.name,
-                    pao.slug,
-                    pao.value,
-                    pao.image
-                FROM product_attribute_options AS pao
-                JOIN product_product_attribute AS ppa ON ppa.product_attribute_option_id = pao.id AND ppa.product_id IS NOT NULL
-                WHERE pao.product_attribute_id IN ($dynamic_placeholders)
-                AND pao.deleted_at IS NULL
-                AND pao.enabled IS TRUE
-                GROUP BY pao.id
-            ", $productAttributeIds);
+            $query_params = $productAttributeIds;
+
+            $sql = "SELECT pao.product_attribute_id, pao.id, pao.name, pao.slug, pao.value, pao.image";
+            $sql .= " FROM product_attribute_options AS pao";
+            $sql .= " JOIN product_product_attribute AS ppa ON ppa.product_attribute_option_id = pao.id AND ppa.product_id IS NOT NULL";
+
+            if ($this->product_category_id) {
+                $sql .= " JOIN product_product_category AS ppc ON ppc.product_id = ppa.product_id";
+            }
+
+            $sql .= " WHERE pao.product_attribute_id IN ($dynamic_placeholders)";
+
+            if ($this->product_category_id) {
+                $sql .= " AND ppc.product_category_id IN (?)";
+
+                array_push($query_params, $this->product_category_id);
+            }
+
+            $sql .= " AND pao.deleted_at IS NULL";
+            $sql .= " AND pao.enabled IS TRUE";
+            $sql .= " GROUP BY pao.id";
+
+            return DB::select($sql, $query_params);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -156,6 +167,10 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                         unset($product['product_attribute_id']);
                         array_push($model['product_ids'], $product['product_id']);
                     }
+                }
+
+                if(empty($model['product_ids'])) {
+                    array_splice($result, $key, 1);
                 }
             }
 

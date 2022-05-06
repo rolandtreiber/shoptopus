@@ -120,7 +120,7 @@ class GetProductAttributeTest extends TestCase
 
         $this->product->update(['deleted_at' => now()]);
 
-        $this->assertCount(0, $this->sendRequest()->json('data.0.product_ids'));
+        $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
