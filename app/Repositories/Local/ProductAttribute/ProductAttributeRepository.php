@@ -16,6 +16,37 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     }
 
     /**
+     * Get all models for a specific product category
+     *
+     * @param string $product_category_id
+     * @param array $page_formatting
+     * @return array
+     */
+    public function getAllForProductCategory(string $product_category_id, array $page_formatting = []) : array
+    {
+        try {
+            $filter_string = " JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = product_attributes.id";
+            $filter_string .= " JOIN product_product_category AS ppc ON ppc.product_id = ppa.product_id";
+            $filter_string .= " WHERE ppc.product_category_id IN (?)";
+            $filter_string .= " AND product_attributes.enabled IS TRUE";
+            $filter_string .= " AND product_attributes.deleted_at IS NULL";
+            $filter_string .= " GROUP BY product_attributes.id";
+
+            $filter_vars = (object) [
+                'filter_string' => $filter_string,
+                'query_parameters' => [$product_category_id]
+            ];
+
+            $filters = ['custom_filter_vars' => $filter_vars];
+
+            return $this->getAll($page_formatting, $filters);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the product attribute options for the given product attributes
      *
      * @param array $productAttributeIds
@@ -40,6 +71,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                 WHERE pao.product_attribute_id IN ($dynamic_placeholders)
                 AND pao.deleted_at IS NULL
                 AND pao.enabled IS TRUE
+                GROUP BY pao.id
             ", $productAttributeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -62,7 +94,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             return DB::select("
                 SELECT
                     ppa.product_attribute_id,
-                    p.id
+                    ppa.product_id
                 FROM products AS p
                 JOIN product_product_attribute AS ppa ON ppa.product_id = p.id
                 WHERE ppa.product_attribute_id IN ($dynamic_placeholders)
@@ -122,7 +154,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                 foreach ($products as $product) {
                     if ($product['product_attribute_id'] === $modelId) {
                         unset($product['product_attribute_id']);
-                        array_push($model['product_ids'], $product['id']);
+                        array_push($model['product_ids'], $product['product_id']);
                     }
                 }
             }

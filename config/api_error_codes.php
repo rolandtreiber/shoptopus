@@ -63,7 +63,8 @@ return [
         ],
         'product_attribute' => [
             "get" => 2100,
-            "getAll" => 2101
+            "getAll" => 2101,
+            "getAllForProductCategory" => 2102
         ],
         'product_category' => [
             "get" => 2200,

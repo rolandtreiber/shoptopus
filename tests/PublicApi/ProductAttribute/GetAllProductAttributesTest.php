@@ -4,6 +4,7 @@ namespace Tests\PublicApi\ProductAttribute;
 
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
@@ -84,7 +85,7 @@ class GetAllProductAttributesTest extends TestCase
         $attributes[0]->products()->attach($product->id, ['product_attribute_option_id' => $option1->id]);
         $attributes[1]->products()->attach($product->id, ['product_attribute_option_id' => $option2->id]);
 
-        $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
+        $this->assertEquals(2, $this->sendRequest()->json('total_records'));
     }
 
     /**
@@ -191,6 +192,39 @@ class GetAllProductAttributesTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function it_can_filter_attributes_within_a_product_category()
+    {
+        $products_without_category = Product::factory()->count(2)->create();
+        $products_in_category = Product::factory()->count(2)->create();
+        $product_category = ProductCategory::factory()->create();
+        $product_category->products()->saveMany([$products_in_category[0], $products_in_category[1]]);
+
+        $attribute_for_products_without_category = ProductAttribute::factory()->create();
+        $attribute_for_products_in_category = ProductAttribute::factory()->create();
+
+        $option1 = ProductAttributeOption::factory()->create(['product_attribute_id' => $attribute_for_products_without_category->id]);
+        $option2 = ProductAttributeOption::factory()->create(['product_attribute_id' => $attribute_for_products_in_category->id]);
+
+        $attribute_for_products_without_category->products()->attach(
+            $products_without_category->pluck('id')->toArray(), ['product_attribute_option_id' => $option1->id]
+        );
+        $attribute_for_products_in_category->products()->attach(
+            $products_in_category->pluck('id')->toArray(), ['product_attribute_option_id' => $option2->id]
+        );
+
+        $this->assertEquals(2, ProductAttribute::count());
+
+        $res = $this->getJson(route('api.product_attributes.getAllForProductCategory',
+            ['product_category_id' => $product_category->id])
+        );
+
+        $this->assertCount(1, $res->json('data'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function product_attributes_can_be_filtered_by_id()
     {
         $product = Product::factory()->create();
@@ -203,7 +237,7 @@ class GetAllProductAttributesTest extends TestCase
         $pas[1]->products()->attach($product->id, ['product_attribute_option_id' => $option2->id]);
         $pas[2]->products()->attach($product->id, ['product_attribute_option_id' => $option3->id]);
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $pas[0]->id]);
+        $res = $this->sendRequest(['filter[id]' => $pas[0]->id]);
 
         $this->assertCount(1, $res->json('data'));
         $this->assertEquals($pas[0]->id, $res->json('data.0.id'));
@@ -225,7 +259,7 @@ class GetAllProductAttributesTest extends TestCase
         $pas[1]->products()->attach($product->id, ['product_attribute_option_id' => $option2->id]);
         $pas[2]->products()->attach($product->id, ['product_attribute_option_id' => $option3->id]);
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$pas[0]->id, $pas[1]->id])]);
+        $res = $this->sendRequest(['filter[id]' => implode(',', [$pas[0]->id, $pas[1]->id])]);
 
         $this->assertCount(2, $res->json('data'));
         $this->assertEquals($pas[0]->id, $res->json('data.0.id'));
