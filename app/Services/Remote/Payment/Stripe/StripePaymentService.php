@@ -70,14 +70,14 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Execute payment
      *
-     * @param array $order
+     * @param string $orderId
      * @param array $provider_payload
      * @return array
      */
-    public function executePayment(array $order, array $provider_payload) : array
+    public function executePayment(string $orderId, array $provider_payload) : array
     {
         try {
-            return $this->transactionRepository->storeTransaction($provider_payload, $order['id']);
+            return $this->transactionRepository->storeTransaction($provider_payload, $orderId);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

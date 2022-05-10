@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductAttribute\ProductAttributeController;
 
 Route::group([
-    'name' => 'api.',
-    'middleware' => 'api'
+    'name' => 'api.'
 ], function () {
     Route::group([
         'name' => 'product_attributes.',

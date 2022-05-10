@@ -1,24 +1,28 @@
 <?php
 
-namespace Tests\Api\Payments\Paypal;
+namespace Tests\PublicApi\Payments\Paypal;
 
 use Tests\TestCase;
-use App\Models\Cart\Cart;
-use PaymentProviderSeeder;
-use App\Models\Order\Order;
-use App\Models\Customer\Customer;
-use App\Models\Competition\Competition;
+use App\Models\Cart;
+use App\Models\Order;
+use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExecutePaymentTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $cart;
+    protected $user;
+
     public function setUp() : void
     {
         parent::setUp();
 
         $this->seed(PaymentProviderSeeder::class);
+
+        $this->cart = Cart::factory()->create();
+        $this->user = $this->cart->user;
     }
 
     /**
@@ -27,16 +31,11 @@ class ExecutePaymentTest extends TestCase
      */
     public function it_requires_a_valid_paypal_order_id_token()
     {
-        $customer = factory(Customer::class)->create();
-        $order = factory(Order::class)->create(['customer_id' => $customer->id]);
-        factory(Cart::class)->create([
-            'user_id' => $customer->user->id,
-            'customer_id' => $customer->id
-        ]);
+        $order = Order::factory()->create(['user_id' => $this->user->id]);
 
         $data = [
             'provider' => 'paypal',
-            'uuid' => $order->uuid,
+            'orderId' => $order->id,
             'provider_payload' => [
                 [
                     'paypal_order_id_token' => null
@@ -44,9 +43,7 @@ class ExecutePaymentTest extends TestCase
             ]
         ];
 
-        $res = $this->signIn($customer->user)
-            ->sendRequest($data)
-            ->json();
+        $res = $this->signIn($order->user)->sendRequest($data)->json();
 
         $this->assertEquals('Client Authentication failed.', $res['developer_message']);
         $this->assertEquals('Sorry there was an error processing your payment, our administrators have been informed.', $res['user_message']);
@@ -58,18 +55,11 @@ class ExecutePaymentTest extends TestCase
      */
     public function the_order_creation_fails_if_the_user_has_not_approved_the_transaction()
     {
-        $customer = factory(Customer::class)->create();
-        $competition = factory(Competition::class)->create();
-        $order = factory(Order::class)->create(['customer_id' => $customer->id]);
-        factory(Cart::class)->create([
-            'user_id' => $customer->user->id,
-            'customer_id' => $customer->id
-        ]);
+        $order = Order::factory()->create(['user_id' => $this->user->id]);
 
         $getClientSettingsData = [
             'provider' => 'paypal',
-            'data[uuid]' => $order->uuid,
-            'data[competitionSlug]' => $competition->slug
+            'orderId' => $order->id
         ];
 
         $res = $this->getJson(route('api.payment.get.settings.public', $getClientSettingsData));
@@ -78,7 +68,7 @@ class ExecutePaymentTest extends TestCase
 
         $data = [
             'provider' => 'paypal',
-            'uuid' => $order->uuid,
+            'orderId' => $order->id,
             'provider_payload' => [
                 [
                     'paypal_order_id_token' => $paypal_order_id_token
@@ -86,8 +76,7 @@ class ExecutePaymentTest extends TestCase
             ]
         ];
 
-        $res = $this->signIn($customer->user)
-            ->sendRequest($data);
+        $res = $this->signIn($this->user)->sendRequest($data);
 
         $res->assertStatus(500);
 

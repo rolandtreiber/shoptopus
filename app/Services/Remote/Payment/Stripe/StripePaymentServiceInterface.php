@@ -15,11 +15,11 @@ interface StripePaymentServiceInterface {
     /**
      * Execute payment
      *
-     * @param array $order
+     * @param string $orderId
      * @param array $provider_payload
      * @return array
      */
-    public function executePayment(array $order, array $provider_payload) : array;
+    public function executePayment(string $orderId, array $provider_payload) : array;
 
     /**
      * Format payment response

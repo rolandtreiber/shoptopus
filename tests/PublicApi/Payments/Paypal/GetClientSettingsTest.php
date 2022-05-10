@@ -1,11 +1,10 @@
 <?php
 
-namespace Tests\Api\Payments\Paypal;
+namespace Tests\PublicApi\Payments\Paypal;
 
 use Tests\TestCase;
-use PaymentProviderSeeder;
-use App\Models\Order\Order;
-use App\Models\Competition\Competition;
+use App\Models\Order;
+use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GetClientSettingsTest extends TestCase
@@ -25,14 +24,11 @@ class GetClientSettingsTest extends TestCase
      */
     public function it_can_make_a_request_to_get_the_client_settings_and_an_id_is_being_returned()
     {
-        $order = factory(Order::class)->create();
-
-        $competition = factory(Competition::class)->create();
+        $order = Order::factory()->create();
 
         $data = [
             'provider' => 'paypal',
-            'data[uuid]' => $order->uuid,
-            'data[competitionSlug]' => $competition->slug
+            'orderId' => $order->id
         ];
 
         $res = $this->sendRequest($data);

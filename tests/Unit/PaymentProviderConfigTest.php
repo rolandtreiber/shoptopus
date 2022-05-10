@@ -38,7 +38,7 @@ class PaymentProviderConfigTest extends TestCase {
     /** @test */
     public function it_has_a_test_value_field()
     {
-        $this->assertNull($this->payment_provider_config->test_value);
+        $this->assertNotNull($this->payment_provider_config->test_value);
     }
 
     /** @test */

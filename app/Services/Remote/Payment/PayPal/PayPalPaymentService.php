@@ -53,15 +53,16 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     public function getClientSettings(string $orderId) : array
     {
         try {
-            $settings = $this->paymentProviderService->get(1);
+            $settings = $this->paymentProviderService->get('paypal', 'name');
             $keyed_config = collect($settings["payment_provider_configs"])->keyBy('setting')->toArray();
+
             $order = $this->orderService->get($orderId);
 
             return [
-                "client_id" => app()->isProduction()
+                'client_id' => app()->isProduction()
                     ? $keyed_config["CLIENT_ID"]["value"]
                     : $keyed_config["CLIENT_ID"]["test_value"],
-                "pay_pal_order_creation" => $this->createOrder($order)
+                'pay_pal_order_creation' => $this->createOrder($order)
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -80,7 +81,8 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     public function executePayment(string $orderId, array $provider_payload) : array
     {
         try {
-            $request = new OrdersCaptureRequest($provider_payload[0]["paypal_order_id_token"]);
+            $request = new OrdersCaptureRequest($provider_payload[0]['paypal_order_id_token']);
+
             $request->prefer('return=representation');
 
             return (array) $this->transactionRepository->storeTransaction(
@@ -184,7 +186,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
                         : "test-transaction-".$order["id"],
                     'amount' => [
                         'currency_code' => $order["currency_code"],
-                        'value' => $order["total"]
+                        'value' => $order["total_price"]
                     ]
                 ]
             ]
@@ -199,7 +201,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      */
     private function getCheckoutReturnUrl(string $orderId) : string
     {
-        return config('app.frontend_url') . "/checkout/?order_id={$orderId}";
+        return config('app.frontend_url_public') . "/checkout?order_id={$orderId}";
     }
 
     /**
@@ -225,10 +227,10 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      * @return SandboxEnvironment|ProductionEnvironment
      * @throws \Exception
      */
-    private function environment()
+    private function environment() : ProductionEnvironment|SandboxEnvironment
     {
         try {
-            $payment_provider = $this->paymentProviderService->get(1);
+            $payment_provider = $this->paymentProviderService->get('paypal', 'name');
             $payment_provider_config = collect($payment_provider["payment_provider_configs"])->keyBy('setting')->toArray();
 
             if (app()->isProduction()) {

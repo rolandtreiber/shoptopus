@@ -43,7 +43,7 @@ class GetClientSettingsTest extends TestCase
             'orderId' => "random-order-id"
         ];
 
-        $this->sendRequest($data)->assertJsonValidationErrors(['data.orderId']);
+        $this->sendRequest($data)->assertJsonValidationErrors(['orderId']);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
