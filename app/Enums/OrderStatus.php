@@ -6,10 +6,11 @@ use BenSampo\Enum\Enum;
 
 final class OrderStatus extends Enum
 {
-    const Paid =        1;
-    const Processing =  2;
-    const InTransit =   3;
-    const Completed =   4;
-    const OnHold =      5;
-    const Cancelled =   6;
+    const AwaitingPayment = 1;
+    const Paid =            2;
+    const Processing =      3;
+    const InTransit =       4;
+    const Completed =       5;
+    const OnHold =          6;
+    const Cancelled =       7;
 }
