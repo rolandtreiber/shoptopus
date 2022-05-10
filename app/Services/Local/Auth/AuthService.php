@@ -154,11 +154,11 @@ class AuthService implements AuthServiceInterface
      * Verify the user's email address
      *
      * @param Request $request
-     * @param int $id
+     * @param string $id
      * @return array
      * @throws \Exception
      */
-    public function verify(Request $request, int $id) : array
+    public function verify(Request $request, string $id) : array
     {
         try {
             $uri = 'login';
