@@ -32,7 +32,12 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Local\Product\ProductServiceInterface', 'App\Services\Local\Product\ProductService');
         $this->app->bind('App\Services\Local\ProductAttribute\ProductAttributeServiceInterface', 'App\Services\Local\ProductAttribute\ProductAttributeService');
         $this->app->bind('App\Services\Local\ProductCategory\ProductCategoryServiceInterface', 'App\Services\Local\ProductCategory\ProductCategoryService');
+        $this->app->bind('App\Services\Remote\Payment\PaymentServiceInterface', 'App\Services\Remote\Payment\PaymentService');
+        $this->app->bind('App\Services\Local\PaymentProvider\PaymentProviderServiceInterface', 'App\Services\Local\PaymentProvider\PaymentProviderService');
         $this->app->bind('App\Services\Local\VoucherCode\VoucherCodeServiceInterface', 'App\Services\Local\VoucherCode\VoucherCodeService');
+
+        // remote
+        $this->app->bind('App\Services\Remote\Payment\Stripe\StripePaymentServiceInterface', 'App\Services\Remote\Payment\Stripe\StripePaymentService');
     }
 
 }

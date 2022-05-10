@@ -35,12 +35,14 @@ class DatabaseSeeder extends Seeder
                 $this->call([
                     RoleSeeder::class,
                     UserSeeder::class,
+                    PaymentProviderSeeder::class,
                 ]);
                 break;
             case 'production':
                 $this->call([
                     RoleSeeder::class,
                     SuperUserSeeder::class,
+                    PaymentProviderSeeder::class,
                 ]);
                 break;
             default:
@@ -61,6 +63,7 @@ class DatabaseSeeder extends Seeder
                     ProductVariantSeeder::class,
                     CartSeeder::class,
                     OrderSeeder::class,
+                    PaymentProviderSeeder::class,
                 ]);
 
                 Module::enabled('ratings') && $this->call([RatingSeeder::class]);

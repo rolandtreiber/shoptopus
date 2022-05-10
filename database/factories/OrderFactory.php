@@ -24,6 +24,7 @@ class OrderFactory extends Factory
     public function definition() : array
     {
         return [
+            'total_price' => $this->faker->numberBetween(100, 1000),
             'user_id' => User::factory(),
             'delivery_type_id' => null,
             'voucher_code_id' => null,
