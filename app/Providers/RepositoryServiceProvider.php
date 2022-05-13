@@ -56,6 +56,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind('App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface', 'App\Repositories\Local\PaymentProvider\PaymentProviderRepository');
         $this->app->bind('App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\Stripe\StripeTransactionRepository');
         $this->app->bind('App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepository');
+        $this->app->bind('App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepository');
 
         $this->app->bind('App\Repositories\Local\VoucherCode\VoucherCodeRepositoryInterface', 'App\Repositories\Local\VoucherCode\VoucherCodeRepository');
         $this->app->bind(EventLogRepositoryInterface::class, EventLogRepository::class);

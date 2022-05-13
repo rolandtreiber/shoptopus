@@ -39,6 +39,7 @@ class ServiceServiceProvider extends ServiceProvider
         // remote
         $this->app->bind('App\Services\Remote\Payment\Stripe\StripePaymentServiceInterface', 'App\Services\Remote\Payment\Stripe\StripePaymentService');
         $this->app->bind('App\Services\Remote\Payment\PayPal\PayPalPaymentServiceInterface', 'App\Services\Remote\Payment\PayPal\PayPalPaymentService');
+        $this->app->bind('App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface', 'App\Services\Remote\Payment\Amazon\AmazonPaymentService');
 
     }
 

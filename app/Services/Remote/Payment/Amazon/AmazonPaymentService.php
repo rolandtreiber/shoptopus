@@ -93,7 +93,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
 
             $payload = [
                 "chargeAmount" => [
-                    "amount" => $order["total"],
+                    "amount" => $order["total_price"],
                     "currencyCode" => $order["currency_code"]
                 ]
             ];
@@ -153,7 +153,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
             "paymentDetails" => [
                 "paymentIntent" => "AuthorizeWithCapture",
                 "chargeAmount" => [
-                    "amount" => $order["total"],
+                    "amount" => $order["total_price"],
                     "currencyCode" => $order["currency_code"]
                 ]
             ],
@@ -216,7 +216,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     private function createClient() : void
     {
         try {
-            $settings = $this->paymentProviderService->get(2);
+            $settings = $this->paymentProviderService->get('amazon', 'name');
             $this->config = collect($settings["payment_provider_configs"])->keyBy('setting')->toArray();
 
             $this->amazonClient = new Client([
