@@ -26,6 +26,7 @@ use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterfa
  */
 class PayPalPaymentService implements PayPalPaymentServiceInterface
 {
+    private array $config;
     private ErrorServiceInterface $errorService;
     private PaymentProviderService $paymentProviderService;
     private PayPalTransactionRepositoryInterface $transactionRepository;
@@ -41,6 +42,10 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
         $this->transactionRepository = $transactionRepository;
         $this->errorService = $errorService;
         $this->orderService = $orderService;
+
+        $this->config = collect($this->paymentProviderService->get('paypal', 'name')["payment_provider_configs"])
+            ->keyBy('setting')
+            ->toArray();
     }
 
     /**
@@ -53,15 +58,12 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     public function getClientSettings(string $orderId) : array
     {
         try {
-            $settings = $this->paymentProviderService->get('paypal', 'name');
-            $keyed_config = collect($settings["payment_provider_configs"])->keyBy('setting')->toArray();
-
             $order = $this->orderService->get($orderId);
 
             return [
                 'client_id' => app()->isProduction()
-                    ? $keyed_config["CLIENT_ID"]["value"]
-                    : $keyed_config["CLIENT_ID"]["test_value"],
+                    ? $this->config["CLIENT_ID"]["value"]
+                    : $this->config["CLIENT_ID"]["test_value"],
                 'pay_pal_order_creation' => $this->createOrder($order)
             ];
         } catch (\Exception | \Error $e) {
@@ -82,7 +84,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     {
         try {
             $request = new OrdersCaptureRequest($provider_payload[0]['paypal_order_id_token']);
-
             $request->prefer('return=representation');
 
             return (array) $this->transactionRepository->storeTransaction(
@@ -171,13 +172,13 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      */
     private function buildCreateOrderRequestBody(array $order) : array
     {
-        $cancel_url = secure_url(Config::get('payment.cancel_path') . '/' . $order["id"]);
+        $checkout_url = $this->getCheckoutReturnUrl($order['id']);
 
         return [
             'intent' => 'CAPTURE',
             'application_context' => [
-                'return_url' => $this->getCheckoutReturnUrl($order['id']),
-                'cancel_url' => $cancel_url
+                'return_url' => $checkout_url,
+                'cancel_url' => $checkout_url
             ],
             'purchase_units' => [
                 [
@@ -230,18 +231,15 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     private function environment() : ProductionEnvironment|SandboxEnvironment
     {
         try {
-            $payment_provider = $this->paymentProviderService->get('paypal', 'name');
-            $payment_provider_config = collect($payment_provider["payment_provider_configs"])->keyBy('setting')->toArray();
-
             if (app()->isProduction()) {
-                $clientId = $payment_provider_config["CLIENT_ID"]["value"] ?: null;
-                $clientSecret = $payment_provider_config["SECRET"]["value"] ?: null;
+                $clientId = $this->config["CLIENT_ID"]["value"] ?: null;
+                $clientSecret = $this->config["SECRET"]["value"] ?: null;
                 // TEMPORARY SandboxEnvironment in production while testing
                 return new SandboxEnvironment($clientId, $clientSecret);
                // return new ProductionEnvironment($clientId, $clientSecret);
             } else {
-                $clientId = $payment_provider_config["CLIENT_ID"]["test_value"] ?: null;
-                $clientSecret = $payment_provider_config["SECRET"]["test_value"] ?: null;
+                $clientId = $this->config["CLIENT_ID"]["test_value"] ?: null;
+                $clientSecret = $this->config["SECRET"]["test_value"] ?: null;
                 return new SandboxEnvironment($clientId, $clientSecret);
             }
         } catch (\Exception | \Error $e) {

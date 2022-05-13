@@ -63,15 +63,14 @@ class ExecutePaymentTest extends TestCase
         ];
 
         $res = $this->getJson(route('api.payment.get.settings.public', $getClientSettingsData));
-
-        $paypal_order_id_token = $res->json('data.0.pay_pal_order_creation.result.id');
+        $paypal_order_id = $res->json('data.0.pay_pal_order_creation.result.id');
 
         $data = [
             'provider' => 'paypal',
             'orderId' => $order->id,
             'provider_payload' => [
                 [
-                    'paypal_order_id_token' => $paypal_order_id_token
+                    'paypal_order_id_token' => $paypal_order_id
                 ]
             ]
         ];

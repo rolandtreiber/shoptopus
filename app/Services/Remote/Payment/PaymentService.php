@@ -9,6 +9,7 @@ use App\Services\Local\Error\ErrorServiceInterface;
 use App\Repositories\Local\Order\OrderRepositoryInterface;
 use App\Services\Remote\Payment\Stripe\StripePaymentServiceInterface;
 use App\Services\Remote\Payment\PayPal\PayPalPaymentServiceInterface;
+use App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface;
 
 class PaymentService implements PaymentServiceInterface
 {
@@ -16,22 +17,26 @@ class PaymentService implements PaymentServiceInterface
     private StripePaymentServiceInterface $stripePaymentService;
     private OrderRepositoryInterface $orderRepository;
     private PaypalPaymentServiceInterface $paypalPaymentService;
+    private AmazonPaymentServiceInterface $amazonPaymentService;
 
     /**
      * @param ErrorServiceInterface $errorService
      * @param OrderRepositoryInterface $orderRepository
      * @param StripePaymentServiceInterface $stripePaymentService
      * @param PaypalPaymentServiceInterface $paypalPaymentService
+     * @param AmazonPaymentServiceInterface $amazonPaymentService
      */
     public function __construct(
         ErrorServiceInterface $errorService,
         OrderRepositoryInterface $orderRepository,
         StripePaymentServiceInterface $stripePaymentService,
-        PaypalPaymentServiceInterface $paypalPaymentService) {
+        PaypalPaymentServiceInterface $paypalPaymentService,
+        AmazonPaymentServiceInterface $amazonPaymentService) {
         $this->errorService = $errorService;
         $this->orderRepository = $orderRepository;
         $this->stripePaymentService = $stripePaymentService;
         $this->paypalPaymentService = $paypalPaymentService;
+        $this->amazonPaymentService = $amazonPaymentService;
     }
 
     /**
@@ -48,6 +53,7 @@ class PaymentService implements PaymentServiceInterface
             $public_settings = match ($provider) {
                 'stripe' => $this->stripePaymentService->getClientSettings($orderId),
                 'paypal' => $this->paypalPaymentService->getClientSettings($orderId),
+                'amazon' => $this->amazonPaymentService->getClientSettings($orderId),
                 default => throw new \Exception("Please pass in a valid payment provider"),
             };
 
@@ -76,6 +82,7 @@ class PaymentService implements PaymentServiceInterface
             $executed_payment_response = match ($provider) {
                 'stripe' => $this->stripePaymentService->executePayment($order['id'], $provider_payload),
                 'paypal' => $this->paypalPaymentService->executePayment($order['id'], $provider_payload),
+                'amazon' => $this->amazonPaymentService->executePayment($order['id'], $provider_payload),
                 default => throw new \Exception("Please pass in a valid payment provider, order id: $orderId"),
             };
 
@@ -108,6 +115,7 @@ class PaymentService implements PaymentServiceInterface
             $api_response_payload = match ($provider) {
                 'stripe' => $this->stripePaymentService->formatPaymentResponse($executed_payment_response),
                 'paypal' => $this->paypalPaymentService->formatPaymentResponse($executed_payment_response),
+                'amazon' => $this->amazonPaymentService->formatPaymentResponse($executed_payment_response),
                 default => throw new \Exception("Please pass in a valid payment provider")
             };
 

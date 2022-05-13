@@ -16,6 +16,7 @@ use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterfa
  */
 class StripePaymentService implements StripePaymentServiceInterface
 {
+    private array $config;
     private ErrorServiceInterface $errorService;
     private PaymentProviderService $paymentProviderService;
     private OrderServiceInterface $orderService;
@@ -32,6 +33,10 @@ class StripePaymentService implements StripePaymentServiceInterface
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
         $this->orderService = $orderService;
+
+        $this->config = collect($this->paymentProviderService->get('stripe', 'name')["payment_provider_configs"])
+            ->keyBy('setting')
+            ->toArray();
     }
 
     /**
@@ -116,10 +121,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     private function getApikey(string $type = 'publishable_key') : string
     {
         try {
-            $settings = $this->paymentProviderService->get('stripe', 'name');
-            $keyed_config = collect($settings["payment_provider_configs"])->keyBy('setting')->toArray();
-
-            return app()->isProduction() ? $keyed_config[$type]["value"] : $keyed_config[$type]["test_value"];
+            return app()->isProduction() ? $this->config[$type]["value"] : $this->config[$type]["test_value"];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
