@@ -202,7 +202,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      */
     private function getCheckoutReturnUrl(string $orderId) : string
     {
-        return config('app.frontend_url_public') . "/checkout?order_id={$orderId}";
+        return config('app.frontend_url_public') . config('payment.return_path') . "?order_id={$orderId}";
     }
 
     /**

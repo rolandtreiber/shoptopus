@@ -137,7 +137,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
 
     /**
      * Generate the Create Checkout Session payload
-     * Returns the payload needed for the signature and the clientAmazonPaymentService.php
+     * Returns the payload needed for the signature
      *
      * @see https://github.com/amzn/amazon-pay-api-sdk-php/issues/9
      *
@@ -146,10 +146,16 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
      */
     private function getPayload(array $order) : array
     {
-        $data = [
+        $orderId = $order['id'];
+
+        return [
             "webCheckoutDetails" => [
-                "checkoutMode" => "ProcessOrder"
+                "checkoutMode" => "ProcessOrder",
+                "checkoutResultReturnUrl" => $this->getCheckoutReturnUrl($orderId)
             ],
+            "storeId" => $this->isProduction
+                ? $this->config["STORE_ID"]["value"]
+                : $this->config["STORE_ID"]["test_value"],
             "paymentDetails" => [
                 "paymentIntent" => "AuthorizeWithCapture",
                 "chargeAmount" => [
@@ -159,25 +165,25 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
             ],
             "merchantMetadata" => [
                 "merchantReferenceId" => $this->isProduction
-                    ? "transaction-".$order["id"]
-                    : "test-transaction-".$order["id"],
+                    ? "transaction-".$orderId
+                    : "test-transaction-".$orderId,
                 "merchantStoreName" => $this->isProduction
                     ? $this->config["STORE_NAME"]["value"]
                     : $this->config["STORE_NAME"]["test_value"],
                 "noteToBuyer" => "Thank you for your purchase."
             ]
         ];
+    }
 
-        $data["storeId"] = $this->isProduction
-            ? $this->config["STORE_ID"]["value"]
-            : $this->config["STORE_ID"]["test_value"];
-
-        $data["webCheckoutDetails"]["checkoutResultReturnUrl"] = $this->getCheckoutReturnUrl($order['id']);
-
-        // $withStoreId
-        //$data["webCheckoutDetails"]["checkoutReviewReturnUrl"] = $this->getCheckoutReturnUrl($order['id']);
-
-        return $data;
+    /**
+     * Get the return url
+     *
+     * @param string $orderId
+     * @return string
+     */
+    private function getCheckoutReturnUrl(string $orderId) : string
+    {
+        return config('app.frontend_url_public') . config('payment.return_path') . "?order_id={$orderId}";
     }
 
     /**
@@ -194,17 +200,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
         }
 
         return $paymentResponse;
-    }
-
-    /**
-     * Get the return url
-     *
-     * @param string $orderId
-     * @return string
-     */
-    private function getCheckoutReturnUrl(string $orderId) : string
-    {
-        return config('app.frontend_url_public') . "/checkout?order_id={$orderId}";
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Services\Remote\Payment;
 
 //use App\Events\OrderCompleted;
+use App\Enums\OrderStatus;
+use App\Models\Order;
 use Illuminate\Support\Facades\Config;
 use App\Exceptions\Payment\PaymentException;
 use App\Services\Local\Error\ErrorServiceInterface;
@@ -88,7 +90,8 @@ class PaymentService implements PaymentServiceInterface
 
             $response = $this->formatPaymentResponse($provider, $executed_payment_response);
 
-            if($response["success"]) {
+            if($response['success']) {
+                Order::find($orderId)->update(['status' => OrderStatus::Paid]);
                 //OrderCompleted::dispatch($order['id'], $response);
             }
 
