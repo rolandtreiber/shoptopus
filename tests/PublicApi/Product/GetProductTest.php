@@ -245,7 +245,7 @@ class GetProductTest extends TestCase
                                             'id',
                                             'name',
                                             'slug',
-                                            'option_value',
+                                            'value',
                                             'image'
                                         ]
                                     ]
@@ -294,7 +294,7 @@ class GetProductTest extends TestCase
                                     'id',
                                     'name',
                                     'slug',
-                                    'option_value',
+                                    'value',
                                     'image'
                                 ]
                             ]

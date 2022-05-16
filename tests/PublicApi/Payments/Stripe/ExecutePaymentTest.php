@@ -29,7 +29,7 @@ class ExecutePaymentTest extends TestCase
      * @test
      * @group apiPost
      */
-    public function it_throws_an_error_if_the_order_status_is_not_awaiting_paymentsss()
+    public function it_throws_an_error_if_the_order_status_is_not_awaiting_payments()
     {
         $order = Order::factory()->create(['user_id' => $this->user->id]);
 

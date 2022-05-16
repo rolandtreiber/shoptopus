@@ -264,7 +264,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             'id' => $product_attribute['option_id'],
                             'name' => $product_attribute['option_name'],
                             'slug' => $product_attribute['option_slug'],
-                            'option_value' => $product_attribute['option_value'],
+                            'value' => $product_attribute['option_value'],
                             'image' => $product_attribute['option_image']
                         ];
 
@@ -341,7 +341,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             'id' => $product_variant['product_attribute_option_id'],
                             'name' => $product_variant['product_attribute_option_name'],
                             'slug' => $product_variant['product_attribute_option_slug'],
-                            'option_value' => $product_variant['product_attribute_option_value'],
+                            'value' => $product_variant['product_attribute_option_value'],
                             'image' => $product_variant['product_attribute_option_image']
                         ];
 
@@ -420,6 +420,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             "{$this->model_table}.stock",
             "{$this->model_table}.backup_stock",
             "{$this->model_table}.sku",
+            "{$this->model_table}.headline",
+            "{$this->model_table}.subtitle",
             "{$this->model_table}.cover_photo"
         ];
 

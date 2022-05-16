@@ -24,6 +24,8 @@ class CreateProductsTable extends Migration
             $table->text('short_description');
             $table->longtext('description');
             $table->unsignedDecimal('price');
+            $table->text('headline')->nullable();
+            $table->text('subtitle')->nullable();
             $table->tinyInteger('status')->default(ProductStatus::Provisional);
             $table->unsignedBigInteger('purchase_count')->default(0);
             $table->unsignedBigInteger('stock')->default(0);

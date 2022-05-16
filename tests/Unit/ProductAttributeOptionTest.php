@@ -55,7 +55,7 @@ class ProductAttributeOptionTest extends TestCase
     }
 
     /** @test */
-    public function it_has_image_field()
+    public function it_has_an_image_field()
     {
         $this->assertNull($this->product_attribute_option->image);
     }

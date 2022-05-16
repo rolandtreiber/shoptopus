@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Facades\Module;
+use Illuminate\Database\Seeder;
 use Database\Seeders\TestData\AddressSeeder;
 use Database\Seeders\TestData\BannerSeeder;
 use Database\Seeders\TestData\CartSeeder;
@@ -18,8 +19,6 @@ use Database\Seeders\TestData\ProductVariantSeeder;
 use Database\Seeders\TestData\RatingSeeder;
 use Database\Seeders\TestData\UserSeeder;
 use Database\Seeders\TestData\VoucherCodeSeeder;
-use Illuminate\Database\Seeder;
-use function config;
 
 class DatabaseSeeder extends Seeder
 {
@@ -48,10 +47,11 @@ class DatabaseSeeder extends Seeder
             default:
 
                 $this->call([
-                    BannerSeeder::class,
+                    ApiProductsTestSeeder::class,
                     RoleSeeder::class,
-                    DeliveryTypeSeeder::class,
                     UserSeeder::class,
+                    BannerSeeder::class,
+                    DeliveryTypeSeeder::class,
                     AddressSeeder::class,
                     DiscountRuleSeeder::class,
                     VoucherCodeSeeder::class,

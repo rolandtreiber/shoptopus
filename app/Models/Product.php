@@ -17,9 +17,9 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 
 /**
  * @method static count()
@@ -63,7 +63,7 @@ class Product extends SearchableModel implements Auditable, Exportable
             ->saveSlugsTo('slug');
     }
 
-    protected $exportableFields = [
+    protected array $exportableFields = [
         'name',
         'slug',
         'short_description',
@@ -75,10 +75,12 @@ class Product extends SearchableModel implements Auditable, Exportable
         'backup_stock',
         'rating',
         'final_price',
-        'sku'
+        'sku',
+        'headline',
+        'subtitle'
     ];
 
-    protected $exportableRelationships = [
+    protected array $exportableRelationships = [
         'product_categories',
         'product_attributes',
         'product_tags',
@@ -86,7 +88,7 @@ class Product extends SearchableModel implements Auditable, Exportable
         'discount_rules'
     ];
 
-    public $translatable = ['name', 'short_description', 'description'];
+    public array $translatable = ['name', 'short_description', 'description', 'headline', 'subtitle'];
 
     protected $appends = ['final_price'];
 
@@ -100,6 +102,8 @@ class Product extends SearchableModel implements Auditable, Exportable
         'short_description',
         'description',
         'price',
+        'headline',
+        'subtitle',
         'status',
         'purchase_count',
         'stock',

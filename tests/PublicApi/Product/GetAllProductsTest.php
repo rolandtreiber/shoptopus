@@ -103,7 +103,7 @@ class GetAllProductsTest extends TestCase
                                     'id',
                                     'name',
                                     'slug',
-                                    'option_value',
+                                    'value',
                                     'image'
                                 ]
                             ]

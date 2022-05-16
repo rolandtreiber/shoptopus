@@ -133,6 +133,18 @@ class ProductTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_headline_field()
+    {
+        $this->assertEmpty($this->product->headline);
+    }
+
+    /** @test */
+    public function it_has_a_subtitle_field()
+    {
+        $this->assertEmpty($this->product->subtitle);
+    }
+
+    /** @test */
     public function it_has_a_deleted_at_field()
     {
         $this->assertNull($this->product->deleted_at);
@@ -229,9 +241,9 @@ class ProductTest extends TestCase
     {
         $this->assertCount(0, $this->product->product_attributes);
 
-        $category = ProductAttribute::factory()->create();
+        $attribute = ProductAttribute::factory()->create();
 
-        $this->product->product_attributes()->attach($category->id);
+        $this->product->product_attributes()->attach($attribute->id);
 
         $this->assertCount(1, $this->product->fresh()->product_attributes);
 

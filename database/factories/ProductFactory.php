@@ -38,7 +38,9 @@ class ProductFactory extends Factory
             'purchase_count' => $this->faker->numberBetween(0, 200),
             'stock' => $this->faker->numberBetween(1, 150),
             'backup_stock' => $this->faker->numberBetween(0, 150),
-            'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers)
+            'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers),
+            'headline' => null,
+            'subtitle' => null
         ];
     }
 }
