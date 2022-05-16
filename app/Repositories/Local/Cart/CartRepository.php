@@ -24,7 +24,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     {
         try {
             $cart = $payload['cart_id']
-                ? $this->get(value: $payload['cart_id'], excludeRelationships: ['user'])
+                ? $this->get($payload['cart_id'])
                 : $this->post([]);
 
             $cart_product_table = DB::table('cart_product');
@@ -48,7 +48,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 ]);
             }
 
-            return $this->get(value: $payload['cart_id'], excludeRelationships: ['user']);
+            return $this->get(value: $cart['id'], excludeRelationships: ['users']);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
