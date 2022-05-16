@@ -87,10 +87,10 @@ class AuthController extends Controller
      * Verify the user's email
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param string $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function verify(Request $request, int $id) : \Illuminate\Http\JsonResponse
+    public function verify(Request $request, string $id) : \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->authService->verify($request, $id));

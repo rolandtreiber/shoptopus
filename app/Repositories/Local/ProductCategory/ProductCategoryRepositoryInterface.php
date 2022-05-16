@@ -21,6 +21,15 @@ interface ProductCategoryRepositoryInterface {
     public function getProductIds(array $productCategoryIds = []) : array;
 
     /**
+     * Get the subcategories
+     *
+     * @param array $productCategoryIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getSubcategories(array $productCategoryIds = []) : array;
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result

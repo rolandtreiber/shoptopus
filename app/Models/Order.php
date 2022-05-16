@@ -2,22 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
-use App\Traits\HasEventLogs;
-use App\Enums\OrderStatus;
-use App\Helpers\GeneralHelper;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use App\Traits\HasUUID;
+use App\Enums\OrderStatus;
+use App\Traits\HasEventLogs;
+use App\Helpers\GeneralHelper;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+//use Spatie\Sluggable\HasSlug;
+//use Spatie\Sluggable\SlugOptions;
 
 /**
  * @method static find(int $selectedCartId)
@@ -25,7 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|mixed $delivery_type_id
  * @property int $status
  * @property mixed $address_id
- * @property VoucherCode|null $voucherCode
+ * @property VoucherCode|null $voucher_code
  * @property string $id
  * @property string|null $voucher_code_id
  * @property int $originalPrice
@@ -44,23 +44,24 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Order extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
+    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, \OwenIt\Auditing\Auditable, HasExportable;
 
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions() : SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom(['user.name', 'address.town'])
-            ->saveSlugsTo('slug');
-    }
+//    /**
+//     * Get the options for generating the slug.
+//     */
+//    public function getSlugOptions() : SlugOptions
+//    {
+//        return SlugOptions::create()
+//            ->generateSlugsFrom(['user.name', 'address.town'])
+//            ->saveSlugsTo('slug');
+//    }
 
     /**
      * @var string[]
      */
     protected $exportableFields = [
-        'slug',
+//        'slug',
+        'currency_code',
         'status',
         'original_price',
         'subtotal',
@@ -87,6 +88,10 @@ class Order extends SearchableModel implements Auditable, Exportable
      */
     protected $fillable = [
         'user_id',
+        'delivery_type_id',
+        'voucher_code_id',
+        'address_id',
+        'currency_code',
         'status',
         'original_price',
         'subtotal',
@@ -122,6 +127,9 @@ class Order extends SearchableModel implements Auditable, Exportable
     public function scopeView($query, $view)
     {
         switch ($view) {
+            case 'awaiting_payment':
+                $query->where('status', OrderStatus::AwaitingPayment);
+                break;
             case 'paid':
                 $query->where('status', OrderStatus::Paid);
                 break;

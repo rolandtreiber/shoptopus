@@ -23,11 +23,11 @@ class PaymentTest extends TestCase
         $this->payment = Payment::factory()->create();
     }
 
-    /** @test */
-    public function it_has_a_generated_slug()
-    {
-        $this->assertEquals(Str::slug($this->payment->payable->slug), $this->payment->slug);
-    }
+//    /** @test */
+//    public function it_has_a_generated_slug()
+//    {
+//        $this->assertEquals(Str::slug($this->payment->payable->slug), $this->payment->slug);
+//    }
 
     /** @test */
     public function it_has_a_payable_type_field()

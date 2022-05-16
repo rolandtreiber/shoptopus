@@ -26,6 +26,8 @@ class ProductCategoryController extends Controller
         try {
             list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
 
+            $filters['parent_id'] = 'null';
+
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

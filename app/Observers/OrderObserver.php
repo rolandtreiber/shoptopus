@@ -3,9 +3,10 @@
 namespace App\Observers;
 
 use App\Models\Order;
+use App\Enums\EventLogType;
+use App\Models\DeliveryType;
 use App\Repositories\Admin\Eventlog\EventLogRepository;
 use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
-use App\Enums\EventLogType;
 
 class OrderObserver
 {
@@ -38,9 +39,13 @@ class OrderObserver
      */
     public function updating(Order $order)
     {
-        if($order->isDirty('voucher_code_id') || $order->isDirty('delivery_type_id')){
-            $order->delivery_cost = $order->delivery_type->price;
-            $order->recalculatePrices();
+        if($order->isDirty(['voucher_code_id', 'delivery_type_id'])) {
+            $dt = DeliveryType::find($order->delivery_type_id);
+
+            if ($dt) {
+                $order->delivery_cost = $dt->price;
+                $order->recalculatePrices();
+            }
         }
 
         if($order->isDirty('status')) {

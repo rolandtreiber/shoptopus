@@ -16,17 +16,18 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('address_id')->constrained();
             $table->foreignUuid('user_id')->nullable()->constrained();
             $table->foreignUuid('delivery_type_id')->nullable()->constrained();
             $table->foreignUuid('voucher_code_id')->nullable()->constrained();
-            $table->foreignUuid('address_id')->constrained();
             $table->unsignedDecimal('original_price')->default(0);
             $table->unsignedDecimal('subtotal')->default(0);
             $table->unsignedDecimal('total_price')->default(0);
             $table->unsignedDecimal('total_discount')->default(0);
             $table->unsignedDecimal('delivery_cost')->default(0);
-            $table->integer('status')->default(OrderStatus::Paid);
-            $table->string('slug');
+            $table->string('currency_code')->default('GBP');
+            $table->integer('status')->default(OrderStatus::AwaitingPayment);
+//            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

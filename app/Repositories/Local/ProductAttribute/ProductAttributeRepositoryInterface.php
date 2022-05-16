@@ -5,6 +5,15 @@ namespace App\Repositories\Local\ProductAttribute;
 interface ProductAttributeRepositoryInterface {
 
     /**
+     * Get all models for a specific product category
+     *
+     * @param string $product_category_id
+     * @param array $page_formatting
+     * @return array
+     */
+    public function getAllForProductCategory(string $product_category_id, array $page_formatting = []) : array;
+
+    /**
      * Get the products for the given product categories
      *
      * @param array $productAttributeIds

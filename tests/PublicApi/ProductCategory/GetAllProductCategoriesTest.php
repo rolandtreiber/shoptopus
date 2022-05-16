@@ -69,7 +69,7 @@ class GetAllProductCategoriesTest extends TestCase
     {
         ProductCategory::factory()->count(2)->create();
 
-        $this->assertEquals(2, $this->signIn()->sendRequest()->json('total_records'));
+        $this->assertEquals(2, $this->sendRequest()->json('total_records'));
     }
 
     /**
@@ -115,6 +115,35 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function it_returns_its_subcategories()
+    {
+        $pc = ProductCategory::factory()->create();
+        $subcategories = ProductCategory::factory()->count(3)->create(['parent_id' => $pc->id]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure([
+            'data' => [
+                [
+                    'subcategories' => [
+                        (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                    ]
+                ]
+            ]
+        ]);
+
+        $this->assertCount(3, $res->json('data.0.subcategories'));
+
+        $subcategories[0]->update(['enabled' => false]);
+        $subcategories[1]->update(['deleted_at' => now()]);
+
+        $this->assertCount(1, $this->sendRequest()->json('data.0.subcategories'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function it_returns_the_associated_product_ids()
     {
         $pc = ProductCategory::factory()->create();
@@ -148,7 +177,7 @@ class GetAllProductCategoriesTest extends TestCase
         ProductCategory::factory()->count(3)->create();
         $product_category = ProductCategory::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => $product_category->id]);
+        $res = $this->sendRequest(['filter[id]' => $product_category->id]);
 
         $this->assertCount(1, $res->json('data'));
         $this->assertEquals($product_category->id, $res->json('data.0.id'));
@@ -164,7 +193,7 @@ class GetAllProductCategoriesTest extends TestCase
         $product_category1 = ProductCategory::factory()->create();
         $product_category2 = ProductCategory::factory()->create();
 
-        $res = $this->signIn()->sendRequest(['filter[id]' => implode(',', [$product_category1->id, $product_category2->id])]);
+        $res = $this->sendRequest(['filter[id]' => implode(',', [$product_category1->id, $product_category2->id])]);
 
         $this->assertCount(2, $res->json('data'));
         $this->assertEquals($product_category1->id, $res->json('data.0.id'));

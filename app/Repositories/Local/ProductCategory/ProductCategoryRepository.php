@@ -76,6 +76,34 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     }
 
     /**
+     * Get the subcategories
+     *
+     * @param array $productCategoryIds
+     * @return array
+     * @throws \Exception
+     */
+    public function getSubcategories(array $productCategoryIds = []) : array
+    {
+        try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
+
+            $columns = implode(',', $this->getSelectableColumns(false));
+
+            return DB::select("
+                SELECT
+                    $columns
+                FROM product_categories AS pc
+                WHERE pc.parent_id IN ($dynamic_placeholders)
+                AND pc.enabled IS TRUE
+                AND pc.deleted_at IS NULL
+            ", $productCategoryIds);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the required related models for the given parent
      *
      * @param $result
@@ -89,6 +117,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
         $discount_rules = [];
         $products = [];
+        $subcategories = [];
 
         if (!in_array('discount_rules', $excludeRelationships)) {
             $discount_rules = $this->getDiscountRules($ids);
@@ -98,12 +127,17 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             $products = $this->getProductIds($ids);
         }
 
+        if (!in_array('subcategories', $excludeRelationships)) {
+            $subcategories = $this->getSubcategories($ids);
+        }
+
         try {
             foreach ($result as &$model) {
                 $modelId = $model['id'];
 
                 $model['discount_rules'] = [];
                 $model['product_ids'] = [];
+                $model['subcategories'] = [];
 
                 foreach ($discount_rules as $discount_rule) {
                     if ($discount_rule['product_category_id'] === $modelId) {
@@ -115,6 +149,12 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 foreach ($products as $product) {
                     if ($product['product_category_id'] === $modelId) {
                         array_push($model['product_ids'], $product['id']);
+                    }
+                }
+
+                foreach ($subcategories as $subcategory) {
+                    if ($subcategory['parent_id'] === $modelId) {
+                        array_push($model['subcategories'], $subcategory);
                     }
                 }
             }

@@ -14,14 +14,17 @@ class GetProductAttributeTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected $product;
     protected $product_attribute;
 
     public function setUp() : void
     {
         parent::setUp();
 
+        $this->product = Product::factory()->create();
         $this->product_attribute = ProductAttribute::factory()->create();
-        ProductAttributeOption::factory()->create(['product_attribute_id' => $this->product_attribute->id]);
+        $option = ProductAttributeOption::factory()->create(['product_attribute_id' => $this->product_attribute->id]);
+        $this->product_attribute->products()->attach($this->product->id, ['product_attribute_option_id' => $option->id]);
     }
 
     /**
@@ -33,6 +36,19 @@ class GetProductAttributeTest extends TestCase
         $this->sendRequest()
             ->assertOk()
             ->assertSee($this->product_attribute->name);
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function an_attribute_without_options_are_excluded()
+    {
+        $this->product_attribute->options->each->delete();
+
+        $res = $this->sendRequest();
+
+        $this->assertEmpty($res->json('data'));
     }
 
     /**
@@ -90,10 +106,6 @@ class GetProductAttributeTest extends TestCase
      */
     public function it_returns_the_associated_product_ids()
     {
-        $p = Product::factory()->create();
-        $p2 = Product::factory()->create();
-        $this->product_attribute->products()->attach([$p->id, $p2->id]);
-
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
@@ -104,11 +116,11 @@ class GetProductAttributeTest extends TestCase
             ]
         ]);
 
-        $this->assertCount(2, $res->json('data.0.product_ids'));
+        $this->assertCount(1, $res->json('data.0.product_ids'));
 
-        $p2->update(['deleted_at' => now()]);
+        $this->product->update(['deleted_at' => now()]);
 
-        $this->assertCount(1, $this->sendRequest()->json('data.0.product_ids'));
+        $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
