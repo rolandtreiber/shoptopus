@@ -9,7 +9,7 @@ use App\Http\Middleware\OwnAccountOrSuperAdmin;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
-use App\Http\Middleware\SetLocaleMiddleware;
+//use App\Http\Middleware\SetLocaleMiddleware;
 use App\Http\Middleware\SuperUser;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
