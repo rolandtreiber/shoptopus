@@ -18,6 +18,7 @@ return [
     '1012' => "Sorry, there was an error getting your user details.",
     "1013" => "Please reset your password.",
     '1014' => "Sorry, the email address is taken.",
+    '1015' => 'Please verify your email address, we have re-sent you the verification email.',
 
     '1100' => 'Sorry there was a system error, the administrator has been informed.',
     '1101' => 'Sorry there was a system error, the administrator has been informed.',
@@ -52,10 +53,15 @@ return [
     "2002" => "Sorry there was an error getting the products for this category.",
 
     "2100" => "Sorry there was an error getting this product attribute.",
-    "2103" => "Sorry there was an error getting all product attributes.",
+    "2101" => "Sorry there was an error getting all product attributes.",
+    "2102" => "Sorry there was an error getting all product attributes for the specified product categories.",
 
     "2200" => "Sorry there was an error getting this product category.",
     "2203" => "Sorry there was an error getting all product categories.",
+
+    "3000" => "Sorry there was an error getting the provider settings, our administrators have been informed.",
+    "3001" => "Sorry there was an error processing your payment, our administrators have been informed.",
+    "3002" => "Sorry there was an error formatting the payment response.",
 
     "4000" => "Sorry there was an error getting this user.",
     "4001" => "Sorry there was an error getting all users.",

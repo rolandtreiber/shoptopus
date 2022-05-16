@@ -5,14 +5,15 @@ namespace App\Repositories\Local;
 use App\Traits\FilterTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use App\Services\Local\Error\ErrorServiceInterface;
 
 class ModelRepository implements ModelRepositoryInterface
 {
     use FilterTrait;
 
     protected $model;
-    protected $model_table;
-    protected $errorService;
+    protected string $model_table;
+    protected ErrorServiceInterface $errorService;
 
     public function __construct($errorService, $model) {
         $this->errorService = $errorService;
@@ -31,17 +32,21 @@ class ModelRepository implements ModelRepositoryInterface
     public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []) : array
     {
         try {
-            if ($this->canBeSoftDeleted()) {
-                $filters['deleted_at'] = 'null';
-            }
+            if (isset($filters['custom_filter_vars'])) {
+                $filter_vars = $filters['custom_filter_vars'];
+            } else {
+                if ($this->canBeSoftDeleted()) {
+                    $filters['deleted_at'] = 'null';
+                }
 
-            if ($this->hasActiveProperty()) {
-                $filters['active'] = 1;
-            } else if ($this->hasEnabledProperty()) {
-                $filters['enabled'] = 1;
-            }
+                if ($this->hasActiveProperty()) {
+                    $filters['active'] = 1;
+                } else if ($this->hasEnabledProperty()) {
+                    $filters['enabled'] = 1;
+                }
 
-            $filter_vars = $this->getFilters($this->model_table, $filters);
+                $filter_vars = $this->getFilters($this->model_table, $filters);
+            }
 
             return [
                 'data' => $this->getModels($filter_vars, $page_formatting, $excludeRelationships),
@@ -170,10 +175,13 @@ class ModelRepository implements ModelRepositoryInterface
     public function getModels($filter_vars, array $page_formatting = [], array $excludeRelationships = []) : array
     {
         try {
-            $hasPageFormatting = !empty($page_formatting);
-
-            $order_by_string = $hasPageFormatting ? $this->getOrderByString($page_formatting) : null;
-            $query_params = $hasPageFormatting ? $this->getQueryParams($filter_vars, $page_formatting) : null;
+            if (!empty($page_formatting)) {
+                $order_by_string = " " . $this->getOrderByString($page_formatting) .  " LIMIT ?, ?;";
+                $query_params = $this->getQueryParams($filter_vars, $page_formatting);
+            } else {
+                $order_by_string = "";
+                $query_params = $filter_vars->query_parameters;
+            }
 
             //DB::enableQueryLog();
 
@@ -181,8 +189,8 @@ class ModelRepository implements ModelRepositoryInterface
             $sql .= implode(',', $this->getSelectableColumns());
             $sql .= " FROM $this->model_table";
             $sql .= $filter_vars->filter_string;
-            $sql .= $hasPageFormatting ? " $order_by_string LIMIT ?, ?;" : "";
-            $result = DB::select($sql, $hasPageFormatting ? $query_params : $filter_vars->query_parameters);
+            $sql .= $order_by_string;
+            $result = DB::select($sql, $query_params);
 
             //dd(DB::getQueryLog());
 
@@ -206,7 +214,7 @@ class ModelRepository implements ModelRepositoryInterface
         $sql = "SELECT count(*) AS count FROM $this->model_table $filter_vars->filter_string";
         $result = DB::select($sql, $filter_vars->query_parameters);
 
-        return (int) $result[0]["count"];
+        return !empty($result) ? (int) $result[0]["count"] : 0;
     }
 
     /**

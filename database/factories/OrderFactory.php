@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use App\Models\Order;
 use App\Models\Address;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -23,10 +24,12 @@ class OrderFactory extends Factory
     public function definition() : array
     {
         return [
-            'user_id' => null,
+            'total_price' => $this->faker->numberBetween(100, 1000),
+            'user_id' => User::factory(),
             'delivery_type_id' => null,
             'voucher_code_id' => null,
-            'address_id' => Address::factory()
+            'address_id' => Address::factory(),
+            'currency_code' => 'GBP'
         ];
     }
 }

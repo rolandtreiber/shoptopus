@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 
 Route::group([
-    'name' => 'api.',
-    'middleware' => 'api'
+    'name' => 'api.'
 ], function () {
     Route::group([
         'name' => 'auth.',

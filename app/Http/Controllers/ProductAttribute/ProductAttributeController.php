@@ -26,7 +26,33 @@ class ProductAttributeController extends Controller
         try {
             list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
 
-            return response()->json($this->getResponse($page_formatting, $this->productAttributeService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse(
+                $page_formatting,
+                $this->productAttributeService->getAll($page_formatting, $filters),
+                $request
+            ));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Get all models for a specific product category
+     *
+     * @param Request $request
+     * @param string $product_category_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAllForProductCategory(Request $request, string $product_category_id) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            list($page_formatting) = $this->getFiltersAndPageFormatting($request);
+
+            return response()->json($this->getResponse(
+                $page_formatting,
+                $this->productAttributeService->getAllForProductCategory($product_category_id, $page_formatting),
+                $request
+            ));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

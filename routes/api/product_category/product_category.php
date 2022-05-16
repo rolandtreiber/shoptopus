@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductCategory\ProductCategoryController;
 
 Route::group([
-    'name' => 'api.',
-    'middleware' => 'api'
+    'name' => 'api.'
 ], function () {
     Route::group([
         'name' => 'product_categories.',

@@ -26,7 +26,8 @@ return [
             "handleOAuthProviderCallback" => 1011,
             "details" => 1012,
             "must_reset_password" => 1013,
-            "email_address_taken" => 1014
+            "email_address_taken" => 1014,
+            "not_verified" => 1015
         ],
         'access_token' => [
             "get" => 1200,
@@ -63,11 +64,19 @@ return [
         ],
         'product_attribute' => [
             "get" => 2100,
-            "getAll" => 2101
+            "getAll" => 2101,
+            "getAllForProductCategory" => 2102
         ],
         'product_category' => [
             "get" => 2200,
             "getAll" => 2201
+        ],
+        'remote' => [
+            'payment' => [
+                'getClientSettings' => 3000,
+                'execute' => 3001,
+                'formatPaymentResponse' => 3002
+            ]
         ],
         'user' => [
             "get" => 4000,
