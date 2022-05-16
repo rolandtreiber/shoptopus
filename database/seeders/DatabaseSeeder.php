@@ -47,7 +47,7 @@ class DatabaseSeeder extends Seeder
             default:
 
                 $this->call([
-                    ApiProductsTestSeeder::class,
+                    //ApiProductsTestSeeder::class,
                     RoleSeeder::class,
                     UserSeeder::class,
                     BannerSeeder::class,
