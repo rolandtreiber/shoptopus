@@ -7,4 +7,5 @@ Route::group(['prefix' => config('excel_import_export.prefix'), 'middleware' => 
     Route::get('export', [ImportExportController::class, 'export']);
     Route::get('template', [ImportExportController::class, 'template']);
     Route::post('import', [ImportExportController::class, 'import']);
+    Route::post('validate', [ImportExportController::class, 'validateImport']);
 });

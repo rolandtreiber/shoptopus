@@ -8,6 +8,7 @@ use Illuminate\Support\Collection;
 interface ExcelImportExportInterface {
 
     public function import(UploadedFile $file, ExcelImportExportInterface $excelImportExport);
+    public function validate(UploadedFile $file, ExcelImportExportInterface $excelImportExport);
     public function export(array $config = []);
     public function template(array $config = []);
 
@@ -27,7 +28,6 @@ interface ExcelImportExportInterface {
     public function clearImportValidatorData();
     public function setImportModelDetails(array $data);
     public function getImportValidatorData();
-    public function addValidImportRow($row);
-    public function addInvalidImportRow($row, $message);
+    public function addImportRow($row, $valid);
     public function importRows(array $rows);
 }

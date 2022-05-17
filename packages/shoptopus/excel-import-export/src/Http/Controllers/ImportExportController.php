@@ -32,6 +32,11 @@ class ImportExportController extends BaseController {
         return $this->excelImportExport->template($request->toArray());
     }
 
+    public function validateImport(ImportRequest $request)
+    {
+        return $this->excelImportExport->validate($request->file('file'), $this->excelImportExport);
+    }
+
     public function import(ImportRequest $request)
     {
         return $this->excelImportExport->import($request->file('file'), $this->excelImportExport);

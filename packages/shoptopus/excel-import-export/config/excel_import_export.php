@@ -6,6 +6,8 @@ return [
     'prefix' => '',
     'ignored_relationships' => [],
     'model_namespace' => 'App\\Models',
-    'languages' => ['en']
-
+    'languages' => ['en'],
+    'importable_models' => [
+        'User', 'Product', 'ProductCategory', 'ProductAttribute', 'ProductVariant'
+    ]
 ];

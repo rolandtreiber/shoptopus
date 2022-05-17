@@ -15,6 +15,13 @@ class ExcelImportExport implements ExcelImportExportInterface
 {
     private $importValidatorData = [];
     private $importModelDetails;
+    private $languages;
+
+    public function __construct()
+    {
+        $this->languages = config('excel_import_export.languages');
+    }
+
 
     public function getClassName($modelName): string
     {
@@ -96,7 +103,8 @@ class ExcelImportExport implements ExcelImportExportInterface
             if (!in_array($methodName, config('excel_import_export.ignored_relationships'))) {
                 $relations[$methodName] = [
                     'type' => $type,
-                    'model' => $model
+                    'model' => $model,
+                    'table' => (new $model)->getTable()
                 ];
             }
         }
@@ -221,10 +229,66 @@ class ExcelImportExport implements ExcelImportExportInterface
         return $modelData;
     }
 
-    public function import(UploadedFile $file, ExcelImportExportInterface $excelImportExport): bool
+    public function validate(UploadedFile $file, ExcelImportExportInterface $excelImportExport): array
     {
+        $this->clearImportValidatorData();
         Excel::import(new ModelImport($excelImportExport), $file);
-        return true;
+
+        $allSuccessful = true;
+        foreach ($this->importValidatorData as $importRowData) {
+            if ($importRowData['valid'] !== true) {
+                $allSuccessful = false;
+            }
+        }
+        if ($allSuccessful) {
+            return [
+                'message' => 'success',
+                'details' => $this->importValidatorData
+            ];
+        } else {
+            return [
+                'message' => 'invalid data',
+                'details' => $this->importValidatorData
+            ];
+        }
+    }
+
+    public function import(UploadedFile $file, ExcelImportExportInterface $excelImportExport): array
+    {
+        $this->clearImportValidatorData();
+        Excel::import(new ModelImport($excelImportExport), $file);
+
+        $allSuccessful = true;
+        foreach ($this->importValidatorData as $importRowData) {
+            if ($importRowData['valid'] !== true) {
+                $allSuccessful = false;
+            }
+        }
+
+
+        if ($allSuccessful) {
+            DB::beginTransaction();
+//            try {
+                $this->importRows($this->importValidatorData);
+//            } catch(\Exception $exception) {
+//                DB::rollBack();
+//                return [
+//                    'status' => 'error',
+//                    'message' => 'There was an error inserting the data into the database. Please contact the administrator.'
+//                ];
+//            }
+            DB::commit();
+            return [
+                'status' => 'success',
+                'message' => count($this->importValidatorData).' records have been successfully imported.'
+            ];
+        } else {
+            return [
+                'status' => 'invalid data',
+                'message' => 'The file you have uploaded has invalid data.',
+                'details' => $this->importValidatorData
+            ];
+        }
     }
 
     public function export(array $config = []): BinaryFileResponse
@@ -245,51 +309,189 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     private function processSimpleImportField($key, $value, $config) {
-        return [
+        $errors = [];
+        if (is_array($config) && array_key_exists('validation', $config)) {
+            $validator = validator()->make([$key => $value], [$key => $config['validation']]);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+            }
+        }
+        $result = [
             'field' => $key,
             'value' => $value,
-            'valid' => true
+            'raw_value' => $value
         ];
+
+        if (count($errors) > 0) {
+            $result['valid'] = false;
+
+            $result['errors'] = array_values($errors->messages())[0];
+        } else {
+            $result['valid'] = true;
+        }
+
+        return $result;
     }
 
-    private function processTranslatableImportField($key, $value) {
-        return [
+    private function processTranslatableImportField($key, $value, $config) {
+        $errors = [];
+        $languageValues = explode(';', $value);
+        $parsedValues = [];
+
+        foreach ($languageValues as $languageValue) {
+            if (trim($languageValue) !== '') {
+                $parsedValue = explode(':', $languageValue);
+                if (is_array($parsedValue) && count($parsedValue) === 2) {
+                    if (in_array(trim(strtolower($parsedValue[0])), $this->languages)) {
+                        $parsedValues[strtolower(trim($parsedValue[0]))] = trim($parsedValue[1]);
+                    } else {
+                        $errors[] = "No such language code: " . trim($parsedValue[0]);
+                    }
+                }
+            }
+        }
+
+        if (is_array($config) && array_key_exists('validation', $config)) {
+            $validator = validator()->make([$key => json_encode($parsedValues)], [$key => $config['validation']]);
+            if ($validator->fails()) {
+                $err = $validator->errors();
+                $errors = array_values($err->messages());
+            }
+        }
+
+        $result = [
             'field' => $key,
-            'value' => $value,
-            'valid' => true
+            'value' => $parsedValues,
+            'raw_value' => $value,
+            'translatable' => true
         ];
+
+        if (count($errors) > 0) {
+            $result['valid'] = false;
+            $result['errors'] = $errors;
+        } else {
+            $result['valid'] = true;
+        }
+
+        return $result;
     }
 
     private function processRelationshipField($key, $value, $relationshipData) {
+        if ($value !== null) {
+            $slugs = explode(',', $value);
+            $slugs = array_map(function ($slug) {
+                return trim($slug);
+            }, $slugs);
+            $error = null;
+
+            $validator = validator()->make([$key => $slugs], [$key => 'exists:'.$relationshipData['table'].',slug']);
+            if ($validator->fails()) {
+                $invalid = [];
+                foreach ($slugs as $slug) {
+                    if (!DB::table($relationshipData['table'])->where('slug', '=', $slug)->first()) {
+                        $invalid[] = $slug;
+                    }
+                }
+                $error = 'Invalid slugs found: '.implode(', ', $invalid);
+            }
+
+            $result = [
+                'relationship' => $key,
+                'type' => $relationshipData['type'],
+                'table' => $relationshipData['table'],
+                'value' => $slugs,
+                'raw_value' => $value
+            ];
+
+            if ($error !== null) {
+                $result['valid'] = false;
+                $result['errors'] = $error;
+            } else {
+                $result['valid'] = true;
+            }
+
+            return $result;
+        }
         return [
-            'field' => $key,
-            'value' => $value,
+            'relationship' => $key,
+            'type' => $relationshipData['type'],
+            'table' => $relationshipData['table'],
+            'value' => [],
+            'raw_value' => $value,
             'valid' => true
         ];
+
     }
 
     public function processUploadedRow(Collection $row)
     {
         $validatedRowData = [];
         $modelData = $this->importModelDetails;
+        $allValid = true;
+        $emptyRow = true;
         foreach ($row as $key => $value) {
+            $result = null;
+            if ($value !== null) {
+                $emptyRow = false;
+            }
             if (in_array($key, array_keys($modelData['importable']['fields'])) && in_array($key, $modelData['fillable'])) {
                 if (in_array($key, $modelData['translatable'])) {
-                    $result = $this->processTranslatableImportField($key, $value);
+                    $result = $this->processTranslatableImportField($key, $value, $modelData['importable']['fields'][$key]);
                 } else {
                     $result = $this->processSimpleImportField($key, $value, $modelData['importable']['fields'][$key]);
                 }
-            } elseif(in_array($key, array_keys($modelData['importable']['relationships'])) && in_array($key, array_keys($modelData['relationships']))) {
+            } elseif(in_array($key, $modelData['importable']['relationships']) && in_array($key, array_keys($modelData['relationships']))) {
                 $result = $this->processRelationshipField($key, $value, $modelData['relationships'][$key]);
             }
-            $validatedRowData[] = $result;
+            if ($result) {
+                $validatedRowData[] = $result;
+                if ($result['valid'] === false) {
+                    $allValid = false;
+                }
+            }
         }
-        dd($validatedRowData);
+
+        if (!$emptyRow) {
+            $this->addImportRow($validatedRowData, $allValid);
+        }
     }
 
     public function importRows(array $rows)
     {
-        // TODO: Implement importRows() method.
+        foreach ($rows as $row) {
+            if ($row['valid']) {
+                $model = new ($this->importModelDetails['model']);
+                foreach ($row['data'] as $columnData) {
+                    if (array_key_exists('field', $columnData)) {
+                        $fieldName = $columnData['field'];
+                        if (array_key_exists('translatable', $columnData) && $columnData['translatable'] === true) {
+                            $model->$fieldName = $columnData['value'];
+                        } else {
+                            $model->$fieldName = $columnData['value'];
+                        }
+                    }
+                }
+
+                $model->save();
+
+                foreach ($row['data'] as $columnData) {
+                    if (array_key_exists('relationship', $columnData)) {
+                        $relationshipName = $columnData['relationship'];
+                        $type = $columnData['type'];
+
+                        switch ($type) {
+                            case 'BelongsToMany':
+                                $slugs = $columnData['value'];
+                                $ids = DB::table($columnData['table'])->whereIn('slug', $slugs)->pluck('id');
+                                $model->$relationshipName()->attach($ids);
+                                break;
+                        }
+                        $model->$fieldName = $columnData['value'];
+                    }
+                }
+
+            }
+        }
     }
 
     /**
@@ -300,30 +502,21 @@ class ExcelImportExport implements ExcelImportExportInterface
         $this->importValidatorData = [];
     }
 
-    public function addValidImportRow($row)
+    public function addImportRow($row, $valid)
     {
         $this->importValidatorData[] = [
-            'valid' => true,
-            $row
+            'valid' => $valid,
+            'data' => $row
         ];
-    }
-
-    public function addInvalidImportRow($row, $message)
-    {
-        $this->importValidatorData[] = [
-            'valid' => false,
-            'message' => $message,
-            $row
-        ];
-    }
-
-    public function getImportValidatorData()
-    {
-        return $this->importValidatorData;
     }
 
     public function setImportModelDetails(array $data)
     {
         $this->importModelDetails = $data;
+    }
+
+    public function getImportValidatorData()
+    {
+        return $this->importValidatorData;
     }
 }

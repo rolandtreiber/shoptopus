@@ -85,15 +85,22 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'name',
         'short_description',
         'description',
-        'price',
+        'price' => [
+            'validation' => ['numeric']
+        ],
         'status' => [
             'description' => '1 = Provisional, 2 = Active, 3 = Discontinued',
-            'options' => [1, 2, 3]
+            'validation' => ['integer', 'min:1', 'max:3']
         ],
-        'stock',
-        'backup_stock',
-        'price',
-        'sku'
+        'stock' => [
+            'validation' => ['integer', 'min:0']
+        ],
+        'backup_stock' => [
+            'validation' => ['integer', 'min:0']
+        ],
+        'sku' => [
+            'validation' => ['max:20', 'unique:products,sku']
+        ]
     ];
 
     protected $exportableRelationships = [
@@ -108,7 +115,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'product_categories',
         'product_attributes',
         'product_tags',
-        'product_variants',
         'discount_rules'
     ];
 
@@ -193,8 +199,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     {
         return $this->hasMany(ProductVariant::class);
     }
-
-
 
 
     /**
