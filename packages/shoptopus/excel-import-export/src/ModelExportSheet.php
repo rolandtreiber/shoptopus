@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents {
+class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents {
 
     private string $modelName;
     private string $modelClass;

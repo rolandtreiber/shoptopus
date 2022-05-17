@@ -6,7 +6,8 @@ use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithTitle;
 
-class ModelTemplateExport implements WithTitle, WithHeadings, FromArray {
+class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
+{
 
     private array $modelData;
 
@@ -26,21 +27,27 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray {
     {
         $languages = config('excel_import_export.languages');
         $result = [];
-        foreach ($this->modelData['fillable'] as $field) {
-            $fieldData = ['name' => $field];
-            $fieldData['is_field'] = true;
-            if (in_array($field, $this->modelData['translatable'])) {
-                $fieldData['is_translatable'] = true;
-                $text = '';
-                foreach ($languages as $language) {
-                    $text .= $language . ': '. 'value' . '; ';
+        foreach ($this->modelData['importable'] as $key => $value) {
+            if (in_array($key, $this->modelData['fillable'])) {
+                $fieldData = ['name' => $key];
+                $fieldData['is_field'] = true;
+                if (in_array($key, $this->modelData['translatable'])) {
+                    $fieldData['is_translatable'] = true;
+                    $text = '';
+                    foreach ($languages as $language) {
+                        $text .= $language . ': ' . 'value' . '; ';
+                    }
+                    $fieldData['description'] = $text;
+                } else {
+                    $fieldData['is_translatable'] = false;
+                    if (array_key_exists('description', $value)) {
+                        $fieldData['description'] = $value['description'];
+                    } else {
+                        $fieldData['description'] = 'value';
+                    }
                 }
-                $fieldData['description'] = $text;
-            } else {
-                $fieldData['is_translatable'] = false;
-                $fieldData['description'] = 'value';
+                $result[] = $fieldData;
             }
-            $result[] = $fieldData;
         }
         foreach ($this->modelData['relationships'] as $name => $relationship) {
             if (in_array($relationship['type'], self::ACCEPTED_RELATIONSHIP_TYPES)) {
@@ -56,7 +63,7 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray {
     public function headings(): array
     {
         $fields = $this->getFields();
-        return array_map(function($field) {
+        return array_map(function ($field) {
             return $field['name'];
         }, $fields);
     }

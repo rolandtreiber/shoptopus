@@ -2,13 +2,21 @@
 
 namespace Shoptopus\ExcelImportExport;
 
-use Maatwebsite\Excel\Concerns\ToArray;
+use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ModelImport implements ToArray
+class ModelImport implements WithMultipleSheets
 {
+    protected ExcelImportExportInterface $excelImportExport;
 
-    public function array(array $array)
+    public function __construct(ExcelImportExportInterface $excelImportExport)
     {
-        dd($array);
+        $this->excelImportExport = $excelImportExport;
+    }
+
+    public function sheets(): array
+    {
+        return [
+            new ModelImportSheet($this->excelImportExport)
+        ];
     }
 }

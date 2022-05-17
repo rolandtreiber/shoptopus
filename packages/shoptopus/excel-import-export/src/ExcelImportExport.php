@@ -4,17 +4,21 @@ namespace Shoptopus\ExcelImportExport;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use ReflectionException;
 use Shoptopus\ExcelImportExport\Exceptions\ExportableModelNotFoundException;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExcelImportExport implements ExcelImportExportInterface {
+class ExcelImportExport implements ExcelImportExportInterface
+{
+    private $importValidatorData = [];
+    private $importModelDetails;
 
-    private function getClassName($modelName): string
+    public function getClassName($modelName): string
     {
-        return config('excel_import_export.model_namespace').'\\'.$modelName;
+        return config('excel_import_export.model_namespace') . '\\' . $modelName;
     }
 
     /**
@@ -22,7 +26,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
      * @return array
      * @throws ReflectionException
      */
-    private function getModelClasses($modelNames): array
+    public function getModelClasses($modelNames): array
     {
         // load composer.json as array
         $composer = json_decode(file_get_contents(base_path('composer.json')), true);
@@ -34,14 +38,14 @@ class ExcelImportExport implements ExcelImportExportInterface {
 
         foreach ($autoload as $className => $path) {
             // skip if we are not in the root namespace, ie App\, to ignore other vendor packages, of which there are a lot (dd($autoload) to see)
-            if ( ! substr($className, 0, strlen($namespace)) === $namespace) {
+            if (!substr($className, 0, strlen($namespace)) === $namespace) {
                 continue;
             }
 
             if (str_contains(strtolower($className), 'models')) {
                 $reflectionClass = new \ReflectionClass($className);
                 if (is_subclass_of($className, "Illuminate\Database\Eloquent\Model") && $reflectionClass->implementsInterface(Exportable::class) && !$reflectionClass->isAbstract()) {
-                    $classFound = array_filter($modelNames, function($el) use ($className) {
+                    $classFound = array_filter($modelNames, function ($el) use ($className) {
                         return $className === $this->getClassName($el);
                     });
                     if ($classFound) {
@@ -60,7 +64,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
     /**
      * @throws ReflectionException
      */
-    private function getRelationships($class): array
+    public function getRelationships($class): array
     {
         $instance = new $class;
         $allMethods = (new \ReflectionClass($class))->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -102,22 +106,45 @@ class ExcelImportExport implements ExcelImportExportInterface {
         return $relations;
     }
 
-    private function getFillableFields($class)
+    public function getFillableFields($class)
     {
         return (new $class)->getFillable();
     }
 
-    private function getExportableFields($class)
+    public function getExportableFields($class)
     {
         return (new $class)->getExportableFields();
     }
 
-    private function getExportableRelationships($class)
+    public function getImportableFields($class)
+    {
+        return (new $class)->getImportableFields();
+    }
+
+    public function getExportableRelationships($class)
     {
         return (new $class)->getExportableRelationships();
     }
 
-    private function getTranslatableFields($class)
+    public function getImportableRelationships($class)
+    {
+        return (new $class)->getImportableRelationships();
+    }
+
+    public function getImportableRelationshipDetails($class): array
+    {
+        $importableRelationships = $this->getImportableRelationships($class);
+        $allRelationships = $this->getRelationships($class);
+        $importable = [];
+        foreach ($allRelationships as $key => $relationship) {
+            if (in_array($key, $importableRelationships)) {
+                $importable[$key] = $relationship;
+            }
+        }
+        return $importable;
+    }
+
+    public function getTranslatableFields($class)
     {
         try {
             return (new $class)->getTranslatableAttributes();
@@ -126,7 +153,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
         }
     }
 
-    private function getModelMap(array $models = []): array
+    public function getExportModelMap(array $models = []): array
     {
         $models = $this->getModelClasses($models);
         $modelMap = [];
@@ -143,13 +170,27 @@ class ExcelImportExport implements ExcelImportExportInterface {
         return $modelMap;
     }
 
+    public function getImportModelDetails(string $model): array
+    {
+        $modelMap = [];
+        $modelMap['model'] = $model;
+        $modelMap['relationships'] = $this->getRelationships($model);
+        $modelMap['fillable'] = $this->getFillableFields($model);
+        $modelMap['importable'] = [
+            'fields' => $this->getImportableFields($model),
+            'relationships' => $this->getImportableRelationships($model)
+        ];
+        $modelMap['translatable'] = $this->getTranslatableFields($model);
+        return $modelMap;
+    }
+
     private function generateExportFile(array $config)
     {
-        $modelMap = $this->getModelMap($config['models']);
+        $modelMap = $this->getExportModelMap($config['models']);
         return Excel::download(new ModelExport($modelMap), $config['name'] . '.xlsx');
     }
 
-    private function validateModel(String $modelName): bool
+    private function validateModel(string $modelName): bool
     {
         $className = $this->getClassName($modelName);
         if (class_exists($className)) {
@@ -165,7 +206,7 @@ class ExcelImportExport implements ExcelImportExportInterface {
     private function generateTemplateFile(array $config)
     {
         $modelData = $this->getModelTemplateData($config['model']);
-        return Excel::download(new ModelTemplateExport($modelData), $config['name']. ' - TEMPLATE' . '.xlsx');
+        return Excel::download(new ModelTemplateExport($modelData), $config['name'] . ' - TEMPLATE' . '.xlsx');
     }
 
     private function getModelTemplateData($model): array
@@ -174,15 +215,15 @@ class ExcelImportExport implements ExcelImportExportInterface {
         $modelData['name'] = $model;
         $modelData['class'] = $modelClass;
         $modelData['fillable'] = $this->getFillableFields($modelClass);
-        $modelData['exportable'] = $this->getExportableFields($modelClass);
+        $modelData['importable'] = $this->getImportableFields($modelClass);
         $modelData['translatable'] = $this->getTranslatableFields($modelClass);
-        $modelData['relationships'] = $this->getRelationships($modelClass);
+        $modelData['relationships'] = $this->getImportableRelationshipDetails($modelClass);
         return $modelData;
     }
 
-    public function import(UploadedFile $file): bool
+    public function import(UploadedFile $file, ExcelImportExportInterface $excelImportExport): bool
     {
-        Excel::import(new ModelImport(), $file);
+        Excel::import(new ModelImport($excelImportExport), $file);
         return true;
     }
 
@@ -201,5 +242,88 @@ class ExcelImportExport implements ExcelImportExportInterface {
             throw new ExportableModelNotFoundException();
         }
         return $this->generateTemplateFile($config);
+    }
+
+    private function processSimpleImportField($key, $value, $config) {
+        return [
+            'field' => $key,
+            'value' => $value,
+            'valid' => true
+        ];
+    }
+
+    private function processTranslatableImportField($key, $value) {
+        return [
+            'field' => $key,
+            'value' => $value,
+            'valid' => true
+        ];
+    }
+
+    private function processRelationshipField($key, $value, $relationshipData) {
+        return [
+            'field' => $key,
+            'value' => $value,
+            'valid' => true
+        ];
+    }
+
+    public function processUploadedRow(Collection $row)
+    {
+        $validatedRowData = [];
+        $modelData = $this->importModelDetails;
+        foreach ($row as $key => $value) {
+            if (in_array($key, array_keys($modelData['importable']['fields'])) && in_array($key, $modelData['fillable'])) {
+                if (in_array($key, $modelData['translatable'])) {
+                    $result = $this->processTranslatableImportField($key, $value);
+                } else {
+                    $result = $this->processSimpleImportField($key, $value, $modelData['importable']['fields'][$key]);
+                }
+            } elseif(in_array($key, array_keys($modelData['importable']['relationships'])) && in_array($key, array_keys($modelData['relationships']))) {
+                $result = $this->processRelationshipField($key, $value, $modelData['relationships'][$key]);
+            }
+            $validatedRowData[] = $result;
+        }
+        dd($validatedRowData);
+    }
+
+    public function importRows(array $rows)
+    {
+        // TODO: Implement importRows() method.
+    }
+
+    /**
+     * @return void
+     */
+    public function clearImportValidatorData(): void
+    {
+        $this->importValidatorData = [];
+    }
+
+    public function addValidImportRow($row)
+    {
+        $this->importValidatorData[] = [
+            'valid' => true,
+            $row
+        ];
+    }
+
+    public function addInvalidImportRow($row, $message)
+    {
+        $this->importValidatorData[] = [
+            'valid' => false,
+            'message' => $message,
+            $row
+        ];
+    }
+
+    public function getImportValidatorData()
+    {
+        return $this->importValidatorData;
+    }
+
+    public function setImportModelDetails(array $data)
+    {
+        $this->importModelDetails = $data;
     }
 }

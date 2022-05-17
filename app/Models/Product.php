@@ -7,6 +7,8 @@ use App\Traits\HasFiles;
 use App\Traits\HasRatings;
 use App\Enums\ProductStatus;
 use App\Traits\HasEventLogs;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Illuminate\Support\Carbon;
 use App\Helpers\GeneralHelper;
@@ -40,7 +42,7 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
  * @property mixed $sku
  * @property mixed $cover_photo
  */
-class Product extends SearchableModel implements Auditable, Exportable
+class Product extends SearchableModel implements Auditable, Exportable, Importable
 {
     use HasFactory,
         HasTranslations,
@@ -51,7 +53,8 @@ class Product extends SearchableModel implements Auditable, Exportable
         \OwenIt\Auditing\Auditable,
         SoftDeletes,
         HasSlug,
-        HasExportable;
+        HasExportable,
+        HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -78,7 +81,30 @@ class Product extends SearchableModel implements Auditable, Exportable
         'sku'
     ];
 
+    protected $importableFields = [
+        'name',
+        'short_description',
+        'description',
+        'price',
+        'status' => [
+            'description' => '1 = Provisional, 2 = Active, 3 = Discontinued',
+            'options' => [1, 2, 3]
+        ],
+        'stock',
+        'backup_stock',
+        'price',
+        'sku'
+    ];
+
     protected $exportableRelationships = [
+        'product_categories',
+        'product_attributes',
+        'product_tags',
+        'product_variants',
+        'discount_rules'
+    ];
+
+    protected $importableRelationships = [
         'product_categories',
         'product_attributes',
         'product_tags',
