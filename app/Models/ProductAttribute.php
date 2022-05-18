@@ -60,6 +60,7 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable,
             'validation' => ['numeric', 'min:1', 'max:3']
         ],
         'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
             'validation' => 'boolean'
         ]
     ];
