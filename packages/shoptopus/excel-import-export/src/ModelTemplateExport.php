@@ -53,7 +53,16 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
             if (in_array($relationship['type'], self::ACCEPTED_RELATIONSHIP_TYPES)) {
                 $fieldData = ['name' => $name];
                 $fieldData['is_relationship'] = true;
-                $fieldData['description'] = "Semicolon separated slugs of existing " . $name . ' (example: slug-1; slug-2)';
+                switch ($relationship['type']) {
+                    case 'HasMany':
+                    case 'BelongsToMany':
+                        $fieldData['description'] = "Semicolon separated slugs of existing " . $name . ' (example: slug-1; slug-2)';
+                        break;
+                    case 'BelongsTo':
+                    case 'HasOne':
+                        $fieldData['description'] = "Slug of " . $name . ' (example: slug-1)';
+                }
+
                 $result[] = $fieldData;
             }
         }

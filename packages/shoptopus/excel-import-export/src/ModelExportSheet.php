@@ -2,6 +2,7 @@
 
 namespace Shoptopus\ExcelImportExport;
 
+use Closure;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
@@ -73,14 +74,16 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
      */
     private function getRelationshipColumnValue($row, $relationshipName, $data): string
     {
-
         switch ($data['type']) {
             case 'BelongsToMany':
             case 'HasMany':
                 return implode(', ', $row->$relationshipName->pluck('slug')->toArray());
             case 'HasOne':
             case 'BelongsTo':
-                return $row->$relationshipName ? $row->$relationshipName->slug : '';
+                if ($row->$relationshipName) {
+                    return $row->$relationshipName->slug ?: '';
+                }
+                return '';
             default:
                 return $data['type'] . ' - ' . $data['model'];
         }
@@ -104,8 +107,7 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
     }
 
     /**
-     * Write code on Method
-     *
+     * @return Closure[]
      */
     public function registerEvents(): array
     {

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -21,9 +23,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property mixed $value
  * @mixin SearchableModel
  */
-class ProductAttributeOption extends SearchableModel implements Auditable, Exportable
+class ProductAttributeOption extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -45,6 +47,22 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'name',
         'value',
         'enabled'
+    ];
+
+    /**
+     * @var array
+     */
+    protected $importableFields = [
+        'name',
+        'value',
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ]
+    ];
+
+    protected $importableRelationships = [
+        'product_attribute'
     ];
 
     protected $exportableRelationships = [
