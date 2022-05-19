@@ -70,6 +70,26 @@ class Rating extends SearchableModel implements Auditable, Exportable
         'verified' => 'boolean'
     ];
 
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'rating',
+        'title',
+        'description',
+        'language_prefix',
+        'verified',
+        'enabled'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'user',
+    ];
+
     public function scopeView($query, $view)
     {
         switch ($view) {

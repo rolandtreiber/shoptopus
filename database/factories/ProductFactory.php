@@ -34,7 +34,7 @@ class ProductFactory extends Factory
             'short_description' => $translated['short_description'],
             'description' => $translated['description'],
             'price' => $this->faker->randomFloat(2, 1, 5000),
-            'status' => ProductStatus::Provisional,
+            'status' => ProductStatus::Active,
             'purchase_count' => $this->faker->numberBetween(0, 200),
             'stock' => $this->faker->numberBetween(1, 150),
             'backup_stock' => $this->faker->numberBetween(0, 150),

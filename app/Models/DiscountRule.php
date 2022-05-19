@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Helpers\GeneralHelper;
 use Carbon\Carbon;
 use App\Traits\HasUUID;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -24,9 +27,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property mixed $categories
  * @property boolean $enabled
  */
-class DiscountRule extends SearchableModel implements Auditable, Exportable
+class DiscountRule extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, \OwenIt\Auditing\Auditable, HasExportable, HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -39,6 +42,60 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
     }
 
     public $translatable = ['name'];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'name',
+        'amount',
+        'valid_from',
+        'valid_until',
+        'value'
+    ];
+
+    protected $importableFields = [
+        'name' => [
+            'validation' => ['unique:discount_rules,name']
+        ],
+        'amount' => [
+            'description' => 'The value of the voucher code in either percentage or actual value',
+            'validation' => ['numeric', 'min:0']
+        ],
+        'type' => [
+            'description' => '1 = percentage, 2 = actual value',
+            'validation' => ['integer', 'min:1', 'max:2']
+        ],
+        'valid_from' => [
+            'description' => 'Valid from date. Format: YYYY:mm:dd',
+            'validation' => ['date']
+        ],
+        'valid_until' => [
+            'description' => 'Valid from date. Format: YYYY:mm:dd',
+            'validation' => ['date']
+        ],
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ]
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $importableRelationships = [
+        'products',
+        'categories'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'products',
+        'categories'
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -131,4 +188,10 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable
         }
         return false;
     }
+
+    public function getValueAttribute()
+    {
+        return GeneralHelper::getDiscountValue($this->type, $this->amount);
+    }
+
 }

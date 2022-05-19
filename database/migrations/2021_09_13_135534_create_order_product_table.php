@@ -27,7 +27,7 @@ class CreateOrderProductTable extends Migration
             $table->unsignedDecimal('final_price')->default(0);
             $table->unsignedDecimal('unit_discount')->default(0);
             $table->unsignedDecimal('total_discount')->default(0);
-
+            $table->string('slug');
             $table->unique(['order_id', 'product_id']);
         });
     }

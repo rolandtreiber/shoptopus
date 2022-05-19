@@ -2,12 +2,16 @@
 
 namespace Shoptopus\ExcelImportExport;
 
+use Closure;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\AfterSheet;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping {
+class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents {
 
     private string $modelName;
     private string $modelClass;
@@ -46,25 +50,40 @@ class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping
         return $result;
     }
 
+    /**
+     * @return string
+     */
     public function title(): string
     {
         return $this->modelName;
     }
 
+    /**
+     * @return array
+     */
     public function headings(): array
     {
         return [...$this->fields, ...$this->exportableRelationships];
     }
 
-    private function getRelationshipColumnValue($row, $relationshipName, $data) {
-
+    /**
+     * @param $row
+     * @param $relationshipName
+     * @param $data
+     * @return string
+     */
+    private function getRelationshipColumnValue($row, $relationshipName, $data): string
+    {
         switch ($data['type']) {
             case 'BelongsToMany':
             case 'HasMany':
                 return implode(', ', $row->$relationshipName->pluck('slug')->toArray());
             case 'HasOne':
             case 'BelongsTo':
-                return $row->$relationshipName ? $row->$relationshipName->slug : '';
+                if ($row->$relationshipName) {
+                    return $row->$relationshipName->slug ?: '';
+                }
+                return '';
             default:
                 return $data['type'] . ' - ' . $data['model'];
         }
@@ -85,5 +104,39 @@ class ModelSheet implements WithTitle, FromCollection, WithHeadings, WithMapping
             }
         }
         return $result;
+    }
+
+    /**
+     * @return Closure[]
+     */
+    public function registerEvents(): array
+    {
+        $columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        $headings = $this->headings();
+        $slugColumnNumber = array_search('slug', $headings);
+        $slugColumnId = null;
+        if ($headings[$slugColumnNumber] === 'slug') {
+            $slugColumnId = $columns[$slugColumnNumber];
+        }
+
+        return [
+            AfterSheet::class => function(AfterSheet $event) use ($columns, $slugColumnId) {
+
+                $event->sheet->getDelegate()->getStyle('A1:'.$columns[count($this->headings())-1].'1')
+                    ->getFill()
+                    ->setFillType(Fill::FILL_SOLID)
+                    ->getStartColor()
+                    ->setARGB('DD4B39');
+
+                if ($slugColumnId !== null) {
+                    $event->sheet->getDelegate()->getStyle($slugColumnId.'2:'.$slugColumnId.(count($this->collection())+1))
+                        ->getFill()
+                        ->setFillType(Fill::FILL_SOLID)
+                        ->getStartColor()
+                        ->setARGB('EBEBEB');
+                }
+
+            },
+        ];
     }
 }

@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Translatable\HasTranslations;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\Importable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -40,7 +42,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property mixed $sku
  * @property mixed $cover_photo
  */
-class Product extends SearchableModel implements Auditable, Exportable
+class Product extends SearchableModel implements Auditable, Exportable, Importable
 {
     use HasFactory,
         HasTranslations,
@@ -51,7 +53,8 @@ class Product extends SearchableModel implements Auditable, Exportable
         \OwenIt\Auditing\Auditable,
         SoftDeletes,
         HasSlug,
-        HasExportable;
+        HasExportable,
+        HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -63,7 +66,7 @@ class Product extends SearchableModel implements Auditable, Exportable
             ->saveSlugsTo('slug');
     }
 
-    protected array $exportableFields = [
+    protected $exportableFields = [
         'name',
         'slug',
         'short_description',
@@ -75,12 +78,32 @@ class Product extends SearchableModel implements Auditable, Exportable
         'backup_stock',
         'rating',
         'final_price',
-        'sku',
-        'headline',
-        'subtitle'
+        'sku'
     ];
 
-    protected array $exportableRelationships = [
+    protected $importableFields = [
+        'name',
+        'short_description',
+        'description',
+        'price' => [
+            'validation' => ['numeric']
+        ],
+        'status' => [
+            'description' => '1 = Provisional, 2 = Active, 3 = Discontinued',
+            'validation' => ['integer', 'min:1', 'max:3']
+        ],
+        'stock' => [
+            'validation' => ['integer', 'min:0']
+        ],
+        'backup_stock' => [
+            'validation' => ['integer', 'min:0']
+        ],
+        'sku' => [
+            'validation' => ['max:20', 'unique:products,sku']
+        ]
+    ];
+
+    protected $exportableRelationships = [
         'product_categories',
         'product_attributes',
         'product_tags',
@@ -88,7 +111,14 @@ class Product extends SearchableModel implements Auditable, Exportable
         'discount_rules'
     ];
 
-    public array $translatable = ['name', 'short_description', 'description', 'headline', 'subtitle'];
+    protected $importableRelationships = [
+        'product_categories',
+        'product_attributes',
+        'product_tags',
+        'discount_rules'
+    ];
+
+    public $translatable = ['name', 'short_description', 'description'];
 
     protected $appends = ['final_price'];
 
@@ -171,8 +201,6 @@ class Product extends SearchableModel implements Auditable, Exportable
     {
         return $this->hasMany(ProductVariant::class);
     }
-
-
 
 
     /**

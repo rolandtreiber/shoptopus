@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Http\Requests\ListRequest;
@@ -26,9 +28,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property string $product_attribute_id
  * @property double $price
  */
-class ProductAttribute extends SearchableModel implements Auditable, Exportable
+class ProductAttribute extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -44,8 +46,23 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable
 
     protected $exportableFields = [
         'slug',
+        'name',
         'type',
         'enabled'
+    ];
+
+    protected $importableFields = [
+        'name' => [
+            'validation' => ['unique:product_attributes,name']
+        ],
+        'type' => [
+            'description' => '1 = Text, 2 = Image, 3 = Color',
+            'validation' => ['numeric', 'min:1', 'max:3']
+        ],
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ]
     ];
 
     protected $exportableRelationships = [

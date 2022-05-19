@@ -28,6 +28,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
 
+    use HasSlug;
     /**
      * Get the options for generating the slug.
      */
@@ -73,6 +74,29 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'lat' => 'decimal:6',
         'lon' => 'decimal:6',
         'enabled' => 'boolean'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableFields = [
+        'slug',
+        'postcodes',
+        'min_weight',
+        'max_weight',
+        'min_distance',
+        'max_distance',
+        'distance_unit',
+        'lat',
+        'lon',
+        'enabled'
+    ];
+
+    /**
+     * @var string[]
+     */
+    protected $exportableRelationships = [
+        'delivery_type'
     ];
 
     /**

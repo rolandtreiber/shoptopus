@@ -12,7 +12,11 @@ use Shoptopus\ExcelImportExport\Exportable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Shoptopus\ExcelImportExport\Importable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed|string $code
@@ -24,9 +28,19 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
  * @property string $value
  * @mixin Builder
 */
-class VoucherCode extends SearchableModel implements Auditable, Exportable
+class VoucherCode extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable;
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable, HasImportable;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['value'])
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +56,45 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable
         'valid_until',
         'enabled',
         'deleted_at'
+    ];
+
+    protected $exportableFields = [
+        'slug',
+        'value',
+        'type',
+        'valid_from',
+        'valid_until',
+        'code',
+        'enabled'
+    ];
+
+    protected $importableFields = [
+        'amount' => [
+            'description' => 'The value of the voucher code in either percentage or actual value',
+            'validation' => ['numeric', 'min:0']
+        ],
+        'valid_from' => [
+            'description' => 'Valid from date. Format: YYYY:mm:dd',
+            'validation' => ['date']
+        ],
+        'valid_until' => [
+            'description' => 'Valid from date. Format: YYYY:mm:dd',
+            'validation' => ['date']
+        ],
+        'type' => [
+            'description' => '1 = percentage, 2 = actual value',
+            'validation' => ['integer', 'min:1', 'max:2']
+        ],
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ]
+    ];
+
+    protected $importableRelationships = [];
+
+    protected $exportableRelationships = [
+        'orders'
     ];
 
     /**

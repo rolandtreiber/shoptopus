@@ -6,6 +6,8 @@ use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
 use Illuminate\Http\Request;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Collection;
@@ -30,9 +32,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property Date $updated_at
  * @property mixed $id
  */
-class ProductCategory extends SearchableModel implements Auditable, Exportable
+class ProductCategory extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
 
     protected $exportableFields = [
         'slug',
@@ -44,7 +46,25 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
     protected $exportableRelationships = [
         'children',
         'discount_rules',
-        'parent'
+        'parent',
+        'associated_products'
+    ];
+
+    protected $importableFields = [
+        'name' => [
+            'validation' => ['unique:product_categories,name']
+        ],
+        'description',
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ]
+    ];
+
+    protected $importableRelationships = [
+        'parent',
+        'discount_rules',
+        'associated_products'
     ];
 
     /**
@@ -187,6 +207,15 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable
     public function scopeRoot($query)
     {
         return $query->whereNull('parent_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     * It turns out that the import and export can only find relationships when the function does not have any argument.
+     */
+    public function associated_products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
     }
 
     /**

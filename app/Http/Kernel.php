@@ -5,11 +5,11 @@ namespace App\Http;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\EncryptCookies;
+use App\Http\Middleware\LogAfterRequest;
 use App\Http\Middleware\OwnAccountOrSuperAdmin;
 use App\Http\Middleware\PreventRequestsDuringMaintenance;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\SetLocale;
-//use App\Http\Middleware\SetLocaleMiddleware;
 use App\Http\Middleware\SuperUser;
 use App\Http\Middleware\TrimStrings;
 use App\Http\Middleware\TrustProxies;
@@ -97,5 +97,6 @@ class Kernel extends HttpKernel
         'permission' => PermissionMiddleware::class,
         'role_or_permission' => RoleOrPermissionMiddleware::class,
         'own_or_super_admin' => OwnAccountOrSuperAdmin::class,
+        'log' => LogAfterRequest::class,
     ];
 }

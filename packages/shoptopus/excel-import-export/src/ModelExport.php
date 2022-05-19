@@ -17,7 +17,7 @@ class ModelExport implements WithMultipleSheets {
     {
         $sheets = [];
         foreach ($this->modelMap as $modelClass => $data) {
-            $sheets[] = new ModelSheet(
+            $sheets[] = new ModelExportSheet(
                 $modelClass,
                 $data['model'],
                 $data['exportable'],

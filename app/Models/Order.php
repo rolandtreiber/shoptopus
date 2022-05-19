@@ -60,7 +60,7 @@ class Order extends SearchableModel implements Auditable, Exportable
      * @var string[]
      */
     protected $exportableFields = [
-//        'slug',
+        'slug',
         'currency_code',
         'status',
         'original_price',

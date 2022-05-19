@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
+use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\Date;
@@ -22,9 +24,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property boolean $enabled
  * @property Date $updated_at
  */
-class ProductTag extends SearchableModel implements Auditable, Exportable
+class ProductTag extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
 
     /**
      * Get the options for generating the slug.
@@ -47,6 +49,29 @@ class ProductTag extends SearchableModel implements Auditable, Exportable
         'description',
         'display_badge',
         'enabled'
+    ];
+
+    protected $importableFields = [
+        'name' => [
+            'validation' => ['unique:product_tags,name']
+        ],
+        'description',
+        'enabled' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ],
+        'display_badge' => [
+            'description' => '0 = disabled, 1 = enabled',
+            'validation' => 'boolean'
+        ],
+    ];
+
+    protected $importableRelationships = [
+        'products'
+    ];
+
+    protected $exportableRelationships = [
+        'products'
     ];
 
     /**
