@@ -163,8 +163,9 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                 }
 
                 foreach ($products as $product) {
-                    if ($product['product_attribute_id'] === $modelId) {
-                        unset($product['product_attribute_id']);
+                    if ($product['product_attribute_id'] === $modelId
+                        && !in_array($product['product_id'], array_column($model['product_ids'], 'id'))
+                    ) {
                         array_push($model['product_ids'], $product['product_id']);
                     }
                 }

@@ -2,6 +2,7 @@
 
 namespace Tests\PublicApi\Product;
 
+use Database\Seeders\ApiProductsTestSeeder;
 use Tests\TestCase;
 use App\Models\Product;
 use App\Models\ProductTag;

@@ -147,7 +147,9 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 }
 
                 foreach ($products as $product) {
-                    if ($product['product_category_id'] === $modelId) {
+                    if ($product['product_category_id'] === $modelId
+                        && !in_array($product['id'], array_column($model['product_ids'], 'id'))
+                    ) {
                         array_push($model['product_ids'], $product['id']);
                     }
                 }

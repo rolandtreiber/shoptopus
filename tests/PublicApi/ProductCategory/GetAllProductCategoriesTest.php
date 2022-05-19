@@ -144,7 +144,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_idsss()
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
