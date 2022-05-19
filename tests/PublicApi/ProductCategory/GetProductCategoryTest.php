@@ -6,7 +6,6 @@ use Tests\TestCase;
 use App\Models\Product;
 use App\Models\DiscountRule;
 use App\Models\ProductCategory;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductCategory\ProductCategoryRepository;
 
@@ -55,7 +54,7 @@ class GetProductCategoryTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                    app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
                 ]
             ]);
     }
@@ -112,7 +111,7 @@ class GetProductCategoryTest extends TestCase
             'data' => [
                 [
                     'subcategories' => [
-                        (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
                     ]
                 ]
             ]

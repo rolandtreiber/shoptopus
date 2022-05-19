@@ -2,7 +2,6 @@
 
 namespace Tests\PublicApi\Product;
 
-use Database\Seeders\ApiProductsTestSeeder;
 use Tests\TestCase;
 use App\Models\Product;
 use App\Models\ProductTag;
@@ -12,7 +11,6 @@ use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Product\ProductRepository;
 
@@ -48,7 +46,7 @@ class GetAllProductsTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                $this->getModelRepo()->getSelectableColumns(false)
+                app()->make(ProductRepository::class)->getSelectableColumns(false)
             ]
         ]);
 
@@ -420,11 +418,6 @@ class GetAllProductsTest extends TestCase
         $this->assertCount(2, $res->json('data'));
         $this->assertEquals($products[0]->id, $res->json('data.0.id'));
         $this->assertEquals($products[1]->id, $res->json('data.1.id'));
-    }
-
-    protected function getModelRepo() : ProductRepository
-    {
-        return new ProductRepository(new ErrorService, new Product);
     }
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse

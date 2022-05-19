@@ -11,7 +11,6 @@ use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Product\ProductRepository;
 
@@ -60,7 +59,7 @@ class GetProductTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    $this->getModelRepo()->getSelectableColumns(false)
+                    app()->make(ProductRepository::class)->getSelectableColumns(false)
                 ]
             ]);
     }
@@ -340,11 +339,6 @@ class GetProductTest extends TestCase
         $pao->update(['enabled' => true, 'deleted_at' => now()]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
-    }
-
-    protected function getModelRepo() : ProductRepository
-    {
-        return new ProductRepository(new ErrorService, new Product);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

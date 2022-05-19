@@ -5,7 +5,6 @@ namespace Tests\PublicApi\Address;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Address;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Address\AddressRepository;
 
@@ -125,7 +124,7 @@ class GetAllAddressesTest extends TestCase
             ->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    (new AddressRepository(new ErrorService, new Address))->getSelectableColumns(false)
+                    app()->make(AddressRepository::class)->getSelectableColumns(false)
                 ]
             ]);
     }
