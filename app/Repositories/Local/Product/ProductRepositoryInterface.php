@@ -5,6 +5,15 @@ namespace App\Repositories\Local\Product;
 interface ProductRepositoryInterface {
 
     /**
+     * Save product to favorites
+     *
+     * @param string $productId
+     * @return array
+     * @throws \Exception
+     */
+    public function favorite(string $productId) : array;
+
+    /**
      * Get the product attributes for the given products
      *
      * @param array $productIds

@@ -51,6 +51,7 @@ return [
     "2000" => "Sorry there was an error getting this product.",
     "2001" => "Sorry there was an error getting all products.",
     "2002" => "Sorry there was an error getting the products for this category.",
+    "2003" => "Sorry there was an error syncing your favorite products.",
 
     "2100" => "Sorry there was an error getting this product attribute.",
     "2101" => "Sorry there was an error getting all product attributes.",

@@ -14,4 +14,12 @@ Route::group([
         Route::get('/{id}', [ProductController::class, 'get'])->name('api.products.get');
         Route::get('/slug/{slug}', [ProductController::class, 'getBySlug'])->name('api.products.getBySlug');
     });
+
+    Route::group([
+        'name' => 'products.',
+        'prefix' => 'products',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::post('/{id}/favorite', [ProductController::class, 'favorite'])->name('api.products.favorite');
+    });
 });

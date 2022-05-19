@@ -5,6 +5,7 @@ namespace App\Repositories\Local\Product;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use App\Enums\ProductAttributeType;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -13,6 +14,45 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function __construct(ErrorServiceInterface $errorService, Product $model)
     {
         parent::__construct($errorService, $model);
+    }
+
+    /**
+     * Save product to favorites
+     *
+     * @param string $productId
+     * @return array
+     * @throws \Exception
+     */
+    public function favorite(string $productId) : array
+    {
+        try {
+            $userId = Auth::id();
+
+            if (!$userId) {
+                throw new \Exception('Unauthenticated.');
+            }
+
+            $table = DB::table('favorited_products');
+
+            $favorited = $table->where([
+                'user_id' => $userId,
+                'product_id' => $productId
+            ]);
+
+            if ($favorited->exists()) {
+                $favorited->delete();
+            } else {
+                $table->insert([
+                    'user_id' => $userId,
+                    'product_id' => $productId
+                ]);
+            }
+
+            return ['favorited' => $favorited->exists()];
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
