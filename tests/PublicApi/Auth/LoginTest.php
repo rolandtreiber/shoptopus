@@ -126,7 +126,8 @@ class LoginTest extends TestCase
                             'user',
                             'products'
                         ],
-                        'notifications'
+                        'notifications',
+                        'favorites'
                     ]
                 ]
             ]

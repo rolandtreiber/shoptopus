@@ -18,19 +18,32 @@ class UserService extends ModelService implements UserServiceInterface
      * Get the currently authenticated user instance
      *
      * @param bool $returnAsArray
-     * @return null|mixed
+     * @return mixed
      * @throws \Exception
      */
-    public function getCurrentUser(bool $returnAsArray = true)
+    public function getCurrentUser(bool $returnAsArray = true) : mixed
     {
         try {
             return $this->modelRepository->getCurrentUser($returnAsArray);
-        } catch (\Exception $e) {
+        } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getCurrentUser'));
-        } catch (\Error $e) {
+        }
+    }
+
+    /**
+     * Get the currently authenticated user's favorited product ids
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getFavoritedProductIds() : array
+    {
+        try {
+            return $this->modelRepository->getFavoritedProductIds();
+        } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getCurrentUser'));
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getFavoritedProductIds'));
         }
     }
 }

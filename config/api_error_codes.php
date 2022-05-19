@@ -86,7 +86,8 @@ return [
             "update" => 4003,
             "delete" => 4004,
             "getCurrentUser" => 4005,
-            "getNotifications" => 4006
+            "getNotifications" => 4006,
+            "getFavoritedProductIds" => 4007
         ]
     ]
 ];
