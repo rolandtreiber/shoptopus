@@ -32,6 +32,22 @@ class UserService extends ModelService implements UserServiceInterface
     }
 
     /**
+     * Get the currently authenticated user's favorited products
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function favorites() : array
+    {
+        try {
+            return $this->modelRepository->favorites();
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.favorites'));
+        }
+    }
+
+    /**
      * Get the currently authenticated user's favorited product ids
      *
      * @return array

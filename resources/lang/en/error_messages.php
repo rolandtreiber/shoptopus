@@ -71,5 +71,6 @@ return [
     "4004" => "Sorry there was an error deleting this user.",
     "4005" => "Sorry there was an error getting the currently authenticated user.",
     "4006" => "Sorry there was an error getting the user's notifications.",
-    "4007" => "Sorry there was an error getting the favorited products."
+    "4007" => "Sorry there was an error getting the favorited product ids.",
+    "4008" => "Sorry there was an error getting the favorited products."
 ];

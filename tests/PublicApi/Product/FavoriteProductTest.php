@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class SaveProductTest extends TestCase
+class FavoriteProductTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -3,16 +3,21 @@
 namespace App\Repositories\Local\User;
 
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
-use Illuminate\Support\Facades\DB;
+use App\Repositories\Local\Product\ProductRepositoryInterface;
 
 class UserRepository extends ModelRepository implements UserRepositoryInterface
 {
-    public function __construct(ErrorServiceInterface $errorService, User $model)
+    private ProductRepositoryInterface $productRepository;
+
+    public function __construct(ErrorServiceInterface $errorService, User $model, ProductRepositoryInterface $productRepository)
     {
         parent::__construct($errorService, $model);
+
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -31,6 +36,24 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
             }
 
             return $returnAsArray ? $user->toArray() : $user;
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * Get the currently authenticated user's favorited products
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function favorites() : array
+    {
+        try {
+            return $this->productRepository->getAll([], [
+                'id' => implode(',', $this->getFavoritedProductIds())
+            ]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
