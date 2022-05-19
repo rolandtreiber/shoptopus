@@ -36,7 +36,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 $current_quantity = (int) $cart_product_item->first('quantity')['quantity'];
 
                 $cart_product_table->update([
-                    'quantity' => $current_quantity + $payload['quantity'],
+                    'quantity' => $current_quantity + (int) $payload['quantity'],
                     'product_variant_id' => $payload['product_variant_id'] ?? null
                 ]);
             } else {
@@ -201,6 +201,9 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                     cp.quantity,
                     p.id,
                     p.name,
+                    p.slug,
+                    p.subtitle,
+                    p.headline,
                     p.short_description,
                     p.description,
                     p.price,
