@@ -44,8 +44,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pao.value as option_value,
                     pao.image as option_image
                 FROM product_attributes AS pa
-                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id
-                JOIN product_attribute_options AS pao ON pao.product_attribute_id = pa.id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
+                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id AND ppa.product_attribute_option_id IS NOT NULL
+                JOIN product_attribute_options AS pao ON pao.product_attribute_id = ppa.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE ppa.product_id IN ($dynamic_placeholders)
                 AND pa.deleted_at IS NULL
                 AND pa.enabled IS TRUE
@@ -190,7 +190,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pao.value as product_attribute_option_value,
                     pao.image as product_attribute_option_image
                 FROM product_variants AS pv
-                LEFT JOIN product_attribute_product_variant as papv ON papv.product_variant_id = pv.id
+                LEFT JOIN product_attribute_product_variant AS papv ON papv.product_variant_id = pv.id
                 LEFT JOIN product_attributes AS pa ON pa.id = papv.product_attribute_id AND pa.enabled IS TRUE AND pa.deleted_at IS NULL
                 LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE pv.product_id IN ($dynamic_placeholders)

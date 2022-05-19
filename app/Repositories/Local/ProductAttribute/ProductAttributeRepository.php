@@ -29,7 +29,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
         try {
             $this->product_category_id = $product_category_id;
 
-            $filter_string = " JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = product_attributes.id";
+            $filter_string = " JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = product_attributes.id AND ppa.product_attribute_option_id IS NOT NULL";
             $filter_string .= " JOIN product_product_category AS ppc ON ppc.product_id = ppa.product_id";
             $filter_string .= " WHERE ppc.product_category_id IN (?)";
             $filter_string .= " AND product_attributes.enabled IS TRUE";
@@ -107,7 +107,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                     ppa.product_attribute_id,
                     ppa.product_id
                 FROM products AS p
-                JOIN product_product_attribute AS ppa ON ppa.product_id = p.id
+                JOIN product_product_attribute AS ppa ON ppa.product_id = p.id AND ppa.product_attribute_option_id IS NOT NULL
                 WHERE ppa.product_attribute_id IN ($dynamic_placeholders)
                 AND p.deleted_at IS NULL
             ", $productAttributeIds);

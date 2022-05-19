@@ -9,6 +9,7 @@ use App\Models\DiscountRule;
 use App\Models\ProductVariant;
 use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
+use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -83,8 +84,15 @@ class GetAllProductsTest extends TestCase
     {
         $p = Product::factory()->create();
         $pa = ProductAttribute::factory()->create();
-        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
+        $paos = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
         $pa->products()->attach($p->id);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        DB::table('product_product_attribute')
+            ->where('product_attribute_id', $pa->id)
+            ->where('product_id', $p->id)
+            ->update(['product_attribute_option_id' => $paos[0]->id]);
 
         $res = $this->sendRequest();
 
@@ -130,16 +138,18 @@ class GetAllProductsTest extends TestCase
     {
         $p = Product::factory()->create();
         $pa = ProductAttribute::factory()->create();
-        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'name' => 'jujuka']);
-        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
-        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
-        $pa->products()->attach($p->id);
+        $pao = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
+        $pa->products()->attach($p->id, ['product_attribute_option_id' => $pao->id]);
 
-        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
+        $this->assertCount(1, $this->sendRequest()->json('data.0.product_attributes.0.options'));
 
-        $this->assertEquals(1, sizeof($res));
+        $pao->update(['enabled' => false]);
 
-        $this->assertEquals($pao_enabled->name, json_decode($res[0]['name'])->en);
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        $pao->update(['enabled' => true, 'deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
     }
 
     /**

@@ -44,11 +44,20 @@ class GetProductAttributeTest extends TestCase
      */
     public function an_attribute_without_options_are_excluded()
     {
-        $this->product_attribute->options->each->delete();
+        $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_attribute_option_id' => null]);
 
-        $res = $this->sendRequest();
+        $this->assertEmpty($this->sendRequest()->json('data'));
+    }
 
-        $this->assertEmpty($res->json('data'));
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function an_attribute_without_products_are_excluded()
+    {
+        $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_id' => null]);
+
+        $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
     /**

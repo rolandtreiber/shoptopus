@@ -9,6 +9,7 @@ use App\Models\DiscountRule;
 use App\Models\ProductVariant;
 use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
+use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
 use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -274,8 +275,15 @@ class GetProductTest extends TestCase
     public function it_returns_the_associated_product_attributes_with_their_options()
     {
         $pa = ProductAttribute::factory()->create();
-        ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
+        $paos = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
         $pa->products()->attach($this->product->id);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        DB::table('product_product_attribute')
+            ->where('product_attribute_id', $pa->id)
+            ->where('product_id', $this->product->id)
+            ->update(['product_attribute_option_id' => $paos[0]->id]);
 
         $res = $this->sendRequest();
 
@@ -320,16 +328,18 @@ class GetProductTest extends TestCase
     public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
     {
         $pa = ProductAttribute::factory()->create();
-        $pao_enabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
-        $pao_disabled = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'enabled' => false]);
-        $pao_deleted = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id, 'deleted_at' => now()]);
-        $pa->products()->attach($this->product->id);
+        $pao = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
+        $pa->products()->attach($this->product->id, ['product_attribute_option_id' => $pao->id]);
 
-        $res = $this->sendRequest()->json('data.0.product_attributes.0.options');
+        $this->assertCount(1, $this->sendRequest()->json('data.0.product_attributes.0.options'));
 
-        $this->assertCount(1, $res);
+        $pao->update(['enabled' => false]);
 
-        $this->assertEquals($pao_enabled->id, $res[0]['id']);
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
+
+        $pao->update(['enabled' => true, 'deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
     }
 
     protected function getModelRepo() : ProductRepository
