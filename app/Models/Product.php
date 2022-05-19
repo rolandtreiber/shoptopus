@@ -118,7 +118,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'discount_rules'
     ];
 
-    public $translatable = ['name', 'short_description', 'description'];
+    public $translatable = ['name', 'short_description', 'description', 'headline', 'subtitle'];
 
     protected $appends = ['final_price'];
 
