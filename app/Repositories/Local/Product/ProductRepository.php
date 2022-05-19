@@ -286,7 +286,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         } else {
                             if ($options_data['id']) {
                                 foreach ($model['product_attributes'] as &$attribute) {
-                                    if ($attribute['id'] === $product_attribute['option_product_attribute_id']) {
+                                    if (!in_array($options_data['id'], array_column($attribute['options'], 'id'))
+                                        && $attribute['id'] === $product_attribute['option_product_attribute_id']
+                                    ) {
 
                                         array_push($attribute['options'], $options_data);
 
@@ -365,7 +367,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                                         array_push($model_variant['product_attributes'], $attributeData);
                                     } else {
                                         foreach ($model_variant['product_attributes'] as &$attribute) {
-                                            if ($attribute['id'] === $product_variant['product_attribute_id']) {
+                                            if ( !in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                                && $attribute['id'] === $product_variant['product_attribute_id']
+                                            ) {
 
                                                 array_push($attribute['options'], $attribute_option);
 
@@ -380,7 +384,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         } else if(is_null($product_variant['product_attribute_id']) && $attribute_option['id']) {
                             foreach($model['product_variants'] as &$model_variant) {
                                 foreach ($model_variant['product_attributes'] as &$attribute) {
-                                    if ($attribute['id'] === $product_variant['product_attribute_id']) {
+                                    if (
+                                        !in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                        && $attribute['id'] === $product_variant['product_attribute_id']
+                                    ) {
 
                                         array_push($attribute['options'], $attribute_option);
 
