@@ -45,7 +45,7 @@ class GetProductTest extends TestCase
      */
     public function it_can_return_a_product_by_its_slug()
     {
-        $this->getJson(route('api.products.getBySlug', ['slug' => $this->product->slug]))
+        $this->getJson(route('api.product.getBySlug', ['slug' => $this->product->slug]))
             ->assertOk()
             ->assertSee($this->product->slug);
     }
@@ -343,6 +343,6 @@ class GetProductTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.products.get', ['id' => $this->product->id]));
+        return $this->getJson(route('api.product.get', ['id' => $this->product->id]));
     }
 }

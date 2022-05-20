@@ -71,7 +71,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 ->where('product_id', $payload['product_id'])
                 ->delete();
 
-            return $this->get($payload['cart_id']);
+            return $this->get(value: $cart['id'], excludeRelationships: ['users']);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -189,7 +189,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
      * @param array $cartIds
      * @return array
      */
-    public function getItems(array $cartIds = []) : array
+    public function getProducts(array $cartIds = []) : array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($cartIds)), ',');
@@ -239,14 +239,14 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $ids = collect($result)->pluck('id')->toArray();
 
             $users = [];
-            $items = [];
+            $products = [];
 
             if (!in_array('user', $excludeRelationships)) {
                 $users = $this->getUsers(collect($result)->unique('user_id')->pluck('user_id')->toArray());
             }
 
             if (!in_array('products', $excludeRelationships)) {
-                $items = $this->getItems($ids);
+                $products = $this->getProducts($ids);
             }
 
             foreach ($result as &$model) {
@@ -261,7 +261,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                     }
                 }
 
-                foreach ($items as $product) {
+                foreach ($products as $product) {
                     if ($product['cart_id'] === $modelId) {
                         unset($product['cart_id']);
                         array_push($model['products'], $product);

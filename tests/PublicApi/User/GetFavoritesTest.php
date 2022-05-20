@@ -45,7 +45,7 @@ class GetFavoritesTest extends TestCase
 
         $this->assertEmpty($this->sendRequest()->json('data'));
 
-        $products->each(fn($product) => $this->postJson(route('api.products.favorite', ['id' => $product->id])));
+        $products->each(fn($product) => $this->postJson(route('api.product.favorite', ['id' => $product->id])));
 
         $res = $this->sendRequest();
 

@@ -133,6 +133,6 @@ class GetProductAttributeTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.product_attributes.get', ['id' => $this->product_attribute->id]));
+        return $this->getJson(route('api.product_attribute.get', ['id' => $this->product_attribute->id]));
     }
 }

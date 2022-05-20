@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Cart;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\PatchRequest;
 use App\Http\Requests\Cart\AddItemToCartRequest;
@@ -16,22 +15,6 @@ class CartController extends Controller
     public function __construct(CartServiceInterface $cartService)
     {
         $this->cartService = $cartService;
-    }
-
-    /**
-     * Get a single model
-     *
-     * @param Request $request
-     * @param string $id
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function get(Request $request, string $id) : \Illuminate\Http\JsonResponse
-    {
-        try {
-            return response()->json($this->getResponse([], $this->cartService->get($id), $request));
-        } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
-        }
     }
 
     /**

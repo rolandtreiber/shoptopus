@@ -40,7 +40,7 @@ class GetProductCategoryTest extends TestCase
      */
     public function it_can_return_a_product_category_by_its_slug()
     {
-        $this->getJson(route('api.product_categories.getBySlug', ['slug' => $this->product_category->slug]))
+        $this->getJson(route('api.product_category.getBySlug', ['slug' => $this->product_category->slug]))
             ->assertOk()
             ->assertSee($this->product_category->description);
     }
@@ -153,6 +153,6 @@ class GetProductCategoryTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.product_categories.get', ['id' => $this->product_category->id]));
+        return $this->getJson(route('api.product_category.get', ['id' => $this->product_category->id]));
     }
 }

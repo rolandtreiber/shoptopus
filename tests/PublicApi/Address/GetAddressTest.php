@@ -97,6 +97,6 @@ class GetAddressTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.addresses.get', ['id' => $this->address->id]));
+        return $this->getJson(route('api.address.get', ['id' => $this->address->id]));
     }
 }

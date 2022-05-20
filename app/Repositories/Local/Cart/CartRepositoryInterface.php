@@ -27,7 +27,7 @@ interface CartRepositoryInterface {
      * @param array $cartIds
      * @return array
      */
-    public function getItems(array $cartIds = []) : array;
+    public function getProducts(array $cartIds = []) : array;
 
     /**
      * Add item to cart.

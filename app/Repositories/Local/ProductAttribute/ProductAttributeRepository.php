@@ -110,6 +110,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                 JOIN product_product_attribute AS ppa ON ppa.product_id = p.id AND ppa.product_attribute_option_id IS NOT NULL
                 WHERE ppa.product_attribute_id IN ($dynamic_placeholders)
                 AND p.deleted_at IS NULL
+
             ", $productAttributeIds);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);

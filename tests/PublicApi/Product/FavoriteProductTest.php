@@ -41,7 +41,7 @@ class FavoriteProductTest extends TestCase
     public function it_requires_a_valid_product_id()
     {
         $this->signIn($this->user)
-            ->postJson(route('api.products.favorite', ['id' => '12345']))
+            ->postJson(route('api.product.favorite', ['id' => '12345']))
             ->assertJsonValidationErrors(['productId']);
     }
 
@@ -91,6 +91,6 @@ class FavoriteProductTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->postJson(route('api.products.favorite', ['id' => $this->product->id]));
+        return $this->postJson(route('api.product.favorite', ['id' => $this->product->id]));
     }
 }
