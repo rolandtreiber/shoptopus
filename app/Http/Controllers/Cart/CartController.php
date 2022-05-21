@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Cart;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\PatchRequest;
 use App\Http\Requests\Cart\AddItemToCartRequest;
+use App\Http\Requests\Cart\UpdateQuantityRequest;
 use App\Services\Local\Cart\CartServiceInterface;
 use App\Http\Requests\Cart\RemoveItemFromCartRequest;
 
@@ -28,6 +29,22 @@ class CartController extends Controller
     {
         try {
             $data = $this->cartService->update($id, $request->validated());
+            return response()->json($this->putResponse($data));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Update quantity for a given product
+     *
+     * @param UpdateQuantityRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateQuantity(UpdateQuantityRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            $data = $this->cartService->updateQuantity($request->validated());
             return response()->json($this->putResponse($data));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));

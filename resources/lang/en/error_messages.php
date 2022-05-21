@@ -44,6 +44,8 @@ return [
     "1503" => "Sorry there was an error removing the item from the cart.",
     "1504" => "Sorry there was an error merging your carts.",
     "1505" => "Sorry there was an error getting the cart for the current user.",
+    "1506" => "Sorry there was an error updating the quantity for the given product.",
+    "1507" => "Sorry there was an error getting the given product.",
 
     "1900" => "Sorry there was an error getting getting all unread notifications.",
     "1903" => "Sorry there was an error marking the notification read.",

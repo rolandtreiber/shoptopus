@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Cart;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Http\FormRequest;
 
 class PatchRequest extends FormRequest
 {
@@ -28,7 +28,7 @@ class PatchRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'ip_address' => "sometimes|nullable|string|max:100"
+            'ip_address' => 'sometimes|nullable|string|max:100'
         ];
     }
 }

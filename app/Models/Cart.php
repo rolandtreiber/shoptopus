@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
@@ -59,5 +60,30 @@ class Cart extends Model implements Auditable, Exportable
             'quantity',
             'product_variant_id'
         ]);
+    }
+
+    public static function quantityValidationRule($productId) : array
+    {
+        return ['required','integer','min:1', function ($attribute, $value, $fail) use($productId) {
+            $productQuery =  DB::table('products')
+                ->whereNull('deleted_at')
+                ->where('id', $productId);
+
+            if (!$productQuery->exists()) {
+                $fail('Product is unavailable.');
+            } else {
+                $stock = (int) $productQuery->select(['stock'])->first()['stock'];
+
+                if ($stock < $value) {
+                    if ($stock === 0 ) {
+                        $fail('Out of stock.');
+                    } else if ($stock === 1) {
+                        $fail('Only 1 left.');
+                    } else {
+                        $fail('Only ' . $stock . ' left.');
+                    }
+                }
+            }
+        }];
     }
 }

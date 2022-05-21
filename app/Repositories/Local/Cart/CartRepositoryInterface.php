@@ -46,6 +46,14 @@ interface CartRepositoryInterface {
     public function removeItem(array $payload) : array;
 
     /**
+     * Update quantity for a given product
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function updateQuantity(array $payload) : array;
+
+    /**
      * Merge the user's carts
      *
      * @param string $userId

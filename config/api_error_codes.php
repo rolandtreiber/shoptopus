@@ -51,7 +51,9 @@ return [
             "addItem" => 1502,
             "removeItem" => 1503,
             "mergeUserCarts" => 1504,
-            "getCartForUser" => 1505
+            "getCartForUser" => 1505,
+            "updateQuantity" => 1506,
+            "productNotFound" => 1507
         ],
         'notification' => [
             "getAllUnreadNotificationsForUser" => 1900,

@@ -4,6 +4,7 @@ namespace App\Repositories\Local\Cart;
 
 use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Config;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -48,7 +49,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 ]);
             }
 
-            return $this->get(value: $cart['id'], excludeRelationships: ['users']);
+            return $this->get(value: $cart['id'], excludeRelationships: ['user']);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -71,7 +72,35 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 ->where('product_id', $payload['product_id'])
                 ->delete();
 
-            return $this->get(value: $cart['id'], excludeRelationships: ['users']);
+            return $this->get(value: $cart['id'], excludeRelationships: ['user']);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
+     * Update quantity for a given product
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function updateQuantity(array $payload) : array
+    {
+        try {
+            $cart_product_table = DB::table('cart_product');
+
+            $cart_product = $cart_product_table
+                ->where('cart_id', $payload['cart_id'])
+                ->where('product_id', $payload['product_id']);
+
+            if(! $cart_product->exists()) {
+                throw new \Exception('Cart or product cannot be found.', Config::get("api_error_codes.services.cart.productNotFound"));
+            }
+
+            $cart_product->update(['quantity' => $payload['quantity']]);
+
+            return $this->get(value: $payload['cart_id'], excludeRelationships: ['user']);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

@@ -6,7 +6,7 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddItemToCartRequest extends FormRequest
+class UpdateQuantityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,11 +15,8 @@ class AddItemToCartRequest extends FormRequest
      */
     public function authorize() : bool
     {
-        $cart_id = $this->cart_id;
-        $user = $this->user();
-
-        if ($cart_id && $user) {
-            return $user->cart->id === $cart_id;
+        if ($user = $this->user()) {
+            return $user->cart->id === $this->cart_id;
         }
 
         return true;
@@ -34,10 +31,9 @@ class AddItemToCartRequest extends FormRequest
     {
         return [
             'product_id'  => 'bail|required|string|exists:products,id',
-            'quantity' => Cart::quantityValidationRule($this->product_id),
-            'cart_id' => 'nullable|string|exists:carts,id',
+            'cart_id' => 'required|string|exists:carts,id',
             'user_id' => 'nullable|string|exists:users,id',
-            'product_variant_id' => 'sometimes|required|integer|exists:product_variants,id'
+            'quantity' => Cart::quantityValidationRule($this->product_id)
         ];
     }
 
@@ -49,8 +45,9 @@ class AddItemToCartRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'cart_id' => $this->cart_id ?: optional(optional($this->user())->cart)->id,
-            'user_id' => optional($this->user())->id
+            'user_id' => optional($this->user())->id,
+            'cart_id' => $this->cart_id,
+            'product_id' => $this->product_id
         ]);
     }
 }

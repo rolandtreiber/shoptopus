@@ -32,9 +32,7 @@ class ApiProductsTestSeeder extends Seeder
     {
         foreach ($products as $index => $product) {
             // Product Tags
-            ProductTag::factory()->count(2)->create()->each(function ($tag) use ($product) {
-                $tag->products()->attach($product->id);
-            });
+            ProductTag::factory()->count(2)->create()->each(fn($tag) => $tag->products()->attach($product->id));
 
             // Product Category
             $parent_category = ProductCategory::factory()->create(['name' => 'Women']);
@@ -42,10 +40,10 @@ class ApiProductsTestSeeder extends Seeder
                 'name' => 'T-shirts',
                 'parent_id' => $parent_category->id
             ]);
-            $parent_category->products()->attach($product->id);
-            $product_category->products()->attach($product->id);
+            $product->product_categories()->attach([$parent_category->id, $product_category->id]);
 
             // Product Attributes
+
             // Color
             $attribute_color = ProductAttribute::factory()->create([
                 'type' => ProductAttributeType::Color,
@@ -54,9 +52,7 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_color_options = ProductAttributeOption::factory()
                 ->count(3)
-                ->create([
-                    'product_attribute_id' => $attribute_color->id
-                ]);
+                ->create(['product_attribute_id' => $attribute_color->id]);
 
             $attribute_color_options[0]->update([
                 'name' => 'red',
@@ -71,7 +67,9 @@ class ApiProductsTestSeeder extends Seeder
                 'value' => 'rgb(0, 255, 0)'
             ]);
 
-            $product->product_attributes()->attach($attribute_color->id);
+            $attribute_color_options->each(fn($option) =>
+                $product->product_attributes()->attach($attribute_color->id, ['product_attribute_option_id' => $option->id])
+            );
 
             // Size
             $attribute_size = ProductAttribute::factory()->create([
@@ -81,32 +79,32 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_size_options = ProductAttributeOption::factory()
                 ->count(5)
-                ->create([
-                    'product_attribute_id' => $attribute_size->id
-                ]);
+                ->create(['product_attribute_id' => $attribute_size->id]);
 
             $attribute_size_options[0]->update([
-                'name' => 'extra small',
+                'name' => 'xs',
                 'value' => 'xs'
             ]);
             $attribute_size_options[1]->update([
-                'name' => 'small',
+                'name' => 'sm',
                 'value' => 'sm'
             ]);
             $attribute_size_options[2]->update([
-                'name' => 'medium',
+                'name' => 'md',
                 'value' => 'md'
             ]);
             $attribute_size_options[3]->update([
-                'name' => 'large',
+                'name' => 'lg',
                 'value' => 'lg'
             ]);
             $attribute_size_options[4]->update([
-                'name' => 'extra large',
+                'name' => 'xl',
                 'value' => 'xl'
             ]);
 
-            $product->product_attributes()->attach($attribute_size->id);
+            $attribute_size_options->each(fn($option) =>
+                $product->product_attributes()->attach($attribute_size->id, ['product_attribute_option_id' => $option->id])
+            );
         }
     }
 
