@@ -5,6 +5,7 @@ namespace App\Http\Resources\Admin;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 /**
  * @mixin Payment
@@ -27,7 +28,7 @@ class PaymentRelationResource extends JsonResource
             'status' => $this->status,
             'payment_ref' => $this->payment_ref,
             'method_ref' => $this->method_ref,
-            'crated_at' => $this->created_at,
+            'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'source' => new PaymentSourceRelationResource($this->payment_source)
         ];
     }
