@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\DeliveryType;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Address;
@@ -23,13 +24,18 @@ class OrderFactory extends Factory
      */
     public function definition() : array
     {
-        return [
+        $result = [
             'total_price' => $this->faker->numberBetween(100, 1000),
             'user_id' => User::factory(),
-            'delivery_type_id' => null,
             'voucher_code_id' => null,
             'address_id' => Address::factory(),
             'currency_code' => 'GBP'
         ];
+        if (env('APP_ENV') === "testing") {
+            $result['delivery_type_id'] = null;
+        } else {
+            $result['delivery_type_id'] = DeliveryType::factory();
+        }
+        return $result;
     }
 }

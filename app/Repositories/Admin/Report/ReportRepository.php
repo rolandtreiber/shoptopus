@@ -241,7 +241,7 @@ class ReportRepository implements ReportRepositoryInterface
             OrderStatus::InTransit])
             ->select([
                 DB::raw('SUM(orders.total_price) as revenue'),
-                DB::raw('SUM(orders.delivery) as delivery'),
+                DB::raw('SUM(orders.delivery_cost) as delivery'),
                 DB::raw('SUM(orders.total_discount) as discount'),
             ])->first();
 

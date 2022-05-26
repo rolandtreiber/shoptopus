@@ -307,12 +307,14 @@ class ExcelImportExport implements ExcelImportExportInterface
         }
         if ($allSuccessful) {
             return [
-                'message' => 'success',
+                'status' => 'success',
+                'message' => 'The uploaded data is valid and can be imported.',
                 'details' => $this->importValidatorData
             ];
         } else {
             return [
-                'message' => 'invalid data',
+                'status' => 'invalid data',
+                'message' => 'The uploaded data contains invalid data.',
                 'details' => $this->importValidatorData
             ];
         }
@@ -337,15 +339,15 @@ class ExcelImportExport implements ExcelImportExportInterface
 
         if ($allSuccessful) {
             DB::beginTransaction();
-//            try {
+            try {
                 $this->importRows($this->importValidatorData);
-//            } catch(Exception $exception) {
-//                DB::rollBack();
-//                return [
-//                    'status' => 'error',
-//                    'message' => 'There was an error inserting the data into the database. Please contact the administrator.'
-//                ];
-//            }
+            } catch(Exception $exception) {
+                DB::rollBack();
+                return [
+                    'status' => 'error',
+                    'message' => 'There was an error inserting the data into the database. Please contact the administrator.'
+                ];
+            }
             DB::commit();
             return [
                 'status' => 'success',

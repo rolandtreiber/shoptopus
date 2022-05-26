@@ -16,8 +16,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-//use Spatie\Sluggable\HasSlug;
-//use Spatie\Sluggable\SlugOptions;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @method static find(int $selectedCartId)
@@ -44,17 +44,17 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Order extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, \OwenIt\Auditing\Auditable, HasExportable;
+    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, \OwenIt\Auditing\Auditable, HasExportable, HasSlug;
 
-//    /**
-//     * Get the options for generating the slug.
-//     */
-//    public function getSlugOptions() : SlugOptions
-//    {
-//        return SlugOptions::create()
-//            ->generateSlugsFrom(['user.name', 'address.town'])
-//            ->saveSlugsTo('slug');
-//    }
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['user.name', 'address.town'])
+            ->saveSlugsTo('slug');
+    }
 
     /**
      * @var string[]

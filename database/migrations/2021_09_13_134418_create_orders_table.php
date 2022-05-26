@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedDecimal('delivery_cost')->default(0);
             $table->string('currency_code')->default('GBP');
             $table->integer('status')->default(OrderStatus::AwaitingPayment);
-//            $table->string('slug');
+            $table->string('slug');
             $table->softDeletes();
             $table->timestamps();
         });

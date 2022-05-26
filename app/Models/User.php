@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use App\Traits\Searchable;
+use Google\Collection;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use App\Traits\NotificationTrait;
@@ -24,6 +25,26 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/**
+ * @property string $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $prefix
+ * @property string $email
+ * @property string $phone
+ * @property Carbon $email_verified_at
+ * @property string $password
+ * @property string $client_ref
+ * @property string $avatar
+ * @property int  $is_favorite
+ * @property Carbon $deleted_at
+ * @property Collection $addresses
+ * @property Collection $orders
+ * @property Collection $social_accounts
+ * @property Collection $payment_sources
+ * @property Collection $payments
+ * @property Cart $cart
+ */
 class User extends Authenticatable implements Auditable, Exportable
 {
     use Notifiable,
