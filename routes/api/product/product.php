@@ -11,7 +11,17 @@ Route::group([
         'prefix' => 'products'
     ], function () {
         Route::get('/', [ProductController::class, 'getAll'])->name('api.products.getAll');
-        Route::get('/{id}', [ProductController::class, 'get'])->name('api.products.get');
-        Route::get('/slug/{slug}', [ProductController::class, 'getBySlug'])->name('api.products.getBySlug');
+    });
+
+    Route::group([
+        'name' => 'product.',
+        'prefix' => 'product'
+    ], function () {
+        Route::get('/{id}', [ProductController::class, 'get'])->name('api.product.get');
+        Route::get('/slug/{slug}', [ProductController::class, 'getBySlug'])->name('api.product.getBySlug');
+
+        Route::post('/{id}/favorite', [ProductController::class, 'favorite'])
+            ->middleware('auth:api')
+            ->name('api.product.favorite');
     });
 });

@@ -12,9 +12,16 @@ Route::group([
         'middleware' => 'auth:api'
     ], function () {
         Route::get('/', [AddressController::class, 'getAll'])->name('api.addresses.getAll');
-        Route::get('/{id}', [AddressController::class, 'get'])->name('api.addresses.get');
         Route::post('/', [AddressController::class, 'post'])->name('api.addresses.create');
-        Route::patch('/{id}', [AddressController::class, 'update'])->name('api.addresses.update');
-        Route::delete('/{id}',  [AddressController::class, 'delete'])->name('api.addresses.delete');
+    });
+
+    Route::group([
+        'name' => 'address.',
+        'prefix' => 'address',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::get('/{id}', [AddressController::class, 'get'])->name('api.address.get');
+        Route::patch('/{id}', [AddressController::class, 'update'])->name('api.address.update');
+        Route::delete('/{id}',  [AddressController::class, 'delete'])->name('api.address.delete');
     });
 });

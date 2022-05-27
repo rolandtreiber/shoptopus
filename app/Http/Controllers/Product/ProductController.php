@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Http\Requests\Product\FavoriteProductRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Local\Product\ProductServiceInterface;
@@ -65,6 +66,21 @@ class ProductController extends Controller
     {
         try {
             return response()->json($this->getResponse([], $this->productService->getBySlug($slug), $request));
+        } catch (\Exception | \Error $e) {
+            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+        }
+    }
+
+    /**
+     * Favorite a single model
+     *
+     * @param FavoriteProductRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function favorite(FavoriteProductRequest $request) : \Illuminate\Http\JsonResponse
+    {
+        try {
+            return response()->json($this->postResponse($this->productService->favorite($request->validated()['productId'])));
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }

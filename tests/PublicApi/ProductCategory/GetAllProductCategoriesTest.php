@@ -6,7 +6,6 @@ use Tests\TestCase;
 use App\Models\Product;
 use App\Models\DiscountRule;
 use App\Models\ProductCategory;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductCategory\ProductCategoryRepository;
 
@@ -42,7 +41,7 @@ class GetAllProductCategoriesTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
             ]
         ]);
 
@@ -126,7 +125,7 @@ class GetAllProductCategoriesTest extends TestCase
             'data' => [
                 [
                     'subcategories' => [
-                        (new ProductCategoryRepository(new ErrorService, new ProductCategory))->getSelectableColumns(false)
+                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
                     ]
                 ]
             ]
@@ -144,7 +143,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_idsss()
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();

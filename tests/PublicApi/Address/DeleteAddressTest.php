@@ -57,6 +57,6 @@ class DeleteAddressTest extends TestCase
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
     {
-        return $this->deleteJson(route('api.addresses.delete', ['id' => $this->address->id]), $data);
+        return $this->deleteJson(route('api.address.delete', ['id' => $this->address->id]), $data);
     }
 }

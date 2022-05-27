@@ -259,7 +259,8 @@ class RegisterTest extends TestCase
                             'user',
                             'products'
                         ],
-                        'notifications'
+                        'notifications',
+                        'favorites'
                     ]
                 ]
             ]

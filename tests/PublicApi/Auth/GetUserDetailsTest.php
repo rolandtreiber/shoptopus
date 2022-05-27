@@ -4,6 +4,7 @@ namespace Tests\PublicApi\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -56,7 +57,8 @@ class GetUserDetailsTest extends TestCase
                             'user',
                             'products'
                         ],
-                        'notifications'
+                        'notifications',
+                        'favorites'
                     ]
                 ]
             ]
@@ -72,24 +74,24 @@ class GetUserDetailsTest extends TestCase
         $user = User::factory()->create();
 
         $notificationData = [
-            'type' => "competition-entered",
-            'title' => "You have entered a Competition.",
+            'type' => "order-complete",
+            'title' => "You're order is ready.",
             'level' => 'info'
         ];
 
         DB::table('notifications')->insert([
             'id' => Str::uuid(),
-            'type' => 'App\Notifications\YouEnteredACompetition',
-            'notifiable_type' => 'App\Models\User\User',
-            'notifiable_id' =>$user->id,
+            'type' => 'App\Notifications\OrderComplete',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $user->id,
             'data' => json_encode($notificationData)
         ]);
 
         DB::table('notifications')->insert([
             'id' => Str::uuid(),
-            'type' => 'App\Notifications\YouEnteredACompetition',
-            'notifiable_type' => 'App\Models\User\User',
-            'notifiable_id' =>$user->id,
+            'type' => 'App\Notifications\OrderComplete',
+            'notifiable_type' => 'App\Models\User',
+            'notifiable_id' => $user->id,
             'data' => json_encode($notificationData),
             'read_at' => now()
         ]);
@@ -97,6 +99,26 @@ class GetUserDetailsTest extends TestCase
         $notifications = $this->signIn($user)->sendRequest()->json('data.auth.user.notifications');
 
         $this->assertCount(1, $notifications);
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function the_favorites_array_contains_all_the_favorited_product_ids()
+    {
+        $user = User::factory()->create();
+
+        $products = Product::factory()->count(3)->create();
+
+        $products->each(fn($product) => DB::table('favorited_products')->insert([
+            'user_id' => $user->id,
+            'product_id' => $product->id
+        ]));
+
+        $favorites = $this->signIn($user)->sendRequest()->json('data.auth.user.favorites');
+
+        $this->assertCount($products->count(), $favorites);
     }
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse

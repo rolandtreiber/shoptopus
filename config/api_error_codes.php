@@ -51,7 +51,9 @@ return [
             "addItem" => 1502,
             "removeItem" => 1503,
             "mergeUserCarts" => 1504,
-            "getCartForUser" => 1505
+            "getCartForUser" => 1505,
+            "updateQuantity" => 1506,
+            "productNotFound" => 1507
         ],
         'notification' => [
             "getAllUnreadNotificationsForUser" => 1900,
@@ -61,6 +63,7 @@ return [
             "get" => 2000,
             "getAll" => 2001,
             "getAllInCategory" => 2002,
+            "favorite" => 2003
         ],
         'product_attribute' => [
             "get" => 2100,
@@ -85,7 +88,9 @@ return [
             "update" => 4003,
             "delete" => 4004,
             "getCurrentUser" => 4005,
-            "getNotifications" => 4006
+            "getNotifications" => 4006,
+            "getFavoritedProductIds" => 4007,
+            "favorites" => 4008
         ]
     ]
 ];

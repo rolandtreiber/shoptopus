@@ -7,8 +7,6 @@ use App\Traits\HasFiles;
 use App\Traits\HasRatings;
 use App\Enums\ProductStatus;
 use App\Traits\HasEventLogs;
-use Shoptopus\ExcelImportExport\Importable;
-use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Illuminate\Support\Carbon;
 use App\Helpers\GeneralHelper;
@@ -17,11 +15,13 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Translatable\HasTranslations;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\Importable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
 
 /**
  * @method static count()
@@ -118,7 +118,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'discount_rules'
     ];
 
-    public $translatable = ['name', 'short_description', 'description'];
+    public $translatable = ['name', 'short_description', 'description', 'headline', 'subtitle'];
 
     protected $appends = ['final_price'];
 
@@ -132,6 +132,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'short_description',
         'description',
         'price',
+        'headline',
+        'subtitle',
         'status',
         'purchase_count',
         'stock',

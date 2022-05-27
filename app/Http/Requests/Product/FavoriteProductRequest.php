@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Cart;
+namespace App\Http\Requests\Product;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RemoveItemFromCartRequest extends FormRequest
+class FavoriteProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,13 +13,6 @@ class RemoveItemFromCartRequest extends FormRequest
      */
     public function authorize() : bool
     {
-        $cart_id = $this->cart_id;
-        $user = $this->user();
-
-        if ($cart_id && $user) {
-            return $user->cart->id === $this->cart_id;
-        }
-
         return true;
     }
 
@@ -31,9 +24,7 @@ class RemoveItemFromCartRequest extends FormRequest
     public function rules() : array
     {
         return [
-            'product_id'  => 'bail|required|string|exists:products,id',
-            'cart_id' => 'required|string|exists:carts,id',
-            'user_id' => 'nullable|string|exists:users,id'
+            'productId' => 'required|string|exists:products,id',
         ];
     }
 
@@ -45,7 +36,7 @@ class RemoveItemFromCartRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => optional($this->user())->id
+            'productId' => $this->route('id')
         ]);
     }
 }

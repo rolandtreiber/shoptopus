@@ -26,7 +26,7 @@ class OLDProductRepository
             'id' => $data['product_attribute_option_id'],
             'name' => $data['product_attribute_option_name'],
             'slug' => $data['product_attribute_option_slug'],
-            'option_value' => $data['product_attribute_option_value'],
+            'value' => $data['product_attribute_option_value'],
             'image' => $data['product_attribute_option_image']
         ];
 
@@ -298,7 +298,7 @@ class OLDProductRepository
                                             'id',
                                             'name',
                                             'slug',
-                                            'option_value',
+                                            'value',
                                             'image'
                                         ]
                                     ]

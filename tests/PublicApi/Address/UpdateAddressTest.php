@@ -73,6 +73,6 @@ class UpdateAddressTest extends TestCase
 
     protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
     {
-        return $this->patchJson(route('api.addresses.update', ['id' => $this->address->id]), $data);
+        return $this->patchJson(route('api.address.update', ['id' => $this->address->id]), $data);
     }
 }

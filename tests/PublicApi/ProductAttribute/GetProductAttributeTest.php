@@ -6,7 +6,6 @@ use Tests\TestCase;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductAttribute\ProductAttributeRepository;
 
@@ -44,11 +43,20 @@ class GetProductAttributeTest extends TestCase
      */
     public function an_attribute_without_options_are_excluded()
     {
-        $this->product_attribute->options->each->delete();
+        $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_attribute_option_id' => null]);
 
-        $res = $this->sendRequest();
+        $this->assertEmpty($this->sendRequest()->json('data'));
+    }
 
-        $this->assertEmpty($res->json('data'));
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function an_attribute_without_products_are_excluded()
+    {
+        $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_id' => null]);
+
+        $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
     /**
@@ -60,7 +68,7 @@ class GetProductAttributeTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    (new ProductAttributeRepository(new ErrorService, new ProductAttribute))->getSelectableColumns(false)
+                    app()->make(ProductAttributeRepository::class)->getSelectableColumns(false)
                 ]
             ]);
     }
@@ -125,6 +133,6 @@ class GetProductAttributeTest extends TestCase
 
     protected function sendRequest() : \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('api.product_attributes.get', ['id' => $this->product_attribute->id]));
+        return $this->getJson(route('api.product_attribute.get', ['id' => $this->product_attribute->id]));
     }
 }

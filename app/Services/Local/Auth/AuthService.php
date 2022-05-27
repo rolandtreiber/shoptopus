@@ -409,7 +409,8 @@ class AuthService implements AuthServiceInterface
             "avatar" => $user->avatar,
             "is_verified" => $user->hasVerifiedEmail(),
             "cart" => $this->cartService->getCartForUser($user->id),
-            "notifications" => $notifications
+            "notifications" => $notifications,
+            "favorites" => $this->userService->getFavoritedProductIds()
         ];
     }
 

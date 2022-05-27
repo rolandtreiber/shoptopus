@@ -27,7 +27,7 @@ interface CartRepositoryInterface {
      * @param array $cartIds
      * @return array
      */
-    public function getItems(array $cartIds = []) : array;
+    public function getProducts(array $cartIds = []) : array;
 
     /**
      * Add item to cart.
@@ -44,6 +44,14 @@ interface CartRepositoryInterface {
      * @return array
      */
     public function removeItem(array $payload) : array;
+
+    /**
+     * Update quantity for a given product
+     *
+     * @param array $payload
+     * @return array
+     */
+    public function updateQuantity(array $payload) : array;
 
     /**
      * Merge the user's carts

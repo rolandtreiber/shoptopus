@@ -5,6 +5,7 @@ namespace App\Repositories\Local\Product;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
 use App\Enums\ProductAttributeType;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 
@@ -13,6 +14,45 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     public function __construct(ErrorServiceInterface $errorService, Product $model)
     {
         parent::__construct($errorService, $model);
+    }
+
+    /**
+     * Save product to favorites
+     *
+     * @param string $productId
+     * @return array
+     * @throws \Exception
+     */
+    public function favorite(string $productId) : array
+    {
+        try {
+            $userId = Auth::id();
+
+            if (!$userId) {
+                throw new \Exception('Unauthenticated.');
+            }
+
+            $table = DB::table('favorited_products');
+
+            $favorited = $table->where([
+                'user_id' => $userId,
+                'product_id' => $productId
+            ]);
+
+            if ($favorited->exists()) {
+                $favorited->delete();
+            } else {
+                $table->insert([
+                    'user_id' => $userId,
+                    'product_id' => $productId
+                ]);
+            }
+
+            return ['favorited' => $favorited->exists()];
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -44,8 +84,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pao.value as option_value,
                     pao.image as option_image
                 FROM product_attributes AS pa
-                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id
-                JOIN product_attribute_options AS pao ON pao.product_attribute_id = pa.id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
+                JOIN product_product_attribute AS ppa ON ppa.product_attribute_id = pa.id AND ppa.product_attribute_option_id IS NOT NULL
+                JOIN product_attribute_options AS pao ON pao.product_attribute_id = ppa.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE ppa.product_id IN ($dynamic_placeholders)
                 AND pa.deleted_at IS NULL
                 AND pa.enabled IS TRUE
@@ -190,7 +230,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pao.value as product_attribute_option_value,
                     pao.image as product_attribute_option_image
                 FROM product_variants AS pv
-                LEFT JOIN product_attribute_product_variant as papv ON papv.product_variant_id = pv.id
+                LEFT JOIN product_attribute_product_variant AS papv ON papv.product_variant_id = pv.id
                 LEFT JOIN product_attributes AS pa ON pa.id = papv.product_attribute_id AND pa.enabled IS TRUE AND pa.deleted_at IS NULL
                 LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE pv.product_id IN ($dynamic_placeholders)
@@ -264,7 +304,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             'id' => $product_attribute['option_id'],
                             'name' => $product_attribute['option_name'],
                             'slug' => $product_attribute['option_slug'],
-                            'option_value' => $product_attribute['option_value'],
+                            'value' => $product_attribute['option_value'],
                             'image' => $product_attribute['option_image']
                         ];
 
@@ -286,7 +326,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         } else {
                             if ($options_data['id']) {
                                 foreach ($model['product_attributes'] as &$attribute) {
-                                    if ($attribute['id'] === $product_attribute['option_product_attribute_id']) {
+                                    if (!in_array($options_data['id'], array_column($attribute['options'], 'id'))
+                                        && $attribute['id'] === $product_attribute['option_product_attribute_id']
+                                    ) {
 
                                         array_push($attribute['options'], $options_data);
 
@@ -341,7 +383,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             'id' => $product_variant['product_attribute_option_id'],
                             'name' => $product_variant['product_attribute_option_name'],
                             'slug' => $product_variant['product_attribute_option_slug'],
-                            'option_value' => $product_variant['product_attribute_option_value'],
+                            'value' => $product_variant['product_attribute_option_value'],
                             'image' => $product_variant['product_attribute_option_image']
                         ];
 
@@ -365,7 +407,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                                         array_push($model_variant['product_attributes'], $attributeData);
                                     } else {
                                         foreach ($model_variant['product_attributes'] as &$attribute) {
-                                            if ($attribute['id'] === $product_variant['product_attribute_id']) {
+                                            if ( !in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                                && $attribute['id'] === $product_variant['product_attribute_id']
+                                            ) {
 
                                                 array_push($attribute['options'], $attribute_option);
 
@@ -380,7 +424,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         } else if(is_null($product_variant['product_attribute_id']) && $attribute_option['id']) {
                             foreach($model['product_variants'] as &$model_variant) {
                                 foreach ($model_variant['product_attributes'] as &$attribute) {
-                                    if ($attribute['id'] === $product_variant['product_attribute_id']) {
+                                    if (
+                                        !in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                        && $attribute['id'] === $product_variant['product_attribute_id']
+                                    ) {
 
                                         array_push($attribute['options'], $attribute_option);
 
@@ -420,6 +467,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             "{$this->model_table}.stock",
             "{$this->model_table}.backup_stock",
             "{$this->model_table}.sku",
+            "{$this->model_table}.headline",
+            "{$this->model_table}.subtitle",
             "{$this->model_table}.cover_photo"
         ];
 

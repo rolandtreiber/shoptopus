@@ -66,6 +66,23 @@ class CartService extends ModelService implements CartServiceInterface
     }
 
     /**
+     * Update quantity for a given product
+     *
+     * @param array $payload
+     * @return array
+     * @throws \Exception
+     */
+    public function updateQuantity(array $payload) : array
+    {
+        try {
+            return $this->modelRepository->updateQuantity($payload);
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.cart.updateQuantity"));
+        }
+    }
+
+    /**
      * Merge the user's carts
      *
      * @param string $userId

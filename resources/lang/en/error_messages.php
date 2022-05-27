@@ -44,6 +44,8 @@ return [
     "1503" => "Sorry there was an error removing the item from the cart.",
     "1504" => "Sorry there was an error merging your carts.",
     "1505" => "Sorry there was an error getting the cart for the current user.",
+    "1506" => "Sorry there was an error updating the quantity for the given product.",
+    "1507" => "Sorry there was an error getting the given product.",
 
     "1900" => "Sorry there was an error getting getting all unread notifications.",
     "1903" => "Sorry there was an error marking the notification read.",
@@ -51,6 +53,7 @@ return [
     "2000" => "Sorry there was an error getting this product.",
     "2001" => "Sorry there was an error getting all products.",
     "2002" => "Sorry there was an error getting the products for this category.",
+    "2003" => "Sorry there was an error syncing your favorite products.",
 
     "2100" => "Sorry there was an error getting this product attribute.",
     "2101" => "Sorry there was an error getting all product attributes.",
@@ -69,5 +72,7 @@ return [
     "4003" => "Sorry there was an error updating this user.",
     "4004" => "Sorry there was an error deleting this user.",
     "4005" => "Sorry there was an error getting the currently authenticated user.",
-    "4006" => "Sorry there was an error getting the user's notifications."
+    "4006" => "Sorry there was an error getting the user's notifications.",
+    "4007" => "Sorry there was an error getting the favorited product ids.",
+    "4008" => "Sorry there was an error getting the favorited products."
 ];

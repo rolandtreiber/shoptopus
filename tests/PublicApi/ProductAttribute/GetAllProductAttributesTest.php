@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
-use App\Services\Local\Error\ErrorService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductAttribute\ProductAttributeRepository;
 
@@ -48,7 +47,7 @@ class GetAllProductAttributesTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                (new ProductAttributeRepository(new ErrorService, new ProductAttribute))->getSelectableColumns(false)
+                app()->make(ProductAttributeRepository::class)->getSelectableColumns(false)
             ]
         ]);
 
