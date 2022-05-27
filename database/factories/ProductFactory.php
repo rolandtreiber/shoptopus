@@ -27,7 +27,14 @@ class ProductFactory extends Factory
      */
     public function definition()
     {
-        $translated = $this->getTranslated($this->faker, ['name', 'short_description', 'description'], ['short', 'medium', 'long']);
+        $translated = $this->getTranslated($this->faker, ['name', 'short_description', 'description', 'headline', 'subtitle'], ['short', 'medium', 'long', 'medium', 'medium']);
+
+        $headline = null;
+        $subtitle = null;
+        if (env('APP_ENV') !== 'testing') {
+            $headline = $translated['headline'];
+            $subtitle = $translated['subtitle'];
+        }
 
         return [
             'name' => $translated['name'],
@@ -39,8 +46,8 @@ class ProductFactory extends Factory
             'stock' => $this->faker->numberBetween(1, 150),
             'backup_stock' => $this->faker->numberBetween(0, 150),
             'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers),
-            'headline' => null,
-            'subtitle' => null
+            'headline' => $headline,
+            'subtitle' => $subtitle
         ];
     }
 }

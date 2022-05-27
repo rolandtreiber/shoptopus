@@ -15,17 +15,16 @@ abstract class AdminControllerTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        //$this->refreshApplication();
-//        config(['app.locales_supported' => [
-//            'en' => ['English'],
-//            'de' => ['Deutsch']
-//        ]]);
-//        config(['app.default_currency' => [
-//            'name' => 'GBP',
-//            'symbol' => '£',
-//            'side' => 'left'
-//        ]]);
-        //$this->runDatabaseMigrations();
+        config(['app.locales_supported' => [
+            'en' => ['English'],
+            'de' => ['Deutsch'],
+            'fr' => ['French']
+        ]]);
+        config(['app.default_currency' => [
+            'name' => 'GBP',
+            'symbol' => '£',
+            'side' => 'left'
+        ]]);
         $this->seed();
     }
 

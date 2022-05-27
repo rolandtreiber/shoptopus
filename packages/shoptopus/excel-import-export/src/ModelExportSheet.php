@@ -32,6 +32,38 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
         $this->languages = config('excel_import_export.languages');
     }
 
+    /**
+     * @return string
+     */
+    public function getModelName(): string
+    {
+        return $this->modelName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getModelClass(): string
+    {
+        return $this->modelClass;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function getFields(): mixed
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @return array|mixed
+     */
+    public function getExportableRelationships(): mixed
+    {
+        return $this->exportableRelationships;
+    }
+
     public function collection()
     {
         $collection = (new $this->modelClass)->all();
@@ -41,7 +73,9 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
                 $translations = $item->getTranslations($translatableField);
                 $text = '';
                 foreach ($this->languages as $language) {
-                    $text .= $language . ': '. $translations[$language] . '; ';
+                    if (array_key_exists($language, $translations)) {
+                        $text .= $language . ': '. $translations[$language] . '; ';
+                    }
                 }
                 $item->$translatableField = $text;
             }
