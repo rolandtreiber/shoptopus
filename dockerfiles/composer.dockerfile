@@ -10,6 +10,6 @@ ENV GID=${GID}
 RUN delgroup dialout
 
 RUN addgroup -g ${GID} --system laravel
-RUN adduser -G laravel --system -D -s /bin/sh -u ${UID} laravel
+RUN adduser -G jenkins --system -D -s /bin/sh -u ${UID} jenkins
 
 WORKDIR /var/www/html
