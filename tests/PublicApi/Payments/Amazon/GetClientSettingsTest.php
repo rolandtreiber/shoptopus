@@ -2,12 +2,13 @@
 
 namespace Tests\PublicApi\Payments\Amazon;
 
+use Tests\PaymentTestCase;
 use Tests\TestCase;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class GetClientSettingsTest extends TestCase
+class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
 

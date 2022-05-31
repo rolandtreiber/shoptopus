@@ -216,7 +216,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
 
             $this->amazonClient = new Client([
                 'public_key_id' => $this->isProduction ? $this->config["PUBLIC_KEY_ID"]["value"] : $this->config["PUBLIC_KEY_ID"]["test_value"],
-                'private_key'   => Storage::get('/amazon/amazon_pay_private_key.pem'),
+                'private_key'   => Storage::disk('local')->get('/amazon/amazon_pay_private_key.pem'),
                 'region'        => $this->isProduction ? $this->config["REGION"]["value"] : $this->config["REGION"]["test_value"],
                 // 'sandbox'       => !$this->isProduction,
                 'sandbox'       => true

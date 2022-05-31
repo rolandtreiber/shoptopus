@@ -21,6 +21,7 @@
         </include>
     </coverage>
     <php>
+        <ini name="memory_limit" value="-1" />
         <server name="APP_ENV" value="testing"/>
         <server name="BCRYPT_ROUNDS" value="4"/>
         <server name="CACHE_DRIVER" value="array"/>

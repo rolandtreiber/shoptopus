@@ -2,6 +2,7 @@
 
 namespace Tests\PublicApi\Payments;
 
+use Tests\PaymentTestCase;
 use Tests\TestCase;
 use App\Models\Cart;
 use App\Models\Order;
@@ -9,7 +10,7 @@ use App\Enums\OrderStatus;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExecutePaymentTest extends TestCase
+class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
 

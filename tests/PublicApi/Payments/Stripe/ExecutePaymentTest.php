@@ -2,13 +2,13 @@
 
 namespace Tests\PublicApi\Payments\Stripe;
 
-use Tests\TestCase;
+use Tests\PaymentTestCase;
 use App\Models\Cart;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExecutePaymentTest extends TestCase
+class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
