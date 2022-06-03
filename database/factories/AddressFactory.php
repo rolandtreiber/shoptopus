@@ -23,7 +23,7 @@ class AddressFactory extends Factory
     public function definition() : array
     {
         return [
-            'address_line_1' => $this->faker->streetAddress,
+            'address_line_1' => str_replace("\n", ' ', $this->faker->streetAddress),
             'town' => $this->faker->city,
             'post_code' => $this->faker->postcode,
             'country' => 'UK',
