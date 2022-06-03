@@ -10,6 +10,11 @@ pipeline {
                 '''
             }
         }
+        stage("Clear all running docker containers") {
+            steps {
+                sh 'docker rm -f $(docker ps -a -q)'
+            }
+        }
         stage("Build Docker Containers") {
             steps {
                 sh 'docker compose build'
