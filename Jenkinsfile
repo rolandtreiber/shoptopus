@@ -12,7 +12,7 @@ pipeline {
         }
         stage("Clear all running docker containers") {
             steps {
-                sh 'docker compose rm -f $(docker ps -a -q)'
+                sh 'docker rm -f $(docker ps -a -q)'
             }
         }
         stage("Start Docker") {
