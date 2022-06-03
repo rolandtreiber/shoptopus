@@ -12,12 +12,12 @@ pipeline {
         }
         stage("Build Docker Containers") {
             steps {
-                sh 'docker compose build --no-cache'
+                sh 'docker compose build'
             }
         }
         stage("Start Docker") {
             steps {
-                sh 'docker compose up -d --no-color --wait'
+                sh 'docker compose up -d --no-color'
                 sh 'docker compose ps'
             }
         }
