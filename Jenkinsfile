@@ -1,12 +1,12 @@
 pipeline {
   agent any
-  stages {
-    stage('Prune docker data') {
+    stages {
+      stage("Prune docker data") {
       steps {
         sh 'docker system prune -a --volumes -f'
       }
     }
-    stage() {
+    stage("Prune Docker Data") {
       steps {
         sh 'docker compose up -d --no-color --wait'
         sh 'docker compose ps'
