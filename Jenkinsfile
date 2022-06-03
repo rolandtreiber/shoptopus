@@ -28,7 +28,7 @@ pipeline {
         }
         stage("Run Tests") {
             steps {
-                sh 'docker compose artisan test'
+                sh 'docker compose run --rm artisan test'
             }
         }
     }
