@@ -10,15 +10,20 @@ pipeline {
                 '''
             }
         }
-        stage("Prune docker data") {
+        stage("Build Docker Containers") {
             steps {
-                sh 'docker system prune -a --volumes -f'
+                sh 'docker compose build --no-cache'
             }
         }
-        stage("Prune Docker Data") {
+        stage("Start Docker") {
             steps {
                 sh 'docker compose up -d --no-color --wait'
                 sh 'docker compose ps'
+            }
+        }
+        stage("Run Composer Install") {
+            steps {
+                sh 'docker compose run --rm composer install'
             }
         }
     }
