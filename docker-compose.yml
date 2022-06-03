@@ -76,7 +76,7 @@ services:
     working_dir: /var/www/html
     depends_on:
       - php
-    user: laravel
+    user: jenkins
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - laravel
