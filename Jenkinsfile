@@ -15,11 +15,6 @@ pipeline {
                 sh 'docker compose rm -f $(docker ps -a -q)'
             }
         }
-        stage("Build Docker Containers") {
-            steps {
-                sh 'docker compose build'
-            }
-        }
         stage("Start Docker") {
             steps {
                 sh 'docker compose up -d --no-color'
@@ -29,6 +24,11 @@ pipeline {
         stage("Run Composer Install") {
             steps {
                 sh 'docker compose run --rm composer install'
+            }
+        }
+        stage("Run Tests") {
+            steps {
+                sh 'docker compose artisan test'
             }
         }
     }
