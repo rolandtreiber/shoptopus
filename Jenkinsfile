@@ -1,6 +1,15 @@
 pipeline {
     agent any
     stages {
+        stage("Verify tooling") {
+            steps {
+                sh '''
+                    docker info
+                    docker version
+                    docker compose version
+                '''
+            }
+        }
         stage("Prune docker data") {
             steps {
                 sh 'docker system prune -a --volumes -f'
