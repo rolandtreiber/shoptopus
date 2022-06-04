@@ -12,7 +12,11 @@ pipeline {
         }
         stage("Clear all running docker containers") {
             steps {
-                sh 'docker rm -f $(docker ps -a -q)'
+                try {
+                    sh 'docker rm -f $(docker ps -a -q)'
+                } catch (Exception e) {
+                    echo 'No running container to clear up...'
+                }
             }
         }
         stage("Start Docker") {
