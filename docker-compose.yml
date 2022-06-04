@@ -9,8 +9,9 @@ services:
       context: ./dockerfiles
       dockerfile: nginx.dockerfile
       args:
-        - UID=${UID:-961}
-        - GID=${GID:-961}
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
     container_name: nginx
     ports:
       - 80:80
@@ -46,8 +47,9 @@ services:
       context: ./dockerfiles
       dockerfile: php.dockerfile
       args:
-        - UID=${UID:-961}
-        - GID=${GID:-961}
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
     container_name: php
     volumes:
       - ./:/var/www/html:delegated
@@ -68,15 +70,16 @@ services:
       context: ./dockerfiles
       dockerfile: composer.dockerfile
       args:
-        - UID=${UID:-961}
-        - GID=${GID:-961}
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
     container_name: composer
     volumes:
       - ./:/var/www/html
     working_dir: /var/www/html
     depends_on:
       - php
-    user: jenkins
+    user: ${USER:-youruser}
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - laravel
@@ -99,8 +102,9 @@ services:
       context: ./dockerfiles
       dockerfile: php.dockerfile
       args:
-        - UID=${UID:-961}
-        - GID=${GID:-961}
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
     container_name: artisan
     volumes:
       - ./:/var/www/html:delegated
