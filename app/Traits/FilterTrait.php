@@ -38,6 +38,7 @@ trait FilterTrait
 //        $searchableColumns = $this->getSearchableColumnsInTable($tableName);
 
         if ($filters) {
+            $shouldGroupBy = false;
             $table_prefix = rtrim($tableName, '.') . '.';
             $local_name = Str::singular($tableName);
             $local_key = $table_prefix . 'id';
@@ -46,6 +47,7 @@ trait FilterTrait
 
             foreach ($this->filterableRelationships as $relation) {
                 if (array_key_exists($relation, $filters)) {
+                    $shouldGroupBy = true;
                     $singular_relation_name = Str::singular($relation);
                     $table = $this->getRelationshipTableName($local_name, $singular_relation_name);
 
@@ -127,6 +129,10 @@ trait FilterTrait
                 }
 
                 $count++;
+            }
+
+            if ($shouldGroupBy) {
+                $filter_string .= " GROUP BY {$local_key}";
             }
         }
 

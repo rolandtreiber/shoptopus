@@ -381,9 +381,10 @@ class GetAllProductsTest extends TestCase
         $attribute = ProductAttribute::factory()->create();
         $options = ProductAttributeOption::factory()->count(2)->create(['product_attribute_id' => $attribute->id]);
         $attribute->products()->attach($products[0]->id, ['product_attribute_option_id' => $options[0]->id]);
+        $attribute->products()->attach($products[0]->id, ['product_attribute_option_id' => $options[1]->id]);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'options' => implode(',', [$options[0]->id])
+            'options' => implode(',', [$options[0]->id, $options[1]->id])
         ]));
 
         $this->assertCount(1, $res->json('data'));
