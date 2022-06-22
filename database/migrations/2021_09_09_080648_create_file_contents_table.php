@@ -20,7 +20,7 @@ class CreateFileContentsTable extends Migration
             $table->uuid('id')->unique()->primary();
             $table->string('url');
             $table->string('file_name');
-            $table->nullableMorphs('fileable');
+            $table->uuidMorphs('fileable');
             $table->text('title')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('type')->default(FileType::Image);

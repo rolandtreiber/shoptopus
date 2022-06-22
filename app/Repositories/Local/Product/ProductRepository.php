@@ -2,7 +2,13 @@
 
 namespace App\Repositories\Local\Product;
 
+use App\Http\Resources\Admin\ProductAttributeOptionListResource;
+use App\Models\FileContent;
 use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
+use App\Models\ProductVariant;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use App\Enums\ProductAttributeType;
 use Illuminate\Support\Facades\Auth;
@@ -477,5 +483,65 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             : array_map(function($column_name){
                 return str_replace($this->model_table . '.', '', $column_name);
             }, $columns);
+    }
+
+    /**
+     * @param Product $product
+     * @param array $selectedAttributeOptionIds
+     * @return array
+     */
+    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = [])
+    {
+        $baseQuery = DB::table('product_attribute_product_variant')
+            ->join('product_variants as product_variant', 'product_variant.id', '=', 'product_attribute_product_variant.product_variant_id')
+            ->where('product_variant.product_id', '=', $product->id);
+
+        $variantAttributeOptionsQuery = $baseQuery
+            ->groupBy('product_variant.id')
+            ->select([
+                'product_variant.id',
+                'product_variant.stock',
+                'product_attribute_product_variant.product_attribute_id',
+                'product_attribute_product_variant.product_attribute_option_id',
+                'attribute_options'
+            ]);
+
+        if (count($selectedAttributeOptionIds) > 0) {
+            foreach ($selectedAttributeOptionIds as $attributeOptionId) {
+                $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
+            }
+        }
+
+        $allOptions = $variantAttributeOptionsQuery->pluck('attribute_options')->map(function($attributeOptions) {
+            return json_decode($attributeOptions);
+        })->toArray();
+
+        array_walk_recursive($allOptions, function($a) use (&$return) { $return[] = $a; });
+        $availableAttributeOptionIds = array_values(array_unique($return ?? []));
+        $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
+        $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
+        $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
+        $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
+        $files = FileContent::where('fileable_type', Product::class)
+            ->where('fileable_id', $product->id)
+            ->get();
+        $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
+            ->whereIn('fileable_id', $variantIds)
+            ->get();
+
+        return [
+            'available_attribute_options' => $availableAttributeOptionIds,
+            'variant_ids' => $variantIds,
+            'lowest_variant_price' =>
+                [
+                    'original' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                    'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                ],
+            'highest_variant_price' =>                 [
+                'original' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
+                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
+            ],
+            'files' => $files->merge($variantFiles)
+        ];
     }
 }

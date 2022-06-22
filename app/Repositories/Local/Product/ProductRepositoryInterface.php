@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Local\Product;
 
+use App\Models\Product;
+
 interface ProductRepositoryInterface {
 
     /**
@@ -72,4 +74,10 @@ interface ProductRepositoryInterface {
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true) : array;
 
+    /**
+     * @param Product $product
+     * @param array $selectedAttributeOptionIds
+     * @return mixed
+     */
+    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []);
 }

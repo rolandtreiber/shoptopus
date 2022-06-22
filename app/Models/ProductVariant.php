@@ -22,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property double $price
  * @property mixed $sku
  * @property boolean $enabled
+ * @property array $attribute_options
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
@@ -66,7 +67,8 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'product_id' => 'string',
         'price' => 'decimal:2',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
+        'attribute_options' => 'array'
     ];
 
     /**

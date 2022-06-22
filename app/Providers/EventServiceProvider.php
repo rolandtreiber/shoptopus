@@ -17,6 +17,7 @@ use App\Models\ProductTag;
 use App\Models\ProductVariant;
 use App\Models\Rating;
 use App\Models\User;
+use App\Models\VariantAttribute;
 use App\Models\VoucherCode;
 use App\Observers\AccessTokenObserver;
 use App\Observers\BannerObserver;
@@ -32,6 +33,7 @@ use App\Observers\ProductTagObserver;
 use App\Observers\ProductVariantObserver;
 use App\Observers\RatingObserver;
 use App\Observers\UserObserver;
+use App\Observers\VariantAttributeObserver;
 use App\Observers\VoucherCodeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -78,5 +80,6 @@ class EventServiceProvider extends ServiceProvider
         Payment::observe(PaymentObserver::class);
         Banner::observe(BannerObserver::class);
         Module::enabled('ratings') && Rating::observe(RatingObserver::class);
+        VariantAttribute::observe(VariantAttributeObserver::class);
     }
 }

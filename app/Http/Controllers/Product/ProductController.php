@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Requests\Product\FavoriteProductRequest;
+use App\Http\Requests\Product\ProductAvailableAttributeOptionsRequest;
+use App\Models\Product;
+use App\Repositories\Local\Product\ProductRepositoryInterface;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Local\Product\ProductServiceInterface;
@@ -10,10 +13,12 @@ use App\Services\Local\Product\ProductServiceInterface;
 class ProductController extends Controller
 {
     private ProductServiceInterface $productService;
+    private ProductRepositoryInterface $productRepository;
 
-    public function __construct(ProductServiceInterface $productService)
+    public function __construct(ProductServiceInterface $productService, ProductRepositoryInterface $productRepository)
     {
         $this->productService = $productService;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -84,5 +89,19 @@ class ProductController extends Controller
         } catch (\Exception | \Error $e) {
             return $this->errorResponse($e, __("error_messages." . $e->getCode()));
         }
+    }
+
+    /**
+     * @param Request $request
+     * @param string $slug
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getAvailableAttributeOptionsForProduct(Product $product, ProductAvailableAttributeOptionsRequest $request) : \Illuminate\Http\JsonResponse
+    {
+      try {
+            return response()->json($this->productRepository->getAvailableAttributeOptions($product, $request->selected_attribute_options ?: []));
+      } catch (\Exception | \Error $e) {
+          return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+      }
     }
 }

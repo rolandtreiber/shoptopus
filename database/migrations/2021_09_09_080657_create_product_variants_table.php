@@ -24,6 +24,7 @@ class CreateProductVariantsTable extends Migration
             $table->unsignedBigInteger('stock')->default(0);
             $table->string('sku', 50)->unique()->nullable();
             $table->text('description')->nullable();
+            $table->json('attribute_options')->nullable();
             $table->boolean('enabled')->default(true);
             $table->softDeletes();
             $table->timestamps();
