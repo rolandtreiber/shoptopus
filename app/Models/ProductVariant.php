@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property mixed $sku
  * @property boolean $enabled
  * @property array $attribute_options
+ * @property string $name
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
 {

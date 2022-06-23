@@ -4,6 +4,7 @@ namespace Database\Seeders\TestData;
 
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Exception;
 use Illuminate\Database\Seeder;
 
@@ -30,14 +31,25 @@ class CartSeeder extends Seeder
             $used[] = $selectedCartId;
             $selectedCart = Cart::find($selectedCartId);
 
-            $usedProductTypes = [];
+            $usedProducts = [];
             $productTypesToAddCount = random_int(1, $products);
             for ($n = 0; $n < $productTypesToAddCount; $n++) {
                 do {
                     $selectedProductId = (new Product)->findNthId(random_int(1, $products));
-                } while (in_array($selectedProductId, $usedProductTypes));
-                $usedProductTypes[] = $selectedProductId;
-                $selectedCart->products()->attach($selectedProductId, ['quantity' => random_int(1, 10)]);
+                } while (in_array($selectedProductId, $usedProducts));
+                $usedProducts[] = $selectedProductId;
+                $productVariantId = null;
+                $variantsCount = ProductVariant::where('product_id', $selectedProductId)->count();
+                if ($variantsCount > 0) {
+                    $variants = ProductVariant::where('product_id', $selectedProductId)->get();
+                    $productVariantId = ($variants[random_int(1, $variantsCount-1)])->id;
+                }
+                $selectedCart->products()->attach($selectedProductId,
+                    [
+                        'quantity' => random_int(1, 10),
+                        'product_variant_id' => $productVariantId
+                    ]
+                );
             }
         }
     }

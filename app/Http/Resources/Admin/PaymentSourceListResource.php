@@ -19,12 +19,14 @@ class PaymentSourceListResource extends JsonResource
     public function toArray($request): array
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'exp_month' => $this->exp_month,
             'exp_year' => $this->exp_year,
             'last_four' => $this->last_four,
             'brand' => $this->brand,
-            'payment_method_id' => $this->payment_method_id
+            'payment_method_id' => $this->payment_method_id,
+            'added' => $this->created_at->format('d-m-Y H:i')
         ];
     }
 }

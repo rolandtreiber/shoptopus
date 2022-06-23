@@ -541,7 +541,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 'original' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
                 'discounted' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
             ],
-            'files' => $files->merge($variantFiles)
+            'files' => $files->merge($variantFiles),
+            'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock')
         ];
     }
 }

@@ -20,9 +20,17 @@ class CartProductListResource extends JsonResource
      */
     public function toArray($request)
     {
-        $totalOriginalPrice = $this->price * $this->pivot->quantity;
-        $totalFinalPrice = $this->final_price * $this->pivot->quantity;
-        $totalDiscount = $totalOriginalPrice - $totalFinalPrice;
+        if ($this->pivot->product_variant_id) {
+            /** @var ProductVariant $variant */
+            $variant = ProductVariant::find($this->pivot->product_variant_id);
+            $totalOriginalPrice = round($variant->price * $this->pivot->quantity, 2);
+            $totalFinalPrice = round($variant->final_price * $this->pivot->quantity, 2);
+            $totalDiscount = round($totalOriginalPrice - $totalFinalPrice, 2);
+        } else {
+            $totalOriginalPrice = round($this->price * $this->pivot->quantity, 2);
+            $totalFinalPrice = round($this->final_price * $this->pivot->quantity, 2);
+            $totalDiscount = round($totalOriginalPrice - $totalFinalPrice, 2);
+        }
 
         return [
             'name' => $this->getTranslations('name'),
@@ -30,7 +38,9 @@ class CartProductListResource extends JsonResource
             'price' => $totalOriginalPrice,
             'discount' => $totalDiscount,
             'final_price' => $totalFinalPrice,
-            'variant' => ProductVariantResource::make(ProductVariant::find($this->pivot->product_variant_id))
+            'item_full_price' => round($this->price, 2),
+            'item_final_price' => round($this->final_price, 2),
+            'variant' => ProductVariantListResource::make(ProductVariant::find($this->pivot->product_variant_id))
         ];
     }
 }
