@@ -1,62 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+```
+       MMMMMMMMM                                                                                                        
+     MMMMMMMMMMMMM                  MMM                                                                                 
+    MMMMMMMMMMMMMMM                 MMM                               OMM~                                              
+    MMMMMMMMMMMMMMMM                MMM            .                  OMM=                   .            .             
+   MMMMMMMMMMMMMMMMM        ~MMMMM  MMM?MMMMM  . MMMMMM    MMMMMMMM  7MMMMMM   MMMMMM    MMMMMMMM   MMM    MMM .MMMMMM  
+   MMMM. MMMMM. MMMM.      ZMMMMMM, MMMM  MMMM. MMMMMMMMM  MMMM MMMM 7MMMMMM .MMMMOMMMM  MMMM $MMM  MMM    MMM MMMMMMM  
+  . MMMMMMMMMMMMMMMD       +MMMI    MMM    MMM MMM    MMM. MM.   +MMM 7MM7   MMM   .MMM  MMM    MMM MMM    MMM MMMM     
+.MM :MMMMMMMMMNMMMM MMM      NMMMMM MMM    MMM.MMM    MMM  MM     MMM 7MM7   MMM    OMM7 MMM   .MMM.MMM    MMM   MMMMMO 
+MMM. MMMMMM=8MMMMM  MMM     MM .MMM.MMM    MMM NMMM  MMMM  MMM   MMM   MMM    MMM. +MMM  MMM:  MMMM MMM$  MMMM  MM  MMM 
+MMMMMMMMMMMMMMMMMMMMMMM     MMMMMMZ MMM    MMM   MMMMMMM   MMMMMMMM .  MMMMM  .MMMMMMM   MMMMMMMMI   MMMMMMMMM DMMMMMM. 
+IMMMMMMMMMMMMMMMMMMMMMM      .  .                  .       MMM                           MMM .                          
+  MMMMMMMMMMMMMMMMMMM                                      MMM                           MMM                            
+ .MMMMMMMMM MMMMMMMMM                                      MMM                           MMM                            
+  MMMMMMM     MMMMMMMN  
+```  
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# Introduction
+Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel.
 
-## About Laravel
+# Installation
+## Docker
+- Use the official [guide](https://docs.docker.com/engine/install/) to install docker on your system
+- Use the official [guide](https://docs.docker.com/compose/install/) to install docker compose
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Start the containers
+- Run `$ docker-compose up -d`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Composer packages
+- Run `$ docker-compose run composer install`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Set the databases host
+> In order to let the containers talk to each other, we need their ips.
+- Run `docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)`
 
-## Learning Laravel
+You should see an output similar to this:
+```
+/shoptopus_artisan_run_50ccf76b1cf3 - 
+/shoptopus_artisan_run_9e0b7c656046 - 
+/shoptopus_artisan_run_8531083b13ac - 
+/artisan - 
+/nginx - 172.22.0.5
+/composer - 
+/php - 172.22.0.3
+/npm - 
+/mailhog - 172.22.0.6
+/mysql - 172.22.0.2
+/redis - 172.22.0.4
+```
+- Take the ip of the mysql container (yours will be different)
+- Update the `DB_HOST` in your .env file for both the `shoptopus` and `shoptopus_logs` databases.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Clear the config
+- Run `$ docker-compose run artisan optimize:clear`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Migrations and test data
+- Run `$ docker-compose run artisan shop:fresh --seed`
 
-## Laravel Sponsors
+## Tests
+- Run `$ docker-compose run artisan test`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Connect to the databases
+Both databases are available on `127.0.0.1:3306`  
+Local development credentials are `homestead` and `secret`  
+The databases are `shoptopus` and `shoptopus_logs`
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Commands
+You can use artisan and composer commands as normal, however you need to **prepend docker-compose run**
+### Examples
+`$ php artisan tinker` -> `$ docker-compose run php artisan tinker`
+`$ php artisan test` -> `$ docker-compose run php artisan test`
+`$ php artisan composer install` -> `$ docker-compose run composer install`
