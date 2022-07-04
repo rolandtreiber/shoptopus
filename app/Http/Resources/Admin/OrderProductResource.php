@@ -33,7 +33,7 @@ class OrderProductResource extends JsonResource
             'name' => $this->pivot->getTranslations('name'),
             'variant' => $productVariant,
             'sku' => $productVariant ? $productVariant->sku : $this->sku,
-            'amount' => $this->pivot->quantity,
+            'amount' => $this->pivot->amount,
             'original_unit_price' => round((float) $this->pivot->original_unit_price, 2),
             'unit_price' => round((float) $this->pivot->unit_price, 2),
             'full_price' => round((float) $this->pivot->full_price, 2),
