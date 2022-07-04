@@ -90,7 +90,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "composer/package-versions-deprecated": false
-        }
+        },
+        "discard-changes": true
     },
     "minimum-stability": "dev",
     "prefer-stable": true
