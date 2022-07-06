@@ -44,6 +44,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property Collection $payment_sources
  * @property Collection $payments
  * @property Cart $cart
+ * @property mixed $unreadNotifications
  */
 class User extends Authenticatable implements Auditable, Exportable
 {
