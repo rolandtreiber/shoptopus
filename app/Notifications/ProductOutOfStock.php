@@ -28,7 +28,7 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
      */
     public function via(): array
     {
-        return ['broadcast', 'database', 'mail'];
+        return ['broadcast', 'database'];
     }
 
     public function broadcastOn(): PrivateChannel

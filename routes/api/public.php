@@ -10,6 +10,7 @@ Route::group(['middleware' => ['auth:api', 'set.locale']], function () {
 
     Route::prefix('notifications')->group(function () {
         Route::get('/', [NotificationController::class, 'index']);
+        Route::get('/latest', [NotificationController::class, 'latest']);
         Route::patch('clear', [NotificationController::class, 'clear']);
         Route::get('/{notification}', [NotificationController::class, 'show']);
     });
