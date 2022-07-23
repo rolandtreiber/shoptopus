@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ListRequest;
+use App\Http\Resources\Admin\ProductTagListResource;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Resources\NotificationResource;
@@ -16,10 +19,11 @@ class NotificationController extends Controller
      * @param Request $request
      * @return AnonymousResourceCollection
      */
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(ListRequest $request): AnonymousResourceCollection
     {
+        /** @var User $user */
         $user = Auth()->user();
-        return NotificationResource::collection($user->notifications()->paginate(15));
+        return NotificationResource::collection(Notification::filtered([], $request)->view($request->view)->where('notifiable_type', User::class)->where('notifiable_id', $user->id)->paginate($request->paginate));
     }
 
     public function latest(Request $request): AnonymousResourceCollection

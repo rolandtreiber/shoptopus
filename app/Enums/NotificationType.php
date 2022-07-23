@@ -2,6 +2,10 @@
 
 namespace App\Enums;
 
+use App\Notifications\NewOrder;
+use App\Notifications\ProductOutOfStock;
+use App\Notifications\ProductRunningLow;
+use App\Notifications\UserSignup;
 use BenSampo\Enum\Enum;
 
 /**
@@ -11,5 +15,20 @@ use BenSampo\Enum\Enum;
  */
 final class NotificationType extends Enum
 {
-    const PrivateChatRequest =   0;
+    const NewOrderPlaced = [
+        'type' => 'new-order',
+        'className' => NewOrder::class
+    ];
+    const ProductOutOfStock = [
+        'type' => 'product-out-of-stock',
+        'className' => ProductOutOfStock::class
+    ];
+    const ProductRunningLow = [
+        'type' => 'product-running-low',
+        'className' => ProductRunningLow::class
+    ];
+    const UserSignup = [
+        'type' => 'user-signup',
+        'className' => UserSignup::class
+    ];
 }
