@@ -8,7 +8,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 
-class BaseNotification  extends Notification implements ShouldBroadcastNow {
+class BaseNotification extends Notification implements ShouldBroadcastNow {
 
     use Queueable, SerializesModels, InteractsWithSockets;
 

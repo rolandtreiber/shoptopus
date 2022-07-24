@@ -1,5 +1,11 @@
 <?php
 
+use App\Enums\UserRole;
+use App\Notifications\NewOrder;
+use App\Notifications\ProductOutOfStock;
+use App\Notifications\ProductRunningLow;
+use App\Notifications\UserSignup;
+
 return [
     'user_avatar_dimensions' => [400, 400],
     'menu_image_dimensions' => [200, 200],
@@ -23,5 +29,29 @@ return [
     'super_user' => [
         'name' => env('SUPER_USER_NAME', 'Super User'),
         'email' => env('SUPER_USER_EMAIL', 'superuser@email.com')
+    ],
+    'notifications' => [
+        ProductOutOfStock::class => [
+            UserRole::StoreManager,
+            UserRole::StoreAssistant,
+            UserRole::SuperAdmin,
+            UserRole::Admin,
+        ],
+        ProductRunningLow::class => [
+            UserRole::StoreManager,
+            UserRole::StoreAssistant,
+            UserRole::SuperAdmin,
+            UserRole::Admin,
+        ],
+        UserSignup::class => [
+            UserRole::StoreManager,
+            UserRole::SuperAdmin,
+            UserRole::Admin,
+        ],
+        NewOrder::class => [
+            UserRole::StoreManager,
+            UserRole::StoreAssistant,
+            UserRole::SuperAdmin,
+        ]
     ]
 ];
