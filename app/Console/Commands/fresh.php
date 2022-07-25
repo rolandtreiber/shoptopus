@@ -29,6 +29,8 @@ class fresh extends Command
      */
     public function handle(): int
     {
+        $file = new Filesystem;
+        $file->cleanDirectory('public/uploads');
         $seed = $this->option('seed');
         $this->call('db:wipe', ['--database' => 'logs']);
         if ($seed !== true) {
@@ -56,8 +58,6 @@ class fresh extends Command
 
         file_put_contents('.env', $envFile);
         $this->info('.env file updated with new id / secret: ' . $id . ' / ' . $secret);
-        $file = new Filesystem;
-        $file->cleanDirectory('public/uploads');
         return 1;
     }
 }

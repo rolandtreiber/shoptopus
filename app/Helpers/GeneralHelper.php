@@ -3,8 +3,11 @@
 namespace App\Helpers;
 
 use App\Enums\DiscountType;
+use App\Enums\FileType;
 use App\Enums\RandomStringMode;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class GeneralHelper {
 
@@ -129,5 +132,27 @@ class GeneralHelper {
         } else {
             return $amount . config('app.default_currency.symbol');
         }
+    }
+
+    public static function getRandomPhotoFromSamples()
+    {
+        $dir = storage_path('app/test-data-images');
+        $files = glob($dir . '/*.*');
+        $file = $files[array_rand($files)];
+
+        $contents = file_get_contents($file);
+
+        $extension = 'jpg';
+        $fileName = Str::random(40) . '.' . $extension;
+
+        Storage::disk('local')->delete('public/uploads/' . $fileName);
+        Storage::disk('uploads')->put($fileName, $contents);
+        $url = config('app.url') . '/uploads/' . $fileName;
+
+        return [
+            'type' => FileType::Image,
+            'url' => $url,
+            'file_name' => $fileName
+        ];
     }
 }

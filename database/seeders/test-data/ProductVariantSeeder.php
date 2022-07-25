@@ -56,12 +56,12 @@ class ProductVariantSeeder extends Seeder
         $used = [];
         for ($i = 0; $i < 3; $i++) {
             do {
-                $productId = (new Product)->findNthId(rand(1, Product::count()));
+                $productId = rand(1, Product::count());
             } while (in_array($productId, $used));
             $used[] = $productId;
             $attribute = ProductAttribute::find((new ProductAttribute)->findNthId(rand(1, ProductAttribute::count())));
             $options = $attribute->options;
-            Product::find($productId)->product_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
+            (new Product)->findNth($productId)->product_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
         }
 
     }

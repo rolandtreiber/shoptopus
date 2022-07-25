@@ -25,23 +25,25 @@ class ProductSeeder extends Seeder
             $product->product_categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
         }
 
-        $taggedCount = Product::count()-1;
+        $taggedCount = Product::count() / 2;
+        $productTotalCount = Product::count() - 1;
 
         $used = [];
         for ($i = 0; $i < $taggedCount; $i++) {
             do {
-                $productId = random_int(1, Product::count()-1);
+                $productId = random_int(1, $productTotalCount);
             } while (in_array($productId, $used));
             $used[] = $productId;
 
-            $tagsCount = random_int(1, ProductTag::count());
+            $tagsCount = random_int(1, ProductTag::count() / 3);
+            $productTagTotalCount = ProductTag::count()-2;
             $usedTags = [];
             for ($n = 1;$n < $tagsCount; $n++) {
                 do {
-                    $tagId = (new ProductTag)->findNthId(rand(1, ProductTag::count()-1));
+                    $tagId = rand(1, $productTagTotalCount);
                 } while (in_array($tagId, $usedTags));
                 $usedTags[] = $tagId;
-                (new Product())->findNth($productId)->product_tags()->attach($tagId);
+                (new Product())->findNth($productId)->product_tags()->attach((new ProductTag)->findNthId($tagId));
             }
         }
 
