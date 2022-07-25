@@ -21,7 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->json('payment');
             $table->json('products');
             $table->json('voucher_code')->nullable();
-            $table->json('delivery_type');
+            $table->json('delivery_type')->nullable();
             $table->json('totals');
             $table->boolean('valid')->default(true);
             $table->string('slug');

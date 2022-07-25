@@ -2,16 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Enums\FileType;
 use App\Helpers\GeneralHelper;
 use App\Models\Product;
 use App\Models\FileContent;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class FileContentFactory extends Factory
 {
