@@ -3,6 +3,8 @@
 namespace App\Services\Local\Auth;
 
 use App\Models\User;
+use App\Repositories\Admin\User\UserRepository;
+use App\Repositories\Admin\User\UserRepositoryInterface;
 use Illuminate\Support\Str;
 use App\Events\UserSignedUp;
 use Illuminate\Http\Request;
@@ -24,19 +26,22 @@ class AuthService implements AuthServiceInterface
     private CartServiceInterface $cartService;
     private SocialAccountServiceInterface $socialAccountService;
     private NotificationServiceInterface $notificationService;
+    private UserRepositoryInterface $userRepository;
 
     public function __construct(
         ErrorServiceInterface $errorService,
         UserServiceInterface $userServiceInterface,
         CartServiceInterface $cartService,
         SocialAccountServiceInterface $socialAccountServiceInterface,
-        NotificationServiceInterface $notificationService
+        NotificationServiceInterface $notificationService,
+        UserRepository $userRepository
     ) {
         $this->errorService = $errorService;
         $this->userService = $userServiceInterface;
         $this->cartService = $cartService;
         $this->socialAccountService = $socialAccountServiceInterface;
         $this->notificationService = $notificationService;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -102,7 +107,7 @@ class AuthService implements AuthServiceInterface
 
                 $user = $this->userService->post($data, false);
 
-                UserSignedUp::dispatch($user);
+                $this->userRepository->triggerNewUserRegistrationNotification($user);
             }
 
             if (!$user->hasVerifiedEmail()) {

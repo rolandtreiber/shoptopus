@@ -12,6 +12,10 @@ class DiscountRuleRepository implements DiscountRuleRepositoryInterface
 
     use TimeperiodHelperTrait;
 
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function bulkExpire(array $ids): bool
     {
         try {
@@ -22,6 +26,10 @@ class DiscountRuleRepository implements DiscountRuleRepositoryInterface
         }
     }
 
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function bulkStart(array $ids): bool
     {
         try {
@@ -50,6 +58,10 @@ class DiscountRuleRepository implements DiscountRuleRepositoryInterface
         }
     }
 
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function bulkDelete(array $ids): bool
     {
         try {

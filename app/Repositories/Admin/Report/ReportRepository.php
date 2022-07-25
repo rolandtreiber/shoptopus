@@ -24,6 +24,10 @@ class ReportRepository implements ReportRepositoryInterface
         $this->reportService = $reportService;
     }
 
+    /**
+     * @param array $controls
+     * @return array
+     */
     public function getSignupsOverTime(array $controls): array
     {
         $start = $controls['start'];
@@ -46,6 +50,10 @@ class ReportRepository implements ReportRepositoryInterface
         return $service->getApexChartsResponse();
     }
 
+    /**
+     * @param array $controls
+     * @return array
+     */
     public function getRevenueOverTime(array $controls): array
     {
         $service = $this->getChartData([
@@ -82,6 +90,8 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @param array $controls
+     * @param null $categoryId
      * @return array
      */
     public function getProductBreakdown(array $controls, $categoryId = null): array
@@ -177,6 +187,7 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
+     * @param array $controls
      * @return array
      */
     public function getOrdersByStatusChartData(array $controls): array
@@ -262,6 +273,10 @@ class ReportRepository implements ReportRepositoryInterface
         return $query->sum('total_price') . ' (' . $query->count() . ')';
     }
 
+    /**
+     * @param array $controls
+     * @return string[]
+     */
     public function getSalesStats(array $controls): array
     {
         $start = $controls['start'];

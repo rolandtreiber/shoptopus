@@ -7,14 +7,18 @@ use App\Enums\EventLogType;
 use App\Models\DeliveryType;
 use App\Repositories\Admin\Eventlog\EventLogRepository;
 use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
+use App\Repositories\Admin\Order\OrderRepository;
+use App\Repositories\Admin\Order\OrderRepositoryInterface;
 
 class OrderObserver
 {
     private EventLogRepositoryInterface $eventLogRepository;
+    private OrderRepositoryInterface $orderRepository;
 
-    public function __construct(EventLogRepository $eventLogRepository)
+    public function __construct(EventLogRepository $eventLogRepository, OrderRepository $orderRepository)
     {
         $this->eventLogRepository = $eventLogRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     /**
@@ -29,6 +33,17 @@ class OrderObserver
             $order->delivery_cost = $order->delivery_type->price;
         }
         $this->eventLogRepository->create(Order::class, $order, EventLogType::StatusChange, ['status' => $order->status]);
+    }
+
+    /**
+     * Listen to the Order updating event.
+     *
+     * @param Order $order
+     * @return void
+     */
+    public function created(Order $order)
+    {
+        $this->orderRepository->triggerNewOrderNotification($order);
     }
 
     /**

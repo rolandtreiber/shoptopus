@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 class RatingRepository implements RatingRepositoryInterface
 {
 
+    /**
+     * @param array $ids
+     * @param bool $verifiedStatus
+     * @return bool
+     */
     public function bulkUpdateAVerifiedStatus(array $ids, bool $verifiedStatus): bool
     {
         try {
@@ -17,6 +22,11 @@ class RatingRepository implements RatingRepositoryInterface
         }
     }
 
+    /**
+     * @param array $ids
+     * @param bool $availability
+     * @return bool
+     */
     public function bulkUpdateAvailability(array $ids, bool $availability): bool
     {
         try {

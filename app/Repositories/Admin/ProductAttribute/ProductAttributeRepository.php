@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class ProductAttributeRepository implements ProductAttributeRepositoryInterface
 {
 
+    /**
+     * @param array $ids
+     * @param bool $availability
+     * @return bool
+     */
     public function bulkUpdateAvailability(array $ids, bool $availability): bool
     {
         try {
@@ -18,6 +23,10 @@ class ProductAttributeRepository implements ProductAttributeRepositoryInterface
         }
     }
 
+    /**
+     * @param array $ids
+     * @return bool
+     */
     public function bulkDelete(array $ids): bool
     {
         try {

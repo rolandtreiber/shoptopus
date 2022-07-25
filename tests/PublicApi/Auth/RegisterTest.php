@@ -119,32 +119,6 @@ class RegisterTest extends TestCase
     /**
      * @test
      * @group apiPost
-     * @see https://github.com/laravel/framework/issues/19952
-     */
-    public function it_dispatches_the_correct_event()
-    {
-        $initialDispatcher = Event::getFacadeRoot();
-        Event::fake();
-        Model::setEventDispatcher($initialDispatcher);
-
-        $this->artisan('passport:install');
-
-        $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
-        ];
-
-        $this->sendRequest($data);
-
-        Event::assertDispatched(UserSignedUp::class);
-    }
-
-    /**
-     * @test
-     * @group apiPost
      */
     public function it_sends_an_email_notification_upon_successful_registration()
     {
