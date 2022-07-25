@@ -19,6 +19,8 @@ use Database\Seeders\TestData\ProductVariantSeeder;
 use Database\Seeders\TestData\RatingSeeder;
 use Database\Seeders\TestData\UserSeeder;
 use Database\Seeders\TestData\VoucherCodeSeeder;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification as NotificationFacade;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,6 +31,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        Mail::fake();
+        NotificationFacade::fake();
         switch (config('app.env')) {
             case 'testing':
                 $this->call([
