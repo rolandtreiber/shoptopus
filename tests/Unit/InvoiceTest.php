@@ -2,45 +2,14 @@
 
 namespace Tests\Unit;
 
-use App\Models\DeliveryType;
-use App\Models\Invoice;
-use App\Models\Order;
-use App\Models\Payment;
-use App\Models\PaymentSource;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Tests\InvoicesTestCase;
 
 /**
  * @group invoices
  */
-class InvoiceTest extends TestCase
+class InvoiceTest extends InvoicesTestCase
 {
-    use RefreshDatabase;
-
-    protected $order;
-    protected $invoice;
-    protected $payment;
-    protected $token;
-
-    public function setUp() : void
-    {
-        parent::setUp();
-
-        $this->order = Order::factory()->state([
-            'delivery_type_id' => DeliveryType::factory()
-        ])->create();
-    }
-
-    private function createPayment()
-    {
-        $this->payment = Payment::factory()->state([
-            'payable_type' => Order::class,
-            'payable_id' => $this->order->id,
-            'payment_source_id' => PaymentSource::factory()
-        ])->create();
-        $this->invoice = Invoice::where('order_id', $this->order->id)->first();
-    }
 
     /**
      * @test
