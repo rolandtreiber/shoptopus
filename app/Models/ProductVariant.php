@@ -125,15 +125,6 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
             ->using(VariantAttribute::class);
     }
 
-    public function updateParentStock()
-    {
-        /** @var Product $product */
-        $product = $this->product;
-        $variantSumStock = $product->product_variants->pluck('stock')->sum();
-        $product->stock = $variantSumStock;
-        $product->save();
-    }
-
     /**
      * @return array
      */
