@@ -142,30 +142,18 @@ class ProductVariantControllerTest extends AdminControllerTestCase
      */
     public function test_variant_update_updates_parent_stock()
     {
-        Storage::fake('uploads');
-        $product = Product::factory()->state([
-            'stock' => 14
-        ])->create();
+        $product = Product::factory()->create(['stock' => 14]);
 
-        $this->assertEquals(14, $product->stock);
-
-        $attribute1 = ProductAttribute::factory()->create();
-        $attributeOption1 = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute1->id
-        ])->create();
-        $attributeOption2 = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute1->id
-        ])->create();
-        $productVariant1 = ProductVariant::factory()->state([
+        $productVariant1 = ProductVariant::factory()->create([
             'product_id' => $product->id,
             'stock' => 5
-        ])->create();
-        $productVariant2 = ProductVariant::factory()->state([
+        ]);
+
+        $productVariant2 = ProductVariant::factory()->create([
             'product_id' => $product->id,
             'stock' => 3
-        ])->create();
-        $productVariant1->product_variant_attributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
-        $productVariant2->product_variant_attributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption2->id]);
+        ]);
+
         $product->refresh();
 
         $this->assertEquals(8, $product->stock);
@@ -177,6 +165,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         ]), [
             'stock' => 2,
         ]);
+        
         $product->refresh();
 
         $this->assertEquals(5, $product->stock);

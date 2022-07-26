@@ -6,7 +6,7 @@ use App\Models\ProductVariant;
 
 class ProductVariantObserver
 {
-    public function updated(ProductVariant $productVariant)
+    public function saved(ProductVariant $productVariant)
     {
         $productVariant->product->recalculateStock();
     }
