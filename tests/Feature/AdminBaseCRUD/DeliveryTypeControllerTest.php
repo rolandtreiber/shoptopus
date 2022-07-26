@@ -56,7 +56,7 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $response
             ->assertJson(fn (AssertableJson $json) =>
             $json->where('data.id', $deliveryType->id)
-                ->where('data.price', $deliveryType->price)
+                ->where('data.price', (float) $deliveryType->price)
                 ->where('data.enabled', $deliveryType->enabled)
                 ->where('data.enabled_by_default_on_creation', $deliveryType->enabled_by_default_on_creation)
                 ->etc());
