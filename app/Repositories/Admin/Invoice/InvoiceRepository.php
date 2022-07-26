@@ -2,9 +2,12 @@
 
 namespace App\Repositories\Admin\Invoice;
 
+use App\Enums\AccessTokenType;
 use App\Enums\PaymentType;
+use App\Models\AccessToken;
 use App\Models\Invoice;
 use App\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -29,10 +32,16 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         $invoice->user_id = $order->user->id;
         $invoice->order_id = $order->id;
         $invoice->address = $order->address;
-        $invoice->payment = $payment;
+        $invoice->payment = [
+            'amount' => $payment->amount,
+            'created_at' => Carbon::parse($payment->created_at)->format('d-m-Y H:i'),
+            'payment_ref' => $payment->payment_ref,
+            'source' => $payment->payment_source
+        ];
         $invoice->products =  $products->map(function($product) {
             $result = [
                 'id' => $product->pivot->id,
+                'sku' => $product->sku,
                 'name' => $product->pivot->name,
                 'type' => $product->pivot->product_variant_id !== null ? 'product_variant': 'product',
                 'amount' => $product->pivot->amount,
@@ -59,6 +68,15 @@ class InvoiceRepository implements InvoiceRepositoryInterface
         ];
 
         $invoice->save();
+
+        $accessToken = new AccessToken();
+        $accessToken->accessable_type = Invoice::class;
+        $accessToken->accessable_id = $invoice->id;
+        $accessToken->user_id = $order->user_id;
+        $accessToken->issuer_user_id = $order->user_id;
+        $accessToken->type = AccessTokenType::Invoice;
+        $accessToken->save();
+
         return $invoice;
     }
 

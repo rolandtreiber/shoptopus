@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AccessTokenType;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -18,11 +19,12 @@ class CreateAccessTokensTable extends Migration
 
         Schema::create('access_tokens', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
-            $table->string('type');
+            $table->integer('type')->default(AccessTokenType::General);
             $table->string('token', 120);
+            $table->uuidMorphs('accessable');
             $table->foreignUuid('user_id')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignUuid('issuer_user_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('expiry');
+            $table->timestamp('expiry')->nullable();
             $table->timestamps();
         });
 
