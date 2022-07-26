@@ -202,6 +202,14 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         return $this->hasMany(ProductVariant::class);
     }
 
+    /**
+     * @return void
+     */
+    public function recalculateStock() : void
+    {
+        $this->update(['stock' => $this->product_variants->pluck('stock')->sum()]);
+    }
+
 
     /**
      * Updated at accessor

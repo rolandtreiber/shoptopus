@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use App\Models\FileContent;
-use App\Models\ProductAttribute;
-use App\Models\ProductAttributeOption;
 use Tests\TestCase;
 use App\Models\Product;
 use Illuminate\Support\Str;
+use App\Models\FileContent;
 use App\Models\ProductVariant;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductVariantTest extends TestCase
@@ -116,5 +116,23 @@ class ProductVariantTest extends TestCase
         $this->assertInstanceOf(ProductAttribute::class, $attr_variant);
 
         $this->assertInstanceOf(ProductAttributeOption::class, $attr_variant->pivot->option);
+    }
+
+    /** @test */
+    public function it_updates_the_parent_product_stock_value_correctly_when_saved()
+    {
+        $this->product_variant->product->update(['stock' => 5]);
+
+        $this->product_variant->update(['stock' => 2]);
+
+        $this->assertEquals(2, $this->product_variant->product->stock);
+    }
+
+    /** @test */
+    public function it_updates_the_parent_product_stock_value_correctly_when_deleted()
+    {
+        $this->product_variant->delete();
+
+        $this->assertEquals(0, $this->product_variant->product->fresh()->stock);
     }
 }

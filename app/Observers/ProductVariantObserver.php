@@ -6,15 +6,13 @@ use App\Models\ProductVariant;
 
 class ProductVariantObserver
 {
-
-    public function saved(ProductVariant $productVariant)
+    public function updated(ProductVariant $productVariant)
     {
-        $productVariant->updateParentStock();
+        $productVariant->product->recalculateStock();
     }
 
     public function deleted(ProductVariant $productVariant)
     {
-        $productVariant->updateParentStock();
+        $productVariant->product->recalculateStock();
     }
-
 }
