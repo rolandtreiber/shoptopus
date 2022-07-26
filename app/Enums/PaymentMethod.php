@@ -10,4 +10,5 @@ final class PaymentMethod extends Enum
     const PayPal =      2;
     const GooglePay =   3;
     const ApplePay =    4;
+    const AmazonPay =   5;
 }

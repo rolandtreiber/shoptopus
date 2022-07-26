@@ -74,6 +74,9 @@ return [
             "get" => 2200,
             "getAll" => 2201
         ],
+        'invoices' => [
+            "download" => 3000
+        ],
         'remote' => [
             'payment' => [
                 'getClientSettings' => 3000,

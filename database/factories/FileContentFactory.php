@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\FileType;
+use App\Helpers\GeneralHelper;
 use App\Models\Product;
 use App\Models\FileContent;
 use App\Traits\TranslatableFactory;
@@ -33,14 +33,16 @@ class FileContentFactory extends Factory
             Product::class
         ]);
 
+        $file = GeneralHelper::getRandomPhotoFromSamples();
+
         return [
-            'url' => 'https://picsum.photos/1200/1200',
+            'url' => $file['url'],
             'fileable_type' => array_search($fileable, Relation::$morphMap),
             'fileable_id' => $fileable::factory(),
             'title' => $translated['title'],
-            'file_name' => $this->faker->word,
+            'file_name' => $file['file_name'],
             'description' => $translated['description'],
-            'type' => FileType::Image
+            'type' => $file['type']
         ];
     }
 }

@@ -18,6 +18,7 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "amzn/amazon-pay-api-sdk-php": "^2.3",
+        "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^3.4",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",

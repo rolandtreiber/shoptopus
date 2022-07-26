@@ -3,14 +3,32 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
+/**
+ * @property string $accessable_type
+ * @property string $accessable_id
+ * @property string $type
+ * @property string $user_id
+ * @property string $issuer_user_id
+ */
 class AccessToken extends Model
 {
     use HasFactory, HasUUID;
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'token';
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -61,5 +79,13 @@ class AccessToken extends Model
         $now = \Carbon\Carbon::now();
         $expiry = Carbon::parse($this->expiry);
         return $expiry < $now;
+    }
+
+    /**
+     * @return MorphTo
+     */
+    public function accessable(): MorphTo
+    {
+        return $this->morphTo();
     }
 }

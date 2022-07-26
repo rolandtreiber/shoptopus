@@ -172,7 +172,7 @@ class Order extends SearchableModel implements Auditable, Exportable
      */
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount'])->using(OrderProduct::class);
+        return $this->belongsToMany(Product::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount', 'product_variant_id'])->using(OrderProduct::class);
     }
 
     /**

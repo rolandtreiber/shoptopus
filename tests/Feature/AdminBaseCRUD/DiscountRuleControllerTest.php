@@ -63,7 +63,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         if ($rule->type === DiscountType::Amount) {
             $response
                 ->assertJson(fn (AssertableJson $json) =>
-                $json->where('data.amount', '£'.$rule->amount)
+                $json->where('data.amount', '£'.number_format((float)$rule->amount, 2, '.', ''))
                     ->etc());
         } else {
             $response

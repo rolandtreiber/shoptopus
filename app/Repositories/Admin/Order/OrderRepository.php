@@ -12,7 +12,6 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-
     /**
      * @param array $ids
      * @param int $status
