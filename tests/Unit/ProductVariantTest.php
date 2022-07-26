@@ -133,6 +133,6 @@ class ProductVariantTest extends TestCase
     {
         $this->product_variant->delete();
 
-        $this->assertEquals(0, $this->product_variant->product->fresh()->stock);
+        $this->assertEquals(0, $this->product_variant->product->stock);
     }
 }
