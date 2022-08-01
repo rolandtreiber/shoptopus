@@ -27,7 +27,8 @@ class VoucherCodeDetailResource extends JsonResource
             'code' => $this->code,
             'valid_from' => Carbon::parse($this->valid_from),
             'valid_until' => Carbon::parse($this->valid_until),
-            'orders' => OrderListResource::collection($this->orders)
+            'orders' => OrderListResource::collection($this->orders),
+            'enabled' => $this->enabled
         ];
     }
 }

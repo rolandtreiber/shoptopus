@@ -21,4 +21,16 @@ class ProductCategoryObserver
             $child->delete();
         }
     }
+
+    public function saved(ProductCategory $productCategory):void {
+        if ($productCategory->enabled === false) {
+            $productCategory->children->map(function($c) {
+                $c->enabled = false;
+                $c->save();
+            });
+        } else if ($productCategory->parent && $productCategory->parent->enabled === false) {
+            $productCategory->parent->enabled = true;
+            $productCategory->parent->save();
+        }
+    }
 }
