@@ -138,7 +138,6 @@ class ProductVariantControllerTest extends AdminControllerTestCase
 
     /**
      * @test
-     * @group work
      */
     public function test_variant_update_updates_parent_stock()
     {
@@ -165,7 +164,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         ]), [
             'stock' => 2,
         ]);
-        
+
         $product->refresh();
 
         $this->assertEquals(5, $product->stock);

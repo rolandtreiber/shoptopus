@@ -7,6 +7,7 @@ use App\Traits\HasUUID;
 use App\Enums\OrderStatus;
 use App\Traits\HasEventLogs;
 use App\Helpers\GeneralHelper;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -34,6 +35,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $created_at
  * @property Address $address
  * @property User $user
+ * @property Invoice $invoice
  * @property Product[] $products
  * @property mixed $pivot
  * @property float $delivery
@@ -194,9 +196,39 @@ class Order extends SearchableModel implements Auditable, Exportable
     /**
      * @return BelongsTo
      */
-    public function delivery_type(): BelongsTo
+    public function delivery_type_relation(): BelongsTo
     {
-        return $this->belongsTo(DeliveryType::class);
+        return $this->belongsTo(DeliveryType::class, 'delivery_type_id', 'id');
+    }
+
+    /**
+     * @return DeliveryType|null
+     */
+    public function getDeliveryTypeAttribute(): ?DeliveryType
+    {
+        // If the delivery type, the order associated with, was deleted, let's take the
+        // snapshot version of the delivery type from the invoice.
+        // If the name changed, the user should see the updated name.
+        // The delivery price change does not affect the orders that have already been placed.
+        if (!$this->delivery_type_relation) {
+            if ($this->invoice) {
+                $deliveryType = new DeliveryType();
+                $deliveryType->fill(json_decode(json_encode($this->invoice->delivery_type), true));
+                return $deliveryType;
+            } else {
+                return null;
+            }
+        } else {
+            return $this->delivery_type_relation;
+        }
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function invoice(): HasOne
+    {
+        return $this->hasOne(Invoice::class);
     }
 
     public function recalculatePrices()
