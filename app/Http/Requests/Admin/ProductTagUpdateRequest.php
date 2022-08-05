@@ -18,7 +18,7 @@ class ProductTagUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['json'],
         ];
     }
 }

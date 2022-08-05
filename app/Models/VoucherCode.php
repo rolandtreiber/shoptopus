@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AvailabilityStatus;
 use Carbon\Carbon;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
@@ -133,6 +134,12 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
                     $q->where('valid_from', '>', $now)
                         ->where('valid_until', '<', $now)
                 );
+                break;
+            case 'enabled':
+                $query->where('enabled', AvailabilityStatus::Enabled);
+                break;
+            case 'disabled':
+                $query->where('enabled', AvailabilityStatus::Disabled);
                 break;
         }
     }

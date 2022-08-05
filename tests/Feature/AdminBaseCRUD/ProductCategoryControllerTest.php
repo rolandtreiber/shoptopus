@@ -165,4 +165,67 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $response->assertForbidden();
     }
 
+    /**
+     * @test
+     */
+    public function test_all_subcategories_disabled_when_parent_category_disabled()
+    {
+        $topLevelProductCategory = ProductCategory::factory()->state([
+            'enabled' => true
+        ])->create();
+        $firstLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $topLevelProductCategory->id,
+            'enabled' => true
+        ])->create();
+        $secondLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $firstLevelProductCategory->id,
+            'enabled' => true
+        ])->create();
+        $thirdLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $secondLevelProductCategory->id,
+            'enabled' => true
+        ])->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->patch(route('admin.api.update.product-category', [
+            'category' => $topLevelProductCategory->id
+        ]), [
+            'enabled' => false,
+        ]);
+        $this->assertEquals($thirdLevelProductCategory->refresh()->enabled, false);
+        $this->assertEquals($secondLevelProductCategory->refresh()->enabled, false);
+        $this->assertEquals($firstLevelProductCategory->refresh()->enabled, false);
+    }
+
+    /**
+     * @test
+     * @group work
+     */
+    public function test_all_parent_categories_enabled_when_subcategory_enabled()
+    {
+        $topLevelProductCategory = ProductCategory::factory()->state([
+            'enabled' => false
+        ])->create();
+        $firstLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $topLevelProductCategory->id,
+            'enabled' => false
+        ])->create();
+        $secondLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $firstLevelProductCategory->id,
+            'enabled' => false
+        ])->create();
+        $thirdLevelProductCategory = ProductCategory::factory()->state([
+            'parent_id' => $secondLevelProductCategory->id,
+            'enabled' => false
+        ])->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->patch(route('admin.api.update.product-category', [
+            'category' => $thirdLevelProductCategory->id
+        ]), [
+            'enabled' => true,
+        ]);
+        $this->assertEquals($secondLevelProductCategory->refresh()->enabled, true);
+        $this->assertEquals($firstLevelProductCategory->refresh()->enabled, true);
+        $this->assertEquals($topLevelProductCategory->refresh()->enabled, true);
+    }
+
 }

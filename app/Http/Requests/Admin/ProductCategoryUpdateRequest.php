@@ -18,7 +18,7 @@ class ProductCategoryUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['json'],
         ];
     }
 }
