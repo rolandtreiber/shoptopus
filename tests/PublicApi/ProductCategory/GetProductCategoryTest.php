@@ -65,7 +65,10 @@ class GetProductCategoryTest extends TestCase
      */
     public function it_returns_the_associated_discount_rules()
     {
-        $dr = DiscountRule::factory()->create();
+        $dr = DiscountRule::factory()->create([
+            'valid_from' => now()->subDay()->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
         $this->product_category->discount_rules()->attach($dr->id);
 
         $res = $this->sendRequest();
@@ -93,6 +96,27 @@ class GetProductCategoryTest extends TestCase
         $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
 
         $dr->update(['enabled' => true, 'deleted_at' => now()]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function the_discount_rules_must_be_valid()
+    {
+        $dr1 = DiscountRule::factory()->create([
+            'valid_from' => now()->addDays(5)->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
+
+        $dr2 = DiscountRule::factory()->create([
+            'valid_from' => now()->subDays(5)->toDateTimeString(),
+            'valid_until' => now()->subDay()->toDateTimeString()
+        ]);
+
+        $this->product_category->discount_rules()->attach([$dr1->id, $dr2->id]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
     }

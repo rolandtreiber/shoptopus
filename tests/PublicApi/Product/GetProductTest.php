@@ -68,9 +68,25 @@ class GetProductTest extends TestCase
      * @test
      * @group apiGet
      */
+    public function it_returns_the_final_price_field()
+    {
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure(['data' => [['final_price']]]);
+
+        $this->assertEquals($this->product->price, $res->json('data.0.final_price'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
     public function it_returns_the_associated_enabled_discount_rules()
     {
-        $dr = DiscountRule::factory()->create();
+        $dr = DiscountRule::factory()->create([
+            'valid_from' => now()->subDay()->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
         $this->product->discount_rules()->attach($dr->id);
 
         $res = $this->sendRequest();
@@ -106,9 +122,36 @@ class GetProductTest extends TestCase
      * @test
      * @group apiGet
      */
-    public function it_returns_its_product_categories()
+    public function the_discount_rules_must_be_valid()
+    {
+        $dr1 = DiscountRule::factory()->create([
+            'valid_from' => now()->addDays(5)->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
+
+        $dr2 = DiscountRule::factory()->create([
+            'valid_from' => now()->subDays(5)->toDateTimeString(),
+            'valid_until' => now()->subDay()->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach([$dr1->id, $dr2->id]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_its_product_categories_with_their_discount_rules()
     {
         $pc = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $pc->discount_rules()->attach($product_category_discount_rule->id);
+
         $this->product->product_categories()->attach($pc->id);
 
         $res = $this->sendRequest();
@@ -124,7 +167,14 @@ class GetProductTest extends TestCase
                             'parent_id',
                             'description',
                             'menu_image',
-                            'header_image'
+                            'header_image',
+                            'discount_rules' => [
+                                [
+                                    'id',
+                                    'type',
+                                    'amount'
+                                ]
+                            ]
                         ]
                     ]
                 ]
@@ -208,6 +258,21 @@ class GetProductTest extends TestCase
         $pv->update(['enabled' => false, 'deleted_at' => null]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
+    }
+
+    /**
+     * @test
+     * @group apiGet
+     */
+    public function it_returns_a_final_price_attribute_for_the_product_variants()
+    {
+        $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure(['data' => [['product_variants' => [['final_price']]]]]);
+
+        $this->assertEquals($pv->price, $this->sendRequest()->json('data.0.product_variants.0.final_price'));
     }
 
     /**

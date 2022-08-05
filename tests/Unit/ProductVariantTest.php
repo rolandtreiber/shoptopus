@@ -75,13 +75,6 @@ class ProductVariantTest extends TestCase
         $this->assertNotNull($this->product_variant->final_price);
     }
 
-//    /** @test */
-//    public function it_has_a_name_attribute()
-//    {
-//        $this->product_variant->refresh();
-//        $this->assertNotNull($this->product_variant->name);
-//    }
-
     /** @test */
     public function it_may_have_a_cover_image()
     {

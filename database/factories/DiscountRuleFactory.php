@@ -24,7 +24,7 @@ class DiscountRuleFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition() : array
     {
         $translations = $this->getTranslated($this->faker, ['name'], ['short']);
 

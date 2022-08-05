@@ -75,6 +75,15 @@ interface ProductRepositoryInterface {
     public function getSelectableColumns(bool $withTableNamePrefix = true) : array;
 
     /**
+     * Calculate the final price
+     *
+     * @param array $product
+     * @param bool $price
+     * @return string
+     */
+    public function calculateFinalPrice(array $product, $price = false) : string;
+
+    /**
      * @param Product $product
      * @param array $selectedAttributeOptionIds
      * @return mixed

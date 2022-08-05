@@ -107,17 +107,20 @@ class GeneralHelper {
         return $amount;
     }
 
-    public static function getDiscountedValue($type, $amount, $basis) {
+    public static function getDiscountedValue($discountType, $discountAmount, $basePrice) : mixed
+    {
         $discounted = 0;
-        switch ($type) {
+
+        switch ($discountType) {
             case DiscountType::Amount:
-                $discounted = $basis - $amount;
+                $discounted = $basePrice - $discountAmount;
                 break;
             case DiscountType::Percentage:
-                $discounted = round($basis - (($basis / 100) * $amount), 2);
+                $discounted = round($basePrice - (($basePrice / 100) * $discountAmount), 2);
                 break;
             default:
         }
+
         return $discounted > 0 ? $discounted : 0;
     }
 

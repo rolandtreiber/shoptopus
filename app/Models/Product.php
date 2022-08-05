@@ -202,13 +202,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         return $this->hasMany(ProductVariant::class);
     }
 
-    public function recalculateStockD()
-    {
-        $this->refresh();
-
-        $this->update(['stock' => $this->product_variants->pluck('stock')->sum()]);
-    }
-
     public function recalculateStock()
     {
         $this->refresh();
@@ -216,6 +209,64 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         $this->update(['stock' => $this->product_variants->pluck('stock')->sum()]);
     }
 
+    /**
+     * Calculate the total discounts
+     *
+     * @param $discounts
+     * @return mixed
+     */
+    private function calculateDiscountAmount($discounts) : mixed
+    {
+        if (config('shoptopus.discount_rules.allow_discount_stacking') === true) {
+            // Discounts stacked and all applied
+            return array_sum($discounts);
+        } else {
+            // Only one discount applied. It is either the lowest or the highest
+            return match (config('shoptopus.discount_rules.applied_discount')) {
+                'highest' => max($discounts),
+                default => min($discounts),
+            };
+        }
+    }
+
+    /**
+     * Calculate the final price with discounts
+     *
+     * @param null $price
+     * @return mixed
+     */
+    public function getFinalPriceAttribute($price = null) : mixed
+    {
+        if (!$price) {
+            $price = $this->price;
+        }
+
+        $discount_rules = $this->discount_rules->map(fn($rule) => [
+            'id' => $rule->id,
+            'amount' => $rule->amount,
+            'type' => $rule->type
+        ])->toArray();
+
+        foreach ($this->product_categories()->get() as $category) {
+            $discount_rules = array_merge($discount_rules, $category->discount_rules->map(fn($rule) => [
+                'id' => $rule->id,
+                'amount' => $rule->amount,
+                'type' => $rule->type
+            ])->toArray());
+        }
+
+        $basePrice = $price;
+
+        if (sizeof($discount_rules) > 0) {
+            $discounts = array_map(function($rule) use ($basePrice) {
+                return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
+            }, array_unique($discount_rules, SORT_REGULAR));
+
+            return $price - $this->calculateDiscountAmount($discounts);
+        } else {
+            return $price;
+        }
+    }
 
 
 
@@ -245,62 +296,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             case 'provisional':
                 $query->where('status', ProductStatus::Provisional);
                 break;
-        }
-    }
-
-    /**
-     * @param $discounts
-     * @return float|int|mixed
-     */
-    private function calculateDiscountAmount($discounts)
-    {
-        if (config('shoptopus.discount_rules.allow_discount_stacking') === true) {
-            // Discounts stacked and all applied
-            return array_sum($discounts);
-        } else {
-            // Only one discount applied. It is either the lowest or the highest
-            switch (config('shoptopus.discount_rules.applied_discount')) {
-                case 'highest':
-                    return max($discounts);
-                default:
-                    return min($discounts);
-            }
-        }
-    }
-
-    /**
-     * Calculate the final price
-     */
-    public function getFinalPriceAttribute($price = null)
-    {
-        if (!$price) {
-            $price = $this->price;
-        }
-        $discount_rules = $this->discount_rules->map(function($rule) {
-            return [
-                'id' => $rule->id,
-                'amount' => $rule->amount,
-                'type' => $rule->type,
-            ];
-        })->toArray();
-        $categoriesWithDiscountRules = $this->product_categories()->get();
-        foreach ($categoriesWithDiscountRules as $category) {
-            $discount_rules = array_merge($discount_rules, $category->discount_rules->map(function($rule) use ($discount_rules) {
-                return [
-                    'id' => $rule->id,
-                    'amount' => $rule->amount,
-                    'type' => $rule->type,
-                ];
-            })->toArray());
-        }
-        $basePrice = $price;
-        if (sizeof($discount_rules) > 0) {
-            $discounts = array_map(function($rule) use ($basePrice) {
-                return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
-            }, array_unique($discount_rules, SORT_REGULAR));
-            return $price - $this->calculateDiscountAmount($discounts);
-        } else {
-            return $price;
         }
     }
 

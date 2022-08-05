@@ -2,16 +2,18 @@
 
 namespace Tests\Unit;
 
-use App\Models\DiscountRule;
-use App\Models\ProductAttribute;
-use App\Models\ProductCategory;
-use App\Models\ProductTag;
-use App\Models\ProductVariant;
 use Tests\TestCase;
 use App\Models\Product;
+use App\Models\ProductTag;
+use App\Enums\DiscountType;
 use Illuminate\Support\Str;
 use App\Models\FileContent;
 use App\Enums\ProductStatus;
+use App\Models\DiscountRule;
+use App\Models\ProductVariant;
+use App\Models\ProductCategory;
+use App\Models\ProductAttribute;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ProductTest extends TestCase
@@ -154,6 +156,235 @@ class ProductTest extends TestCase
     public function it_has_a_final_price_attribute()
     {
         $this->assertNotNull($this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_a_discount_rule_is_applied()
+    {
+        $this->product->update(['price' => 10.00]);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 5.55,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->assertEquals(4.45, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed()
+    {
+        Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
+
+        $this->product->update(['price' => 10.00]);
+
+        $discount_rule1 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 3,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $discount_rule2 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 2,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
+
+        $this->assertEquals(5, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed()
+    {
+        $this->product->update(['price' => 10.00]);
+
+        $discount_rule1 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 5,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $discount_rule2 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 6,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
+
+        $this->assertEquals(4, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied()
+    {
+        $this->product->update(['price' => 10.00]);
+
+        $discount_rule1 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 4,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $discount_rule2 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 6,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
+
+        $this->assertEquals(4, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied()
+    {
+        Config::set('shoptopus.discount_rules.applied_discount', 'lowest');
+
+        $this->product->update(['price' => 10.00]);
+
+        $discount_rule1 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 4,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $discount_rule2 = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 6,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
+
+        $this->assertEquals(6, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule()
+    {
+        $product_category = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 6,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $product_category->discount_rules()->attach($product_category_discount_rule->id);
+        $this->product->product_categories()->attach($product_category->id);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 5,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->product->update(['price' => 10.00]);
+
+        $this->assertEquals(4, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    {
+        Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
+
+        $product_category = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 3,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $product_category->discount_rules()->attach($product_category_discount_rule->id);
+        $this->product->product_categories()->attach($product_category->id);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 3,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->product->update(['price' => 10.00]);
+
+        $this->assertEquals(4, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed()
+    {
+        $product_category = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Percentage,
+            'amount' => 50, // 50%
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $product_category->discount_rules()->attach($product_category_discount_rule->id);
+        $this->product->product_categories()->attach($product_category->id);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 5.5,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->product->update(['price' => 10.00]);
+
+        $this->assertEquals(4.5, $this->product->final_price);
+    }
+
+    /** @test */
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    {
+        Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
+
+        $product_category = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Percentage,
+            'amount' => 10, // 10%
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $product_category->discount_rules()->attach($product_category_discount_rule->id);
+        $this->product->product_categories()->attach($product_category->id);
+
+        $discount_rule = DiscountRule::factory()->create([
+            'type' => DiscountType::Amount,
+            'amount' => 3,
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+
+        $this->product->discount_rules()->attach($discount_rule->id);
+
+        $this->product->update(['price' => 10.00]);
+
+        $this->assertEquals(6, $this->product->final_price);
     }
 
     /** @test */

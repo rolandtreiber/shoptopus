@@ -2,13 +2,10 @@
 
 namespace App\Repositories\Local\Product;
 
-use App\Http\Resources\Admin\ProductAttributeOptionListResource;
-use App\Models\FileContent;
 use App\Models\Product;
-use App\Models\ProductAttribute;
-use App\Models\ProductAttributeOption;
+use App\Models\FileContent;
 use App\Models\ProductVariant;
-use Illuminate\Support\Collection;
+use App\Helpers\GeneralHelper;
 use Illuminate\Support\Facades\DB;
 use App\Enums\ProductAttributeType;
 use Illuminate\Support\Facades\Auth;
@@ -127,6 +124,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 FROM discount_rules AS dr
                 JOIN discount_rule_product AS drp ON drp.discount_rule_id = dr.id
                 WHERE drp.product_id IN ($dynamic_placeholders)
+                AND dr.valid_from <= DATETIME()
+                AND dr.valid_until >= DATETIME()
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $productIds);
@@ -157,9 +156,18 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     pc.parent_id,
                     pc.description,
                     pc.menu_image,
-                    pc.header_image
+                    pc.header_image,
+                    dr.id as discount_rule_id,
+                    dr.amount as discount_rule_amount,
+                    dr.type as discount_rule_type
                 FROM product_categories AS pc
                 JOIN product_product_category AS ppc ON ppc.product_category_id = pc.id
+                LEFT JOIN discount_rule_product_category AS drpc ON drpc.product_category_id = pc.id
+                LEFT JOIN discount_rules AS dr ON dr.id = drpc.discount_rule_id
+                                                      AND dr.enabled IS TRUE
+                                                      AND dr.deleted_at IS NULL
+                                                      AND dr.valid_from <= DATETIME()
+                                                      AND dr.valid_until >= DATETIME()
                 WHERE ppc.product_id IN ($dynamic_placeholders)
                 AND pc.deleted_at IS NULL
                 AND pc.enabled IS TRUE
@@ -355,8 +363,26 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                 foreach ($product_categories as $product_category) {
                     if ($product_category['product_id'] === $modelId) {
-                        unset($product_category['product_id']);
-                        array_push($model['product_categories'], $product_category);
+                        $category = [
+                            'id' => $product_category['id'],
+                            'name' => $product_category['name'],
+                            'slug' => $product_category['slug'],
+                            'parent_id' => $product_category['parent_id'],
+                            'description' => $product_category['description'],
+                            'menu_image' => $product_category['menu_image'],
+                            'header_image' => $product_category['header_image'],
+                            'discount_rules' => []
+                        ];
+
+                        if (isset($product_category['discount_rule_id'])) {
+                            array_push($category['discount_rules'], [
+                                'id' => $product_category['discount_rule_id'],
+                                'amount' => $product_category['discount_rule_amount'],
+                                'type' => $product_category['discount_rule_type']
+                            ]);
+                        }
+
+                        array_push($model['product_categories'], $category);
                     }
                 }
 
@@ -379,6 +405,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                                 'stock' => $product_variant['stock'],
                                 'description' => $product_variant['description'],
                                 'sku' => $product_variant['sku'],
+                                'final_price' => $this->calculateFinalPrice($model, $product_variant['price']),
                                 'product_attributes' => []
                             ];
 
@@ -444,6 +471,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         }
                     }
                 }
+
+                $model['final_price'] = $this->calculateFinalPrice($model);
             }
 
             return $result;
@@ -451,6 +480,55 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             $this->errorService->logException($e);
             throw $e;
         }
+    }
+
+    /**
+     * Calculate the final price
+     *
+     * @param array $product
+     * @param bool $price
+     * @return string
+     */
+    public function calculateFinalPrice(array $product, $price = false) : string
+    {
+        if (!$price) {
+            $price = $product['price'];
+        }
+
+        $discount_rules = [];
+
+        if (!empty($product['discount_rules'])) {
+            $discount_rules = collect($product['discount_rules'])->map(fn($rule) => [
+                'id' => $rule['id'],
+                'amount' => $rule['amount'],
+                'type' => $rule['type']
+            ])->toArray();
+        }
+
+        if (!empty($product['product_categories'])) {
+            foreach ($product['product_categories'] as $category) {
+                if (!empty($category['discount_rules'])) {
+
+                    $discount_rules = array_merge($discount_rules, collect($category['discount_rules'])->map(fn($rule) => [
+                        'id' => $rule['id'],
+                        'amount' => $rule['amount'],
+                        'type' => $rule['type']
+                    ])->toArray());
+                }
+            }
+        }
+
+        $basePrice = $price;
+
+        if (!empty($discount_rules)) {
+            $discounts = array_map(function($rule) use ($basePrice) {
+                return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
+            }, array_unique($discount_rules, SORT_REGULAR));
+
+            $price =  $price - $this->calculateDiscountAmount($discounts);
+        }
+
+        return number_format((float)$price, 2, '.', '');
     }
 
     /**
@@ -490,7 +568,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
      * @param array $selectedAttributeOptionIds
      * @return array
      */
-    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = [])
+    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []) : array
     {
         $baseQuery = DB::table('product_attribute_product_variant')
             ->join('product_variants as product_variant', 'product_variant.id', '=', 'product_attribute_product_variant.product_variant_id')
@@ -506,10 +584,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 'attribute_options'
             ]);
 
-        if (count($selectedAttributeOptionIds) > 0) {
-            foreach ($selectedAttributeOptionIds as $attributeOptionId) {
-                $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
-            }
+        foreach ($selectedAttributeOptionIds as $attributeOptionId) {
+            $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
         }
 
         $allOptions = $variantAttributeOptionsQuery->pluck('attribute_options')->map(function($attributeOptions) {
@@ -544,5 +620,25 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             'files' => $files->merge($variantFiles),
             'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock')
         ];
+    }
+
+    /**
+     * Calculate the total discounts
+     *
+     * @param $discounts
+     * @return mixed
+     */
+    private function calculateDiscountAmount($discounts) : mixed
+    {
+        if (config('shoptopus.discount_rules.allow_discount_stacking') === true) {
+            // Discounts stacked and all applied
+            return array_sum($discounts);
+        } else {
+            // Only one discount applied. It is either the lowest or the highest
+            return match (config('shoptopus.discount_rules.applied_discount')) {
+                'highest' => max($discounts),
+                default => min($discounts),
+            };
+        }
     }
 }

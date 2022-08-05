@@ -57,6 +57,21 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
+    public function it_returns_the_final_price_field()
+    {
+        $product = Product::factory()->create();
+
+        $res = $this->sendRequest();
+
+        $res->assertJsonStructure(['data' => [['final_price']]]);
+
+        $this->assertEquals($product->price, $res->json('data.0.final_price'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
     public function soft_deleted_products_are_not_returned()
     {
         Product::factory()->count(2)->create(['deleted_at' => now()]);
@@ -157,9 +172,12 @@ class GetAllProductsTest extends TestCase
      */
     public function it_returns_the_associated_enabled_discount_rules()
     {
-        $pc = Product::factory()->create();
-        $dr = DiscountRule::factory()->create();
-        $pc->discount_rules()->attach($dr->id);
+        $p = Product::factory()->create();
+        $dr = DiscountRule::factory()->create([
+            'valid_from' => now()->subDay()->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
+        $p->discount_rules()->attach($dr->id);
 
         $res = $this->sendRequest();
 
@@ -194,10 +212,38 @@ class GetAllProductsTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_categories()
+    public function the_discount_rules_must_be_valid()
+    {
+        $p = Product::factory()->create();
+
+        $dr1 = DiscountRule::factory()->create([
+            'valid_from' => now()->addDays(5)->toDateTimeString(),
+            'valid_until' => now()->addDays(10)->toDateTimeString()
+        ]);
+
+        $dr2 = DiscountRule::factory()->create([
+            'valid_from' => now()->subDays(5)->toDateTimeString(),
+            'valid_until' => now()->subDay()->toDateTimeString()
+        ]);
+
+        $p->discount_rules()->attach([$dr1->id, $dr2->id]);
+
+        $this->assertEmpty($this->sendRequest()->json('data.0.discount_rules'));
+    }
+
+    /**
+     * @test
+     * @group apiGetAll
+     */
+    public function it_returns_the_associated_product_categories_with_their_discount_rules()
     {
         $p = Product::factory()->create();
         $pc = ProductCategory::factory()->create();
+        $product_category_discount_rule = DiscountRule::factory()->create([
+            'valid_from' => now()->toDateTimeString(),
+            'valid_until' => now()->addDays(5)->toDateTimeString()
+        ]);
+        $pc->discount_rules()->attach($product_category_discount_rule->id);
         $pc->products()->attach($p->id);
 
         $res = $this->sendRequest();
@@ -213,7 +259,14 @@ class GetAllProductsTest extends TestCase
                             'parent_id',
                             'description',
                             'menu_image',
-                            'header_image'
+                            'header_image',
+                            'discount_rules' => [
+                                [
+                                    'id',
+                                    'type',
+                                    'amount'
+                                ]
+                            ]
                         ]
                     ]
                 ]
