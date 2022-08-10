@@ -39,8 +39,8 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 FROM discount_rules AS dr
                 JOIN discount_rule_product_category AS drpc ON drpc.discount_rule_id = dr.id
                 WHERE drpc.product_category_id IN ($dynamic_placeholders)
-                AND dr.valid_from <= DATETIME()
-                AND dr.valid_until >= DATETIME()
+                AND dr.valid_from <= current_timestamp
+                AND dr.valid_until >= current_timestamp
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $productCategoryIds);

@@ -124,8 +124,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 FROM discount_rules AS dr
                 JOIN discount_rule_product AS drp ON drp.discount_rule_id = dr.id
                 WHERE drp.product_id IN ($dynamic_placeholders)
-                AND dr.valid_from <= DATETIME()
-                AND dr.valid_until >= DATETIME()
+                AND dr.valid_from <= current_timestamp
+                AND dr.valid_until >= current_timestamp
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $productIds);
@@ -166,8 +166,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 LEFT JOIN discount_rules AS dr ON dr.id = drpc.discount_rule_id
                                                       AND dr.enabled IS TRUE
                                                       AND dr.deleted_at IS NULL
-                                                      AND dr.valid_from <= DATETIME()
-                                                      AND dr.valid_until >= DATETIME()
+                                                      AND dr.valid_from <= current_timestamp
+                                                      AND dr.valid_until >= current_timestamp
                 WHERE ppc.product_id IN ($dynamic_placeholders)
                 AND pc.deleted_at IS NULL
                 AND pc.enabled IS TRUE
@@ -255,6 +255,65 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             $this->errorService->logException($e);
             throw $e;
         }
+    }
+
+    /**
+     * @param Product $product
+     * @param array $selectedAttributeOptionIds
+     * @return array
+     */
+    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []) : array
+    {
+        $baseQuery = DB::table('product_attribute_product_variant')
+            ->join('product_variants as product_variant', 'product_variant.id', '=', 'product_attribute_product_variant.product_variant_id')
+            ->where('product_variant.product_id', '=', $product->id);
+
+        $variantAttributeOptionsQuery = $baseQuery
+            ->groupBy('product_variant.id')
+            ->select([
+                'product_variant.id',
+                'product_variant.stock',
+                'product_attribute_product_variant.product_attribute_id',
+                'product_attribute_product_variant.product_attribute_option_id',
+                'attribute_options'
+            ]);
+
+        foreach ($selectedAttributeOptionIds as $attributeOptionId) {
+            $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
+        }
+
+        $allOptions = $variantAttributeOptionsQuery->pluck('attribute_options')->map(function($attributeOptions) {
+            return json_decode($attributeOptions);
+        })->toArray();
+
+        array_walk_recursive($allOptions, function($a) use (&$return) { $return[] = $a; });
+        $availableAttributeOptionIds = array_values(array_unique($return ?? []));
+        $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
+        $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
+        $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
+        $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
+        $files = FileContent::where('fileable_type', Product::class)
+            ->where('fileable_id', $product->id)
+            ->get();
+        $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
+            ->whereIn('fileable_id', $variantIds)
+            ->get();
+
+        return [
+            'available_attribute_options' => $availableAttributeOptionIds,
+            'variant_ids' => $variantIds,
+            'lowest_variant_price' =>
+                [
+                    'original' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                    'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                ],
+            'highest_variant_price' =>                 [
+                'original' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
+                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
+            ],
+            'files' => $files->merge($variantFiles),
+            'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock')
+        ];
     }
 
     /**
@@ -561,65 +620,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             : array_map(function($column_name){
                 return str_replace($this->model_table . '.', '', $column_name);
             }, $columns);
-    }
-
-    /**
-     * @param Product $product
-     * @param array $selectedAttributeOptionIds
-     * @return array
-     */
-    public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []) : array
-    {
-        $baseQuery = DB::table('product_attribute_product_variant')
-            ->join('product_variants as product_variant', 'product_variant.id', '=', 'product_attribute_product_variant.product_variant_id')
-            ->where('product_variant.product_id', '=', $product->id);
-
-        $variantAttributeOptionsQuery = $baseQuery
-            ->groupBy('product_variant.id')
-            ->select([
-                'product_variant.id',
-                'product_variant.stock',
-                'product_attribute_product_variant.product_attribute_id',
-                'product_attribute_product_variant.product_attribute_option_id',
-                'attribute_options'
-            ]);
-
-        foreach ($selectedAttributeOptionIds as $attributeOptionId) {
-            $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
-        }
-
-        $allOptions = $variantAttributeOptionsQuery->pluck('attribute_options')->map(function($attributeOptions) {
-            return json_decode($attributeOptions);
-        })->toArray();
-
-        array_walk_recursive($allOptions, function($a) use (&$return) { $return[] = $a; });
-        $availableAttributeOptionIds = array_values(array_unique($return ?? []));
-        $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
-        $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
-        $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
-        $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
-        $files = FileContent::where('fileable_type', Product::class)
-            ->where('fileable_id', $product->id)
-            ->get();
-        $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
-            ->whereIn('fileable_id', $variantIds)
-            ->get();
-
-        return [
-            'available_attribute_options' => $availableAttributeOptionIds,
-            'variant_ids' => $variantIds,
-            'lowest_variant_price' =>
-                [
-                    'original' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
-                    'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
-                ],
-            'highest_variant_price' =>                 [
-                'original' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
-                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
-            ],
-            'files' => $files->merge($variantFiles),
-            'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock')
-        ];
     }
 
     /**
