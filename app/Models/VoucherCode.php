@@ -153,6 +153,26 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * @return int
+     */
+    public function getStatusAttribute(): int
+    {
+        $now = Carbon::now();
+        if ($this->enabled === true) {
+            if ($this->valid_from < $now && $this->valid_until > $now) {
+                return 1;
+            }
+            if ($this->valid_from > $now) { // Not yet started
+                return 2;
+            }
+            if ($this->valid_until < $now) { // Expired
+                return 3;
+            }
+        }
+        return 0;
+    }
+
     public function getValueAttribute()
     {
         return GeneralHelper::getDiscountValue($this->type, $this->amount);

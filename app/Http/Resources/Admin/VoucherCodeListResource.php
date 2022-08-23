@@ -37,7 +37,8 @@ class VoucherCodeListResource extends JsonResource
                 OrderStatus::Processing,
                 OrderStatus::OnHold
             ])->where('voucher_code_id', $this->id)->count(),
-            'enabled' => $this->enabled
+            'enabled' => $this->enabled,
+            'status' => $this->status,
         ];
     }
 }

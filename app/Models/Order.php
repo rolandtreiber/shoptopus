@@ -238,10 +238,9 @@ class Order extends SearchableModel implements Auditable, Exportable
 
         $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
         $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
-        $discount = DB::table('order_product')->where('order_id', $this->id)->sum('total_discount');
+//        $discount = DB::table('order_product')->where('order_id', $this->id)->sum('total_discount');
         $total = $subTotal + $this->delivery_cost;
 
-        $this->total_discount = $discount;
         $this->subtotal = $subTotal;
         $this->original_price = $originalPrice;
         $voucher_code = $this->voucher_code;
@@ -256,6 +255,7 @@ class Order extends SearchableModel implements Auditable, Exportable
         } else {
             $this->total_price = $total;
         }
+        $this->total_discount = $originalPrice - $this->total_price;
         $this->save();
         Order::setEventDispatcher($dispatcher);
     }

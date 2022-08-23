@@ -35,7 +35,7 @@ class DeliveryTypeController extends Controller
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return DeliveryTypeListResource::collection(DeliveryType::filtered([], $request)->paginate(25));
+        return DeliveryTypeListResource::collection(DeliveryType::filtered([], $request)->availability($request->view)->paginate(25));
     }
 
     /**

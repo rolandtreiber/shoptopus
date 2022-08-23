@@ -25,6 +25,7 @@ class OrderDetailResource extends JsonResource
 
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'original_price' => $this->original_price,

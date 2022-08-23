@@ -25,9 +25,12 @@ class OrderListResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d H:i:s'),
             'total_price' => GeneralHelper::displayPrice($this->total_price),
+            'original_price' => GeneralHelper::displayPrice($this->original_price),
+            'total_discount' => GeneralHelper::displayPrice($this->total_discount),
             'status' => $this->status,
             'user' => $this->user->name,
             'delivery_type' => $this->delivery_type->getTranslations('name'),

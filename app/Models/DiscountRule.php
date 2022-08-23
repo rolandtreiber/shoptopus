@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\AvailabilityStatus;
 use App\Helpers\GeneralHelper;
 use Carbon\Carbon;
 use App\Traits\HasUUID;
@@ -155,6 +156,12 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
                     $q->whereDate('valid_from', '>', $today)
                         ->orWhereDate('valid_until', '<', $today)->orWhere('enabled', 0);
                 });
+                break;
+            case 'enabled':
+                $query->where('enabled', AvailabilityStatus::Enabled);
+                break;
+            case 'disabled':
+                $query->where('enabled', AvailabilityStatus::Disabled);
                 break;
         }
     }
