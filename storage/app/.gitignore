@@ -1,4 +1,9 @@
 *
 !public/
 !test-data-images
+!test-data-images/avatars
+!test-data-images/categories
+!test-data-images/categories/banner
+!test-data-images/categories/menu
+!test-data-images/tags
 !.gitignore

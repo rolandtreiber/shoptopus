@@ -26,8 +26,8 @@ class ProductCategoryListResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
             'description' => $this->getTranslations('description'),
-            'menu_image' => $this->menu_image ? $this->menu_image->url : null,
-            'header_image' => $this->header_image ? $this->header_image->url : null,
+            'menu_image' => $this->menu_image?->url,
+            'header_image' => $this->header_image?->url,
             'children' => ProductCategoryListResource::collection($this->children),
             'enabled' => $this->enabled,
             'updated_at' => $this->updated_at
