@@ -137,15 +137,28 @@ class GeneralHelper {
         }
     }
 
-    public static function getRandomPhotoFromSamples()
+    public static function getPhotoFromSamples($directory = null, $prefix = null, $number = null)
     {
-        $dir = storage_path('app/test-data-images');
-        $files = glob($dir . '/*.*');
+        $storagePath = 'app/test-data-images';
+        if ($directory) {
+            $storagePath .= '/'.$directory;
+        }
+        $dir = storage_path($storagePath);
+
+        !$prefix && $prefix = '*';
+
+        if (!$number) {
+            $pattern = $dir . '/'.$prefix.'*.*';
+        } else {
+            $pattern = $dir . '/'.$prefix.$number.'.*';
+        }
+
+        $files = glob($pattern);
         $file = $files[array_rand($files)];
 
         $contents = file_get_contents($file);
+        $extension = pathinfo(parse_url($file, PHP_URL_PATH), PATHINFO_EXTENSION);
 
-        $extension = 'jpg';
         $fileName = Str::random(40) . '.' . $extension;
 
         Storage::disk('local')->delete('public/uploads/' . $fileName);
@@ -158,4 +171,5 @@ class GeneralHelper {
             'file_name' => $fileName
         ];
     }
+
 }

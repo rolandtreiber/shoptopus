@@ -33,7 +33,7 @@ class FileContentFactory extends Factory
             Product::class
         ]);
 
-        $file = GeneralHelper::getRandomPhotoFromSamples();
+        $file = GeneralHelper::getPhotoFromSamples();
 
         return [
             'url' => $file['url'],

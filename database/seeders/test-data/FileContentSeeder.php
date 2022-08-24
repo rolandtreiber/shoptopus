@@ -2,7 +2,7 @@
 
 namespace Database\Seeders\TestData;
 
-use App\FileContent;
+use App\Models\FileContent;
 use Illuminate\Database\Seeder;
 
 class FileContentSeeder extends Seeder

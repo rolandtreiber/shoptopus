@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\GeneralHelper;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,8 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $avatar = GeneralHelper::getPhotoFromSamples('avatars');
+
         return [
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
@@ -32,8 +35,8 @@ class UserFactory extends Factory
             'temporary' => false,
             'phone' => null,
             'avatar' => [
-                'url' => 'https://picsum.photos/450/450',
-                'file_name' => $this->faker->word
+                'url' => $avatar['url'],
+                'file_name' => $avatar['file_name']
             ],
             'is_favorite' => false
         ];
