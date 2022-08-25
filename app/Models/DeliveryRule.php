@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int|null $max_weight
  * @property int|null $min_distance
  * @property int|null $max_distance
+ * @property string $distance_unit
  * @property float|null $lat
  * @property float|null $lon
  * @property int $status

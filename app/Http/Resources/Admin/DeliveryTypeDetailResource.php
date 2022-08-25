@@ -27,7 +27,9 @@ class DeliveryTypeDetailResource extends JsonResource
             'enabled_by_default_on_creation' => $this->enabled_by_default_on_creation,
             'enabled' => $this->enabled,
             'price' => $this->price,
-            'rules' => DeliveryRuleListResource::collection($this->deliveryRules)
+            'rules' => DeliveryRuleListResource::collection($this->deliveryRules),
+            'order_count' => $this->getOrderCount(),
+            'total_revenue' => $this->getTotalRevenue()
         ];
     }
 }
