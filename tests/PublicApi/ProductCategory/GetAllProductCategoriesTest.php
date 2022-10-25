@@ -75,7 +75,7 @@ class GetAllProductCategoriesTest extends TestCase
      * @test
      * @group apiGetAll
      */
-    public function it_returns_the_associated_discount_rules()
+    public function it_returns_the_associated_discount_rulessss()
     {
         $pc = ProductCategory::factory()->create();
         $dr = DiscountRule::factory()->create([
@@ -85,7 +85,7 @@ class GetAllProductCategoriesTest extends TestCase
         $pc->discount_rules()->attach($dr->id);
 
         $res = $this->sendRequest();
-
+        
         $res->assertJsonStructure([
             'data' => [
                 [

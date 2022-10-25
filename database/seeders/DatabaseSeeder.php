@@ -51,23 +51,23 @@ class DatabaseSeeder extends Seeder
             default:
 
                 $this->call([
-//                    ApiProductsTestSeeder::class,
+                    ApiProductsTestSeeder::class,
                     RoleSeeder::class,
                     UserSeeder::class,
-                    BannerSeeder::class,
-                    DeliveryTypeSeeder::class,
-                    AddressSeeder::class,
-                    DiscountRuleSeeder::class,
-                    VoucherCodeSeeder::class,
-                    ProductTagSeeder::class,
-                    ProductCategorySeeder::class,
-                    ProductAttributeSeeder::class,
-                    ProductAttributeOptionSeeder::class,
-                    ProductSeeder::class,
-                    ProductVariantSeeder::class,
-                    CartSeeder::class,
-                    OrderSeeder::class,
-                    PaymentProviderSeeder::class,
+//                    BannerSeeder::class,
+//                    DeliveryTypeSeeder::class,
+//                    AddressSeeder::class,
+//                    DiscountRuleSeeder::class,
+//                    VoucherCodeSeeder::class,
+//                    ProductTagSeeder::class,
+//                    ProductCategorySeeder::class,
+//                    ProductAttributeSeeder::class,
+//                    ProductAttributeOptionSeeder::class,
+//                    ProductSeeder::class,
+//                    ProductVariantSeeder::class,
+//                    CartSeeder::class,
+//                    OrderSeeder::class,
+//                    PaymentProviderSeeder::class,
                 ]);
 
                 Module::enabled('ratings') && $this->call([RatingSeeder::class]);

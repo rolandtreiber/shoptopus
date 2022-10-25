@@ -31,9 +31,9 @@ class ApiProductsTestSeeder extends Seeder
 
     protected function addRelationships($products)
     {
-        foreach ($products as $index => $product) {
+        foreach ($products as $product) {
             // Product Tags
-            ProductTag::factory()->count(2)->create()->each(fn($tag) => $tag->products()->attach($product->id));
+            // ProductTag::factory()->count(2)->create()->each(fn($tag) => $tag->products()->attach($product->id));
 
             // Product Category
             $parent_category = ProductCategory::factory()->create(['name' => 'Women']);
@@ -48,19 +48,19 @@ class ApiProductsTestSeeder extends Seeder
                 'type' => ProductAttributeType::Color,
                 'name' => 'color'
             ]);
-            $attribute_color_color_options = ProductAttributeOption::factory()
+            $attribute_color_options = ProductAttributeOption::factory()
                 ->count(3)
                 ->create(['product_attribute_id' => $attribute_color->id]);
 
-            $attribute_color_color_options[0]->update([
+            $attribute_color_options[0]->update([
                 'name' => 'red',
                 'value' => 'rgb(255, 0, 0)'
             ]);
-            $attribute_color_color_options[1]->update([
+            $attribute_color_options[1]->update([
                 'name' => 'blue',
                 'value' => 'rgb(0, 0, 255)'
             ]);
-            $attribute_color_color_options[2]->update([
+            $attribute_color_options[2]->update([
                 'name' => 'green',
                 'value' => 'rgb(0, 255, 0)'
             ]);
@@ -96,6 +96,50 @@ class ApiProductsTestSeeder extends Seeder
                 'value' => 'xl'
             ]);
 
+            // Type attributes
+            $attribute_type = ProductAttribute::factory()->create([
+                'type' => ProductAttributeType::Text,
+                'name' => 'type'
+            ]);
+            $attribute_type_options = ProductAttributeOption::factory()
+                ->count(3)
+                ->create(['product_attribute_id' => $attribute_type->id]);
+
+            $attribute_type_options[0]->update([
+                'name' => 'lifestyle',
+                'value' => 'lifestyle'
+            ]);
+            $attribute_type_options[1]->update([
+                'name' => 'training',
+                'value' => 'training'
+            ]);
+            $attribute_type_options[2]->update([
+                'name' => 'hiking',
+                'value' => 'hiking'
+            ]);
+
+            // Weather attributes
+            $attribute_weather = ProductAttribute::factory()->create([
+                'type' => ProductAttributeType::Text,
+                'name' => 'weather'
+            ]);
+            $attribute_weather_options = ProductAttributeOption::factory()
+                ->count(3)
+                ->create(['product_attribute_id' => $attribute_weather->id]);
+
+            $attribute_weather_options[0]->update([
+                'name' => 'rain',
+                'value' => 'rain'
+            ]);
+            $attribute_weather_options[1]->update([
+                'name' => 'sunny',
+                'value' => 'sunny'
+            ]);
+            $attribute_weather_options[2]->update([
+                'name' => 'cloudy',
+                'value' => 'cloudy'
+            ]);
+
             // Product Variants
             $variant1 = ProductVariant::factory()->create([
                 'product_id' => $product->id,
@@ -118,37 +162,50 @@ class ApiProductsTestSeeder extends Seeder
             ]);
 
             // Add attributes to variant1
-            $attribute_color_color_options->each(fn($option) =>
+            $attribute_color_options->each(fn($option) =>
                 $variant1->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $option->id])
             );
-
             $attribute_size_options->each(fn($option) =>
                 $variant1->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $option->id])
             );
+            $attribute_type_options->each(fn($option) =>
+                $variant1->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $option->id])
+            );
+            $variant1->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[0]->id]);
 
             // Add attributes to variant2
-            $variant2->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_color_options[1]->id]);
-            $variant2->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_color_options[2]->id]);
-
+            $variant2->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_options[1]->id]);
+            $variant2->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_options[2]->id]);
             $variant2->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[1]->id]);
             $variant2->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[3]->id]);
             $variant2->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[4]->id]);
+            $variant2->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[0]->id]);
+            $variant2->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[1]->id]);
+            $attribute_weather_options->each(fn($option) =>
+                $variant2->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $option->id])
+            );
 
             // Add attributes to variant3
-            $variant3->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_color_options[1]->id]);
-
+            $variant3->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_options[1]->id]);
             $variant3->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[0]->id]);
             $variant3->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[2]->id]);
             $variant3->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[3]->id]);
             $variant3->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[4]->id]);
+            $variant3->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[0]->id]);
+            $variant3->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[2]->id]);
+            $variant3->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[1]->id]);
 
             // Add attributes to variant4
-            $variant4->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_color_options[0]->id]);
-            $variant4->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_color_options[1]->id]);
-
+            $variant4->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_options[0]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $attribute_color_options[1]->id]);
             $variant4->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[0]->id]);
             $variant4->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[2]->id]);
             $variant4->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[3]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[0]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[1]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[2]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[0]->id]);
+            $variant4->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[2]->id]);
 
 
 //            // Color
