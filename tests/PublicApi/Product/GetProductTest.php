@@ -325,11 +325,11 @@ class GetProductTest extends TestCase
         $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes'));
         $this->assertEquals($pa_valid->id, $res->json('data.0.product_variants.0.product_attributes.0.id'));
 
-        $this->assertCount(3, $res->json('data.0.product_variants.0.product_attributes.0.options'));
+        $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes.0.options'));
 
         $attribute_options->first()->update(['enabled' => false]);
 
-        $this->assertCount(2, $this->sendRequest()->json('data.0.product_variants.0.product_attributes.0.options'));
+        $this->assertCount(0, $this->sendRequest()->json('data.0.product_variants.0.product_attributes.0.options'));
     }
 
     /**

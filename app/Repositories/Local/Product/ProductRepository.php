@@ -246,7 +246,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 FROM product_variants AS pv
                 LEFT JOIN product_attribute_product_variant AS papv ON papv.product_variant_id = pv.id
                 LEFT JOIN product_attributes AS pa ON pa.id = papv.product_attribute_id AND pa.enabled IS TRUE AND pa.deleted_at IS NULL
-                LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
+                LEFT JOIN product_attribute_options AS pao ON pao.product_attribute_id = papv.product_attribute_id AND pao.id = papv.product_attribute_option_id AND pao.enabled IS TRUE AND pao.deleted_at IS NULL
                 WHERE pv.product_id IN ($dynamic_placeholders)
                 AND pv.deleted_at IS NULL
                 AND pv.enabled IS TRUE
