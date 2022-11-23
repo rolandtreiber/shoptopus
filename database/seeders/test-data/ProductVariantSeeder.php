@@ -42,14 +42,16 @@ class ProductVariantSeeder extends Seeder
                 $usedAttributes[] = $attributeId;
                 $attribute = ProductAttribute::find($attributeId);
                 $options = $attribute->options;
-                do {
-                    $optionId = random_int(1, sizeof($options));
-                } while (DB::table('product_attribute_product_variant')
-                    ->where('product_variant_id', $productVariant->id)
-                    ->where('product_attribute_id', $attribute->id)
-                    ->where('product_attribute_option_id', $optionId)
-                    ->first());
-                $productVariant->product_variant_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
+                if (sizeof($options) > 0) {
+                    do {
+                        $optionId = random_int(1, sizeof($options));
+                    } while (DB::table('product_attribute_product_variant')
+                        ->where('product_variant_id', $productVariant->id)
+                        ->where('product_attribute_id', $attribute->id)
+                        ->where('product_attribute_option_id', $optionId)
+                        ->first());
+                    $productVariant->product_variant_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[$optionId-1]->id]);
+                }
             }
         }
 
@@ -59,9 +61,11 @@ class ProductVariantSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $used));
             $used[] = $productId;
-            $attribute = ProductAttribute::find((new ProductAttribute)->findNthId(rand(1, ProductAttribute::count())));
-            $options = $attribute->options;
-            (new Product)->findNth($productId)->product_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
+            if (ProductAttribute::count() > 0) {
+                $attribute = ProductAttribute::find((new ProductAttribute)->findNthId(rand(1, ProductAttribute::count())));
+                $options = $attribute->options;
+                count($options) > 0 && (new Product)->findNth($productId)->product_attributes()->attach($attribute->id, ['product_attribute_option_id' => $options[random_int(1, count($options))-1]->id]);
+            }
         }
 
     }

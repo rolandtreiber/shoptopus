@@ -82,7 +82,15 @@ class InvoiceRepository implements InvoiceRepositoryInterface
 
     private function getImage($url)
     {
-        $contents = file_get_contents($url);
+        if (env('APP_ENV') === 'local') {
+            try {
+                $contents = file_get_contents($url);
+            } catch (\Exception $exception) {
+                $contents = file_get_contents(str_replace(env('APP_URL'),  __DIR__.'/../../../../public', $url));
+            }
+        } else {
+            $contents = file_get_contents($url);
+        }
 
         $img = Image::make($contents);
         $img->orientate();

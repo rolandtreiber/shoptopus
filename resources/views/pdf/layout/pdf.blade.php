@@ -272,9 +272,8 @@
 <body>
 
 <header>
-    <img src="{{config('app.url')}}/images/receipt-header.jpg" width="100%"/>
+    <img src="images/receipt-header.jpg" width="100%"/>
 </header>
-
 @yield('content')
 
 <footer style="display:block; background-color: #fff; padding:15px; text-align: center; color: #353535">

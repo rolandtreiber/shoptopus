@@ -8,6 +8,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductTag;
 use Exception;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -22,7 +23,12 @@ class ProductSeeder extends Seeder
         Product::factory()->count(55)->hasFilecontents(rand(1, 3))->create();
 
         foreach (Product::all() as $product) {
-            $product->product_categories()->attach((new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1)));
+            do {
+                $categoryId = (new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1));
+                $duplicate = DB::table('product_product_category')->where('product_id', $product->id)
+                ->where('product_category_id', $categoryId)->first();
+            } while ($duplicate !== null);
+            $product->product_categories()->attach($categoryId);
         }
 
         $taggedCount = Product::count() / 2;
