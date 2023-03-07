@@ -14,12 +14,12 @@
         }
     },
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "ext-pdo": "*",
         "amzn/amazon-pay-api-sdk-php": "^2.3",
         "barryvdh/laravel-dompdf": "^2.0",
-        "bensampo/laravel-enum": "^3.4",
+        "bensampo/laravel-enum": "^4.2.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "google/apiclient": "^2.12",

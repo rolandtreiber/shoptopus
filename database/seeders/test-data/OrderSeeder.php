@@ -53,7 +53,7 @@ class OrderSeeder extends Seeder
             $order->save();
 
             $usedProductTypes = [];
-            $productTypesToAddCount = random_int(1, $products);
+            $productTypesToAddCount = random_int(1, round($products/2));
             for ($n = 0; $n < $productTypesToAddCount; $n++) {
                 do {
                     $selectedProduct = Product::find($productIds[random_int(1, $products-1)]);

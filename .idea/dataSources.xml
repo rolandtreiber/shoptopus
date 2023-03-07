@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="homestead_shoptopus" uuid="615109c7-b1e3-443f-8d5b-25ded2ca20e6">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://192.168.56.56:3306/shoptopus</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="homestead_shoptopus_logs" uuid="0a1eb3f4-3d91-4573-acc9-8d90c17028d4">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://192.168.56.56:3306/shoptopus_logs</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="Docker mysql Shoptopus" uuid="6f3d7e88-7fe7-4126-9190-7cdbdb23b62c">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
