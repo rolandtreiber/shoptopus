@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\DiscountType;
-use App\Models\VoucherCode;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

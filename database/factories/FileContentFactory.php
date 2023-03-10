@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
-use App\Models\FileContent;
 use App\Models\Product;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -12,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class FileContentFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

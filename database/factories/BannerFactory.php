@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Banner;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BannerFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

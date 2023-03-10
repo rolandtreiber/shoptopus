@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

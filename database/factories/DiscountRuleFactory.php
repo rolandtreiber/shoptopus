@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Enums\DiscountType;
-use App\Models\DiscountRule;
 use App\Traits\TranslatableFactory;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DiscountRuleFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory

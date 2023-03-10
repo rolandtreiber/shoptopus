@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Enums\ProductAttributeType;
-use App\Models\ProductAttribute;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductAttributeFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

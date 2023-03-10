@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
-use App\Models\ProductTag;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ProductTagFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

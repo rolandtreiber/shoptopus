@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Language;
-use App\Models\Content;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContentFactory extends Factory

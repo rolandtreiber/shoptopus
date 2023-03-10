@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\SystemSetting;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SystemSettingFactory extends Factory

@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\DeliveryType;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DeliveryTypeFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *

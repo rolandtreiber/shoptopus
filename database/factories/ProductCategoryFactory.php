@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
-use App\Models\ProductCategory;
 use App\Traits\TranslatableFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -11,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductCategoryFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * Define the model's default state.
      *
