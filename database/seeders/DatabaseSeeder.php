@@ -54,6 +54,7 @@ class DatabaseSeeder extends Seeder
                     ApiProductsTestSeeder::class,
                     RoleSeeder::class,
                     UserSeeder::class,
+                    PaymentProviderSeeder::class,
                     //                    BannerSeeder::class,
                     //                    DeliveryTypeSeeder::class,
                     //                    AddressSeeder::class,
@@ -67,7 +68,6 @@ class DatabaseSeeder extends Seeder
                     //                    ProductVariantSeeder::class,
                     //                    CartSeeder::class,
                     //                    OrderSeeder::class,
-                    //                    PaymentProviderSeeder::class,
                 ]);
 
                 Module::enabled('ratings') && $this->call([RatingSeeder::class]);
