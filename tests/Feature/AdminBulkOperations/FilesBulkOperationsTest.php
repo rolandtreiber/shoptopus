@@ -25,10 +25,10 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
             'ids' => $fileContentIds,
         ]);
         $response->assertOk();
-        $this->assertModelMissing('file_contents', [
+        $this->assertDatabaseMissing('file_contents', [
             'id' => $fileContentIds[0],
         ]);
-        $this->assertModelMissing('file_contents', [
+        $this->assertDatabaseMissing('file_contents', [
             'id' => $fileContentIds[1],
         ]);
     }

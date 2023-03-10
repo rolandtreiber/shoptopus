@@ -198,7 +198,6 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
 
     /**
      * @test
-     * @group work
      */
     public function test_all_parent_categories_enabled_when_subcategory_enabled()
     {

@@ -17,7 +17,7 @@
         }
     },
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "ext-json": "*",
         "ext-pdo": "*",
         "amzn/amazon-pay-api-sdk-php": "^2.3",
@@ -30,6 +30,7 @@
         "laravel/passport": "^10.3",
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
+        "league/flysystem-aws-s3-v3": "^3.0",
         "owen-it/laravel-auditing": "^12.1",
         "paypal/paypal-checkout-sdk": "^1.0",
         "pusher/pusher-php-server": "^7.0",
@@ -41,7 +42,7 @@
         "spatie/laravel-sluggable": "^3.3",
         "spatie/laravel-translatable": "^5.2",
         "stripe/stripe-php": "^8.0",
-        "league/flysystem-aws-s3-v3": "^3.0"
+        "symfony/finder": "^6.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

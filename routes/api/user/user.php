@@ -1,13 +1,16 @@
 <?php
 
-use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
 
 Route::group([
-    'name' => 'api.',
+    'name' => 'api.'
 ], function () {
-    Route::prefix('user')->middleware('auth:api')->group([
-        'name' => 'user.', ], function () {
-            Route::get('/favorites', [UserController::class, 'favorites'])->name('api.user.favorites');
-        });
+    Route::group([
+        'name' => 'user.',
+        'prefix' => 'user',
+        'middleware' => 'auth:api'
+    ], function () {
+        Route::get('/favorites', [UserController::class, 'favorites'])->name('api.user.favorites');
+    });
 });
