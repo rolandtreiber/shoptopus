@@ -27,7 +27,7 @@ class ProductTagFactory extends Factory
     {
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
 
-        $hasBadge = $this->faker->boolean;
+        $hasBadge = $this->faker->boolean();
 
         $badge = GeneralHelper::getPhotoFromSamples('tags', 'tag');
 

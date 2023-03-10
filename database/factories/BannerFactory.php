@@ -28,7 +28,7 @@ class BannerFactory extends Factory
     {
         $translated = $this->getTranslated($this->faker, ['title', 'description', 'button_text'], ['short', 'medium', 'word']);
 
-        $showButton = $this->faker->boolean;
+        $showButton = $this->faker->boolean();
         $buttonText = $translated['button_text'];
         $buttonUrl = 'https://google.com';
 
@@ -42,7 +42,7 @@ class BannerFactory extends Factory
             'show_button' => $showButton,
             'button_text' => $showButton ? $buttonText : null,
             'button_url' => $showButton ? $buttonUrl : null,
-            'enabled' => $this->faker->boolean,
+            'enabled' => $this->faker->boolean(),
             'total_clicks' => random_int(10, 200),
         ];
     }

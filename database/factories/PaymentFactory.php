@@ -40,7 +40,7 @@ class PaymentFactory extends Factory
             'payment_ref' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseLowercaseAndNumbers),
             'method_ref' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseLowercaseAndNumbers),
             'type' => PaymentType::Payment,
-            'description' => $this->faker->text,
+            'description' => $this->faker->text(),
         ];
     }
 }

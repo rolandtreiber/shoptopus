@@ -23,7 +23,7 @@ class PasswordResetFactory extends Factory
     public function definition(): array
     {
         return [
-            'email' => $this->faker->unique()->safeEmail,
+            'email' => $this->faker->unique()->safeEmail(),
             'token' => Str::random(60),
         ];
     }

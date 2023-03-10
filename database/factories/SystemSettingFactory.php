@@ -23,7 +23,7 @@ class SystemSettingFactory extends Factory
     {
         return [
             'key' => $this->faker->regexify('[A-Za-z0-9]{60}'),
-            'value' => $this->faker->text,
+            'value' => $this->faker->text(),
             'type' => $this->faker->numberBetween(-8, 8),
         ];
     }

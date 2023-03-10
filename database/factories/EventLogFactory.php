@@ -25,10 +25,10 @@ class EventLogFactory extends Factory
         return [
             'message' => $this->faker->regexify('[A-Za-z0-9]{200}'),
             'type' => $this->faker->numberBetween(-8, 8),
-            'notification' => $this->faker->boolean,
+            'notification' => $this->faker->boolean(),
             'user_id' => User::factory(),
-            'actioned' => $this->faker->boolean,
-            'data' => $this->faker->text,
+            'actioned' => $this->faker->boolean(),
+            'data' => $this->faker->text(),
         ];
     }
 }

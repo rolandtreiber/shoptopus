@@ -26,7 +26,7 @@ class AccessTokenFactory extends Factory
         $user = User::factory()->create();
 
         return [
-            'type' => $this->faker->word,
+            'type' => $this->faker->word(),
             'token' => $this->faker->regexify('[A-Za-z0-9]{120}'),
             'accessable_type' => User::class,
             'accessable_id' => $user->id,

@@ -23,9 +23,9 @@ class PaymentProviderConfigFactory extends Factory
     public function definition(): array
     {
         return [
-            'setting' => $this->faker->word,
-            'value' => $this->faker->text,
-            'test_value' => $this->faker->text,
+            'setting' => $this->faker->word(),
+            'value' => $this->faker->text(),
+            'test_value' => $this->faker->text(),
             'payment_provider_id' => PaymentProvider::factory(),
         ];
     }

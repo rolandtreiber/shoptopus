@@ -23,11 +23,11 @@ class ContentFactory extends Factory
     public function definition()
     {
         return [
-            'contentable_type' => $this->faker->word,
+            'contentable_type' => $this->faker->word(),
             'contentable_id' => $this->faker->randomNumber(),
             'language_id' => Language::factory(),
             'type' => $this->faker->numberBetween(-8, 8),
-            'text' => $this->faker->text,
+            'text' => $this->faker->text(),
         ];
     }
 }

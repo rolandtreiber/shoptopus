@@ -27,14 +27,14 @@ class DeliveryRuleFactory extends Factory
         $postcodes = [];
         $postcodeCount = random_int(0, 10);
         for ($i = 0; $i < $postcodeCount; $i++) {
-            $postcodes[] = $this->faker->postcode;
+            $postcodes[] = $this->faker->postcode();
         }
 
-        $noMinWeight = $this->faker->boolean;
+        $noMinWeight = $this->faker->boolean();
         $minWeight = $noMinWeight ? 0 : $this->faker->randomNumber(4);
         $maxWeight = $minWeight + 5000;
 
-        $noMinDistance = $this->faker->boolean;
+        $noMinDistance = $this->faker->boolean();
         $minDistance = $noMinDistance ? 0 : $this->faker->randomFloat(10, 100);
         $maxDistance = $minWeight + 50;
 
@@ -46,8 +46,8 @@ class DeliveryRuleFactory extends Factory
             'min_distance' => $minDistance,
             'max_distance' => $maxDistance,
             'distance_unit' => 'mile',
-            'lat' => $this->faker->latitude,
-            'lon' => $this->faker->longitude,
+            'lat' => $this->faker->latitude(),
+            'lon' => $this->faker->longitude(),
             'enabled' => true,
         ];
     }

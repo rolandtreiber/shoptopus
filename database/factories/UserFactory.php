@@ -27,9 +27,9 @@ class UserFactory extends Factory
         $avatar = GeneralHelper::getPhotoFromSamples('avatars');
 
         return [
-            'first_name' => $this->faker->firstName,
-            'last_name' => $this->faker->lastName,
-            'email' => $this->faker->unique()->email,
+            'first_name' => $this->faker->firstName(),
+            'last_name' => $this->faker->lastName(),
+            'email' => $this->faker->unique()->email(),
             'prefix' => null,
             'email_verified_at' => null,
             'password' => bcrypt('password'),
