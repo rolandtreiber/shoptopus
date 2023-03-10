@@ -82,7 +82,7 @@ class GetUserDetailsTest extends TestCase
         DB::table('notifications')->insert([
             'id' => Str::uuid(),
             'type' => 'App\Notifications\OrderComplete',
-            'notifiable_type' => 'App\Models\User',
+            'notifiable_type' => \App\Models\User::class,
             'notifiable_id' => $user->id,
             'data' => json_encode($notificationData),
         ]);
@@ -90,7 +90,7 @@ class GetUserDetailsTest extends TestCase
         DB::table('notifications')->insert([
             'id' => Str::uuid(),
             'type' => 'App\Notifications\OrderComplete',
-            'notifiable_type' => 'App\Models\User',
+            'notifiable_type' => \App\Models\User::class,
             'notifiable_id' => $user->id,
             'data' => json_encode($notificationData),
             'read_at' => now(),

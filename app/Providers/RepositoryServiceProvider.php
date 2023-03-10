@@ -41,24 +41,24 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Repositories\Local\ModelRepositoryInterface', 'App\Repositories\ModelRepository');
+        $this->app->bind(\App\Repositories\Local\ModelRepositoryInterface::class, 'App\Repositories\ModelRepository');
 
-        $this->app->bind('App\Repositories\Local\User\UserRepositoryInterface', 'App\Repositories\Local\User\UserRepository');
-        $this->app->bind('App\Repositories\Local\AccessToken\AccessTokenRepositoryInterface', 'App\Repositories\Local\AccessToken\AccessTokenRepository');
-        $this->app->bind('App\Repositories\Local\Address\AddressRepositoryInterface', 'App\Repositories\Local\Address\AddressRepository');
-        $this->app->bind('App\Repositories\Local\Cart\CartRepositoryInterface', 'App\Repositories\Local\Cart\CartRepository');
-        $this->app->bind('App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface', 'App\Repositories\Local\DeliveryRule\DeliveryRuleRepository');
-        $this->app->bind('App\Repositories\Local\DeliveryType\DeliveryTypeRepositoryInterface', 'App\Repositories\Local\DeliveryType\DeliveryTypeRepository');
-        $this->app->bind('App\Repositories\Local\Order\OrderRepositoryInterface', 'App\Repositories\Local\Order\OrderRepository');
-        $this->app->bind('App\Repositories\Local\Product\ProductRepositoryInterface', 'App\Repositories\Local\Product\ProductRepository');
-        $this->app->bind('App\Repositories\Local\ProductAttribute\ProductAttributeRepositoryInterface', 'App\Repositories\Local\ProductAttribute\ProductAttributeRepository');
-        $this->app->bind('App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface', 'App\Repositories\Local\ProductCategory\ProductCategoryRepository');
-        $this->app->bind('App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface', 'App\Repositories\Local\PaymentProvider\PaymentProviderRepository');
-        $this->app->bind('App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\Stripe\StripeTransactionRepository');
-        $this->app->bind('App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepository');
-        $this->app->bind('App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface', 'App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepository');
+        $this->app->bind(\App\Repositories\Local\User\UserRepositoryInterface::class, \App\Repositories\Local\User\UserRepository::class);
+        $this->app->bind(\App\Repositories\Local\AccessToken\AccessTokenRepositoryInterface::class, \App\Repositories\Local\AccessToken\AccessTokenRepository::class);
+        $this->app->bind(\App\Repositories\Local\Address\AddressRepositoryInterface::class, \App\Repositories\Local\Address\AddressRepository::class);
+        $this->app->bind(\App\Repositories\Local\Cart\CartRepositoryInterface::class, \App\Repositories\Local\Cart\CartRepository::class);
+        $this->app->bind(\App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface::class, \App\Repositories\Local\DeliveryRule\DeliveryRuleRepository::class);
+        $this->app->bind(\App\Repositories\Local\DeliveryType\DeliveryTypeRepositoryInterface::class, \App\Repositories\Local\DeliveryType\DeliveryTypeRepository::class);
+        $this->app->bind(\App\Repositories\Local\Order\OrderRepositoryInterface::class, \App\Repositories\Local\Order\OrderRepository::class);
+        $this->app->bind(\App\Repositories\Local\Product\ProductRepositoryInterface::class, \App\Repositories\Local\Product\ProductRepository::class);
+        $this->app->bind(\App\Repositories\Local\ProductAttribute\ProductAttributeRepositoryInterface::class, \App\Repositories\Local\ProductAttribute\ProductAttributeRepository::class);
+        $this->app->bind(\App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface::class, \App\Repositories\Local\ProductCategory\ProductCategoryRepository::class);
+        $this->app->bind(\App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface::class, \App\Repositories\Local\PaymentProvider\PaymentProviderRepository::class);
+        $this->app->bind(\App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\Stripe\StripeTransactionRepository::class);
+        $this->app->bind(\App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepository::class);
+        $this->app->bind(\App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepository::class);
 
-        $this->app->bind('App\Repositories\Local\VoucherCode\VoucherCodeRepositoryInterface', 'App\Repositories\Local\VoucherCode\VoucherCodeRepository');
+        $this->app->bind(\App\Repositories\Local\VoucherCode\VoucherCodeRepositoryInterface::class, \App\Repositories\Local\VoucherCode\VoucherCodeRepository::class);
         $this->app->bind(EventLogRepositoryInterface::class, EventLogRepository::class);
         $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
         $this->app->bind(BannerRepositoryInterface::class, BannerRepository::class);
