@@ -9,14 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class DeliveryTypeFactory extends Factory
 {
     use TranslatableFactory;
-
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = DeliveryType::class;
-
     /**
      * Define the model's default state.
      *

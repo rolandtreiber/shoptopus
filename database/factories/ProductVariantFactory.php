@@ -12,14 +12,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductVariantFactory extends Factory
 {
     use TranslatableFactory;
-
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = ProductVariant::class;
-
     /**
      * Define the model's default state.
      *

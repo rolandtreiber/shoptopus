@@ -9,14 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class BannerFactory extends Factory
 {
     use TranslatableFactory;
-
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = Banner::class;
-
     /**
      * Define the model's default state.
      *

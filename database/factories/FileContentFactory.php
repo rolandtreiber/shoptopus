@@ -12,14 +12,6 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 class FileContentFactory extends Factory
 {
     use TranslatableFactory;
-
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = FileContent::class;
-
     /**
      * Define the model's default state.
      *
