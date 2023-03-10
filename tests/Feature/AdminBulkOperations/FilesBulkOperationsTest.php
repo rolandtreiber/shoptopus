@@ -25,10 +25,10 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
             'ids' => $fileContentIds,
         ]);
         $response->assertOk();
-        $this->assertDeleted('file_contents', [
+        $this->assertModelMissing('file_contents', [
             'id' => $fileContentIds[0],
         ]);
-        $this->assertDeleted('file_contents', [
+        $this->assertModelMissing('file_contents', [
             'id' => $fileContentIds[1],
         ]);
     }
