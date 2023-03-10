@@ -2,7 +2,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "repositories": {
         "shoptopus/excel-import-export": {
@@ -21,7 +24,6 @@
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^4.2.0",
         "fideloper/proxy": "^4.4",
-        "fruitcake/laravel-cors": "^2.0",
         "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.0.1",
         "intervention/image": "^2.6",
