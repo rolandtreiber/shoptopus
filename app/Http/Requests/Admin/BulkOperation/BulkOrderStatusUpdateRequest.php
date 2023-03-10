@@ -19,8 +19,8 @@ class BulkOrderStatusUpdateRequest extends BaseBulkOperationRequest
             'ids.*' => ['exists:orders,id'],
             'status' => [
                 'required',
-                Rule::in(OrderStatus::getValues())
-            ]
+                Rule::in(OrderStatus::getValues()),
+            ],
         ];
     }
 }

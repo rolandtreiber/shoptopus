@@ -29,7 +29,7 @@ class DeliveryTypeDetailResource extends JsonResource
             'price' => $this->price,
             'rules' => DeliveryRuleListResource::collection($this->deliveryRules),
             'order_count' => $this->getOrderCount(),
-            'total_revenue' => $this->getTotalRevenue()
+            'total_revenue' => $this->getTotalRevenue(),
         ];
     }
 }

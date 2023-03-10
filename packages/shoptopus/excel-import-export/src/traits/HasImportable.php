@@ -18,8 +18,10 @@ trait HasImportable
                     $importableFields[$value] = [];
                 }
             }
+
             return $importableFields;
         }
+
         return [];
     }
 
@@ -48,5 +50,4 @@ trait HasImportable
     {
         $this->importableRelationships = $importableRelationships;
     }
-
 }

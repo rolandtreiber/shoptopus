@@ -11,9 +11,10 @@ class OwnAccountOrSuperAdmin
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
+     *
      * @throws AuthorizationException
      */
     public function handle(Request $request, Closure $next)

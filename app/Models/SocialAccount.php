@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class SocialAccount extends Model
 {
@@ -26,14 +26,15 @@ class SocialAccount extends Model
      * @var array
      */
     protected $hidden = [
-        'created_at', 'updated_at'
+        'created_at', 'updated_at',
     ];
 
     /**
      * Get the owner of the social account
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }

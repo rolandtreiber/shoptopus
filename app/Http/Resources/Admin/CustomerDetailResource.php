@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\AddressResource;
-use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -45,7 +44,7 @@ class CustomerDetailResource extends JsonResource
             'cart' => new CartListResource($this->cart),
             'total_orders' => $this->orders()->count(),
             'total_spent' => $this->payments()->sum('amount'),
-            'latest_order_date' => $latestOrderDate?->format('d-m-Y H:i')
+            'latest_order_date' => $latestOrderDate?->format('d-m-Y H:i'),
         ];
     }
 }

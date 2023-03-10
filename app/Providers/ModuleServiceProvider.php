@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Services\Module\Module;
 use App\Services\Module\ModuleService;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +14,7 @@ class ModuleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('module', function($app) {
+        $this->app->singleton('module', function ($app) {
             return new ModuleService($app->config['shoptopus']['modules']);
         });
     }

@@ -17,7 +17,7 @@ class AttributeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
-            'option' => new AttributeOptionResource($this->pivot->option)
+            'option' => new AttributeOptionResource($this->pivot->option),
         ];
     }
 }

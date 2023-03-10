@@ -2,10 +2,10 @@
 
 namespace App\Notifications;
 
+use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Notifications\Notification;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class VerifyEmail extends Notification
 {
@@ -35,7 +35,7 @@ class VerifyEmail extends Notification
      */
     public function toMail($notifiable)
     {
-        $prefix = config('app.frontend_url_public') . '/verification/?api_verify_url=';
+        $prefix = config('app.frontend_url_public').'/verification/?api_verify_url=';
 
         $verificationUrl = $this->verificationUrl($notifiable);
 
@@ -46,7 +46,7 @@ class VerifyEmail extends Notification
         return (new MailMessage)
             ->subject('Verify Email Address')
             ->line('Please click the button below to verify your email address.')
-            ->action('Verify Email Address', $prefix . urlencode($verificationUrl))
+            ->action('Verify Email Address', $prefix.urlencode($verificationUrl))
             ->line('If you did not create an account, no further action is required.');
     }
 

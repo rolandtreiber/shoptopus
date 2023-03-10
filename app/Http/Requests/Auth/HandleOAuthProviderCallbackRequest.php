@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Support\Facades\Config;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Config;
 
 class HandleOAuthProviderCallbackRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class HandleOAuthProviderCallbackRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,11 +22,11 @@ class HandleOAuthProviderCallbackRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'provider' => 'required|string|in:' .  implode(',', Config::get('social_login_providers.providers')),
-            'code' => 'required|string'
+            'provider' => 'required|string|in:'.implode(',', Config::get('social_login_providers.providers')),
+            'code' => 'required|string',
         ];
     }
 

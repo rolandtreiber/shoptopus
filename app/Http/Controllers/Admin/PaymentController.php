@@ -20,10 +20,11 @@ use Illuminate\Validation\Rule;
 class PaymentController extends Controller
 {
     use ProcessRequest;
+
     protected PaymentRepositoryInterface $paymentRepository;
 
     /**
-     * @param PaymentRepositoryInterface $paymentRepository
+     * @param  PaymentRepositoryInterface  $paymentRepository
      */
     public function __construct(PaymentRepositoryInterface $paymentRepository)
     {
@@ -31,7 +32,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -40,7 +41,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param Payment $payment
+     * @param  Payment  $payment
      * @return PaymentDetailResource
      */
     public function show(Payment $payment): PaymentDetailResource
@@ -51,7 +52,7 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param PaymentStoreRequest $request
+     * @param  PaymentStoreRequest  $request
      * @return PaymentDetailResource
      */
     public function create(PaymentStoreRequest $request): PaymentDetailResource
@@ -68,8 +69,8 @@ class PaymentController extends Controller
     /**
      * Update a resource.
      *
-     * @param Payment $payment
-     * @param PaymentUpdateRequest $request
+     * @param  Payment  $payment
+     * @param  PaymentUpdateRequest  $request
      * @return PaymentDetailResource
      */
     public function update(Payment $payment, PaymentUpdateRequest $request): PaymentDetailResource
@@ -84,18 +85,20 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param Payment $payment
+     * @param  Payment  $payment
      * @return string[]
      */
     public function delete(Payment $payment): array
     {
         $payment->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param PaymentStatusUpdateBulkOperationRequest $request
+     * @param  PaymentStatusUpdateBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateStatus(PaymentStatusUpdateBulkOperationRequest $request): array
@@ -103,8 +106,8 @@ class PaymentController extends Controller
         $request->validate([
             'status' => [
                 'required',
-                Rule::in(PaymentStatus::getValues())
-                ]
+                Rule::in(PaymentStatus::getValues()),
+            ],
         ]);
         if ($this->paymentRepository->bulkUpdateStatus($request->ids, $request->status)) {
             return ['status' => 'Success'];

@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Cart;
 
-use Tests\TestCase;
 use App\Models\Cart;
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class RemoveItemFromCartTest extends TestCase
 {
@@ -20,7 +20,7 @@ class RemoveItemFromCartTest extends TestCase
     {
         $data = [
             'product_id' => null,
-            'cart_id' => null
+            'cart_id' => null,
         ];
 
         $this->sendRequest($data)
@@ -39,7 +39,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => '101',
-            'cart_id' => $cart->id
+            'cart_id' => $cart->id,
         ];
 
         $res = $this->sendRequest($data);
@@ -61,7 +61,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'cart_id' => $cart->id
+            'cart_id' => $cart->id,
         ];
 
         $res = $this->signIn()->sendRequest($data)->json();
@@ -83,25 +83,25 @@ class RemoveItemFromCartTest extends TestCase
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $cart->id,
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ]);
 
         $data = [
             'product_id' => $product->id,
-            'cart_id' => $cart->id
+            'cart_id' => $cart->id,
         ];
 
         $this->sendRequest($data)->json();
 
         $this->assertDatabaseMissing('cart_product', [
             'cart_id' => $cart->id,
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ]);
 
         $this->assertEmpty($cart->products);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->deleteJson(route('api.cart.removeItem'), $data);
     }

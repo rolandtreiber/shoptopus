@@ -15,6 +15,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group product_variants
+ *
  * @see \App\Http\Controllers\Admin\ProductVariantController
  */
 class ProductVariantControllerTest extends AdminControllerTestCase
@@ -29,23 +30,23 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     {
         $product = Product::factory()->create();
         $variants = ProductVariant::factory()->state([
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ])->count(3)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.product-variants', [
             'product' => $product->id,
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $variants[0]->id
+            'id' => $variants[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $variants[1]->id
+            'id' => $variants[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $variants[2]->id
+            'id' => $variants[2]->id,
         ]);
     }
 
@@ -58,24 +59,24 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();
         $attributeOption = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-variant', [
-            'product' => $product->id
+            'product' => $product->id,
         ]), [
             'price' => 12.9,
             'description' => json_encode([
                 'en' => 'Test Variant',
-                'de' => 'Test Variante'
+                'de' => 'Test Variante',
             ]),
             'product_attributes' => [
-                $attribute->id => $attributeOption->id
+                $attribute->id => $attributeOption->id,
             ],
             'attachments' => [
                 UploadedFile::fake()->image('product_variant_image1.jpg'),
-                UploadedFile::fake()->image('product_variant_image2.jpg')
-            ]
+                UploadedFile::fake()->image('product_variant_image2.jpg'),
+            ],
         ]);
         $productVariantId = $response->json()['data']['id'];
         $productVariant = ProductVariant::find($productVariantId);
@@ -97,33 +98,33 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $attribute1 = ProductAttribute::factory()->create();
         $attribute2 = ProductAttribute::factory()->create();
         $attributeOption1 = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute1->id
+            'product_attribute_id' => $attribute1->id,
         ])->create();
         $attributeOption2 = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute1->id
+            'product_attribute_id' => $attribute1->id,
         ])->create();
         $productVariant = ProductVariant::factory()->state([
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ])->create();
         $productVariant->product_variant_attributes()->attach($attribute1, ['product_attribute_option_id' => $attributeOption1->id]);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
             'product' => $product->id,
-            'variant' => $productVariant->id
+            'variant' => $productVariant->id,
         ]), [
             'price' => 11.12,
             'description' => json_encode([
                 'en' => 'Updated Test Variant',
-                'de' => 'Aktualisiert Test Variante'
+                'de' => 'Aktualisiert Test Variante',
             ]),
             'product_attributes' => [
-                $attribute2->id => $attributeOption2->id
+                $attribute2->id => $attributeOption2->id,
             ],
             'attachments' => [
                 UploadedFile::fake()->image('product_variant_image1.jpg'),
-                UploadedFile::fake()->image('product_variant_image2.jpg')
-            ]
+                UploadedFile::fake()->image('product_variant_image2.jpg'),
+            ],
         ]);
         $productVariantId = $response->json()['data']['id'];
         $productVariant = ProductVariant::find($productVariantId);
@@ -145,12 +146,12 @@ class ProductVariantControllerTest extends AdminControllerTestCase
 
         $productVariant1 = ProductVariant::factory()->create([
             'product_id' => $product->id,
-            'stock' => 5
+            'stock' => 5,
         ]);
 
         $productVariant2 = ProductVariant::factory()->create([
             'product_id' => $product->id,
-            'stock' => 3
+            'stock' => 3,
         ]);
 
         $product->refresh();
@@ -160,7 +161,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->patch(route('admin.api.update.product-variant', [
             'product' => $product->id,
-            'variant' => $productVariant1->id
+            'variant' => $productVariant1->id,
         ]), [
             'stock' => 2,
         ]);
@@ -178,16 +179,16 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();
         $attributeOption = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $productVariant = ProductVariant::factory()->state([
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ])->create();
         $productVariant->product_variant_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-variant', [
             'product' => $product->id,
-            'variant' => $productVariant->id
+            'variant' => $productVariant->id,
         ]));
         $variantId = $response->json()['data']['id'];
         $attributeId = $response->json()['data']['attributes'][0]['id'];
@@ -204,12 +205,12 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     {
         $product = Product::factory()->create();
         $productVariant = ProductVariant::factory()->state([
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.product-variant', [
             'product' => $product->id,
-            'variant' => $productVariant->id
+            'variant' => $productVariant->id,
         ]));
 
         $this->assertSoftDeleted($productVariant);
@@ -224,7 +225,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-variant', [
-            'product' => $product->id
+            'product' => $product->id,
         ]));
         $response->assertStatus(422);
     }
@@ -237,20 +238,19 @@ class ProductVariantControllerTest extends AdminControllerTestCase
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();
         $attributeOption = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $productVariant = ProductVariant::factory()->state([
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ])->create();
         $productVariant->product_variant_attributes()->attach($attribute, ['product_attribute_option_id' => $attributeOption->id]);
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-variant', [
             'product' => $product->id,
-            'variant' => $productVariant->id
+            'variant' => $productVariant->id,
         ]), [
-            'price' => 'twelve'
+            'price' => 'twelve',
         ]);
         $response->assertStatus(422);
     }
-
 }

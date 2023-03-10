@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\ProductAttributeBulkOperationRequest;
 use App\Http\Requests\Admin\ProductAttributeStoreRequest;
 use App\Http\Requests\Admin\ProductAttributeUpdateRequest;
@@ -19,10 +18,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductAttributeController extends Controller
 {
     use ProcessRequest;
+
     protected ProductAttributeRepositoryInterface $productAttributeRepository;
 
     /**
-     * @param ProductAttributeRepositoryInterface $productAttributeRepository
+     * @param  ProductAttributeRepositoryInterface  $productAttributeRepository
      */
     public function __construct(ProductAttributeRepositoryInterface $productAttributeRepository)
     {
@@ -30,7 +30,7 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -39,7 +39,7 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param ProductAttribute $attribute
+     * @param  ProductAttribute  $attribute
      * @return ProductAttributeDetailResource
      */
     public function show(ProductAttribute $attribute): ProductAttributeDetailResource
@@ -50,7 +50,7 @@ class ProductAttributeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductAttributeStoreRequest $request
+     * @param  ProductAttributeStoreRequest  $request
      * @return ProductAttributeDetailResource
      */
     public function create(ProductAttributeStoreRequest $request): ProductAttributeDetailResource
@@ -68,8 +68,8 @@ class ProductAttributeController extends Controller
     /**
      * Update a resource.
      *
-     * @param ProductAttribute $attribute
-     * @param ProductAttributeUpdateRequest $request
+     * @param  ProductAttribute  $attribute
+     * @param  ProductAttributeUpdateRequest  $request
      * @return ProductAttributeDetailResource
      */
     public function update(ProductAttribute $attribute, ProductAttributeUpdateRequest $request): ProductAttributeDetailResource
@@ -85,24 +85,26 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param ProductAttribute $attribute
+     * @param  ProductAttribute  $attribute
      * @return string[]
      */
     public function delete(ProductAttribute $attribute): array
     {
         $attribute->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param ProductAttributeBulkOperationRequest $request
+     * @param  ProductAttributeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateAvailability(ProductAttributeBulkOperationRequest $request): array
     {
         $request->validate([
-            'availability' => ['required', 'boolean']
+            'availability' => ['required', 'boolean'],
         ]);
         if ($this->productAttributeRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
             return ['status' => 'Success'];
@@ -111,8 +113,9 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param ProductAttributeBulkOperationRequest $request
+     * @param  ProductAttributeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(ProductAttributeBulkOperationRequest $request): array

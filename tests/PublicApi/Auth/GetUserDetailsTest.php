@@ -2,12 +2,12 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Product;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class GetUserDetailsTest extends TestCase
 {
@@ -47,7 +47,7 @@ class GetUserDetailsTest extends TestCase
                         'phone',
                         'avatar' => [
                             'url',
-                            'file_name'
+                            'file_name',
                         ],
                         'is_verified',
                         'cart' => [
@@ -55,13 +55,13 @@ class GetUserDetailsTest extends TestCase
                             'user_id',
                             'ip_address',
                             'user',
-                            'products'
+                            'products',
                         ],
                         'notifications',
-                        'favorites'
-                    ]
-                ]
-            ]
+                        'favorites',
+                    ],
+                ],
+            ],
         ]);
     }
 
@@ -74,9 +74,9 @@ class GetUserDetailsTest extends TestCase
         $user = User::factory()->create();
 
         $notificationData = [
-            'type' => "order-complete",
+            'type' => 'order-complete',
             'title' => "You're order is ready.",
-            'level' => 'info'
+            'level' => 'info',
         ];
 
         DB::table('notifications')->insert([
@@ -84,7 +84,7 @@ class GetUserDetailsTest extends TestCase
             'type' => 'App\Notifications\OrderComplete',
             'notifiable_type' => 'App\Models\User',
             'notifiable_id' => $user->id,
-            'data' => json_encode($notificationData)
+            'data' => json_encode($notificationData),
         ]);
 
         DB::table('notifications')->insert([
@@ -93,7 +93,7 @@ class GetUserDetailsTest extends TestCase
             'notifiable_type' => 'App\Models\User',
             'notifiable_id' => $user->id,
             'data' => json_encode($notificationData),
-            'read_at' => now()
+            'read_at' => now(),
         ]);
 
         $notifications = $this->signIn($user)->sendRequest()->json('data.auth.user.notifications');
@@ -111,9 +111,9 @@ class GetUserDetailsTest extends TestCase
 
         $products = Product::factory()->count(3)->create();
 
-        $products->each(fn($product) => DB::table('favorited_products')->insert([
+        $products->each(fn ($product) => DB::table('favorited_products')->insert([
             'user_id' => $user->id,
-            'product_id' => $product->id
+            'product_id' => $product->id,
         ]));
 
         $favorites = $this->signIn($user)->sendRequest()->json('data.auth.user.favorites');
@@ -121,7 +121,7 @@ class GetUserDetailsTest extends TestCase
         $this->assertCount($products->count(), $favorites);
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.auth.details'));
     }

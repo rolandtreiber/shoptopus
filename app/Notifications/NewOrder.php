@@ -34,7 +34,7 @@ class NewOrder extends BaseNotification implements UserNotification
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('user-' . $this->userId . '-notifications');
+        return new PrivateChannel('user-'.$this->userId.'-notifications');
     }
 
     public function broadcastType()
@@ -50,7 +50,7 @@ class NewOrder extends BaseNotification implements UserNotification
     public function toArray()
     {
         return [
-            'message' => $this->createMessage($this->data)
+            'message' => $this->createMessage($this->data),
         ];
     }
 
@@ -61,8 +61,8 @@ class NewOrder extends BaseNotification implements UserNotification
             ->line($this->createMessage($this->data));
     }
 
-    function createMessage($data): string
+    public function createMessage($data): string
     {
-        return 'New order of ('.$data->currency_code.' ' . $data->total_price . ') was placed by (' . $data->user->name . ') <' . $data->user->email . '> at ' . Carbon::parse($data->created_at)->format('d/m/Y H:i') . '.';
+        return 'New order of ('.$data->currency_code.' '.$data->total_price.') was placed by ('.$data->user->name.') <'.$data->user->email.'> at '.Carbon::parse($data->created_at)->format('d/m/Y H:i').'.';
     }
 }

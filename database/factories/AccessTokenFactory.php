@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\AccessToken;
-
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,9 +21,10 @@ class AccessTokenFactory extends Factory
      *
      * @return array
      */
-    public function definition() : array
+    public function definition(): array
     {
         $user = User::factory()->create();
+
         return [
             'type' => $this->faker->word,
             'token' => $this->faker->regexify('[A-Za-z0-9]{120}'),

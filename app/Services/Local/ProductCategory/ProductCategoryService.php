@@ -2,9 +2,9 @@
 
 namespace App\Services\Local\ProductCategory;
 
-use App\Services\Local\ModelService;
-use App\Services\Local\Error\ErrorServiceInterface;
 use App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface;
+use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\ModelService;
 
 class ProductCategoryService extends ModelService implements ProductCategoryServiceInterface
 {

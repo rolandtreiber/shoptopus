@@ -21,39 +21,39 @@ class DeliveryTypeSeeder extends Seeder
                 'name' => [
                     'en' => 'Local small',
                     'de' => 'Lokal klein',
-                    'fr' => 'Petit local'
+                    'fr' => 'Petit local',
                 ],
                 'description' => [
                     'en' => 'under 5kg',
                     'de' => 'unter 5kg',
-                    'fr' => 'moins de 5kg'
+                    'fr' => 'moins de 5kg',
                 ],
                 'price' => 2,
                 'rule' => [
                     'lat' => '51.4545',
                     'lon' => '-2.5879',
                     'max_distance' => 10,
-                    'max_weight' => 5000
-                ]
+                    'max_weight' => 5000,
+                ],
             ],
             [
                 'name' => [
                     'en' => 'Heavy',
                     'de' => 'Lourd',
-                    'fr' => 'Schwer'
+                    'fr' => 'Schwer',
                 ],
                 'description' => [
                     'en' => 'over 5kg',
                     'de' => 'über 5 kg',
-                    'fr' => 'plus que 5kg'
+                    'fr' => 'plus que 5kg',
                 ],
                 'price' => 8,
                 'rule' => [
                     'lat' => '51.4545',
                     'lon' => '-2.5879',
-                    'min_weight' => 5000
-                ]
-            ]
+                    'min_weight' => 5000,
+                ],
+            ],
         ];
 
         DB::table('delivery_rules')->delete();
@@ -63,7 +63,7 @@ class DeliveryTypeSeeder extends Seeder
             $type = DeliveryType::factory()->create([
                 'name' => $deliveryType['name'],
                 'description' => $deliveryType['description'],
-                'price' => $deliveryType['price']
+                'price' => $deliveryType['price'],
             ]);
 
             DeliveryRule::factory()->create([
@@ -73,7 +73,7 @@ class DeliveryTypeSeeder extends Seeder
                 'min_weight' => $deliveryType['rule']['min_weight'] ?? null,
                 'max_weight' => $deliveryType['rule']['max_weight'] ?? null,
                 'max_distance' => $deliveryType['rule']['max_distance'] ?? null,
-                'min_distance' => $deliveryType['rule']['min_distance'] ?? null
+                'min_distance' => $deliveryType['rule']['min_distance'] ?? null,
             ]);
         }
     }

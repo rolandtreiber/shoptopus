@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use App\Models\PasswordReset;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 class PasswordResetFactory extends Factory
 {
-
     /**
      * The name of the factory's corresponding model.
      *
@@ -21,11 +20,11 @@ class PasswordResetFactory extends Factory
      *
      * @return array
      */
-    public function definition() : array
+    public function definition(): array
     {
         return [
             'email' => $this->faker->unique()->safeEmail,
-            'token' => Str::random(60)
+            'token' => Str::random(60),
         ];
     }
 }

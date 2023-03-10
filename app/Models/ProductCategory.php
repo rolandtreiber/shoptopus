@@ -5,29 +5,30 @@ namespace App\Models;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Illuminate\Support\Collection;
 use Spatie\Translatable\HasTranslations;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static count()
  * @method static filtered(array $array, Request $request)
  * @method static root()
+ *
  * @property mixed|string[]|null $menu_image
  * @property mixed|string[]|null $header_image
- * @property boolean $enabled
+ * @property bool $enabled
  * @property Collection $children
  * @property Date $updated_at
  * @property mixed $id
@@ -40,37 +41,37 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         'slug',
         'name',
         'description',
-        'enabled'
+        'enabled',
     ];
 
     protected $exportableRelationships = [
         'children',
         'discount_rules',
         'parent',
-        'associated_products'
+        'associated_products',
     ];
 
     protected $importableFields = [
         'name' => [
-            'validation' => ['unique:product_categories,name']
+            'validation' => ['unique:product_categories,name'],
         ],
         'description',
         'enabled' => [
             'description' => '0 = disabled, 1 = enabled',
-            'validation' => 'boolean'
-        ]
+            'validation' => 'boolean',
+        ],
     ];
 
     protected $importableRelationships = [
         'parent',
         'discount_rules',
-        'associated_products'
+        'associated_products',
     ];
 
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['name'])
@@ -91,7 +92,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         'header_image',
         'parent_id',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -104,7 +105,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         'parent_id' => 'string',
         'menu_image' => 'object',
         'header_image' => 'object',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 
 //    /**
@@ -151,10 +152,11 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
 
     /**
      * Add a child category
-     * @param ProductCategory $product_category
+     *
+     * @param  ProductCategory  $product_category
      * @return false|\Illuminate\Database\Eloquent\Model
      */
-    public function addChildCategory(ProductCategory $product_category) : \Illuminate\Database\Eloquent\Model|bool
+    public function addChildCategory(ProductCategory $product_category): \Illuminate\Database\Eloquent\Model|bool
     {
         return $this->children()->save($product_category);
     }
@@ -164,9 +166,10 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
      */
     public function setChildrenIds(): ProductCategory
     {
-        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
+        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function (ProductCategory $category) {
             return $category->setChildrenIds()->allChildIds;
         })->toArray()];
+
         return $this;
     }
 
@@ -175,11 +178,11 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
      */
     public function childrenIds(): array
     {
-        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
+        $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function (ProductCategory $category) {
             return [$category->id, ...$category->setChildrenIds()->allChildIds];
         })->toArray()];
 
-        return [$this->id, ...$this->children()->availability('enabled')->get()->map(function(ProductCategory $category) {
+        return [$this->id, ...$this->children()->availability('enabled')->get()->map(function (ProductCategory $category) {
             return $category->setChildrenIds()->allChildIds;
         })];
     }
@@ -187,12 +190,16 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     /**
      * Recursively selects all descendants and turns them into an array.
      * The array then can be used in the frontend filtering by category anywhere down the tree.
+     *
      * @return mixed
      */
     public function tree()
     {
         $childIds = $this->childrenIds();
-        array_walk_recursive($childIds, function($a) use (&$return) { $return[] = $a; });
+        array_walk_recursive($childIds, function ($a) use (&$return) {
+        $return[] = $a;
+        });
+
         return $return;
     }
 
@@ -219,10 +226,10 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     }
 
     /**
-     * @param bool $immediate
+     * @param  bool  $immediate
      * @return BelongsToMany
      */
-    public function products(bool $immediate = true) : BelongsToMany
+    public function products(bool $immediate = true): BelongsToMany
     {
         if ($immediate) {
             return $this->belongsToMany(Product::class);

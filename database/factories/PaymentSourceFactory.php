@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Enums\PaymentMethod;
 use App\Models\PaymentSource;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentSourceFactory extends Factory
@@ -20,12 +20,13 @@ class PaymentSourceFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition(): array
     {
         $brands = [
-            'visa', 'mastercard', 'american express'
+            'visa', 'mastercard', 'american express',
         ];
 
         return [
@@ -41,7 +42,7 @@ class PaymentSourceFactory extends Factory
                 PaymentMethod::Stripe,
                 PaymentMethod::PayPal,
                 PaymentMethod::ApplePay,
-                PaymentMethod::GooglePay
+                PaymentMethod::GooglePay,
             ]),
         ];
     }

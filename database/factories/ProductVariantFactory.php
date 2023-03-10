@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Product;
-use App\Helpers\GeneralHelper;
-use App\Models\ProductVariant;
 use App\Enums\RandomStringMode;
+use App\Helpers\GeneralHelper;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -36,7 +36,7 @@ class ProductVariantFactory extends Factory
             'stock' => $this->faker->numberBetween(0, 30),
             'description' => $translations['description'],
             'sku' => GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndNumbers),
-            'enabled' => true
+            'enabled' => true,
         ];
     }
 }

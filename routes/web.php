@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/invoice/{token}', [InvoiceController::class, "download"])->name('invoice.download');
+Route::get('/invoice/{token}', [InvoiceController::class, 'download'])->name('invoice.download');

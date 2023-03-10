@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $accessable_type
@@ -52,7 +52,7 @@ class AccessToken extends Model
         'id' => 'string',
         'user_id' => 'string',
         'issuer_user_id' => 'string',
-        'expiry' => 'datetime'
+        'expiry' => 'datetime',
     ];
 
     /**
@@ -78,6 +78,7 @@ class AccessToken extends Model
     {
         $now = \Carbon\Carbon::now();
         $expiry = Carbon::parse($this->expiry);
+
         return $expiry < $now;
     }
 

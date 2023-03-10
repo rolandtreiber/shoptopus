@@ -2,16 +2,16 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\Address;
 use App\Models\Payment;
-use Illuminate\Support\Str;
 use App\Models\PaymentSource;
 use App\Models\SocialAccount;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {
@@ -19,7 +19,7 @@ class UserTest extends TestCase
 
     protected $user;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -41,14 +41,14 @@ class UserTest extends TestCase
     /** @test */
     public function it_has_a_slug_generated_from_its_first_and_last_name()
     {
-        $this->assertEquals(Str::slug($this->user->first_name . ' ' . $this->user->last_name), $this->user->slug);
+        $this->assertEquals(Str::slug($this->user->first_name.' '.$this->user->last_name), $this->user->slug);
     }
 
     /** @test */
     public function it_has_a_name_field()
     {
         $this->assertEquals(
-            trim($this->user->prefix . ' ' . $this->user->first_name . ' ' . $this->user->last_name),
+            trim($this->user->prefix.' '.$this->user->first_name.' '.$this->user->last_name),
             $this->user->name
         );
     }
@@ -76,7 +76,7 @@ class UserTest extends TestCase
     {
         $this->assertEquals(
             $this->user->initials,
-            substr($this->user->first_name, 0, 1) . substr($this->user->last_name, 0, 1)
+            substr($this->user->first_name, 0, 1).substr($this->user->last_name, 0, 1)
         );
     }
 
@@ -176,6 +176,6 @@ class UserTest extends TestCase
 
         $this->assertInstanceOf(SocialAccount::class, $this->user->social_accounts[0]);
 
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection' , $this->user->social_accounts);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->user->social_accounts);
     }
 }

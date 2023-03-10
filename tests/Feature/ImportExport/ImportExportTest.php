@@ -38,8 +38,8 @@ class ImportExportTest extends AdminControllerTestCase
 
         $allHeaderFields = array_merge($categoryExportableFields, $categoryExportableRelationships);
 
-        Excel::assertDownloaded('product-categories - TEMPLATE.xlsx', function(ModelTemplateExport $export) use ($allHeaderFields) {
-            return !array_diff($export->headings(), $allHeaderFields);
+        Excel::assertDownloaded('product-categories - TEMPLATE.xlsx', function (ModelTemplateExport $export) use ($allHeaderFields) {
+            return ! array_diff($export->headings(), $allHeaderFields);
         });
     }
 
@@ -53,8 +53,8 @@ class ImportExportTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first())
             ->get('/io/export?name=products&models[]=Product&models[]=ProductCategory&models[]=ProductAttribute&models[]=ProductAttributeOption&models[]=ProductTag');
 
-        Excel::assertDownloaded('products.xlsx', function(ModelExport $export) {
-            $modelsFromSheets = array_map(function(ModelExportSheet $sheet) {
+        Excel::assertDownloaded('products.xlsx', function (ModelExport $export) {
+            $modelsFromSheets = array_map(function (ModelExportSheet $sheet) {
                 return $sheet->getModelClass();
             }, $export->sheets());
 
@@ -63,10 +63,10 @@ class ImportExportTest extends AdminControllerTestCase
                 ProductCategory::class,
                 ProductAttribute::class,
                 ProductAttributeOption::class,
-                ProductTag::class
+                ProductTag::class,
             ];
 
-            return !array_diff($modelsFromSheets, $models);
+            return ! array_diff($modelsFromSheets, $models);
         });
     }
 
@@ -81,9 +81,10 @@ class ImportExportTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first())
             ->get('/io/export?name=products&models[]=Product');
 
-        Excel::assertDownloaded('products.xlsx', function(ModelExport $export) use ($products) {
+        Excel::assertDownloaded('products.xlsx', function (ModelExport $export) use ($products) {
             /** @var ModelExportSheet $sheet */
             $sheet = $export->sheets()[0];
+
             return $sheet->collection()->contains($products[0]) && $sheet->collection()->contains($products[1]);
         });
     }
@@ -93,16 +94,16 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_import_file_validates_success()
     {
-        $path  = __DIR__.'/TestData/product-categories-import.xlsx';
-        $file = new UploadedFile ($path, 'product-categories-import.xlsx', null, null, true);
+        $path = __DIR__.'/TestData/product-categories-import.xlsx';
+        $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post('/io/validate', [
-            'file' => $file
+            'file' => $file,
         ]);
 
         $response->assertJsonFragment([
-            "status" => "success"
+            'status' => 'success',
         ]);
     }
 
@@ -111,20 +112,20 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_import_file_validates_fail()
     {
-        $path  = __DIR__.'/TestData/product-categories-import-invalid.xlsx';
-        $file = new UploadedFile ($path, 'product-categories-import-invalid.xlsx', null, null, true);
+        $path = __DIR__.'/TestData/product-categories-import-invalid.xlsx';
+        $file = new UploadedFile($path, 'product-categories-import-invalid.xlsx', null, null, true);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post('/io/validate', [
-            'file' => $file
+            'file' => $file,
         ]);
 
         $response->assertJsonFragment([
-            "errors" => "Invalid slugs found: INVALID"
+            'errors' => 'Invalid slugs found: INVALID',
         ]);
 
         $response->assertJsonFragment([
-            "status" => "invalid data"
+            'status' => 'invalid data',
         ]);
     }
 
@@ -133,19 +134,19 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_import_file_imports_data()
     {
-        $path  = __DIR__.'/TestData/product-categories-import.xlsx';
-        $file = new UploadedFile ($path, 'product-categories-import.xlsx', null, null, true);
+        $path = __DIR__.'/TestData/product-categories-import.xlsx';
+        $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post('/io/import', [
-            'file' => $file
+            'file' => $file,
         ]);
 
         $this->assertDatabaseHas('product_categories', [
-            'slug' => 'furniture'
+            'slug' => 'furniture',
         ]);
         $response->assertJsonFragment([
-            "status" => "success"
+            'status' => 'success',
         ]);
     }
 
@@ -154,7 +155,6 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_export_requires_permission()
     {
-
         $response = $this->actingAs(User::where('email', 'customer@m.com')->first())
             ->get('/io/export?name=products&models[]=Product&models[]=ProductCategory&models[]=ProductAttribute&models[]=ProductAttributeOption&models[]=ProductTag');
 
@@ -177,12 +177,12 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_import_requires_permission()
     {
-        $path  = __DIR__.'/TestData/product-categories-import.xlsx';
-        $file = new UploadedFile ($path, 'product-categories-import.xlsx', null, null, true);
+        $path = __DIR__.'/TestData/product-categories-import.xlsx';
+        $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
 
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->post('/io/import', [
-            'file' => $file
+            'file' => $file,
         ]);
 
         $response->assertForbidden();
@@ -193,15 +193,14 @@ class ImportExportTest extends AdminControllerTestCase
      */
     public function test_import_validation_requires_permission()
     {
-        $path  = __DIR__.'/TestData/product-categories-import.xlsx';
-        $file = new UploadedFile ($path, 'product-categories-import.xlsx', null, null, true);
+        $path = __DIR__.'/TestData/product-categories-import.xlsx';
+        $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
 
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->post('/io/validate', [
-            'file' => $file
+            'file' => $file,
         ]);
 
         $response->assertForbidden();
     }
-
 }

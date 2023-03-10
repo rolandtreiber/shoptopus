@@ -2,10 +2,10 @@
 
 namespace App\Repositories\Local\PaymentProvider;
 
-use Illuminate\Support\Facades\DB;
-use App\Repositories\Local\ModelRepository;
 use App\Models\PaymentProvider\PaymentProvider;
+use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class PaymentProviderRepository extends ModelRepository implements PaymentProviderRepositoryInterface
 {
@@ -17,10 +17,10 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
     /**
      * Get the configs for the given payment provider
      *
-     * @param array $paymentProviderIds
+     * @param  array  $paymentProviderIds
      * @return array
      */
-    public function getConfigs(array $paymentProviderIds = []) : array
+    public function getConfigs(array $paymentProviderIds = []): array
     {
         $ids = implode(',', $paymentProviderIds);
 
@@ -40,22 +40,22 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
             "{$this->model_table}.name",
             "{$this->model_table}.enabled",
-            "{$this->model_table}.test_mode"
+            "{$this->model_table}.test_mode",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 
@@ -63,22 +63,23 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
      * Get the required related models for the given payment provider
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         try {
-            if (!in_array('payment_provider_configs', $excludeRelationships)) {
+            if (! in_array('payment_provider_configs', $excludeRelationships)) {
                 $configs = $this->getConfigs(collect($result)->pluck('id')->toArray());
 
-                foreach($result as &$model) {
+                foreach ($result as &$model) {
                     $modelId = (int) $model['id'];
 
                     $model['payment_provider_configs'] = [];
                     foreach ($configs as $config) {
-                        if((int) $config['payment_provider_id'] === $modelId) {
+                        if ((int) $config['payment_provider_id'] === $modelId) {
                             unset($config['payment_provider_id']);
                             array_push($model['payment_provider_configs'], $config);
                         }

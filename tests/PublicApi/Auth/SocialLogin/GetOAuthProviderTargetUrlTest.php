@@ -2,8 +2,8 @@
 
 namespace Tests\PublicApi\Auth\SocialLogin;
 
-use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetOAuthProviderTargetUrlTest extends TestCase
 {
@@ -36,7 +36,7 @@ class GetOAuthProviderTargetUrlTest extends TestCase
     public function it_returns_a_target_url_for_facebook()
     {
         $this->sendRequest('facebook')
-            ->assertJsonStructure(['data' => ['targetUrl'] ]);
+            ->assertJsonStructure(['data' => ['targetUrl']]);
     }
 
     /**
@@ -46,10 +46,10 @@ class GetOAuthProviderTargetUrlTest extends TestCase
     public function it_returns_a_target_url_for_google()
     {
         $this->sendRequest('google')
-            ->assertJsonStructure(['data' => ['targetUrl'] ]);
+            ->assertJsonStructure(['data' => ['targetUrl']]);
     }
 
-    protected function sendRequest($provider) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($provider): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.auth.getOAuthProviderTargetUrl', ['provider' => $provider]));
     }

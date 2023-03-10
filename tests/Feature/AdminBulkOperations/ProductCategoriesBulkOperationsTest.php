@@ -20,21 +20,21 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_enable_multiple_product_categories()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
             'ids' => $productCategoryIds,
-            'availability' => true
+            'availability' => true,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('product_categories', [
             'id' => $productCategoryIds[0],
-            'enabled' => 1
+            'enabled' => 1,
         ]);
         $this->assertDatabaseHas('product_categories', [
             'id' => $productCategoryIds[1],
-            'enabled' => 1
+            'enabled' => 1,
         ]);
     }
 
@@ -44,21 +44,21 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_disable_multiple_product_categories()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
             'ids' => $productCategoryIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('product_categories', [
             'id' => $productCategoryIds[0],
-            'enabled' => 0
+            'enabled' => 0,
         ]);
         $this->assertDatabaseHas('product_categories', [
             'id' => $productCategoryIds[1],
-            'enabled' => 0
+            'enabled' => 0,
         ]);
     }
 
@@ -68,7 +68,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_delete_multiple_product_categories()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), [
@@ -76,10 +76,10 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
         ]);
         $response->assertOk();
         $this->assertSoftDeleted('product_categories', [
-            'id' => $productCategoryIds[0]
+            'id' => $productCategoryIds[0],
         ]);
         $this->assertSoftDeleted('product_categories', [
-            'id' => $productCategoryIds[1]
+            'id' => $productCategoryIds[1],
         ]);
     }
 
@@ -89,7 +89,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_availability_update_validation()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
@@ -104,12 +104,12 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_availability_update_authorization()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
             'ids' => $productCategoryIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertForbidden();
     }
@@ -120,11 +120,11 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_availability_update_authentication()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
             'ids' => $productCategoryIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertStatus(500);
     }
@@ -135,7 +135,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_availability_update_not_found_handled()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeManager);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
@@ -160,7 +160,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_delete_authorization()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), [
@@ -175,7 +175,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_delete_authentication()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), [
             'ids' => $productCategoryIds,
@@ -189,7 +189,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_product_categories_delete_not_found_handled()
     {
         $productCategoryIds = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeManager);
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), [
@@ -197,5 +197,4 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
         ]);
         $response->assertStatus(422);
     }
-
 }

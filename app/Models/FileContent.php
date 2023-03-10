@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Enums\FileType;
 use App\Traits\HasUUID;
-use Spatie\Translatable\HasTranslations;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Translatable\HasTranslations;
 
 class FileContent extends SearchableModel
 {
@@ -27,7 +27,7 @@ class FileContent extends SearchableModel
         'url',
         'file_name',
         'description',
-        'type'
+        'type',
     ];
 
     /**
@@ -41,7 +41,7 @@ class FileContent extends SearchableModel
     ];
 
     protected $hidden = [
-        'fileable_id', 'fileable_type', 'created_at'
+        'fileable_id', 'fileable_type', 'created_at',
     ];
 
     public function scopeView($query, $view)
@@ -133,5 +133,4 @@ class FileContent extends SearchableModel
     {
         return $query->where('type', FileType::Other);
     }
-
 }

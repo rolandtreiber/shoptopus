@@ -9,33 +9,34 @@ use Illuminate\Support\Facades\DB;
 
 class DiscountRuleRepository implements DiscountRuleRepositoryInterface
 {
-
     use TimeperiodHelperTrait;
 
     /**
-     * @param array $ids
+     * @param  array  $ids
      * @return bool
      */
     public function bulkExpire(array $ids): bool
     {
         try {
             DB::table('discount_rules')->whereIn('id', $ids)->update(['valid_until' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param array $ids
+     * @param  array  $ids
      * @return bool
      */
     public function bulkStart(array $ids): bool
     {
         try {
             DB::table('discount_rules')->whereIn('id', $ids)->update(['valid_from' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
@@ -50,24 +51,26 @@ class DiscountRuleRepository implements DiscountRuleRepositoryInterface
         try {
             DB::table('discount_rules')->whereIn('id', $ids)->update([
                 'valid_from' => Carbon::now(),
-                'valid_until' => $expiry
+                'valid_until' => $expiry,
             ]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param array $ids
+     * @param  array  $ids
      * @return bool
      */
     public function bulkDelete(array $ids): bool
     {
         try {
             DB::table('discount_rules')->whereIn('id', $ids)->update(['deleted_at' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }

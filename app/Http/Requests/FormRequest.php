@@ -10,7 +10,8 @@ class FormRequest extends \Illuminate\Foundation\Http\FormRequest
     /**
      * @throws ApiValidationFailedException
      */
-    protected function failedValidation(Validator $validator):void {
+    protected function failedValidation(Validator $validator): void
+    {
         throw new ApiValidationFailedException($validator->errors());
     }
 }

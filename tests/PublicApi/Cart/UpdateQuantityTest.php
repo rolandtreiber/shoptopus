@@ -2,20 +2,21 @@
 
 namespace Tests\PublicApi\Cart;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Product;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class UpdateQuantityTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $user;
+
     protected $cart;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -32,7 +33,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => '1234',
             'product_id' => '1234',
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $this->sendRequest($data)->assertJsonValidationErrors(['cart_id', 'product_id']);
@@ -49,7 +50,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 0
+            'quantity' => 0,
         ];
 
         $res = $this->sendRequest($data);
@@ -69,7 +70,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $res = $this->sendRequest($data);
@@ -89,7 +90,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 2
+            'quantity' => 2,
         ];
 
         $res = $this->sendRequest($data);
@@ -102,7 +103,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product2->id,
-            'quantity' => 5
+            'quantity' => 5,
         ];
 
         $res2 = $this->sendRequest($data);
@@ -122,7 +123,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 3
+            'quantity' => 3,
         ];
 
         $res = $this->sendRequest($data)->json();
@@ -142,7 +143,7 @@ class UpdateQuantityTest extends TestCase
         $cart_product = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         DB::table('cart_product')->insert($cart_product);
@@ -152,7 +153,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 4
+            'quantity' => 4,
         ];
 
         $this->sendRequest($data)->json();
@@ -171,7 +172,7 @@ class UpdateQuantityTest extends TestCase
         $cart_product = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         DB::table('cart_product')->insert($cart_product);
@@ -179,7 +180,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
-            'quantity' => 4
+            'quantity' => 4,
         ];
 
         $cart = $this->sendRequest($data)->json('data.0');
@@ -189,12 +190,12 @@ class UpdateQuantityTest extends TestCase
         $this->assertEquals($data['quantity'], $cart['products'][0]['quantity']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->patchJson(route('api.cart.updateQuantity', [
             'cart_id' => $data['cart_id'],
             'product_id' => $data['product_id'],
-            'quantity' => $data['quantity']
+            'quantity' => $data['quantity'],
         ]));
     }
 }

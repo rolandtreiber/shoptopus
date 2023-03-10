@@ -2,12 +2,12 @@
 
 namespace Tests\PublicApi\ProductCategory;
 
-use Tests\TestCase;
-use App\Models\Product;
 use App\Models\DiscountRule;
+use App\Models\Product;
 use App\Models\ProductCategory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductCategory\ProductCategoryRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetProductCategoryTest extends TestCase
 {
@@ -15,7 +15,7 @@ class GetProductCategoryTest extends TestCase
 
     protected $product_category;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -54,8 +54,8 @@ class GetProductCategoryTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
-                ]
+                    app()->make(ProductCategoryRepository::class)->getSelectableColumns(false),
+                ],
             ]);
     }
 
@@ -67,7 +67,7 @@ class GetProductCategoryTest extends TestCase
     {
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
         $this->product_category->discount_rules()->attach($dr->id);
 
@@ -84,11 +84,11 @@ class GetProductCategoryTest extends TestCase
                             'amount',
                             'valid_from',
                             'valid_until',
-                            'slug'
-                        ]
-                    ]
-                ]
-            ]
+                            'slug',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $dr->update(['enabled' => false]);
@@ -108,12 +108,12 @@ class GetProductCategoryTest extends TestCase
     {
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
 
         $dr2 = DiscountRule::factory()->create([
             'valid_from' => now()->subDays(5)->toDateTimeString(),
-            'valid_until' => now()->subDay()->toDateTimeString()
+            'valid_until' => now()->subDay()->toDateTimeString(),
         ]);
 
         $this->product_category->discount_rules()->attach([$dr1->id, $dr2->id]);
@@ -135,10 +135,10 @@ class GetProductCategoryTest extends TestCase
             'data' => [
                 [
                     'subcategories' => [
-                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
-                    ]
-                ]
-            ]
+                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false),
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(3, $res->json('data.0.subcategories'));
@@ -163,9 +163,9 @@ class GetProductCategoryTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_ids'
-                ]
-            ]
+                    'product_ids',
+                ],
+            ],
         ]);
 
         $this->assertEquals($p->id, $res->json('data.0.product_ids.0'));
@@ -175,7 +175,7 @@ class GetProductCategoryTest extends TestCase
         $this->assertEmpty($this->sendRequest()->json('data.0.product_ids'));
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.product_category.get', ['id' => $this->product_category->id]));
     }

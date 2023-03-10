@@ -2,20 +2,21 @@
 
 namespace App\Services\Local\Auth;
 
-use Google_Client;
-use App\Models\User;
 use App\Models\SocialAccount;
+use App\Models\User;
+use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\User\UserServiceInterface;
+use Google_Client;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Config;
 use Laravel\Socialite\Facades\Socialite;
 use Laravel\Socialite\Two\User as ProviderUser;
-use App\Services\Local\User\UserServiceInterface;
-use App\Services\Local\Error\ErrorServiceInterface;
 
 class SocialAccountService implements SocialAccountServiceInterface
 {
     private ErrorServiceInterface $errorService;
+
     private UserServiceInterface $userService;
 
     public function __construct(ErrorServiceInterface $errorService, UserServiceInterface $userService)
@@ -27,11 +28,12 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Get the target url to the Auth provider's authentication page
      *
-     * @param string $provider
+     * @param  string  $provider
      * @return string
+     *
      * @throws \Exception
      */
-    public function getOAuthProviderTargetUrl(string $provider) : string
+    public function getOAuthProviderTargetUrl(string $provider): string
     {
         try {
             return Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
@@ -44,11 +46,12 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Handle the Auth provider's callback
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
-    public function handleOAuthProviderCallback(array $payload) : array
+    public function handleOAuthProviderCallback(array $payload): array
     {
         try {
             $provider = $payload['provider'];
@@ -71,12 +74,13 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Find or create user instance by provider user instance and provider name
      *
-     * @param ProviderUser $providerUser
-     * @param string $provider
+     * @param  ProviderUser  $providerUser
+     * @param  string  $provider
      * @return array
+     *
      * @throws \Exception
      */
-    public function findOrCreate(ProviderUser $providerUser, string $provider) : array
+    public function findOrCreate(ProviderUser $providerUser, string $provider): array
     {
         $socialAccount = SocialAccount::where('provider_name', $provider)
             ->where('provider_id', $providerUser->getId())
@@ -93,11 +97,11 @@ class SocialAccountService implements SocialAccountServiceInterface
                 $user = User::where('email', $email)->first();
             }
 
-            if(!$user) {
+            if (! $user) {
                 $user_data = $this->getPayload($providerUser);
                 $user = $this->userService->post($user_data);
 
-                if(!($user instanceof User)) {
+                if (! ($user instanceof User)) {
                     $user = User::findOrFail($user['id']);
                 }
             }
@@ -107,7 +111,7 @@ class SocialAccountService implements SocialAccountServiceInterface
                 'provider_id' => $providerUser->getId(),
                 'provider_name' => $provider,
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ]);
 
             return $user->toArray();
@@ -117,32 +121,34 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Get a payload for creating a new social account
      *
-     * @param ProviderUser $providerUser
+     * @param  ProviderUser  $providerUser
      * @return array
+     *
      * @throws \Exception
      */
-    public function getPayload(ProviderUser $providerUser) : array
+    public function getPayload(ProviderUser $providerUser): array
     {
         $name = $this->splitUserName($providerUser->getName());
 
         return [
-            "first_name" => $name['first_name'],
-            "last_name" => $name['last_name'],
-            "email" => $providerUser->getEmail(),
-            "phone" => null,
-            "password" => null
+            'first_name' => $name['first_name'],
+            'last_name' => $name['last_name'],
+            'email' => $providerUser->getEmail(),
+            'phone' => null,
+            'password' => null,
         ];
     }
 
     /**
      * Get an access token from the given provider
      *
-     * @param string $provider
-     * @param string $authorization_code
+     * @param  string  $provider
+     * @param  string  $authorization_code
      * @return string
+     *
      * @throws \Exception
      */
-    protected function getAccessTokenFromProvider(string $provider, string $authorization_code) : string
+    protected function getAccessTokenFromProvider(string $provider, string $authorization_code): string
     {
         $accessToken = null;
 
@@ -151,7 +157,7 @@ class SocialAccountService implements SocialAccountServiceInterface
                 'client_id' => Config::get('services.facebook.client_id'),
                 'redirect_uri' => Config::get('services.facebook.redirect'),
                 'client_secret' => Config::get('services.facebook.client_secret'),
-                'code' => $authorization_code
+                'code' => $authorization_code,
             ])->json(); // access_token, token_type, expires_in
 
             if (isset($response['error'])) {
@@ -159,18 +165,18 @@ class SocialAccountService implements SocialAccountServiceInterface
             }
 
             $accessToken = $response['access_token'];
-        } else if ($provider === 'google') {
+        } elseif ($provider === 'google') {
             // @see https://developers.google.com/identity/protocols/oauth2/web-server#php_2
             // @see https://www.oauth.com/oauth2-servers/signing-in-with-google/getting-an-id-token/
             $client = new Google_Client([
                 'client_id' => Config::get('services.google.client_id'),
-                'client_secret' => Config::get('services.google.client_secret')
+                'client_secret' => Config::get('services.google.client_secret'),
             ]);
 
             $client->addScope(['openid', 'profile', 'email']);
             $client->setRedirectUri(Config::get('services.google.redirect'));
             $client->setAccessType('offline');
-            $client->setApprovalPrompt("consent");
+            $client->setApprovalPrompt('consent');
             $client->setIncludeGrantedScopes(true);
 
             // Make sure to urldecode the code
@@ -182,14 +188,15 @@ class SocialAccountService implements SocialAccountServiceInterface
         return $accessToken;
     }
 
-    public function splitUserName($name) {
+    public function splitUserName($name)
+    {
         $parts = [];
 
-        while ( strlen( trim($name)) > 0 ) {
+        while (strlen(trim($name)) > 0) {
             $name = trim($name);
             $string = preg_replace('#.*\s([\w-]*)$#', '$1', $name);
             $parts[] = $string;
-            $name = trim( preg_replace('#'.preg_quote($string,'#').'#', '', $name ) );
+            $name = trim(preg_replace('#'.preg_quote($string, '#').'#', '', $name));
         }
 
         if (empty($parts)) {

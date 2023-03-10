@@ -26,11 +26,11 @@ class RatingListResource extends JsonResource
             'language' => $this->language_prefix,
             'title' => $this->title,
             'description' => $this->description,
-            'ratable_type' => str_replace("App\Models\\", "", $this->ratable_type),
+            'ratable_type' => str_replace("App\Models\\", '', $this->ratable_type),
             'ratable_id' => $this->ratable_id,
             'verified' => $this->verified,
             'enabled' => $this->enabled,
-            'left_at' => $this->created_at
+            'left_at' => $this->created_at,
         ];
     }
 }

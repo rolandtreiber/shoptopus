@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Notification;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class SendPasswordResetTest extends TestCase
 {
@@ -43,7 +43,7 @@ class SendPasswordResetTest extends TestCase
         $user = User::factory()->create();
 
         $data = [
-            'email' => $user->email
+            'email' => $user->email,
         ];
 
         $this->assertDatabaseMissing('password_resets', ['email' => $user->email]);
@@ -53,13 +53,13 @@ class SendPasswordResetTest extends TestCase
         $this->assertEquals('We have e-mailed your password reset link!', $res);
 
         $this->assertDatabaseHas('password_resets', [
-            'email' => $user->email
+            'email' => $user->email,
         ]);
 
         Notification::assertSentTo($user, ResetPasswordNotification::class);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('password.email'), $data);
     }

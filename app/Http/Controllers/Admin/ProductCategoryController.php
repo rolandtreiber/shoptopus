@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\ProductCategoryBulkOperationRequest;
 use App\Http\Requests\Admin\ProductCategoryStoreRequest;
 use App\Http\Requests\Admin\ProductCategoryUpdateRequest;
@@ -21,10 +20,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductCategoryController extends Controller
 {
     use ProcessRequest;
+
     protected ProductCategoryRepositoryInterface $productCategoryRepository;
 
     /**
-     * @param ProductCategoryRepositoryInterface $productCategoryRepository
+     * @param  ProductCategoryRepositoryInterface  $productCategoryRepository
      */
     public function __construct(ProductCategoryRepositoryInterface $productCategoryRepository)
     {
@@ -32,12 +32,12 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        if (isset($request->filters["parent_id"])) {
+        if (isset($request->filters['parent_id'])) {
             $dataset = ProductCategory::filtered([], $request);
         } else {
             if ($request->filters) {
@@ -51,8 +51,8 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param Product $product
-     * @param ProductCategory $category
+     * @param  Product  $product
+     * @param  ProductCategory  $category
      * @return ProductCategoryDetailResource
      */
     public function show(Product $product, ProductCategory $category): ProductCategoryDetailResource
@@ -71,7 +71,7 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductCategoryStoreRequest $request
+     * @param  ProductCategoryStoreRequest  $request
      * @return ProductCategoryDetailResource
      */
     public function create(ProductCategoryStoreRequest $request): ProductCategoryDetailResource
@@ -91,8 +91,8 @@ class ProductCategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductCategoryUpdateRequest $request
-     * @param ProductCategory $category
+     * @param  ProductCategoryUpdateRequest  $request
+     * @param  ProductCategory  $category
      * @return ProductCategoryDetailResource
      */
     public function update(ProductCategoryUpdateRequest $request, ProductCategory $category): ProductCategoryDetailResource
@@ -111,24 +111,26 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param ProductCategory $category
+     * @param  ProductCategory  $category
      * @return string[]
      */
     public function delete(ProductCategory $category): array
     {
         $category->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param ProductCategoryBulkOperationRequest $request
+     * @param  ProductCategoryBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateAvailability(ProductCategoryBulkOperationRequest $request): array
     {
         $request->validate([
-            'availability' => ['required', 'boolean']
+            'availability' => ['required', 'boolean'],
         ]);
         if ($this->productCategoryRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
             return ['status' => 'Success'];
@@ -137,8 +139,9 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param ProductCategoryBulkOperationRequest $request
+     * @param  ProductCategoryBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(ProductCategoryBulkOperationRequest $request): array

@@ -13,7 +13,6 @@ use Intervention\Image\Facades\Image;
 
 trait ProcessRequest
 {
-
     /**
      * @param $request
      * @param $modelClass
@@ -65,8 +64,8 @@ trait ProcessRequest
 
     /**
      * @param $file
-     * @param int $sizeX
-     * @param int $sizeY
+     * @param  int  $sizeX
+     * @param  int  $sizeY
      * @return array|null
      */
     public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
@@ -81,27 +80,27 @@ trait ProcessRequest
         if (in_array($file->extension(), $imageFormats, true)) {
             $img = Image::make($file->path());
             $img->orientate();
-            $fileName = Str::random(40) . '.jpg';
+            $fileName = Str::random(40).'.jpg';
             $data = $img->resize($sizeX, $sizeY, function ($const) {
                 $const->aspectRatio();
             })->encode('jpg', 80);
             if (config('app.env') === 'local' || config('app.env') === 'testing') {
                 Storage::disk('uploads')->put($fileName, $data);
-                $url = config('app.url') . '/uploads/' . $fileName;
+                $url = config('app.url').'/uploads/'.$fileName;
             } else {
                 Storage::disk('digitalocean')->put($fileName, $data, ['visibility' => 'public']);
-                $url = config('filesystems.disks.digitalocean.endpoint') . '/' . config('filesystems.disks.digitalocean.bucket') . '/' . $fileName;
+                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
             }
         } else {
-            $fileName = Str::random(40) . '.' . strtolower($file->extension());
+            $fileName = Str::random(40).'.'.strtolower($file->extension());
             /** @var File $data */
             $data = $file;
             if (config('app.env') === 'local' || config('app.env') === 'testing') {
                 Storage::disk('uploads')->put($fileName, $data->getContent());
-                $url = config('app.url') . '/uploads/' . $fileName;
+                $url = config('app.url').'/uploads/'.$fileName;
             } else {
                 Storage::disk('digitalocean')->put($fileName, $data->getContent(), ['visibility' => 'public']);
-                $url = config('filesystems.disks.digitalocean.endpoint') . '/' . config('filesystems.disks.digitalocean.bucket') . '/' . $fileName;
+                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
             }
         }
 
@@ -138,7 +137,7 @@ trait ProcessRequest
         return [
             'type' => $fileType,
             'url' => $url,
-            'file_name' => $fileName
+            'file_name' => $fileName,
         ];
     }
 
@@ -167,7 +166,7 @@ trait ProcessRequest
             if ($field === 'null') {
                 unset($data[$key]);
             }
-            if (!is_array($field)) {
+            if (! is_array($field)) {
                 if (json_decode($field)) {
                     $decoded = json_decode($field, true);
                     if (is_array($decoded)) {
@@ -178,7 +177,7 @@ trait ProcessRequest
                 }
             }
         }
+
         return $data;
     }
-
 }

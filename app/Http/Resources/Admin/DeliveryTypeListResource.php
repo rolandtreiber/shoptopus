@@ -28,7 +28,7 @@ class DeliveryTypeListResource extends JsonResource
             'enabled' => $this->enabled,
             'price' => $this->price,
             'order_count' => $this->getOrderCount(),
-            'total_revenue' => $this->getTotalRevenue()
+            'total_revenue' => $this->getTotalRevenue(),
         ];
     }
 }

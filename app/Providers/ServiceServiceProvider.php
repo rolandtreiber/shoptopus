@@ -2,9 +2,9 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
+use Illuminate\Support\ServiceProvider;
 
 class ServiceServiceProvider extends ServiceProvider
 {
@@ -40,8 +40,5 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind('App\Services\Remote\Payment\Stripe\StripePaymentServiceInterface', 'App\Services\Remote\Payment\Stripe\StripePaymentService');
         $this->app->bind('App\Services\Remote\Payment\PayPal\PayPalPaymentServiceInterface', 'App\Services\Remote\Payment\PayPal\PayPalPaymentService');
         $this->app->bind('App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface', 'App\Services\Remote\Payment\Amazon\AmazonPaymentService');
-
     }
-
 }
-

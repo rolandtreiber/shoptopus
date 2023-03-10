@@ -1,15 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Payment\PaymentController;
+use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'name' => 'api.'
+    'name' => 'api.',
 ], function () {
     Route::group([
         'name' => 'payment.',
         'prefix' => 'payment',
-        'middleware' => 'api'
+        'middleware' => 'api',
     ], function () {
         Route::get('/{provider}/settings', [PaymentController::class, 'getClientSettings'])->name('api.payment.get.settings.public');
     });
@@ -17,7 +17,7 @@ Route::group([
     Route::group([
         'name' => 'payment.',
         'prefix' => 'payment',
-        'middleware' => 'auth:api'
+        'middleware' => 'auth:api',
     ], function () {
         Route::post('/execute', [PaymentController::class, 'execute'])->name('api.payment.execute');
     });

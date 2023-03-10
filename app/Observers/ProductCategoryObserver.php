@@ -10,7 +10,7 @@ class ProductCategoryObserver
     use ProcessRequest;
 
     /**
-     * @param ProductCategory $productCategory
+     * @param  ProductCategory  $productCategory
      */
     public function deleting(ProductCategory $productCategory): void
     {
@@ -22,13 +22,14 @@ class ProductCategoryObserver
         }
     }
 
-    public function saved(ProductCategory $productCategory):void {
+    public function saved(ProductCategory $productCategory): void
+    {
         if ($productCategory->enabled === false) {
-            $productCategory->children->map(function($c) {
+            $productCategory->children->map(function ($c) {
                 $c->enabled = false;
                 $c->save();
             });
-        } else if ($productCategory->parent && $productCategory->parent->enabled === false) {
+        } elseif ($productCategory->parent && $productCategory->parent->enabled === false) {
             $productCategory->parent->enabled = true;
             $productCategory->parent->save();
         }

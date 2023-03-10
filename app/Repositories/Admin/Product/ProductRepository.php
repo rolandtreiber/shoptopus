@@ -3,12 +3,8 @@
 namespace App\Repositories\Admin\Product;
 
 use App\Enums\ProductStatus;
-use App\Enums\UserRole;
 use App\Exceptions\NotificationException;
-use App\Models\Order;
 use App\Models\Product;
-use App\Models\ProductAttribute;
-use App\Models\Rating;
 use App\Models\User;
 use App\Notifications\ProductOutOfStock;
 use App\Notifications\ProductRunningLow;
@@ -19,15 +15,15 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-
     /**
-     * @param array $ids
+     * @param  array  $ids
      * @return bool
      */
     public function bulkDelete(array $ids): bool
     {
         try {
             DB::table('products')->whereIn('id', $ids)->update(['deleted_at' => Carbon::now()]);
+
             return true;
         } catch (\Exception $exception) {
             return false;
@@ -35,13 +31,14 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param array $ids
+     * @param  array  $ids
      * @return bool
      */
     public function bulkArchive(array $ids): bool
     {
         try {
             DB::table('products')->whereIn('id', $ids)->update(['status' => ProductStatus::Discontinued]);
+
             return true;
         } catch (\Exception $exception) {
             return false;
@@ -49,8 +46,9 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      * @return bool
+     *
      * @throws NotificationException
      */
     public function triggerRunningLowNotification(Product $product): bool
@@ -73,11 +71,12 @@ class ProductRepository implements ProductRepositoryInterface
                 Log::error($exception->getMessage());
             }
         }
+
         return $result;
     }
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      * @return bool
      */
     public function triggerOutOfStockNotification(Product $product): bool
@@ -100,6 +99,7 @@ class ProductRepository implements ProductRepositoryInterface
                 Log::error($exception->getMessage());
             }
         }
+
         return $result;
     }
 }

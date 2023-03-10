@@ -17,7 +17,7 @@ class DeliveryTypeUpdateRequest extends FormRequest
             'name' => ['json'],
             'description' => ['json'],
             'status' => ['sometimes', 'numeric'],
-            'price' => ['numeric']
+            'price' => ['numeric'],
         ];
     }
 }

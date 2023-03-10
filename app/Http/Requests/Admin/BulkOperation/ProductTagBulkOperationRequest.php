@@ -13,7 +13,7 @@ class ProductTagBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:product_tags,id']
+            'ids.*' => ['exists:product_tags,id'],
         ];
     }
 }

@@ -19,6 +19,7 @@ class UserFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition(): array
@@ -36,9 +37,9 @@ class UserFactory extends Factory
             'phone' => null,
             'avatar' => [
                 'url' => $avatar['url'],
-                'file_name' => $avatar['file_name']
+                'file_name' => $avatar['file_name'],
             ],
-            'is_favorite' => false
+            'is_favorite' => false,
         ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Database\Seeders\TestData;
 
-use Faker\Factory;
 use App\Models\User;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     *
      * @throws \Exception
      */
     public function run(): void
@@ -57,10 +58,9 @@ class UserSeeder extends Seeder
 
         /** @var User $user */
         $user = User::factory()->state([
-            'email' => 'rolandtreiber@gmail.com'
+            'email' => 'rolandtreiber@gmail.com',
         ])->create();
         $user->assignRole(Role::findByName('super_admin'));
         $user->assignRole(Role::findByName('customer'));
     }
 }
-

@@ -12,6 +12,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group banners
+ *
  * @see \App\Http\Controllers\Admin\BannersController
  */
 class BannerControllerTest extends AdminControllerTestCase
@@ -28,13 +29,13 @@ class BannerControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.banners', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $banners[0]->id
+            'id' => $banners[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $banners[1]->id
+            'id' => $banners[1]->id,
         ]);
     }
 
@@ -49,10 +50,10 @@ class BannerControllerTest extends AdminControllerTestCase
             'banner' => $banner->id,
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $banner->id
+            'id' => $banner->id,
         ]);
     }
 
@@ -66,20 +67,20 @@ class BannerControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.banner'), [
             'title' => json_encode([
                 'en' => 'New Products',
-                'de' => 'Neue Prodikte'
+                'de' => 'Neue Prodikte',
             ]),
             'description' => json_encode([
                 'en' => 'Description',
-                'de' => 'Bezeichnung'
+                'de' => 'Bezeichnung',
             ]),
             'button_text' => json_encode([
-               'en' => 'Click Here',
-               'de' => 'Clicken Sie Hier'
+                'en' => 'Click Here',
+                'de' => 'Clicken Sie Hier',
             ]),
             'show_button' => true,
             'button_url' => 'https://google.com',
             'background_image' => UploadedFile::fake()->image('banner.jpg'),
-            'enabled' => true
+            'enabled' => true,
         ]);
         $bannerId = $response->json()['data']['id'];
         $banner = Banner::find($bannerId);
@@ -103,24 +104,24 @@ class BannerControllerTest extends AdminControllerTestCase
         $banner = Banner::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.banner', [
-            'banner' => $banner
+            'banner' => $banner,
         ]), [
             'title' => json_encode([
                 'en' => 'New Products',
-                'de' => 'Neue Prodikte'
+                'de' => 'Neue Prodikte',
             ]),
             'description' => json_encode([
                 'en' => 'Description',
-                'de' => 'Bezeichnung'
+                'de' => 'Bezeichnung',
             ]),
             'button_text' => json_encode([
                 'en' => 'Click Here',
-                'de' => 'Clicken Sie Hier'
+                'de' => 'Clicken Sie Hier',
             ]),
             'show_button' => true,
             'button_url' => 'https://google.com',
             'background_image' => UploadedFile::fake()->image('banner.jpg'),
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertOk();
         $bannerId = $response->json()['data']['id'];
@@ -133,7 +134,8 @@ class BannerControllerTest extends AdminControllerTestCase
         $this->assertEquals('Click Here', $banner->setLocale('en')->button_text);
         $this->assertEquals('Clicken Sie Hier', $banner->setLocale('de')->button_text);
         $this->assertEquals(true, $banner->setLocale('de')->show_button);
-        $this->assertEquals(true, $banner->setLocale('de')->enabled);    }
+        $this->assertEquals(true, $banner->setLocale('de')->enabled);
+    }
 
     /**
      * @test
@@ -156,9 +158,9 @@ class BannerControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.banner'), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertStatus(422);
     }
@@ -172,9 +174,9 @@ class BannerControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.banner'), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertForbidden();
     }
@@ -187,13 +189,13 @@ class BannerControllerTest extends AdminControllerTestCase
         $banner = Banner::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->patch(route('admin.api.update.banner', [
-            'banner' => $banner->id
+            'banner' => $banner->id,
         ]), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertForbidden();
     }

@@ -3,7 +3,7 @@
 return [
     'providers' => [
         'facebook',
-        'google'
-//        'twitter'
-    ]
+        'google',
+        //        'twitter'
+    ],
 ];

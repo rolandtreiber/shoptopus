@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\Address;
 
 use App\Models\Address;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class AddressRepository extends ModelRepository implements AddressRepositoryInterface
 {
@@ -17,11 +17,12 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     /**
      * Get the users for the given addresses
      *
-     * @param array $userIds
+     * @param  array  $userIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getUsers(array $userIds = []) : array
+    public function getUsers(array $userIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($userIds)), ',');
@@ -55,22 +56,23 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         $ids = collect($result)->unique('user_id')->pluck('user_id')->toArray();
 
         $users = [];
 
         try {
-            if (!in_array('user', $excludeRelationships)) {
+            if (! in_array('user', $excludeRelationships)) {
                 $users = $this->getUsers($ids);
             }
 
-            foreach($result as &$model) {
+            foreach ($result as &$model) {
                 $model['user'] = null;
 
                 foreach ($users as $user) {
@@ -90,10 +92,10 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -106,13 +108,13 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
             "{$this->model_table}.country",
             "{$this->model_table}.lat",
             "{$this->model_table}.lon",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.deleted_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

@@ -4,14 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\ProductTagBulkOperationRequest;
 use App\Http\Requests\Admin\ProductTagStoreRequest;
 use App\Http\Requests\Admin\ProductTagUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductTagDetailResource;
 use App\Http\Resources\Admin\ProductTagListResource;
-use App\Http\Resources\Admin\ProductTagResource;
 use App\Models\ProductTag;
 use App\Repositories\Admin\ProductTag\ProductTagRepositoryInterface;
 use App\Traits\ProcessRequest;
@@ -20,10 +18,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductTagController extends Controller
 {
     use ProcessRequest;
+
     protected ProductTagRepositoryInterface $productTagRepository;
 
     /**
-     * @param ProductTagRepositoryInterface $productTagRepository
+     * @param  ProductTagRepositoryInterface  $productTagRepository
      */
     public function __construct(ProductTagRepositoryInterface $productTagRepository)
     {
@@ -31,7 +30,7 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -40,7 +39,7 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param ProductTag $tag
+     * @param  ProductTag  $tag
      * @return ProductTagDetailResource
      */
     public function show(ProductTag $tag): ProductTagDetailResource
@@ -51,7 +50,7 @@ class ProductTagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductTagStoreRequest $request
+     * @param  ProductTagStoreRequest  $request
      * @return ProductTagListResource
      */
     public function create(ProductTagStoreRequest $request): ProductTagListResource
@@ -68,8 +67,8 @@ class ProductTagController extends Controller
     /**
      * Update a resource.
      *
-     * @param ProductTag $tag
-     * @param ProductTagUpdateRequest $request
+     * @param  ProductTag  $tag
+     * @param  ProductTagUpdateRequest  $request
      * @return ProductTagListResource
      */
     public function update(ProductTag $tag, ProductTagUpdateRequest $request): ProductTagListResource
@@ -84,24 +83,26 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param ProductTag $tag
+     * @param  ProductTag  $tag
      * @return string[]
      */
     public function delete(ProductTag $tag): array
     {
         $tag->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param ProductTagBulkOperationRequest $request
+     * @param  ProductTagBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateAvailability(ProductTagBulkOperationRequest $request): array
     {
         $request->validate([
-            'availability' => ['required', 'boolean']
+            'availability' => ['required', 'boolean'],
         ]);
         if ($this->productTagRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
             return ['status' => 'Success'];
@@ -110,8 +111,9 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param ProductTagBulkOperationRequest $request
+     * @param  ProductTagBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(ProductTagBulkOperationRequest $request): array

@@ -2,31 +2,32 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
+use App\Enums\ProductStatus;
+use App\Helpers\GeneralHelper;
+use App\Traits\HasEventLogs;
 use App\Traits\HasFiles;
 use App\Traits\HasRatings;
-use App\Enums\ProductStatus;
-use App\Traits\HasEventLogs;
-use Spatie\Sluggable\HasSlug;
+use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use App\Helpers\GeneralHelper;
-use Spatie\Sluggable\SlugOptions;
 use Illuminate\Support\Facades\DB;
-use Spatie\Translatable\HasTranslations;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Shoptopus\ExcelImportExport\traits\HasImportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
  * @method static find(int $productId)
  * @method static filtered(array[] $array)
+ *
  * @property mixed $name
  * @property mixed $price
  * @property mixed $id
@@ -59,7 +60,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
@@ -78,7 +79,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'backup_stock',
         'rating',
         'final_price',
-        'sku'
+        'sku',
     ];
 
     protected $importableFields = [
@@ -86,21 +87,21 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'short_description',
         'description',
         'price' => [
-            'validation' => ['numeric']
+            'validation' => ['numeric'],
         ],
         'status' => [
             'description' => '1 = Provisional, 2 = Active, 3 = Discontinued',
-            'validation' => ['integer', 'min:1', 'max:3']
+            'validation' => ['integer', 'min:1', 'max:3'],
         ],
         'stock' => [
-            'validation' => ['integer', 'min:0']
+            'validation' => ['integer', 'min:0'],
         ],
         'backup_stock' => [
-            'validation' => ['integer', 'min:0']
+            'validation' => ['integer', 'min:0'],
         ],
         'sku' => [
-            'validation' => ['max:20', 'unique:products,sku']
-        ]
+            'validation' => ['max:20', 'unique:products,sku'],
+        ],
     ];
 
     protected $exportableRelationships = [
@@ -108,14 +109,14 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'product_attributes',
         'product_tags',
         'product_variants',
-        'discount_rules'
+        'discount_rules',
     ];
 
     protected $importableRelationships = [
         'product_categories',
         'product_attributes',
         'product_tags',
-        'discount_rules'
+        'discount_rules',
     ];
 
     public $translatable = ['name', 'short_description', 'description', 'headline', 'subtitle'];
@@ -140,7 +141,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'backup_stock',
         'rating',
         'sku',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -157,7 +158,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'price' => 'decimal:2',
         'final_price' => 'decimal:2',
         'rating' => 'decimal:2',
-        'cover_photo' => 'object'
+        'cover_photo' => 'object',
     ];
 
     /**
@@ -215,7 +216,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
      * @param $discounts
      * @return mixed
      */
-    private function calculateDiscountAmount($discounts) : mixed
+    private function calculateDiscountAmount($discounts): mixed
     {
         if (config('shoptopus.discount_rules.allow_discount_stacking') === true) {
             // Discounts stacked and all applied
@@ -232,33 +233,33 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     /**
      * Calculate the final price with discounts
      *
-     * @param null $price
+     * @param  null  $price
      * @return mixed
      */
-    public function getFinalPriceAttribute($price = null) : mixed
+    public function getFinalPriceAttribute($price = null): mixed
     {
-        if (!$price) {
+        if (! $price) {
             $price = $this->price;
         }
 
-        $discount_rules = $this->discount_rules->map(fn($rule) => [
+        $discount_rules = $this->discount_rules->map(fn ($rule) => [
             'id' => $rule->id,
             'amount' => $rule->amount,
-            'type' => $rule->type
+            'type' => $rule->type,
         ])->toArray();
 
         foreach ($this->product_categories()->get() as $category) {
-            $discount_rules = array_merge($discount_rules, $category->discount_rules->map(fn($rule) => [
+            $discount_rules = array_merge($discount_rules, $category->discount_rules->map(fn ($rule) => [
                 'id' => $rule->id,
                 'amount' => $rule->amount,
-                'type' => $rule->type
+                'type' => $rule->type,
             ])->toArray());
         }
 
         $basePrice = $price;
 
-        if (sizeof($discount_rules) > 0) {
-            $discounts = array_map(function($rule) use ($basePrice) {
+        if (count($discount_rules) > 0) {
+            $discounts = array_map(function ($rule) use ($basePrice) {
                 return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
             }, array_unique($discount_rules, SORT_REGULAR));
 
@@ -267,11 +268,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             return $price;
         }
     }
-
-
-
-
-
 
     /**
      * Updated at accessor
@@ -301,7 +297,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     /**
      * @param $query
-     * @param array|null $tags
+     * @param  array|null  $tags
      */
     public function scopeWhereHasTags($query, ?array $tags)
     {
@@ -313,7 +309,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     /**
      * @param $query
-     * @param array|null $categories
+     * @param  array|null  $categories
      */
     public function scopeWhereHasCategories($query, ?array $categories)
     {
@@ -325,7 +321,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     /**
      * @param $query
-     * @param array|null $attributeOptions
+     * @param  array|null  $attributeOptions
      */
     public function scopeWhereHasAttributeOptions($query, ?array $attributeOptions)
     {
@@ -349,25 +345,26 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     public function getAttributedTranslatedNameAttribute(): array
     {
         $attributes = $this->product_attributes;
-        if (!$attributes || count($attributes) === 0) {
+        if (! $attributes || count($attributes) === 0) {
             return $this->getTranslations('name');
         }
         $languages = config('app.locales_supported');
         $elements = [];
         foreach ($languages as $languageKey => $language) {
-            $text = $this->setLocale($languageKey)->name . ' - ';
+            $text = $this->setLocale($languageKey)->name.' - ';
             $attributeTexts = [];
             foreach ($attributes as $attribute) {
                 $option = $attribute->pivot->option;
-                $attributeTexts[] =  '(' . $attribute->setLocale($languageKey)->name . ') ' . $option->setLocale($languageKey)->name;
+                $attributeTexts[] = '('.$attribute->setLocale($languageKey)->name.') '.$option->setLocale($languageKey)->name;
             }
-            $elements[$languageKey] = $text . implode(', ', $attributeTexts);
+            $elements[$languageKey] = $text.implode(', ', $attributeTexts);
         }
+
         return $elements;
     }
 
     /**
-     * @param array|null $categoryIds
+     * @param  array|null  $categoryIds
      */
     public function handleCategories(?array $categoryIds = [])
     {
@@ -376,12 +373,11 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     }
 
     /**
-     * @param array|null $tagIds
+     * @param  array|null  $tagIds
      */
     public function handleTags(?array $tagIds = [])
     {
         $this->product_tags()->detach();
         $this->product_tags()->sync($tagIds);
     }
-
 }

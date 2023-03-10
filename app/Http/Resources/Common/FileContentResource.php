@@ -25,7 +25,7 @@ class FileContentResource extends JsonResource
             'title' => $this->getTranslations('title'),
             'file_name' => $this->file_name,
             'description' => $this->getTranslations('description'),
-            'type' => $this->type
+            'type' => $this->type,
         ];
     }
 }

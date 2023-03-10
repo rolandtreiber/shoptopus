@@ -6,7 +6,6 @@ use App\Http\Requests\FormRequest;
 
 /**
  * Class PasswordResetTokenCheckRequest
- * @package App\Http\Requests\Auth
  */
 final class PasswordResetTokenCheckRequest extends FormRequest
 {
@@ -18,8 +17,7 @@ final class PasswordResetTokenCheckRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'password_reset_token' => 'required'
+            'password_reset_token' => 'required',
         ];
     }
-
 }

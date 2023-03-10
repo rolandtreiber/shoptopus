@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Cart;
 
 use App\Models\Cart;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateQuantityRequest extends FormRequest
@@ -13,7 +12,7 @@ class UpdateQuantityRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         if ($user = $this->user()) {
             return $user->cart->id === $this->cart_id;
@@ -27,13 +26,13 @@ class UpdateQuantityRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'product_id'  => 'bail|required|string|exists:products,id',
+            'product_id' => 'bail|required|string|exists:products,id',
             'cart_id' => 'required|string|exists:carts,id',
             'user_id' => 'nullable|string|exists:users,id',
-            'quantity' => Cart::quantityValidationRule($this->product_id)
+            'quantity' => Cart::quantityValidationRule($this->product_id),
         ];
     }
 
@@ -47,7 +46,7 @@ class UpdateQuantityRequest extends FormRequest
         $this->merge([
             'user_id' => optional($this->user())->id,
             'cart_id' => $this->cart_id,
-            'product_id' => $this->product_id
+            'product_id' => $this->product_id,
         ]);
     }
 }

@@ -2,19 +2,20 @@
 
 namespace Tests\PublicApi\Product;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class FavoriteProductTest extends TestCase
 {
     use RefreshDatabase;
 
     public $user;
+
     public $product;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -53,7 +54,7 @@ class FavoriteProductTest extends TestCase
     {
         $this->assertDatabaseMissing('favorited_products', [
             'user_id' => $this->user->id,
-            'product_id' => $this->product->id
+            'product_id' => $this->product->id,
         ]);
 
         $this->signIn($this->user)
@@ -62,7 +63,7 @@ class FavoriteProductTest extends TestCase
 
         $this->assertDatabaseHas('favorited_products', [
             'user_id' => $this->user->id,
-            'product_id' => $this->product->id
+            'product_id' => $this->product->id,
         ]);
     }
 
@@ -78,18 +79,18 @@ class FavoriteProductTest extends TestCase
 
         $this->assertDatabaseHas('favorited_products', [
             'user_id' => $this->user->id,
-            'product_id' => $this->product->id
+            'product_id' => $this->product->id,
         ]);
 
         $this->sendRequest();
 
         $this->assertDatabaseMissing('favorited_products', [
             'user_id' => $this->user->id,
-            'product_id' => $this->product->id
+            'product_id' => $this->product->id,
         ]);
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.product.favorite', ['id' => $this->product->id]));
     }

@@ -2,28 +2,28 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use App\Notifications\ResetPasswordNotification;
+use App\Notifications\VerifyEmail;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use App\Traits\Searchable;
-use Google\Collection;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 use App\Traits\NotificationTrait;
-use App\Notifications\VerifyEmail;
-use Laravel\Passport\HasApiTokens;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Traits\HasRoles;
+use App\Traits\Searchable;
+use Carbon\Carbon;
+use Google\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Notifications\ResetPasswordNotification;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property string $id
@@ -64,7 +64,7 @@ class User extends Authenticatable implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['first_name', 'last_name'])
@@ -82,14 +82,14 @@ class User extends Authenticatable implements Auditable, Exportable
         'phone',
         'email_verified_at',
         'client_ref',
-        'role_names'
+        'role_names',
     ];
 
     protected $exportableRelationships = [
         'addresses',
         'payment_sources',
         'payments',
-        'orders'
+        'orders',
     ];
 
     /**
@@ -109,7 +109,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'client_ref',
         'avatar',
         'is_favorite',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $appends = ['role_names'];
@@ -120,7 +120,7 @@ class User extends Authenticatable implements Auditable, Exportable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password', 'remember_token',
     ];
 
     /**
@@ -132,7 +132,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'id' => 'string',
         'email_verified_at' => 'datetime',
         'avatar' => 'object',
-        'is_favorite' => 'boolean'
+        'is_favorite' => 'boolean',
     ];
 
     public function getRoleNamesAttribute()
@@ -142,24 +142,27 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the social accounts of the user.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function social_accounts() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function social_accounts(): HasMany
     {
         return $this->hasMany(SocialAccount::class);
     }
 
     /**
      * Get the social accounts of the user.
+     *
      * @return HasMany
      */
-    public function addresses() : HasMany
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
     /**
      * Get the orders of the user.
+     *
      * @return HasMany
      */
     public function orders(): HasMany
@@ -177,6 +180,7 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the payment sources of the user.
+     *
      * @return HasMany
      */
     public function payment_sources(): HasMany
@@ -186,6 +190,7 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the cart for the user.
+     *
      * @return HasOne
      */
     public function cart(): HasOne
@@ -201,7 +206,7 @@ class User extends Authenticatable implements Auditable, Exportable
      */
     public function sendPasswordResetNotification($token)
     {
-        $url = config('app.frontend_url_public') . '/reset-password?token=' . $token;
+        $url = config('app.frontend_url_public').'/reset-password?token='.$token;
 
         $this->notify(new ResetPasswordNotification($url));
     }
@@ -243,10 +248,10 @@ class User extends Authenticatable implements Auditable, Exportable
         }
     }
 
-
     public function scopeCustomers($query)
     {
         $query->role('customer');
+
         return $query;
     }
 }

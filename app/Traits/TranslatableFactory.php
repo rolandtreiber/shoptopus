@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-trait TranslatableFactory {
-
+trait TranslatableFactory
+{
     public function getTranslated($faker, array $fields, array $types): array
     {
         $supportedLocales = config('app.locales_supported');
@@ -12,8 +12,7 @@ trait TranslatableFactory {
         foreach ($fields as $field) {
             $value = [];
             foreach ($supportedLocales as $localeKey => $localeValue) {
-                $value[$localeKey] = match ($types[$typeCount])
-                {
+                $value[$localeKey] = match ($types[$typeCount]) {
                     'word' => $faker->word(true),
                     'short' => $faker->words(5, true),
                     'medium' => $faker->words(10, true),
@@ -23,7 +22,7 @@ trait TranslatableFactory {
             $result[$field] = $value;
             $typeCount++;
         }
+
         return $result;
     }
-
 }

@@ -4,7 +4,6 @@ namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Models\ProductCategory;
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -13,6 +12,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group product_categories
+ *
  * @see \App\Http\Controllers\Admin\ProductCategoryController
  */
 class ProductCategoryControllerTest extends AdminControllerTestCase
@@ -27,22 +27,22 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     {
         $rootCategories = ProductCategory::factory()->count(2)->create();
         $childCategory = ProductCategory::factory()->state([
-            'parent_id' => $rootCategories[0]->id
+            'parent_id' => $rootCategories[0]->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.product-categories', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $rootCategories[0]->id
+            'id' => $rootCategories[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $rootCategories[1]->id
+            'id' => $rootCategories[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $childCategory->id
+            'id' => $childCategory->id,
         ]);
     }
 
@@ -56,11 +56,11 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-category'), [
             'name' => json_encode([
                 'en' => 'Test Category',
-                'de' => 'Test Kategorie'
+                'de' => 'Test Kategorie',
             ]),
             'description' => json_encode([
                 'en' => 'Test Category Description',
-                'de' => 'Test Kategorie Beschreibung'
+                'de' => 'Test Kategorie Beschreibung',
             ]),
             'header_image' => UploadedFile::fake()->image('product_category_header_image1.jpg'),
             'menu_image' => UploadedFile::fake()->image('product_category_menu_image1.jpg'),
@@ -84,15 +84,15 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $productCategory = ProductCategory::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-category', [
-            'category' => $productCategory->id
+            'category' => $productCategory->id,
         ]), [
             'name' => json_encode([
                 'en' => 'Updated Test Category',
-                'de' => 'Aktualisiert Test Kategorie'
+                'de' => 'Aktualisiert Test Kategorie',
             ]),
             'description' => json_encode([
                 'en' => 'Updated Test Category Description',
-                'de' => 'Aktualisiert Test Kategorie Beschreibung'
+                'de' => 'Aktualisiert Test Kategorie Beschreibung',
             ]),
             'header_image' => UploadedFile::fake()->image('product_category_header_image1.jpg'),
             'menu_image' => UploadedFile::fake()->image('product_category_menu_image1.jpg'),
@@ -115,7 +115,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $productCategory = ProductCategory::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-category', [
-            'category' => $productCategory->id
+            'category' => $productCategory->id,
         ]))->json();
         $productCategoryId = $response['data']['id'];
         $name = $response['data']['name'];
@@ -148,8 +148,8 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-category'), [
             'description' => json_encode([
                 'en' => 'Test Category Description',
-                'de' => 'Test Kategorie Beschreibung'
-            ])
+                'de' => 'Test Kategorie Beschreibung',
+            ]),
         ]);
         $response->assertStatus(422);
     }
@@ -171,23 +171,23 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     public function test_all_subcategories_disabled_when_parent_category_disabled()
     {
         $topLevelProductCategory = ProductCategory::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->create();
         $firstLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $topLevelProductCategory->id,
-            'enabled' => true
+            'enabled' => true,
         ])->create();
         $secondLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $firstLevelProductCategory->id,
-            'enabled' => true
+            'enabled' => true,
         ])->create();
         $thirdLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $secondLevelProductCategory->id,
-            'enabled' => true
+            'enabled' => true,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-category', [
-            'category' => $topLevelProductCategory->id
+            'category' => $topLevelProductCategory->id,
         ]), [
             'enabled' => false,
         ]);
@@ -203,23 +203,23 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     public function test_all_parent_categories_enabled_when_subcategory_enabled()
     {
         $topLevelProductCategory = ProductCategory::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->create();
         $firstLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $topLevelProductCategory->id,
-            'enabled' => false
+            'enabled' => false,
         ])->create();
         $secondLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $firstLevelProductCategory->id,
-            'enabled' => false
+            'enabled' => false,
         ])->create();
         $thirdLevelProductCategory = ProductCategory::factory()->state([
             'parent_id' => $secondLevelProductCategory->id,
-            'enabled' => false
+            'enabled' => false,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-category', [
-            'category' => $thirdLevelProductCategory->id
+            'category' => $thirdLevelProductCategory->id,
         ]), [
             'enabled' => true,
         ]);
@@ -227,5 +227,4 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
         $this->assertEquals($firstLevelProductCategory->refresh()->enabled, true);
         $this->assertEquals($topLevelProductCategory->refresh()->enabled, true);
     }
-
 }

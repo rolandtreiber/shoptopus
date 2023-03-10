@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Product;
-use Illuminate\Support\Str;
 use App\Models\FileContent;
-use App\Models\ProductVariant;
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
+use App\Models\ProductVariant;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class ProductVariantTest extends TestCase
 {
@@ -17,7 +17,7 @@ class ProductVariantTest extends TestCase
 
     protected $product_variant;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -43,7 +43,7 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_description()
+    public function it_returns_a_translated_description()
     {
         $this->product_variant
             ->setTranslation('description', 'en', 'english translation')
@@ -82,7 +82,7 @@ class ProductVariantTest extends TestCase
 
         FileContent::factory()->create([
             'fileable_type' => get_class($this->product_variant),
-            'fileable_id' => $this->product_variant->id
+            'fileable_id' => $this->product_variant->id,
         ]);
 
         $this->assertNotNull($this->product_variant->cover_image());
@@ -99,7 +99,7 @@ class ProductVariantTest extends TestCase
         $attr_option = ProductAttributeOption::factory()->create(['product_attribute_id' => $attr->id]);
 
         $this->product_variant->product_variant_attributes()->attach($attr->id, [
-            'product_attribute_option_id' => $attr_option->id
+            'product_attribute_option_id' => $attr_option->id,
         ]);
 
         $this->assertNotNull($this->product_variant->product_variant_attributes);

@@ -2,10 +2,10 @@
 
 namespace Tests\PublicApi\Cart;
 
-use Tests\TestCase;
 use App\Models\Cart;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UpdateCartTest extends TestCase
 {
@@ -13,7 +13,7 @@ class UpdateCartTest extends TestCase
 
     protected $cart;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,7 +50,7 @@ class UpdateCartTest extends TestCase
         $this->cart->update(['user_id' => $user->id]);
 
         $data = [
-            'ip_address' => '127.0.0.1'
+            'ip_address' => '127.0.0.1',
         ];
 
         $this->signIn($user)->sendRequest($data)->assertOk();
@@ -58,7 +58,7 @@ class UpdateCartTest extends TestCase
         $this->assertDatabaseHas('carts', $data);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->patchJson(route('api.cart.update', ['id' => $this->cart->id]), $data);
     }

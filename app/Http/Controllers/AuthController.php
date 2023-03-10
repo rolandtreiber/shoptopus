@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\AuthFlow;
-use App\Events\Admin\UserPasswordReset;
-use App\Http\Requests\Auth\EmailConfirmationRequest;
-use App\Http\Resources\Admin\UserDetailResource;
-use App\Models\AccessToken;
 use App\Enums\AccessTokenTypes;
+use App\Enums\AuthFlow;
 use App\Enums\TokenCheckOutcomeType;
+use App\Events\Admin\UserPasswordReset;
 use App\Events\Admin\UserSignup;
 use App\Exceptions\ApiValidationFailedException;
+use App\Http\Requests\Auth\EmailConfirmationRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SignupRequest;
 use App\Http\Requests\Auth\UpdatePasswordFromResetFlowRequest;
+use App\Http\Resources\Admin\UserDetailResource;
+use App\Models\AccessToken;
 use App\Models\User;
 use Carbon\Carbon;
 use Exception;
@@ -39,7 +39,7 @@ class AuthController extends Controller
             'client_id' => config('passport.grant_id'),
             'client_secret' => config('passport.secret'),
             'username' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
         ], [], [], []);
 
         $res = app()->handle($authRequest);
@@ -54,7 +54,7 @@ class AuthController extends Controller
             if ($content['user']['email_confirmed'] === false) {
                 return [
                     'status' => 'error',
-                    'message' => 'The email is not confirmed.'
+                    'message' => 'The email is not confirmed.',
                 ];
             }
         }
@@ -62,12 +62,12 @@ class AuthController extends Controller
         $responseData = json_decode($res->getContent(), true, 512, JSON_THROW_ON_ERROR);
 
         return response()->json($responseData);
-
     }
 
     /**
-     * @param SignupRequest $request
+     * @param  SignupRequest  $request
      * @return string[]
+     *
      * @throws ApiValidationFailedException
      */
     public function apiSignup(SignupRequest $request): array
@@ -76,7 +76,7 @@ class AuthController extends Controller
         if ($taken) {
             return [
                 'status' => 'error',
-                'message' => 'The email is already registered.'
+                'message' => 'The email is already registered.',
             ];
         }
         $user = new User();
@@ -85,14 +85,15 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         event(new UserSignup($user));
+
         return [
             'status' => 'success',
-            'message' => 'Signup successful. Please check your email.'
+            'message' => 'Signup successful. Please check your email.',
         ];
     }
 
     /**
-     * @param EmailConfirmationRequest $request
+     * @param  EmailConfirmationRequest  $request
      * @return string[]
      */
     public function confirmEmail(EmailConfirmationRequest $request): array
@@ -100,10 +101,10 @@ class AuthController extends Controller
         $token = $request->email_confirmation_token;
         $accessToken = AccessToken::where('token', '=', $token)->where('type', AccessTokenTypes::EmailConfirmation)->first();
         $now = Carbon::now();
-        if (!$accessToken) {
+        if (! $accessToken) {
             return [
                 'status' => 'error',
-                'message' => 'Invalid token'
+                'message' => 'Invalid token',
             ];
         }
 
@@ -111,7 +112,7 @@ class AuthController extends Controller
         if ($expiry < $now) {
             return [
                 'status' => 'error',
-                'message' => 'Token expired'
+                'message' => 'Token expired',
             ];
         }
         $user = (new User)->find($accessToken->user_id);
@@ -121,12 +122,13 @@ class AuthController extends Controller
         } else {
             return [
                 'status' => 'error',
-                'message' => 'User not found'
+                'message' => 'User not found',
             ];
         }
+
         return [
             'status' => 'success',
-            'message' => 'Email confirmed'
+            'message' => 'Email confirmed',
         ];
     }
 
@@ -138,7 +140,7 @@ class AuthController extends Controller
     {
         $accessToken = AccessToken::where('token', '=', $token)->where('type', AccessTokenTypes::PasswordReset)->first();
         $now = Carbon::now();
-        if (!$accessToken) {
+        if (! $accessToken) {
             return view('auth.PasswordResetForm', ['user' => null, 'type' => TokenCheckOutcomeType::TokenInvalid]);
         }
 
@@ -146,6 +148,7 @@ class AuthController extends Controller
         if ($expiry < $now) {
             return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeType::TokenExpired]);
         }
+
         return view('auth.PasswordResetForm', ['user' => $accessToken->user, 'type' => TokenCheckOutcomeType::Success]);
     }
 
@@ -155,34 +158,35 @@ class AuthController extends Controller
         if ($user) {
             $request->flow === AuthFlow::Admin && event(new UserPasswordReset($user));
         }
+
         return [
             'status' => 'success',
-            'message' => 'If there is an account associated with this email, we have sent the recovery email to it.'
+            'message' => 'If there is an account associated with this email, we have sent the recovery email to it.',
         ];
     }
 
     /**
-     * @param UpdatePasswordFromResetFlowRequest $request
+     * @param  UpdatePasswordFromResetFlowRequest  $request
      * @return string[]
      */
     public function updatePasswordFromResetFlow(UpdatePasswordFromResetFlowRequest $request): array
     {
         $accessToken = AccessToken::where('token', $request->password_reset_token)->first();
-        if (!$accessToken) {
+        if (! $accessToken) {
             return [
                 'status' => 'error',
-                'message' => 'The token is invalid.'
+                'message' => 'The token is invalid.',
             ];
         }
 
-        if (!$accessToken->hasExpired()) {
+        if (! $accessToken->hasExpired()) {
             return [
                 'status' => 'error',
                 'message' => 'The token has expired.',
             ];
         }
         $user = User::where('id', $accessToken->user_id)->first();
-        if (!$user) {
+        if (! $user) {
             return [
                 'status' => 'error',
                 'message' => 'User not found.',
@@ -192,6 +196,7 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
         $accessToken->delete();
+
         return [
             'status' => 'success',
             'message' => 'Your password was reset successfully. You can now log in.',
@@ -205,5 +210,4 @@ class AuthController extends Controller
     {
         return new UserDetailResource(Auth()->user());
     }
-
 }

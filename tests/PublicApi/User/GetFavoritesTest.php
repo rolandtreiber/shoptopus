@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\User;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Product;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 use App\Repositories\Local\Product\ProductRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetFavoritesTest extends TestCase
 {
@@ -14,7 +14,7 @@ class GetFavoritesTest extends TestCase
 
     public $user;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -45,20 +45,20 @@ class GetFavoritesTest extends TestCase
 
         $this->assertEmpty($this->sendRequest()->json('data'));
 
-        $products->each(fn($product) => $this->postJson(route('api.product.favorite', ['id' => $product->id])));
+        $products->each(fn ($product) => $this->postJson(route('api.product.favorite', ['id' => $product->id])));
 
         $res = $this->sendRequest();
 
         $res->assertJsonStructure([
             'data' => [
-                app()->make(ProductRepository::class)->getSelectableColumns(false)
-            ]
+                app()->make(ProductRepository::class)->getSelectableColumns(false),
+            ],
         ]);
 
         $this->assertCount($products->count(), $res->json('data'));
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.user.favorites'));
     }

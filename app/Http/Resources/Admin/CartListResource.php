@@ -34,7 +34,7 @@ class CartListResource extends JsonResource
             'products_total' => $totalProductCount,
             'products' => CartProductListResource::collection($this->products),
             'full_price' => $totalProductOriginalValue,
-            'price' => $totalProductCurrentValue
+            'price' => $totalProductCurrentValue,
         ];
     }
 }

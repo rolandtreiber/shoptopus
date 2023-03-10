@@ -1,21 +1,21 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Product\ProductController;
+use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'name' => 'api.'
+    'name' => 'api.',
 ], function () {
     Route::group([
         'name' => 'products.',
-        'prefix' => 'products'
+        'prefix' => 'products',
     ], function () {
         Route::get('/', [ProductController::class, 'getAll'])->name('api.products.getAll');
     });
 
     Route::group([
         'name' => 'product.',
-        'prefix' => 'product'
+        'prefix' => 'product',
     ], function () {
         Route::get('/{id}', [ProductController::class, 'get'])->name('api.product.get');
         Route::get('/slug/{slug}', [ProductController::class, 'getBySlug'])->name('api.product.getBySlug');

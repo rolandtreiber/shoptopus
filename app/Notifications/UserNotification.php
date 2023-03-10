@@ -2,12 +2,11 @@
 
 namespace App\Notifications;
 
-interface UserNotification {
-
+interface UserNotification
+{
     /**
      * @param $data
      * @return string
      */
-    function createMessage($data): string;
-
+    public function createMessage($data): string;
 }

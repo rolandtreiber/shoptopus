@@ -11,7 +11,7 @@ class FileContentObserver
     use ProcessRequest;
 
     /**
-     * @param FileContent $fileContent
+     * @param  FileContent  $fileContent
      */
     public function deleting(FileContent $fileContent): void
     {

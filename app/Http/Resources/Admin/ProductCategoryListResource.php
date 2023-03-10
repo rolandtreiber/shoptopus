@@ -19,9 +19,10 @@ class ProductCategoryListResource extends JsonResource
      */
     public function toArray($request): array
     {
-        $this->load(['children' => function($q) use ($request) {
+        $this->load(['children' => function ($q) use ($request) {
             $q->availability($request->view);
         }]);
+
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
@@ -30,7 +31,7 @@ class ProductCategoryListResource extends JsonResource
             'header_image' => $this->header_image?->url,
             'children' => ProductCategoryListResource::collection($this->children),
             'enabled' => $this->enabled,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

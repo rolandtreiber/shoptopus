@@ -17,7 +17,9 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     use RefreshDatabase;
 
     private Carbon $validFrom;
+
     private Carbon $validUntil;
+
     private Carbon $now;
 
     public function setUp(): void
@@ -35,20 +37,20 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom,
-            'valid_until' => $this->validUntil
+            'valid_until' => $this->validUntil,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
-            'valid_until' => $this->now->format('Y-m-d H:i:s')
+            'valid_until' => $this->now->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
-            'valid_until' => $this->now->format('Y-m-d H:i:s')
+            'valid_until' => $this->now->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -59,20 +61,20 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->addMonth(),
-            'valid_until' => $this->validUntil->addMonths(3)
+            'valid_until' => $this->validUntil->addMonths(3),
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
-            'valid_from' => $this->now->format('Y-m-d H:i:s')
+            'valid_from' => $this->now->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
-            'valid_from' => $this->now->format('Y-m-d H:i:s')
+            'valid_from' => $this->now->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -83,23 +85,23 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
-            'valid_until' => $this->validUntil->subMonth()
+            'valid_until' => $this->validUntil->subMonth(),
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => $discountRuleIds,
-            'period' => Interval::Day
+            'period' => Interval::Day,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addDay()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addDay()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addDay()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addDay()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -110,23 +112,23 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
-            'valid_until' => $this->validUntil->subMonth()
+            'valid_until' => $this->validUntil->subMonth(),
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => $discountRuleIds,
-            'period' => Interval::Week
+            'period' => Interval::Week,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addWeek()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addWeek()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addWeek()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addWeek()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -137,23 +139,23 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
-            'valid_until' => $this->validUntil->subMonth()
+            'valid_until' => $this->validUntil->subMonth(),
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => $discountRuleIds,
-            'period' => Interval::Month
+            'period' => Interval::Month,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addMonth()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addMonth()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
             'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
-            'valid_until' => Carbon::now()->endOfDay()->addMonth()->format('Y-m-d H:i:s')
+            'valid_until' => Carbon::now()->endOfDay()->addMonth()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -165,14 +167,14 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertOk();
         $this->assertSoftDeleted('discount_rules', [
-            'id' => $discountRuleIds[0]
+            'id' => $discountRuleIds[0],
         ]);
         $this->assertSoftDeleted('discount_rules', [
-            'id' => $discountRuleIds[1]
+            'id' => $discountRuleIds[1],
         ]);
     }
 
@@ -184,7 +186,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertForbidden();
     }
@@ -196,7 +198,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertStatus(500);
     }
@@ -209,7 +211,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
-            'ids' => [...$discountRuleIds, 'invalid id']
+            'ids' => [...$discountRuleIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }
@@ -222,7 +224,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
-            'ids' => [...$discountRuleIds, 'invalid id']
+            'ids' => [...$discountRuleIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }
@@ -236,7 +238,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => $discountRuleIds,
-            'period' => Interval::Month
+            'period' => Interval::Month,
         ]);
         $response->assertForbidden();
     }
@@ -249,7 +251,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => $discountRuleIds,
-            'period' => Interval::Month
+            'period' => Interval::Month,
         ]);
         $response->assertStatus(500);
     }
@@ -263,7 +265,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
             'ids' => [...$discountRuleIds, 'invalid id'],
-            'period' => Interval::Month
+            'period' => Interval::Month,
         ]);
         $response->assertStatus(422);
     }
@@ -289,7 +291,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertForbidden();
     }
@@ -301,7 +303,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertStatus(500);
     }
@@ -314,7 +316,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), [
-            'ids' => [...$discountRuleIds, 'invalid id']
+            'ids' => [...$discountRuleIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }
@@ -337,7 +339,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertForbidden();
     }
@@ -349,7 +351,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), [
-            'ids' => $discountRuleIds
+            'ids' => $discountRuleIds,
         ]);
         $response->assertStatus(500);
     }
@@ -362,7 +364,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), [
-            'ids' => [...$discountRuleIds, 'invalid id']
+            'ids' => [...$discountRuleIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }

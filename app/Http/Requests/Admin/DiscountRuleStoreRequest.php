@@ -19,7 +19,7 @@ class DiscountRuleStoreRequest extends FormRequest
             'amount' => ['required', 'numeric'],
             'valid_from' => ['required', 'date'],
             'valid_until' => ['required', 'date'],
-            'enabled' => ['required']
+            'enabled' => ['required'],
         ];
     }
 }

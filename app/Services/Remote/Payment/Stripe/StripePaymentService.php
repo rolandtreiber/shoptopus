@@ -2,24 +2,29 @@
 
 namespace App\Services\Remote\Payment\Stripe;
 
-use Stripe\Stripe;
-use Stripe\PaymentIntent;
+use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
-use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 /** StripePaymentService
  * Limitations of finalising payments on the server see on below link
+ *
  * @see https://stripe.com/docs/payments/accept-a-payment-synchronously
  * As an alternative we could be using webhooks to store the transaction, etc
  */
 class StripePaymentService implements StripePaymentServiceInterface
 {
     private array $config;
+
     private ErrorServiceInterface $errorService;
+
     private PaymentProviderService $paymentProviderService;
+
     private OrderServiceInterface $orderService;
+
     private StripeTransactionRepositoryInterface $transactionRepository;
 
     public function __construct(
@@ -27,14 +32,13 @@ class StripePaymentService implements StripePaymentServiceInterface
         PaymentProviderService $paymentProviderService,
         StripeTransactionRepositoryInterface $transactionRepository,
         OrderServiceInterface $orderService
-    )
-    {
+    ) {
         $this->errorService = $errorService;
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
         $this->orderService = $orderService;
 
-        $this->config = collect($this->paymentProviderService->get('stripe', 'name')["payment_provider_configs"])
+        $this->config = collect($this->paymentProviderService->get('stripe', 'name')['payment_provider_configs'])
             ->keyBy('setting')
             ->toArray();
     }
@@ -42,10 +46,10 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param string $orderId
+     * @param  string  $orderId
      * @return array
      */
-    public function getClientSettings(string $orderId) : array
+    public function getClientSettings(string $orderId): array
     {
         try {
             $this->setApiKey();
@@ -57,14 +61,14 @@ class StripePaymentService implements StripePaymentServiceInterface
                 'currency' => strtolower($order['currency_code']),
                 'payment_method_types' => ['card'],
                 'metadata' => [
-                    'order_id' => $order['id']
-                ]
+                    'order_id' => $order['id'],
+                ],
             ]);
 
             return [
                 'publishableKey' => $this->getApikey(),
                 'clientSecret' => $intent->client_secret,
-                'order_total' => $intent->amount
+                'order_total' => $intent->amount,
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -75,11 +79,11 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Execute payment
      *
-     * @param string $orderId
-     * @param array $provider_payload
+     * @param  string  $orderId
+     * @param  array  $provider_payload
      * @return array
      */
-    public function executePayment(string $orderId, array $provider_payload) : array
+    public function executePayment(string $orderId, array $provider_payload): array
     {
         try {
             return $this->transactionRepository->storeTransaction($provider_payload, $orderId);
@@ -92,36 +96,37 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Format payment response
      *
-     * @param array $executed_payment_response
+     * @param  array  $executed_payment_response
      * @return array
      */
-    public function formatPaymentResponse(array $executed_payment_response) : array
+    public function formatPaymentResponse(array $executed_payment_response): array
     {
-       try {
-           return [
-               "success" => $executed_payment_response["status"] === "succeeded",
-               "status_code" => $executed_payment_response["status"] === "succeeded" ? 200 : 500,
-               "status" => $executed_payment_response["status"] === "succeeded" ? "CREATED" : "NON_STANDARD",
-               "payment_id" => $executed_payment_response["id"],
-               "provider" => "Stripe"
-           ];
-       } catch (\Exception | \Error $e) {
-           $this->errorService->logException($e);
-           throw $e;
-       }
+        try {
+            return [
+                'success' => $executed_payment_response['status'] === 'succeeded',
+                'status_code' => $executed_payment_response['status'] === 'succeeded' ? 200 : 500,
+                'status' => $executed_payment_response['status'] === 'succeeded' ? 'CREATED' : 'NON_STANDARD',
+                'payment_id' => $executed_payment_response['id'],
+                'provider' => 'Stripe',
+            ];
+        } catch (\Exception | \Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
      * Get the api key
      *
-     * @param string $type
+     * @param  string  $type
      * @return string
+     *
      * @throws \Exception
      */
-    private function getApikey(string $type = 'publishable_key') : string
+    private function getApikey(string $type = 'publishable_key'): string
     {
         try {
-            return app()->isProduction() ? $this->config[$type]["value"] : $this->config[$type]["test_value"];
+            return app()->isProduction() ? $this->config[$type]['value'] : $this->config[$type]['test_value'];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;

@@ -20,7 +20,7 @@ class StripeTransaction extends Model
     protected $fillable = [
         'order_id',
         'payment_id',
-        'object' ,
+        'object',
         'amount',
         'canceled_at',
         'cancellation_reason',
@@ -39,7 +39,7 @@ class StripeTransaction extends Model
         'setup_future_usage',
         'shipping',
         'source',
-        'status'
+        'status',
     ];
 
     /**
@@ -49,14 +49,15 @@ class StripeTransaction extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
      * An order item belongs to a transaction
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function order() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }

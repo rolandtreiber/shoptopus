@@ -29,7 +29,7 @@ class UserDetailResource extends JsonResource
             'initials' => $this->initials,
             'email' => $this->email,
             'email_verified' => $this->email_verified_at !== null,
-            'roles' => $this->getRoleNames()
+            'roles' => $this->getRoleNames(),
         ];
     }
 }

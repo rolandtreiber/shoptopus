@@ -25,7 +25,7 @@ class ProductAttributeListResource extends JsonResource
             'type' => $this->type,
             'image' => $this->image ? $this->image->url : null,
             'enabled' => $this->enabled,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

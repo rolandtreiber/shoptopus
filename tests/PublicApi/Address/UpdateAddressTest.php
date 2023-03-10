@@ -2,9 +2,9 @@
 
 namespace Tests\PublicApi\Address;
 
-use Tests\TestCase;
 use App\Models\Address;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class UpdateAddressTest extends TestCase
 {
@@ -12,7 +12,7 @@ class UpdateAddressTest extends TestCase
 
     protected $address;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -49,7 +49,7 @@ class UpdateAddressTest extends TestCase
             'town' => 'Bristol',
             'post_code' => 'BS34 8PL',
             'country' => 'UK',
-            'name' => 'home'
+            'name' => 'home',
         ];
 
         $this->signIn($this->address->user)->sendRequest($data);
@@ -65,13 +65,13 @@ class UpdateAddressTest extends TestCase
     {
         $data = Address::factory()->raw([
             'lat' => 2000,
-            'lon' => 2000.768
+            'lon' => 2000.768,
         ]);
 
         $this->signIn($this->address->user)->sendRequest($data)->assertJsonValidationErrors(['lat', 'lon']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->patchJson(route('api.address.update', ['id' => $this->address->id]), $data);
     }

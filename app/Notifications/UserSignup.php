@@ -32,7 +32,7 @@ class UserSignup extends BaseNotification implements UserNotification
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('user-' . $this->userId . '-notifications');
+        return new PrivateChannel('user-'.$this->userId.'-notifications');
     }
 
     public function broadcastType()
@@ -48,11 +48,11 @@ class UserSignup extends BaseNotification implements UserNotification
     public function toArray()
     {
         return [
-            'message' => $this->createMessage($this->data)
+            'message' => $this->createMessage($this->data),
         ];
     }
 
-    function createMessage($data): string
+    public function createMessage($data): string
     {
         return 'New user ('.$data->name.') <'.$data->email.'> signed up';
     }

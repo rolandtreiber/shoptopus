@@ -16,10 +16,10 @@ class AccessTokenRepository extends ModelRepository implements AccessTokenReposi
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -28,13 +28,13 @@ class AccessTokenRepository extends ModelRepository implements AccessTokenReposi
             "{$this->model_table}.user_id",
             "{$this->model_table}.issuer_user_id",
             "{$this->model_table}.expiry",
-            "{$this->model_table}.created_at"
+            "{$this->model_table}.created_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

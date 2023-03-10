@@ -2,21 +2,20 @@
 
 namespace Tests\PublicApi\Payments\Amazon;
 
-use Tests\PaymentTestCase;
-use Tests\TestCase;
-use App\Models\Order;
 use Amazon\Pay\API\Client;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
+use Tests\PaymentTestCase;
 
-class ExecutePaymentTest extends PaymentTestCase {
-
+class ExecutePaymentTest extends PaymentTestCase
+{
     use RefreshDatabase;
 
     protected $client;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -24,9 +23,9 @@ class ExecutePaymentTest extends PaymentTestCase {
 
         $this->client = new Client([
             'public_key_id' => config('payment_providers.provider_settings.amazon.sandbox.PUBLIC_KEY_ID'),
-            'private_key'   => Storage::get('/amazon/amazon_pay_private_key.pem'),
-            'region'        => config('payment_providers.provider_settings.amazon.sandbox.REGION'),
-            'sandbox'       => true
+            'private_key' => Storage::get('/amazon/amazon_pay_private_key.pem'),
+            'region' => config('payment_providers.provider_settings.amazon.sandbox.REGION'),
+            'sandbox' => true,
         ]);
     }
 
@@ -42,14 +41,14 @@ class ExecutePaymentTest extends PaymentTestCase {
             'provider' => 'amazon',
             'orderId' => $order->id,
             'provider_payload' => [
-                'checkout_session_id' => 'asdsaa'
-            ]
+                'checkout_session_id' => 'asdsaa',
+            ],
         ];
 
         $res = $this->signIn($order->user)->sendRequest($data)->json();
 
         $this->assertEquals(
-            "Sorry there was an error processing your payment, our administrators have been informed.",
+            'Sorry there was an error processing your payment, our administrators have been informed.',
             $res['user_message']
         );
 
@@ -73,8 +72,8 @@ class ExecutePaymentTest extends PaymentTestCase {
             'provider' => 'amazon',
             'orderId' => $order->id,
             'provider_payload' => [
-                'checkout_session_id' => $this->createAndGetCheckoutSessionId()
-            ]
+                'checkout_session_id' => $this->createAndGetCheckoutSessionId(),
+            ],
         ];
 
         $this->signIn($order->user)
@@ -82,21 +81,21 @@ class ExecutePaymentTest extends PaymentTestCase {
             ->assertJsonStructure([
                 'data' => [
                     [
-                        'success', 'status_code', 'status', 'payment_id', 'provider'
-                    ]
-                ]
+                        'success', 'status_code', 'status', 'payment_id', 'provider',
+                    ],
+                ],
             ]);
     }
 
-    protected function createAndGetCheckoutSessionId() : string
+    protected function createAndGetCheckoutSessionId(): string
     {
-        $payload = array(
-            'webCheckoutDetails' => array(
+        $payload = [
+            'webCheckoutDetails' => [
                 'checkoutReviewReturnUrl' => 'https://localhost/store/checkout_review',
-                'checkoutResultReturnUrl' => 'https://localhost/store/checkout_result'
-            ),
-            'storeId' => config('payment_providers.provider_settings.amazon.sandbox.STORE_ID')
-        );
+                'checkoutResultReturnUrl' => 'https://localhost/store/checkout_result',
+            ],
+            'storeId' => config('payment_providers.provider_settings.amazon.sandbox.STORE_ID'),
+        ];
         $header = ['x-amz-pay-idempotency-key' => uniqid()];
 
         $amazonResponse = $this->client->createCheckoutSession($payload, $header);
@@ -104,9 +103,8 @@ class ExecutePaymentTest extends PaymentTestCase {
         return json_decode($amazonResponse['response'])->checkoutSessionId;
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.payment.execute'), $data);
     }
-
 }

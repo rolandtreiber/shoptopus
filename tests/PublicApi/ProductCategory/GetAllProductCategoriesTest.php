@@ -2,12 +2,12 @@
 
 namespace Tests\PublicApi\ProductCategory;
 
-use Tests\TestCase;
-use App\Models\Product;
 use App\Models\DiscountRule;
+use App\Models\Product;
 use App\Models\ProductCategory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductCategory\ProductCategoryRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetAllProductCategoriesTest extends TestCase
 {
@@ -25,7 +25,7 @@ class GetAllProductCategoriesTest extends TestCase
                 'data',
                 'next',
                 'records',
-                'total_records'
+                'total_records',
             ]);
     }
 
@@ -41,8 +41,8 @@ class GetAllProductCategoriesTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
-            ]
+                app()->make(ProductCategoryRepository::class)->getSelectableColumns(false),
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data'));
@@ -80,12 +80,12 @@ class GetAllProductCategoriesTest extends TestCase
         $pc = ProductCategory::factory()->create();
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
         $pc->discount_rules()->attach($dr->id);
 
         $res = $this->sendRequest();
-        
+
         $res->assertJsonStructure([
             'data' => [
                 [
@@ -97,11 +97,11 @@ class GetAllProductCategoriesTest extends TestCase
                             'amount',
                             'valid_from',
                             'valid_until',
-                            'slug'
-                        ]
-                    ]
-                ]
-            ]
+                            'slug',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $dr->update(['enabled' => false]);
@@ -123,12 +123,12 @@ class GetAllProductCategoriesTest extends TestCase
 
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
 
         $dr2 = DiscountRule::factory()->create([
             'valid_from' => now()->subDays(5)->toDateTimeString(),
-            'valid_until' => now()->subDay()->toDateTimeString()
+            'valid_until' => now()->subDay()->toDateTimeString(),
         ]);
 
         $pc->discount_rules()->attach([$dr1->id, $dr2->id]);
@@ -151,10 +151,10 @@ class GetAllProductCategoriesTest extends TestCase
             'data' => [
                 [
                     'subcategories' => [
-                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false)
-                    ]
-                ]
-            ]
+                        app()->make(ProductCategoryRepository::class)->getSelectableColumns(false),
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(3, $res->json('data.0.subcategories'));
@@ -181,16 +181,16 @@ class GetAllProductCategoriesTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_ids'
-                ]
-            ]
+                    'product_ids',
+                ],
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data.0.product_ids'));
 
         $p2->update(['deleted_at' => now()]);
 
-        $this->assertCount(1,$this->sendRequest()->json('data.0.product_ids'));
+        $this->assertCount(1, $this->sendRequest()->json('data.0.product_ids'));
     }
 
     /**
@@ -225,7 +225,7 @@ class GetAllProductCategoriesTest extends TestCase
         $this->assertEquals($product_category2->id, $res->json('data.1.id'));
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.product_categories.getAll', $data));
     }

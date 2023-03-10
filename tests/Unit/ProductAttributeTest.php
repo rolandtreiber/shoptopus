@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Product;
-use Illuminate\Support\Str;
-use App\Models\ProductAttribute;
 use App\Enums\ProductAttributeType;
+use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class ProductAttributeTest extends TestCase
 {
@@ -16,7 +16,7 @@ class ProductAttributeTest extends TestCase
 
     protected $product_attribute;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -36,7 +36,7 @@ class ProductAttributeTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_name()
+    public function it_returns_a_translated_name()
     {
         $this->product_attribute
             ->setTranslation('name', 'en', 'english translation')
@@ -88,7 +88,7 @@ class ProductAttributeTest extends TestCase
         $this->assertCount(0, $this->product_attribute->options);
 
         ProductAttributeOption::factory()->create([
-            'product_attribute_id' => $this->product_attribute->id
+            'product_attribute_id' => $this->product_attribute->id,
         ]);
 
         $this->assertCount(1, $this->product_attribute->fresh()->options);

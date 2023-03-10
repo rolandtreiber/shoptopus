@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\FileType;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\ProductBulkOperationRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
@@ -26,7 +24,7 @@ class ProductController extends Controller
     protected ProductRepositoryInterface $productRepository;
 
     /**
-     * @param ProductRepositoryInterface $productRepository
+     * @param  ProductRepositoryInterface  $productRepository
      */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
@@ -34,14 +32,14 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return ProductListResource::collection(Product::filtered([
-//            ['id', '>=', '9476d4cf-bc20-4585-9d6b-4138bfcbff55'],
-//            ['name->en', 'like', '%volupt%']
+            //            ['id', '>=', '9476d4cf-bc20-4585-9d6b-4138bfcbff55'],
+            //            ['name->en', 'like', '%volupt%']
         ], $request)->view($request->view)->whereHasAttributeOptions($request->attribute_options)->whereHasTags($request->tags)->whereHasCategories($request->categories)->paginate($request->paginate));
     }
 
@@ -54,7 +52,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      * @return ProductDetailResource
      */
     public function show(Product $product): ProductDetailResource
@@ -65,7 +63,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param ProductStoreRequest $request
+     * @param  ProductStoreRequest  $request
      * @return ProductListResource
      */
     public function create(ProductStoreRequest $request): ProductListResource
@@ -93,8 +91,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param ProductUpdateRequest $request
-     * @param Product $product
+     * @param  ProductUpdateRequest  $request
+     * @param  Product  $product
      * @return ProductListResource
      */
     public function update(ProductUpdateRequest $request, Product $product): ProductListResource
@@ -107,22 +105,25 @@ class ProductController extends Controller
         $this->handleAttributes($product, $request);
         $product->handleCategories($request->product_categories);
         $product->handleTags($request->product_tags);
+
         return new ProductListResource($product);
     }
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      * @return string[]
      */
     public function delete(Product $product): array
     {
         $product->deleteWithAttachments();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param ProductBulkOperationRequest $request
+     * @param  ProductBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkArchive(ProductBulkOperationRequest $request): array
@@ -134,8 +135,9 @@ class ProductController extends Controller
     }
 
     /**
-     * @param ProductBulkOperationRequest $request
+     * @param  ProductBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(ProductBulkOperationRequest $request): array
@@ -145,5 +147,4 @@ class ProductController extends Controller
         }
         throw new BulkOperationException();
     }
-
 }

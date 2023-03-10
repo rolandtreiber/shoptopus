@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\DeliveryType;
 
 use App\Models\DeliveryType;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepositoryInterface
 {
@@ -17,12 +17,12 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the delivery rules for the given delivery types
      *
-     * @param array $deliveryTypeIds
+     * @param  array  $deliveryTypeIds
      * @return array
+     *
      * @throws \Exception
      */
-
-    public function getDeliveryRules(array $deliveryTypeIds = []) : array
+    public function getDeliveryRules(array $deliveryTypeIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
@@ -53,11 +53,12 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the orders for the given delivery types
      *
-     * @param array $deliveryTypeIds
+     * @param  array  $deliveryTypeIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getOrders(array $deliveryTypeIds = []) : array
+    public function getOrders(array $deliveryTypeIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
@@ -89,11 +90,12 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         try {
             $ids = collect($result)->pluck('id')->toArray();
@@ -101,11 +103,11 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
             $deliveryRules = [];
             $orders = [];
 
-            if (!in_array('delivery_rules', $excludeRelationships)) {
+            if (! in_array('delivery_rules', $excludeRelationships)) {
                 $deliveryRules = $this->getDeliveryRules($ids);
             }
 
-            if (!in_array('orders', $excludeRelationships)) {
+            if (! in_array('orders', $excludeRelationships)) {
                 $orders = $this->getOrders($ids);
             }
 
@@ -140,10 +142,10 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -152,13 +154,13 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
             "{$this->model_table}.price",
             "{$this->model_table}.enabled",
             "{$this->model_table}.enabled_by_default_on_creation",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.deleted_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

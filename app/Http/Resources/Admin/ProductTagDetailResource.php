@@ -23,7 +23,7 @@ class ProductTagDetailResource extends JsonResource
             'enabled' => $this->enabled,
             'description' => $this->getTranslations('description'),
             'display_badge' => $this->display_badge,
-            'products' => ProductListResource::collection($this->products)
+            'products' => ProductListResource::collection($this->products),
         ];
     }
 }

@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class VerifyEmailTest extends TestCase
 {
@@ -14,7 +14,7 @@ class VerifyEmailTest extends TestCase
 
     protected $user;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -55,7 +55,7 @@ class VerifyEmailTest extends TestCase
             ]
         );
 
-        $query_string = "?" . parse_url($url)['query'];
+        $query_string = '?'.parse_url($url)['query'];
 
         $this->assertNull($this->user->email_verified_at);
 
@@ -65,11 +65,11 @@ class VerifyEmailTest extends TestCase
     }
 
     /**
-     * @param string $query_string
+     * @param  string  $query_string
      * @return \Illuminate\Testing\TestResponse
      */
-    protected function sendRequest(string $query_string = '') : \Illuminate\Testing\TestResponse
+    protected function sendRequest(string $query_string = ''): \Illuminate\Testing\TestResponse
     {
-        return $this->getJson(route('verification.verify', ['id' => $this->user->id]) . $query_string);
+        return $this->getJson(route('verification.verify', ['id' => $this->user->id]).$query_string);
     }
 }

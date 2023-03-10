@@ -11,7 +11,7 @@ class GetClientSettingsRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +21,10 @@ class GetClientSettingsRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'orderId' => 'required|string|exists:orders,id'
+            'orderId' => 'required|string|exists:orders,id',
         ];
     }
 }

@@ -2,13 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use App\Models\Cart;
-use App\Models\Product;
+use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends TestCase
 {
@@ -16,7 +14,7 @@ class LoginTest extends TestCase
 
     protected $user;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -31,7 +29,7 @@ class LoginTest extends TestCase
     {
         $data = [
             'email' => null,
-            'password' => null
+            'password' => null,
         ];
 
         $this->sendRequest($data)
@@ -45,8 +43,8 @@ class LoginTest extends TestCase
     public function it_requires_a_valid_email()
     {
         $data = [
-            'email' => "lolevesgmail",
-            'password' => "password"
+            'email' => 'lolevesgmail',
+            'password' => 'password',
         ];
 
         $this->sendRequest($data)
@@ -61,9 +59,8 @@ class LoginTest extends TestCase
     {
         $data = [
             'email' => $this->user->email,
-            'password' => "passwordssssss"
+            'password' => 'passwordssssss',
         ];
-
 
         $res = $this->sendRequest($data)->json();
 
@@ -79,9 +76,8 @@ class LoginTest extends TestCase
     {
         $data = [
             'email' => 'lolevesP@gmai.com',
-            'password' => "password"
+            'password' => 'password',
         ];
-
 
         $res = $this->sendRequest($data)->json();
 
@@ -99,7 +95,7 @@ class LoginTest extends TestCase
 
         $data = [
             'email' => $this->user->email,
-            'password' => "password"
+            'password' => 'password',
         ];
 
         $this->sendRequest($data)->assertJsonStructure([
@@ -116,7 +112,7 @@ class LoginTest extends TestCase
                         'phone',
                         'avatar' => [
                             'url',
-                            'file_name'
+                            'file_name',
                         ],
                         'is_verified',
                         'cart' => [
@@ -124,13 +120,13 @@ class LoginTest extends TestCase
                             'user_id',
                             'ip_address',
                             'user',
-                            'products'
+                            'products',
                         ],
                         'notifications',
-                        'favorites'
-                    ]
-                ]
-            ]
+                        'favorites',
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertDatabaseHas('oauth_access_tokens', ['user_id' => $this->user->id]);
@@ -145,9 +141,9 @@ class LoginTest extends TestCase
         $this->artisan('passport:install');
 
         $notificationData = [
-            'type' => "competition-entered",
-            'title' => "You have entered a Competition.",
-            'level' => 'info'
+            'type' => 'competition-entered',
+            'title' => 'You have entered a Competition.',
+            'level' => 'info',
         ];
 
         DB::table('notifications')->insert([
@@ -155,7 +151,7 @@ class LoginTest extends TestCase
             'type' => 'App\Notifications\YouEnteredACompetition',
             'notifiable_type' => 'App\Models\User\User',
             'notifiable_id' => $this->user->id,
-            'data' => json_encode($notificationData)
+            'data' => json_encode($notificationData),
         ]);
 
         DB::table('notifications')->insert([
@@ -164,12 +160,12 @@ class LoginTest extends TestCase
             'notifiable_type' => 'App\Models\User\User',
             'notifiable_id' => $this->user->id,
             'data' => json_encode($notificationData),
-            'read_at' => now()
+            'read_at' => now(),
         ]);
 
         $data = [
             'email' => $this->user->email,
-            'password' => "password"
+            'password' => 'password',
         ];
 
         $notifications = $this->sendRequest($data)->json('data.auth.user.notifications');
@@ -187,15 +183,15 @@ class LoginTest extends TestCase
 
         $data = [
             'email' => $this->user->email,
-            'password' => "randompassword"
+            'password' => 'randompassword',
         ];
 
         $res = $this->sendRequest($data)->json();
 
-        $this->assertEquals("Please reset your password.", $res['user_message']);
+        $this->assertEquals('Please reset your password.', $res['user_message']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.auth.login'), $data);
     }

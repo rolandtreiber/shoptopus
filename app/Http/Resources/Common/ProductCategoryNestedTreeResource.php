@@ -2,8 +2,6 @@
 
 namespace App\Http\Resources\Common;
 
-use App\Enums\AvailabilityStatus;
-use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,7 +19,7 @@ class ProductCategoryNestedTreeResource extends JsonResource
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
             'parent_id' => $this->parent_id,
-            'children' => ProductCategoryNestedTreeResource::collection($this->children)
+            'children' => ProductCategoryNestedTreeResource::collection($this->children),
         ];
     }
 }

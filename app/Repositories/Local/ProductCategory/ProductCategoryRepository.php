@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\ProductCategory;
 
 use App\Models\ProductCategory;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class ProductCategoryRepository extends ModelRepository implements ProductCategoryRepositoryInterface
 {
@@ -17,11 +17,12 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the discount rules for the given product categories
      *
-     * @param array $productCategoryIds
+     * @param  array  $productCategoryIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getDiscountRules(array $productCategoryIds = []) : array
+    public function getDiscountRules(array $productCategoryIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
@@ -53,11 +54,12 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the products for the given product categories
      *
-     * @param array $productCategoryIds
+     * @param  array  $productCategoryIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getProductIds(array $productCategoryIds = []) : array
+    public function getProductIds(array $productCategoryIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
@@ -80,11 +82,12 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the subcategories
      *
-     * @param array $productCategoryIds
+     * @param  array  $productCategoryIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getSubcategories(array $productCategoryIds = []) : array
+    public function getSubcategories(array $productCategoryIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($productCategoryIds)), ',');
@@ -109,11 +112,12 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         $ids = collect($result)->pluck('id')->toArray();
 
@@ -121,15 +125,15 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
         $products = [];
         $subcategories = [];
 
-        if (!in_array('discount_rules', $excludeRelationships)) {
+        if (! in_array('discount_rules', $excludeRelationships)) {
             $discount_rules = $this->getDiscountRules($ids);
         }
 
-        if (!in_array('products', $excludeRelationships)) {
+        if (! in_array('products', $excludeRelationships)) {
             $products = $this->getProductIds($ids);
         }
 
-        if (!in_array('subcategories', $excludeRelationships)) {
+        if (! in_array('subcategories', $excludeRelationships)) {
             $subcategories = $this->getSubcategories($ids);
         }
 
@@ -150,7 +154,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
                 foreach ($products as $product) {
                     if ($product['product_category_id'] === $modelId
-                        && !in_array($product['id'], array_column($model['product_ids'], 'id'))
+                        && ! in_array($product['id'], array_column($model['product_ids'], 'id'))
                     ) {
                         array_push($model['product_ids'], $product['id']);
                     }
@@ -173,10 +177,10 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -185,13 +189,13 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             "{$this->model_table}.description",
             "{$this->model_table}.menu_image",
             "{$this->model_table}.header_image",
-            "{$this->model_table}.parent_id"
+            "{$this->model_table}.parent_id",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

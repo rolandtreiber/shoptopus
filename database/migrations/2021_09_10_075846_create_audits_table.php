@@ -16,8 +16,8 @@ class CreateAuditsTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::connection(config('app.env') === "testing" ? 'sqlite_logs' : 'logs')->create('audits', function (Blueprint $table) {
-            $primaryDbName = DB::connection(config('app.env') === "testing" ? 'sqlite' : 'mysql')->getDatabaseName();
+        Schema::connection(config('app.env') === 'testing' ? 'sqlite_logs' : 'logs')->create('audits', function (Blueprint $table) {
+            $primaryDbName = DB::connection(config('app.env') === 'testing' ? 'sqlite' : 'mysql')->getDatabaseName();
 
             $table->id();
             $table->string('user_type')->nullable();
@@ -30,7 +30,7 @@ class CreateAuditsTable extends Migration
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 1023)->nullable();
             $table->string('tags')->nullable();
-            config('app.env') !== "testing" && $table->foreign('user_id')->references('id')->on($primaryDbName . '.users')->nullOnDelete();
+            config('app.env') !== 'testing' && $table->foreign('user_id')->references('id')->on($primaryDbName.'.users')->nullOnDelete();
             $table->timestamps();
 
             $table->index(['user_id', 'user_type']);
@@ -46,6 +46,6 @@ class CreateAuditsTable extends Migration
      */
     public function down()
     {
-        Schema::connection(config('app.env') === "testing" ? 'sqlite_logs' : 'logs')->dropIfExists('audits');
+        Schema::connection(config('app.env') === 'testing' ? 'sqlite_logs' : 'logs')->dropIfExists('audits');
     }
 }

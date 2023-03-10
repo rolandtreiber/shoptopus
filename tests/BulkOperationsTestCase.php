@@ -10,8 +10,11 @@ use Spatie\Permission\Models\Role;
 class BulkOperationsTestCase extends TestCase
 {
     public User $superAdmin;
+
     public User $storeManager;
+
     public User $storeAssistant;
+
     public User $customer;
 
     protected function setUp(): void
@@ -25,7 +28,7 @@ class BulkOperationsTestCase extends TestCase
     }
 
     /**
-     * @param Role $role
+     * @param  Role  $role
      * @return User
      */
     public function createUser(Role $role): User
@@ -33,7 +36,7 @@ class BulkOperationsTestCase extends TestCase
         /** @var User $user */
         $user = User::factory()->create();
         $user->assignRole($role);
+
         return $user;
     }
-
 }

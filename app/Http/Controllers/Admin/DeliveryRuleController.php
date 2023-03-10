@@ -19,8 +19,8 @@ class DeliveryRuleController extends Controller
     use ProcessRequest;
 
     /**
-     * @param ListRequest $request
-     * @param DeliveryType $deliveryType
+     * @param  ListRequest  $request
+     * @param  DeliveryType  $deliveryType
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request, DeliveryType $deliveryType): AnonymousResourceCollection
@@ -29,24 +29,26 @@ class DeliveryRuleController extends Controller
     }
 
     /**
-     * @param DeliveryType $deliveryType
-     * @param DeliveryRule $deliveryRule
+     * @param  DeliveryType  $deliveryType
+     * @param  DeliveryRule  $deliveryRule
      * @return DeliveryRuleDetailResource
+     *
      * @throws RuleDoesNotBelongToTypeException
      */
     public function show(DeliveryType $deliveryType, DeliveryRule $deliveryRule): DeliveryRuleDetailResource
     {
-        if (!$deliveryType->deliveryRules->contains($deliveryRule)) {
+        if (! $deliveryType->deliveryRules->contains($deliveryRule)) {
             throw new RuleDoesNotBelongToTypeException();
         }
+
         return new DeliveryRuleDetailResource($deliveryRule);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param DeliveryType $deliveryType
-     * @param DeliveryRuleStoreRequest $request
+     * @param  DeliveryType  $deliveryType
+     * @param  DeliveryRuleStoreRequest  $request
      * @return DeliveryRuleListResource
      */
     public function create(DeliveryType $deliveryType, DeliveryRuleStoreRequest $request): DeliveryRuleListResource
@@ -63,15 +65,16 @@ class DeliveryRuleController extends Controller
     /**
      * Update a resource.
      *
-     * @param DeliveryType $deliveryType
-     * @param DeliveryRule $deliveryRule
-     * @param DeliveryRuleUpdateRequest $request
+     * @param  DeliveryType  $deliveryType
+     * @param  DeliveryRule  $deliveryRule
+     * @param  DeliveryRuleUpdateRequest  $request
      * @return DeliveryRuleListResource
+     *
      * @throws RuleDoesNotBelongToTypeException
      */
     public function update(DeliveryType $deliveryType, DeliveryRule $deliveryRule, DeliveryRuleUpdateRequest $request): DeliveryRuleListResource
     {
-        if (!$deliveryType->deliveryRules->contains($deliveryRule)) {
+        if (! $deliveryType->deliveryRules->contains($deliveryRule)) {
             throw new RuleDoesNotBelongToTypeException();
         }
         $data = $this->getProcessed($request, [], []);
@@ -82,16 +85,19 @@ class DeliveryRuleController extends Controller
     }
 
     /**
-     * @param DeliveryType $deliveryType
-     * @param DeliveryRule $deliveryRule
+     * @param  DeliveryType  $deliveryType
+     * @param  DeliveryRule  $deliveryRule
      * @return string[]
+     *
      * @throws RuleDoesNotBelongToTypeException
      */
     public function delete(DeliveryType $deliveryType, DeliveryRule $deliveryRule): array
     {
-        if (!$deliveryType->deliveryRules->contains($deliveryRule)) {
+        if (! $deliveryType->deliveryRules->contains($deliveryRule)) {
             throw new RuleDoesNotBelongToTypeException();
         }
         $deliveryRule->delete();
+
         return ['status' => 'Success'];
-    }}
+    }
+}

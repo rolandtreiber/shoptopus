@@ -73,6 +73,5 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductTagRepositoryInterface::class, ProductTagRepository::class);
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
         $this->app->bind(VoucherCodeRepositoryInterface::class, VoucherCodeRepository::class);
-
     }
 }

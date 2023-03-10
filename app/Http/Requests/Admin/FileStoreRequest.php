@@ -23,7 +23,7 @@ class FileStoreRequest extends FormRequest
             'model' => ['required'],
             'id' => ['required'],
             'file' => ['sometimes'],
-            'files' => ['sometimes']
+            'files' => ['sometimes'],
         ];
     }
 }

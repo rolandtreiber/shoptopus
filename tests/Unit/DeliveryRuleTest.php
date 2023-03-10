@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Illuminate\Support\Str;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class DeliveryRuleTest extends TestCase
 {
@@ -14,7 +14,7 @@ class DeliveryRuleTest extends TestCase
 
     protected $delivery_rule;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 

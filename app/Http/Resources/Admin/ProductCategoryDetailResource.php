@@ -29,7 +29,7 @@ class ProductCategoryDetailResource extends JsonResource
             'tree' => $this->tree(),
             'children' => ProductCategoryListResource::collection($this->children),
             'products' => ProductListResource::collection($this->products()->get()),
-            'enabled' => $this->enabled
+            'enabled' => $this->enabled,
         ];
     }
 }

@@ -3,9 +3,9 @@
 namespace Tests;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class AdminControllerTestCase extends BaseTestCase
 {
@@ -18,22 +18,22 @@ abstract class AdminControllerTestCase extends BaseTestCase
         config(['app.locales_supported' => [
             'en' => ['English'],
             'de' => ['Deutsch'],
-            'fr' => ['French']
+            'fr' => ['French'],
         ]]);
         config(['app.default_currency' => [
             'name' => 'GBP',
             'symbol' => '£',
-            'side' => 'left'
+            'side' => 'left',
         ]]);
         $this->seed();
     }
 
     /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
-     * @param array $scopes
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
+     * @param  array  $scopes
      * @return $this
      */
-    protected function signIn($user = null, array $scopes = []) : TestCase
+    protected function signIn($user = null, array $scopes = []): TestCase
     {
         $user = $user ?? User::factory()->create();
 
@@ -52,11 +52,12 @@ abstract class AdminControllerTestCase extends BaseTestCase
             if (array_intersect($nonAuthorizedUserRoleNames, $user->getRoleNames()->toArray())) {
                 return $user;
             }
+
             return null;
-        })->filter(function($item) {
+        })->filter(function ($item) {
             return $item !== null;
         });
+
         return $unAuthorizedUsers->random();
     }
-
 }

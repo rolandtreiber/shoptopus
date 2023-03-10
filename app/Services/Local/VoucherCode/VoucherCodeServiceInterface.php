@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\VoucherCode;
 
-interface VoucherCodeServiceInterface {
+interface VoucherCodeServiceInterface
+{
     //
 }

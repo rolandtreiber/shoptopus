@@ -14,7 +14,7 @@ class VariantAttribute extends MorphPivot
     protected $fillable = [
         'product_attribute_id',
         'product_variant_id',
-        'product_attribute_option_id'
+        'product_attribute_option_id',
     ];
 
     public function getOptionAttribute()

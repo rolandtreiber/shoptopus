@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Enums\ProductAttributeType;
 use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
+use App\Models\ProductCategory;
 use App\Models\ProductTag;
 use App\Models\ProductVariant;
 use Illuminate\Database\Seeder;
-use App\Models\ProductCategory;
-use App\Models\ProductAttribute;
-use App\Enums\ProductAttributeType;
-use App\Models\ProductAttributeOption;
 
 class ApiProductsTestSeeder extends Seeder
 {
@@ -25,7 +25,7 @@ class ApiProductsTestSeeder extends Seeder
             'headline' => 'Sustainable Materials',
             'subtitle' => "Women's T-shirt",
             'name' => 'Sportswear Essential',
-            'short_description' => 'Take flight in your new favourite tee. Rep an icon with bold graphics that remind you to reach for the sky, printed on heavyweight cotton for a premium look and feel.'
+            'short_description' => 'Take flight in your new favourite tee. Rep an icon with bold graphics that remind you to reach for the sky, printed on heavyweight cotton for a premium look and feel.',
         ]));
     }
 
@@ -39,14 +39,14 @@ class ApiProductsTestSeeder extends Seeder
             $parent_category = ProductCategory::factory()->create(['name' => 'Women']);
             $product_category = ProductCategory::factory()->create([
                 'name' => 'T-shirts',
-                'parent_id' => $parent_category->id
+                'parent_id' => $parent_category->id,
             ]);
             $product->product_categories()->attach([$parent_category->id, $product_category->id]);
 
             // Color attributes
             $attribute_color = ProductAttribute::factory()->create([
                 'type' => ProductAttributeType::Color,
-                'name' => 'color'
+                'name' => 'color',
             ]);
             $attribute_color_options = ProductAttributeOption::factory()
                 ->count(3)
@@ -54,21 +54,21 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_color_options[0]->update([
                 'name' => 'red',
-                'value' => 'rgb(255, 0, 0)'
+                'value' => 'rgb(255, 0, 0)',
             ]);
             $attribute_color_options[1]->update([
                 'name' => 'blue',
-                'value' => 'rgb(0, 0, 255)'
+                'value' => 'rgb(0, 0, 255)',
             ]);
             $attribute_color_options[2]->update([
                 'name' => 'green',
-                'value' => 'rgb(0, 255, 0)'
+                'value' => 'rgb(0, 255, 0)',
             ]);
 
             // Size attributes
             $attribute_size = ProductAttribute::factory()->create([
                 'type' => ProductAttributeType::Text,
-                'name' => 'size'
+                'name' => 'size',
             ]);
 
             $attribute_size_options = ProductAttributeOption::factory()
@@ -77,29 +77,29 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_size_options[0]->update([
                 'name' => 'xs',
-                'value' => 'xs'
+                'value' => 'xs',
             ]);
             $attribute_size_options[1]->update([
                 'name' => 'sm',
-                'value' => 'sm'
+                'value' => 'sm',
             ]);
             $attribute_size_options[2]->update([
                 'name' => 'md',
-                'value' => 'md'
+                'value' => 'md',
             ]);
             $attribute_size_options[3]->update([
                 'name' => 'lg',
-                'value' => 'lg'
+                'value' => 'lg',
             ]);
             $attribute_size_options[4]->update([
                 'name' => 'xl',
-                'value' => 'xl'
+                'value' => 'xl',
             ]);
 
             // Type attributes
             $attribute_type = ProductAttribute::factory()->create([
                 'type' => ProductAttributeType::Text,
-                'name' => 'type'
+                'name' => 'type',
             ]);
             $attribute_type_options = ProductAttributeOption::factory()
                 ->count(3)
@@ -107,21 +107,21 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_type_options[0]->update([
                 'name' => 'lifestyle',
-                'value' => 'lifestyle'
+                'value' => 'lifestyle',
             ]);
             $attribute_type_options[1]->update([
                 'name' => 'training',
-                'value' => 'training'
+                'value' => 'training',
             ]);
             $attribute_type_options[2]->update([
                 'name' => 'hiking',
-                'value' => 'hiking'
+                'value' => 'hiking',
             ]);
 
             // Weather attributes
             $attribute_weather = ProductAttribute::factory()->create([
                 'type' => ProductAttributeType::Text,
-                'name' => 'weather'
+                'name' => 'weather',
             ]);
             $attribute_weather_options = ProductAttributeOption::factory()
                 ->count(3)
@@ -129,47 +129,44 @@ class ApiProductsTestSeeder extends Seeder
 
             $attribute_weather_options[0]->update([
                 'name' => 'rain',
-                'value' => 'rain'
+                'value' => 'rain',
             ]);
             $attribute_weather_options[1]->update([
                 'name' => 'sunny',
-                'value' => 'sunny'
+                'value' => 'sunny',
             ]);
             $attribute_weather_options[2]->update([
                 'name' => 'cloudy',
-                'value' => 'cloudy'
+                'value' => 'cloudy',
             ]);
 
             // Product Variants
             $variant1 = ProductVariant::factory()->create([
                 'product_id' => $product->id,
-                'stock' => 3
+                'stock' => 3,
             ]);
 
             $variant2 = ProductVariant::factory()->create([
                 'product_id' => $product->id,
-                'stock' => 6
+                'stock' => 6,
             ]);
 
             $variant3 = ProductVariant::factory()->create([
                 'product_id' => $product->id,
-                'stock' => 2
+                'stock' => 2,
             ]);
 
             $variant4 = ProductVariant::factory()->create([
                 'product_id' => $product->id,
-                'stock' => 12
+                'stock' => 12,
             ]);
 
             // Add attributes to variant1
-            $attribute_color_options->each(fn($option) =>
-                $variant1->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $option->id])
+            $attribute_color_options->each(fn ($option) => $variant1->product_variant_attributes()->attach($attribute_color, ['product_attribute_option_id' => $option->id])
             );
-            $attribute_size_options->each(fn($option) =>
-                $variant1->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $option->id])
+            $attribute_size_options->each(fn ($option) => $variant1->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $option->id])
             );
-            $attribute_type_options->each(fn($option) =>
-                $variant1->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $option->id])
+            $attribute_type_options->each(fn ($option) => $variant1->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $option->id])
             );
             $variant1->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[0]->id]);
 
@@ -181,8 +178,7 @@ class ApiProductsTestSeeder extends Seeder
             $variant2->product_variant_attributes()->attach($attribute_size, ['product_attribute_option_id' => $attribute_size_options[4]->id]);
             $variant2->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[0]->id]);
             $variant2->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[1]->id]);
-            $attribute_weather_options->each(fn($option) =>
-                $variant2->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $option->id])
+            $attribute_weather_options->each(fn ($option) => $variant2->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $option->id])
             );
 
             // Add attributes to variant3
@@ -206,7 +202,6 @@ class ApiProductsTestSeeder extends Seeder
             $variant4->product_variant_attributes()->attach($attribute_type, ['product_attribute_option_id' => $attribute_type_options[2]->id]);
             $variant4->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[0]->id]);
             $variant4->product_variant_attributes()->attach($attribute_weather, ['product_attribute_option_id' => $attribute_weather_options[2]->id]);
-
 
 //            // Color
 //            $attribute_color = ProductAttribute::factory()->create([
@@ -271,5 +266,4 @@ class ApiProductsTestSeeder extends Seeder
 //            );
         }
     }
-
 }

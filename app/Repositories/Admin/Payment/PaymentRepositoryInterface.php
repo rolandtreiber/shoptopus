@@ -2,8 +2,7 @@
 
 namespace App\Repositories\Admin\Payment;
 
-interface PaymentRepositoryInterface {
-
+interface PaymentRepositoryInterface
+{
     public function bulkUpdateStatus(array $ids, int $status): bool;
-
 }

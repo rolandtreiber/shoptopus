@@ -18,7 +18,7 @@ class ProductAttributeUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['json']
+            'name' => ['json'],
         ];
     }
 }

@@ -3,8 +3,8 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
-use App\Models\Product;
 use App\Models\FileContent;
+use App\Models\Product;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -30,7 +30,7 @@ class FileContentFactory extends Factory
         $translated = $this->getTranslated($this->faker, ['title', 'description'], ['short', 'medium']);
 
         $fileable = $this->faker->randomElement([
-            Product::class
+            Product::class,
         ]);
 
         $file = GeneralHelper::getPhotoFromSamples();
@@ -42,7 +42,7 @@ class FileContentFactory extends Factory
             'title' => $translated['title'],
             'file_name' => $file['file_name'],
             'description' => $translated['description'],
-            'type' => $file['type']
+            'type' => $file['type'],
         ];
     }
 }

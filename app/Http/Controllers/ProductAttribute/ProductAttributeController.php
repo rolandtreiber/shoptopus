@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\ProductAttribute;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Local\ProductAttribute\ProductAttributeServiceInterface;
+use Illuminate\Http\Request;
 
 class ProductAttributeController extends Controller
 {
@@ -18,13 +18,13 @@ class ProductAttributeController extends Controller
     /**
      * Get all models
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAll(Request $request) : \Illuminate\Http\JsonResponse
+    public function getAll(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
-            list($filters, $page_formatting) = $this->getFiltersAndPageFormatting($request);
+            [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
 
             return response()->json($this->getResponse(
                 $page_formatting,
@@ -32,21 +32,21 @@ class ProductAttributeController extends Controller
                 $request
             ));
         } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get all models for a specific product category
      *
-     * @param Request $request
-     * @param string $product_category_id
+     * @param  Request  $request
+     * @param  string  $product_category_id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllForProductCategory(Request $request, string $product_category_id) : \Illuminate\Http\JsonResponse
+    public function getAllForProductCategory(Request $request, string $product_category_id): \Illuminate\Http\JsonResponse
     {
         try {
-            list($page_formatting) = $this->getFiltersAndPageFormatting($request);
+            [$page_formatting] = $this->getFiltersAndPageFormatting($request);
 
             return response()->json($this->getResponse(
                 $page_formatting,
@@ -54,23 +54,23 @@ class ProductAttributeController extends Controller
                 $request
             ));
         } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get a single model
      *
-     * @param Request $request
-     * @param string $id
+     * @param  Request  $request
+     * @param  string  $id
      * @return \Illuminate\Http\JsonResponse
      */
-    public function get(Request $request, string $id) : \Illuminate\Http\JsonResponse
+    public function get(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productAttributeService->get($id), $request));
         } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 }

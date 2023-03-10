@@ -6,7 +6,7 @@ use App\Http\Requests\FormRequest;
 
 /**
  * Class SignupRequest
- * @package App\Http\Requests\Auth
+ *
  * @property string $email
  * @property string $name
  * @property string $password
@@ -23,7 +23,7 @@ final class SignupRequest extends FormRequest
         return [
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required'
+            'password' => 'required',
         ];
     }
 
@@ -33,8 +33,7 @@ final class SignupRequest extends FormRequest
             'name' => 'Name is required!',
             'email.required' => 'Email is required!',
             'email.email' => 'The email is invalid',
-            'password.required' => 'Password is required!'
+            'password.required' => 'Password is required!',
         ];
     }
-
 }

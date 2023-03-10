@@ -11,7 +11,9 @@ use BenSampo\Enum\Enum;
  */
 final class ChartRange extends Enum
 {
-    const LastWeek =    1;
-    const LastMonth =   2;
-    const LastYear =    3;
+    const LastWeek = 1;
+
+    const LastMonth = 2;
+
+    const LastYear = 3;
 }

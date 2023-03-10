@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 
 class ReportRepository implements ReportRepositoryInterface
 {
-
     protected ReportServiceInterface $reportService;
 
     public function __construct(ReportServiceInterface $reportService)
@@ -25,7 +24,7 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
-     * @param array $controls
+     * @param  array  $controls
      * @return array
      */
     public function getSignupsOverTime(array $controls): array
@@ -41,17 +40,17 @@ class ReportRepository implements ReportRepositoryInterface
                 [
                     'label' => 'Signups',
                     'model' => User::class,
-                ]
+                ],
             ],
             'cascade' => false,
-            'randomize_colors' => false
+            'randomize_colors' => false,
         ]);
 
         return $service->getApexChartsResponse();
     }
 
     /**
-     * @param array $controls
+     * @param  array  $controls
      * @return array
      */
     public function getRevenueOverTime(array $controls): array
@@ -66,8 +65,8 @@ class ReportRepository implements ReportRepositoryInterface
                     'model' => Order::class,
                     'attribute' => 'total_price',
                     'conditions' => [
-                        ['where', 'status', '=', OrderStatus::Completed]
-                    ]
+                        ['where', 'status', '=', OrderStatus::Completed],
+                    ],
                 ],
                 [
                     'label' => 'Paid Orders (Paid, Processing, In Transit)',
@@ -78,34 +77,34 @@ class ReportRepository implements ReportRepositoryInterface
                             OrderStatus::Paid,
                             OrderStatus::Processing,
                             OrderStatus::InTransit,
-                        ]]
-                    ]
-                ]
+                        ]],
+                    ],
+                ],
             ],
             'cascade' => true,
-            'randomize_colors' => false
+            'randomize_colors' => false,
         ]);
 
         return $service->getApexChartsResponse();
     }
 
     /**
-     * @param array $controls
-     * @param null $categoryId
+     * @param  array  $controls
+     * @param  null  $categoryId
      * @return array
      */
     public function getProductBreakdown(array $controls, $categoryId = null): array
     {
         $topLevelCategories = ProductCategory::where('enabled', 1)->whereNull('parent_id')->select('id', 'name')->get();
 
-        if (!$categoryId && $topLevelCategories !== null) {
+        if (! $categoryId && $topLevelCategories !== null) {
             $categoryId = $topLevelCategories->first()->id;
         }
 
         $reportService = $this->reportService->setup();
         $products = DB::table('order_product')
             ->leftJoin('products as product', 'order_product.product_id', 'product.id')
-            ->leftJoin('product_product_category as ppc', function($join) use ($categoryId) {
+            ->leftJoin('product_product_category as ppc', function ($join) use ($categoryId) {
                 $join->on('ppc.product_id', 'product.id');
                 $join->where('ppc.product_category_id', $categoryId);
             })
@@ -134,18 +133,18 @@ class ReportRepository implements ReportRepositoryInterface
         }
 
         $reportService->addDataset([
-            'label' => "Products",
-            'borderColor' => "transparent",
+            'label' => 'Products',
+            'borderColor' => 'transparent',
             'backgroundColor' => $bgColor,
             'data' => $count,
-            'labels' => $labels
+            'labels' => $labels,
         ])->setLabels($labels);
 
         $data = $reportService->getApexBarChartsResponse();
 
         return [
             'categories' => $topLevelCategories,
-            'data' => $data
+            'data' => $data,
         ];
     }
 
@@ -163,7 +162,7 @@ class ReportRepository implements ReportRepositoryInterface
         $statuses = [
             1 => 'Provisional',
             2 => 'Active',
-            3 => 'Discontinued'
+            3 => 'Discontinued',
         ];
         $palette = $reportService->getPalette();
         foreach ($products as $product) {
@@ -177,17 +176,18 @@ class ReportRepository implements ReportRepositoryInterface
         }
 
         $reportService->addDataset([
-            'label' => "Products",
-            'borderColor' => "transparent",
+            'label' => 'Products',
+            'borderColor' => 'transparent',
             'backgroundColor' => $bgColor,
             'data' => $count,
-            'labels' => $labels
+            'labels' => $labels,
         ])->setLabels($labels);
+
         return $reportService->getApexCompositePieResponse();
     }
 
     /**
-     * @param array $controls
+     * @param  array  $controls
      * @return array
      */
     public function getOrdersByStatusChartData(array $controls): array
@@ -210,7 +210,7 @@ class ReportRepository implements ReportRepositoryInterface
             3 => 'In Transit',
             4 => 'Completed',
             5 => 'On Hold',
-            6 => 'Cancelled'
+            6 => 'Cancelled',
         ];
         $palette = $reportService->getPalette();
         foreach ($orders as $order) {
@@ -224,12 +224,13 @@ class ReportRepository implements ReportRepositoryInterface
         }
 
         $reportService->addDataset([
-            'label' => "Orders",
-            'borderColor' => "transparent",
+            'label' => 'Orders',
+            'borderColor' => 'transparent',
             'backgroundColor' => $bgColor,
             'data' => $count,
-            'labels' => $labels
+            'labels' => $labels,
         ]);
+
         return $reportService->getApexCompositePieResponse();
     }
 
@@ -239,7 +240,7 @@ class ReportRepository implements ReportRepositoryInterface
     public function getTotalOverviewValues(): array
     {
         $unsold = DB::table('products')
-            ->leftJoin('product_variants as pv', function($join) {
+            ->leftJoin('product_variants as pv', function ($join) {
                 $join->on('products.id', 'pv.product_id')
                     ->where('pv.enabled', 1);
             })->select([
@@ -249,7 +250,7 @@ class ReportRepository implements ReportRepositoryInterface
         $ordersTotal = DB::table('orders')->whereIn('status', [
             OrderStatus::Completed,
             OrderStatus::Paid,
-            OrderStatus::InTransit])
+            OrderStatus::InTransit, ])
             ->select([
                 DB::raw('SUM(orders.total_price) as revenue'),
                 DB::raw('SUM(orders.delivery_cost) as delivery'),
@@ -270,11 +271,11 @@ class ReportRepository implements ReportRepositoryInterface
      */
     private function getSalesStatsRow($query): string
     {
-        return $query->sum('total_price') . ' (' . $query->count() . ')';
+        return $query->sum('total_price').' ('.$query->count().')';
     }
 
     /**
-     * @param array $controls
+     * @param  array  $controls
      * @return string[]
      */
     public function getSalesStats(array $controls): array
@@ -317,7 +318,7 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return array
      */
     public function getOverview(array $data): array
@@ -334,12 +335,12 @@ class ReportRepository implements ReportRepositoryInterface
             'pending_orders' => Order::view('paid')->count(),
             'new_signups' => User::whereDate('created_at', '>=', Carbon::now()->endOfDay()->subDays(3))->count(),
             'low_stock' => Product::where('stock', '<=', 10)->count(),
-            'todays_orders' => Order::whereDate('created_at', '>=', Carbon::today()->startOfDay())->count()
+            'todays_orders' => Order::whereDate('created_at', '>=', Carbon::today()->startOfDay())->count(),
         ];
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return ReportService
      */
     public function getChartData(array $data): ReportService
@@ -371,19 +372,19 @@ class ReportRepository implements ReportRepositoryInterface
             $data = $query->get();
 
             $reportService->setItems($data);
-            if (!isset($m['attribute'])) {
+            if (! isset($m['attribute'])) {
                 $reportService->makeReportDatasetByNumberOfItems($cascade)->addLabel($m['label'])->addDataset();
             } else {
                 $reportService->makeReportDatasetByAttribute($m['attribute'], $cascade)->addLabel($m['label'])->addDataset();
             }
             $reportService->setShadow(true);
         }
-        return $reportService;
 
+        return $reportService;
     }
 
     /**
-     * @param array $data
+     * @param  array  $data
      * @return array[]
      */
     public function getSales(array $data): array
@@ -400,7 +401,7 @@ class ReportRepository implements ReportRepositoryInterface
             'stats' => $stats,
             'revenue_over_time' => $revenueOverTime,
             'products_breakdown' => $productsBreakdown,
-            'totals' => $totalOverviewValues
+            'totals' => $totalOverviewValues,
         ];
     }
 }

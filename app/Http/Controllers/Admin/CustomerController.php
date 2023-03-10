@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\CustomerDetailResource;
 use App\Http\Resources\Admin\CustomerListResource;
-use App\Http\Resources\Admin\UserListResource;
 use App\Models\User;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -16,7 +15,7 @@ class CustomerController extends Controller
     use ProcessRequest;
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -25,12 +24,13 @@ class CustomerController extends Controller
     }
 
     /**
-     * @param User $customer
+     * @param  User  $customer
      * @return CustomerDetailResource
      */
     public function show(User $customer): CustomerDetailResource
     {
         $customer->load('cart.products');
+
         return new CustomerDetailResource($customer);
     }
 }

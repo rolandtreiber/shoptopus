@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class EventLogType extends Enum
 {
-    const StatusChange =   0;
-    const Note =           1;
+    const StatusChange = 0;
+
+    const Note = 1;
 }

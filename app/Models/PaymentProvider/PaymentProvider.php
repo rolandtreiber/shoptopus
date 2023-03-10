@@ -2,8 +2,8 @@
 
 namespace App\Models\PaymentProvider;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PaymentProvider extends Model
 {
@@ -15,7 +15,7 @@ class PaymentProvider extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'enabled', 'test_mode'
+        'name', 'enabled', 'test_mode',
     ];
 
     /**
@@ -25,7 +25,7 @@ class PaymentProvider extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
@@ -35,14 +35,15 @@ class PaymentProvider extends Model
      */
     protected $casts = [
         'enabled' => 'boolean',
-        'test_mode' => 'boolean'
+        'test_mode' => 'boolean',
     ];
 
     /**
      * A payment provider has many config.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function payment_provider_configs() : \Illuminate\Database\Eloquent\Relations\HasMany
+    public function payment_provider_configs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(PaymentProviderConfig::class);
     }

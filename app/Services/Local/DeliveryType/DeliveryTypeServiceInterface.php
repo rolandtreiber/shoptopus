@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\DeliveryType;
 
-interface DeliveryTypeServiceInterface {
+interface DeliveryTypeServiceInterface
+{
     //
 }

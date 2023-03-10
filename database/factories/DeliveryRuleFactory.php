@@ -19,6 +19,7 @@ class DeliveryRuleFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition()
@@ -47,7 +48,7 @@ class DeliveryRuleFactory extends Factory
             'distance_unit' => 'mile',
             'lat' => $this->faker->latitude,
             'lon' => $this->faker->longitude,
-            'enabled' => true
+            'enabled' => true,
         ];
     }
 }

@@ -54,7 +54,6 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                         Route::patch('/', [ProductVariantController::class, 'update'])->name('admin.api.update.product-variant');
                     });
                 });
-
             });
         });
 
@@ -208,7 +207,6 @@ Route::group(['middleware' => ['auth:api', 'admin', 'set.locale']], function () 
                         Route::patch('/', [DeliveryRuleController::class, 'update'])->middleware('super_user')->name('admin.api.update.delivery-rule');
                     });
                 });
-
             });
         });
 

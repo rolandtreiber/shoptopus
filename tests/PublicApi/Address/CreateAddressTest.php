@@ -2,10 +2,10 @@
 
 namespace Tests\PublicApi\Address;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CreateAddressTest extends TestCase
 {
@@ -35,7 +35,7 @@ class CreateAddressTest extends TestCase
             'address_line_1' => null,
             'town' => null,
             'post_code' => null,
-            'country' => null
+            'country' => null,
         ];
 
         $this->signIn()
@@ -58,7 +58,7 @@ class CreateAddressTest extends TestCase
             'town' => 'Bristol',
             'post_code' => 'BS34 8PL',
             'country' => 'UK',
-            'name' => 'home'
+            'name' => 'home',
         ];
 
         $this->signIn($user)->sendRequest($data);
@@ -77,7 +77,7 @@ class CreateAddressTest extends TestCase
         $this->signIn($address['user_id'])->sendRequest($address)->assertOk();
 
         $this->assertDatabaseHas('addresses', [
-            'user_id' => $address['user_id']
+            'user_id' => $address['user_id'],
         ]);
     }
 
@@ -89,13 +89,13 @@ class CreateAddressTest extends TestCase
     {
         $data = Address::factory()->raw([
             'lat' => 2000,
-            'lon' => 2000.768
+            'lon' => 2000.768,
         ]);
 
         $this->signIn()->sendRequest($data)->assertJsonValidationErrors(['lat', 'lon']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.addresses.create'), $data);
     }

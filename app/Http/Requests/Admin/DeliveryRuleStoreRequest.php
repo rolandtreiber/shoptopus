@@ -21,7 +21,7 @@ class DeliveryRuleStoreRequest extends FormRequest
             'max_distance' => ['numeric', 'min:0'],
             'lat' => ['numeric'],
             'lon' => ['numeric'],
-            'status' => ['sometimes']
+            'status' => ['sometimes'],
         ];
     }
 }

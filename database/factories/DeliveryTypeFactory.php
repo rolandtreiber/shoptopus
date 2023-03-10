@@ -31,7 +31,7 @@ class DeliveryTypeFactory extends Factory
             'description' => $translations['description'],
             'enabled' => true,
             'enabled_by_default_on_creation' => true,
-            'price' => $this->faker->randomFloat(2, 0, 12)
+            'price' => $this->faker->randomFloat(2, 0, 12),
         ];
     }
 }

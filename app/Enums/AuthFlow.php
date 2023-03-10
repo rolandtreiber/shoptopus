@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class AuthFlow extends Enum
 {
-    const Admin =   32;
-    const Public =  24;
+    const Admin = 32;
+
+    const Public = 24;
 }

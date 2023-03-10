@@ -14,18 +14,18 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Testing\Fluent\AssertableJson;
 use JMac\Testing\Traits\AdditionalAssertions;
-use Tests\CreatesApplication;
 use Tests\AdminControllerTestCase;
+use Tests\CreatesApplication;
 
 /**
  * @group admin-base-crud
  * @group products
+ *
  * @see \App\Http\Controllers\Admin\ProductController
  */
 class ProductControllerTest extends AdminControllerTestCase
 {
     use RefreshDatabase;
-
     use AdditionalAssertions, WithFaker, CreatesApplication;
 
     /**
@@ -37,8 +37,7 @@ class ProductControllerTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.products', ['page' => 1, 'paginate' => 20, 'filters' => []]));
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.0.id', $product->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.0.id', $product->id)
                 ->where('data.0.name', $product->getTranslations('name'))
                 ->where('data.0.price', $product->price)
                 ->where('data.0.final_price', $product->final_price)
@@ -60,11 +59,10 @@ class ProductControllerTest extends AdminControllerTestCase
             'tags' => [$tag->id],
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.0.id', $products[0]->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.0.id', $products[0]->id)
                 ->has('data', 1)
                 ->etc()
             );
@@ -80,21 +78,21 @@ class ProductControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product'), [
             'name' => json_encode([
                 'en' => 'Test Product',
-                'de' => 'Test Produkt'
+                'de' => 'Test Produkt',
             ]),
             'price' => 12.50,
             'short_description' => json_encode([
                 'en' => 'Short Description',
-                'de' => 'Kurz Bezeichnung'
+                'de' => 'Kurz Bezeichnung',
             ]),
             'description' => json_encode([
                 'en' => 'Longer Description',
-                'de' => 'Langer Bezeichnung'
+                'de' => 'Langer Bezeichnung',
             ]),
             'attachments' => [
                 UploadedFile::fake()->image('product_image1.jpg'),
-                UploadedFile::fake()->image('product_image2.jpg')
-            ]
+                UploadedFile::fake()->image('product_image2.jpg'),
+            ],
         ]);
         $productId = $response->json()['data']['id'];
         $product = Product::find($productId);
@@ -133,25 +131,25 @@ class ProductControllerTest extends AdminControllerTestCase
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product', [
-            'product' => $product->id
+            'product' => $product->id,
         ]), [
             'name' => json_encode([
                 'en' => 'Updated Test Product',
-                'de' => 'Aktualisiert Test Produkt'
+                'de' => 'Aktualisiert Test Produkt',
             ]),
             'price' => 12.33,
             'short_description' => json_encode([
                 'en' => 'Updated Short Description',
-                'de' => 'Aktualisiert Kurz Bezeichnung'
+                'de' => 'Aktualisiert Kurz Bezeichnung',
             ]),
             'description' => json_encode([
                 'en' => 'Updated Longer Description',
-                'de' => 'Aktualisiert Langer Bezeichnung'
+                'de' => 'Aktualisiert Langer Bezeichnung',
             ]),
             'attachments' => [
                 UploadedFile::fake()->image('product_image1.jpg'),
-                UploadedFile::fake()->image('product_image2.jpg')
-            ]
+                UploadedFile::fake()->image('product_image2.jpg'),
+            ],
         ]);
         $response->assertCreated();
         $jsonResponse = $response->json();
@@ -166,7 +164,6 @@ class ProductControllerTest extends AdminControllerTestCase
         $this->assertEquals('Updated Longer Description', $product->setLocale('en')->description);
         $this->assertEquals('Aktualisiert Langer Bezeichnung', $product->setLocale('de')->description);
         $this->assertEquals(12.33, $product->price);
-
     }
 
     /**

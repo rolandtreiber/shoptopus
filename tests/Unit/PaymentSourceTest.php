@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Payment;
-use Illuminate\Support\Str;
 use App\Models\PaymentSource;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class PaymentSourceTest extends TestCase
 {
@@ -15,7 +15,7 @@ class PaymentSourceTest extends TestCase
 
     protected $payment_source;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class PaymentSourceTest extends TestCase
     /** @test */
     public function it_has_a_generated_slug()
     {
-        $string = $this->payment_source->user->last_name . ' ' . $this->payment_source->name;
+        $string = $this->payment_source->user->last_name.' '.$this->payment_source->name;
         $this->assertEquals(Str::slug($string), $this->payment_source->slug);
     }
 

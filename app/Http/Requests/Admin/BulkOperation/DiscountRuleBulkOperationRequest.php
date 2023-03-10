@@ -13,7 +13,7 @@ class DiscountRuleBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:discount_rules,id']
+            'ids.*' => ['exists:discount_rules,id'],
         ];
     }
 }

@@ -14,7 +14,7 @@ return [
         Permission::ProductsCanDelete,
         Permission::DeliveryRulesCanCreate,
         Permission::DeliveryRulesCanUpdate,
-        Permission::DeliveryRulesCanDelete
+        Permission::DeliveryRulesCanDelete,
     ],
     'admin' => [
         Permission::CanActAsCustomer,
@@ -23,7 +23,7 @@ return [
         Permission::ProductsCanDelete,
         Permission::DeliveryRulesCanCreate,
         Permission::DeliveryRulesCanUpdate,
-        Permission::DeliveryRulesCanDelete
+        Permission::DeliveryRulesCanDelete,
     ],
     'store_manager' => [
         Permission::CanActAsCustomer,
@@ -32,7 +32,7 @@ return [
         Permission::ProductsCanDelete,
         Permission::DeliveryRulesCanCreate,
         Permission::DeliveryRulesCanUpdate,
-        Permission::DeliveryRulesCanDelete
+        Permission::DeliveryRulesCanDelete,
     ],
     'store_assistant' => [
         Permission::ProductsCanCreate,
@@ -51,6 +51,6 @@ return [
         Permission::CanViewOwnAccount,
     ],
     'auditor' => [
-        Permission::CanAccessAuditables
-    ]
+        Permission::CanAccessAuditables,
+    ],
 ];

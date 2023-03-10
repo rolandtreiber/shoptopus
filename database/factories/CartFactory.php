@@ -24,8 +24,8 @@ class CartFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'ip_address' => null
-//            'ip_address' => $this->faker->regexify('[A-Za-z0-9]{100}')
+            'ip_address' => null,
+            //            'ip_address' => $this->faker->regexify('[A-Za-z0-9]{100}')
         ];
     }
 }

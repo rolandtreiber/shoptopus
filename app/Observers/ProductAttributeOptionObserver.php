@@ -10,7 +10,7 @@ class ProductAttributeOptionObserver
     use ProcessRequest;
 
     /**
-     * @param ProductAttributeOption $productAttributeOption
+     * @param  ProductAttributeOption  $productAttributeOption
      */
     public function deleting(ProductAttributeOption $productAttributeOption): void
     {

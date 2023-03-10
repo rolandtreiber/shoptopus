@@ -11,14 +11,20 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
-class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents {
-
+class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithMapping, WithEvents
+{
     private string $modelName;
+
     private string $modelClass;
+
     private array $fields;
+
     private array $exportableRelationships;
+
     private array $relationships;
+
     private array $translatableFields;
+
     private array $languages;
 
     public function __construct(string $modelClass, string $modelName, array $exportable, array $translatableFields, array $relationships)
@@ -68,19 +74,21 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
     {
         $collection = (new $this->modelClass)->all();
 
-        $result = $collection->map(function($item) {
+        $result = $collection->map(function ($item) {
             foreach ($this->translatableFields as $translatableField) {
                 $translations = $item->getTranslations($translatableField);
                 $text = '';
                 foreach ($this->languages as $language) {
                     if (array_key_exists($language, $translations)) {
-                        $text .= $language . ': '. $translations[$language] . '; ';
+                        $text .= $language.': '.$translations[$language].'; ';
                     }
                 }
                 $item->$translatableField = $text;
             }
+
             return $item;
         });
+
         return $result;
     }
 
@@ -117,11 +125,11 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
                 if ($row->$relationshipName) {
                     return $row->$relationshipName->slug ?: '';
                 }
+
                 return '';
             default:
-                return $data['type'] . ' - ' . $data['model'];
+                return $data['type'].' - '.$data['model'];
         }
-
     }
 
     /**
@@ -137,6 +145,7 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
                 $result[$exportableRelationship] = $this->getRelationshipColumnValue($row, $exportableRelationship, $this->relationships[$exportableRelationship]);
             }
         }
+
         return $result;
     }
 
@@ -154,22 +163,20 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
         }
 
         return [
-            AfterSheet::class => function(AfterSheet $event) use ($columns, $slugColumnId) {
-
-                $event->sheet->getDelegate()->getStyle('A1:'.$columns[count($this->headings())-1].'1')
+            AfterSheet::class => function (AfterSheet $event) use ($columns, $slugColumnId) {
+                $event->sheet->getDelegate()->getStyle('A1:'.$columns[count($this->headings()) - 1].'1')
                     ->getFill()
                     ->setFillType(Fill::FILL_SOLID)
                     ->getStartColor()
                     ->setARGB('DD4B39');
 
                 if ($slugColumnId !== null) {
-                    $event->sheet->getDelegate()->getStyle($slugColumnId.'2:'.$slugColumnId.(count($this->collection())+1))
+                    $event->sheet->getDelegate()->getStyle($slugColumnId.'2:'.$slugColumnId.(count($this->collection()) + 1))
                         ->getFill()
                         ->setFillType(Fill::FILL_SOLID)
                         ->getStartColor()
                         ->setARGB('EBEBEB');
                 }
-
             },
         ];
     }

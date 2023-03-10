@@ -21,13 +21,12 @@ class ProductAttributeOptionSeeder extends Seeder
                 $attributeId = (new ProductAttribute())->findNthId(rand(0, ProductAttribute::count()));
             } while (in_array($attributeId, $used));
             $used[] = $attributeId;
-            $optionCount = rand(2,10);
+            $optionCount = rand(2, 10);
             ProductAttributeOption::factory()
                 ->state([
-                    'product_attribute_id' => $attributeId
+                    'product_attribute_id' => $attributeId,
                 ])
                 ->count($optionCount)->create();
-
         }
     }
 }

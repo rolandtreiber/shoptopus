@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductAttributeOption;
 use App\Traits\TranslatableFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ProductAttributeOption;
 
 class ProductAttributeOptionFactory extends Factory
 {
@@ -22,6 +22,7 @@ class ProductAttributeOptionFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws Exception
      */
     public function definition(): array
@@ -32,7 +33,7 @@ class ProductAttributeOptionFactory extends Factory
             'name' => $translations['name'],
             'value' => random_int(1, 100),
             'image' => null,
-            'enabled' => true
+            'enabled' => true,
         ];
     }
 }

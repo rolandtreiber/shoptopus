@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
-use App\Models\Order;
 use App\Enums\EventLogType;
 use App\Models\DeliveryType;
+use App\Models\Order;
 use App\Repositories\Admin\Eventlog\EventLogRepository;
 use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
 use App\Repositories\Admin\Order\OrderRepository;
@@ -13,6 +13,7 @@ use App\Repositories\Admin\Order\OrderRepositoryInterface;
 class OrderObserver
 {
     private EventLogRepositoryInterface $eventLogRepository;
+
     private OrderRepositoryInterface $orderRepository;
 
     public function __construct(EventLogRepository $eventLogRepository, OrderRepository $orderRepository)
@@ -24,7 +25,7 @@ class OrderObserver
     /**
      * Listen to the Order updating event.
      *
-     * @param Order $order
+     * @param  Order  $order
      * @return void
      */
     public function creating(Order $order)
@@ -38,7 +39,7 @@ class OrderObserver
     /**
      * Listen to the Order updating event.
      *
-     * @param Order $order
+     * @param  Order  $order
      * @return void
      */
     public function created(Order $order)
@@ -49,12 +50,12 @@ class OrderObserver
     /**
      * Listen to the Order updating event.
      *
-     * @param Order $order
+     * @param  Order  $order
      * @return void
      */
     public function updating(Order $order)
     {
-        if($order->isDirty(['voucher_code_id', 'delivery_type_id'])) {
+        if ($order->isDirty(['voucher_code_id', 'delivery_type_id'])) {
             $dt = DeliveryType::find($order->delivery_type_id);
 
             if ($dt) {
@@ -63,9 +64,8 @@ class OrderObserver
             }
         }
 
-        if($order->isDirty('status')) {
+        if ($order->isDirty('status')) {
             $this->eventLogRepository->create(Order::class, $order, EventLogType::StatusChange, ['status' => $order->status]);
         }
-
     }
 }

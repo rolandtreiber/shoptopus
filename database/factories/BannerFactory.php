@@ -21,6 +21,7 @@ class BannerFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function definition(): array
@@ -36,13 +37,13 @@ class BannerFactory extends Factory
             'description' => $translated['description'],
             'background_image' => [
                 'url' => 'https://picsum.photos/1200/450',
-                'file_name' => ''
+                'file_name' => '',
             ],
             'show_button' => $showButton,
             'button_text' => $showButton ? $buttonText : null,
             'button_url' => $showButton ? $buttonUrl : null,
             'enabled' => $this->faker->boolean,
-            'total_clicks' => random_int(10, 200)
+            'total_clicks' => random_int(10, 200),
         ];
     }
 }

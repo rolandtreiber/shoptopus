@@ -2,9 +2,7 @@
 
 namespace App\Notifications;
 
-use App\Models\Order;
 use App\Models\Product;
-use Carbon\Carbon;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Notifications\Messages\MailMessage;
 
@@ -35,7 +33,7 @@ class ProductRunningLow extends BaseNotification implements UserNotification
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('user-' . $this->userId . '-notifications');
+        return new PrivateChannel('user-'.$this->userId.'-notifications');
     }
 
     public function broadcastType()
@@ -51,7 +49,7 @@ class ProductRunningLow extends BaseNotification implements UserNotification
     public function toArray()
     {
         return [
-            'message' => $this->createMessage($this->data)
+            'message' => $this->createMessage($this->data),
         ];
     }
 
@@ -62,7 +60,7 @@ class ProductRunningLow extends BaseNotification implements UserNotification
             ->line($this->createMessage($this->data));
     }
 
-    function createMessage($data): string
+    public function createMessage($data): string
     {
         return 'Product '.$data->name.' is running low (less than 5 available).';
     }

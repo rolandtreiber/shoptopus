@@ -2,16 +2,16 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Order;
+use App\Enums\OrderStatus;
 use App\Models\Address;
+use App\Models\DeliveryType;
+use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
-use App\Enums\OrderStatus;
+use App\Models\User;
 use App\Models\VoucherCode;
-use App\Models\DeliveryType;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class OrderTest extends TestCase
 {
@@ -19,7 +19,7 @@ class OrderTest extends TestCase
 
     protected $order;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 

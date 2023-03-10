@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\EventLog;
 use App\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class EventLogFactory extends Factory
 {

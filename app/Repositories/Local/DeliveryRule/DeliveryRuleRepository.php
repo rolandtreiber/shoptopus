@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\DeliveryRule;
 
 use App\Models\DeliveryRule;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepositoryInterface
 {
@@ -17,11 +17,12 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     /**
      * Get the delivery types for the given delivery rules
      *
-     * @param array $deliveryTypeIds
+     * @param  array  $deliveryTypeIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getDeliveryTypes(array $deliveryTypeIds = []) : array
+    public function getDeliveryTypes(array $deliveryTypeIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($deliveryTypeIds)), ',');
@@ -47,16 +48,17 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         try {
             $delivery_types = [];
 
-            if (!in_array('delivery_type', $excludeRelationships)) {
+            if (! in_array('delivery_type', $excludeRelationships)) {
                 $delivery_types = $this->getDeliveryTypes(collect($result)
                     ->unique('delivery_type_id')
                     ->pluck('delivery_type_id')
@@ -68,7 +70,7 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
                 $model['delivery_type'] = null;
 
                 foreach ($delivery_types as $deliveryType) {
-                    if($deliveryType['id'] === $model['delivery_type_id']) {
+                    if ($deliveryType['id'] === $model['delivery_type_id']) {
                         $model['delivery_type'] = $deliveryType;
                     }
                 }
@@ -84,10 +86,10 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -101,13 +103,13 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
             "{$this->model_table}.lat",
             "{$this->model_table}.lon",
             "{$this->model_table}.enabled",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.deleted_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

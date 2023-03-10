@@ -19,6 +19,7 @@ class RatingFactory extends Factory
      * Define the model's default state.
      *
      * @return array
+     *
      * @throws Exception
      */
     public function definition(): array
@@ -27,7 +28,7 @@ class RatingFactory extends Factory
             'rating' => random_int(1, 5),
             'description' => $this->faker->sentences(3, true),
             'title' => $this->faker->sentence,
-            'language_prefix' => array_keys($this->faker->randomElement(config('app.locales_supported')))[0]
+            'language_prefix' => array_keys($this->faker->randomElement(config('app.locales_supported')))[0],
         ];
     }
 }

@@ -2,64 +2,55 @@
 
 namespace App\Repositories\Local\Product;
 
+use App\Enums\DiscountType;
+use App\Enums\ProductAttributeType;
 use App\Models\DiscountRule;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductTag;
 use Carbon\Carbon;
-use App\Enums\DiscountType;
-use App\Enums\ProductAttributeType;
 
 class OLDProductRepository
 {
     /**
      * Merge the product attributes into the corresponding products
      *
-     * @param array $data
-     * @param array $products
+     * @param  array  $data
+     * @param  array  $products
      * @return void
      */
-    private function addAttributesToProduct(array $data, array &$products) : void
+    private function addAttributesToProduct(array $data, array &$products): void
     {
         $attribute_option = [
             'id' => $data['product_attribute_option_id'],
             'name' => $data['product_attribute_option_name'],
             'slug' => $data['product_attribute_option_slug'],
             'value' => $data['product_attribute_option_value'],
-            'image' => $data['product_attribute_option_image']
+            'image' => $data['product_attribute_option_image'],
         ];
 
-        if ($data['product_product_attribute_id'] && $data['product_attribute_id'])
-        {
-            foreach ($products as &$model_product)
-            {
-                if ($model_product['id'] === $data['id'])
-                {
-                    if ( ! in_array($data['product_attribute_id'], array_column($model_product['product_attributes'], 'id')))
-                    {
+        if ($data['product_product_attribute_id'] && $data['product_attribute_id']) {
+            foreach ($products as &$model_product) {
+                if ($model_product['id'] === $data['id']) {
+                    if (! in_array($data['product_attribute_id'], array_column($model_product['product_attributes'], 'id'))) {
                         $relationData = [
                             'id' => $data['product_attribute_id'],
                             'name' => $data['product_attribute_name'],
                             'slug' => $data['product_attribute_slug'],
                             'type' => strtolower(ProductAttributeType::fromValue((int) $data['product_attribute_type'])->key),
                             'image' => $data['product_attribute_image'],
-                            'options' => []
+                            'options' => [],
                         ];
 
-                        if ($attribute_option['id'])
-                        {
+                        if ($attribute_option['id']) {
                             array_push($relationData['options'], $attribute_option);
                         }
 
                         array_push($model_product['product_attributes'], $relationData);
-                    } else
-                    {
-                        foreach ($model_product['product_attributes'] as &$attribute)
-                        {
-                            if ($attribute['id'] === $data['product_attribute_id'])
-                            {
-
+                    } else {
+                        foreach ($model_product['product_attributes'] as &$attribute) {
+                            if ($attribute['id'] === $data['product_attribute_id']) {
                                 array_push($attribute['options'], $attribute_option);
 
                                 break;
@@ -70,15 +61,10 @@ class OLDProductRepository
                     break;
                 }
             }
-        } else if ($data['product_product_attribute_id'] && is_null($data['product_attribute_id']) && $attribute_option['id'])
-        {
-            foreach ($products as &$model_product)
-            {
-                foreach ($model_product['product_attributes'] as &$attribute)
-                {
-                    if ($attribute['id'] === $data['product_product_attribute_id'])
-                    {
-
+        } elseif ($data['product_product_attribute_id'] && is_null($data['product_attribute_id']) && $attribute_option['id']) {
+            foreach ($products as &$model_product) {
+                foreach ($model_product['product_attributes'] as &$attribute) {
+                    if ($attribute['id'] === $data['product_product_attribute_id']) {
                         array_push($attribute['options'], $attribute_option);
 
                         break;
@@ -91,29 +77,23 @@ class OLDProductRepository
     /**
      * Merge the discount rules into the corresponding products
      *
-     * @param array $data
-     * @param array $products
+     * @param  array  $data
+     * @param  array  $products
      * @return void
      */
-    private function addDiscountRuleToProduct(array $data, array &$products) : void
+    private function addDiscountRuleToProduct(array $data, array &$products): void
     {
-        if ($data['discount_rule_id'])
-        {
+        if ($data['discount_rule_id']) {
             $is_valid = Carbon::now()->isAfter(Carbon::createFromFormat('Y-m-d H:i:s', $data['discount_rule_valid_from']))
                 && Carbon::now()->isBefore(Carbon::createFromFormat('Y-m-d H:i:s', $data['discount_rule_valid_until']));
 
-            if ( ! $is_valid)
-            {
+            if (! $is_valid) {
                 return;
             }
 
-            foreach ($products as &$model_product)
-            {
-                if ($model_product['id'] === $data['id'])
-                {
-                    if ( ! in_array($data['discount_rule_id'], array_column($model_product['discount_rules'], 'id')))
-                    {
-
+            foreach ($products as &$model_product) {
+                if ($model_product['id'] === $data['id']) {
+                    if (! in_array($data['discount_rule_id'], array_column($model_product['discount_rules'], 'id'))) {
                         $relationData = [
                             'id' => $data['discount_rule_id'],
                             'type' => strtolower(DiscountType::fromValue((int) $data['discount_rule_type'])->key),
@@ -136,21 +116,16 @@ class OLDProductRepository
     /**
      * Merge the product tags into the corresponding products
      *
-     * @param array $data
-     * @param array $products
+     * @param  array  $data
+     * @param  array  $products
      * @return void
      */
-    private function addTagsToProduct(array $data, array &$products) : void
+    private function addTagsToProduct(array $data, array &$products): void
     {
-        if ($data['product_tag_id'])
-        {
-            foreach ($products as &$model_product)
-            {
-                if ($model_product['id'] === $data['id'])
-                {
-                    if ( ! in_array($data['product_tag_id'], array_column($model_product['product_tags'], 'id')))
-                    {
-
+        if ($data['product_tag_id']) {
+            foreach ($products as &$model_product) {
+                if ($model_product['id'] === $data['id']) {
+                    if (! in_array($data['product_tag_id'], array_column($model_product['product_tags'], 'id'))) {
                         $relationData = [
                             'id' => $data['product_tag_id'],
                             'name' => $data['product_tag_name'],
@@ -168,7 +143,6 @@ class OLDProductRepository
             }
         }
     }
-
 
 //    TESTS
 
@@ -204,13 +178,13 @@ class OLDProductRepository
                                     'amount',
                                     'valid_from',
                                     'valid_until',
-                                    'slug'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'slug',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.products.0.discount_rules'));
@@ -246,13 +220,13 @@ class OLDProductRepository
                                     'name',
                                     'description',
                                     'badge',
-                                    'display_badge'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'display_badge',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.products.0.product_tags'));
@@ -299,15 +273,15 @@ class OLDProductRepository
                                             'name',
                                             'slug',
                                             'value',
-                                            'image'
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                            'image',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.products.0.product_attributes'));
@@ -319,5 +293,4 @@ class OLDProductRepository
 
         $this->assertCount(2, $this->sendRequest()->json('data.0.products.0.product_attributes.0.options'));
     }
-
 }

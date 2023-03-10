@@ -2,26 +2,27 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
 use App\Enums\OrderStatus;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Spatie\Translatable\HasTranslations;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @method static count()
+ *
  * @property string $id
  * @property mixed $deliveryRules
  * @property mixed $status
  * @property mixed $enabled_by_default_on_creation
- * @property boolean $enabled
+ * @property bool $enabled
  * @property mixed $price
  */
 class DeliveryType extends SearchableModel implements Auditable, Exportable
@@ -31,7 +32,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['name'])
@@ -39,7 +40,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
     }
 
     public array $translatable = [
-        'name', 'description'
+        'name', 'description',
     ];
 
     /**
@@ -50,7 +51,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
         'name',
         'description',
         'price',
-        'enabled'
+        'enabled',
     ];
 
     /**
@@ -58,7 +59,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
      */
     protected $exportableRelationships = [
         'orders',
-        'deliveryRules'
+        'deliveryRules',
     ];
 
     /**
@@ -72,7 +73,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
         'price',
         'enabled',
         'enabled_by_default_on_creation',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -84,7 +85,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'price' => 'float',
         'enabled' => 'boolean',
-        'enabled_by_default_on_creation' => 'boolean'
+        'enabled_by_default_on_creation' => 'boolean',
     ];
 
     /**
@@ -115,7 +116,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
                 OrderStatus::Paid,
                 OrderStatus::Processing,
                 OrderStatus::Completed,
-                OrderStatus::OnHold
+                OrderStatus::OnHold,
             ])
             ->count();
     }
@@ -133,8 +134,7 @@ class DeliveryType extends SearchableModel implements Auditable, Exportable
                 OrderStatus::Paid,
                 OrderStatus::Processing,
                 OrderStatus::Completed,
-                OrderStatus::OnHold])
+                OrderStatus::OnHold, ])
             ->sum('delivery_cost');
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Address;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AddressFactory extends Factory
@@ -20,7 +20,7 @@ class AddressFactory extends Factory
      *
      * @return array
      */
-    public function definition() : array
+    public function definition(): array
     {
         return [
             'address_line_1' => str_replace("\n", ' ', $this->faker->streetAddress),

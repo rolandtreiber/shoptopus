@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductTagFactory extends Factory
 {
     use TranslatableFactory;
+
     /**
      * The name of the factory's corresponding model.
      *
@@ -35,7 +36,7 @@ class ProductTagFactory extends Factory
             'description' => null,
             'badge' => null,
             'display_badge' => false,
-            'enabled' => true
+            'enabled' => true,
         ];
 
         if (env('APP_ENV') !== 'testing') {
@@ -43,7 +44,7 @@ class ProductTagFactory extends Factory
             $result['display_badge'] = $hasBadge;
             $result['badge'] = $hasBadge ? [
                 'url' => $badge['url'],
-                'file_name' => $badge['file_name']
+                'file_name' => $badge['file_name'],
             ] : null;
         }
 

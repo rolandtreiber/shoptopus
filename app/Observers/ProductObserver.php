@@ -17,23 +17,24 @@ class ProductObserver
     }
 
     /**
-     * @param Product $product
+     * @param  Product  $product
      * @return void
      */
     public function saving(Product $product)
     {
         /** @var FileContent $firstImage */
         $firstImage = $product->images()->first();
-        if ($firstImage && (!$product->cover_photo || $product->cover_photo->file_name !== $firstImage->file_name)) {
+        if ($firstImage && (! $product->cover_photo || $product->cover_photo->file_name !== $firstImage->file_name)) {
             $product->cover_photo = [
                 'file_name' => $firstImage->file_name,
-                'url' => $firstImage->url
+                'url' => $firstImage->url,
             ];
             $product->save();
         }
     }
 
-    public function saved(Product $product) {
+    public function saved(Product $product)
+    {
         if ($product->stock < 5) {
             if ($product->stock == 0) {
                 $this->productRepository->triggerOutOfStockNotification($product);

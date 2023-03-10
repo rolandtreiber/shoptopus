@@ -17,7 +17,7 @@ return [
     'discount_rules' => [
         'allow_discount_stacking' => false,
         'applied_discount' => 'highest', // either highest or lowest
-        'voucher_code_basis' => 'final_price' // final_price or total_price
+        'voucher_code_basis' => 'final_price', // final_price or total_price
         // When it is set to final_price, the basis of the price the voucher code discount is applied to will be the already discounted price.
         // When it is set to full_price, the basis of the price the voucher code discount is applied to will be the products full price.
     ],
@@ -28,7 +28,7 @@ return [
     ],
     'super_user' => [
         'name' => env('SUPER_USER_NAME', 'Super User'),
-        'email' => env('SUPER_USER_EMAIL', 'superuser@email.com')
+        'email' => env('SUPER_USER_EMAIL', 'superuser@email.com'),
     ],
     'notifications' => [
         ProductOutOfStock::class => [
@@ -52,6 +52,6 @@ return [
             UserRole::StoreManager,
             UserRole::StoreAssistant,
             UserRole::SuperAdmin,
-        ]
-    ]
+        ],
+    ],
 ];

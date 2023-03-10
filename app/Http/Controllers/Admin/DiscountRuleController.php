@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\Interval;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\DiscountRuleBulkOperationRequest;
 use App\Http\Requests\Admin\DiscountRuleStoreRequest;
 use App\Http\Requests\Admin\DiscountRuleUpdateRequest;
@@ -21,10 +20,11 @@ use Illuminate\Validation\Rule;
 class DiscountRuleController extends Controller
 {
     use ProcessRequest;
+
     protected DiscountRuleRepositoryInterface $discountRuleRepository;
 
     /**
-     * @param DiscountRuleRepositoryInterface $discountRuleRepository
+     * @param  DiscountRuleRepositoryInterface  $discountRuleRepository
      */
     public function __construct(DiscountRuleRepositoryInterface $discountRuleRepository)
     {
@@ -32,7 +32,7 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -41,7 +41,7 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param DiscountRule $discountRule
+     * @param  DiscountRule  $discountRule
      * @return DiscountRuleDetailResource
      */
     public function show(DiscountRule $discountRule): DiscountRuleDetailResource
@@ -52,7 +52,7 @@ class DiscountRuleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param DiscountRuleStoreRequest $request
+     * @param  DiscountRuleStoreRequest  $request
      * @return DiscountRuleListResource
      */
     public function create(DiscountRuleStoreRequest $request): DiscountRuleListResource
@@ -68,8 +68,8 @@ class DiscountRuleController extends Controller
     /**
      * Update a resource.
      *
-     * @param DiscountRule $discountRule
-     * @param DiscountRuleUpdateRequest $request
+     * @param  DiscountRule  $discountRule
+     * @param  DiscountRuleUpdateRequest  $request
      * @return DiscountRuleListResource
      */
     public function update(DiscountRule $discountRule, DiscountRuleUpdateRequest $request): DiscountRuleListResource
@@ -82,18 +82,20 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param DiscountRule $discountRule
+     * @param  DiscountRule  $discountRule
      * @return string[]
      */
     public function delete(DiscountRule $discountRule): array
     {
         $discountRule->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param DiscountRuleBulkOperationRequest $request
+     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkExpire(DiscountRuleBulkOperationRequest $request): array
@@ -102,12 +104,12 @@ class DiscountRuleController extends Controller
             return ['status' => 'Success'];
         }
         throw new BulkOperationException();
-
     }
 
     /**
-     * @param DiscountRuleBulkOperationRequest $request
+     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkStart(DiscountRuleBulkOperationRequest $request): array
@@ -116,12 +118,12 @@ class DiscountRuleController extends Controller
             return ['status' => 'Success'];
         }
         throw new BulkOperationException();
-
     }
 
     /**
-     * @param DiscountRuleBulkOperationRequest $request
+     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkActivateForPeriod(DiscountRuleBulkOperationRequest $request): array
@@ -130,8 +132,8 @@ class DiscountRuleController extends Controller
             'period' => ['required', Rule::in([
                 Interval::Day,
                 Interval::Week,
-                Interval::Month
-            ])]
+                Interval::Month,
+            ])],
         ]);
         if ($this->discountRuleRepository->bulkActivateForPeriod($request->ids, $request->period)) {
             return ['status' => 'Success'];
@@ -140,8 +142,9 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param DiscountRuleBulkOperationRequest $request
+     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(DiscountRuleBulkOperationRequest $request): array

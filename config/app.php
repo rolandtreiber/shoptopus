@@ -86,20 +86,20 @@ return [
 
     'locales_supported' => [
         'en' => [
-            'label' => 'English'
+            'label' => 'English',
         ],
         'de' => [
-            'label' => 'Deutsch'
+            'label' => 'Deutsch',
         ],
         'fr' => [
-            'label' => 'Francais'
-        ]
+            'label' => 'Francais',
+        ],
     ],
 
     'default_currency' => [
         'name' => 'GBP',
         'symbol' => '£',
-        'side' => 'left'
+        'side' => 'left',
     ],
 
     'google_maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
@@ -256,7 +256,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'Module' => App\Facades\Module::class
+        'Module' => App\Facades\Module::class,
 
     ],
 

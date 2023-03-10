@@ -2,26 +2,27 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
 use App\Traits\HasFiles;
+use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Translatable\HasTranslations;
-use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static find($variant)
+ *
  * @property string $id
  * @property string $product_id
- * @property double $price
+ * @property float $price
  * @property mixed $sku
- * @property boolean $enabled
+ * @property bool $enabled
  * @property array $attribute_options
  * @property string $name
  */
@@ -32,7 +33,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['product.name'])
@@ -56,7 +57,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'stock',
         'sku',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -69,7 +70,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'product_id' => 'string',
         'price' => 'decimal:2',
         'enabled' => 'boolean',
-        'attribute_options' => 'array'
+        'attribute_options' => 'array',
     ];
 
     /**
@@ -79,14 +80,14 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         'slug',
         'name',
         'sku',
-        'final_price'
+        'final_price',
     ];
 
     /**
      * @var string[]
      */
     protected $exportableRelationships = [
-        'product'
+        'product',
     ];
 
     /**
@@ -99,6 +100,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
 
     /**
      * Get the product for the product variant
+     *
      * @return BelongsTo
      */
     public function product(): BelongsTo
@@ -108,9 +110,10 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
 
     /**
      * Get the cover image for the product variant
+     *
      * @return null|FileContent
      */
-    public function cover_image() : ?FileContent
+    public function cover_image(): ?FileContent
     {
         return optional($this->images())->first();
     }
@@ -135,14 +138,15 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
         $elements = [];
 
         foreach ($languages as $languageKey => $language) {
-            $text = $this->product->setLocale($languageKey)->name . ' - ';
+            $text = $this->product->setLocale($languageKey)->name.' - ';
             $attributeTexts = [];
             foreach ($attributes as $attribute) {
                 $option = $attribute->pivot->option;
-                $attributeTexts[] =  '(' . $attribute->setLocale($languageKey)->name . ') ' . $option->setLocale($languageKey)->name;
+                $attributeTexts[] = '('.$attribute->setLocale($languageKey)->name.') '.$option->setLocale($languageKey)->name;
             }
-            $elements[$languageKey] = $text . implode(', ', $attributeTexts);
+            $elements[$languageKey] = $text.implode(', ', $attributeTexts);
         }
+
         return $elements;
     }
 }

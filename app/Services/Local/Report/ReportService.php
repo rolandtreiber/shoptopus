@@ -8,20 +8,32 @@ use App\Enums\Palette;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 
-class ReportService implements ReportServiceInterface {
-
+class ReportService implements ReportServiceInterface
+{
     protected array $labels = [];
+
     protected array $datasets = [];
+
     protected array $dataset = [];
+
     protected $items;
+
     protected $response;
+
     private $randomColors = false;
+
     private $palette;
+
     private $count = 0;
+
     private $start;
+
     private $end;
+
     private $interval;
+
     private array $dates = [];
+
     private $shadow = false;
 
     /**
@@ -39,16 +51,18 @@ class ReportService implements ReportServiceInterface {
             $this->setLabelsAndDates();
         }
         $this->setPalette($palette);
+
         return $this;
     }
 
     /**
-     * @param array $labels
+     * @param  array  $labels
      * @return ReportService
      */
     public function setLabels(array $labels): ReportService
     {
         $this->labels = $labels;
+
         return $this;
     }
 
@@ -61,7 +75,7 @@ class ReportService implements ReportServiceInterface {
     }
 
     /**
-     * @param mixed $palette
+     * @param  mixed  $palette
      */
     public function setPalette($palette = null): ReportService
     {
@@ -90,6 +104,7 @@ class ReportService implements ReportServiceInterface {
                 Palette::DarkGray,
             ];
         }
+
         return $this;
     }
 
@@ -101,7 +116,7 @@ class ReportService implements ReportServiceInterface {
     {
         return [
             'labels' => $this->labels,
-            'datasets' => $this->datasets
+            'datasets' => $this->datasets,
         ];
     }
 
@@ -115,8 +130,8 @@ class ReportService implements ReportServiceInterface {
         return [
             'series' => $series,
             'chartOptions' => [
-                'labels' => $this->labels
-            ]
+                'labels' => $this->labels,
+            ],
         ];
     }
 
@@ -126,13 +141,13 @@ class ReportService implements ReportServiceInterface {
         foreach ($this->datasets as $dataset) {
             $series[] = [
                 'name' => $dataset['label'],
-                'data' => $dataset['data']
+                'data' => $dataset['data'],
             ];
         }
 
         return [
             'series' => $series,
-            'categories' => $this->labels
+            'categories' => $this->labels,
         ];
     }
 
@@ -146,7 +161,7 @@ class ReportService implements ReportServiceInterface {
                 $series[] = [
                     'name' => 'Total',
                     'data' => $data,
-                    'color' => $palette[$i]
+                    'color' => $palette[$i],
                 ];
                 $i++;
                 if ($i = count($palette)) {
@@ -157,7 +172,7 @@ class ReportService implements ReportServiceInterface {
 
         return [
             'series' => $series,
-            'categories' => $this->labels
+            'categories' => $this->labels,
         ];
     }
 
@@ -172,7 +187,7 @@ class ReportService implements ReportServiceInterface {
             $series[] = [
                 'data' => $data,
                 'name' => $dataset['labels'][$index],
-                'color' => $dataset['backgroundColor'][$index]
+                'color' => $dataset['backgroundColor'][$index],
             ];
         }
 
@@ -190,12 +205,14 @@ class ReportService implements ReportServiceInterface {
     public function randomizeColors($r): ReportService
     {
         $this->randomColors = $r;
+
         return $this;
     }
 
     public function setShadow($s): ReportService
     {
         $this->shadow = $s;
+
         return $this;
     }
 
@@ -215,8 +232,8 @@ class ReportService implements ReportServiceInterface {
                 do {
                     $labels[] = $rollingDate->format('m-d');
                     $date = [
-                        'start' => Carbon::parse($rollingDate->format('Y-m-d')." 00:00:00"),
-                        'end' => Carbon::parse($rollingDate->format('Y-m-d')." 23:59:59"),
+                        'start' => Carbon::parse($rollingDate->format('Y-m-d').' 00:00:00'),
+                        'end' => Carbon::parse($rollingDate->format('Y-m-d').' 23:59:59'),
                     ];
                     $dates[] = $date;
                     $rollingDate->addDay();
@@ -229,8 +246,8 @@ class ReportService implements ReportServiceInterface {
                 do {
                     $labels[] = $rollingDate->format('Y').' week '.$rollingDate->weekOfYear;
                     $date = [
-                        'start' => Carbon::parse($rollingDate->copy()->startOfWeek()->format('Y-m-d')." 00:00:00"),
-                        'end' => Carbon::parse($rollingDate->copy()->endOfWeek()->format('Y-m-d')." 23:59:59"),
+                        'start' => Carbon::parse($rollingDate->copy()->startOfWeek()->format('Y-m-d').' 00:00:00'),
+                        'end' => Carbon::parse($rollingDate->copy()->endOfWeek()->format('Y-m-d').' 23:59:59'),
                     ];
                     $dates[] = $date;
                     $rollingDate->addWeek();
@@ -240,8 +257,8 @@ class ReportService implements ReportServiceInterface {
                 do {
                     $labels[] = $rollingDate->format('Y-m');
                     $date = [
-                        'start' => Carbon::parse($rollingDate->format('Y-m')."-1 00:00:00"),
-                        'end' => Carbon::parse($rollingDate->format('Y-m').'-'.$rollingDate->copy()->lastOfMonth()->format('d')." 23:59:59"),
+                        'start' => Carbon::parse($rollingDate->format('Y-m').'-1 00:00:00'),
+                        'end' => Carbon::parse($rollingDate->format('Y-m').'-'.$rollingDate->copy()->lastOfMonth()->format('d').' 23:59:59'),
                     ];
                     $dates[] = $date;
                     $rollingDate->addMonth();
@@ -251,8 +268,8 @@ class ReportService implements ReportServiceInterface {
                 do {
                     $labels[] = $rollingDate->format('Y');
                     $date = [
-                        'start' => Carbon::parse($rollingDate->format('Y')."-1-1 00:00:00"),
-                        'end' => Carbon::parse($rollingDate->format('Y')."-12-31 23:59:59"),
+                        'start' => Carbon::parse($rollingDate->format('Y').'-1-1 00:00:00'),
+                        'end' => Carbon::parse($rollingDate->format('Y').'-12-31 23:59:59'),
                     ];
                     $dates[] = $date;
                     $rollingDate->addYear();
@@ -279,6 +296,7 @@ class ReportService implements ReportServiceInterface {
     public function clearLabels(): ReportService
     {
         $this->labels = [];
+
         return $this;
     }
 
@@ -292,12 +310,13 @@ class ReportService implements ReportServiceInterface {
     }
 
     /**
-     * @param Collection $items
+     * @param  Collection  $items
      * Sets the items to be used for constructing a dataset.
      */
     public function setItems(Collection $items): ReportService
     {
         $this->items = $items;
+
         return $this;
     }
 
@@ -319,7 +338,7 @@ class ReportService implements ReportServiceInterface {
 
     /**
      * @param $attr
-     * @param bool $cascade
+     * @param  bool  $cascade
      * @return $this
      * Creates a report dataset based on an attribute.
      */
@@ -332,10 +351,10 @@ class ReportService implements ReportServiceInterface {
         $bgColors = [];
         $rollingValue = 0;
         $data = [];
-        $color = $this->shadow === true ? "rgba(0,0,0,0.3)" : $this->palette[0];
+        $color = $this->shadow === true ? 'rgba(0,0,0,0.3)' : $this->palette[0];
         foreach ($this->dates as $date) {
             $value = $this->items->where('created_at', '>=', $date['start'])->where('created_at', '<=', $date['end'])->sum($attr);
-            $bgColors[] = $this->randomColors === 'true' && !$this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
+            $bgColors[] = $this->randomColors === 'true' && ! $this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
             $data[] = $rollingValue + $value;
             if ($cascade) {
                 $rollingValue += $value;
@@ -344,6 +363,7 @@ class ReportService implements ReportServiceInterface {
         $dataset['data'] = $data;
         $dataset['backgroundColor'] = $bgColors;
         $this->dataset = $dataset;
+
         return $this;
     }
 
@@ -354,6 +374,7 @@ class ReportService implements ReportServiceInterface {
     public function addSingleLabel($label): ReportService
     {
         $this->labels[] = $label;
+
         return $this;
     }
 
@@ -366,9 +387,10 @@ class ReportService implements ReportServiceInterface {
         $dataset = [
             'label' => $label,
             'backgroundColor' => [],
-            'data' => []
+            'data' => [],
         ];
         $this->dataset = $dataset;
+
         return $this;
     }
 
@@ -376,18 +398,18 @@ class ReportService implements ReportServiceInterface {
      * @param $value
      * @return $this
      */
-
     public function addDataToSingleDataset($value): ReportService
     {
-        $color = $this->shadow === true ? "rgba(0,0,0,0.3)" : $this->palette[0];
-        $this->dataset['backgroundColor'][] = $this->randomColors === 'true' && !$this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
+        $color = $this->shadow === true ? 'rgba(0,0,0,0.3)' : $this->palette[0];
+        $this->dataset['backgroundColor'][] = $this->randomColors === 'true' && ! $this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
         $this->dataset['data'][] = $value;
         $this->count++;
+
         return $this;
     }
 
     /**
-     * @param bool $cascade
+     * @param  bool  $cascade
      * @return $this
      * Creates a report dataset based on the number of items.
      */
@@ -401,22 +423,22 @@ class ReportService implements ReportServiceInterface {
 
         $rollingValue = 0;
         $data = [];
-        $color = $this->shadow === true ? "rgba(0,0,0,0.3)" : $this->palette[0];
+        $color = $this->shadow === true ? 'rgba(0,0,0,0.3)' : $this->palette[0];
 
         $start = Carbon::parse($this->dates[0]['start']);
-        $end = Carbon::parse($this->dates[sizeof($this->dates)-1]['end']);
+        $end = Carbon::parse($this->dates[count($this->dates) - 1]['end']);
         $lengthInDays = $end->diffInDays($start);
         foreach ($this->dates as $date) {
-            $shadowStart = Carbon::parse($date['start'])->subDays($lengthInDays+1)->format('Y-m-d H:i:s');
-            $shadowEnd = Carbon::parse($date['end'])->subDays($lengthInDays+1)->format('Y-m-d H:i:s');
+            $shadowStart = Carbon::parse($date['start'])->subDays($lengthInDays + 1)->format('Y-m-d H:i:s');
+            $shadowEnd = Carbon::parse($date['end'])->subDays($lengthInDays + 1)->format('Y-m-d H:i:s');
 
-            if (!$this->shadow) {
+            if (! $this->shadow) {
                 $value = $this->items->where('created_at', '>=', $date['start'])->where('created_at', '<=', $date['end'])->count();
             } else {
                 $value = $this->items->where('created_at', '>=', $shadowStart)->where('created_at', '<=', $shadowEnd)->count();
             }
             $data[] = $rollingValue + $value;
-            $bgColors[] = $this->randomColors === 'true' && !$this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
+            $bgColors[] = $this->randomColors === 'true' && ! $this->shadow ? 'rgba('.rand(0, 255).', '.rand(0, 255).', '.rand(0, 255).', 0.6)' : $color;
             if ($cascade) {
                 $rollingValue += $value;
             }
@@ -424,11 +446,13 @@ class ReportService implements ReportServiceInterface {
         $dataset['data'] = $data;
         $dataset['backgroundColor'] = $bgColors;
         $this->dataset = $dataset;
+
         return $this;
     }
 
     /**
      * Appends the dataset to the $datasets array, then empties the array.
+     *
      * @return $this
      */
     public function addDataset(array $dataset = null): ReportService
@@ -440,6 +464,7 @@ class ReportService implements ReportServiceInterface {
         }
         $this->count++;
         $this->dataset = [];
+
         return $this;
     }
 
@@ -451,11 +476,12 @@ class ReportService implements ReportServiceInterface {
     public function addLabel($label): ReportService
     {
         $this->dataset['label'] = $label;
+
         return $this;
     }
 
     /**
-     * @param int|null $type
+     * @param  int|null  $type
      * @return array
      */
     public function getControlsFromType(int $type = null): array
@@ -465,19 +491,19 @@ class ReportService implements ReportServiceInterface {
                 return [
                     'start' => Carbon::now()->subWeek()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Interval::Day
+                    'interval' => Interval::Day,
                 ];
             case ChartRange::LastYear:
                 return [
                     'start' => Carbon::now()->subYear()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Interval::Month
+                    'interval' => Interval::Month,
                 ];
             default:
                 return [
                     'start' => Carbon::now()->subMonth()->startOfDay(),
                     'end' => Carbon::now()->endOfDay(),
-                    'interval' => Interval::Day
+                    'interval' => Interval::Day,
                 ];
         }
     }

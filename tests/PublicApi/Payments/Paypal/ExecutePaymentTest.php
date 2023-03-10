@@ -2,20 +2,21 @@
 
 namespace Tests\PublicApi\Payments\Paypal;
 
-use Tests\PaymentTestCase;
 use App\Models\Cart;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
     protected $cart;
+
     protected $user;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -38,9 +39,9 @@ class ExecutePaymentTest extends PaymentTestCase
             'orderId' => $order->id,
             'provider_payload' => [
                 [
-                    'paypal_order_id_token' => null
-                ]
-            ]
+                    'paypal_order_id_token' => null,
+                ],
+            ],
         ];
 
         $res = $this->signIn($order->user)->sendRequest($data)->json();
@@ -59,7 +60,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
         $getClientSettingsData = [
             'provider' => 'paypal',
-            'orderId' => $order->id
+            'orderId' => $order->id,
         ];
 
         $res = $this->getJson(route('api.payment.get.settings.public', $getClientSettingsData));
@@ -70,9 +71,9 @@ class ExecutePaymentTest extends PaymentTestCase
             'orderId' => $order->id,
             'provider_payload' => [
                 [
-                    'paypal_order_id_token' => $paypal_order_id
-                ]
-            ]
+                    'paypal_order_id_token' => $paypal_order_id,
+                ],
+            ],
         ];
 
         $res = $this->signIn($this->user)->sendRequest($data);
@@ -85,7 +86,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $this->assertEquals('ORDER_NOT_APPROVED', $error_response->details[0]->issue);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.payment.execute'), $data);
     }

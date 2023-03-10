@@ -6,8 +6,8 @@ use App\Enums\UserRole;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
-class Customer extends User {
-
+class Customer extends User
+{
     public static function all($columns = ['*'])
     {
         $role = Role::findByName(UserRole::Customer);

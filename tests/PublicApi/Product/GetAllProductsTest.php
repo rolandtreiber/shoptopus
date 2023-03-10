@@ -2,17 +2,17 @@
 
 namespace Tests\PublicApi\Product;
 
-use Tests\TestCase;
-use App\Models\Product;
-use App\Models\ProductTag;
 use App\Models\DiscountRule;
-use App\Models\ProductVariant;
-use App\Models\ProductCategory;
+use App\Models\Product;
 use App\Models\ProductAttribute;
-use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\ProductCategory;
+use App\Models\ProductTag;
+use App\Models\ProductVariant;
 use App\Repositories\Local\Product\ProductRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class GetAllProductsTest extends TestCase
 {
@@ -30,7 +30,7 @@ class GetAllProductsTest extends TestCase
                 'data',
                 'next',
                 'records',
-                'total_records'
+                'total_records',
             ]);
     }
 
@@ -46,8 +46,8 @@ class GetAllProductsTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                app()->make(ProductRepository::class)->getSelectableColumns(false)
-            ]
+                app()->make(ProductRepository::class)->getSelectableColumns(false),
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data'));
@@ -126,13 +126,13 @@ class GetAllProductsTest extends TestCase
                                     'name',
                                     'slug',
                                     'value',
-                                    'image'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'image',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pa->update(['deleted_at' => now()]);
@@ -175,7 +175,7 @@ class GetAllProductsTest extends TestCase
         $p = Product::factory()->create();
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
         $p->discount_rules()->attach($dr->id);
 
@@ -192,11 +192,11 @@ class GetAllProductsTest extends TestCase
                             'amount',
                             'valid_from',
                             'valid_until',
-                            'slug'
-                        ]
-                    ]
-                ]
-            ]
+                            'slug',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $dr->update(['enabled' => false]);
@@ -218,12 +218,12 @@ class GetAllProductsTest extends TestCase
 
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
 
         $dr2 = DiscountRule::factory()->create([
             'valid_from' => now()->subDays(5)->toDateTimeString(),
-            'valid_until' => now()->subDay()->toDateTimeString()
+            'valid_until' => now()->subDay()->toDateTimeString(),
         ]);
 
         $p->discount_rules()->attach([$dr1->id, $dr2->id]);
@@ -241,7 +241,7 @@ class GetAllProductsTest extends TestCase
         $pc = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $pc->discount_rules()->attach($product_category_discount_rule->id);
         $pc->products()->attach($p->id);
@@ -264,13 +264,13 @@ class GetAllProductsTest extends TestCase
                                 [
                                     'id',
                                     'type',
-                                    'amount'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'amount',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pc->update(['deleted_at' => now()]);
@@ -300,11 +300,11 @@ class GetAllProductsTest extends TestCase
                             'name',
                             'description',
                             'badge',
-                            'display_badge'
-                        ]
-                    ]
-                ]
-            ]
+                            'display_badge',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pt->update(['deleted_at' => now()]);
@@ -330,9 +330,9 @@ class GetAllProductsTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_variants'
-                ]
-            ]
+                    'product_variants',
+                ],
+            ],
         ]);
 
         $this->assertEmpty($this->sendRequest()->json('data.0.product_variants'));
@@ -350,7 +350,7 @@ class GetAllProductsTest extends TestCase
         $products[0]->product_categories()->attach($categories[0]->id);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id]),
         ]));
 
         $this->assertCount(1, $res->json('data'));
@@ -360,7 +360,7 @@ class GetAllProductsTest extends TestCase
         $products[1]->product_categories()->attach($categories[1]->id);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id])
+            'product_categories' => implode(',', [$categories[0]->id, $categories[1]->id]),
         ]));
 
         $this->assertCount(2, $res->json('data'));
@@ -381,7 +381,7 @@ class GetAllProductsTest extends TestCase
         $products[0]->product_tags()->attach($tags[0]->id);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id]),
         ]));
 
         $this->assertCount(1, $res->json('data'));
@@ -391,7 +391,7 @@ class GetAllProductsTest extends TestCase
         $products[1]->product_tags()->attach($tags[1]->id);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id])
+            'product_tags' => implode(',', [$tags[0]->id, $tags[1]->id]),
         ]));
 
         $this->assertCount(2, $res->json('data'));
@@ -415,7 +415,7 @@ class GetAllProductsTest extends TestCase
 
         $res = $this->getJson(route('api.products.getAll', [
             'product_categories' => implode(',', [$categories[0]->id]),
-            'product_tags' => implode(',', [$tags[0]->id])
+            'product_tags' => implode(',', [$tags[0]->id]),
         ]));
 
         $this->assertCount(1, $res->json('data'));
@@ -437,7 +437,7 @@ class GetAllProductsTest extends TestCase
         $attribute->products()->attach($products[0]->id, ['product_attribute_option_id' => $options[1]->id]);
 
         $res = $this->getJson(route('api.products.getAll', [
-            'options' => implode(',', [$options[0]->id, $options[1]->id])
+            'options' => implode(',', [$options[0]->id, $options[1]->id]),
         ]));
 
         $this->assertCount(1, $res->json('data'));
@@ -474,7 +474,7 @@ class GetAllProductsTest extends TestCase
         $this->assertEquals($products[1]->id, $res->json('data.1.id'));
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.products.getAll', $data));
     }

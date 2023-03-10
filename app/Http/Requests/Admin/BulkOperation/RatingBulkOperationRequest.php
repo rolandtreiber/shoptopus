@@ -13,7 +13,7 @@ class RatingBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:ratings,id']
+            'ids.*' => ['exists:ratings,id'],
         ];
     }
 }

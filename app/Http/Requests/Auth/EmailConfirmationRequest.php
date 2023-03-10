@@ -6,8 +6,8 @@ use App\Http\Requests\FormRequest;
 
 /**
  * Class EmailConfirmationRequest
+ *
  * @property mixed $email_confirmation_token
- * @package App\Http\Requests\Auth
  */
 final class EmailConfirmationRequest extends FormRequest
 {
@@ -19,7 +19,7 @@ final class EmailConfirmationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email_confirmation_token' => 'required'
+            'email_confirmation_token' => 'required',
         ];
     }
 }

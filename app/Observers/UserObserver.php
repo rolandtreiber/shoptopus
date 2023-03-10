@@ -2,10 +2,10 @@
 
 namespace App\Observers;
 
+use App\Enums\RandomStringMode;
+use App\Helpers\GeneralHelper;
 use App\Models\Cart;
 use App\Models\User;
-use App\Helpers\GeneralHelper;
-use App\Enums\RandomStringMode;
 
 class UserObserver
 {
@@ -17,7 +17,7 @@ class UserObserver
     public bool $afterCommit = true;
 
     /**
-     * @param User $user
+     * @param  User  $user
      */
     public function creating(User $user)
     {
@@ -28,7 +28,7 @@ class UserObserver
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      */
     public function saving(User $user)
     {
@@ -36,13 +36,13 @@ class UserObserver
         $lastName = $user->last_name;
         $prefix = $user->prefix ?? '';
 
-        $user->name = trim($prefix . ' ' . $firstName . ' ' . $lastName);
+        $user->name = trim($prefix.' '.$firstName.' '.$lastName);
 
-        $user->initials = substr($firstName, 0, 1) . substr($lastName, 0, 1);
+        $user->initials = substr($firstName, 0, 1).substr($lastName, 0, 1);
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      */
     public function created(User $user)
     {
@@ -50,5 +50,4 @@ class UserObserver
         $cart->user_id = $user->id;
         $cart->save();
     }
-
 }

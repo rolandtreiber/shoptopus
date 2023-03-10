@@ -24,7 +24,7 @@ class ProductDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
-            'description' =>$this->getTranslations('description'),
+            'description' => $this->getTranslations('description'),
             'short_description' => $this->getTranslations('short_description'),
             'price' => $this->price,
             'final_price' => $this->final_price,
@@ -40,7 +40,7 @@ class ProductDetailResource extends JsonResource
             'created_at' => Carbon::parse($this->create_at)->format('Y-m-d'),
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
             'images' => FileContentResource::collection($this->images()),
-            'pdfs' => $this->pdfs()
+            'pdfs' => $this->pdfs(),
         ];
     }
 }

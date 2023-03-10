@@ -13,7 +13,7 @@ class BannerBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:banners,id']
+            'ids.*' => ['exists:banners,id'],
         ];
     }
 }

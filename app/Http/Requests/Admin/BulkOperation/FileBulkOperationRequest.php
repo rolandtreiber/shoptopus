@@ -13,7 +13,7 @@ class FileBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:file_contents,id']
+            'ids.*' => ['exists:file_contents,id'],
         ];
     }
 }

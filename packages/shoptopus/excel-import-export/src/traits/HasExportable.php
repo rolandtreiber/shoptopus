@@ -37,5 +37,4 @@ trait HasExportable
     {
         $this->exportableRelationships = $exportableRelationships;
     }
-
 }

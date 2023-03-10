@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Enums\AvailabilityStatus;
-use Carbon\Carbon;
+use App\Helpers\GeneralHelper;
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
-use App\Helpers\GeneralHelper;
-use OwenIt\Auditing\Contracts\Auditable;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
-use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Shoptopus\ExcelImportExport\traits\HasImportable;
@@ -28,7 +28,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $valid_until
  * @property string $value
  * @mixin Builder
-*/
+ */
 class VoucherCode extends SearchableModel implements Auditable, Exportable, Importable
 {
     use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable, HasImportable;
@@ -36,7 +36,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['value'])
@@ -56,7 +56,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
         'valid_from',
         'valid_until',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     protected $exportableFields = [
@@ -66,36 +66,36 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
         'valid_from',
         'valid_until',
         'code',
-        'enabled'
+        'enabled',
     ];
 
     protected $importableFields = [
         'amount' => [
             'description' => 'The value of the voucher code in either percentage or actual value',
-            'validation' => ['numeric', 'min:0']
+            'validation' => ['numeric', 'min:0'],
         ],
         'valid_from' => [
             'description' => 'Valid from date. Format: YYYY:mm:dd',
-            'validation' => ['date']
+            'validation' => ['date'],
         ],
         'valid_until' => [
             'description' => 'Valid from date. Format: YYYY:mm:dd',
-            'validation' => ['date']
+            'validation' => ['date'],
         ],
         'type' => [
             'description' => '1 = percentage, 2 = actual value',
-            'validation' => ['integer', 'min:1', 'max:2']
+            'validation' => ['integer', 'min:1', 'max:2'],
         ],
         'enabled' => [
             'description' => '0 = disabled, 1 = enabled',
-            'validation' => 'boolean'
-        ]
+            'validation' => 'boolean',
+        ],
     ];
 
     protected $importableRelationships = [];
 
     protected $exportableRelationships = [
-        'orders'
+        'orders',
     ];
 
     /**
@@ -109,7 +109,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
         'type' => 'integer',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 
     protected $appends = ['value'];
@@ -130,8 +130,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
                 $query->where('valid_until', '<', $now);
                 break;
             case 'all_inactive':
-                $query->where(fn($q) =>
-                    $q->where('valid_from', '>', $now)
+                $query->where(fn ($q) => $q->where('valid_from', '>', $now)
                         ->where('valid_until', '<', $now)
                 );
                 break;
@@ -146,9 +145,10 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
 
     /**
      * Get the orders where the voucher code was used.
+     *
      * @return HasMany
      */
-    public function orders() : HasMany
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
@@ -170,6 +170,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
                 return 3;
             }
         }
+
         return 0;
     }
 

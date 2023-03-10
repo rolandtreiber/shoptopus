@@ -14,7 +14,7 @@ class ProductAvailableAttributeOptionsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'selected_attribute_options' => ['array']
+            'selected_attribute_options' => ['array'],
         ];
     }
 }

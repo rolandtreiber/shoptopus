@@ -2,17 +2,16 @@
 
 namespace Tests\PublicApi\Payments\Amazon;
 
-use Tests\PaymentTestCase;
-use Tests\TestCase;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
-    public function setUp() : void
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -50,30 +49,30 @@ class GetClientSettingsTest extends PaymentTestCase
                         'payloadJSON' => [
                             'webCheckoutDetails' => [
                                 'checkoutMode',
-                                'checkoutResultReturnUrl'
+                                'checkoutResultReturnUrl',
                             ],
                             'paymentDetails' => [
                                 'paymentIntent',
                                 'chargeAmount' => [
                                     'amount',
-                                    'currencyCode'
-                                ]
+                                    'currencyCode',
+                                ],
                             ],
                             'merchantMetadata' => [
                                 'merchantReferenceId',
                                 'merchantStoreName',
-                                'noteToBuyer'
+                                'noteToBuyer',
                             ],
                             'storeId',
                         ],
-                        'signature'
-                    ]
-                ]
-            ]
+                        'signature',
+                    ],
+                ],
+            ],
         ]);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.payment.get.settings.public', $data));
     }

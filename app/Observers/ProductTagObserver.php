@@ -10,7 +10,7 @@ class ProductTagObserver
     use ProcessRequest;
 
     /**
-     * @param ProductTag $productTag
+     * @param  ProductTag  $productTag
      */
     public function deleting(ProductTag $productTag): void
     {

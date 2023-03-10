@@ -2,8 +2,8 @@
 
 namespace App\Models\PaymentProvider;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class PaymentProviderConfig extends Model
 {
@@ -19,7 +19,7 @@ class PaymentProviderConfig extends Model
         'setting',
         'value',
         'test_value',
-        'public'
+        'public',
     ];
 
     /**
@@ -28,7 +28,7 @@ class PaymentProviderConfig extends Model
      * @var array
      */
     protected $casts = [
-        'public' => 'boolean'
+        'public' => 'boolean',
     ];
 
     /**
@@ -38,16 +38,16 @@ class PaymentProviderConfig extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
      * Get the payment provider for the payment provider config.
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function payment_provider() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function payment_provider(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(PaymentProvider::class);
     }
-
 }

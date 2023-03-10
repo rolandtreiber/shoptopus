@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\RatingBulkOperationRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\RatingDetailResource;
@@ -17,10 +16,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class RatingController extends Controller
 {
     use ProcessRequest;
+
     protected RatingRepositoryInterface $ratingRepository;
 
     /**
-     * @param RatingRepositoryInterface $ratingRepository
+     * @param  RatingRepositoryInterface  $ratingRepository
      */
     public function __construct(RatingRepositoryInterface $ratingRepository)
     {
@@ -28,7 +28,7 @@ class RatingController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -37,7 +37,7 @@ class RatingController extends Controller
     }
 
     /**
-     * @param Rating $rating
+     * @param  Rating  $rating
      * @return RatingDetailResource
      */
     public function show(Rating $rating): RatingDetailResource
@@ -46,24 +46,26 @@ class RatingController extends Controller
     }
 
     /**
-     * @param Rating $rating
+     * @param  Rating  $rating
      * @return string[]
      */
     public function delete(Rating $rating): array
     {
         $rating->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param RatingBulkOperationRequest $request
+     * @param  RatingBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateAvailability(RatingBulkOperationRequest $request): array
     {
         $request->validate([
-            'availability' => ['required', 'boolean']
+            'availability' => ['required', 'boolean'],
         ]);
         if ($this->ratingRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
             return ['status' => 'Success'];
@@ -72,14 +74,15 @@ class RatingController extends Controller
     }
 
     /**
-     * @param RatingBulkOperationRequest $request
+     * @param  RatingBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateVerifiedStatus(RatingBulkOperationRequest $request): array
     {
         $request->validate([
-            'verified' => ['required', 'boolean']
+            'verified' => ['required', 'boolean'],
         ]);
         if ($this->ratingRepository->bulkUpdateAVerifiedStatus($request->ids, $request->verified)) {
             return ['status' => 'Success'];

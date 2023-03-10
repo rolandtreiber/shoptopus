@@ -29,7 +29,7 @@ class PaymentRelationResource extends JsonResource
             'payment_ref' => $this->payment_ref,
             'method_ref' => $this->method_ref,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            'source' => new PaymentSourceRelationResource($this->payment_source)
+            'source' => new PaymentSourceRelationResource($this->payment_source),
         ];
     }
 }
