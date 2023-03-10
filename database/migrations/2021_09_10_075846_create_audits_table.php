@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuditsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -48,4 +48,4 @@ class CreateAuditsTable extends Migration
     {
         Schema::connection(config('app.env') === 'testing' ? 'sqlite_logs' : 'logs')->dropIfExists('audits');
     }
-}
+};
