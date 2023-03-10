@@ -16,7 +16,7 @@ class PaymentTest extends TestCase
 
     protected $payment;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

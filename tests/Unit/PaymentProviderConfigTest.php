@@ -14,7 +14,7 @@ class PaymentProviderConfigTest extends TestCase
 
     protected $payment_provider_config;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

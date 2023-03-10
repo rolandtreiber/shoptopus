@@ -16,7 +16,7 @@ class ProductAttributeTest extends TestCase
 
     protected $product_attribute;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -22,7 +22,7 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
 
     private Carbon $now;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->validFrom = Carbon::now()->subDay();

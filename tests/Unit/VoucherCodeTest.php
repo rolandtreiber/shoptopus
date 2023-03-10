@@ -15,7 +15,7 @@ class VoucherCodeTest extends TestCase
 
     protected $voucher_code;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -22,7 +22,7 @@ class InvoicesTestCase extends TestCase
 
     protected $token;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

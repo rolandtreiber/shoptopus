@@ -14,7 +14,7 @@ class DeliveryRuleTest extends TestCase
 
     protected $delivery_rule;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

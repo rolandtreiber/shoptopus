@@ -15,7 +15,7 @@ class ProductCategoryTest extends TestCase
 
     protected $product_category;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

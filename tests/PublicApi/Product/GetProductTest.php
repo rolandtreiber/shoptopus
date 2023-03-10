@@ -20,7 +20,7 @@ class GetProductTest extends TestCase
 
     protected $product;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

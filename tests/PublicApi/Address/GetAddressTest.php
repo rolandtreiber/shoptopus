@@ -13,7 +13,7 @@ class GetAddressTest extends TestCase
 
     protected $address;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

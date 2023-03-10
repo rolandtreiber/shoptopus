@@ -18,7 +18,7 @@ class DeliveryTypeTest extends TestCase
 
     protected $delivery_type;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

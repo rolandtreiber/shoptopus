@@ -17,7 +17,7 @@ class ProductVariantTest extends TestCase
 
     protected $product_variant;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

@@ -14,7 +14,7 @@ class ProductAttributeOptionTest extends TestCase
 
     protected $product_attribute_option;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

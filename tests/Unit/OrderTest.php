@@ -19,7 +19,7 @@ class OrderTest extends TestCase
 
     protected $order;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

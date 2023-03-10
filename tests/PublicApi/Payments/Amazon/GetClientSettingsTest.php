@@ -11,7 +11,7 @@ class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

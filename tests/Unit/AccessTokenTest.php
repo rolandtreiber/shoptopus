@@ -13,7 +13,7 @@ class AccessTokenTest extends TestCase
 
     protected $access_token;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

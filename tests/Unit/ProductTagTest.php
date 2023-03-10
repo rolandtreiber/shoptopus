@@ -17,7 +17,7 @@ class ProductTagTest extends TestCase
 
     protected $product_tag;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
