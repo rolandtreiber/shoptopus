@@ -7,7 +7,5 @@ use App\Models\Order;
 
 interface InvoiceRepositoryInterface
 {
-
     public function create(Order $order): Invoice;
-
 }

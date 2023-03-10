@@ -20,7 +20,7 @@ class NotificatonResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'timestamp' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            'notifiable' => $this->notifiable
+            'notifiable' => $this->notifiable,
         ];
     }
 }

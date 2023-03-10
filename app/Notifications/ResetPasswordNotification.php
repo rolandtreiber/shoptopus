@@ -1,10 +1,11 @@
 <?php
+
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ResetPasswordNotification extends Notification implements ShouldQueue
 {
@@ -17,7 +18,6 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      *
      * @return void
      */
-
     public function __construct($url)
     {
         $this->url = $url;
@@ -29,7 +29,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function via($notifiable) : array
+    public function via($notifiable): array
     {
         return ['mail'];
     }
@@ -40,7 +40,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
-    public function toMail($notifiable) : MailMessage
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->line('You are receiving this email because we received a password reset request for your account.')
@@ -54,7 +54,7 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable) : array
+    public function toArray($notifiable): array
     {
         return [
             //

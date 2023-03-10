@@ -4,8 +4,8 @@ namespace Shoptopus\ExcelImportExport\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ImportRequest extends FormRequest {
-
+class ImportRequest extends FormRequest
+{
     /**
      * Get the validation rules that apply to the request.
      *

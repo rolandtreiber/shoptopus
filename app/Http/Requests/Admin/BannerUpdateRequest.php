@@ -21,7 +21,7 @@ class BannerUpdateRequest extends FormRequest
             'title' => ['json'],
             'description' => ['json'],
             'button_text' => ['json'],
-            'button_url' => ['sometimes']
+            'button_url' => ['sometimes'],
         ];
     }
 }

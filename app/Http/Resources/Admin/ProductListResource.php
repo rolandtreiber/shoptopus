@@ -28,7 +28,7 @@ class ProductListResource extends JsonResource
             'status' => $this->status,
             'stock' => $this->stock,
             'variants' => $this->product_variants ? $this->product_variants()->count() : [],
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

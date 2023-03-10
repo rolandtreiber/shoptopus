@@ -6,7 +6,7 @@ use App\Http\Requests\FormRequest;
 
 /**
  * Class UpdatePasswordFromResetFlowRequest
- * @package App\Http\Requests\Auth
+ *
  * @property mixed password
  */
 final class UpdatePasswordFromResetFlowRequest extends FormRequest
@@ -20,8 +20,7 @@ final class UpdatePasswordFromResetFlowRequest extends FormRequest
     {
         return [
             'password' => 'required',
-            'password_reset_token' => 'required'
+            'password_reset_token' => 'required',
         ];
     }
-
 }

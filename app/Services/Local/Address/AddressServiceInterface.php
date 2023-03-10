@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\Address;
 
-interface AddressServiceInterface {
+interface AddressServiceInterface
+{
     //
 }

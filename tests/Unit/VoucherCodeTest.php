@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Carbon\Carbon;
-use Tests\TestCase;
+use App\Enums\DiscountType;
 use App\Models\Order;
 use App\Models\VoucherCode;
-use App\Enums\DiscountType;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class VoucherCodeTest extends TestCase
 {
@@ -15,7 +15,7 @@ class VoucherCodeTest extends TestCase
 
     protected $voucher_code;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

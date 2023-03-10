@@ -4,7 +4,6 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 
 class Admin
@@ -12,9 +11,10 @@ class Admin
     /**
      * Handle an incoming request.
      *
-     * @param Request $request
-     * @param Closure $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @return mixed
+     *
      * @throws AuthorizationException
      */
     public function handle(Request $request, Closure $next)

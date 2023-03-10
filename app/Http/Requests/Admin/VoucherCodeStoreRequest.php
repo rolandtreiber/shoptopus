@@ -17,7 +17,7 @@ class VoucherCodeStoreRequest extends FormRequest
             'type' => ['required', 'numeric'],
             'amount' => ['required', 'numeric'],
             'valid_from' => ['required', 'date'],
-            'valid_until' => ['required', 'date']
+            'valid_until' => ['required', 'date'],
         ];
     }
 }

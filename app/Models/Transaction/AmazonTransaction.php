@@ -23,19 +23,19 @@ class AmazonTransaction extends Model
         'checkout_session_id',
         'charge_id',
         'product_type',
-       'merchant_reference_id',
-       'merchant_store_name',
-       'buyer_id',
-       'buyer_name',
-       'buyer_email',
-       'state',
-       'reason_code',
-       'reason_description',
-       'amazon_last_updated_timestamp',
-//       'payment_intent',
-//       'charge_amount',
-//       'currency_code',
-//       'environment'
+        'merchant_reference_id',
+        'merchant_store_name',
+        'buyer_id',
+        'buyer_name',
+        'buyer_email',
+        'state',
+        'reason_code',
+        'reason_description',
+        'amazon_last_updated_timestamp',
+        //       'payment_intent',
+        //       'charge_amount',
+        //       'currency_code',
+        //       'environment'
     ];
 
     /**
@@ -45,16 +45,16 @@ class AmazonTransaction extends Model
      */
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
     ];
 
     /**
      * An order item belongs to a transaction
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function order() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Order::class, 'order_id', 'id');
     }
-
 }

@@ -2,15 +2,15 @@
 
 namespace Tests\PublicApi\Payments;
 
-use Tests\PaymentTestCase;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class GetClientSettingsTest extends PaymentTestCase
     {
         $data = [
             'provider' => null,
-            'orderId' => null
+            'orderId' => null,
         ];
 
         $this->expectException(\Illuminate\Routing\Exceptions\UrlGenerationException::class);
@@ -40,13 +40,13 @@ class GetClientSettingsTest extends PaymentTestCase
     {
         $data = [
             'provider' => 'stripe',
-            'orderId' => "random-order-id"
+            'orderId' => 'random-order-id',
         ];
 
         $this->sendRequest($data)->assertJsonValidationErrors(['orderId']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.payment.get.settings.public', $data));
     }

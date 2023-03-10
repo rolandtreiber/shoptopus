@@ -2,17 +2,17 @@
 
 namespace Tests\PublicApi\Product;
 
-use Tests\TestCase;
-use App\Models\Product;
-use App\Models\ProductTag;
 use App\Models\DiscountRule;
-use App\Models\ProductVariant;
-use App\Models\ProductCategory;
+use App\Models\Product;
 use App\Models\ProductAttribute;
-use Illuminate\Support\Facades\DB;
 use App\Models\ProductAttributeOption;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\ProductCategory;
+use App\Models\ProductTag;
+use App\Models\ProductVariant;
 use App\Repositories\Local\Product\ProductRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class GetProductTest extends TestCase
 {
@@ -20,7 +20,7 @@ class GetProductTest extends TestCase
 
     protected $product;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -59,8 +59,8 @@ class GetProductTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    app()->make(ProductRepository::class)->getSelectableColumns(false)
-                ]
+                    app()->make(ProductRepository::class)->getSelectableColumns(false),
+                ],
             ]);
     }
 
@@ -85,7 +85,7 @@ class GetProductTest extends TestCase
     {
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
         $this->product->discount_rules()->attach($dr->id);
 
@@ -102,11 +102,11 @@ class GetProductTest extends TestCase
                             'amount',
                             'valid_from',
                             'valid_until',
-                            'slug'
-                        ]
-                    ]
-                ]
-            ]
+                            'slug',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $dr->update(['enabled' => false]);
@@ -126,12 +126,12 @@ class GetProductTest extends TestCase
     {
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
-            'valid_until' => now()->addDays(10)->toDateTimeString()
+            'valid_until' => now()->addDays(10)->toDateTimeString(),
         ]);
 
         $dr2 = DiscountRule::factory()->create([
             'valid_from' => now()->subDays(5)->toDateTimeString(),
-            'valid_until' => now()->subDay()->toDateTimeString()
+            'valid_until' => now()->subDay()->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach([$dr1->id, $dr2->id]);
@@ -148,7 +148,7 @@ class GetProductTest extends TestCase
         $pc = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $pc->discount_rules()->attach($product_category_discount_rule->id);
 
@@ -172,13 +172,13 @@ class GetProductTest extends TestCase
                                 [
                                     'id',
                                     'type',
-                                    'amount'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'amount',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pc->update(['deleted_at' => now()]);
@@ -207,11 +207,11 @@ class GetProductTest extends TestCase
                             'name',
                             'description',
                             'badge',
-                            'display_badge'
-                        ]
-                    ]
-                ]
-            ]
+                            'display_badge',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pt->update(['deleted_at' => now()]);
@@ -244,11 +244,11 @@ class GetProductTest extends TestCase
                             'data',
                             'stock',
                             'sku',
-                            'description'
-                        ]
-                    ]
-                ]
-            ]
+                            'description',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pv->update(['deleted_at' => now()]);
@@ -311,15 +311,15 @@ class GetProductTest extends TestCase
                                             'name',
                                             'slug',
                                             'value',
-                                            'image'
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                            'image',
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.product_variants.0.product_attributes'));
@@ -367,13 +367,13 @@ class GetProductTest extends TestCase
                                     'name',
                                     'slug',
                                     'value',
-                                    'image'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                    'image',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $pa->update(['deleted_at' => now()]);
@@ -406,7 +406,7 @@ class GetProductTest extends TestCase
         $this->assertEmpty($this->sendRequest()->json('data.0.product_attributes'));
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.product.get', ['id' => $this->product->id]));
     }

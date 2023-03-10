@@ -2,13 +2,12 @@
 
 namespace App\Observers;
 
-use App\Facades\Module;
 use App\Models\Rating;
 
 class RatingObserver
 {
     /**
-     * @param Rating $rating
+     * @param  Rating  $rating
      */
     public function created(Rating $rating)
     {

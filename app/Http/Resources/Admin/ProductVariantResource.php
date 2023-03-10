@@ -32,7 +32,7 @@ class ProductVariantResource extends JsonResource
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
             'image' => $this->cover_image(),
             'sku' => $this->sku,
-            'enabled' => $this->enabled
+            'enabled' => $this->enabled,
         ];
     }
 }

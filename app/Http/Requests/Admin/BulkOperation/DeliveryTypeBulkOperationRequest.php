@@ -13,7 +13,7 @@ class DeliveryTypeBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:delivery_types,id']
+            'ids.*' => ['exists:delivery_types,id'],
         ];
     }
 }

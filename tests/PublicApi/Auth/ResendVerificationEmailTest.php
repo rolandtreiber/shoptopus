@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
 use App\Notifications\VerifyEmail;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class ResendVerificationEmailTest extends TestCase
 {
@@ -14,7 +14,7 @@ class ResendVerificationEmailTest extends TestCase
 
     protected $user;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -80,10 +80,9 @@ class ResendVerificationEmailTest extends TestCase
         Notification::assertSentTo($this->user, VerifyEmail::class);
 
         Notification::assertTimesSent(1, VerifyEmail::class);
-
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('verification.resend'), $data);
     }

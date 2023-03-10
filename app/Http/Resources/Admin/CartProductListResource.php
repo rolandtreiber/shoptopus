@@ -40,7 +40,7 @@ class CartProductListResource extends JsonResource
             'final_price' => $totalFinalPrice,
             'item_full_price' => round($this->price, 2),
             'item_final_price' => round($this->final_price, 2),
-            'variant' => ProductVariantListResource::make(ProductVariant::find($this->pivot->product_variant_id))
+            'variant' => ProductVariantListResource::make(ProductVariant::find($this->pivot->product_variant_id)),
         ];
     }
 }

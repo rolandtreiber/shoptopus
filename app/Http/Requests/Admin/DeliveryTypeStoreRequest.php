@@ -17,7 +17,7 @@ class DeliveryTypeStoreRequest extends FormRequest
             'name' => ['required', 'json'],
             'description' => ['required', 'json'],
             'status' => ['sometimes', 'numeric'],
-            'price' => ['required', 'numeric']
+            'price' => ['required', 'numeric'],
         ];
     }
 }

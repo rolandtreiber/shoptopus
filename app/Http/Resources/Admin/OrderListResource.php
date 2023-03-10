@@ -3,12 +3,10 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\GeneralHelper;
-use App\Models\DeliveryType;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
 /**
  * @mixin Order
@@ -35,7 +33,7 @@ class OrderListResource extends JsonResource
             'user' => $this->user->name,
             'delivery_type' => $this->delivery_type->getTranslations('name'),
             'delivery_cost' => $this->delivery_cost,
-            'town' => $this->address->town
+            'town' => $this->address->town,
         ];
     }
 }

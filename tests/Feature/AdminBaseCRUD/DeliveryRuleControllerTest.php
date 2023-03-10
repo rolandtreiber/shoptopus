@@ -12,6 +12,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group delivery_rules
+ *
  * @see \App\Http\Controllers\Admin\DeliveryRuleController
  */
 class DeliveryRuleControllerTest extends AdminControllerTestCase
@@ -25,23 +26,23 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRules = DeliveryRule::factory()->state([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->count(3)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.delivery-rules', [
             'deliveryType' => $deliveryType,
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $deliveryRules[0]->id
+            'id' => $deliveryRules[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $deliveryRules[1]->id
+            'id' => $deliveryRules[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $deliveryRules[2]->id
+            'id' => $deliveryRules[2]->id,
         ]);
     }
 
@@ -52,7 +53,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.delivery-rule', [
@@ -60,11 +61,10 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'deliveryRule' => $deliveryRule->id,
         ]));
         $response->assertJsonFragment([
-            'id' => $deliveryRule->id
+            'id' => $deliveryRule->id,
         ]);
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.id', $deliveryRule->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $deliveryRule->id)
                 ->where('data.min_weight', $deliveryRule->min_weight)
                 ->where('data.max_weight', $deliveryRule->max_weight)
                 ->etc());
@@ -79,7 +79,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $postCodes = ['BS10', 'NX9'];
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.delivery-rule', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'postcodes' => $postCodes,
             'enabled' => true,
@@ -88,7 +88,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'min_distance' => 10,
             'max_distance' => 100,
             'lat' => 51.4545,
-            'lon' => -2.5879
+            'lon' => -2.5879,
         ]);
         $response->assertCreated();
         $deliveryRuleId = $response->json()['data']['id'];
@@ -110,13 +110,13 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $postCodes = ['BS10', 'NX9'];
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-rule', [
             'deliveryType' => $deliveryType,
-            'deliveryRule' => $deliveryRule
+            'deliveryRule' => $deliveryRule,
         ]), [
             'postcodes' => $postCodes,
             'enabled' => true,
@@ -125,7 +125,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'min_distance' => 10,
             'max_distance' => 100,
             'lat' => 51.4545,
-            'lon' => -2.5879
+            'lon' => -2.5879,
         ]);
         $response->assertOk();
         $deliveryRuleId = $response->json()['data']['id'];
@@ -147,12 +147,12 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.delivery-rule', [
             $deliveryType,
-            $deliveryRule
+            $deliveryRule,
         ]));
 
         $this->assertSoftDeleted($deliveryRule);
@@ -167,7 +167,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $deliveryType = DeliveryType::factory()->create();
         $postCodes = ['BS10', 'NX9'];
         $response = $this->post(route('admin.api.create.delivery-rule', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'postcodes' => $postCodes,
             'enabled' => true,
@@ -176,7 +176,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'min_distance' => 10,
             'max_distance' => 100,
             'lat' => 51.4545,
-            'lon' => -2.5879
+            'lon' => -2.5879,
         ]);
         $response->assertForbidden();
     }
@@ -188,13 +188,13 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $postCodes = ['BS10', 'NX9'];
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-rule', [
             'deliveryType' => $deliveryType,
-            'deliveryRule' => $deliveryRule
+            'deliveryRule' => $deliveryRule,
         ]), [
             'postcodes' => $postCodes,
             'enabled' => true,
@@ -203,7 +203,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
             'min_distance' => 10,
             'max_distance' => 100,
             'lat' => 51.4545,
-            'lon' => -2.5879
+            'lon' => -2.5879,
         ]);
         $response->assertForbidden();
     }
@@ -215,12 +215,12 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->delete(route('admin.api.delete.delivery-rule', [
             $deliveryType,
-            $deliveryRule
+            $deliveryRule,
         ]));
 
         $response->assertForbidden();
@@ -234,10 +234,10 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'storemanager@m.com')->first());
         $deliveryType = DeliveryType::factory()->create();
         $response = $this->post(route('admin.api.create.delivery-rule', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'lat' => 'hello',
-            'lon' => -2.5879
+            'lon' => -2.5879,
         ]);
         $response->assertStatus(422);
     }
@@ -249,15 +249,15 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
-            'delivery_type_id' => $deliveryType->id
+            'delivery_type_id' => $deliveryType->id,
         ])->create();
         $this->actingAs(User::where('email', 'storemanager@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-rule', [
             'deliveryType' => $deliveryType,
-            'deliveryRule' => $deliveryRule
+            'deliveryRule' => $deliveryRule,
         ]), [
             'lat' => 51.4545,
-            'lon' => 'invalid'
+            'lon' => 'invalid',
         ]);
         $response->assertStatus(422);
     }

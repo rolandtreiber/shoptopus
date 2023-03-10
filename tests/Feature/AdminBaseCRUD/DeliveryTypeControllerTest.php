@@ -11,6 +11,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group delivery_types
+ *
  * @see \App\Http\Controllers\Admin\DeliveryTypeController
  */
 class DeliveryTypeControllerTest extends AdminControllerTestCase
@@ -27,16 +28,16 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.delivery-types', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $deliveryTypes[0]->id
+            'id' => $deliveryTypes[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $deliveryTypes[1]->id
+            'id' => $deliveryTypes[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $deliveryTypes[2]->id
+            'id' => $deliveryTypes[2]->id,
         ]);
     }
 
@@ -51,11 +52,10 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
             'deliveryType' => $deliveryType->id,
         ]));
         $response->assertJsonFragment([
-            'id' => $deliveryType->id
+            'id' => $deliveryType->id,
         ]);
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.id', $deliveryType->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $deliveryType->id)
                 ->where('data.price', (float) $deliveryType->price)
                 ->where('data.enabled', $deliveryType->enabled)
                 ->where('data.enabled_by_default_on_creation', $deliveryType->enabled_by_default_on_creation)
@@ -71,14 +71,14 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.delivery-type'), [
             'name' => json_encode([
                 'en' => 'Express overnight',
-                'de' => 'Express Ubernacht'
+                'de' => 'Express Ubernacht',
             ]),
             'description' => json_encode([
                 'en' => 'Very quick',
-                'de' => 'Sehr schnell'
+                'de' => 'Sehr schnell',
             ]),
             'price' => 15,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertCreated();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -99,18 +99,18 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $deliveryType = DeliveryType::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-type', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'name' => json_encode([
                 'en' => 'Express overnight UPDATED',
-                'de' => 'Express Ubernacht AKTUALISIERT'
+                'de' => 'Express Ubernacht AKTUALISIERT',
             ]),
             'description' => json_encode([
                 'en' => 'Very quick UPDATED',
-                'de' => 'Sehr schnell AKTUALISIERT'
+                'de' => 'Sehr schnell AKTUALISIERT',
             ]),
             'price' => 15,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertOk();
         $deliveryTypeId = $response->json()['data']['id'];
@@ -144,14 +144,14 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.delivery-type'), [
             'name' => json_encode([
                 'en' => 'Express overnight',
-                'de' => 'Express Ubernacht'
+                'de' => 'Express Ubernacht',
             ]),
             'description' => json_encode([
                 'en' => 'Very quick',
-                'de' => 'Sehr schnell'
+                'de' => 'Sehr schnell',
             ]),
             'price' => 15,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertForbidden();
     }
@@ -164,18 +164,18 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $deliveryType = DeliveryType::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-type', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'name' => json_encode([
                 'en' => 'Express overnight UPDATED',
-                'de' => 'Express Ubernacht AKTUALISIERT'
+                'de' => 'Express Ubernacht AKTUALISIERT',
             ]),
             'description' => json_encode([
                 'en' => 'Very quick UPDATED',
-                'de' => 'Sehr schnell AKTUALISIERT'
+                'de' => 'Sehr schnell AKTUALISIERT',
             ]),
             'price' => 15,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertForbidden();
     }
@@ -201,10 +201,10 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.delivery-type'), [
             'description' => json_encode([
                 'en' => 'Very quick',
-                'de' => 'Sehr schnell'
+                'de' => 'Sehr schnell',
             ]),
             'price' => 15,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertStatus(422);
     }
@@ -217,20 +217,19 @@ class DeliveryTypeControllerTest extends AdminControllerTestCase
         $deliveryType = DeliveryType::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-type', [
-            'deliveryType' => $deliveryType
+            'deliveryType' => $deliveryType,
         ]), [
             'name' => json_encode([
                 'en' => 'Express overnight UPDATED',
-                'de' => 'Express Ubernacht AKTUALISIERT'
+                'de' => 'Express Ubernacht AKTUALISIERT',
             ]),
             'description' => json_encode([
                 'en' => 'Very quick UPDATED',
-                'de' => 'Sehr schnell AKTUALISIERT'
+                'de' => 'Sehr schnell AKTUALISIERT',
             ]),
             'price' => 'twenty',
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertStatus(422);
     }
-
 }

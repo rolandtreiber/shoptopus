@@ -32,7 +32,7 @@ class Banner extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['title'])
@@ -51,7 +51,7 @@ class Banner extends SearchableModel implements Auditable, Exportable
         'button_text',
         'button_url',
         'enabled',
-        'created_at'
+        'created_at',
     ];
 
     /**
@@ -65,7 +65,7 @@ class Banner extends SearchableModel implements Auditable, Exportable
         'show_button',
         'button_text',
         'button_url',
-        'enabled'
+        'enabled',
     ];
 
     /**
@@ -80,6 +80,6 @@ class Banner extends SearchableModel implements Auditable, Exportable
         'background_image' => 'object',
         'enabled' => 'boolean',
         'total_clicks' => 'integer',
-        'show_button' => 'boolean'
+        'show_button' => 'boolean',
     ];
 }

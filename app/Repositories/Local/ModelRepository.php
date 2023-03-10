@@ -2,20 +2,23 @@
 
 namespace App\Repositories\Local;
 
+use App\Services\Local\Error\ErrorServiceInterface;
 use App\Traits\FilterTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use App\Services\Local\Error\ErrorServiceInterface;
 
 class ModelRepository implements ModelRepositoryInterface
 {
     use FilterTrait;
 
     protected $model;
+
     protected string $model_table;
+
     protected ErrorServiceInterface $errorService;
 
-    public function __construct($errorService, $model) {
+    public function __construct($errorService, $model)
+    {
         $this->errorService = $errorService;
         $this->model = $model;
         $this->model_table = $model->getTable();
@@ -24,12 +27,12 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Get all models
      *
-     * @param array $page_formatting
-     * @param array $filters
-     * @param array $excludeRelationships
+     * @param  array  $page_formatting
+     * @param  array  $filters
+     * @param  array  $excludeRelationships
      * @return array
      */
-    public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []) : array
+    public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []): array
     {
         try {
             if (isset($filters['custom_filter_vars'])) {
@@ -41,7 +44,7 @@ class ModelRepository implements ModelRepositoryInterface
 
                 if ($this->hasActiveProperty()) {
                     $filters['active'] = 1;
-                } else if ($this->hasEnabledProperty()) {
+                } elseif ($this->hasEnabledProperty()) {
                     $filters['enabled'] = 1;
                 }
 
@@ -50,7 +53,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             return [
                 'data' => $this->getModels($filter_vars, $page_formatting, $excludeRelationships),
-                'count' => $this->getCount($filter_vars)
+                'count' => $this->getCount($filter_vars),
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -62,11 +65,11 @@ class ModelRepository implements ModelRepositoryInterface
      * Get a single model
      *
      * @param $value
-     * @param string $key
-     * @param array $excludeRelationships
+     * @param  string  $key
+     * @param  array  $excludeRelationships
      * @return array
      */
-    public function get($value, string $key = 'id', array $excludeRelationships = []) : array
+    public function get($value, string $key = 'id', array $excludeRelationships = []): array
     {
         try {
             $filters = [$key => $value];
@@ -77,7 +80,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             if ($this->hasActiveProperty()) {
                 $filters['active'] = 1;
-            } else if ($this->hasEnabledProperty()) {
+            } elseif ($this->hasEnabledProperty()) {
                 $filters['enabled'] = 1;
             }
 
@@ -85,7 +88,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             $result = $this->getModels($this->getFilters($this->model_table, $filters), $page_formatting, $excludeRelationships);
 
-            return !empty($result) ? $result[0] : [];
+            return ! empty($result) ? $result[0] : [];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -95,16 +98,16 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Create a model
      *
-     * @param array $payload
-     * @param bool $returnAsArray
+     * @param  array  $payload
+     * @param  bool  $returnAsArray
      * @return mixed
      */
-    public function post(array $payload, bool $returnAsArray = true) : mixed
+    public function post(array $payload, bool $returnAsArray = true): mixed
     {
         try {
             $model = $this->model->create($payload);
 
-            if(method_exists($this, 'saveRelationships')) {
+            if (method_exists($this, 'saveRelationships')) {
                 $this->saveRelationships($model->id, $payload);
             }
 
@@ -120,19 +123,20 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Update a model
      *
-     * @param string $id
-     * @param array $payload
+     * @param  string  $id
+     * @param  array  $payload
      * @return mixed
+     *
      * @throws \Exception
      */
-    public function update(string $id, array $payload) : mixed
+    public function update(string $id, array $payload): mixed
     {
         try {
             $model = $this->model->find($id);
 
             $model->update($payload);
 
-            if(method_exists($this, 'saveRelationships')) {
+            if (method_exists($this, 'saveRelationships')) {
                 $this->saveRelationships($model->id, $payload);
             }
 
@@ -146,11 +150,12 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Delete a model
      *
-     * @param string $id
+     * @param  string  $id
      * @return int
+     *
      * @throws \Exception
      */
-    public function delete(string $id) : int
+    public function delete(string $id): int
     {
         try {
             $query = DB::table($this->model_table)->where('id', $id);
@@ -168,24 +173,24 @@ class ModelRepository implements ModelRepositoryInterface
      * Return the models based on the filters and apply page formatting if applicable
      *
      * @param $filter_vars
-     * @param array $page_formatting
-     * @param array $excludeRelationships
+     * @param  array  $page_formatting
+     * @param  array  $excludeRelationships
      * @return array
      */
-    public function getModels($filter_vars, array $page_formatting = [], array $excludeRelationships = []) : array
+    public function getModels($filter_vars, array $page_formatting = [], array $excludeRelationships = []): array
     {
         try {
-            if (!empty($page_formatting)) {
-                $order_by_string = " " . $this->getOrderByString($page_formatting) .  " LIMIT ?, ?;";
+            if (! empty($page_formatting)) {
+                $order_by_string = ' '.$this->getOrderByString($page_formatting).' LIMIT ?, ?;';
                 $query_params = $this->getQueryParams($filter_vars, $page_formatting);
             } else {
-                $order_by_string = "";
+                $order_by_string = '';
                 $query_params = $filter_vars->query_parameters;
             }
 
             //DB::enableQueryLog();
 
-            $sql = "SELECT ";
+            $sql = 'SELECT ';
             $sql .= implode(',', $this->getSelectableColumns());
             $sql .= " FROM $this->model_table";
             $sql .= $filter_vars->filter_string;
@@ -194,7 +199,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             //dd(DB::getQueryLog());
 
-            return $result && method_exists($this,'getTheResultWithRelationships')
+            return $result && method_exists($this, 'getTheResultWithRelationships')
                 ? $this->getTheResultWithRelationships($result, $excludeRelationships)
                 : $result;
         } catch (\Exception | \Error $e) {
@@ -209,12 +214,12 @@ class ModelRepository implements ModelRepositoryInterface
      * @param $filter_vars
      * @return int
      */
-    public function getCount($filter_vars) : int
+    public function getCount($filter_vars): int
     {
         $sql = "SELECT count(*) AS count FROM $this->model_table $filter_vars->filter_string";
         $result = DB::select($sql, $filter_vars->query_parameters);
 
-        return !empty($result) ? (int) $result[0]["count"] : 0;
+        return ! empty($result) ? (int) $result[0]['count'] : 0;
     }
 
     /**
@@ -222,7 +227,7 @@ class ModelRepository implements ModelRepositoryInterface
      *
      * @return bool
      */
-    protected function hasActiveProperty() : bool
+    protected function hasActiveProperty(): bool
     {
         return in_array('active', Schema::getColumnListing($this->model_table));
     }
@@ -232,7 +237,7 @@ class ModelRepository implements ModelRepositoryInterface
      *
      * @return bool
      */
-    protected function hasEnabledProperty() : bool
+    protected function hasEnabledProperty(): bool
     {
         return in_array('enabled', Schema::getColumnListing($this->model_table));
     }
@@ -242,7 +247,7 @@ class ModelRepository implements ModelRepositoryInterface
      *
      * @return bool
      */
-    protected function canBeSoftDeleted() : bool
+    protected function canBeSoftDeleted(): bool
     {
         return in_array('deleted_at', Schema::getColumnListing($this->model_table));
     }

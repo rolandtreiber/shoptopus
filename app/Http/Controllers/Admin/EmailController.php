@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 class EmailController extends Controller
 {
     /**
-     * @param SendEmailRequest $request
+     * @param  SendEmailRequest  $request
      * @return string[]
      */
     public function sendEmail(SendEmailRequest $request): array
@@ -28,6 +28,7 @@ class EmailController extends Controller
             }
             Mail::to($emailAddress)->send(new GenericAdminEmail($request, $emailAddress));
         }
+
         return ['message' => 'success'];
     }
 
@@ -38,5 +39,4 @@ class EmailController extends Controller
     {
         return DB::table('users')->select([DB::raw('CONCAT (name, " <", email, ">") as "option"')])->pluck('option');
     }
-
 }

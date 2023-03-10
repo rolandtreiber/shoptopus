@@ -2,9 +2,9 @@
 
 namespace App\Services\Local\Product;
 
-use App\Services\Local\ModelService;
-use App\Services\Local\Error\ErrorServiceInterface;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
+use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\ModelService;
 use Illuminate\Support\Facades\Config;
 
 class ProductService extends ModelService implements ProductServiceInterface
@@ -17,11 +17,12 @@ class ProductService extends ModelService implements ProductServiceInterface
     /**
      * Save product to favorites
      *
-     * @param string $productId
+     * @param  string  $productId
      * @return array
+     *
      * @throws \Exception
      */
-    public function favorite(string $productId) : array
+    public function favorite(string $productId): array
     {
         try {
             return $this->modelRepository->favorite($productId);

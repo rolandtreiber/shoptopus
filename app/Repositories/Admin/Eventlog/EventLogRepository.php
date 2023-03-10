@@ -6,10 +6,10 @@ use App\Enums\OrderStatus;
 use App\Models\EventLog;
 use App\Models\Order;
 
-class EventLogRepository implements EventLogRepositoryInterface {
-
+class EventLogRepository implements EventLogRepositoryInterface
+{
     /**
-     * @param string $modelClass
+     * @param  string  $modelClass
      * @param $model
      * @param $type
      * @param $data
@@ -19,9 +19,9 @@ class EventLogRepository implements EventLogRepositoryInterface {
     {
         $eventLog = new EventLog();
         switch ($modelClass) {
-            case (Order::class):
+            case Order::class:
                 /** @var Order $model */
-                $eventLog->message = 'Order status was updated to ' . OrderStatus::getKey($model->status);
+                $eventLog->message = 'Order status was updated to '.OrderStatus::getKey($model->status);
                 $eventLog->type = $type;
                 $eventLog->data = $data;
                 break;

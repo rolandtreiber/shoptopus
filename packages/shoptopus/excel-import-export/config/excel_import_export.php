@@ -5,5 +5,5 @@ return [
     'prefix' => '',
     'ignored_relationships' => [],
     'model_namespace' => 'App\\Models',
-    'languages' => ['en']
+    'languages' => ['en'],
 ];

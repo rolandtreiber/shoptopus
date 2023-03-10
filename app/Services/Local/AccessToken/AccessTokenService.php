@@ -2,9 +2,9 @@
 
 namespace App\Services\Local\AccessToken;
 
-use App\Services\Local\ModelService;
-use App\Services\Local\Error\ErrorServiceInterface;
 use App\Repositories\Local\AccessToken\AccessTokenRepositoryInterface;
+use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\ModelService;
 
 class AccessTokenService extends ModelService implements AccessTokenServiceInterface
 {

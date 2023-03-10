@@ -22,14 +22,14 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
         $fileContentIds = FileContent::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.files.bulk.delete'), [
-            'ids' => $fileContentIds
+            'ids' => $fileContentIds,
         ]);
         $response->assertOk();
-        $this->assertDeleted('file_contents', [
-            'id' => $fileContentIds[0]
+        $this->assertDatabaseMissing('file_contents', [
+            'id' => $fileContentIds[0],
         ]);
-        $this->assertDeleted('file_contents', [
-            'id' => $fileContentIds[1]
+        $this->assertDatabaseMissing('file_contents', [
+            'id' => $fileContentIds[1],
         ]);
     }
 
@@ -41,7 +41,7 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
         $fileContentIds = FileContent::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->delete(route('admin.api.files.bulk.delete'), [
-            'ids' => $fileContentIds
+            'ids' => $fileContentIds,
         ]);
         $response->assertForbidden();
     }
@@ -53,7 +53,7 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
     {
         $fileContentIds = FileContent::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->delete(route('admin.api.files.bulk.delete'), [
-            'ids' => $fileContentIds
+            'ids' => $fileContentIds,
         ]);
         $response->assertStatus(500);
     }
@@ -66,7 +66,7 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
         $fileContentIds = FileContent::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.files.bulk.delete'), [
-            'ids' => [...$fileContentIds, 'invalid id']
+            'ids' => [...$fileContentIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }
@@ -80,5 +80,4 @@ class FilesBulkOperationsTest extends BulkOperationsTestCase
         $response = $this->delete(route('admin.api.files.bulk.delete'), []);
         $response->assertStatus(422);
     }
-
 }

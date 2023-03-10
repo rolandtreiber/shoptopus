@@ -6,8 +6,8 @@ use App\Models\FileContent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
-trait HasFiles {
-
+trait HasFiles
+{
     public function deleteWithAttachments()
     {
         foreach ($this->fileContents as $fileContent) {
@@ -79,5 +79,4 @@ trait HasFiles {
     {
         return $this->morphMany(FileContent::class, 'fileable')->other()->get();
     }
-
 }

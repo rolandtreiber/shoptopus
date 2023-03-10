@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Address;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class DeleteAddressRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class DeleteAddressRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return DB::table('addresses')
             ->where('id', $this->id)
@@ -25,10 +25,10 @@ class DeleteAddressRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'id'  => 'required|string|exists:addresses'
+            'id' => 'required|string|exists:addresses',
         ];
     }
 
@@ -40,7 +40,7 @@ class DeleteAddressRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id')
+            'id' => $this->route('id'),
         ]);
     }
 }

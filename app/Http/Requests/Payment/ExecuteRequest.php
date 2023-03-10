@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Payment;
 
 use App\Enums\OrderStatus;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class ExecuteRequest extends FormRequest
 {
@@ -13,7 +13,7 @@ class ExecuteRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return DB::table('orders')
             ->where('id', $this->orderId)
@@ -27,12 +27,12 @@ class ExecuteRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'provider_payload' => 'sometimes|array',
             'provider' => 'required|in:paypal,amazon,stripe',
-            'orderId' => 'required|string|exists:orders,id'
+            'orderId' => 'required|string|exists:orders,id',
         ];
     }
 }

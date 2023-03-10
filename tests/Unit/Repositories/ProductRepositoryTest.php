@@ -2,24 +2,25 @@
 
 namespace Tests\Unit\Repositories;
 
-use App\Models\ProductVariant;
-use Tests\TestCase;
-use App\Models\Product;
 use App\Enums\DiscountType;
 use App\Models\DiscountRule;
+use App\Models\Product;
 use App\Models\ProductCategory;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\ProductVariant;
 use App\Repositories\Local\Product\ProductRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
+use Tests\TestCase;
 
 class ProductRepositoryTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $repo;
+
     protected $product;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +39,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 5.55,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach($discount_rule->id);
@@ -60,14 +61,14 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 3,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $discount_rule2 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
             'amount' => 2,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
@@ -87,14 +88,14 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 5,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $discount_rule2 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
             'amount' => 6,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
@@ -114,14 +115,14 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 4,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $discount_rule2 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
             'amount' => 6,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
@@ -143,14 +144,14 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 4,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $discount_rule2 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
             'amount' => 6,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach([$discount_rule1->id, $discount_rule2->id]);
@@ -171,7 +172,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 6,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $product_category->discount_rules()->attach($product_category_discount_rule->id);
         $this->product->product_categories()->attach($product_category->id);
@@ -180,7 +181,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 5,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $this->product->discount_rules()->attach($discount_rule->id);
 
@@ -202,7 +203,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 3,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $product_category->discount_rules()->attach($product_category_discount_rule->id);
         $this->product->product_categories()->attach($product_category->id);
@@ -211,7 +212,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 3,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach($discount_rule->id);
@@ -232,7 +233,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Percentage,
             'amount' => 50, // 50%
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $product_category->discount_rules()->attach($product_category_discount_rule->id);
         $this->product->product_categories()->attach($product_category->id);
@@ -241,7 +242,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 5.5,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach($discount_rule->id);
@@ -264,7 +265,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Percentage,
             'amount' => 10, // 10%
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
         $product_category->discount_rules()->attach($product_category_discount_rule->id);
         $this->product->product_categories()->attach($product_category->id);
@@ -273,7 +274,7 @@ class ProductRepositoryTest extends TestCase
             'type' => DiscountType::Amount,
             'amount' => 3,
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product->discount_rules()->attach($discount_rule->id);
@@ -296,7 +297,7 @@ class ProductRepositoryTest extends TestCase
         $this->assertEquals($pv->price, $this->getFinalPrice($product, $pv->price));
     }
 
-    protected function getFinalPrice($product, $product_variant_price = false) : string
+    protected function getFinalPrice($product, $product_variant_price = false): string
     {
         return $this->repo->calculateFinalPrice($product, $product_variant_price);
     }

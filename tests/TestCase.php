@@ -3,10 +3,10 @@
 namespace Tests;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Notification;
 use Laravel\Passport\Passport;
 use Spatie\Permission\Models\Role;
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -19,15 +19,15 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * @param \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
-     * @param array $scopes
+     * @param  \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
+     * @param  array  $scopes
      * @return $this
      */
-    protected function signIn($user = null, array $scopes = []) : TestCase
+    protected function signIn($user = null, array $scopes = []): TestCase
     {
         if (is_null($user)) {
             $user = User::factory()->create();
-        } else if (is_string($user)) {
+        } elseif (is_string($user)) {
             $user = User::find($user);
         }
 
@@ -46,11 +46,12 @@ abstract class TestCase extends BaseTestCase
             if (array_intersect($nonAuthorizedUserRoleNames, $user->getRoleNames()->toArray())) {
                 return $user;
             }
+
             return null;
-        })->filter(function($item) {
+        })->filter(function ($item) {
             return $item !== null;
         });
+
         return $unAuthorizedUsers->random();
     }
-
 }

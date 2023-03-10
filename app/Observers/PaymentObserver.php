@@ -6,10 +6,8 @@ use App\Enums\PaymentType;
 use App\Helpers\GeneralHelper;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Repositories\Admin\Eventlog\EventLogRepository;
 use App\Repositories\Admin\Invoice\InvoiceRepository;
 use App\Repositories\Admin\Invoice\InvoiceRepositoryInterface;
-use App\Repositories\Admin\Order\OrderRepository;
 use Illuminate\Support\Carbon;
 
 class PaymentObserver
@@ -22,7 +20,7 @@ class PaymentObserver
     }
 
     /**
-     * @param Payment $payment
+     * @param  Payment  $payment
      */
     public function creating(Payment $payment)
     {
@@ -34,13 +32,13 @@ class PaymentObserver
                 $descriptionText = 'Payment of '.GeneralHelper::displayPrice($payment->amount).' ';
         }
 
-        $descriptionText .= 'for the '.str_replace("App\Models\\", "", $payment->payable_type) . ' with ID "'.$payment->payable_id.'" ';
+        $descriptionText .= 'for the '.str_replace("App\Models\\", '', $payment->payable_type).' with ID "'.$payment->payable_id.'" ';
         $descriptionText .= 'processed at '.Carbon::parse($payment->created_at)->format('Y-m-d H:i:s');
         $payment->description = $descriptionText;
     }
 
     /**
-     * @param Payment $payment
+     * @param  Payment  $payment
      */
     public function created(Payment $payment)
     {

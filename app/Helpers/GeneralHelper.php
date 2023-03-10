@@ -9,15 +9,17 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-class GeneralHelper {
-
-    public static function fromCamelCase($input) {
+class GeneralHelper
+{
+    public static function fromCamelCase($input)
+    {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
         $ret = $matches[0];
         foreach ($ret as &$match) {
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
         }
         $result = implode(' ', $ret);
+
         return strtoupper($result);
     }
 
@@ -27,8 +29,8 @@ class GeneralHelper {
     }
 
     /**
-     * @param int $length
-     * @param int $mode
+     * @param  int  $length
+     * @param  int  $mode
      * @return string
      */
     public static function generateRandomString(int $length = 10, int $mode = 0): string
@@ -57,6 +59,7 @@ class GeneralHelper {
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
+
         return $randomString;
     }
 
@@ -67,16 +70,17 @@ class GeneralHelper {
     public static function imageToDataUrl($url): string
     {
         $imageData = base64_encode(file_get_contents($url));
+
         return 'data: '.mime_content_type($url).';base64,'.$imageData;
     }
 
     public static function getCleanHtml($text)
     {
-        return str_replace("&nbsp;", '', preg_replace( "/\r|\n/", "", $text));
+        return str_replace('&nbsp;', '', preg_replace("/\r|\n/", '', $text));
     }
 
     /**
-     * @param null $timestamp
+     * @param  null  $timestamp
      */
     public static function getFormattedTimestamp($timestamp = null): string
     {
@@ -84,30 +88,33 @@ class GeneralHelper {
         $timestampRaw = $timestamp ? Carbon::parse($timestamp) : Carbon::now();
         if ($now->year == $timestampRaw->year && $now->month == $timestampRaw->month && $now->day == $timestampRaw->day) {
             $timestampFormatted = $timestampRaw->format('H:i');
-        } else if ($now->year == $timestampRaw->year) {
+        } elseif ($now->year == $timestampRaw->year) {
             $timestampFormatted = $timestampRaw->format('d-m H:i');
         } else {
             $timestampFormatted = $timestampRaw->format('d-m-Y H:i');
         }
+
         return $timestampFormatted;
     }
 
-    public static function getDiscountValue($type, $amount) {
+    public static function getDiscountValue($type, $amount)
+    {
         $value = str_replace('.00', '', $amount);
         switch ($type) {
             case DiscountType::Percentage:
                 return $value.'%';
             case DiscountType::Amount:
                 if (config('app.default_currency.side') === 'left') {
-                    return config('app.default_currency.symbol') . $value;
+                    return config('app.default_currency.symbol').$value;
                 } else {
                     return $value.config('app.default_currency.symbol');
                 }
         }
+
         return $amount;
     }
 
-    public static function getDiscountedValue($discountType, $discountAmount, $basePrice) : mixed
+    public static function getDiscountedValue($discountType, $discountAmount, $basePrice): mixed
     {
         $discounted = 0;
 
@@ -119,7 +126,7 @@ class GeneralHelper {
                 $discounted = round($basePrice - (($basePrice / 100) * $discountAmount), 2);
                 break;
             default:
-        }
+            }
 
         return $discounted > 0 ? $discounted : 0;
     }
@@ -131,9 +138,9 @@ class GeneralHelper {
     public static function displayPrice($amount): string
     {
         if (config('app.default_currency.side') === 'left') {
-            return config('app.default_currency.symbol') . $amount;
+            return config('app.default_currency.symbol').$amount;
         } else {
-            return $amount . config('app.default_currency.symbol');
+            return $amount.config('app.default_currency.symbol');
         }
     }
 
@@ -145,12 +152,12 @@ class GeneralHelper {
         }
         $dir = storage_path($storagePath);
 
-        !$prefix && $prefix = '*';
+        ! $prefix && $prefix = '*';
 
-        if (!$number) {
-            $pattern = $dir . '/'.$prefix.'*.*';
+        if (! $number) {
+            $pattern = $dir.'/'.$prefix.'*.*';
         } else {
-            $pattern = $dir . '/'.$prefix.$number.'.*';
+            $pattern = $dir.'/'.$prefix.$number.'.*';
         }
 
         $files = glob($pattern);
@@ -159,17 +166,16 @@ class GeneralHelper {
         $contents = file_get_contents($file);
         $extension = pathinfo(parse_url($file, PHP_URL_PATH), PATHINFO_EXTENSION);
 
-        $fileName = Str::random(40) . '.' . $extension;
+        $fileName = Str::random(40).'.'.$extension;
 
-        Storage::disk('local')->delete('public/uploads/' . $fileName);
+        Storage::disk('local')->delete('public/uploads/'.$fileName);
         Storage::disk('uploads')->put($fileName, $contents);
-        $url = config('app.url') . '/uploads/' . $fileName;
+        $url = config('app.url').'/uploads/'.$fileName;
 
         return [
             'type' => FileType::Image,
             'url' => $url,
-            'file_name' => $fileName
+            'file_name' => $fileName,
         ];
     }
-
 }

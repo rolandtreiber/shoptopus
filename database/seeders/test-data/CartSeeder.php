@@ -14,6 +14,7 @@ class CartSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     *
      * @throws Exception
      */
     public function run()
@@ -42,12 +43,12 @@ class CartSeeder extends Seeder
                 $variantsCount = ProductVariant::where('product_id', $selectedProductId)->count();
                 if ($variantsCount > 0) {
                     $variants = ProductVariant::where('product_id', $selectedProductId)->get();
-                    $productVariantId = ($variants[random_int(1, $variantsCount-1)])->id;
+                    $productVariantId = ($variants[random_int(1, $variantsCount - 1)])->id;
                 }
                 $selectedCart->products()->attach($selectedProductId,
                     [
                         'quantity' => random_int(1, 10),
-                        'product_variant_id' => $productVariantId
+                        'product_variant_id' => $productVariantId,
                     ]
                 );
             }

@@ -2,14 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
 use App\Models\User;
-use App\Events\UserSignedUp;
 use App\Notifications\VerifyEmail;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
@@ -27,7 +24,7 @@ class RegisterTest extends TestCase
             'first_name' => null,
             'last_name' => null,
             'email' => null,
-            'password' => null
+            'password' => null,
         ];
 
         $this->sendRequest($data)
@@ -45,11 +42,11 @@ class RegisterTest extends TestCase
     public function it_requires_a_valid_email()
     {
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "lolevesgmail",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'lolevesgmail',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data)
@@ -63,10 +60,10 @@ class RegisterTest extends TestCase
     public function it_requires_a_password_confirmation()
     {
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
         ];
 
         $this->sendRequest($data)
@@ -80,11 +77,11 @@ class RegisterTest extends TestCase
     public function the_password_has_a_minimum_number_of_characters()
     {
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "passwor",
-            'password_confirmation' => "passwor"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'passwor',
+            'password_confirmation' => 'passwor',
         ];
 
         $this->sendRequest($data)
@@ -100,19 +97,19 @@ class RegisterTest extends TestCase
         $this->artisan('passport:install');
 
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data)->assertOk();
 
         $this->assertDatabaseHas('users', [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
         ]);
     }
 
@@ -127,11 +124,11 @@ class RegisterTest extends TestCase
         Notification::fake();
 
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data)->assertOk();
@@ -154,11 +151,11 @@ class RegisterTest extends TestCase
         Notification::fake();
 
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data);
@@ -179,11 +176,11 @@ class RegisterTest extends TestCase
         Notification::fake();
 
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data);
@@ -204,11 +201,11 @@ class RegisterTest extends TestCase
         Notification::fake();
 
         $data = [
-            'first_name' => "Istvan",
-            'last_name' => "Lovas",
-            'email' => "loleves@gmail.com",
-            'password' => "password",
-            'password_confirmation' => "password"
+            'first_name' => 'Istvan',
+            'last_name' => 'Lovas',
+            'email' => 'loleves@gmail.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
         ];
 
         $this->sendRequest($data)->assertJsonStructure([
@@ -231,17 +228,17 @@ class RegisterTest extends TestCase
                             'user_id',
                             'ip_address',
                             'user',
-                            'products'
+                            'products',
                         ],
                         'notifications',
-                        'favorites'
-                    ]
-                ]
-            ]
+                        'favorites',
+                    ],
+                ],
+            ],
         ]);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.auth.register'), $data);
     }

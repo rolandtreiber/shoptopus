@@ -33,7 +33,7 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
 
     public function broadcastOn(): PrivateChannel
     {
-        return new PrivateChannel('user-' . $this->userId . '-notifications');
+        return new PrivateChannel('user-'.$this->userId.'-notifications');
     }
 
     public function broadcastType()
@@ -49,19 +49,18 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
     public function toArray()
     {
         return [
-            'message' => $this->createMessage($this->data)
+            'message' => $this->createMessage($this->data),
         ];
     }
 
     public function toMail($notifiable)
     {
-
         return (new MailMessage)
             ->greeting('Hello '.$notifiable->first_name.'!')
             ->line($this->createMessage($this->data));
     }
 
-    function createMessage($data): string
+    public function createMessage($data): string
     {
         return 'Product '.$data->name.' is now out of stock.';
     }

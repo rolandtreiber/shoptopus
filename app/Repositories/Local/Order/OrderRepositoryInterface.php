@@ -2,24 +2,24 @@
 
 namespace App\Repositories\Local\Order;
 
-interface OrderRepositoryInterface {
-
+interface OrderRepositoryInterface
+{
     /**
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array;
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array;
 
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array;
-
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array;
 }

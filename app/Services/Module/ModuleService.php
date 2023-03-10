@@ -2,8 +2,8 @@
 
 namespace App\Services\Module;
 
-class ModuleService implements ModuleInterface {
-
+class ModuleService implements ModuleInterface
+{
     private array $config;
 
     public function __construct($config)
@@ -16,6 +16,7 @@ class ModuleService implements ModuleInterface {
         if (array_key_exists($module, $this->config) && $this->config[$module] === true) {
             return true;
         }
+
         return false;
     }
 }

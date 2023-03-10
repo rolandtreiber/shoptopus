@@ -3,8 +3,8 @@
 namespace Database\Factories\PaymentProvider;
 
 use App\Models\PaymentProvider\PaymentProvider;
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\PaymentProvider\PaymentProviderConfig;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PaymentProviderConfigFactory extends Factory
 {
@@ -23,10 +23,10 @@ class PaymentProviderConfigFactory extends Factory
     public function definition(): array
     {
         return [
-            'setting' => $this->faker->word,
-            'value' => $this->faker->text,
-            'test_value' => $this->faker->text,
-            'payment_provider_id' => PaymentProvider::factory()
+            'setting' => $this->faker->word(),
+            'value' => $this->faker->text(),
+            'test_value' => $this->faker->text(),
+            'payment_provider_id' => PaymentProvider::factory(),
         ];
     }
 }

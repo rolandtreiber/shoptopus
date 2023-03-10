@@ -11,7 +11,7 @@ class RemoveItemFromCartRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         $cart_id = $this->cart_id;
         $user = $this->user();
@@ -28,12 +28,12 @@ class RemoveItemFromCartRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'product_id'  => 'bail|required|string|exists:products,id',
+            'product_id' => 'bail|required|string|exists:products,id',
             'cart_id' => 'required|string|exists:carts,id',
-            'user_id' => 'nullable|string|exists:users,id'
+            'user_id' => 'nullable|string|exists:users,id',
         ];
     }
 
@@ -45,7 +45,7 @@ class RemoveItemFromCartRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => optional($this->user())->id
+            'user_id' => $this->user()?->id,
         ]);
     }
 }

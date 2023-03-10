@@ -20,21 +20,21 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_enable_multiple_delivery_types()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
             'ids' => $deliveryTypeIds,
-            'availability' => true
+            'availability' => true,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('delivery_types', [
             'id' => $deliveryTypeIds[0],
-            'enabled' => 1
+            'enabled' => 1,
         ]);
         $this->assertDatabaseHas('delivery_types', [
             'id' => $deliveryTypeIds[1],
-            'enabled' => 1
+            'enabled' => 1,
         ]);
     }
 
@@ -44,21 +44,21 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_disable_multiple_delivery_types()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
             'ids' => $deliveryTypeIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertOk();
         $this->assertDatabaseHas('delivery_types', [
             'id' => $deliveryTypeIds[0],
-            'enabled' => 0
+            'enabled' => 0,
         ]);
         $this->assertDatabaseHas('delivery_types', [
             'id' => $deliveryTypeIds[1],
-            'enabled' => 0
+            'enabled' => 0,
         ]);
     }
 
@@ -68,18 +68,18 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_can_delete_multiple_delivery_types()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.delivery-types.bulk.delete'), [
-            'ids' => $deliveryTypeIds
+            'ids' => $deliveryTypeIds,
         ]);
         $response->assertOk();
         $this->assertSoftDeleted('delivery_types', [
-            'id' => $deliveryTypeIds[0]
+            'id' => $deliveryTypeIds[0],
         ]);
         $this->assertSoftDeleted('delivery_types', [
-            'id' => $deliveryTypeIds[1]
+            'id' => $deliveryTypeIds[1],
         ]);
     }
 
@@ -89,7 +89,7 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_availability_update_validation()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
@@ -104,12 +104,12 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_availability_update_authorization()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
             'ids' => $deliveryTypeIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertForbidden();
     }
@@ -120,11 +120,11 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_availability_update_authentication()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
             'ids' => $deliveryTypeIds,
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertStatus(500);
     }
@@ -135,12 +135,12 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_availability_update_not_found_handled()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => true
+            'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.delivery-types.bulk.update-availability'), [
             'ids' => [...$deliveryTypeIds, 'invalid id'],
-            'availability' => false
+            'availability' => false,
         ]);
         $response->assertStatus(422);
     }
@@ -161,11 +161,11 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_delete_authorization()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
         $response = $this->delete(route('admin.api.delivery-types.bulk.delete'), [
-            'ids' => $deliveryTypeIds
+            'ids' => $deliveryTypeIds,
         ]);
         $response->assertForbidden();
     }
@@ -176,10 +176,10 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_delete_authentication()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $response = $this->delete(route('admin.api.delivery-types.bulk.delete'), [
-            'ids' => $deliveryTypeIds
+            'ids' => $deliveryTypeIds,
         ]);
         $response->assertStatus(500);
     }
@@ -190,13 +190,12 @@ class DeliveryTypesBulkOperationsTest extends BulkOperationsTestCase
     public function test_bulk_delivery_types_delete_not_found_handled()
     {
         $deliveryTypeIds = DeliveryType::factory()->state([
-            'enabled' => false
+            'enabled' => false,
         ])->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.delivery-types.bulk.delete'), [
-            'ids' => [...$deliveryTypeIds, 'invalid id']
+            'ids' => [...$deliveryTypeIds, 'invalid id'],
         ]);
         $response->assertStatus(422);
     }
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Traits\HasUUID;
 use App\Enums\PaymentType;
+use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
@@ -36,7 +36,7 @@ class Payment extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['payable.slug'])
@@ -63,7 +63,7 @@ class Payment extends SearchableModel implements Auditable, Exportable
     protected $exportableRelationships = [
         'user',
         'payment_source',
-        'payable'
+        'payable',
     ];
 
     /**
@@ -97,7 +97,7 @@ class Payment extends SearchableModel implements Auditable, Exportable
         'user_id' => 'string',
         'status' => 'integer',
         'type' => 'integer',
-        'proof' => 'object'
+        'proof' => 'object',
     ];
 
     public function scopeView($query, $view)

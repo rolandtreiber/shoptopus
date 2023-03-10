@@ -2,14 +2,13 @@
 
 namespace App\Repositories\Local\AccessToken;
 
-interface AccessTokenRepositoryInterface {
-
+interface AccessTokenRepositoryInterface
+{
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array;
-
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array;
 }

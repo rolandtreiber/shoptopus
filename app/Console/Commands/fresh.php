@@ -53,11 +53,12 @@ class fresh extends Command
 
         $envFile = file_get_contents('.env');
 
-        $envFile = preg_replace('/^PASSPORT_GRANT_ID=(.*)$/m', 'PASSPORT_GRANT_ID=' . $id, $envFile);
-        $envFile = preg_replace('/^PASSPORT_SECRET=(.*)$/m', 'PASSPORT_SECRET=' . $secret, $envFile);
+        $envFile = preg_replace('/^PASSPORT_GRANT_ID=(.*)$/m', 'PASSPORT_GRANT_ID='.$id, $envFile);
+        $envFile = preg_replace('/^PASSPORT_SECRET=(.*)$/m', 'PASSPORT_SECRET='.$secret, $envFile);
 
         file_put_contents('.env', $envFile);
-        $this->info('.env file updated with new id / secret: ' . $id . ' / ' . $secret);
+        $this->info('.env file updated with new id / secret: '.$id.' / '.$secret);
+
         return 1;
     }
 }

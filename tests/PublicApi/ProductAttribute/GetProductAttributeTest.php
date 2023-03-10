@@ -2,21 +2,22 @@
 
 namespace Tests\PublicApi\ProductAttribute;
 
-use Tests\TestCase;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\ProductAttribute\ProductAttributeRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetProductAttributeTest extends TestCase
 {
     use RefreshDatabase;
 
     protected $product;
+
     protected $product_attribute;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -68,8 +69,8 @@ class GetProductAttributeTest extends TestCase
         $this->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    app()->make(ProductAttributeRepository::class)->getSelectableColumns(false)
-                ]
+                    app()->make(ProductAttributeRepository::class)->getSelectableColumns(false),
+                ],
             ]);
     }
 
@@ -90,11 +91,11 @@ class GetProductAttributeTest extends TestCase
                             'name',
                             'slug',
                             'value',
-                            'image'
-                        ]
-                    ]
-                ]
-            ]
+                            'image',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.options'));
@@ -119,9 +120,9 @@ class GetProductAttributeTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_ids'
-                ]
-            ]
+                    'product_ids',
+                ],
+            ],
         ]);
 
         $this->assertCount(1, $res->json('data.0.product_ids'));
@@ -131,7 +132,7 @@ class GetProductAttributeTest extends TestCase
         $this->assertEmpty($this->sendRequest()->json('data'));
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.product_attribute.get', ['id' => $this->product_attribute->id]));
     }

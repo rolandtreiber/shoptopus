@@ -2,30 +2,34 @@
 
 namespace App\Services\Local\Auth;
 
+use App\Models\PasswordReset;
 use App\Models\User;
+use App\Notifications\PasswordResetSuccess;
 use App\Repositories\Admin\User\UserRepository;
 use App\Repositories\Admin\User\UserRepositoryInterface;
-use Illuminate\Support\Str;
-use App\Events\UserSignedUp;
-use Illuminate\Http\Request;
-use App\Models\PasswordReset;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Config;
-use App\Notifications\PasswordResetSuccess;
 use App\Services\Local\Cart\CartServiceInterface;
-use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Notification\NotificationServiceInterface;
+use App\Services\Local\User\UserServiceInterface;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class AuthService implements AuthServiceInterface
 {
     private ErrorServiceInterface $errorService;
+
     private UserServiceInterface $userService;
+
     private CartServiceInterface $cartService;
+
     private SocialAccountServiceInterface $socialAccountService;
+
     private NotificationServiceInterface $notificationService;
+
     private UserRepositoryInterface $userRepository;
 
     public function __construct(
@@ -47,16 +51,17 @@ class AuthService implements AuthServiceInterface
     /**
      * Login
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
-    public function login(array $payload) : array
+    public function login(array $payload): array
     {
         try {
             $user = User::whereEmail($payload['email'])->first();
 
-            if (!$user) {
+            if (! $user) {
                 throw new \Exception('User not found.', Config::get('api_error_codes.services.auth.login_user_incorrect'));
             }
 
@@ -65,7 +70,7 @@ class AuthService implements AuthServiceInterface
                 throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.must_reset_password'));
             }
 
-            if (!Hash::check($payload["password"], $user->password)) {
+            if (! Hash::check($payload['password'], $user->password)) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
             }
 
@@ -74,9 +79,9 @@ class AuthService implements AuthServiceInterface
             }
 
             return [
-                "data" => [
-                    "auth" => $this->createTokenAndGetAuthResponse($user)
-                ]
+                'data' => [
+                    'auth' => $this->createTokenAndGetAuthResponse($user),
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -87,22 +92,23 @@ class AuthService implements AuthServiceInterface
     /**
      * Register
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
-    public function register(array $payload) : array
+    public function register(array $payload): array
     {
         try {
             $user = $this->userService->getCurrentUser(false);
 
-            if(!$user) {
+            if (! $user) {
                 $data = [
-                    "first_name" => $payload['first_name'],
-                    "last_name" => $payload['last_name'],
-                    "email" => $payload['email'],
-                    "password" => bcrypt($payload['password']),
-                    "phone" => $payload['phone'] ?? null
+                    'first_name' => $payload['first_name'],
+                    'last_name' => $payload['last_name'],
+                    'email' => $payload['email'],
+                    'password' => bcrypt($payload['password']),
+                    'phone' => $payload['phone'] ?? null,
                 ];
 
                 $user = $this->userService->post($data, false);
@@ -110,15 +116,15 @@ class AuthService implements AuthServiceInterface
                 $this->userRepository->triggerNewUserRegistrationNotification($user);
             }
 
-            if (!$user->hasVerifiedEmail()) {
+            if (! $user->hasVerifiedEmail()) {
                 $user->sendEmailVerificationNotification();
             }
 
             return [
-                "data" => [
-                    "message" => "Welcome to the wonderful world of Shoptopus! Please check your email to verify",
-                    "auth" => $this->createTokenAndGetAuthResponse($user)
-                ]
+                'data' => [
+                    'message' => 'Welcome to the wonderful world of Shoptopus! Please check your email to verify',
+                    'auth' => $this->createTokenAndGetAuthResponse($user),
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -135,6 +141,7 @@ class AuthService implements AuthServiceInterface
      * Get the authenticated user's details
      *
      * @return array
+     *
      * @throws \Exception
      */
     public function details(): array
@@ -143,11 +150,11 @@ class AuthService implements AuthServiceInterface
             $user = User::findOrFail(Auth::id());
 
             return [
-                "data" => [
-                    "auth" => [
-                        "user" => $this->normalisedUserDetails($user)
-                    ]
-                ]
+                'data' => [
+                    'auth' => [
+                        'user' => $this->normalisedUserDetails($user),
+                    ],
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -158,40 +165,41 @@ class AuthService implements AuthServiceInterface
     /**
      * Verify the user's email address
      *
-     * @param Request $request
-     * @param string $id
+     * @param  Request  $request
+     * @param  string  $id
      * @return array
+     *
      * @throws \Exception
      */
-    public function verify(Request $request, string $id) : array
+    public function verify(Request $request, string $id): array
     {
         try {
             $uri = 'login';
             $message = 'Email has been verified.';
             $statusCode = 200;
 
-            if (!$request->hasValidSignature()) {
+            if (! $request->hasValidSignature()) {
                 $uri = 'verify';
                 $message = 'Invalid/Expired url provided.';
                 $statusCode = 401;
             } else {
                 $user = User::find($id);
 
-                if (!$user) {
+                if (! $user) {
                     $uri = 'verify';
                     $message = 'Sorry, there was an error while trying to verify your email address.';
                     $statusCode = 404;
                 } else {
-                    if (!$user->hasVerifiedEmail()) {
+                    if (! $user->hasVerifiedEmail()) {
                         $user->markEmailAsVerified();
                     }
                 }
             }
 
-            $url = Config::get('app.frontend_url_public') . "/{$uri}?message=" . urlencode($message) . "&status=" . urlencode($statusCode);
+            $url = Config::get('app.frontend_url_public')."/{$uri}?message=".urlencode($message).'&status='.urlencode($statusCode);
 
             return [
-                'url' => $url
+                'url' => $url,
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -202,8 +210,9 @@ class AuthService implements AuthServiceInterface
     /**
      * Resend the verification email
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
     public function resendVerification(array $payload): array
@@ -212,14 +221,14 @@ class AuthService implements AuthServiceInterface
             $user = User::whereEmail($payload['email'])->firstOrFail();
 
             if ($user->hasVerifiedEmail()) {
-                $message = "Email has been verified.";
+                $message = 'Email has been verified.';
             } else {
                 $user->sendEmailVerificationNotification();
 
-                $message = "Verification email re-sent.";
+                $message = 'Verification email re-sent.';
             }
 
-            return ["data" => ["message" => $message]];
+            return ['data' => ['message' => $message]];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resendVerification'));
@@ -230,9 +239,10 @@ class AuthService implements AuthServiceInterface
      * Logout
      *
      * @return array
+     *
      * @throws \Exception
      */
-    public function logout() : array
+    public function logout(): array
     {
         try {
             $user = $this->userService->getCurrentUser(false);
@@ -243,7 +253,7 @@ class AuthService implements AuthServiceInterface
 
             $user->tokens->each->revoke();
 
-            return ["data" => ["auth" => null]];
+            return ['data' => ['auth' => null]];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
@@ -253,8 +263,9 @@ class AuthService implements AuthServiceInterface
     /**
      * Send password reset email
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
     public function sendPasswordReset(array $payload): array
@@ -266,7 +277,7 @@ class AuthService implements AuthServiceInterface
                 ['email' => $user->email],
                 [
                     'email' => $user->email,
-                    'token' => Str::random(60)
+                    'token' => Str::random(60),
                 ]
             );
 
@@ -274,7 +285,7 @@ class AuthService implements AuthServiceInterface
                 $user->sendPasswordResetNotification($passwordReset->token);
             }
 
-            return ["data" => ["message" => "We have e-mailed your password reset link!"]];
+            return ['data' => ['message' => 'We have e-mailed your password reset link!']];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.sendPasswordReset'));
@@ -284,8 +295,9 @@ class AuthService implements AuthServiceInterface
     /**
      * Reset password
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
     public function resetPassword(array $payload): array
@@ -293,26 +305,26 @@ class AuthService implements AuthServiceInterface
         try {
             $passwordReset = PasswordReset::where([
                 ['token', $payload['token']],
-                ['email', $payload['email']]
+                ['email', $payload['email']],
             ])->first();
 
-            if (!$passwordReset) {
-                throw new \Exception("This password reset token is invalid.");
+            if (! $passwordReset) {
+                throw new \Exception('This password reset token is invalid.');
             }
 
             if ($passwordReset->updated_at->addMinutes(60)->isPast()) {
                 $passwordReset->delete();
-                throw new \Exception("This password reset token has expired.");
+                throw new \Exception('This password reset token has expired.');
             }
 
             $user = User::whereEmail($payload['email'])->first();
 
-            if (!$user) {
-                throw new \Exception("We cant find a user with that e-mail address.");
+            if (! $user) {
+                throw new \Exception('We cant find a user with that e-mail address.');
             }
 
             $user->forceFill([
-                'password' => Hash::make($payload['password'])
+                'password' => Hash::make($payload['password']),
             ])->setRememberToken(Str::random(60));
 
             $user->save();
@@ -321,7 +333,7 @@ class AuthService implements AuthServiceInterface
 
             $user->notify(new PasswordResetSuccess());
 
-            return ["data" => ["message" => "Password successfully updated!"]];
+            return ['data' => ['message' => 'Password successfully updated!']];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resetPassword'));
@@ -331,17 +343,18 @@ class AuthService implements AuthServiceInterface
     /**
      * Get the target url to the Auth provider's authentication page
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
     public function getOAuthProviderTargetUrl(array $payload): array
     {
         try {
             return [
-                "data" => [
-                    "targetUrl" => $this->socialAccountService->getOAuthProviderTargetUrl($payload['provider'])
-                ]
+                'data' => [
+                    'targetUrl' => $this->socialAccountService->getOAuthProviderTargetUrl($payload['provider']),
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -352,8 +365,9 @@ class AuthService implements AuthServiceInterface
     /**
      * Obtain the user information from the Auth provider
      *
-     * @param array $payload
+     * @param  array  $payload
      * @return array
+     *
      * @throws \Exception
      */
     public function handleOAuthProviderCallback(array $payload): array
@@ -361,14 +375,14 @@ class AuthService implements AuthServiceInterface
         try {
             $user = User::find($this->socialAccountService->handleOAuthProviderCallback($payload)['id']);
 
-            if (!$user->hasVerifiedEmail()) {
+            if (! $user->hasVerifiedEmail()) {
                 $user->sendEmailVerificationNotification();
             }
 
             return [
-                "data" => [
-                    "auth" => $this->createTokenAndGetAuthResponse($user)
-                ]
+                'data' => [
+                    'auth' => $this->createTokenAndGetAuthResponse($user),
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -377,46 +391,47 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      * @return array
+     *
      * @throws \Exception
      */
-    private function createTokenAndGetAuthResponse(User $user) : array
+    private function createTokenAndGetAuthResponse(User $user): array
     {
         return [
             'token' => $user->createToken(Config::get('app.name'))->accessToken,
             'token_type' => 'Bearer',
-            'user' => $this->normalisedUserDetails($user)
+            'user' => $this->normalisedUserDetails($user),
         ];
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      * @return array
+     *
      * @throws \Exception
      */
-    private function normalisedUserDetails(User $user) : array
+    private function normalisedUserDetails(User $user): array
     {
-        $notifications = array_map(function($notification) {
+        $notifications = array_map(function ($notification) {
             return [
                 'id' => $notification['id'],
-                'data' => json_decode($notification['data'])
+                'data' => json_decode($notification['data']),
             ];
         }, $this->notificationService->getAllUnreadNotificationsForUser($user->id));
 
         return [
-            "id" => $user->id,
-            "name" => $user->name,
-            "first_name" => $user->first_name,
-            "last_name" => $user->last_name,
-            "email" => $user->email,
-            "phone" => $user->phone,
-            "avatar" => $user->avatar,
-            "is_verified" => $user->hasVerifiedEmail(),
-            "cart" => $this->cartService->getCartForUser($user->id),
-            "notifications" => $notifications,
-            "favorites" => $this->userService->getFavoritedProductIds()
+            'id' => $user->id,
+            'name' => $user->name,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'avatar' => $user->avatar,
+            'is_verified' => $user->hasVerifiedEmail(),
+            'cart' => $this->cartService->getCartForUser($user->id),
+            'notifications' => $notifications,
+            'favorites' => $this->userService->getFavoritedProductIds(),
         ];
     }
-
 }

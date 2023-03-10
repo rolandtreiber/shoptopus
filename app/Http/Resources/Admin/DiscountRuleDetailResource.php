@@ -29,7 +29,7 @@ class DiscountRuleDetailResource extends JsonResource
             'valid_from' => Carbon::parse($this->valid_from)->format('Y-m-d H:i'),
             'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
             'products' => ProductListResource::collection($this->products),
-            'categories' => ProductCategoryListResource::collection($this->categories)
+            'categories' => ProductCategoryListResource::collection($this->categories),
         ];
     }
 }

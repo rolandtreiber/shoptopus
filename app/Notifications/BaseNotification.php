@@ -8,8 +8,8 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 
-class BaseNotification extends Notification implements ShouldBroadcastNow {
-
+class BaseNotification extends Notification implements ShouldBroadcastNow
+{
     use Queueable, SerializesModels, InteractsWithSockets;
 
     public string $userId;
@@ -18,5 +18,4 @@ class BaseNotification extends Notification implements ShouldBroadcastNow {
     {
         $this->userId = $userId;
     }
-
 }

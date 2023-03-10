@@ -25,7 +25,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.customers.send-email'), [
-            'addresses' => $emailAddresses
+            'addresses' => $emailAddresses,
         ]);
 
         $response->assertOk();
@@ -41,15 +41,15 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.customers.send-email'), [
-            'addresses' => $emailAddresses
+            'addresses' => $emailAddresses,
         ]);
 
         $response->assertOk();
         $this->assertDatabaseHas('email_archives', [
-           'address' => $emailAddresses[0]
+            'address' => $emailAddresses[0],
         ]);
         $this->assertDatabaseHas('email_archives', [
-            'address' => $emailAddresses[1]
+            'address' => $emailAddresses[1],
         ]);
     }
 
@@ -62,7 +62,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.customers.send-email'), [
-            'addresses' => [...$emailAddresses, 'invalid email address']
+            'addresses' => [...$emailAddresses, 'invalid email address'],
         ]);
 
         $response->assertStatus(422);
@@ -76,7 +76,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
         $response = $this->post(route('admin.customers.send-email'), [
-            'addresses' => $emailAddresses
+            'addresses' => $emailAddresses,
         ]);
 
         $response->assertStatus(500);
@@ -91,10 +91,9 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
         $this->signIn(User::factory()->create());
         $response = $this->post(route('admin.customers.send-email'), [
-            'addresses' => $emailAddresses
+            'addresses' => $emailAddresses,
         ]);
 
         $response->assertForbidden();
     }
-
 }

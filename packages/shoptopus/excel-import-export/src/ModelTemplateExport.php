@@ -8,14 +8,13 @@ use Maatwebsite\Excel\Concerns\WithTitle;
 
 class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
 {
-
     private array $modelData;
 
     const ACCEPTED_RELATIONSHIP_TYPES = [
         'HasMany',
         'BelongsToMany',
         'BelongsTo',
-        'HasOne'
+        'HasOne',
     ];
 
     public function __construct(array $modelData)
@@ -35,7 +34,7 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
                     $fieldData['is_translatable'] = true;
                     $text = '';
                     foreach ($languages as $language) {
-                        $text .= $language . ': ' . 'value' . '; ';
+                        $text .= $language.': '.'value'.'; ';
                     }
                     $fieldData['description'] = $text;
                 } else {
@@ -56,22 +55,24 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
                 switch ($relationship['type']) {
                     case 'HasMany':
                     case 'BelongsToMany':
-                        $fieldData['description'] = "Semicolon separated slugs of existing " . $name . ' (example: slug-1; slug-2)';
+                        $fieldData['description'] = 'Semicolon separated slugs of existing '.$name.' (example: slug-1; slug-2)';
                         break;
                     case 'BelongsTo':
                     case 'HasOne':
-                        $fieldData['description'] = "Slug of " . $name . ' (example: slug-1)';
+                        $fieldData['description'] = 'Slug of '.$name.' (example: slug-1)';
                 }
 
                 $result[] = $fieldData;
             }
         }
+
         return $result;
     }
 
     public function headings(): array
     {
         $fields = $this->getFields();
+
         return array_map(function ($field) {
             return $field['name'];
         }, $fields);
@@ -92,6 +93,7 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
         foreach ($fields as $field) {
             $data[] = $field['description'];
         }
+
         return [$data];
     }
 }

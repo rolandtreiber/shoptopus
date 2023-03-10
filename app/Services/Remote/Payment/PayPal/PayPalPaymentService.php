@@ -2,21 +2,22 @@
 
 namespace App\Services\Remote\Payment\PayPal;
 
-use PayPalHttp\HttpResponse;
-use Illuminate\Support\Facades\Config;
 use App\Exceptions\Payment\PaymentException;
-use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Core\SandboxEnvironment;
-use PayPalCheckoutSdk\Core\ProductionEnvironment;
-use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
-use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
-use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface;
+use Illuminate\Support\Facades\Config;
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\ProductionEnvironment;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
+use PayPalHttp\HttpResponse;
 
 /**
  * PayPalPaymentService
+ *
  * @see https://github.com/paypal/Checkout-PHP-SDK
  * @see https://developer.paypal.com/docs/checkout/reference/server-integration/setup-sdk/
  * @see https://developer.paypal.com/docs/archive/checkout/how-to/server-integration/
@@ -27,9 +28,13 @@ use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterfa
 class PayPalPaymentService implements PayPalPaymentServiceInterface
 {
     private array $config;
+
     private ErrorServiceInterface $errorService;
+
     private PaymentProviderService $paymentProviderService;
+
     private PayPalTransactionRepositoryInterface $transactionRepository;
+
     private OrderServiceInterface $orderService;
 
     public function __construct(
@@ -43,7 +48,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
         $this->errorService = $errorService;
         $this->orderService = $orderService;
 
-        $this->config = collect($this->paymentProviderService->get('paypal', 'name')["payment_provider_configs"])
+        $this->config = collect($this->paymentProviderService->get('paypal', 'name')['payment_provider_configs'])
             ->keyBy('setting')
             ->toArray();
     }
@@ -51,36 +56,38 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param string $orderId
+     * @param  string  $orderId
      * @return array
+     *
      * @throws \Exception
      */
-    public function getClientSettings(string $orderId) : array
+    public function getClientSettings(string $orderId): array
     {
         try {
             $order = $this->orderService->get($orderId);
 
             return [
                 'client_id' => app()->isProduction()
-                    ? $this->config["CLIENT_ID"]["value"]
-                    : $this->config["CLIENT_ID"]["test_value"],
-                'pay_pal_order_creation' => $this->createOrder($order)
+                    ? $this->config['CLIENT_ID']['value']
+                    : $this->config['CLIENT_ID']['test_value'],
+                'pay_pal_order_creation' => $this->createOrder($order),
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
-           throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
     }
 
     /**
      * Create a PayPal Order/Payment
      *
-     * @param string $orderId
-     * @param array $provider_payload
+     * @param  string  $orderId
+     * @param  array  $provider_payload
      * @return array
+     *
      * @throws \Exception
      */
-    public function executePayment(string $orderId, array $provider_payload) : array
+    public function executePayment(string $orderId, array $provider_payload): array
     {
         try {
             $request = new OrdersCaptureRequest($provider_payload[0]['paypal_order_id_token']);
@@ -104,28 +111,29 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Format payment response
      *
-     * @param array $executed_payment_response
+     * @param  array  $executed_payment_response
      * @return array
      */
-    public function formatPaymentResponse(array $executed_payment_response) : array
+    public function formatPaymentResponse(array $executed_payment_response): array
     {
         return [
-            "success" => $executed_payment_response["statusCode"] == 201,
-            "status_code" => $executed_payment_response["statusCode"],
-            "status" => $executed_payment_response["result"]->status,
-            "payment_id" => $executed_payment_response["result"]->id,
-            "provider" => "PayPal"
+            'success' => $executed_payment_response['statusCode'] == 201,
+            'status_code' => $executed_payment_response['statusCode'],
+            'status' => $executed_payment_response['result']->status,
+            'payment_id' => $executed_payment_response['result']->id,
+            'provider' => 'PayPal',
         ];
     }
 
     /**
      * Create a PayPal Order/Payment
      *
-     * @param array $order
+     * @param  array  $order
      * @return HttpResponse
+     *
      * @throws \Exception
      */
-    private function createOrder(array $order) : HttpResponse
+    private function createOrder(array $order): HttpResponse
     {
         try {
             $request = new OrdersCreateRequest();
@@ -145,19 +153,21 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * ValidateResponse
      *
-     * @param object $response
+     * @param  object  $response
      * @return HttpResponse
+     *
      * @throws PaymentException
+     *
      * @todo - capture more error codes from PayPal - for example, system error, we need to let errors like "no funds" etc pass back to the front-end
      */
-    private function validateResponse(object $response) : HttpResponse
+    private function validateResponse(object $response): HttpResponse
     {
-        if (!$response instanceof HttpResponse) {
+        if (! $response instanceof HttpResponse) {
             throw new PaymentException("This is not an instance of PayPalHttp\HttpResponse");
         }
 
-        if (!in_array($response->statusCode, [200, 201])) {
-            throw new PaymentException("Non-standard PayPal response code: $response->statusCode Data: " . json_encode($response->result));
+        if (! in_array($response->statusCode, [200, 201])) {
+            throw new PaymentException("Non-standard PayPal response code: $response->statusCode Data: ".json_encode($response->result));
         }
 
         return $response;
@@ -167,10 +177,10 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      * Setting up the JSON request body for creating the order with minimum request body. The intent in the
      * request body should be "AUTHORIZE" for authorize intent flow.
      *
-     * @param array $order
+     * @param  array  $order
      * @return array
      */
-    private function buildCreateOrderRequestBody(array $order) : array
+    private function buildCreateOrderRequestBody(array $order): array
     {
         $checkout_url = $this->getCheckoutReturnUrl($order['id']);
 
@@ -178,41 +188,43 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
             'intent' => 'CAPTURE',
             'application_context' => [
                 'return_url' => $checkout_url,
-                'cancel_url' => $checkout_url
+                'cancel_url' => $checkout_url,
             ],
             'purchase_units' => [
                 [
                     'reference_id' => app()->isProduction()
-                        ? "transaction-".$order["id"]
-                        : "test-transaction-".$order["id"],
+                        ? 'transaction-'.$order['id']
+                        : 'test-transaction-'.$order['id'],
                     'amount' => [
-                        'currency_code' => $order["currency_code"],
-                        'value' => $order["total_price"]
-                    ]
-                ]
-            ]
+                        'currency_code' => $order['currency_code'],
+                        'value' => $order['total_price'],
+                    ],
+                ],
+            ],
         ];
     }
 
     /**
      * Get the return url
      *
-     * @param string $orderId
+     * @param  string  $orderId
      * @return string
      */
-    private function getCheckoutReturnUrl(string $orderId) : string
+    private function getCheckoutReturnUrl(string $orderId): string
     {
-        return config('app.frontend_url_public') . config('payment.return_path') . "?order_id={$orderId}";
+        return config('app.frontend_url_public').config('payment.return_path')."?order_id={$orderId}";
     }
 
     /**
      * Returns PayPal HTTP client instance with environment that has access
      * credentials context. Use this instance to invoke PayPal APIs, provided the
      * credentials have access.
+     *
      * @return PayPalHttpClient
+     *
      * @throws \Exception
      */
-    private function client() : PayPalHttpClient
+    private function client(): PayPalHttpClient
     {
         try {
             return new PayPalHttpClient($this->environment());
@@ -225,21 +237,24 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Set up and return PayPal PHP SDK environment with PayPal access credentials.
      * This sample uses SandboxEnvironment. In production, use ProductionEnvironment.
+     *
      * @return SandboxEnvironment|ProductionEnvironment
+     *
      * @throws \Exception
      */
-    private function environment() : ProductionEnvironment|SandboxEnvironment
+    private function environment(): ProductionEnvironment|SandboxEnvironment
     {
         try {
             if (app()->isProduction()) {
-                $clientId = $this->config["CLIENT_ID"]["value"] ?: null;
-                $clientSecret = $this->config["SECRET"]["value"] ?: null;
+                $clientId = $this->config['CLIENT_ID']['value'] ?: null;
+                $clientSecret = $this->config['SECRET']['value'] ?: null;
                 // TEMPORARY SandboxEnvironment in production while testing
                 return new SandboxEnvironment($clientId, $clientSecret);
-               // return new ProductionEnvironment($clientId, $clientSecret);
+            // return new ProductionEnvironment($clientId, $clientSecret);
             } else {
-                $clientId = $this->config["CLIENT_ID"]["test_value"] ?: null;
-                $clientSecret = $this->config["SECRET"]["test_value"] ?: null;
+                $clientId = $this->config['CLIENT_ID']['test_value'] ?: null;
+                $clientSecret = $this->config['SECRET']['test_value'] ?: null;
+
                 return new SandboxEnvironment($clientId, $clientSecret);
             }
         } catch (\Exception | \Error $e) {

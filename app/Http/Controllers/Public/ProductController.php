@@ -11,7 +11,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class ProductController extends Controller
 {
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function list(ListRequest $request): AnonymousResourceCollection

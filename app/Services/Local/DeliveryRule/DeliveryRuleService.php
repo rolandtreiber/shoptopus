@@ -2,9 +2,9 @@
 
 namespace App\Services\Local\DeliveryRule;
 
-use App\Services\Local\ModelService;
-use App\Services\Local\Error\ErrorServiceInterface;
 use App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface;
+use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\ModelService;
 
 class DeliveryRuleService extends ModelService implements DeliveryRuleServiceInterface
 {

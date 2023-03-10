@@ -29,7 +29,7 @@ class Audit extends Model
         'ip_address',
         'user_agent',
         'tags',
-        'created_at'
+        'created_at',
     ];
 
     protected $with = ['auditable', 'user'];

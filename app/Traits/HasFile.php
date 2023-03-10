@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 /**
  * @method morphOne(string $string, string $string1)
  */
-trait HasFile {
-
+trait HasFile
+{
     /**
      * @return MorphOne
      */
@@ -17,5 +17,4 @@ trait HasFile {
     {
         return $this->morphOne(FileContent::class, 'fileable');
     }
-
 }

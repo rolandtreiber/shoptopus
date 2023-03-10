@@ -5,8 +5,8 @@ namespace App\Traits;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 
-trait HasAttributes {
-
+trait HasAttributes
+{
     /**
      * @param $model
      * @param $request
@@ -36,5 +36,4 @@ trait HasAttributes {
             }
         }
     }
-
 }

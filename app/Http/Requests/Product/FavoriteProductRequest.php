@@ -11,7 +11,7 @@ class FavoriteProductRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class FavoriteProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'productId' => 'required|string|exists:products,id',
@@ -36,7 +36,7 @@ class FavoriteProductRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'productId' => $this->route('id')
+            'productId' => $this->route('id'),
         ]);
     }
 }

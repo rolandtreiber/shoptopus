@@ -2,13 +2,13 @@
 
 namespace Tests\PublicApi\ProductAttribute;
 
-use Tests\TestCase;
 use App\Models\Product;
-use App\Models\ProductCategory;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\ProductCategory;
 use App\Repositories\Local\ProductAttribute\ProductAttributeRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetAllProductAttributesTest extends TestCase
 {
@@ -26,7 +26,7 @@ class GetAllProductAttributesTest extends TestCase
                 'data',
                 'next',
                 'records',
-                'total_records'
+                'total_records',
             ]);
     }
 
@@ -47,8 +47,8 @@ class GetAllProductAttributesTest extends TestCase
 
         $res->assertJsonStructure([
             'data' => [
-                app()->make(ProductAttributeRepository::class)->getSelectableColumns(false)
-            ]
+                app()->make(ProductAttributeRepository::class)->getSelectableColumns(false),
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data'));
@@ -112,11 +112,11 @@ class GetAllProductAttributesTest extends TestCase
                             'name',
                             'slug',
                             'value',
-                            'image'
-                        ]
-                    ]
-                ]
-            ]
+                            'image',
+                        ],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data.0.options'));
@@ -175,9 +175,9 @@ class GetAllProductAttributesTest extends TestCase
         $res->assertJsonStructure([
             'data' => [
                 [
-                    'product_ids'
-                ]
-            ]
+                    'product_ids',
+                ],
+            ],
         ]);
 
         $this->assertCount(2, $res->json('data.0.product_ids'));
@@ -265,7 +265,7 @@ class GetAllProductAttributesTest extends TestCase
         $this->assertEquals($pas[1]->id, $res->json('data.1.id'));
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.product_attributes.getAll', $data));
     }

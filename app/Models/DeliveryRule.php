@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed|string $delivery_type_id
@@ -28,12 +28,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class DeliveryRule extends SearchableModel implements Auditable, Exportable
 {
     use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
-
     use HasSlug;
+
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['delivery_type.name'])
@@ -56,7 +56,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'lat',
         'lon',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -74,7 +74,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'max_distance' => 'float',
         'lat' => 'decimal:6',
         'lon' => 'decimal:6',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 
     /**
@@ -90,14 +90,14 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'distance_unit',
         'lat',
         'lon',
-        'enabled'
+        'enabled',
     ];
 
     /**
      * @var string[]
      */
     protected $exportableRelationships = [
-        'delivery_type'
+        'delivery_type',
     ];
 
     /**
@@ -107,5 +107,4 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     {
         return $this->belongsTo(DeliveryType::class);
     }
-
 }

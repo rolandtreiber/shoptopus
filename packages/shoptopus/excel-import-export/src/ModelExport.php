@@ -4,8 +4,8 @@ namespace Shoptopus\ExcelImportExport;
 
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class ModelExport implements WithMultipleSheets {
-
+class ModelExport implements WithMultipleSheets
+{
     private array $modelMap;
 
     public function __construct(array $modelMap)
@@ -25,6 +25,7 @@ class ModelExport implements WithMultipleSheets {
                 $data['relationships'],
             );
         }
+
         return $sheets;
     }
 }

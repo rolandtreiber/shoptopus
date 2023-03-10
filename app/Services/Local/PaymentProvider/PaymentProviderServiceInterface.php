@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\PaymentProvider;
 
-interface PaymentProviderServiceInterface {
+interface PaymentProviderServiceInterface
+{
     //
 }

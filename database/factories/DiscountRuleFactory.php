@@ -2,10 +2,9 @@
 
 namespace Database\Factories;
 
-use Carbon\Carbon;
 use App\Enums\DiscountType;
-use App\Models\DiscountRule;
 use App\Traits\TranslatableFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DiscountRuleFactory extends Factory
@@ -13,18 +12,11 @@ class DiscountRuleFactory extends Factory
     use TranslatableFactory;
 
     /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = DiscountRule::class;
-
-    /**
      * Define the model's default state.
      *
      * @return array
      */
-    public function definition() : array
+    public function definition(): array
     {
         $translations = $this->getTranslated($this->faker, ['name'], ['short']);
 
@@ -35,7 +27,7 @@ class DiscountRuleFactory extends Factory
             'amount' => $this->faker->randomFloat(2, 0, 50),
             'name' => $translations['name'],
             'valid_from' => $valid_from->toDateTimeString(),
-            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5,30)))->toDateTimeString(),
+            'valid_until' => $valid_from->addDays($this->faker->randomElement(range(5, 30)))->toDateTimeString(),
         ];
     }
 }

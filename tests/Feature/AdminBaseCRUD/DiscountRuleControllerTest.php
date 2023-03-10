@@ -13,6 +13,7 @@ use Tests\AdminControllerTestCase;
 /**
  * @group admin-base-crud
  * @group discount_rules
+ *
  * @see \App\Http\Controllers\Admin\DiscountRuleController
  */
 class DiscountRuleControllerTest extends AdminControllerTestCase
@@ -29,16 +30,16 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.discount-rules', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $rules[0]->id
+            'id' => $rules[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $rules[1]->id
+            'id' => $rules[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $rules[2]->id
+            'id' => $rules[2]->id,
         ]);
     }
 
@@ -53,22 +54,19 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
             'discountRule' => $rule->id,
         ]));
         $response->assertJsonFragment([
-            'id' => $rule->id
+            'id' => $rule->id,
         ]);
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.id', $rule->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $rule->id)
                 ->where('data.type', $rule->type)
                 ->etc());
         if ($rule->type === DiscountType::Amount) {
             $response
-                ->assertJson(fn (AssertableJson $json) =>
-                $json->where('data.amount', '£'.number_format((float)$rule->amount, 2, '.', ''))
+                ->assertJson(fn (AssertableJson $json) => $json->where('data.amount', '£'.number_format((float) $rule->amount, 2, '.', ''))
                     ->etc());
         } else {
             $response
-                ->assertJson(fn (AssertableJson $json) =>
-                $json->where('data.amount', $rule->amount.'%')
+                ->assertJson(fn (AssertableJson $json) => $json->where('data.amount', $rule->amount.'%')
                     ->etc());
         }
     }
@@ -84,13 +82,13 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.discount-rule'), [
             'name' => json_encode([
                 'en' => '5% off',
-                'de' => '5% rabatt'
+                'de' => '5% rabatt',
             ]),
             'type' => DiscountType::Percentage,
             'amount' => 5,
             'valid_from' => $validFrom,
             'valid_until' => $validUntil,
-            'enabled' => true
+            'enabled' => true,
         ]);
         $response->assertCreated();
         $ruleId = $response->json()['data']['id'];
@@ -113,16 +111,16 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addMonth();
         $response = $this->patch(route('admin.api.update.discount-rule', [
-            'discountRule' => $rule
+            'discountRule' => $rule,
         ]), [
             'name' => json_encode([
                 'en' => '5% off UPDATED',
-                'de' => '5% rabatt AKTUALISIERT'
+                'de' => '5% rabatt AKTUALISIERT',
             ]),
             'type' => DiscountType::Percentage,
             'amount' => 8.5,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertOk();
         $ruleId = $response->json()['data']['id'];
@@ -158,12 +156,12 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.discount-rule'), [
             'name' => json_encode([
                 'en' => '5% off',
-                'de' => '5% rabatt'
+                'de' => '5% rabatt',
             ]),
             'type' => DiscountType::Percentage,
             'amount' => 5,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertForbidden();
     }
@@ -178,16 +176,16 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addMonth();
         $response = $this->patch(route('admin.api.update.discount-rule', [
-            'discountRule' => $rule
+            'discountRule' => $rule,
         ]), [
             'name' => json_encode([
                 'en' => '5% off UPDATED',
-                'de' => '5% rabatt AKTUALISIERT'
+                'de' => '5% rabatt AKTUALISIERT',
             ]),
             'type' => DiscountType::Percentage,
             'amount' => 8.5,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertForbidden();
     }
@@ -215,11 +213,11 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.discount-rule'), [
             'name' => json_encode([
                 'en' => '5% off',
-                'de' => '5% rabatt'
+                'de' => '5% rabatt',
             ]),
             'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertStatus(422);
     }
@@ -234,18 +232,17 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addMonth();
         $response = $this->patch(route('admin.api.update.discount-rule', [
-            'discountRule' => $rule
+            'discountRule' => $rule,
         ]), [
             'name' => json_encode([
                 'en' => '5% off UPDATED',
-                'de' => '5% rabatt AKTUALISIERT'
+                'de' => '5% rabatt AKTUALISIERT',
             ]),
             'type' => DiscountType::Percentage,
-            'amount' => "Thirty two",
+            'amount' => 'Thirty two',
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertStatus(422);
     }
-
 }

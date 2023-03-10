@@ -2,6 +2,6 @@
 
 return [
     'available_prefixes' => [
-        'MR', 'MRs', 'Miss', 'DR', 'Jr', 'Sr'
-    ]
+        'MR', 'MRs', 'Miss', 'DR', 'Jr', 'Sr',
+    ],
 ];

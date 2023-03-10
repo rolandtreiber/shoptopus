@@ -33,11 +33,12 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         try {
 //            $ids = collect($result)->pluck('user_id')->toArray();
@@ -69,10 +70,10 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -87,13 +88,13 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
             "{$this->model_table}.delivery_cost",
             "{$this->model_table}.status",
             "{$this->model_table}.currency_code",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.deleted_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

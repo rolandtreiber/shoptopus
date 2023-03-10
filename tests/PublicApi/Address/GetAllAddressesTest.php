@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Address;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Address;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Models\User;
 use App\Repositories\Local\Address\AddressRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetAllAddressesTest extends TestCase
 {
@@ -37,7 +37,7 @@ class GetAllAddressesTest extends TestCase
                 'data',
                 'next',
                 'records',
-                'total_records'
+                'total_records',
             ]);
     }
 
@@ -78,10 +78,10 @@ class GetAllAddressesTest extends TestCase
                         'email_verified_at',
                         'client_ref',
                         'temporary',
-                        'is_favorite'
-                    ]
-                ]
-            ]
+                        'is_favorite',
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertCount(5, $res->json('data'));
@@ -124,11 +124,10 @@ class GetAllAddressesTest extends TestCase
             ->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    app()->make(AddressRepository::class)->getSelectableColumns(false)
-                ]
+                    app()->make(AddressRepository::class)->getSelectableColumns(false),
+                ],
             ]);
     }
-
 
     /**
      * @test
@@ -164,7 +163,7 @@ class GetAllAddressesTest extends TestCase
         $this->assertEquals($address2->id, $res->json('data.1.id'));
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.addresses.getAll', $data));
     }

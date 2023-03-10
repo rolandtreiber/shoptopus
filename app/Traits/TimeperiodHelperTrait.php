@@ -6,8 +6,8 @@ use App\Enums\Interval;
 use App\Exceptions\InvalidTimePeriodException;
 use Illuminate\Support\Carbon;
 
-trait TimeperiodHelperTrait {
-
+trait TimeperiodHelperTrait
+{
     /**
      * @throws InvalidTimePeriodException
      */
@@ -23,5 +23,4 @@ trait TimeperiodHelperTrait {
         }
         throw new InvalidTimePeriodException();
     }
-
 }

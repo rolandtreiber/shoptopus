@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Models\Product;
 use App\Models\ProductTag;
-use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 /**
  * @group product_tag
@@ -17,7 +17,7 @@ class ProductTagTest extends TestCase
 
     protected $product_tag;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -37,7 +37,7 @@ class ProductTagTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_name()
+    public function it_returns_a_translated_name()
     {
         $this->product_tag
             ->setTranslation('name', 'en', 'english translation')
@@ -58,7 +58,7 @@ class ProductTagTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_description()
+    public function it_returns_a_translated_description()
     {
         $this->product_tag
             ->setTranslation('description', 'en', 'english translation')

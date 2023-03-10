@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\ProductAttribute;
 use App\Enums\ProductAttributeType;
 use App\Traits\TranslatableFactory;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -10,13 +9,6 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class ProductAttributeFactory extends Factory
 {
     use TranslatableFactory;
-
-    /**
-     * The name of the factory's corresponding model.
-     *
-     * @var string
-     */
-    protected $model = ProductAttribute::class;
 
     /**
      * Define the model's default state.
@@ -31,7 +23,7 @@ class ProductAttributeFactory extends Factory
             'name' => $translations['name'],
             'type' => ProductAttributeType::Text,
             'image' => null,
-            'enabled' => true
+            'enabled' => true,
         ];
     }
 }

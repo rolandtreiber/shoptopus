@@ -11,6 +11,7 @@ use BenSampo\Enum\Enum;
  */
 final class AvailabilityStatus extends Enum
 {
-    const Enabled =     1;
-    const Disabled =    0;
+    const Enabled = 1;
+
+    const Disabled = 0;
 }

@@ -22,7 +22,7 @@ class ProductCategorySimpleListResource extends JsonResource
             'menu_image' => $this->menu_image ? $this->menu_image->url : null,
             'header_image' => $this->header_image ? $this->header_image->url : null,
             'enabled' => $this->enabled,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

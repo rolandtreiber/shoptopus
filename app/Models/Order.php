@@ -2,26 +2,27 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use App\Traits\HasUUID;
 use App\Enums\OrderStatus;
-use App\Traits\HasEventLogs;
 use App\Helpers\GeneralHelper;
+use App\Traits\HasEventLogs;
+use App\Traits\HasUUID;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
  * @method static find(int $selectedCartId)
+ *
  * @property int|mixed $user_id
  * @property int|mixed $delivery_type_id
  * @property int $status
@@ -51,7 +52,7 @@ class Order extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['user.name', 'address.town'])
@@ -68,7 +69,7 @@ class Order extends SearchableModel implements Auditable, Exportable
         'original_price',
         'subtotal',
         'total_price',
-        'total_discount'
+        'total_discount',
     ];
 
     /**
@@ -80,7 +81,7 @@ class Order extends SearchableModel implements Auditable, Exportable
         'products',
         'payments',
         'voucher_code',
-        'delivery_type'
+        'delivery_type',
     ];
 
     /**
@@ -100,7 +101,7 @@ class Order extends SearchableModel implements Auditable, Exportable
         'total_price',
         'total_discount',
         'delivery_cost',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -116,12 +117,12 @@ class Order extends SearchableModel implements Auditable, Exportable
         'subtotal' => 'float',
         'total_price' => 'float',
         'total_discount' => 'float',
-        'delivery_cost' => 'float'
+        'delivery_cost' => 'float',
     ];
 
     public function scopeSearch($query, $search)
     {
-        $query->whereHas('user', function($q) use($search) {
+        $query->whereHas('user', function ($q) use ($search) {
             $q->where('name', 'like', '%'.$search.'%');
         });
     }
@@ -210,10 +211,11 @@ class Order extends SearchableModel implements Auditable, Exportable
         // snapshot version of the delivery type from the invoice.
         // If the name changed, the user should see the updated name.
         // The delivery price change does not affect the orders that have already been placed.
-        if (!$this->delivery_type_relation) {
+        if (! $this->delivery_type_relation) {
             if ($this->invoice) {
                 $deliveryType = new DeliveryType();
                 $deliveryType->fill(json_decode(json_encode($this->invoice->delivery_type), true));
+
                 return $deliveryType;
             } else {
                 return null;
@@ -245,8 +247,7 @@ class Order extends SearchableModel implements Auditable, Exportable
         $this->original_price = $originalPrice;
         $voucher_code = $this->voucher_code;
         if ($voucher_code) {
-            $basis = match (config('shoptopus.voucher_code_basis'))
-            {
+            $basis = match (config('shoptopus.voucher_code_basis')) {
                 'full_price' => $originalPrice,
                 'final_price' => $total,
                 default => $total,

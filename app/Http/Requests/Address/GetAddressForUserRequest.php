@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Address;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class GetAddressForUserRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class GetAddressForUserRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return DB::table('addresses')
             ->where('id', $this->route('id'))
@@ -25,10 +25,10 @@ class GetAddressForUserRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'id'  => 'required|string|exists:addresses'
+            'id' => 'required|string|exists:addresses',
         ];
     }
 
@@ -40,7 +40,7 @@ class GetAddressForUserRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'id' => $this->route('id')
+            'id' => $this->route('id'),
         ]);
     }
 }

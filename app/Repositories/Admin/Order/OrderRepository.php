@@ -13,22 +13,23 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 class OrderRepository implements OrderRepositoryInterface
 {
     /**
-     * @param array $ids
-     * @param int $status
+     * @param  array  $ids
+     * @param  int  $status
      * @return bool
      */
     public function bulkUpdateStatus(array $ids, int $status): bool
     {
         try {
             DB::table('orders')->whereIn('id', $ids)->update(['status' => $status]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
 
     /**
-     * @param Order $order
+     * @param  Order  $order
      * @return bool
      */
     public function triggerNewOrderNotification(Order $order): bool
@@ -51,6 +52,7 @@ class OrderRepository implements OrderRepositoryInterface
                 Log::error($exception->getMessage());
             }
         }
+
         return $result;
     }
 }

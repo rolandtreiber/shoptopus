@@ -6,8 +6,8 @@ use App\Enums\RandomStringMode;
 use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserStoreRequest;
-use App\Http\Requests\ListRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
+use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\UserDetailResource;
 use App\Http\Resources\Admin\UserListResource;
 use App\Models\User;
@@ -20,7 +20,7 @@ class UserController extends Controller
     use ProcessRequest;
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -29,7 +29,7 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      * @return UserDetailResource
      */
     public function show(User $user): UserDetailResource
@@ -40,7 +40,7 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param UserStoreRequest $request
+     * @param  UserStoreRequest  $request
      * @return UserDetailResource
      */
     public function create(UserStoreRequest $request): UserDetailResource
@@ -63,8 +63,8 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param User $user
-     * @param UserUpdateRequest $request
+     * @param  User  $user
+     * @param  UserUpdateRequest  $request
      * @return UserDetailResource
      */
     public function update(User $user, UserUpdateRequest $request): UserDetailResource
@@ -85,12 +85,13 @@ class UserController extends Controller
     }
 
     /**
-     * @param User $user
+     * @param  User  $user
      * @return string[]
      */
     public function delete(User $user): array
     {
         $user->delete();
+
         return ['status' => 'Success'];
     }
 }

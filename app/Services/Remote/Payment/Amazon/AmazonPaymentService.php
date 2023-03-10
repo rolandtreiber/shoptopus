@@ -3,12 +3,12 @@
 namespace App\Services\Remote\Payment\Amazon;
 
 use Amazon\Pay\API\Client;
-use Illuminate\Support\Facades\Storage;
 use App\Exceptions\Payment\PaymentException;
+use App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
-use App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 /** AmazonPaymentService
  * @see https://amazonpaycheckoutintegrationguide.s3.amazonaws.com/amazon-pay-checkout/add-the-amazon-pay-button.html
@@ -19,11 +19,17 @@ use App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterfa
 class AmazonPaymentService implements AmazonPaymentServiceInterface
 {
     public bool $isProduction;
+
     private array $config;
+
     private Client $amazonClient;
+
     private ErrorServiceInterface $errorService;
+
     private PaymentProviderService $paymentProviderService;
+
     private OrderServiceInterface $orderService;
+
     private AmazonTransactionRepositoryInterface $transactionRepository;
 
     /**
@@ -34,8 +40,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
         PaymentProviderService $paymentProviderService,
         AmazonTransactionRepositoryInterface $transactionRepository,
         OrderServiceInterface $orderService
-    )
-    {
+    ) {
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
         $this->errorService = $errorService;
@@ -49,11 +54,12 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param string $orderId
+     * @param  string  $orderId
      * @return array
+     *
      * @throws \Exception
      */
-    public function getClientSettings(string $orderId) : array
+    public function getClientSettings(string $orderId): array
     {
         try {
             $order = $this->orderService->get($orderId);
@@ -61,17 +67,17 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
             $payload = $this->getPayload($order);
 
             return [
-                'merchantId' => $this->isProduction ? $this->config["MERCHANT_ID"]["value"] : $this->config["MERCHANT_ID"]["test_value"],
-                'publicKeyId' => $this->isProduction ? $this->config["PUBLIC_KEY_ID"]["value"] : $this->config["PUBLIC_KEY_ID"]["test_value"],
-                'ledgerCurrency' => $order["currency_code"],
+                'merchantId' => $this->isProduction ? $this->config['MERCHANT_ID']['value'] : $this->config['MERCHANT_ID']['test_value'],
+                'publicKeyId' => $this->isProduction ? $this->config['PUBLIC_KEY_ID']['value'] : $this->config['PUBLIC_KEY_ID']['test_value'],
+                'ledgerCurrency' => $order['currency_code'],
                 'checkoutLanguage' => 'en_GB',
                 'productType' => 'PayOnly',
                 'placement' => 'Checkout',
                 'buttonColor' => 'Gold',
                 'createCheckoutSessionConfig' => [
-                    "payloadJSON" => $payload,
-                    "signature" => $this->amazonClient->generateButtonSignature($payload)
-                ]
+                    'payloadJSON' => $payload,
+                    'signature' => $this->amazonClient->generateButtonSignature($payload),
+                ],
             ];
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);
@@ -84,29 +90,29 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
      *
      * @throws \Exception
      */
-    public function executePayment(array $order, array $provider_payload) : array
+    public function executePayment(array $order, array $provider_payload): array
     {
         try {
             if (empty($provider_payload['checkout_session_id'])) {
-                throw new PaymentException("Invalid checkout session id");
+                throw new PaymentException('Invalid checkout session id');
             }
 
             $payload = [
-                "chargeAmount" => [
-                    "amount" => $order["total_price"],
-                    "currencyCode" => $order["currency_code"]
-                ]
+                'chargeAmount' => [
+                    'amount' => $order['total_price'],
+                    'currencyCode' => $order['currency_code'],
+                ],
             ];
 
             $response = $this->amazonClient->completeCheckoutSession($provider_payload['checkout_session_id'], $payload);
 
-            if($response['status'] !== 200) {
+            if ($response['status'] !== 200) {
                 $decoded_res = json_decode($response['response']);
 
                 throw new PaymentException($decoded_res->message, $response['status']);
             }
 
-            return $this->transactionRepository->storeTransaction($this->validateResponse($response), $order["id"]);
+            return $this->transactionRepository->storeTransaction($this->validateResponse($response), $order['id']);
         } catch (PaymentException $e) {
             $this->errorService->logException($e, true);
             throw $e;
@@ -119,19 +125,19 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     /**
      * Format payment response
      *
-     * @param array $executed_payment_response
+     * @param  array  $executed_payment_response
      * @return array
      */
-    public function formatPaymentResponse(array $executed_payment_response) : array
+    public function formatPaymentResponse(array $executed_payment_response): array
     {
-        $success = $executed_payment_response["status"] == 200;
+        $success = $executed_payment_response['status'] == 200;
 
         return [
-            "success" => $success,
-            "status_code" => $executed_payment_response["status"],
-            "status" => $success ? "CREATED" : "NON_STANDARD",
-            "payment_id" => json_decode($executed_payment_response["response"])->checkoutSessionId,
-            "provider" => "Amazon"
+            'success' => $success,
+            'status_code' => $executed_payment_response['status'],
+            'status' => $success ? 'CREATED' : 'NON_STANDARD',
+            'payment_id' => json_decode($executed_payment_response['response'])->checkoutSessionId,
+            'provider' => 'Amazon',
         ];
     }
 
@@ -141,62 +147,63 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
      *
      * @see https://github.com/amzn/amazon-pay-api-sdk-php/issues/9
      *
-     * @param array $order
+     * @param  array  $order
      * @return array
      */
-    private function getPayload(array $order) : array
+    private function getPayload(array $order): array
     {
         $orderId = $order['id'];
 
         return [
-            "webCheckoutDetails" => [
-                "checkoutMode" => "ProcessOrder",
-                "checkoutResultReturnUrl" => $this->getCheckoutReturnUrl($orderId)
+            'webCheckoutDetails' => [
+                'checkoutMode' => 'ProcessOrder',
+                'checkoutResultReturnUrl' => $this->getCheckoutReturnUrl($orderId),
             ],
-            "storeId" => $this->isProduction
-                ? $this->config["STORE_ID"]["value"]
-                : $this->config["STORE_ID"]["test_value"],
-            "paymentDetails" => [
-                "paymentIntent" => "AuthorizeWithCapture",
-                "chargeAmount" => [
-                    "amount" => $order["total_price"],
-                    "currencyCode" => $order["currency_code"]
-                ]
+            'storeId' => $this->isProduction
+                ? $this->config['STORE_ID']['value']
+                : $this->config['STORE_ID']['test_value'],
+            'paymentDetails' => [
+                'paymentIntent' => 'AuthorizeWithCapture',
+                'chargeAmount' => [
+                    'amount' => $order['total_price'],
+                    'currencyCode' => $order['currency_code'],
+                ],
             ],
-            "merchantMetadata" => [
-                "merchantReferenceId" => $this->isProduction
-                    ? "transaction-".$orderId
-                    : "test-transaction-".$orderId,
-                "merchantStoreName" => $this->isProduction
-                    ? $this->config["STORE_NAME"]["value"]
-                    : $this->config["STORE_NAME"]["test_value"],
-                "noteToBuyer" => "Thank you for your purchase."
-            ]
+            'merchantMetadata' => [
+                'merchantReferenceId' => $this->isProduction
+                    ? 'transaction-'.$orderId
+                    : 'test-transaction-'.$orderId,
+                'merchantStoreName' => $this->isProduction
+                    ? $this->config['STORE_NAME']['value']
+                    : $this->config['STORE_NAME']['test_value'],
+                'noteToBuyer' => 'Thank you for your purchase.',
+            ],
         ];
     }
 
     /**
      * Get the return url
      *
-     * @param string $orderId
+     * @param  string  $orderId
      * @return string
      */
-    private function getCheckoutReturnUrl(string $orderId) : string
+    private function getCheckoutReturnUrl(string $orderId): string
     {
-        return config('app.frontend_url_public') . config('payment.return_path') . "?order_id={$orderId}";
+        return config('app.frontend_url_public').config('payment.return_path')."?order_id={$orderId}";
     }
 
     /**
      * Validate the paymentResponse object
      *
-     * @param array $paymentResponse
+     * @param  array  $paymentResponse
      * @return array
+     *
      * @throws PaymentException
      */
-    private function validateResponse(array $paymentResponse) : array
+    private function validateResponse(array $paymentResponse): array
     {
-        if (!in_array($paymentResponse["status"], [200, 201])) {
-            throw new PaymentException("Non-standard Amazon response code:".$paymentResponse["status"]."Data: " . json_encode($paymentResponse["response"]));
+        if (! in_array($paymentResponse['status'], [200, 201])) {
+            throw new PaymentException('Non-standard Amazon response code:'.$paymentResponse['status'].'Data: '.json_encode($paymentResponse['response']));
         }
 
         return $paymentResponse;
@@ -206,20 +213,21 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
      * Create the client via the Amazon API
      *
      * @return void
+     *
      * @throws \Exception
      */
-    private function createClient() : void
+    private function createClient(): void
     {
         try {
             $settings = $this->paymentProviderService->get('amazon', 'name');
-            $this->config = collect($settings["payment_provider_configs"])->keyBy('setting')->toArray();
+            $this->config = collect($settings['payment_provider_configs'])->keyBy('setting')->toArray();
 
             $this->amazonClient = new Client([
-                'public_key_id' => $this->isProduction ? $this->config["PUBLIC_KEY_ID"]["value"] : $this->config["PUBLIC_KEY_ID"]["test_value"],
-                'private_key'   => Storage::disk('local')->get('/amazon/amazon_pay_private_key.pem'),
-                'region'        => $this->isProduction ? $this->config["REGION"]["value"] : $this->config["REGION"]["test_value"],
+                'public_key_id' => $this->isProduction ? $this->config['PUBLIC_KEY_ID']['value'] : $this->config['PUBLIC_KEY_ID']['test_value'],
+                'private_key' => Storage::disk('local')->get('/amazon/amazon_pay_private_key.pem'),
+                'region' => $this->isProduction ? $this->config['REGION']['value'] : $this->config['REGION']['test_value'],
                 // 'sandbox'       => !$this->isProduction,
-                'sandbox'       => true
+                'sandbox' => true,
             ]);
         } catch (\Exception | \Error $e) {
             $this->errorService->logException($e);

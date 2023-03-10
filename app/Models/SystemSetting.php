@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class SystemSetting extends Model
 {
@@ -19,7 +19,7 @@ class SystemSetting extends Model
     protected $fillable = [
         'key',
         'value',
-        'type'
+        'type',
     ];
 
     /**
@@ -29,6 +29,6 @@ class SystemSetting extends Model
      */
     protected $casts = [
         'id' => 'string',
-        'type' => 'integer'
+        'type' => 'integer',
     ];
 }

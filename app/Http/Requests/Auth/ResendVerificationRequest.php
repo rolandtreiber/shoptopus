@@ -11,7 +11,7 @@ class ResendVerificationRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,10 +21,10 @@ class ResendVerificationRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'email' => 'required|string|email|max:255|exists:users'
+            'email' => 'required|string|email|max:255|exists:users',
         ];
     }
 }

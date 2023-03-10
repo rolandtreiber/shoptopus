@@ -19,7 +19,7 @@ class ProductCategoryStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'json'],
-            'description' => ['required', 'json']
+            'description' => ['required', 'json'],
         ];
     }
 }

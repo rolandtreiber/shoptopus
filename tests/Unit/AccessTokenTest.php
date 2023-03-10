@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\AccessToken;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AccessTokenTest extends TestCase
 {
@@ -13,7 +13,7 @@ class AccessTokenTest extends TestCase
 
     protected $access_token;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

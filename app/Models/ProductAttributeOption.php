@@ -4,16 +4,16 @@ namespace App\Models;
 
 use App\Traits\HasFile;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property mixed $image
@@ -30,7 +30,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['name'])
@@ -46,7 +46,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'slug',
         'name',
         'value',
-        'enabled'
+        'enabled',
     ];
 
     /**
@@ -57,16 +57,16 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'value',
         'enabled' => [
             'description' => '0 = disabled, 1 = enabled',
-            'validation' => 'boolean'
-        ]
+            'validation' => 'boolean',
+        ],
     ];
 
     protected $importableRelationships = [
-        'product_attribute'
+        'product_attribute',
     ];
 
     protected $exportableRelationships = [
-        'product_attribute'
+        'product_attribute',
     ];
 
     /**
@@ -80,7 +80,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'value',
         'image',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -91,7 +91,7 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
     protected $casts = [
         'id' => 'string',
         'image' => 'object',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 
     public function product_attribute(): \Illuminate\Database\Eloquent\Relations\BelongsTo

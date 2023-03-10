@@ -33,7 +33,7 @@ class PaymentDetailResource extends JsonResource
             'payable_type' => $this->payable_type,
             'user' => new UserListResource($this->user),
             'payment_source' => new PaymentSourceListResource($this->payment_source),
-            'payable' => $this->payable
+            'payable' => $this->payable,
         ];
     }
 }

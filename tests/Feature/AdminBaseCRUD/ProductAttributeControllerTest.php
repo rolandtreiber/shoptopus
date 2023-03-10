@@ -16,6 +16,7 @@ use Throwable;
 /**
  * @group admin-base-crud
  * @group product_attributes
+ *
  * @see \App\Http\Controllers\Admin\ProductAttributeController
  */
 class ProductAttributeControllerTest extends AdminControllerTestCase
@@ -33,36 +34,36 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.product-attributes', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $attributes[0]->id
+            'id' => $attributes[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $attributes[1]->id
+            'id' => $attributes[1]->id,
         ]);
     }
 
     /**
      * @test
+     *
      * @throws Throwable
      */
     public function test_product_attribute_can_be_shown()
     {
         $attribute = ProductAttribute::factory()->create();
         $options = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->count(2)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.show.product-attribute', [
             'attribute' => $attribute->id,
         ]));
         $response->assertJsonFragment([
-            'id' => $attribute->id
+            'id' => $attribute->id,
         ]);
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.id', $attribute->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $attribute->id)
                 ->has('data.options', 2)
                 ->where('data.options.0.id', $options[0]->id)
                 ->where('data.options.1.id', $options[1]->id)
@@ -80,10 +81,10 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-attribute'), [
             'name' => json_encode([
                 'en' => 'Color',
-                'de' => 'Farbe'
+                'de' => 'Farbe',
             ]),
             'image' => UploadedFile::fake()->image('product_attribute.jpg'),
-            'type' => ProductAttributeType::Text
+            'type' => ProductAttributeType::Text,
         ]);
         $response->assertCreated();
         $attributeId = $response->json()['data']['id'];
@@ -101,14 +102,14 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-attribute', [
-            'attribute' => $attribute
+            'attribute' => $attribute,
         ]), [
             'name' => json_encode([
                 'en' => 'Color',
-                'de' => 'Farbe'
+                'de' => 'Farbe',
             ]),
             'image' => UploadedFile::fake()->image('product_attribute.jpg'),
-            'type' => ProductAttributeType::Text
+            'type' => ProductAttributeType::Text,
         ]);
         $attributeId = $response->json()['data']['id'];
         $this->assertEquals($attributeId, $attribute->id);
@@ -125,7 +126,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     {
         $attribute = ProductAttribute::factory()->create();
         $options = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->count(2)->create();
 
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -144,14 +145,14 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-attribute-option', [
-            'attribute' => $attribute
+            'attribute' => $attribute,
         ]), [
             'name' => json_encode([
                 'en' => 'Red',
-                'de' => 'Rot'
+                'de' => 'Rot',
             ]),
             'image' => UploadedFile::fake()->image('red.jpg'),
-            'value' => 1
+            'value' => 1,
         ]);
         $attributeOptionId = $response->json()['data']['id'];
         $option = ProductAttributeOption::find($attributeOptionId);
@@ -168,19 +169,19 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-attribute-option', [
             'attribute' => $attribute,
-            'option' => $option
+            'option' => $option,
         ]), [
             'name' => json_encode([
                 'en' => 'Yellow',
-                'de' => 'Gelb'
+                'de' => 'Gelb',
             ]),
             'image' => UploadedFile::fake()->image('red.jpg'),
-            'value' => 1
+            'value' => 1,
         ]);
         $attributeOptionId = $response->json()['data']['id'];
         $this->assertEquals($option->id, $attributeOptionId);
@@ -198,12 +199,12 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $this->delete(route('admin.api.delete.product-attribute-option', [
             'attribute' => $attribute,
-            'option' => $option
+            'option' => $option,
         ]));
 
         $this->assertSoftDeleted($option);
@@ -220,7 +221,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-attribute'), [
             'name' => json_encode([
                 'en' => 'Color',
-                'de' => 'Farbe'
+                'de' => 'Farbe',
             ]),
         ]);
         $response->assertStatus(422);
@@ -234,14 +235,15 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-attribute', [
-            'attribute' => $attribute
+            'attribute' => $attribute,
         ]), [
             'name' => json_encode([
                 'en' => 'Red',
-                'de' => 'Rot'
+                'de' => 'Rot',
             ]),
         ]);
-        $response->assertStatus(422);    }
+        $response->assertStatus(422);
+    }
 
     /**
      * @test
@@ -262,12 +264,12 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([
-            'product_attribute_id' => $attribute->id
+            'product_attribute_id' => $attribute->id,
         ])->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->delete(route('admin.api.delete.product-attribute-option', [
             'attribute' => $attribute,
-            'option' => $option
+            'option' => $option,
         ]));
         $response->assertForbidden();
     }

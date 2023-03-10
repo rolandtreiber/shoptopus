@@ -15,8 +15,9 @@ class VoucherCodeRepository implements VoucherCodeRepositoryInterface
     {
         try {
             DB::table('voucher_codes')->whereIn('id', $ids)->update(['valid_until' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
@@ -25,8 +26,9 @@ class VoucherCodeRepository implements VoucherCodeRepositoryInterface
     {
         try {
             DB::table('voucher_codes')->whereIn('id', $ids)->update(['valid_from' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
@@ -41,10 +43,11 @@ class VoucherCodeRepository implements VoucherCodeRepositoryInterface
         try {
             DB::table('voucher_codes')->whereIn('id', $ids)->update([
                 'valid_from' => Carbon::now(),
-                'valid_until' => $expiry
+                'valid_until' => $expiry,
             ]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }
@@ -53,8 +56,9 @@ class VoucherCodeRepository implements VoucherCodeRepositoryInterface
     {
         try {
             DB::table('voucher_codes')->whereIn('id', $ids)->update(['deleted_at' => Carbon::now()]);
+
             return true;
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return false;
         }
     }

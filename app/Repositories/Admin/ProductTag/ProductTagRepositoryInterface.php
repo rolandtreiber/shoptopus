@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Admin\ProductTag;
 
-interface ProductTagRepositoryInterface {
-
+interface ProductTagRepositoryInterface
+{
     public function bulkUpdateAvailability(array $ids, bool $availability): bool;
-    public function bulkDelete(array $ids): bool;
 
+    public function bulkDelete(array $ids): bool;
 }

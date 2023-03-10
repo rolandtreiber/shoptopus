@@ -18,7 +18,7 @@ class DiscountRuleUpdateRequest extends FormRequest
             'name' => ['json'],
             'amount' => ['numeric'],
             'valid_from' => ['date'],
-            'valid_until' => ['date']
+            'valid_until' => ['date'],
         ];
     }
 }

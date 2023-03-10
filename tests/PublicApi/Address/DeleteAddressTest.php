@@ -2,9 +2,9 @@
 
 namespace Tests\PublicApi\Address;
 
-use Tests\TestCase;
 use App\Models\Address;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class DeleteAddressTest extends TestCase
 {
@@ -12,7 +12,7 @@ class DeleteAddressTest extends TestCase
 
     protected $address;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -44,18 +44,18 @@ class DeleteAddressTest extends TestCase
     {
         $this->assertDatabaseHas('addresses', [
             'id' => $this->address->id,
-            'deleted_at' => null
+            'deleted_at' => null,
         ]);
 
         $this->signIn($this->address->user)->sendRequest()->assertOk();
 
         $this->assertDatabaseHas('addresses', [
             'id' => $this->address->id,
-            'deleted_at' => now()
+            'deleted_at' => now(),
         ]);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->deleteJson(route('api.address.delete', ['id' => $this->address->id]), $data);
     }

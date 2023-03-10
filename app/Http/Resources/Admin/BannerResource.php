@@ -26,7 +26,7 @@ class BannerResource extends JsonResource
             'button_url' => $this->button_url,
             'background_image' => $this->background_image,
             'total_clicks' => $this->total_clicks,
-            'enabled' => $this->enabled
+            'enabled' => $this->enabled,
         ];
     }
 }

@@ -2,33 +2,34 @@
 
 namespace App\Repositories\Local\DeliveryRule;
 
-interface DeliveryRuleRepositoryInterface {
-
+interface DeliveryRuleRepositoryInterface
+{
     /**
      * Get the delivery types for the given delivery rules
      *
-     * @param array $deliveryTypeIds
+     * @param  array  $deliveryTypeIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getDeliveryTypes(array $deliveryTypeIds = []) : array;
+    public function getDeliveryTypes(array $deliveryTypeIds = []): array;
 
     /**
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array;
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array;
 
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array;
-
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array;
 }

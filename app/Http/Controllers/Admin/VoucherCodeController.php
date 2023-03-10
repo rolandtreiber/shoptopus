@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\Interval;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\BulkOperation\BulkOperationRequest;
 use App\Http\Requests\Admin\BulkOperation\VoucherCodeBulkOperationRequest;
 use App\Http\Requests\Admin\VoucherCodeStoreRequest;
 use App\Http\Requests\Admin\VoucherCodeUpdateRequest;
@@ -21,10 +20,11 @@ use Illuminate\Validation\Rule;
 class VoucherCodeController extends Controller
 {
     use ProcessRequest;
+
     protected VoucherCodeRepositoryInterface $voucherCodeRepository;
 
     /**
-     * @param VoucherCodeRepositoryInterface $voucherCodeRepository
+     * @param  VoucherCodeRepositoryInterface  $voucherCodeRepository
      */
     public function __construct(VoucherCodeRepositoryInterface $voucherCodeRepository)
     {
@@ -32,7 +32,7 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -41,7 +41,7 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param VoucherCode $voucherCode
+     * @param  VoucherCode  $voucherCode
      * @return VoucherCodeDetailResource
      */
     public function show(VoucherCode $voucherCode): VoucherCodeDetailResource
@@ -52,7 +52,7 @@ class VoucherCodeController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param VoucherCodeStoreRequest $request
+     * @param  VoucherCodeStoreRequest  $request
      * @return VoucherCodeListResource
      */
     public function create(VoucherCodeStoreRequest $request): VoucherCodeListResource
@@ -68,8 +68,8 @@ class VoucherCodeController extends Controller
     /**
      * Update a resource.
      *
-     * @param VoucherCode $voucherCode
-     * @param VoucherCodeUpdateRequest $request
+     * @param  VoucherCode  $voucherCode
+     * @param  VoucherCodeUpdateRequest  $request
      * @return VoucherCodeListResource
      */
     public function update(VoucherCode $voucherCode, VoucherCodeUpdateRequest $request): VoucherCodeListResource
@@ -82,18 +82,20 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param VoucherCode $voucherCode
+     * @param  VoucherCode  $voucherCode
      * @return string[]
      */
     public function delete(VoucherCode $voucherCode): array
     {
         $voucherCode->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param VoucherCodeBulkOperationRequest $request
+     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkExpire(VoucherCodeBulkOperationRequest $request): array
@@ -102,12 +104,12 @@ class VoucherCodeController extends Controller
             return ['status' => 'Success'];
         }
         throw new BulkOperationException();
-
     }
 
     /**
-     * @param VoucherCodeBulkOperationRequest $request
+     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkStart(VoucherCodeBulkOperationRequest $request): array
@@ -116,12 +118,12 @@ class VoucherCodeController extends Controller
             return ['status' => 'Success'];
         }
         throw new BulkOperationException();
-
     }
 
     /**
-     * @param VoucherCodeBulkOperationRequest $request
+     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkActivateForPeriod(VoucherCodeBulkOperationRequest $request): array
@@ -130,8 +132,8 @@ class VoucherCodeController extends Controller
             'period' => ['required', Rule::in([
                 Interval::Day,
                 Interval::Week,
-                Interval::Month
-            ])]
+                Interval::Month,
+            ])],
         ]);
         if ($this->voucherCodeRepository->bulkActivateForPeriod($request->ids, $request->period)) {
             return ['status' => 'Success'];
@@ -140,8 +142,9 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param VoucherCodeBulkOperationRequest $request
+     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(VoucherCodeBulkOperationRequest $request): array

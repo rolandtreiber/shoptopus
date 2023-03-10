@@ -15,7 +15,7 @@ class SendEmailRequest extends FormRequest
     {
         return [
             'addresses' => ['required'],
-            'addresses.*' => ['email']
+            'addresses.*' => ['email'],
         ];
     }
 }

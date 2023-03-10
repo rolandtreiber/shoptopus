@@ -13,7 +13,7 @@ class PaymentStatusUpdateBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:payments,id']
+            'ids.*' => ['exists:payments,id'],
         ];
     }
 }

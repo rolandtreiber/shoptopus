@@ -17,18 +17,21 @@ final class NotificationType extends Enum
 {
     const NewOrderPlaced = [
         'type' => 'new-order',
-        'className' => NewOrder::class
+        'className' => NewOrder::class,
     ];
+
     const ProductOutOfStock = [
         'type' => 'product-out-of-stock',
-        'className' => ProductOutOfStock::class
+        'className' => ProductOutOfStock::class,
     ];
+
     const ProductRunningLow = [
         'type' => 'product-running-low',
-        'className' => ProductRunningLow::class
+        'className' => ProductRunningLow::class,
     ];
+
     const UserSignup = [
         'type' => 'user-signup',
-        'className' => UserSignup::class
+        'className' => UserSignup::class,
     ];
 }

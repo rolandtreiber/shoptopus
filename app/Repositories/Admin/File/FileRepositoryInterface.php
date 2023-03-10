@@ -2,8 +2,7 @@
 
 namespace App\Repositories\Admin\File;
 
-interface FileRepositoryInterface {
-
+interface FileRepositoryInterface
+{
     public function bulkDelete(array $ids): bool;
-
 }

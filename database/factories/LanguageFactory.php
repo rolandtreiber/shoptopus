@@ -2,9 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use App\Models\Language;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class LanguageFactory extends Factory
 {
@@ -23,7 +22,7 @@ class LanguageFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->name(),
         ];
     }
 }

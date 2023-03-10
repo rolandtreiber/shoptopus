@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Order;
 use App\Models\Payment;
-use Illuminate\Support\Str;
 use App\Models\PaymentSource;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
@@ -16,7 +16,7 @@ class PaymentTest extends TestCase
 
     protected $payment;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

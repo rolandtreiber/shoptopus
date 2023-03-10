@@ -23,7 +23,7 @@ class ReportOverviewResource extends JsonResource
             'pending_orders' => $this['pending_orders'],
             'new_signups' => $this['new_signups'],
             'low_stock' => $this['low_stock'],
-            'todays_orders' => $this['todays_orders']
+            'todays_orders' => $this['todays_orders'],
         ];
     }
 }

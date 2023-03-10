@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\AccessToken;
 
-interface AccessTokenServiceInterface {
+interface AccessTokenServiceInterface
+{
     //
 }

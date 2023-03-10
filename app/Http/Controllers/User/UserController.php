@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\Local\User\UserServiceInterface;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -18,15 +18,15 @@ class UserController extends Controller
     /**
      * Favorite a single model
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function favorites(Request $request) : \Illuminate\Http\JsonResponse
+    public function favorites(Request $request): \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->userService->favorites(), $request));
         } catch (\Exception | \Error $e) {
-            return $this->errorResponse($e, __("error_messages." . $e->getCode()));
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 }

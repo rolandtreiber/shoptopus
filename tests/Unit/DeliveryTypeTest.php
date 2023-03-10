@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Order;
-use Illuminate\Support\Str;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
+use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 /**
  * @group delivery_type
@@ -18,7 +18,7 @@ class DeliveryTypeTest extends TestCase
 
     protected $delivery_type;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +38,7 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_name()
+    public function it_returns_a_translated_name()
     {
         $this->delivery_type
             ->setTranslation('name', 'en', 'english translation')
@@ -59,7 +59,7 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_description()
+    public function it_returns_a_translated_description()
     {
         $this->delivery_type
             ->setTranslation('description', 'en', 'english translation')

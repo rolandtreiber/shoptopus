@@ -2,22 +2,22 @@
 
 namespace Tests\PublicApi\Payments;
 
-use Tests\PaymentTestCase;
-use Tests\TestCase;
+use App\Enums\OrderStatus;
 use App\Models\Cart;
 use App\Models\Order;
-use App\Enums\OrderStatus;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
     protected $cart;
+
     protected $user;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -61,7 +61,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
         $data = [
             'provider' => 'some provider',
-            'orderId' => $order->id
+            'orderId' => $order->id,
         ];
 
         $this->signIn($this->user)->sendRequest($data)->assertJsonValidationErrors(['provider']);
@@ -75,21 +75,21 @@ class ExecutePaymentTest extends PaymentTestCase
     {
         $order = Order::factory()->create([
             'user_id' => $this->user->id,
-            'status' => OrderStatus::Processing
+            'status' => OrderStatus::Processing,
         ]);
 
         $data = [
             'provider' => 'stripe',
-            'orderId' => $order->id
+            'orderId' => $order->id,
         ];
 
         $res = $this->signIn($this->user)->sendRequest($data)->json();
 
-        $this->assertEquals("This action is unauthorized.", $res['developer_message']);
-        $this->assertEquals("Sorry there was a system error, the administrator has been informed.", $res['user_message']);
+        $this->assertEquals('This action is unauthorized.', $res['developer_message']);
+        $this->assertEquals('Sorry there was a system error, the administrator has been informed.', $res['user_message']);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.payment.execute'), $data);
     }

@@ -2,9 +2,9 @@
 
 namespace App\Repositories\Admin\Banner;
 
-interface BannerRepositoryInterface {
-
+interface BannerRepositoryInterface
+{
     public function bulkUpdateAvailability(array $ids, bool $availability): bool;
-    public function bulkDelete(array $ids): bool;
 
+    public function bulkDelete(array $ids): bool;
 }

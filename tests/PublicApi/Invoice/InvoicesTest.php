@@ -36,5 +36,4 @@ class InvoicesTest extends InvoicesTestCase
         $this->assertEquals($response['error_code'], 3000);
         $this->assertEquals($response['developer_message'], 'invalid_token');
     }
-
 }

@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class CartTest extends TestCase
 {
@@ -14,7 +14,7 @@ class CartTest extends TestCase
 
     protected $cart;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

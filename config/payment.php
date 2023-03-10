@@ -2,5 +2,5 @@
 
 return [
     'return_path' => '/payment/complete',
-    'cancel_path' => '/order/cancel'
+    'cancel_path' => '/order/cancel',
 ];

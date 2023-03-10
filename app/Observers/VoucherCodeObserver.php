@@ -9,7 +9,7 @@ use App\Models\VoucherCode;
 class VoucherCodeObserver
 {
     /**
-     * @param VoucherCode $voucherCode
+     * @param  VoucherCode  $voucherCode
      */
     public function creating(VoucherCode $voucherCode)
     {

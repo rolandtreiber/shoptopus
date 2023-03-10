@@ -2,31 +2,31 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use App\Traits\HasUUID;
 use App\Traits\HasFiles;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use App\Traits\HasUUID;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property string $id
  * @property mixed $ratable
  * @property User $user
- * @property integer $rating
+ * @property int $rating
  * @property string $language_prefix
  * @property string $description
  * @property string $title
  * @property string $ratable_type
- * @property integer $ratable_id
- * @property boolean $verified
- * @property boolean $enabled
+ * @property int $ratable_id
+ * @property bool $verified
+ * @property bool $enabled
  * @property Carbon $created_at
  */
 class Rating extends SearchableModel implements Auditable, Exportable
@@ -36,7 +36,7 @@ class Rating extends SearchableModel implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['user.name', 'rating'])
@@ -67,7 +67,7 @@ class Rating extends SearchableModel implements Auditable, Exportable
         'ratable_id' => 'string',
         'ratable_type' => 'string',
         'enabled' => 'boolean',
-        'verified' => 'boolean'
+        'verified' => 'boolean',
     ];
 
     /**
@@ -80,7 +80,7 @@ class Rating extends SearchableModel implements Auditable, Exportable
         'description',
         'language_prefix',
         'verified',
-        'enabled'
+        'enabled',
     ];
 
     /**

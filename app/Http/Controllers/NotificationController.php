@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ListRequest;
-use App\Http\Resources\Admin\ProductTagListResource;
-use App\Models\ProductTag;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use App\Http\Resources\NotificationResource;
 use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NotificationController extends Controller
 {
-
     /**
-     * @param Request $request
+     * @param  Request  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         /** @var User $user */
         $user = Auth()->user();
+
         return NotificationResource::collection(Notification::filtered([], $request)->view($request->view)->where('notifiable_type', User::class)->where('notifiable_id', $user->id)->paginate($request->paginate));
     }
 
@@ -48,11 +46,12 @@ class NotificationController extends Controller
         /** @var User $user */
         $user = Auth()->user();
         $user->unreadNotifications->markAsRead();
+
         return response()->json([]);
     }
 
     /**
-     * @param Notification $notification
+     * @param  Notification  $notification
      * @return NotificationResource
      */
     public function show(Notification $notification): NotificationResource

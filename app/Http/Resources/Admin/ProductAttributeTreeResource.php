@@ -16,11 +16,11 @@ class ProductAttributeTreeResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'id' =>$this->id,
+            'id' => $this->id,
             'name' => $this->getTranslations('name'),
             'type' => $this->type,
             'image' => $this->image,
-            'options' => ProductAttributeOptionTreeResource::collection($this->options)
+            'options' => ProductAttributeOptionTreeResource::collection($this->options),
         ];
     }
 }

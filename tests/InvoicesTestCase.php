@@ -12,21 +12,23 @@ use Illuminate\Support\Facades\Notification;
 
 class InvoicesTestCase extends TestCase
 {
-
     use RefreshDatabase;
 
     protected $order;
+
     protected $invoice;
+
     protected $payment;
+
     protected $token;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
         Notification::fake();
         $this->order = Order::factory()->state([
-            'delivery_type_id' => DeliveryType::factory()
+            'delivery_type_id' => DeliveryType::factory(),
         ])->create();
     }
 
@@ -35,9 +37,8 @@ class InvoicesTestCase extends TestCase
         $this->payment = Payment::factory()->state([
             'payable_type' => Order::class,
             'payable_id' => $this->order->id,
-            'payment_source_id' => PaymentSource::factory()
+            'payment_source_id' => PaymentSource::factory(),
         ])->create();
         $this->invoice = Invoice::where('order_id', $this->order->id)->first();
     }
-
 }

@@ -6,13 +6,11 @@ use Illuminate\Support\Str;
 
 trait HasUUID
 {
-
     protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($model)
-        {
+        static::creating(function ($model) {
             $uuid = (string) Str::orderedUuid();
             $model->id = $uuid;
         });
@@ -27,6 +25,7 @@ trait HasUUID
     {
         return false;
     }
+
     /**
      * Get the auto-incrementing key type.
      *
@@ -39,12 +38,11 @@ trait HasUUID
 
     public function findNth($n)
     {
-        return $this->offset($n-1)->take(1)->first();
+        return $this->offset($n - 1)->take(1)->first();
     }
 
     public function findNthId($n)
     {
-        return $this->offset($n-1)->take(1)->first()->id;
+        return $this->offset($n - 1)->take(1)->first()->id;
     }
-
 }

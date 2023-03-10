@@ -16,7 +16,7 @@ class ModelImport implements WithMultipleSheets
     public function sheets(): array
     {
         return [
-            new ModelImportSheet($this->excelImportExport)
+            new ModelImportSheet($this->excelImportExport),
         ];
     }
 }

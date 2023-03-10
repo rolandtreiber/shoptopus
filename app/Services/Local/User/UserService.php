@@ -2,10 +2,10 @@
 
 namespace App\Services\Local\User;
 
+use App\Repositories\Local\User\UserRepositoryInterface;
+use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;
 use Illuminate\Support\Facades\Config;
-use App\Services\Local\Error\ErrorServiceInterface;
-use App\Repositories\Local\User\UserRepositoryInterface;
 
 class UserService extends ModelService implements UserServiceInterface
 {
@@ -17,11 +17,12 @@ class UserService extends ModelService implements UserServiceInterface
     /**
      * Get the currently authenticated user instance
      *
-     * @param bool $returnAsArray
+     * @param  bool  $returnAsArray
      * @return mixed
+     *
      * @throws \Exception
      */
-    public function getCurrentUser(bool $returnAsArray = true) : mixed
+    public function getCurrentUser(bool $returnAsArray = true): mixed
     {
         try {
             return $this->modelRepository->getCurrentUser($returnAsArray);
@@ -35,9 +36,10 @@ class UserService extends ModelService implements UserServiceInterface
      * Get the currently authenticated user's favorited products
      *
      * @return array
+     *
      * @throws \Exception
      */
-    public function favorites() : array
+    public function favorites(): array
     {
         try {
             return $this->modelRepository->favorites();
@@ -51,9 +53,10 @@ class UserService extends ModelService implements UserServiceInterface
      * Get the currently authenticated user's favorited product ids
      *
      * @return array
+     *
      * @throws \Exception
      */
-    public function getFavoritedProductIds() : array
+    public function getFavoritedProductIds(): array
     {
         try {
             return $this->modelRepository->getFavoritedProductIds();

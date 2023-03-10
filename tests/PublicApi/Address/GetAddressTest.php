@@ -2,10 +2,10 @@
 
 namespace Tests\PublicApi\Address;
 
-use Tests\TestCase;
 use App\Models\Address;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Repositories\Local\Address\AddressRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class GetAddressTest extends TestCase
 {
@@ -13,7 +13,7 @@ class GetAddressTest extends TestCase
 
     protected $address;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -59,8 +59,8 @@ class GetAddressTest extends TestCase
             ->sendRequest()
             ->assertJsonStructure([
                 'data' => [
-                    app()->make(AddressRepository::class)->getSelectableColumns(false)
-                ]
+                    app()->make(AddressRepository::class)->getSelectableColumns(false),
+                ],
             ]);
     }
 
@@ -88,14 +88,14 @@ class GetAddressTest extends TestCase
                             'email_verified_at',
                             'client_ref',
                             'temporary',
-                            'is_favorite'
-                        ]
-                    ]
-                ]
+                            'is_favorite',
+                        ],
+                    ],
+                ],
             ]);
     }
 
-    protected function sendRequest() : \Illuminate\Testing\TestResponse
+    protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.address.get', ['id' => $this->address->id]));
     }

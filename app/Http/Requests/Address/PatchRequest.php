@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Address;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class PatchRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class PatchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return DB::table('addresses')
             ->where('id', $this->id)
@@ -25,17 +25,17 @@ class PatchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'address_line_1' => "sometimes|required|string|min:2|max:255",
-            'town' => "sometimes|required|string|min:2|max:255",
-            'post_code' => "sometimes|required|string|min:2|max:255",
-            'country' => "sometimes|required|string|min:2|max:255",
-            'address_line_2' => "sometimes|nullable|string|min:2|max:255",
-            'name' => "sometimes|nullable|string|max:255",
-            'lat' => ['sometimes','nullable','regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
-            'lon' => ['sometimes','nullable','regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/']
+            'address_line_1' => 'sometimes|required|string|min:2|max:255',
+            'town' => 'sometimes|required|string|min:2|max:255',
+            'post_code' => 'sometimes|required|string|min:2|max:255',
+            'country' => 'sometimes|required|string|min:2|max:255',
+            'address_line_2' => 'sometimes|nullable|string|min:2|max:255',
+            'name' => 'sometimes|nullable|string|max:255',
+            'lat' => ['sometimes', 'nullable', 'regex:/^[-]?(([0-8]?[0-9])\.(\d+))|(90(\.0+)?)$/'],
+            'lon' => ['sometimes', 'nullable', 'regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'],
         ];
     }
 }

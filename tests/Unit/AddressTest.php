@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Address;
-use Illuminate\Support\Str;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class AddressTest extends TestCase
 {
@@ -14,7 +14,7 @@ class AddressTest extends TestCase
 
     protected $address;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -24,9 +24,9 @@ class AddressTest extends TestCase
     /** @test */
     public function it_has_a_generated_slug()
     {
-        $string = optional($this->address->user)->name ?? '';
-        $string .= $this->address->name ? ' ' . $this->address->name : '';
-        $string .= $this->address->town ? ' ' . $this->address->town . ' ' : '';
+        $string = $this->address->user?->name ?? '';
+        $string .= $this->address->name ? ' '.$this->address->name : '';
+        $string .= $this->address->town ? ' '.$this->address->town.' ' : '';
 
         $this->assertEquals(Str::slug(trim($string)), $this->address->slug);
     }
@@ -91,7 +91,7 @@ class AddressTest extends TestCase
 
         $this->address->refresh();
 
-        $this->assertEquals("https://www.google.com/maps/@".$this->address->lat.",".$this->address->lon.",14z", $this->address->google_maps_url);
+        $this->assertEquals('https://www.google.com/maps/@'.$this->address->lat.','.$this->address->lon.',14z', $this->address->google_maps_url);
     }
 
     /** @test */

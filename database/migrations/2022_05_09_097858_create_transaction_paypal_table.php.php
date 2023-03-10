@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransactionPayPalTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -21,7 +21,7 @@ class CreateTransactionPayPalTable extends Migration
             $table->string('intent');
             $table->string('status');
             $table->string('reference_id');
-            $table->decimal('charge_amount', 10,2);
+            $table->decimal('charge_amount', 10, 2);
             $table->string('currency_code');
             $table->string('merchant_id');
             $table->string('merchant_email');
@@ -44,4 +44,4 @@ class CreateTransactionPayPalTable extends Migration
     {
         Schema::dropIfExists('transaction_paypal');
     }
-}
+};

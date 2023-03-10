@@ -12,14 +12,17 @@ class GenericAdminEmail extends ArchiveableEmail
     use Queueable, SerializesModels;
 
     public $subject;
+
     public $files;
+
     public $recipient;
+
     public $body;
 
     /**
      * Create a new message instance.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @param $recipient
      */
     public function __construct(Request $request, $recipient)
@@ -57,6 +60,7 @@ class GenericAdminEmail extends ArchiveableEmail
                 ]);
             }
         }
+
         return $email;
     }
 }

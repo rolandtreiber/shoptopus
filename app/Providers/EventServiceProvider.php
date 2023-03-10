@@ -82,4 +82,14 @@ class EventServiceProvider extends ServiceProvider
         Module::enabled('ratings') && Rating::observe(RatingObserver::class);
         VariantAttribute::observe(VariantAttributeObserver::class);
     }
+
+    /**
+     * Determine if events and listeners should be automatically discovered.
+     *
+     * @return bool
+     */
+    public function shouldDiscoverEvents()
+    {
+        return false;
+    }
 }

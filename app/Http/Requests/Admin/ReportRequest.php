@@ -19,7 +19,7 @@ class ReportRequest extends FormRequest
             'interval' => 'required',
             'models' => 'required',
             'type' => 'required',
-            'randomize_colors' => 'required'
+            'randomize_colors' => 'required',
         ];
     }
 }

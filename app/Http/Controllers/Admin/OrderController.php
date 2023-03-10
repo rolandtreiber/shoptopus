@@ -17,6 +17,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class OrderController extends Controller
 {
     use ProcessRequest;
+
     protected OrderRepositoryInterface $orderRepository;
 
     public function __construct(OrderRepositoryInterface $orderRepository)
@@ -25,7 +26,7 @@ class OrderController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -36,7 +37,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param Order $order
+     * @param  Order  $order
      * @return OrderDetailResource
      */
     public function show(Order $order): OrderDetailResource
@@ -47,8 +48,8 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param OrderStatusUpdateRequest $request
-     * @param Order $order
+     * @param  OrderStatusUpdateRequest  $request
+     * @param  Order  $order
      * @return OrderListResource
      */
     public function updateStatus(OrderStatusUpdateRequest $request, Order $order): OrderListResource
@@ -62,18 +63,20 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Order $order
+     * @param  Order  $order
      * @return string[]
      */
     public function delete(Order $order): array
     {
         $order->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param BulkOrderStatusUpdateRequest $request
+     * @param  BulkOrderStatusUpdateRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkStatusUpdate(BulkOrderStatusUpdateRequest $request): array

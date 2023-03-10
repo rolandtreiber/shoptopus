@@ -26,7 +26,7 @@ class PaymentListResource extends JsonResource
             'type' => $this->type,
             'status' => $this->status,
             'crated_at' => $this->created_at,
-            'user' => new UserListResource($this->user)
+            'user' => new UserListResource($this->user),
         ];
     }
 }

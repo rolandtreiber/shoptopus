@@ -2,20 +2,21 @@
 
 namespace Tests\PublicApi\Payments\Stripe;
 
-use Tests\PaymentTestCase;
 use App\Models\Cart;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
     protected $cart;
+
     protected $user;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,7 +39,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'stripe',
             'orderId' => $order->id,
-            'provider_payload' => $this->dummyPaymentIntent($total)
+            'provider_payload' => $this->dummyPaymentIntent($total),
         ];
 
         $res = $this->signIn($this->user)->sendRequest($data)->json('data.0');
@@ -51,11 +52,11 @@ class ExecutePaymentTest extends PaymentTestCase
 
         $this->assertDatabaseHas('transaction_stripe', [
             'payment_id' => $res['payment_id'],
-            'amount' => $total
+            'amount' => $total,
         ]);
     }
 
-    protected function dummyPaymentIntent($total) : array
+    protected function dummyPaymentIntent($total): array
     {
         return [
             'allowed_source_types' => ['card'],
@@ -63,30 +64,30 @@ class ExecutePaymentTest extends PaymentTestCase
             'automatic_payment_methods' => null,
             'canceled_at' => null,
             'cancellation_reason' => null,
-            'capture_method' => "automatic",
-            'client_secret' => "pi_3KxxzjBFieusaDib1qqAQcZA_secret_hbhRbI9Br1di5sSdL0HcAgvol",
-            'confirmation_method' => "automatic",
+            'capture_method' => 'automatic',
+            'client_secret' => 'pi_3KxxzjBFieusaDib1qqAQcZA_secret_hbhRbI9Br1di5sSdL0HcAgvol',
+            'confirmation_method' => 'automatic',
             'created' => now()->timestamp,
-            'currency' => "gbp",
+            'currency' => 'gbp',
             'description' => null,
-            'id' => "pi_3KxxzjBFieusaDib1qqAQcZA",
+            'id' => 'pi_3KxxzjBFieusaDib1qqAQcZA',
             'last_payment_error' => null,
             'livemode' => false,
             'next_action' => null,
             'next_source_action' => null,
-            'object' => "payment_intent",
-            'payment_method' => "pm_1Kxy03BFieusaDibx2UJBY4M",
+            'object' => 'payment_intent',
+            'payment_method' => 'pm_1Kxy03BFieusaDibx2UJBY4M',
             'payment_method_types' => ['card'],
             'processing' => null,
             'receipt_email' => null,
             'setup_future_usage' => null,
             'shipping' => null,
             'source' => null,
-            'status' => "succeeded"
+            'status' => 'succeeded',
         ];
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.payment.execute'), $data);
     }

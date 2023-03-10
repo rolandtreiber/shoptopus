@@ -29,7 +29,7 @@ class AddressResource extends JsonResource
             'lat' => $this->lat,
             'lon' => $this->lon,
             'country' => $this->country,
-            'composite' => $this->google_maps_url
+            'composite' => $this->google_maps_url,
         ];
     }
 }

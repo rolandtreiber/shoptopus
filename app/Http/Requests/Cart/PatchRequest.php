@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Cart;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\DB;
 
 class PatchRequest extends FormRequest
 {
@@ -12,7 +12,7 @@ class PatchRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return DB::table('carts')
             ->where('id', $this->id)
@@ -25,10 +25,10 @@ class PatchRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
-            'ip_address' => 'sometimes|nullable|string|max:100'
+            'ip_address' => 'sometimes|nullable|string|max:100',
         ];
     }
 }

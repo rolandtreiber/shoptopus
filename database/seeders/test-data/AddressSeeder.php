@@ -17,6 +17,7 @@ class AddressSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     *
      * @throws Exception
      */
     public function run()
@@ -26,8 +27,8 @@ class AddressSeeder extends Seeder
         foreach ($customers as $customer) {
             Address::factory()->state([
                 'user_id' => $customer->id,
-                'lat' => $faker->latitude,
-                'lon' => $faker->longitude
+                'lat' => $faker->latitude(),
+                'lon' => $faker->longitude(),
             ])->count(random_int(1, 2))->create();
         }
     }

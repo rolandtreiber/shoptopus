@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\ProductAttribute;
-use App\Models\ProductCategory;
 use App\Traits\ProcessRequest;
 
 class ProductAttributeObserver
@@ -11,7 +10,7 @@ class ProductAttributeObserver
     use ProcessRequest;
 
     /**
-     * @param ProductAttribute $productAttribute
+     * @param  ProductAttribute  $productAttribute
      */
     public function deleting(ProductAttribute $productAttribute): void
     {

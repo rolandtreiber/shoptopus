@@ -12,16 +12,17 @@ use App\Http\Resources\Admin\BannerResource;
 use App\Models\Banner;
 use App\Repositories\Admin\Banner\BannerRepositoryInterface;
 use App\Traits\ProcessRequest;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use function config;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class BannerController extends Controller
 {
     use ProcessRequest;
+
     protected BannerRepositoryInterface $bannerRepository;
 
     /**
-     * @param BannerRepositoryInterface $bannerRepository
+     * @param  BannerRepositoryInterface  $bannerRepository
      */
     public function __construct(BannerRepositoryInterface $bannerRepository)
     {
@@ -29,7 +30,7 @@ class BannerController extends Controller
     }
 
     /**
-     * @param ListRequest $request
+     * @param  ListRequest  $request
      * @return AnonymousResourceCollection
      */
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -38,7 +39,7 @@ class BannerController extends Controller
     }
 
     /**
-     * @param Banner $banner
+     * @param  Banner  $banner
      * @return BannerResource
      */
     public function show(Banner $banner): BannerResource
@@ -49,7 +50,7 @@ class BannerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param BannerStoreRequest $request
+     * @param  BannerStoreRequest  $request
      * @return BannerResource
      */
     public function create(BannerStoreRequest $request): BannerResource
@@ -66,8 +67,8 @@ class BannerController extends Controller
     /**
      * Update a resource.
      *
-     * @param Banner $banner
-     * @param BannerUpdateRequest $request
+     * @param  Banner  $banner
+     * @param  BannerUpdateRequest  $request
      * @return BannerResource
      */
     public function update(Banner $banner, BannerUpdateRequest $request): BannerResource
@@ -82,24 +83,26 @@ class BannerController extends Controller
     }
 
     /**
-     * @param Banner $banner
+     * @param  Banner  $banner
      * @return string[]
      */
     public function delete(Banner $banner): array
     {
         $banner->delete();
+
         return ['status' => 'Success'];
     }
 
     /**
-     * @param BannerBulkOperationRequest $request
+     * @param  BannerBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkUpdateAvailability(BannerBulkOperationRequest $request): array
     {
         $request->validate([
-            'availability' => ['required', 'boolean']
+            'availability' => ['required', 'boolean'],
         ]);
         if ($this->bannerRepository->bulkUpdateAvailability($request->ids, $request->availability)) {
             return ['status' => 'Success'];
@@ -108,8 +111,9 @@ class BannerController extends Controller
     }
 
     /**
-     * @param BannerBulkOperationRequest $request
+     * @param  BannerBulkOperationRequest  $request
      * @return string[]
+     *
      * @throws BulkOperationException
      */
     public function bulkDelete(BannerBulkOperationRequest $request): array

@@ -2,11 +2,11 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Cart;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class LoginWithCartIdTest extends TestCase
 {
@@ -14,7 +14,7 @@ class LoginWithCartIdTest extends TestCase
 
     protected $user;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -38,30 +38,30 @@ class LoginWithCartIdTest extends TestCase
 
         $this->assertDatabaseHas('carts', [
             'id' => $cart_front_end->id,
-            'user_id' => null
+            'user_id' => null,
         ]);
 
         $this->assertDatabaseHas('carts', [
             'id' => $this->user->cart->id,
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $cart_front_end->id,
             'product_id' => $product_front_end->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $this->user->cart->id,
             'product_id' => $product_back_end->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $data = [
             'email' => $this->user->email,
             'password' => 'password',
-            'cart_id' => $cart_front_end->id
+            'cart_id' => $cart_front_end->id,
         ];
 
         $cart = $this->signIn($this->user)
@@ -87,19 +87,19 @@ class LoginWithCartIdTest extends TestCase
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $cart_front_end->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $this->user->cart->id,
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $data = [
             'email' => $this->user->email,
             'password' => 'password',
-            'cart_id' => $cart_front_end->id
+            'cart_id' => $cart_front_end->id,
         ];
 
         $cart = $this->signIn($this->user)
@@ -108,7 +108,7 @@ class LoginWithCartIdTest extends TestCase
 
         $this->assertCount(1, $cart['products']);
 
-        $this->assertEquals("2", $cart['products'][0]['quantity']);
+        $this->assertEquals('2', $cart['products'][0]['quantity']);
     }
 
     /**
@@ -126,30 +126,30 @@ class LoginWithCartIdTest extends TestCase
 
         $this->assertDatabaseHas('carts', [
             'id' => $cart_front_end->id,
-            'user_id' => null
+            'user_id' => null,
         ]);
 
         $this->assertDatabaseHas('carts', [
             'id' => $this->user->cart->id,
-            'user_id' => $this->user->id
+            'user_id' => $this->user->id,
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $cart_front_end->id,
             'product_id' => $product_front_end->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $this->user->cart->id,
             'product_id' => $product_back_end->id,
-            'quantity' => 1
+            'quantity' => 1,
         ]);
 
         $data = [
             'email' => $this->user->email,
             'password' => 'password',
-            'cart_id' => $cart_front_end->id
+            'cart_id' => $cart_front_end->id,
         ];
 
         $this->signIn($this->user)
@@ -158,15 +158,15 @@ class LoginWithCartIdTest extends TestCase
 
         $this->assertDatabaseMissing('cart_product', [
             'cart_id' => $cart_front_end->id,
-            'product_id' => $product_front_end->id
+            'product_id' => $product_front_end->id,
         ]);
 
         $this->assertDatabaseMissing('carts', [
-            'id' => $cart_front_end->id
+            'id' => $cart_front_end->id,
         ]);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.auth.login'), $data);
     }

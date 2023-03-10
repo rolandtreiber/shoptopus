@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use App\Models\Product;
-use Illuminate\Support\Str;
 use App\Models\DiscountRule;
+use App\Models\Product;
 use App\Models\ProductCategory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Tests\TestCase;
 
 class ProductCategoryTest extends TestCase
 {
@@ -15,7 +15,7 @@ class ProductCategoryTest extends TestCase
 
     protected $product_category;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -35,7 +35,7 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_name()
+    public function it_returns_a_translated_name()
     {
         $this->product_category
             ->setTranslation('name', 'en', 'english translation')
@@ -56,7 +56,7 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    function it_returns_a_translated_description()
+    public function it_returns_a_translated_description()
     {
         $this->product_category
             ->setTranslation('description', 'en', 'english translation')
@@ -94,7 +94,7 @@ class ProductCategoryTest extends TestCase
         $this->assertNull($this->product_category->parent);
 
         $this->product_category->update([
-            'parent_id' => ProductCategory::factory()->create()->id
+            'parent_id' => ProductCategory::factory()->create()->id,
         ]);
 
         $this->product_category->refresh();
@@ -151,7 +151,7 @@ class ProductCategoryTest extends TestCase
 
         $discount_rule = DiscountRule::factory()->create([
             'valid_from' => now()->toDateTimeString(),
-            'valid_until' => now()->addDays(5)->toDateTimeString()
+            'valid_until' => now()->addDays(5)->toDateTimeString(),
         ]);
 
         $this->product_category->discount_rules()->attach($discount_rule->id);
@@ -161,7 +161,7 @@ class ProductCategoryTest extends TestCase
         $this->assertInstanceOf(DiscountRule::class, $this->product_category->discount_rules()->first());
 
         $discount_rule->update([
-            'valid_until' => now()->subDays(5)->toDateTimeString()
+            'valid_until' => now()->subDays(5)->toDateTimeString(),
         ]);
 
         $this->assertCount(0, $this->product_category->fresh()->discount_rules);

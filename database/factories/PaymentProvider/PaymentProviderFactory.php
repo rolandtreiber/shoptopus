@@ -24,7 +24,7 @@ class PaymentProviderFactory extends Factory
         return [
             'name' => $this->faker->randomElement(['paypal', 'amazon', 'stripe']),
             'enabled' => true,
-            'test_mode' => true
+            'test_mode' => true,
         ];
     }
 }

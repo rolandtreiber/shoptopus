@@ -10,7 +10,6 @@ use Tests\InvoicesTestCase;
  */
 class InvoiceTest extends InvoicesTestCase
 {
-
     /**
      * @test
      */
@@ -80,5 +79,4 @@ class InvoiceTest extends InvoicesTestCase
             $this->assertContains($invoiceProduct['product_id'], $orderProductIds);
         }
     }
-
 }

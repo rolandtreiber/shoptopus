@@ -13,15 +13,15 @@ class BearerTokenResponse extends \League\OAuth2\Server\ResponseTypes\BearerToke
      * AuthorizationServer::getResponseType() to pull in your version of
      * this class rather than the default.
      *
-     * @param AccessTokenEntityInterface $accessToken
-     *
+     * @param  AccessTokenEntityInterface  $accessToken
      * @return array
      */
     protected function getExtraParams(AccessTokenEntityInterface $accessToken): array
     {
         $user = User::find($this->accessToken->getUserIdentifier());
+
         return [
-            'user' => new UserDetailsResource($user)
+            'user' => new UserDetailsResource($user),
         ];
     }
 }

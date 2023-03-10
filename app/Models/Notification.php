@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Enums\NotificationType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
 class Notification extends SearchableModel
 {
@@ -12,7 +11,7 @@ class Notification extends SearchableModel
 
     protected $casts = [
         'id' => 'string',
-        'data' => 'object'
+        'data' => 'object',
     ];
 
     public function scopeView($query, $view)

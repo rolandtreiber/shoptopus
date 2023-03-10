@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Address extends Model implements Auditable, Exportable
 {
@@ -19,7 +19,7 @@ class Address extends Model implements Auditable, Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['user.name', 'name', 'town'])
@@ -45,7 +45,7 @@ class Address extends Model implements Auditable, Exportable
     ];
 
     protected $exportableRelationships = [
-        'user'
+        'user',
     ];
 
     /**
@@ -63,7 +63,7 @@ class Address extends Model implements Auditable, Exportable
         'address_line_2',
         'lat',
         'lon',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -74,16 +74,17 @@ class Address extends Model implements Auditable, Exportable
     protected $casts = [
         'id' => 'string',
         'lat' => 'decimal:6',
-        'lon' => 'decimal:6'
+        'lon' => 'decimal:6',
     ];
 
     protected $appends = ['google_maps_url'];
 
     /**
      * An address belongs to a user
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function user() : \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
@@ -91,8 +92,8 @@ class Address extends Model implements Auditable, Exportable
     /**
      * @return string|null
      */
-    public function getGoogleMapsUrlAttribute() : ?string
+    public function getGoogleMapsUrlAttribute(): ?string
     {
-        return $this->lat && $this->lon ? "https://www.google.com/maps/@".$this->lat.",".$this->lon.",14z" : null;
+        return $this->lat && $this->lon ? 'https://www.google.com/maps/@'.$this->lat.','.$this->lon.',14z' : null;
     }
 }

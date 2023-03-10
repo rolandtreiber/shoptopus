@@ -2,14 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Traits\APIControllerTrait;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Throwable;
-use App\Traits\APIControllerTrait;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -94,6 +94,7 @@ class Handler extends ExceptionHandler
             default:
                 $status = 500;
         }
-        return $this->errorResponse($e, __("error_messages.0000"), null, $status);
+
+        return $this->errorResponse($e, __('error_messages.0000'), null, $status);
     }
 }

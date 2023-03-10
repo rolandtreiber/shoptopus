@@ -16,6 +16,7 @@ class ProductSeeder extends Seeder
      * Run the database seeds.
      *
      * @return void
+     *
      * @throws Exception
      */
     public function run()
@@ -24,7 +25,7 @@ class ProductSeeder extends Seeder
 
         foreach (Product::all() as $product) {
             do {
-                $categoryId = (new ProductCategory)->findNthId(rand(1, ProductCategory::count()-1));
+                $categoryId = (new ProductCategory)->findNthId(rand(1, ProductCategory::count() - 1));
                 $duplicate = DB::table('product_product_category')->where('product_id', $product->id)
                 ->where('product_category_id', $categoryId)->first();
             } while ($duplicate !== null);
@@ -42,9 +43,9 @@ class ProductSeeder extends Seeder
             $used[] = $productId;
 
             $tagsCount = random_int(1, ProductTag::count() / 3);
-            $productTagTotalCount = ProductTag::count()-2;
+            $productTagTotalCount = ProductTag::count() - 2;
             $usedTags = [];
-            for ($n = 1;$n < $tagsCount; $n++) {
+            for ($n = 1; $n < $tagsCount; $n++) {
                 do {
                     $tagId = rand(1, $productTagTotalCount);
                 } while (in_array($tagId, $usedTags));
@@ -60,7 +61,7 @@ class ProductSeeder extends Seeder
                 $productId = rand(1, Product::count());
             } while (in_array($productId, $discounted));
             $discounted[] = $productId;
-            (new Product())->findNth($productId)->discount_rules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count()-1)));
+            (new Product())->findNth($productId)->discount_rules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count() - 1)));
         }
 
         Product::all()->map(function (Product $product) {

@@ -40,10 +40,10 @@ class OrderDetailResource extends JsonResource
             'voucher_code' => new VoucherCodeListResource($this->voucher_code),
             'delivery_type' => [
                 'name' => $dt->getTranslations('name'),
-                'description' => $dt->getTranslations('description')
+                'description' => $dt->getTranslations('description'),
             ],
             'products' => OrderProductResource::collection($this->products),
-            'event_logs' => EventLogResource::collection($this->eventLogs)
+            'event_logs' => EventLogResource::collection($this->eventLogs),
         ];
     }
 }

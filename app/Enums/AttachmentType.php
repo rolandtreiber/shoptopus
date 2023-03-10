@@ -11,5 +11,5 @@ use BenSampo\Enum\Enum;
  */
 final class AttachmentType extends Enum
 {
-    const General =         0;
+    const General = 0;
 }

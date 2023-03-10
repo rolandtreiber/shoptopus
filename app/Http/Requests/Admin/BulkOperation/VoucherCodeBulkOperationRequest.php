@@ -13,7 +13,7 @@ class VoucherCodeBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:voucher_codes,id']
+            'ids.*' => ['exists:voucher_codes,id'],
         ];
     }
 }

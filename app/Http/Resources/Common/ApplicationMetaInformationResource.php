@@ -19,7 +19,7 @@ class ApplicationMetaInformationResource extends JsonResource
             'locales' => config('app.locales_supported'),
             'default_locale' => config('app.locale'),
             'default_currency' => config('app.default_currency'),
-            'google_maps_api_key' => config('app.google_maps_api_key')
+            'google_maps_api_key' => config('app.google_maps_api_key'),
         ];
     }
 }

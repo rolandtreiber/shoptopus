@@ -2,16 +2,16 @@
 
 namespace Tests\PublicApi\Payments\Stripe;
 
-use Tests\PaymentTestCase;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\PaymentTestCase;
 
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -28,7 +28,7 @@ class GetClientSettingsTest extends PaymentTestCase
 
         $data = [
             'provider' => 'stripe',
-            'orderId' => $order->id
+            'orderId' => $order->id,
         ];
 
         $res = $this->sendRequest($data);
@@ -40,15 +40,15 @@ class GetClientSettingsTest extends PaymentTestCase
                 [
                     'publishableKey',
                     'clientSecret',
-                    'order_total'
-                ]
-            ]
+                    'order_total',
+                ],
+            ],
         ]);
 
         $this->assertEquals($order->total_price * 100, $res->json('data.0.order_total'));
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.payment.get.settings.public', $data));
     }

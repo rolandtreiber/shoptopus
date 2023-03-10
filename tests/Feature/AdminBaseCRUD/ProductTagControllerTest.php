@@ -8,17 +8,18 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
  * @group admin-base-crud
  * @group product_tags
+ *
  * @see \App\Http\Controllers\Admin\ProductTagController
  */
 class ProductTagControllerTest extends AdminControllerTestCase
 {
     use RefreshDatabase;
+
     /**
      * @test
      */
@@ -29,13 +30,13 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.product-tags', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $tags[0]->id
+            'id' => $tags[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $tags[1]->id
+            'id' => $tags[1]->id,
         ]);
     }
 
@@ -50,10 +51,10 @@ class ProductTagControllerTest extends AdminControllerTestCase
             'tag' => $tag->id,
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $tag->id
+            'id' => $tag->id,
         ]);
     }
 
@@ -67,14 +68,14 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-tag'), [
             'name' => json_encode([
                 'en' => 'Plant Based',
-                'de' => 'Auf Pflanzlicher Basis'
+                'de' => 'Auf Pflanzlicher Basis',
             ]),
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
             'badge' => UploadedFile::fake()->image('product_tag.jpg'),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertCreated();
         $tagId = $response->json()['data']['id'];
@@ -95,18 +96,18 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $tag = ProductTag::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-tag', [
-            'tag' => $tag
+            'tag' => $tag,
         ]), [
             'name' => json_encode([
                 'en' => 'Plant Based',
-                'de' => 'Auf Pflanzlicher Basis'
+                'de' => 'Auf Pflanzlicher Basis',
             ]),
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
             'badge' => UploadedFile::fake()->image('product_tag.jpg'),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertOk();
         $tagId = $response->json()['data']['id'];
@@ -140,9 +141,9 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-tag'), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertStatus(422);
     }
@@ -156,9 +157,9 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.product-tag'), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertForbidden();
     }
@@ -171,13 +172,13 @@ class ProductTagControllerTest extends AdminControllerTestCase
         $tag = ProductTag::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->patch(route('admin.api.update.product-tag', [
-            'tag' => $tag->id
+            'tag' => $tag->id,
         ]), [
             'description' => json_encode([
                 'en' => 'Does not contain meat or dairy products',
-                'de' => 'Enthält kein Fleisch oder Milchprodukte'
+                'de' => 'Enthält kein Fleisch oder Milchprodukte',
             ]),
-            'display_badge' => 1
+            'display_badge' => 1,
         ]);
         $response->assertForbidden();
     }

@@ -21,7 +21,7 @@ class DiscountRuleSeeder extends Seeder
         $dr->name = [
             'en' => '£2 off',
             'de' => '£2 Rabatt',
-            'fr' => '£2 réduction'
+            'fr' => '£2 réduction',
         ];
         $dr->amount = 2;
         $dr->valid_from = Carbon::now();
@@ -33,12 +33,11 @@ class DiscountRuleSeeder extends Seeder
         $dr->name = [
             'en' => '10% off',
             'de' => '10% Rabatt',
-            'fr' => '10% réduction'
+            'fr' => '10% réduction',
         ];
         $dr->amount = 10;
         $dr->valid_from = Carbon::now();
         $dr->valid_until = Carbon::now()->addMonth();
         $dr->save();
-
     }
 }

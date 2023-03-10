@@ -2,12 +2,12 @@
 
 namespace Tests\PublicApi\Auth;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\PasswordReset;
+use App\Models\User;
 use App\Notifications\PasswordResetSuccess;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
+use Tests\TestCase;
 
 class ResetPasswordTest extends TestCase
 {
@@ -31,7 +31,7 @@ class ResetPasswordTest extends TestCase
         $data = [
             'email' => null,
             'token' => null,
-            'password' => null
+            'password' => null,
         ];
 
         $this->sendRequest($data)
@@ -49,19 +49,19 @@ class ResetPasswordTest extends TestCase
         $user = User::factory()->create();
 
         $passwordReset = PasswordReset::factory()->create([
-            'email' => $user->email
+            'email' => $user->email,
         ]);
 
         $data = [
             'token' => $passwordReset->token,
             'email' => $user->email,
             'password' => 'newpassword',
-            'password_confirmation' => 'newpassword'
+            'password_confirmation' => 'newpassword',
         ];
 
         $res = $this->sendRequest($data)->json('data.message');
 
-        $this->assertEquals('Password successfully updated!', $res);;
+        $this->assertEquals('Password successfully updated!', $res);
 
         $this->assertNull($passwordReset->fresh());
 
@@ -80,14 +80,14 @@ class ResetPasswordTest extends TestCase
 
         $passwordReset = PasswordReset::factory()->create([
             'email' => $user->email,
-            'updated_at' => now()->subMinutes(61)
+            'updated_at' => now()->subMinutes(61),
         ]);
 
         $data = [
             'token' => $passwordReset->token,
             'email' => 'someeial@not.com',
             'password' => 'newpassword',
-            'password_confirmation' => 'newpassword'
+            'password_confirmation' => 'newpassword',
         ];
 
         $this->assertEquals(
@@ -112,14 +112,14 @@ class ResetPasswordTest extends TestCase
 
         $passwordReset = PasswordReset::factory()->create([
             'email' => $user->email,
-            'updated_at' => now()->subMinutes(61)
+            'updated_at' => now()->subMinutes(61),
         ]);
 
         $data = [
             'token' => $passwordReset->token,
             'email' => $user->email,
             'password' => 'newpassword',
-            'password_confirmation' => 'newpassword'
+            'password_confirmation' => 'newpassword',
         ];
 
         $this->assertEquals(
@@ -132,7 +132,7 @@ class ResetPasswordTest extends TestCase
         Notification::assertNotSentTo($user, PasswordResetSuccess::class);
     }
 
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('password.update'), $data);
     }

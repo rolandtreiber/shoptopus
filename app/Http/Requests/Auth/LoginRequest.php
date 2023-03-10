@@ -11,7 +11,7 @@ class LoginRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize() : bool
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,12 +21,12 @@ class LoginRequest extends FormRequest
      *
      * @return array
      */
-    public function rules() : array
+    public function rules(): array
     {
         return [
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:4|max:100',
-            'cart_id' => 'sometimes|nullable|string|exists:carts,id'
+            'cart_id' => 'sometimes|nullable|string|exists:carts,id',
         ];
     }
 

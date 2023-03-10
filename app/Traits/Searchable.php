@@ -5,8 +5,8 @@ namespace App\Traits;
 use App\Http\Requests\ListRequest;
 use Illuminate\Support\Carbon;
 
-trait Searchable {
-
+trait Searchable
+{
     public function scopeFiltered($query, $filters, ListRequest $request = null)
     {
         if ($request && $request->filters) {
@@ -20,32 +20,32 @@ trait Searchable {
             }
         }
         foreach ($filters as $filter) {
-            if (sizeof($filter) === 2) {
+            if (count($filter) === 2) {
                 $query->where($filter[0], $filter[1]);
             }
-            if (sizeof($filter) === 3) {
+            if (count($filter) === 3) {
                 $operator = '=';
-                $value = "%" . $filter[2] . "%";
+                $value = '%'.$filter[2].'%';
                 switch ($filter[1]) {
                     case 'isPresent':
                         $operator = '!=';
-                        $value = "";
+                        $value = '';
                         break;
                     case 'isBlank':
                         $operator = '=';
-                        $value = "";
+                        $value = '';
                         break;
                     case 'endsWith':
                         $operator = 'like';
-                        $value = "%" . $filter[2];
+                        $value = '%'.$filter[2];
                         break;
                     case 'startsWith':
                         $operator = 'like';
-                        $value = $filter[2] . "%";
+                        $value = $filter[2].'%';
                         break;
                     case 'notContains':
                         $operator = 'not like';
-                        $value = "%" . $filter[2] . "%";
+                        $value = '%'.$filter[2].'%';
                         break;
                     case 'notEqual':
                         $operator = '!=';
@@ -67,7 +67,7 @@ trait Searchable {
                         break;
                     case 'contains':
                         $operator = 'LIKE';
-                        $value = "%" . $filter[2] . "%";
+                        $value = '%'.$filter[2].'%';
                         break;
                 }
 
@@ -81,7 +81,7 @@ trait Searchable {
         if ($request && $request->sort_by_field && $request->sort_by_type) {
             $query->orderBy($request->sort_by_field, $request->sort_by_type);
         }
+
         return $query;
     }
-
 }

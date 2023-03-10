@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Database\Seeders\PaymentProviderSeeder;
 use App\Models\PaymentProvider\PaymentProvider;
+use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PaymentProviderTest extends TestCase
 {
@@ -13,7 +13,7 @@ class PaymentProviderTest extends TestCase
 
     protected $payment_provider;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -43,6 +43,6 @@ class PaymentProviderTest extends TestCase
     /** @test */
     public function it_may_have_many_payment_provider_configs()
     {
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection' , $this->payment_provider->payment_provider_configs);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->payment_provider->payment_provider_configs);
     }
 }

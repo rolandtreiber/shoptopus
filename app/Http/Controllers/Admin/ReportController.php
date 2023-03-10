@@ -35,10 +35,8 @@ class ReportController extends Controller
         return new ReportSalesResource($this->reportRepository->getSales($request->toArray()));
     }
 
-
     public function getChart(ReportRequest $request)
     {
         return $this->reportRepository->getChartData($request->toArray());
     }
-
 }

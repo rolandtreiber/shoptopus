@@ -7,18 +7,19 @@ use App\Models\User;
 use App\Models\VoucherCode;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\AdminControllerTestCase;
 
 /**
  * @group admin-base-crud
  * @group voucher_codes
+ *
  * @see \App\Http\Controllers\Admin\VoucherCodeController
  */
 class VoucherCodeControllerTest extends AdminControllerTestCase
 {
     use RefreshDatabase;
+
     /**
      * @test
      */
@@ -29,16 +30,16 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $response = $this->get(route('admin.api.index.voucher-codes', [
             'page' => 1,
             'paginate' => 20,
-            'filters' => []
+            'filters' => [],
         ]));
         $response->assertJsonFragment([
-            'id' => $voucherCodes[0]->id
+            'id' => $voucherCodes[0]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $voucherCodes[1]->id
+            'id' => $voucherCodes[1]->id,
         ]);
         $response->assertJsonFragment([
-            'id' => $voucherCodes[2]->id
+            'id' => $voucherCodes[2]->id,
         ]);
     }
 
@@ -53,11 +54,10 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'voucherCode' => $voucherCode->id,
         ]));
         $response->assertJsonFragment([
-            'id' => $voucherCode->id
+            'id' => $voucherCode->id,
         ]);
         $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('data.id', $voucherCode->id)
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $voucherCode->id)
                 ->where('data.amount', $voucherCode->amount)
                 ->where('data.code', $voucherCode->code)
                 ->etc());
@@ -76,7 +76,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'amount' => 10,
             'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertCreated();
         $voucherCodeId = $response->json()['data']['id'];
@@ -97,12 +97,12 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addWeek();
         $response = $this->patch(route('admin.api.update.voucher-code', [
-            'voucherCode' => $voucherCode
+            'voucherCode' => $voucherCode,
         ]), [
             'amount' => 5,
             'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertOk();
         $voucherCodeId = $response->json()['data']['id'];
@@ -137,7 +137,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
             'amount' => 10,
             'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertForbidden();
     }
@@ -152,12 +152,12 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addWeek();
         $response = $this->patch(route('admin.api.update.voucher-code', [
-            'voucherCode' => $voucherCode
+            'voucherCode' => $voucherCode,
         ]), [
             'amount' => 5,
             'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertForbidden();
     }
@@ -186,7 +186,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $response = $this->post(route('admin.api.create.voucher-code'), [
             'type' => DiscountType::Percentage,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertStatus(422);
     }
@@ -201,12 +201,12 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
         $validFrom = Carbon::now();
         $validUntil = Carbon::now()->addWeek();
         $response = $this->patch(route('admin.api.update.voucher-code', [
-            'voucherCode' => $voucherCode
+            'voucherCode' => $voucherCode,
         ]), [
             'amount' => 'thirtytwo',
             'type' => DiscountType::Amount,
             'valid_from' => $validFrom,
-            'valid_until' => $validUntil
+            'valid_until' => $validUntil,
         ]);
         $response->assertStatus(422);
     }

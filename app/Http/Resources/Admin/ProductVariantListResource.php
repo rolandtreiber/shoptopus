@@ -20,7 +20,7 @@ class ProductVariantListResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'name' => $this->name
+            'name' => $this->name,
         ];
     }
 }

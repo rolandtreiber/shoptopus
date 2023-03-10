@@ -2,19 +2,19 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Database\Seeders\PaymentProviderSeeder;
 use App\Models\PaymentProvider\PaymentProvider;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\PaymentProvider\PaymentProviderConfig;
+use Database\Seeders\PaymentProviderSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class PaymentProviderConfigTest extends TestCase {
-
+class PaymentProviderConfigTest extends TestCase
+{
     use RefreshDatabase;
 
     protected $payment_provider_config;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         parent::setUp();
 

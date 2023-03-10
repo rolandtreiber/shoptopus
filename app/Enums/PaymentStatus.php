@@ -11,8 +11,11 @@ use BenSampo\Enum\Enum;
  */
 final class PaymentStatus extends Enum
 {
-    const Pending =     0;
-    const Settled =     1;
-    const Refunded =    2;
-    const Rejected =    3;
+    const Pending = 0;
+
+    const Settled = 1;
+
+    const Refunded = 2;
+
+    const Rejected = 3;
 }

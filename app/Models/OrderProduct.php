@@ -34,7 +34,7 @@ class OrderProduct extends MorphPivot implements Exportable
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['order.slug', 'product.slug'])
@@ -49,7 +49,7 @@ class OrderProduct extends MorphPivot implements Exportable
     protected $exportableFields = [
         'slug',
         'amount',
-        'name'
+        'name',
     ];
 
     /**
@@ -68,7 +68,7 @@ class OrderProduct extends MorphPivot implements Exportable
      */
     protected $casts = [
         'product_id' => 'string',
-        'product_variant_id' => 'string'
+        'product_variant_id' => 'string',
     ];
 
     /**

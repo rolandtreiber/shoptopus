@@ -2,9 +2,9 @@
 
 namespace Tests\PublicApi\Cart;
 
-use Tests\TestCase;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class AddItemToCartTest extends TestCase
 {
@@ -18,7 +18,7 @@ class AddItemToCartTest extends TestCase
     {
         $data = [
             'product_id' => null,
-            'quantity' => null
+            'quantity' => null,
         ];
 
         $this->sendRequest($data)
@@ -35,7 +35,7 @@ class AddItemToCartTest extends TestCase
     {
         $data = [
             'product_id' => '101',
-            'quantity' => 2
+            'quantity' => 2,
         ];
 
         $res = $this->sendRequest($data);
@@ -55,7 +55,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'quantity' => 0
+            'quantity' => 0,
         ];
 
         $res = $this->sendRequest($data);
@@ -74,7 +74,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $res = $this->sendRequest($data);
@@ -93,7 +93,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'quantity' => 2
+            'quantity' => 2,
         ];
 
         $res = $this->sendRequest($data);
@@ -105,7 +105,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product2->id,
-            'quantity' => 5
+            'quantity' => 5,
         ];
 
         $res2 = $this->sendRequest($data);
@@ -125,7 +125,7 @@ class AddItemToCartTest extends TestCase
         $data = [
             'product_id' => $product->id,
             'quantity' => 1,
-            'cart_id' => 'random-cart-id'
+            'cart_id' => 'random-cart-id',
         ];
 
         $this->sendRequest($data)->assertJsonValidationErrors(['cart_id']);
@@ -141,29 +141,29 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $this->assertDatabaseMissing('carts', [
-            'user_id' => null
+            'user_id' => null,
         ]);
 
         $this->assertDatabaseMissing('cart_product', [
             'product_id' => $data['product_id'],
-            'quantity' => $data['quantity']
+            'quantity' => $data['quantity'],
         ]);
 
         $res = $this->sendRequest($data)->json('data.0');
 
         $this->assertDatabaseHas('carts', [
             'id' => $res['id'],
-            'user_id' => $res['user_id']
+            'user_id' => $res['user_id'],
         ]);
 
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $res['id'],
             'product_id' => $res['products'][0]['id'],
-            'quantity' => $res['products'][0]['quantity']
+            'quantity' => $res['products'][0]['quantity'],
         ]);
     }
 
@@ -177,13 +177,13 @@ class AddItemToCartTest extends TestCase
 
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ])->json('data.0');
 
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $this->sendRequest($data)->json('data.0');
@@ -191,7 +191,7 @@ class AddItemToCartTest extends TestCase
         $this->assertDatabaseHas('cart_product', [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
-            'quantity' => 2
+            'quantity' => 2,
         ]);
     }
 
@@ -205,7 +205,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'quantity' => 1
+            'quantity' => 1,
         ];
 
         $this->sendRequest($data)->assertJsonStructure([
@@ -230,16 +230,15 @@ class AddItemToCartTest extends TestCase
                             'backup_stock',
                             'sku',
                             'cover_photo',
-                            'rating'
-                        ]
-                    ]
-                ]
-            ]
+                            'rating',
+                        ],
+                    ],
+                ],
+            ],
         ]);
     }
 
-
-    protected function sendRequest($data = []) : \Illuminate\Testing\TestResponse
+    protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
         return $this->postJson(route('api.cart.addItem'), $data);
     }

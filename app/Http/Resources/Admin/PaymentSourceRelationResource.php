@@ -21,7 +21,7 @@ class PaymentSourceRelationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'payment_method_id' => $this->payment_method_id
+            'payment_method_id' => $this->payment_method_id,
         ];
     }
 }

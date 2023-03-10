@@ -3,9 +3,9 @@
 namespace App\Repositories\Local\VoucherCode;
 
 use App\Models\VoucherCode;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use Illuminate\Support\Facades\DB;
 
 class VoucherCodeRepository extends ModelRepository implements VoucherCodeRepositoryInterface
 {
@@ -17,11 +17,12 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
     /**
      * Get the orders for the given voucher codes
      *
-     * @param array $voucherCodeIds
+     * @param  array  $voucherCodeIds
      * @return array
+     *
      * @throws \Exception
      */
-    public function getOrders(array $voucherCodeIds = []) : array
+    public function getOrders(array $voucherCodeIds = []): array
     {
         try {
             $dynamic_placeholders = trim(str_repeat('?,', count($voucherCodeIds)), ',');
@@ -53,18 +54,19 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
      * Get the required related models for the given parent
      *
      * @param $result
-     * @param array $excludeRelationships
+     * @param  array  $excludeRelationships
      * @return array
+     *
      * @throws \Exception
      */
-    public function getTheResultWithRelationships($result, array $excludeRelationships = []) : array
+    public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         try {
             $ids = collect($result)->pluck('id')->toArray();
 
             $orders = [];
 
-            if (!in_array('orders', $excludeRelationships)) {
+            if (! in_array('orders', $excludeRelationships)) {
                 $orders = $this->getOrders($ids);
             }
 
@@ -91,10 +93,10 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
     /**
      * Get the columns for selection
      *
-     * @param bool $withTableNamePrefix
+     * @param  bool  $withTableNamePrefix
      * @return array
      */
-    public function getSelectableColumns(bool $withTableNamePrefix = true) : array
+    public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
         $columns = [
             "{$this->model_table}.id",
@@ -104,13 +106,13 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
             "{$this->model_table}.valid_from",
             "{$this->model_table}.valid_until",
             "{$this->model_table}.enabled",
-            "{$this->model_table}.deleted_at"
+            "{$this->model_table}.deleted_at",
         ];
 
         return $withTableNamePrefix
             ? $columns
-            : array_map(function($column_name){
-                return str_replace($this->model_table . '.', '', $column_name);
+            : array_map(function ($column_name) {
+                return str_replace($this->model_table.'.', '', $column_name);
             }, $columns);
     }
 }

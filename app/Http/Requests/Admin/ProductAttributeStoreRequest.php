@@ -19,7 +19,7 @@ class ProductAttributeStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'json'],
-            'type' => ['required', 'numeric']
+            'type' => ['required', 'numeric'],
         ];
     }
 }

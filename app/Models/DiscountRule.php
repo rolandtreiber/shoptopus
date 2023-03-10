@@ -4,19 +4,19 @@ namespace App\Models;
 
 use App\Enums\AvailabilityStatus;
 use App\Helpers\GeneralHelper;
-use Carbon\Carbon;
 use App\Traits\HasUUID;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
+use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
+use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
-use OwenIt\Auditing\Contracts\Auditable;
-use Shoptopus\ExcelImportExport\Exportable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Shoptopus\ExcelImportExport\traits\HasExportable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property string $id
@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property mixed $valid_until
  * @property mixed $products
  * @property mixed $categories
- * @property boolean $enabled
+ * @property bool $enabled
  */
 class DiscountRule extends SearchableModel implements Auditable, Exportable, Importable
 {
@@ -35,7 +35,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
     /**
      * Get the options for generating the slug.
      */
-    public function getSlugOptions() : SlugOptions
+    public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
             ->generateSlugsFrom(['name'])
@@ -53,33 +53,33 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         'amount',
         'valid_from',
         'valid_until',
-        'value'
+        'value',
     ];
 
     protected $importableFields = [
         'name' => [
-            'validation' => ['unique:discount_rules,name']
+            'validation' => ['unique:discount_rules,name'],
         ],
         'amount' => [
             'description' => 'The value of the voucher code in either percentage or actual value',
-            'validation' => ['numeric', 'min:0']
+            'validation' => ['numeric', 'min:0'],
         ],
         'type' => [
             'description' => '1 = percentage, 2 = actual value',
-            'validation' => ['integer', 'min:1', 'max:2']
+            'validation' => ['integer', 'min:1', 'max:2'],
         ],
         'valid_from' => [
             'description' => 'Valid from date. Format: YYYY:mm:dd',
-            'validation' => ['date']
+            'validation' => ['date'],
         ],
         'valid_until' => [
             'description' => 'Valid from date. Format: YYYY:mm:dd',
-            'validation' => ['date']
+            'validation' => ['date'],
         ],
         'enabled' => [
             'description' => '0 = disabled, 1 = enabled',
-            'validation' => 'boolean'
-        ]
+            'validation' => 'boolean',
+        ],
     ];
 
     /**
@@ -87,7 +87,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
      */
     protected $importableRelationships = [
         'products',
-        'categories'
+        'categories',
     ];
 
     /**
@@ -95,7 +95,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
      */
     protected $exportableRelationships = [
         'products',
-        'categories'
+        'categories',
     ];
 
     /**
@@ -110,7 +110,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         'valid_from',
         'valid_until',
         'enabled',
-        'deleted_at'
+        'deleted_at',
     ];
 
     /**
@@ -125,7 +125,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         'name' => 'string',
         'valid_from' => 'datetime',
         'valid_until' => 'datetime',
-        'enabled' => 'boolean'
+        'enabled' => 'boolean',
     ];
 
     /**
@@ -152,7 +152,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
                 $query->whereDate('valid_until', '<', $today);
                 break;
             case 'all_inactive':
-                $query->where(function($q) use($today) {
+                $query->where(function ($q) use ($today) {
                     $q->whereDate('valid_from', '>', $today)
                         ->orWhereDate('valid_until', '<', $today)->orWhere('enabled', 0);
                 });
@@ -181,6 +181,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
     {
         $now = Carbon::now();
         $query->where('valid_from', '<=', $now)->where('valid_until', '>=', $now);
+
         return $query;
     }
 
@@ -193,6 +194,7 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         if ($now >= $this->valid_from && $now <= $this->valid_until) {
             return true;
         }
+
         return false;
     }
 
@@ -200,5 +202,4 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
     {
         return GeneralHelper::getDiscountValue($this->type, $this->amount);
     }
-
 }

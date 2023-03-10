@@ -13,7 +13,7 @@ class ProductCategoryBulkOperationRequest extends BaseBulkOperationRequest
     {
         return [
             'ids' => ['required', 'array'],
-            'ids.*' => ['exists:product_categories,id']
+            'ids.*' => ['exists:product_categories,id'],
         ];
     }
 }

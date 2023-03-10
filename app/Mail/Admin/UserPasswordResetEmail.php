@@ -12,6 +12,7 @@ class UserPasswordResetEmail extends Mailable
     use Queueable, SerializesModels;
 
     public User $user;
+
     public string $token;
 
     /**
@@ -33,13 +34,13 @@ class UserPasswordResetEmail extends Mailable
     public function build(): UserPasswordResetEmail
     {
         $address = config('mail.from.address');
-        $subject = "Reset your password";
+        $subject = 'Reset your password';
         $name = config('mail.from.name');
-        $resetUrl = config('app.frontend_url_admin')."/reset-password/".$this->token;
+        $resetUrl = config('app.frontend_url_admin').'/reset-password/'.$this->token;
 
         return $this->view('email.password-reset', [
             'user' => $this->user,
-            'resetUrl' => $resetUrl
+            'resetUrl' => $resetUrl,
         ])
             ->from($address, $name)
             ->replyTo($address, $name)

@@ -31,7 +31,7 @@ class CustomerListResource extends JsonResource
             'email' => $this->email,
             'email_verified' => $this->email_verified_at !== null,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
-            'is_favorite' => $this->is_favorite
+            'is_favorite' => $this->is_favorite,
         ];
     }
 }

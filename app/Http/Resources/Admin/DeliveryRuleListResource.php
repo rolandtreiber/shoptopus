@@ -29,7 +29,7 @@ class DeliveryRuleListResource extends JsonResource
             'distance_unit' => $this->distance_unit,
             'lat' => $this->lat,
             'lon' => $this->lon,
-            'status' => $this->status
+            'status' => $this->status,
         ];
     }
 }
