@@ -45,7 +45,7 @@ class RemoveItemFromCartRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'user_id' => optional($this->user())->id,
+            'user_id' => $this->user()?->id,
         ]);
     }
 }

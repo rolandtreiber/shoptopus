@@ -115,7 +115,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
      */
     public function cover_image(): ?FileContent
     {
-        return optional($this->images())->first();
+        return $this->images()?->first();
     }
 
     /**

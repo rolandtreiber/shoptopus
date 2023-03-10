@@ -24,7 +24,7 @@ class AddressTest extends TestCase
     /** @test */
     public function it_has_a_generated_slug()
     {
-        $string = optional($this->address->user)->name ?? '';
+        $string = $this->address->user?->name ?? '';
         $string .= $this->address->name ? ' '.$this->address->name : '';
         $string .= $this->address->town ? ' '.$this->address->town.' ' : '';
 
