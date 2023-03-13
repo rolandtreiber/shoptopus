@@ -23,41 +23,39 @@ Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel
 - Use the official [guide](https://docs.docker.com/engine/install/) to install docker on your system
 - Use the official [guide](https://docs.docker.com/compose/install/) to install docker compose
 
+## Install the ssl certificates
+- Install [mkcert](https://mkcert.org/) on your system.
+- Once mkcert is available, locate the following folder: `[PROJECT ROOT]/docker-config/reverse-proxy/ssl`
+- Then inside this folder, run `$ mkcert -install shoptopus.test`
+- If all is well, you should see a message saying your certificate has been installed as well as see `shoptopus.test.key` and `shoptopus.test-key.pem` files appearing in the folder.
+
+> You do not need to do anything with the certificates. They will be picked up and used by traefik.
+
+## Add the url-s to your hosts file.
+- Locate the `/etc/hosts` file in your system and add the following values to it:
+```
+127.0.0.1  shoptopus.test
+127.0.0.1  es.shoptopus.test
+127.0.0.1  kb.shoptopus.test
+```
+
 ## Start the containers
 - Run `$ docker-compose up -d`
 
 ## Composer packages
-- Run `$ docker-compose run composer install`
+- Run `$ docker-compose run sh-composer install`
 
-## Set the databases host
-> In order to let the containers talk to each other, we need their ips.
-- Run `docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq)`
-
-You should see an output similar to this:
-```
-/shoptopus_artisan_run_50ccf76b1cf3 - 
-/shoptopus_artisan_run_9e0b7c656046 - 
-/shoptopus_artisan_run_8531083b13ac - 
-/artisan - 
-/nginx - 172.22.0.5
-/composer - 
-/php - 172.22.0.3
-/npm - 
-/mailhog - 172.22.0.6
-/mysql - 172.22.0.2
-/redis - 172.22.0.4
-```
-- Take the ip of the mysql container (yours will be different)
-- Update the `DB_HOST` in your .env file for both the `shoptopus` and `shoptopus_logs` databases.
+## Set up the databases
+> The database host in your .env should be set to the mysql container's name (sh-mysql)
 
 ## Clear the config
-- Run `$ docker-compose run artisan optimize:clear`
+- Run `$ docker-compose run sh-artisan optimize:clear`
 
 ## Migrations and test data
-- Run `$ docker-compose run artisan shop:fresh --seed`
+- Run `$ docker-compose run sh-artisan shop:fresh --seed`
 
 ## Tests
-- Run `$ docker-compose run artisan test`
+- Run `$ docker-compose run sh-artisan test`
 
 ## Connect to the databases
 Both databases are available on `127.0.0.1:3306`  
@@ -67,6 +65,16 @@ The databases are `shoptopus` and `shoptopus_logs`
 # Commands
 You can use artisan and composer commands as normal, however you need to **prepend docker-compose run**
 ### Examples
-`$ php artisan tinker` -> `$ docker-compose run php artisan tinker`
-`$ php artisan test` -> `$ docker-compose run php artisan test`
-`$ php artisan composer install` -> `$ docker-compose run composer install`
+`$ php artisan tinker` -> `$ docker-compose run sh-artisan tinker`
+`$ php artisan test` -> `$ docker-compose run sh-artisan test`
+`$ php artisan composer install` -> `$ docker-compose run sh-composer install`
+
+# ElasticSearch
+Available 
+- externally (from your machine) on http://es.shoptopus.test:9200
+- internally (from another container) on http://sh-elasticsearch.test:9200
+
+# Kibana
+Available 
+- externally (from your machine) on http://kb.shoptopus.test:5601
+- internally (from another container) on http://sh-kibana.test:5601

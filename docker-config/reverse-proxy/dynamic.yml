@@ -1,0 +1,4 @@
+tls:
+  certificates:
+    - certFile: /etc/certs/shoptopus.test.pem
+      keyFile: /etc/certs/shoptopus.test-key.pem

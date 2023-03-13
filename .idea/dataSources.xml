@@ -5,7 +5,7 @@
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://127.0.0.1:3306/shoptopus</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/shoptopus</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
     <data-source source="LOCAL" name="Docker mysql Shoptopus Logs" uuid="0fa5e9e8-dc7a-4dbb-9562-b5d8279ae757">

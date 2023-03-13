@@ -1,9 +1,11 @@
 <?php
 
+use Elastic\Elasticsearch\ClientBuilder;
+use Monolog\Formatter\ElasticsearchFormatter;
+use Monolog\Handler\ElasticsearchHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
-
 return [
 
     /*
@@ -51,9 +53,22 @@ return [
     */
 
     'channels' => [
+        'elasticsearch' => [
+            'driver'         => 'monolog',
+            'level'          => 'debug',
+            'handler'        => ElasticsearchHandler::class,
+            'formatter'      => ElasticsearchFormatter::class,
+            'formatter_with' => [
+                'index' => env('ELASTIC_LOGS_INDEX'),
+                'type'  => '_doc',
+            ],
+            'handler_with'   => [
+                'client' => config('app.env') !== 'testing' ? ClientBuilder::create()->setHosts([env('ELASTIC_HOST')])->build() : null,
+            ],
+        ],
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'elasticsearch'],
             'ignore_exceptions' => false,
         ],
 

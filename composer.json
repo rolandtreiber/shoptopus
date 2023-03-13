@@ -23,6 +23,7 @@
         "amzn/amazon-pay-api-sdk-php": "^2.3",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^5.0",
+        "elasticsearch/elasticsearch": "^8.6",
         "google/apiclient": "^2.12",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.6",
@@ -31,7 +32,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.7",
         "league/flysystem-aws-s3-v3": "^3.0",
-        "owen-it/laravel-auditing": "^12.1",
+        "owen-it/laravel-auditing": "^13.4",
         "paypal/paypal-checkout-sdk": "^1.0",
         "pusher/pusher-php-server": "^7.0",
         "s-ichikawa/laravel-sendgrid-driver": "^3.0",
@@ -97,7 +98,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "composer/package-versions-deprecated": false
+            "composer/package-versions-deprecated": false,
+            "php-http/discovery": true
         },
         "discard-changes": true
     },
