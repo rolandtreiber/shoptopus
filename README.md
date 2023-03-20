@@ -29,6 +29,8 @@ Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel
 - Then inside this folder, run `$ mkcert -install shoptopus.test`
 - If all is well, you should see a message saying your certificate has been installed as well as see `shoptopus.test.key` and `shoptopus.test-key.pem` files appearing in the folder.
 
+![Screenshot](./docs/screenshots/mkcert-ssl.png)
+
 > You do not need to do anything with the certificates. They will be picked up and used by traefik.
 
 ## Add the url-s to your hosts file.
@@ -42,8 +44,12 @@ Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel
 ## Start the containers
 - Run `$ docker-compose up -d`
 
+![Screenshot](./docs/screenshots/containers-running.jpg)
+
 ## Composer packages
 - Run `$ docker-compose run sh-composer install`
+
+![Screenshot](./docs/screenshots/composer-install.jpg)
 
 ## Set up the databases
 > The database host in your .env should be set to the mysql container's name (sh-mysql)
@@ -57,10 +63,14 @@ Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel
 ## Tests
 - Run `$ docker-compose run sh-artisan test`
 
+![Screenshot](./docs/screenshots/tests.jpg)
+
 ## Connect to the databases
 Both databases are available on `127.0.0.1:3306`  
 Local development credentials are `homestead` and `secret`  
 The databases are `shoptopus` and `shoptopus_logs`
+
+![Screenshot](./docs/screenshots/db-connection.jpg)
 
 # Commands
 You can use artisan and composer commands as normal, however you need to **prepend docker-compose run**
@@ -74,10 +84,14 @@ Available
 - externally (from your machine) on http://es.shoptopus.test:9200
 - internally (from another container) on http://sh-elasticsearch.test:9200
 
+![Screenshot](./docs/screenshots/elasticsearch.jpg)
+
 # Kibana
 Available 
 - externally (from your machine) on http://kb.shoptopus.test:5601
 - internally (from another container) on http://sh-kibana.test:5601
+
+![Screenshot](./docs/screenshots/kibana.jpg)
 
 # Audit Viewer utility
 ![Screenshot](./docs/screenshots/audit-viewer.png)
