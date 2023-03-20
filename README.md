@@ -65,8 +65,8 @@ The databases are `shoptopus` and `shoptopus_logs`
 # Commands
 You can use artisan and composer commands as normal, however you need to **prepend docker-compose run**
 ### Examples
-`$ php artisan tinker` -> `$ docker-compose run sh-artisan tinker`
-`$ php artisan test` -> `$ docker-compose run sh-artisan test`
+`$ php artisan tinker` -> `$ docker-compose run sh-artisan tinker`\
+`$ php artisan test` -> `$ docker-compose run sh-artisan test`\
 `$ php artisan composer install` -> `$ docker-compose run sh-composer install`
 
 # ElasticSearch
@@ -78,3 +78,24 @@ Available
 Available 
 - externally (from your machine) on http://kb.shoptopus.test:5601
 - internally (from another container) on http://sh-kibana.test:5601
+
+# Audit Viewer utility
+![Screenshot](./docs/screenshots/audit-viewer.png)
+The audit viewer utility is a Spring Boot application with a "baked-in" React frontend all in one jar file for convenience.
+It connects to the logs database and allows easy access to the audits providing advanced filtering and searching features.
+
+The simplest way to start the application is to run:\
+```$ java -jar ./audit-viewer.jar```
+This will start the application with the following default settings:
+- POST: 5555
+- DB_HOST: 127.0.0.1
+- DB_NAME: shoptopus_logs
+- DB_USER: root
+- DB_PASSWORD: secret
+
+In case you need to override any of the above, you can do so by specifying them as parameters like so:\
+```java -jar ./audit-viewer.jar --PORT=1111 --DB_HOST=127.0.0.1 --DB_NAME=shoptopus_logs --DB_USER=root --DB_PASSWORD=secret```
+
+You can access the application through the specified port, such as http://localhost:5555
+
+This utility was designed with production use in mind allowing for easy tracing and debugging in case something would behave incorrectly.

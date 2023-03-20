@@ -69,7 +69,7 @@ services:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     container_name: sh-mysql
-    restart: always
+    restart: unless-stopped
     tty: true
     ports:
       - 3306:3306
