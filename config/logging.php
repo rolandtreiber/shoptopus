@@ -1,6 +1,6 @@
 <?php
 
-use Elastic\Elasticsearch\ClientBuilder;
+use Elasticsearch\ClientBuilder;
 use Monolog\Formatter\ElasticsearchFormatter;
 use Monolog\Handler\ElasticsearchHandler;
 use Monolog\Handler\NullHandler;
@@ -64,7 +64,7 @@ return [
                 'type'  => '_doc',
             ],
             'handler_with'   => [
-                'client' => config('app.env') !== 'testing' ? ClientBuilder::create()->setHosts([env('ELASTIC_HOST')])->build() : null,
+                'client' => config('app.env') !== 'testing' ? ClientBuilder::create()->setHosts([env('ELASTIC_SCHEME')."://".env('ELASTIC_HOST').":".env('ELASTIC_PORT')])->build() : null,
             ],
         ],
         'stack' => [
