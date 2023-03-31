@@ -62,15 +62,17 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     public function mappableAs(): array
     {
-        $result = [
+        return [
             'id' => 'keyword',
-            'categories' => 'keyword',
-            'slug' => 'keyword',
-            'tags' => 'keyword',
+            'price' => 'float',
+            'name' => 'nested',
+            'headline' => 'nested',
+            'description' => 'nested',
+            'purchase_count' => 'long',
+            'rating' => 'float',
             'created_at' => 'date',
+            'updated_at' => 'date',
         ];
-
-        return $result;
     }
 
     public function toSearchableArray(): array
@@ -78,22 +80,20 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         $result = [
             'id' => $this->id,
             'parent_id' => $this->parent_id,
+            'name' => $this->getTranslations('name'),
+            'headline' => $this->getTranslations('headline'),
+            'description' => $this->getTranslations('description'),
             'slug' => $this->slug,
             'status' => $this->status,
             'purchase_count' => $this->purchase_count,
             'stock' => $this->stock,
+            'price' => $this->price,
             'backup_stock' => $this->backup_stock,
             'rating' => $this->rating,
             'created_at' => $this->created_at,
             'categories' => str_replace("-", "", implode(' ',$this->product_categories->pluck('id')->toArray())),
             'tags' => str_replace("-", "", implode(' ',$this->product_tags->pluck('id')->each(function($item) {return str_replace("-", "", $item);})->toArray()))
         ];
-        foreach ($this->translatable as $translatable) {
-            $field = $this->getTranslations($translatable);
-            foreach ($field as $key => $value) {
-                $result[$translatable.'_'.$key] = $value;
-            }
-        }
 
         return $result;
     }
