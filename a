@@ -1,0 +1,2 @@
+#!/bin/bash
+docker-compose run sh-artisan $1 $2 $3

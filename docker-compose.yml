@@ -110,7 +110,6 @@ services:
   sh-redis:
     image: redis:alpine
     container_name: sh-redis
-    restart: unless-stopped
     labels:
       - traefik.enable=false
     ports:
@@ -170,7 +169,7 @@ services:
     working_dir: /var/www/html
     depends_on:
       - sh-php
-    entrypoint: ['composer', '--ignore-platform-reqs']
+    entrypoint: ['composer']
     networks:
       - app-network
 

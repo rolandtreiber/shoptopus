@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use JeroenG\Explorer\Application\Explored;
+use Laravel\Scout\Searchable;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\Importable;
@@ -43,7 +45,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $sku
  * @property mixed $cover_photo
  */
-class Product extends SearchableModel implements Auditable, Exportable, Importable
+class Product extends SearchableModel implements Auditable, Exportable, Importable, Explored
 {
     use HasFactory,
         HasTranslations,
@@ -55,7 +57,46 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         SoftDeletes,
         HasSlug,
         HasExportable,
-        HasImportable;
+        HasImportable,
+        Searchable;
+
+    public function mappableAs(): array
+    {
+        $result = [
+            'id' => 'keyword',
+            'categories' => 'keyword',
+            'slug' => 'keyword',
+            'tags' => 'keyword',
+            'created_at' => 'date',
+        ];
+
+        return $result;
+    }
+
+    public function toSearchableArray(): array
+    {
+        $result = [
+            'id' => $this->id,
+            'parent_id' => $this->parent_id,
+            'slug' => $this->slug,
+            'status' => $this->status,
+            'purchase_count' => $this->purchase_count,
+            'stock' => $this->stock,
+            'backup_stock' => $this->backup_stock,
+            'rating' => $this->rating,
+            'created_at' => $this->created_at,
+            'categories' => str_replace("-", "", implode(' ',$this->product_categories->pluck('id')->toArray())),
+            'tags' => str_replace("-", "", implode(' ',$this->product_tags->pluck('id')->each(function($item) {return str_replace("-", "", $item);})->toArray()))
+        ];
+        foreach ($this->translatable as $translatable) {
+            $field = $this->getTranslations($translatable);
+            foreach ($field as $key => $value) {
+                $result[$translatable.'_'.$key] = $value;
+            }
+        }
+
+        return $result;
+    }
 
     /**
      * Get the options for generating the slug.
@@ -380,4 +421,5 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         $this->product_tags()->detach();
         $this->product_tags()->sync($tagIds);
     }
+
 }

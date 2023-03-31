@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Product;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
@@ -40,6 +41,9 @@ class fresh extends Command
             $this->call('migrate:fresh', ['--seed' => true]);
             $this->info('Database refreshed and seeded');
         }
+        $this->call('scout:flush', ['model' => Product::class]);
+        $this->call('scout:import', ['model' => Product::class]);
+        $this->info('Products indexed in elasticsearch');
 
         Artisan::call('passport:install');
         $output = Artisan::output();
@@ -58,7 +62,6 @@ class fresh extends Command
 
         file_put_contents('.env', $envFile);
         $this->info('.env file updated with new id / secret: '.$id.' / '.$secret);
-
         return 1;
     }
 }
