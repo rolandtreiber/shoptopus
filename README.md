@@ -93,6 +93,25 @@ Available
 
 ![Screenshot](./docs/screenshots/kibana.jpg)
 
+# Laravel Scout
+Products are imported into Elasticsearch and we can take advantage of the full text search capabilities.
+The `$ docker-compose run sh-artisan shop:fresh --seed` command automatically flushes and imports product data.
+
+Alternatively you can call: 
+- `$ docker-compose run sh-artisan scout:flush "App\Models\Product"` to delete the product indices
+- `$ docker-compose run sh-artisan scout:import "App\Models\Product"` to import the product indices
+
+## Accessing the data in Kibana
+- Navigate to **hanburger menu -> Management -> Stack Management**
+- Navigate to **Kibana -> Index Patterns**
+- You should see **products*** listed as available index pattern.\
+- Type products* into the textbox and click **Create index pattern**\
+- Navigate to **hamburger menu -> Analytics -> Discover**
+- Select **products***
+- You should see your data
+
+![Screenshot](./docs/screenshots/products-index.png)
+
 # Audit Viewer utility
 ![Screenshot](./docs/screenshots/audit-viewer.png)
 The audit viewer utility is a Spring Boot application with a "baked-in" React frontend all in one jar file for convenience.
