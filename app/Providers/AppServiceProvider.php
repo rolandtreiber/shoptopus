@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->app->bind(ElasticsearchHandler::class, function ($app) {
             return new ElasticsearchHandler(ClientBuilder::create()->setHosts([env('ELASTIC_HOST')])->build(), [

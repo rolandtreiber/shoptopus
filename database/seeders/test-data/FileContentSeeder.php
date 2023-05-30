@@ -12,7 +12,7 @@ class FileContentSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         FileContent::factory()->count(5)->create();
     }

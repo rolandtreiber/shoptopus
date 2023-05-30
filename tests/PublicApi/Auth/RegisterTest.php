@@ -17,7 +17,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         Notification::fake();
 
@@ -41,7 +41,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_requires_a_valid_email()
+    public function it_requires_a_valid_email(): void
     {
         $data = [
             'first_name' => 'Istvan',
@@ -60,7 +60,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_requires_a_password_confirmation()
+    public function it_requires_a_password_confirmation(): void
     {
         $data = [
             'first_name' => 'Istvan',
@@ -78,7 +78,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function the_password_has_a_minimum_number_of_characters()
+    public function the_password_has_a_minimum_number_of_characters(): void
     {
         $data = [
             'first_name' => 'Istvan',
@@ -97,7 +97,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_saves_the_user_to_the_database()
+    public function it_saves_the_user_to_the_database(): void
     {
         $this->artisan('passport:install');
 
@@ -123,7 +123,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_sends_an_email_notification_upon_successful_registration()
+    public function it_sends_an_email_notification_upon_successful_registration(): void
     {
         $this->artisan('passport:install');
 
@@ -151,7 +151,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_creates_an_access_token()
+    public function it_creates_an_access_token(): void
     {
         $this->artisan('passport:install');
 
@@ -177,7 +177,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_creates_a_cart_for_the_user()
+    public function it_creates_a_cart_for_the_user(): void
     {
         $this->artisan('passport:install');
 
@@ -203,7 +203,7 @@ class RegisterTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_returns_the_user_object_and_all_relevant_data()
+    public function it_returns_the_user_object_and_all_relevant_data(): void
     {
         $this->artisan('passport:install');
 

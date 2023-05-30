@@ -17,7 +17,7 @@ class RemoveItemFromCartTest extends TestCase
      *
      * @group apiDelete
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'product_id' => null,
@@ -35,7 +35,7 @@ class RemoveItemFromCartTest extends TestCase
      *
      * @group apiDelete
      */
-    public function the_product_must_exists()
+    public function the_product_must_exists(): void
     {
         $cart = Cart::factory()->create();
 
@@ -55,7 +55,7 @@ class RemoveItemFromCartTest extends TestCase
      *
      * @group apiDelete
      */
-    public function if_authenticated_the_cart_must_belong_to_the_user()
+    public function if_authenticated_the_cart_must_belong_to_the_user(): void
     {
         $user = User::factory()->create();
         $product = Product::factory()->create();
@@ -78,7 +78,7 @@ class RemoveItemFromCartTest extends TestCase
      *
      * @group apiDelete
      */
-    public function it_removes_the_product_from_the_cart()
+    public function it_removes_the_product_from_the_cart(): void
     {
         $product = Product::factory()->create();
 

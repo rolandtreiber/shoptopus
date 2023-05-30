@@ -14,7 +14,7 @@ class LogoutTest extends TestCase
      *
      * @group apiPost
      */
-    public function unauthenticated_users_cannot_logout()
+    public function unauthenticated_users_cannot_logout(): void
     {
         $res = $this->sendRequest()->json();
 
@@ -27,7 +27,7 @@ class LogoutTest extends TestCase
      *
      * @group apiPost
      */
-    public function authenticated_users_can_logout()
+    public function authenticated_users_can_logout(): void
     {
         $this->signIn()
              ->sendRequest()

@@ -12,7 +12,7 @@ class NotificationResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $type = str_replace('App\\Notifications\\', '', $this->type);
         $type = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $type));

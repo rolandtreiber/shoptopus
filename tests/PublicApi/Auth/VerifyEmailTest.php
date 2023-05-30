@@ -26,7 +26,7 @@ class VerifyEmailTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_requires_a_valid_url()
+    public function it_requires_a_valid_url(): void
     {
         $this->assertNull($this->user->email_verified_at);
 
@@ -46,7 +46,7 @@ class VerifyEmailTest extends TestCase
      *
      * @group apiGet
      */
-    public function the_users_email_is_marked_verified_upon_successful_verification()
+    public function the_users_email_is_marked_verified_upon_successful_verification(): void
     {
         $url = URL::temporarySignedRoute(
             'verification.verify',

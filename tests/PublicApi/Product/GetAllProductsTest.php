@@ -23,7 +23,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_correct_format()
+    public function it_returns_the_correct_format(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -40,7 +40,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         Product::factory()->count(2)->create();
 
@@ -60,7 +60,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_final_price_field()
+    public function it_returns_the_final_price_field(): void
     {
         $product = Product::factory()->create();
 
@@ -76,7 +76,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function soft_deleted_products_are_not_returned()
+    public function soft_deleted_products_are_not_returned(): void
     {
         Product::factory()->count(2)->create(['deleted_at' => now()]);
 
@@ -88,7 +88,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_count()
+    public function it_returns_the_count(): void
     {
         Product::factory()->count(2)->create();
 
@@ -100,7 +100,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_attributes_with_their_options()
+    public function it_returns_the_associated_product_attributes_with_their_options(): void
     {
         $p = Product::factory()->create();
         $pa = ProductAttribute::factory()->create();
@@ -155,7 +155,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
+    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted(): void
     {
         $p = Product::factory()->create();
         $pa = ProductAttribute::factory()->create();
@@ -178,7 +178,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_enabled_discount_rules()
+    public function it_returns_the_associated_enabled_discount_rules(): void
     {
         $p = Product::factory()->create();
         $dr = DiscountRule::factory()->create([
@@ -221,7 +221,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function the_discount_rules_must_be_valid()
+    public function the_discount_rules_must_be_valid(): void
     {
         $p = Product::factory()->create();
 
@@ -245,7 +245,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_categories_with_their_discount_rules()
+    public function it_returns_the_associated_product_categories_with_their_discount_rules(): void
     {
         $p = Product::factory()->create();
         $pc = ProductCategory::factory()->create();
@@ -293,7 +293,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_its_product_tags()
+    public function it_returns_its_product_tags(): void
     {
         $p = Product::factory()->create();
         $pt = ProductTag::factory()->create();
@@ -332,7 +332,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_does_not_contain_the_product_variants()
+    public function it_does_not_contain_the_product_variants(): void
     {
         $p = Product::factory()->create();
         ProductVariant::factory()->create(['product_id' => $p->id]);
@@ -355,7 +355,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_categories()
+    public function products_can_be_filtered_by_categories(): void
     {
         $products = Product::factory()->count(5)->create();
         $categories = ProductCategory::factory()->count(2)->create();
@@ -387,7 +387,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_tags()
+    public function products_can_be_filtered_by_tags(): void
     {
         $products = Product::factory()->count(5)->create();
         $tags = ProductTag::factory()->count(2)->create();
@@ -419,7 +419,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_multiple_relationships()
+    public function products_can_be_filtered_by_multiple_relationships(): void
     {
         $products = Product::factory()->count(5)->create();
         $categories = ProductCategory::factory()->count(2)->create();
@@ -443,7 +443,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_attribute_options()
+    public function products_can_be_filtered_by_attribute_options(): void
     {
         $products = Product::factory()->count(5)->create();
 
@@ -465,7 +465,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function products_can_be_filtered_by_id()
+    public function products_can_be_filtered_by_id(): void
     {
         Product::factory()->count(3)->create();
         $product = Product::factory()->create();
@@ -481,7 +481,7 @@ class GetAllProductsTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function filters_can_accept_multiple_parameters()
+    public function filters_can_accept_multiple_parameters(): void
     {
         $products = Product::factory()->count(3)->create();
 

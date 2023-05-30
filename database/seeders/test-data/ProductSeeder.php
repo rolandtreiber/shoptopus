@@ -19,7 +19,7 @@ class ProductSeeder extends Seeder
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         Product::factory()->count(55)->hasFilecontents(rand(1, 3))->create();
 

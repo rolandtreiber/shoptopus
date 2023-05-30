@@ -18,7 +18,7 @@ class GetUserDetailsTest extends TestCase
      *
      * @group apiGet
      */
-    public function unauthenticated_users_cannot_access_their_details()
+    public function unauthenticated_users_cannot_access_their_details(): void
     {
         $res = $this->sendRequest();
 
@@ -31,7 +31,7 @@ class GetUserDetailsTest extends TestCase
      *
      * @group apiGet
      */
-    public function authenticated_users_can_get_their_details_containing_all_required_fields()
+    public function authenticated_users_can_get_their_details_containing_all_required_fields(): void
     {
         $res = $this->signIn()->sendRequest();
 
@@ -72,7 +72,7 @@ class GetUserDetailsTest extends TestCase
      *
      * @group apiGet
      */
-    public function the_notifications_array_contains_all_the_unread_notifications()
+    public function the_notifications_array_contains_all_the_unread_notifications(): void
     {
         $user = User::factory()->create();
 
@@ -109,7 +109,7 @@ class GetUserDetailsTest extends TestCase
      *
      * @group apiGet
      */
-    public function the_favorites_array_contains_all_the_favorited_product_ids()
+    public function the_favorites_array_contains_all_the_favorited_product_ids(): void
     {
         $user = User::factory()->create();
 

@@ -14,7 +14,7 @@ class DeliveryRuleFactory extends Factory
      *
      * @throws \Exception
      */
-    public function definition()
+    public function definition(): array
     {
         $postcodes = [];
         $postcodeCount = random_int(0, 10);

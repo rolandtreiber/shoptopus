@@ -11,7 +11,7 @@ class SystemSettingFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'key' => $this->faker->regexify('[A-Za-z0-9]{60}'),

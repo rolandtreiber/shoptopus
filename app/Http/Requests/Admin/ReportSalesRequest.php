@@ -11,7 +11,7 @@ class ReportSalesRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'revenue_over_time_range' => 'required',

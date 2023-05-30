@@ -12,7 +12,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::disableForeignKeyConstraints();
 
@@ -44,7 +44,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::connection(config('app.env') === 'testing' ? 'sqlite_logs' : 'logs')->dropIfExists('audits');
     }

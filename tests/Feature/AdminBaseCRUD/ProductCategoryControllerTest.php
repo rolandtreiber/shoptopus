@@ -23,7 +23,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_categories_can_be_listed()
+    public function test_product_categories_can_be_listed(): void
     {
         $rootCategories = ProductCategory::factory()->count(2)->create();
         $childCategory = ProductCategory::factory()->state([
@@ -49,7 +49,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_can_be_created()
+    public function test_product_category_can_be_created(): void
     {
         Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -78,7 +78,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_can_be_updated()
+    public function test_product_category_can_be_updated(): void
     {
         Storage::fake('uploads');
         $productCategory = ProductCategory::factory()->create();
@@ -110,7 +110,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_can_be_shown()
+    public function test_product_category_can_be_shown(): void
     {
         $productCategory = ProductCategory::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -128,7 +128,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_can_be_deleted()
+    public function test_product_category_can_be_deleted(): void
     {
         $productCategory = ProductCategory::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -142,7 +142,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_create_validation()
+    public function test_product_category_create_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-category'), [
@@ -157,7 +157,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_category_delete_permission()
+    public function test_product_category_delete_permission(): void
     {
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $productCategory = ProductCategory::factory()->create();
@@ -168,7 +168,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_all_subcategories_disabled_when_parent_category_disabled()
+    public function test_all_subcategories_disabled_when_parent_category_disabled(): void
     {
         $topLevelProductCategory = ProductCategory::factory()->state([
             'enabled' => true,
@@ -199,7 +199,7 @@ class ProductCategoryControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_all_parent_categories_enabled_when_subcategory_enabled()
+    public function test_all_parent_categories_enabled_when_subcategory_enabled(): void
     {
         $topLevelProductCategory = ProductCategory::factory()->state([
             'enabled' => false,

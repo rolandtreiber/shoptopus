@@ -11,7 +11,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('cart_product', function (Blueprint $table) {
             $table->foreignUuid('cart_id')->nullable()->constrained()->cascadeOnDelete();
@@ -28,7 +28,7 @@ return new class extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('cart_product');
     }

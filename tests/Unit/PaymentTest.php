@@ -30,31 +30,31 @@ class PaymentTest extends TestCase
 //    }
 
     /** @test */
-    public function it_has_a_payable_type_field()
+    public function it_has_a_payable_type_field(): void
     {
         $this->assertEquals(basename(Order::class), $this->payment->payable_type);
     }
 
     /** @test */
-    public function it_has_a_payable_id_field()
+    public function it_has_a_payable_id_field(): void
     {
         $this->assertNotNull($this->payment->payable_id);
     }
 
     /** @test */
-    public function it_has_an_amount_field()
+    public function it_has_an_amount_field(): void
     {
         $this->assertNotNull($this->payment->amount);
     }
 
     /** @test */
-    public function it_has_a_proof_field()
+    public function it_has_a_proof_field(): void
     {
         $this->assertNull($this->payment->proof);
     }
 
     /** @test */
-    public function it_may_belong_to_a_user()
+    public function it_may_belong_to_a_user(): void
     {
         $this->assertNull($this->payment->user);
 
@@ -64,7 +64,7 @@ class PaymentTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_a_payment_source()
+    public function it_may_belong_to_a_payment_source(): void
     {
         $this->assertNull($this->payment->payment_source);
 
@@ -74,7 +74,7 @@ class PaymentTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belongs_to_a_payable()
+    public function it_may_belongs_to_a_payable(): void
     {
         $this->assertInstanceOf(Order::class, $this->payment->payable);
     }

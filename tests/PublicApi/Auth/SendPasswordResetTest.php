@@ -17,7 +17,7 @@ class SendPasswordResetTest extends TestCase
      *
      * @group apiPost
      */
-    public function authenticated_users_cannot_reset_their_password()
+    public function authenticated_users_cannot_reset_their_password(): void
     {
         $this->signIn()
             ->sendRequest()
@@ -29,7 +29,7 @@ class SendPasswordResetTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $this->sendRequest(['email' => null])->assertJsonValidationErrors(['email']);
     }
@@ -39,7 +39,7 @@ class SendPasswordResetTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_sends_the_reset_link_successfully()
+    public function it_sends_the_reset_link_successfully(): void
     {
         Notification::fake();
 

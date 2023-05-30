@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Symfony\Component\HttpFoundation\Response;
 use Closure;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class Admin
      *
      * @throws AuthorizationException
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $user = Auth()->user();
         if ($user->hasRole(['admin', 'super_admin', 'store_manager', 'store_assistant', 'auditor'])) {

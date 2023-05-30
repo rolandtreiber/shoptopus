@@ -17,7 +17,7 @@ class ProductFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $translated = $this->getTranslated($this->faker, ['name', 'short_description', 'description', 'headline', 'subtitle'], ['short', 'medium', 'long', 'medium', 'medium']);
 

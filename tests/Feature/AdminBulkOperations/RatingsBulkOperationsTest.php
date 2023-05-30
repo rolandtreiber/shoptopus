@@ -17,7 +17,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_set_multiple_ratings_verified()
+    public function test_can_set_multiple_ratings_verified(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => false,
@@ -41,7 +41,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_set_multiple_ratings_unverified()
+    public function test_can_set_multiple_ratings_unverified(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => true,
@@ -65,7 +65,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_enable_multiple_ratings()
+    public function test_can_enable_multiple_ratings(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => false,
@@ -89,7 +89,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_disable_multiple_ratings()
+    public function test_can_disable_multiple_ratings(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => true,
@@ -113,7 +113,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_verification_update_authorization()
+    public function test_bulk_ratings_verification_update_authorization(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => false,
@@ -129,7 +129,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_verification_update_authentication()
+    public function test_bulk_ratings_verification_update_authentication(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => false,
@@ -144,7 +144,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_verification_update_not_found_handled()
+    public function test_bulk_ratings_verification_update_not_found_handled(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => false,
@@ -160,7 +160,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_verification_update_validation()
+    public function test_bulk_ratings_verification_update_validation(): void
     {
         $ratingIds = Rating::factory()->state([
             'verified' => false,
@@ -175,7 +175,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_availability_update_authorization()
+    public function test_bulk_ratings_availability_update_authorization(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => false,
@@ -191,7 +191,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_availability_update_authentication()
+    public function test_bulk_ratings_availability_update_authentication(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => false,
@@ -206,7 +206,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_availability_update_not_found_handled()
+    public function test_bulk_ratings_availability_update_not_found_handled(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => false,
@@ -222,7 +222,7 @@ class RatingsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_ratings_availability_update_validation()
+    public function test_bulk_ratings_availability_update_validation(): void
     {
         $ratingIds = Rating::factory()->state([
             'enabled' => false,

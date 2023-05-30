@@ -26,7 +26,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_template_can_be_exported_with_the_right_headings()
+    public function test_template_can_be_exported_with_the_right_headings(): void
     {
         Excel::fake();
 
@@ -46,7 +46,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_export_has_all_required_sheets()
+    public function test_export_has_all_required_sheets(): void
     {
         Excel::fake();
 
@@ -73,7 +73,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_export_has_the_right_data()
+    public function test_export_has_the_right_data(): void
     {
         Excel::fake();
 
@@ -92,7 +92,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_import_file_validates_success()
+    public function test_import_file_validates_success(): void
     {
         $path = __DIR__.'/TestData/product-categories-import.xlsx';
         $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
@@ -110,7 +110,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_import_file_validates_fail()
+    public function test_import_file_validates_fail(): void
     {
         $path = __DIR__.'/TestData/product-categories-import-invalid.xlsx';
         $file = new UploadedFile($path, 'product-categories-import-invalid.xlsx', null, null, true);
@@ -132,7 +132,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_import_file_imports_data()
+    public function test_import_file_imports_data(): void
     {
         $path = __DIR__.'/TestData/product-categories-import.xlsx';
         $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
@@ -153,7 +153,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_export_requires_permission()
+    public function test_export_requires_permission(): void
     {
         $response = $this->actingAs(User::where('email', 'customer@m.com')->first())
             ->get('/io/export?name=products&models[]=Product&models[]=ProductCategory&models[]=ProductAttribute&models[]=ProductAttributeOption&models[]=ProductTag');
@@ -164,7 +164,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_template_Export_requires_permission()
+    public function test_template_Export_requires_permission(): void
     {
         $response = $this->actingAs(User::where('email', 'customer@m.com')->first())
             ->get('/io/export?name=products&models[]=Product');
@@ -175,7 +175,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_import_requires_permission()
+    public function test_import_requires_permission(): void
     {
         $path = __DIR__.'/TestData/product-categories-import.xlsx';
         $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);
@@ -191,7 +191,7 @@ class ImportExportTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_import_validation_requires_permission()
+    public function test_import_validation_requires_permission(): void
     {
         $path = __DIR__.'/TestData/product-categories-import.xlsx';
         $file = new UploadedFile($path, 'product-categories-import.xlsx', null, null, true);

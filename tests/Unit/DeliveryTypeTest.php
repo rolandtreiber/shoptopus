@@ -26,19 +26,19 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_name_field()
+    public function it_has_an_name_field(): void
     {
         $this->assertNotNull($this->delivery_type->name);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_name()
+    public function it_has_a_slug_generated_from_its_name(): void
     {
         $this->assertEquals(Str::slug($this->delivery_type->name), $this->delivery_type->slug);
     }
 
     /** @test */
-    public function it_returns_a_translated_name()
+    public function it_returns_a_translated_name(): void
     {
         $this->delivery_type
             ->setTranslation('name', 'en', 'english translation')
@@ -53,13 +53,13 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_description_field()
+    public function it_has_a_description_field(): void
     {
         $this->assertNotNull($this->delivery_type->description);
     }
 
     /** @test */
-    public function it_returns_a_translated_description()
+    public function it_returns_a_translated_description(): void
     {
         $this->delivery_type
             ->setTranslation('description', 'en', 'english translation')
@@ -74,25 +74,25 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_price_field()
+    public function it_has_a_price_field(): void
     {
         $this->assertNotNull($this->delivery_type->price);
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertTrue($this->delivery_type->enabled);
     }
 
     /** @test */
-    public function it_has_an_enabled_by_default_on_creation_field()
+    public function it_has_an_enabled_by_default_on_creation_field(): void
     {
         $this->assertTrue($this->delivery_type->enabled_by_default_on_creation);
     }
 
     /** @test */
-    public function it_may_have_many_delivery_rules()
+    public function it_may_have_many_delivery_rules(): void
     {
         $this->assertCount(0, $this->delivery_type->deliveryRules);
 
@@ -104,7 +104,7 @@ class DeliveryTypeTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_orders()
+    public function it_may_have_many_orders(): void
     {
         $this->assertCount(0, $this->delivery_type->orders);
 

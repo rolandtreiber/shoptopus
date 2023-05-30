@@ -14,7 +14,7 @@ class DeliveryTypeFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $translations = $this->getTranslated($this->faker, ['name', 'description'], ['word', 'medium']);
 

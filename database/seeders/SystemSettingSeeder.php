@@ -12,7 +12,7 @@ class SystemSettingSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         SystemSetting::factory()->count(5)->create();
     }

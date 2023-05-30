@@ -20,7 +20,7 @@ class AddressSeeder extends Seeder
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $faker = Factory::create();
         $customers = User::role('customer')->get();

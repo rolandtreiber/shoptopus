@@ -18,7 +18,7 @@ class TransactionsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_update_the_status_of_multiple_transactions()
+    public function test_can_update_the_status_of_multiple_transactions(): void
     {
         $transactionIds = Payment::factory()->state([
             'status' => PaymentStatus::Pending,
@@ -42,7 +42,7 @@ class TransactionsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_transactions_status_update_authorization()
+    public function test_bulk_transactions_status_update_authorization(): void
     {
         $transactionIds = Payment::factory()->state([
             'status' => PaymentStatus::Pending,
@@ -58,7 +58,7 @@ class TransactionsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_transactions_status_update_authentication()
+    public function test_bulk_transactions_status_update_authentication(): void
     {
         $transactionIds = Payment::factory()->state([
             'status' => PaymentStatus::Pending,
@@ -73,7 +73,7 @@ class TransactionsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_transactions_status_update_not_found_handled()
+    public function test_bulk_transactions_status_update_not_found_handled(): void
     {
         $transactionIds = Payment::factory()->state([
             'status' => PaymentStatus::Pending,
@@ -89,7 +89,7 @@ class TransactionsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_transactions_status_update_validation()
+    public function test_bulk_transactions_status_update_validation(): void
     {
         $transactionIds = Payment::factory()->state([
             'status' => PaymentStatus::Pending,

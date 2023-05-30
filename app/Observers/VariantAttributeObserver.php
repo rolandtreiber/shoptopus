@@ -22,7 +22,7 @@ class VariantAttributeObserver
     /**
      * @return void
      */
-    public function created(VariantAttribute $variantAttribute)
+    public function created(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);
     }
@@ -30,7 +30,7 @@ class VariantAttributeObserver
     /**
      * @return void
      */
-    public function deleted(VariantAttribute $variantAttribute)
+    public function deleted(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);
     }

@@ -12,7 +12,7 @@ class EventLogFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'message' => $this->faker->regexify('[A-Za-z0-9]{200}'),

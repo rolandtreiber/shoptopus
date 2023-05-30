@@ -11,7 +11,7 @@ class ProductVariantObserver
         $productVariant->product->recalculateStock();
     }
 
-    public function deleted(ProductVariant $productVariant)
+    public function deleted(ProductVariant $productVariant): void
     {
         $productVariant->product->recalculateStock();
     }

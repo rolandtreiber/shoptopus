@@ -30,19 +30,19 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNotNull($this->product->name);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_name_field()
+    public function it_has_a_slug_generated_from_its_name_field(): void
     {
         $this->assertEquals(Str::slug($this->product->name), $this->product->slug);
     }
 
     /** @test */
-    public function it_returns_a_translated_name()
+    public function it_returns_a_translated_name(): void
     {
         $this->product
             ->setTranslation('name', 'en', 'english translation')
@@ -57,13 +57,13 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_short_description_field()
+    public function it_has_a_short_description_field(): void
     {
         $this->assertNotNull($this->product->short_description);
     }
 
     /** @test */
-    public function it_returns_a_translated_short_description()
+    public function it_returns_a_translated_short_description(): void
     {
         $this->product
             ->setTranslation('short_description', 'en', 'english translation')
@@ -78,13 +78,13 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_description_field()
+    public function it_has_a_description_field(): void
     {
         $this->assertNotNull($this->product->description);
     }
 
     /** @test */
-    public function it_returns_a_translated_description()
+    public function it_returns_a_translated_description(): void
     {
         $this->product
             ->setTranslation('description', 'en', 'english translation')
@@ -99,67 +99,67 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_price_field()
+    public function it_has_a_price_field(): void
     {
         $this->assertNotNull($this->product->price);
     }
 
     /** @test */
-    public function it_has_a_status_field()
+    public function it_has_a_status_field(): void
     {
         $this->assertEquals(ProductStatus::Active, $this->product->status);
     }
 
     /** @test */
-    public function it_has_a_purchase_count_field()
+    public function it_has_a_purchase_count_field(): void
     {
         $this->assertNotNull($this->product->purchase_count);
     }
 
     /** @test */
-    public function it_has_a_stock_field()
+    public function it_has_a_stock_field(): void
     {
         $this->assertNotNull($this->product->stock);
     }
 
     /** @test */
-    public function it_has_a_backup_stock_field()
+    public function it_has_a_backup_stock_field(): void
     {
         $this->assertNotNull($this->product->backup_stock);
     }
 
     /** @test */
-    public function it_has_a_sku_field()
+    public function it_has_a_sku_field(): void
     {
         $this->assertNotNull($this->product->sku);
     }
 
     /** @test */
-    public function it_has_a_headline_field()
+    public function it_has_a_headline_field(): void
     {
         $this->assertEmpty($this->product->headline);
     }
 
     /** @test */
-    public function it_has_a_subtitle_field()
+    public function it_has_a_subtitle_field(): void
     {
         $this->assertEmpty($this->product->subtitle);
     }
 
     /** @test */
-    public function it_has_a_deleted_at_field()
+    public function it_has_a_deleted_at_field(): void
     {
         $this->assertNull($this->product->deleted_at);
     }
 
     /** @test */
-    public function it_has_a_final_price_attribute()
+    public function it_has_a_final_price_attribute(): void
     {
         $this->assertNotNull($this->product->final_price);
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_a_discount_rule_is_applied()
+    public function its_final_price_attribute_is_calculated_correctly_when_a_discount_rule_is_applied(): void
     {
         $this->product->update(['price' => 10.00]);
 
@@ -176,7 +176,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed()
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -202,7 +202,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed()
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed(): void
     {
         $this->product->update(['price' => 10.00]);
 
@@ -226,7 +226,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied()
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied(): void
     {
         $this->product->update(['price' => 10.00]);
 
@@ -250,7 +250,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied()
+    public function its_final_price_attribute_is_calculated_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied(): void
     {
         Config::set('shoptopus.discount_rules.applied_discount', 'lowest');
 
@@ -276,7 +276,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule()
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule(): void
     {
         $product_category = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
@@ -303,7 +303,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -332,7 +332,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed()
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed(): void
     {
         $product_category = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
@@ -359,7 +359,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    public function its_final_price_attribute_is_calculated_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -388,7 +388,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_images()
+    public function it_may_have_many_images(): void
     {
         $this->assertCount(0, $this->product->images());
 
@@ -401,7 +401,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_creates_a_cover_photo_from_its_existing_images()
+    public function it_creates_a_cover_photo_from_its_existing_images(): void
     {
         $this->assertNull($this->product->cover_photo);
 
@@ -418,7 +418,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function the_cover_photo_will_always_be_the_first_image()
+    public function the_cover_photo_will_always_be_the_first_image(): void
     {
         $first_image = FileContent::factory()->create([
             'fileable_type' => get_class($this->product),
@@ -440,7 +440,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_tags()
+    public function it_may_have_many_tags(): void
     {
         $this->assertCount(0, $this->product->product_tags);
 
@@ -454,7 +454,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_categories()
+    public function it_may_have_many_categories(): void
     {
         $this->assertCount(0, $this->product->product_categories);
 
@@ -468,7 +468,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_attributes()
+    public function it_may_have_many_attributes(): void
     {
         $this->assertCount(0, $this->product->product_attributes);
 
@@ -482,7 +482,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_valid_discount_rules()
+    public function it_may_have_many_valid_discount_rules(): void
     {
         $this->assertCount(0, $this->product->discount_rules);
 
@@ -505,7 +505,7 @@ class ProductTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_product_variants()
+    public function it_may_have_many_product_variants(): void
     {
         $this->assertCount(0, $this->product->product_variants);
 

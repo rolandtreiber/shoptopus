@@ -25,7 +25,7 @@ class GetAddressTest extends TestCase
      *
      * @group apiGet
      */
-    public function unauthenticated_users_are_not_allowed_to_get_addresses()
+    public function unauthenticated_users_are_not_allowed_to_get_addresses(): void
     {
         $unAuthenticatedRes = $this->sendRequest()->json();
 
@@ -43,7 +43,7 @@ class GetAddressTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_can_return_an_address_by_its_id()
+    public function it_can_return_an_address_by_its_id(): void
     {
         $this->signIn($this->address->user)
             ->sendRequest()
@@ -56,7 +56,7 @@ class GetAddressTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $this->signIn($this->address->user)
             ->sendRequest()
@@ -72,7 +72,7 @@ class GetAddressTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_owner_of_the_address()
+    public function it_returns_the_owner_of_the_address(): void
     {
         $this->signIn($this->address->user)
             ->sendRequest()

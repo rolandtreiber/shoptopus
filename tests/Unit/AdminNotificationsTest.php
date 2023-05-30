@@ -50,7 +50,7 @@ class AdminNotificationsTest extends TestCase
     /**
      * @test
      */
-    public function test_product_running_low_notification_is_sent()
+    public function test_product_running_low_notification_is_sent(): void
     {
         $this->createRequiredUsers($this->notificationsConfig[ProductRunningLow::class]);
         Product::factory()->state([
@@ -65,7 +65,7 @@ class AdminNotificationsTest extends TestCase
     /**
      * @test
      */
-    public function test_product_out_of_stock_notification_is_sent()
+    public function test_product_out_of_stock_notification_is_sent(): void
     {
         $this->createRequiredUsers($this->notificationsConfig[ProductOutOfStock::class]);
         Product::factory()->state([
@@ -80,7 +80,7 @@ class AdminNotificationsTest extends TestCase
     /**
      * @test
      */
-    public function test_new_order_notification_is_sent()
+    public function test_new_order_notification_is_sent(): void
     {
         $this->createRequiredUsers($this->notificationsConfig[NewOrder::class]);
         Order::factory()->create();
@@ -97,7 +97,7 @@ class AdminNotificationsTest extends TestCase
      *
      * @see https://github.com/laravel/framework/issues/19952
      */
-    public function test_user_signup_notification_is_sent()
+    public function test_user_signup_notification_is_sent(): void
     {
         $this->createRequiredUsers($this->notificationsConfig[UserSignup::class]);
 

@@ -17,7 +17,7 @@ class RatingSeeder extends Seeder
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $productIds = Product::all()->pluck('id');
         $userIds = User::all()->pluck('id');

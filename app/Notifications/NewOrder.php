@@ -45,14 +45,14 @@ class NewOrder extends BaseNotification implements UserNotification
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'message' => $this->createMessage($this->data),
         ];
     }
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->greeting('Hello '.$notifiable->first_name.'!')

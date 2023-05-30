@@ -9,7 +9,7 @@ class FileBulkOperationRequest extends BaseBulkOperationRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'ids' => ['required', 'array'],

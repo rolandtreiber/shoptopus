@@ -14,7 +14,7 @@ class SuperUserSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $superUser = User::factory()->state([
             'name' => config('shoptopus.super_user.name'),

@@ -13,7 +13,7 @@ class ProductAttributeOptionSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $used = [];
         for ($i = 1; $i < 6; $i++) {

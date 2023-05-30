@@ -12,7 +12,7 @@ class ContentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'contentable_type' => $this->faker->word(),

@@ -17,7 +17,7 @@ class FileContentFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $translated = $this->getTranslated($this->faker, ['title', 'description'], ['short', 'medium']);
 

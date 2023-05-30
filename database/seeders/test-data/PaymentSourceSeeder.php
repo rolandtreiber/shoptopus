@@ -12,7 +12,7 @@ class PaymentSourceSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         PaymentSource::factory()->count(5)->create();
     }

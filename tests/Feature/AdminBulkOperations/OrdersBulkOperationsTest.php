@@ -18,7 +18,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_update_multiple_order_status()
+    public function test_can_update_multiple_order_status(): void
     {
         $orderIds = Order::factory()->state([
             'status' => OrderStatus::Paid,
@@ -42,7 +42,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_order_status_update_validation()
+    public function test_bulk_order_status_update_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [
@@ -54,7 +54,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_order_status_update_authorization()
+    public function test_bulk_order_status_update_authorization(): void
     {
         $orderIds = Order::factory()->state([
             'status' => OrderStatus::Paid,
@@ -70,7 +70,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_order_status_update_authentication()
+    public function test_bulk_order_status_update_authentication(): void
     {
         $orderIds = Order::factory()->state([
             'status' => OrderStatus::Paid,
@@ -85,7 +85,7 @@ class OrdersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_order_status_update_order_not_found_throws_expected_error()
+    public function test_bulk_order_status_update_order_not_found_throws_expected_error(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.orders.bulk.status-update'), [

@@ -18,7 +18,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_archive_multiple_products()
+    public function test_can_archive_multiple_products(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,
@@ -41,7 +41,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_delete_multiple_products()
+    public function test_can_delete_multiple_products(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,
@@ -62,7 +62,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_archive_validation()
+    public function test_bulk_products_archive_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.products.bulk.archive'), []);
@@ -72,7 +72,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_archive_authorization()
+    public function test_bulk_products_archive_authorization(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,
@@ -87,7 +87,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_archive_authentication()
+    public function test_bulk_products_archive_authentication(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,
@@ -101,7 +101,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_delete_validation()
+    public function test_bulk_products_delete_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.products.bulk.delete'), [
@@ -113,7 +113,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_delete_authorization()
+    public function test_bulk_products_delete_authorization(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,
@@ -128,7 +128,7 @@ class ProductsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_products_delete_authentication()
+    public function test_bulk_products_delete_authentication(): void
     {
         $productIds = Product::factory()->state([
             'status' => ProductStatus::Active,

@@ -24,7 +24,7 @@ class DeleteAddressTest extends TestCase
      *
      * @group apiDelete
      */
-    public function unauthorised_users_are_not_allowed_to_delete_addresses()
+    public function unauthorised_users_are_not_allowed_to_delete_addresses(): void
     {
         $unAuthenticatedRes = $this->sendRequest()->json();
 
@@ -42,7 +42,7 @@ class DeleteAddressTest extends TestCase
      *
      * @group apiDelete
      */
-    public function authorised_users_can_delete_their_addresses()
+    public function authorised_users_can_delete_their_addresses(): void
     {
         $this->assertDatabaseHas('addresses', [
             'id' => $this->address->id,

@@ -27,25 +27,25 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_first_name_field()
+    public function it_has_a_first_name_field(): void
     {
         $this->assertNotNull($this->user->first_name);
     }
 
     /** @test */
-    public function it_has_a_last_name_field()
+    public function it_has_a_last_name_field(): void
     {
         $this->assertNotNull($this->user->last_name);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_first_and_last_name()
+    public function it_has_a_slug_generated_from_its_first_and_last_name(): void
     {
         $this->assertEquals(Str::slug($this->user->first_name.' '.$this->user->last_name), $this->user->slug);
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertEquals(
             trim($this->user->prefix.' '.$this->user->first_name.' '.$this->user->last_name),
@@ -54,25 +54,25 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_email_field()
+    public function it_has_an_email_field(): void
     {
         $this->assertNotNull($this->user->email);
     }
 
     /** @test */
-    public function it_has_a_password_field()
+    public function it_has_a_password_field(): void
     {
         $this->assertNotNull($this->user->password);
     }
 
     /** @test */
-    public function it_has_a_prefix_field()
+    public function it_has_a_prefix_field(): void
     {
         $this->assertNull($this->user->prefix);
     }
 
     /** @test */
-    public function it_has_an_initials_field()
+    public function it_has_an_initials_field(): void
     {
         $this->assertEquals(
             $this->user->initials,
@@ -81,38 +81,38 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_phone_field()
+    public function it_has_a_phone_field(): void
     {
         $this->assertNull($this->user->phone);
     }
 
     /** @test */
-    public function it_has_a_temporary_field()
+    public function it_has_a_temporary_field(): void
     {
         $this->assertFalse($this->user->temporary);
     }
 
     /** @test */
-    public function it_has_an_is_favorite_field()
+    public function it_has_an_is_favorite_field(): void
     {
         $this->assertFalse($this->user->is_favorite);
     }
 
     /** @test */
-    public function it_has_an_avatar_field()
+    public function it_has_an_avatar_field(): void
     {
         $this->assertNotNull($this->user->avatar->url);
         $this->assertNotNull($this->user->avatar->file_name);
     }
 
     /** @test */
-    public function it_has_an_email_verified_at_field()
+    public function it_has_an_email_verified_at_field(): void
     {
         $this->assertNull($this->user->email_verified_at);
     }
 
     /** @test */
-    public function it_may_have_many_addresses()
+    public function it_may_have_many_addresses(): void
     {
         $this->assertCount(0, $this->user->addresses);
 
@@ -124,7 +124,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_orders()
+    public function it_may_have_many_orders(): void
     {
         $this->assertCount(0, $this->user->orders);
 
@@ -136,7 +136,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_payment_sources()
+    public function it_may_have_many_payment_sources(): void
     {
         $this->assertCount(0, $this->user->payment_sources);
 
@@ -148,7 +148,7 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_payments()
+    public function it_may_have_many_payments(): void
     {
         $this->assertCount(0, $this->user->payments);
 
@@ -160,13 +160,13 @@ class UserTest extends TestCase
     }
 
     /** @test */
-    public function a_cart_is_added_for_the_user_on_creation()
+    public function a_cart_is_added_for_the_user_on_creation(): void
     {
         $this->assertInstanceOf(Cart::class, $this->user->cart);
     }
 
     /** @test */
-    public function it_may_have_many_social_accounts()
+    public function it_may_have_many_social_accounts(): void
     {
         $this->assertCount(0, $this->user->social_accounts);
 

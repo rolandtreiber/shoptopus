@@ -17,7 +17,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_enable_multiple_product_categories()
+    public function test_can_enable_multiple_product_categories(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => false,
@@ -41,7 +41,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_disable_multiple_product_categories()
+    public function test_can_disable_multiple_product_categories(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -65,7 +65,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_delete_multiple_product_categories()
+    public function test_can_delete_multiple_product_categories(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -86,7 +86,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_availability_update_validation()
+    public function test_bulk_product_categories_availability_update_validation(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -101,7 +101,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_availability_update_authorization()
+    public function test_bulk_product_categories_availability_update_authorization(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -117,7 +117,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_availability_update_authentication()
+    public function test_bulk_product_categories_availability_update_authentication(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -132,7 +132,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_availability_update_not_found_handled()
+    public function test_bulk_product_categories_availability_update_not_found_handled(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -147,7 +147,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_delete_validation()
+    public function test_bulk_product_categories_delete_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), []);
@@ -157,7 +157,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_delete_authorization()
+    public function test_bulk_product_categories_delete_authorization(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -172,7 +172,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_delete_authentication()
+    public function test_bulk_product_categories_delete_authentication(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
@@ -186,7 +186,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_categories_delete_not_found_handled()
+    public function test_bulk_product_categories_delete_not_found_handled(): void
     {
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,

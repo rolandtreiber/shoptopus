@@ -17,7 +17,7 @@ class ProductVariantSeeder extends Seeder
      *
      * @throws \Exception
      */
-    public function run()
+    public function run(): void
     {
         $variableProductCount = Product::count() / 2;
 

@@ -17,7 +17,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function unauthenticated_users_are_not_allowed_to_get_all_their_addresses()
+    public function unauthenticated_users_are_not_allowed_to_get_all_their_addresses(): void
     {
         $res = $this->sendRequest()->json();
 
@@ -30,7 +30,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_correct_format()
+    public function it_returns_the_correct_format(): void
     {
         $this->signIn()
             ->sendRequest()
@@ -48,7 +48,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_all_addresses_for_the_user()
+    public function it_returns_all_addresses_for_the_user(): void
     {
         $user = User::factory()->create();
         Address::factory()->count(5)->create(['user_id' => $user->id]);
@@ -95,7 +95,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function soft_deleted_addresses_are_not_returned()
+    public function soft_deleted_addresses_are_not_returned(): void
     {
         $addresses = Address::factory()->count(2)->create(['deleted_at' => now()]);
 
@@ -109,7 +109,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_count()
+    public function it_returns_the_count(): void
     {
         $user = User::factory()->create();
         Address::factory()->count(5)->create(['user_id' => $user->id]);
@@ -122,7 +122,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $address = Address::factory()->create();
 
@@ -140,7 +140,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function addresses_can_be_filtered_by_id()
+    public function addresses_can_be_filtered_by_id(): void
     {
         $user = User::factory()->create();
         $addresses = Address::factory()->count(2)->create(['user_id' => $user->id]);
@@ -156,7 +156,7 @@ class GetAllAddressesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function filters_can_accept_multiple_parameters()
+    public function filters_can_accept_multiple_parameters(): void
     {
         $user = User::factory()->create();
 

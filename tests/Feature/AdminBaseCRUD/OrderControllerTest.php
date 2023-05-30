@@ -23,7 +23,7 @@ class OrderControllerTest extends AdminControllerTestCase
      *
      * @test
      */
-    public function test_order_delivery_type_returned_after_deleting_delivery_type()
+    public function test_order_delivery_type_returned_after_deleting_delivery_type(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryTypeName = $deliveryType->getTranslations('name');

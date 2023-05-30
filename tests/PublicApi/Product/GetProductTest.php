@@ -32,7 +32,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_can_return_a_product_by_its_id()
+    public function it_can_return_a_product_by_its_id(): void
     {
         $this->sendRequest()
             ->assertOk()
@@ -45,7 +45,7 @@ class GetProductTest extends TestCase
      * @group apiGet
      * @group apiGetBySlug
      */
-    public function it_can_return_a_product_by_its_slug()
+    public function it_can_return_a_product_by_its_slug(): void
     {
         $this->getJson(route('api.product.getBySlug', ['slug' => $this->product->slug]))
             ->assertOk()
@@ -57,7 +57,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -72,7 +72,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_final_price_field()
+    public function it_returns_the_final_price_field(): void
     {
         $res = $this->sendRequest();
 
@@ -86,7 +86,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_associated_enabled_discount_rules()
+    public function it_returns_the_associated_enabled_discount_rules(): void
     {
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
@@ -128,7 +128,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function the_discount_rules_must_be_valid()
+    public function the_discount_rules_must_be_valid(): void
     {
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
@@ -150,7 +150,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_its_product_categories_with_their_discount_rules()
+    public function it_returns_its_product_categories_with_their_discount_rules(): void
     {
         $pc = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
@@ -198,7 +198,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_its_product_tags()
+    public function it_returns_its_product_tags(): void
     {
         $pt = ProductTag::factory()->create();
         $this->product->product_tags()->attach($pt->id);
@@ -236,7 +236,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_its_product_variants()
+    public function it_returns_its_product_variants(): void
     {
         $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
 
@@ -274,7 +274,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_a_final_price_attribute_for_the_product_variants()
+    public function it_returns_a_final_price_attribute_for_the_product_variants(): void
     {
         $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
 
@@ -290,7 +290,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants()
+    public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants(): void
     {
         $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
         $pa_valid = ProductAttribute::factory()->create();
@@ -348,7 +348,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_associated_product_attributes_with_their_options()
+    public function it_returns_the_associated_product_attributes_with_their_options(): void
     {
         $pa = ProductAttribute::factory()->create();
         $paos = ProductAttributeOption::factory()->count(3)->create(['product_attribute_id' => $pa->id]);
@@ -402,7 +402,7 @@ class GetProductTest extends TestCase
      *
      * @group apiGet
      */
-    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
+    public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted(): void
     {
         $pa = ProductAttribute::factory()->create();
         $pao = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);

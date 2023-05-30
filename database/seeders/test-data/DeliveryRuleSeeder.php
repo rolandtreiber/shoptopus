@@ -12,7 +12,7 @@ class DeliveryRuleSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         DeliveryRule::factory()->count(5)->create();
     }

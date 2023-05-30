@@ -32,7 +32,7 @@ class ExecutePaymentTest extends PaymentTestCase
      *
      * @group apiPost
      */
-    public function unauthenticated_users_are_not_allowed_to_execute_payments()
+    public function unauthenticated_users_are_not_allowed_to_execute_payments(): void
     {
         $res = $this->sendRequest()->json();
 
@@ -45,7 +45,7 @@ class ExecutePaymentTest extends PaymentTestCase
      *
      * @group apiPost
      */
-    public function unauthorised_users_are_not_allowed_to_execute_payments()
+    public function unauthorised_users_are_not_allowed_to_execute_payments(): void
     {
         $res = $this->signIn()->sendRequest()->json();
 
@@ -58,7 +58,7 @@ class ExecutePaymentTest extends PaymentTestCase
      *
      * @group apiPost
      */
-    public function it_throws_an_error_if_the_payment_gateway_is_not_supported()
+    public function it_throws_an_error_if_the_payment_gateway_is_not_supported(): void
     {
         $order = Order::factory()->create(['user_id' => $this->user->id]);
 
@@ -75,7 +75,7 @@ class ExecutePaymentTest extends PaymentTestCase
      *
      * @group apiPost
      */
-    public function it_throws_an_error_if_the_order_status_is_not_awaiting_payment()
+    public function it_throws_an_error_if_the_order_status_is_not_awaiting_payment(): void
     {
         $order = Order::factory()->create([
             'user_id' => $this->user->id,

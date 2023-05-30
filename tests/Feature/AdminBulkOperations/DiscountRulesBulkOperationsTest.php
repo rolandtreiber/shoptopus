@@ -33,7 +33,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_expire_multiple_discount_rules()
+    public function test_can_expire_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom,
@@ -57,7 +57,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_start_multiple_discount_rules()
+    public function test_can_start_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->addMonth(),
@@ -81,7 +81,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_make_active_for_one_day_multiple_discount_rules()
+    public function test_can_make_active_for_one_day_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
@@ -108,7 +108,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_make_active_for_one_week_multiple_discount_rules()
+    public function test_can_make_active_for_one_week_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
@@ -135,7 +135,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_make_active_for_one_month_multiple_discount_rules()
+    public function test_can_make_active_for_one_month_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
@@ -162,7 +162,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_delete_multiple_discount_rules()
+    public function test_can_delete_multiple_discount_rules(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -181,7 +181,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_delete_authorization()
+    public function test_bulk_discount_rules_delete_authorization(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
@@ -194,7 +194,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_delete_authentication()
+    public function test_bulk_discount_rules_delete_authentication(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->delete(route('admin.api.discount-rules.bulk.delete'), [
@@ -206,7 +206,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_delete_not_found_handled()
+    public function test_bulk_discount_rules_delete_not_found_handled(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -219,7 +219,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_delete_validation()
+    public function test_bulk_discount_rules_delete_validation(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -232,7 +232,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_make_active_authorization()
+    public function test_bulk_discount_rules_make_active_authorization(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
@@ -246,7 +246,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_make_active_authentication()
+    public function test_bulk_discount_rules_make_active_authentication(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.activate-for-period'), [
@@ -259,7 +259,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_make_active_not_found_handled()
+    public function test_bulk_discount_rules_make_active_not_found_handled(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -273,7 +273,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_make_active_validation()
+    public function test_bulk_discount_rules_make_active_validation(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -286,7 +286,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_start_authorization()
+    public function test_bulk_discount_rules_start_authorization(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
@@ -299,7 +299,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_start_authentication()
+    public function test_bulk_discount_rules_start_authentication(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), [
@@ -311,7 +311,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_start_not_found_handled()
+    public function test_bulk_discount_rules_start_not_found_handled(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -324,7 +324,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_start_validation()
+    public function test_bulk_discount_rules_start_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.start'), []);
@@ -334,7 +334,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_expire_authorization()
+    public function test_bulk_discount_rules_expire_authorization(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->storeAssistant);
@@ -347,7 +347,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_expire_authentication()
+    public function test_bulk_discount_rules_expire_authentication(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), [
@@ -359,7 +359,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_expire_not_found_handled()
+    public function test_bulk_discount_rules_expire_not_found_handled(): void
     {
         $discountRuleIds = DiscountRule::factory()->count(3)->create()->pluck('id')->toArray();
         $this->signIn($this->superAdmin);
@@ -372,7 +372,7 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_discount_rules_expire_validation()
+    public function test_bulk_discount_rules_expire_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.discount-rules.bulk.expire'), []);

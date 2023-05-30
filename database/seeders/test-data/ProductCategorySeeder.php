@@ -16,7 +16,7 @@ class ProductCategorySeeder extends Seeder
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         ProductCategory::factory()->count(10)->create();
 

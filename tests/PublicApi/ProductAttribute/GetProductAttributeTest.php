@@ -32,7 +32,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_can_return_a_product_attribute_by_its_id()
+    public function it_can_return_a_product_attribute_by_its_id(): void
     {
         $this->sendRequest()
             ->assertOk()
@@ -44,7 +44,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function an_attribute_without_options_are_excluded()
+    public function an_attribute_without_options_are_excluded(): void
     {
         $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_attribute_option_id' => null]);
 
@@ -56,7 +56,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function an_attribute_without_products_are_excluded()
+    public function an_attribute_without_products_are_excluded(): void
     {
         $this->product_attribute->products()->updateExistingPivot($this->product->id, ['product_id' => null]);
 
@@ -68,7 +68,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -83,7 +83,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_associated_options()
+    public function it_returns_the_associated_options(): void
     {
         $res = $this->sendRequest();
 
@@ -119,7 +119,7 @@ class GetProductAttributeTest extends TestCase
      *
      * @group apiGet
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_ids(): void
     {
         $res = $this->sendRequest();
 

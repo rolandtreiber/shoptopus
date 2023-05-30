@@ -23,7 +23,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rules_can_be_listed()
+    public function test_discount_rules_can_be_listed(): void
     {
         $rules = DiscountRule::factory()->count(3)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -46,7 +46,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_can_be_shown()
+    public function test_discount_rule_can_be_shown(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -74,7 +74,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_can_be_created()
+    public function test_discount_rule_can_be_created(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $validFrom = Carbon::now();
@@ -104,7 +104,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_can_be_updated()
+    public function test_discount_rule_can_be_updated(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -136,7 +136,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_can_be_deleted()
+    public function test_discount_rule_can_be_deleted(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -148,7 +148,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_creation_requires_appropriate_Permission()
+    public function test_discount_rule_creation_requires_appropriate_Permission(): void
     {
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
         $validFrom = Carbon::now();
@@ -169,7 +169,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_updating_requires_appropriate_Permission()
+    public function test_discount_rule_updating_requires_appropriate_Permission(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -193,7 +193,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_deletion_requires_appropriate_Permission()
+    public function test_discount_rule_deletion_requires_appropriate_Permission(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'storeassistant@m.com')->first());
@@ -205,7 +205,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_creation_validation()
+    public function test_discount_rule_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $validFrom = Carbon::now();
@@ -225,7 +225,7 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_discount_rule_update_validation()
+    public function test_discount_rule_update_validation(): void
     {
         $rule = DiscountRule::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());

@@ -19,7 +19,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_correct_format()
+    public function it_returns_the_correct_format(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -36,7 +36,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $product = Product::factory()->create();
         $attributes = ProductAttribute::factory()->count(2)->create();
@@ -61,7 +61,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function soft_deleted_and_disabled_product_attributes_are_not_returned()
+    public function soft_deleted_and_disabled_product_attributes_are_not_returned(): void
     {
         $product = Product::factory()->create();
         $attribute1 = ProductAttribute::factory()->create(['deleted_at' => now()]);
@@ -79,7 +79,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_count()
+    public function it_returns_the_count(): void
     {
         $product = Product::factory()->create();
         $attributes = ProductAttribute::factory()->count(2)->create();
@@ -96,7 +96,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_options()
+    public function it_returns_the_associated_options(): void
     {
         $product = Product::factory()->create();
         $pa = ProductAttribute::factory()->create();
@@ -140,7 +140,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function attributes_without_options_are_excluded()
+    public function attributes_without_options_are_excluded(): void
     {
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();
@@ -156,7 +156,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function attributes_without_products_are_excluded()
+    public function attributes_without_products_are_excluded(): void
     {
         ProductAttribute::factory()->count(3)->create();
 
@@ -170,7 +170,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_ids(): void
     {
         $pa = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->create(['product_attribute_id' => $pa->id]);
@@ -200,7 +200,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_can_filter_attributes_within_a_product_category()
+    public function it_can_filter_attributes_within_a_product_category(): void
     {
         $products_without_category = Product::factory()->count(2)->create();
         $products_in_category = Product::factory()->count(2)->create();
@@ -234,7 +234,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function product_attributes_can_be_filtered_by_id()
+    public function product_attributes_can_be_filtered_by_id(): void
     {
         $product = Product::factory()->create();
         $pas = ProductAttribute::factory()->count(3)->create();
@@ -257,7 +257,7 @@ class GetAllProductAttributesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function filters_can_accept_multiple_parameters()
+    public function filters_can_accept_multiple_parameters(): void
     {
         $product = Product::factory()->create();
         $pas = ProductAttribute::factory()->count(3)->create();

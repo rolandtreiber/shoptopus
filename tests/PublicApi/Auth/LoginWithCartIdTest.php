@@ -28,7 +28,7 @@ class LoginWithCartIdTest extends TestCase
      *
      * @group apiPost
      */
-    public function the_existing_cart_of_the_user_is_correctly_merged()
+    public function the_existing_cart_of_the_user_is_correctly_merged(): void
     {
         $cart_front_end = Cart::factory()->create(['user_id' => null]);
         $product_front_end = Product::factory()->create();
@@ -77,7 +77,7 @@ class LoginWithCartIdTest extends TestCase
      *
      * @group apiPost
      */
-    public function when_carts_are_merged_the_quantity_for_the_same_product_is_correctly_updated()
+    public function when_carts_are_merged_the_quantity_for_the_same_product_is_correctly_updated(): void
     {
         $product = Product::factory()->create();
 
@@ -118,7 +118,7 @@ class LoginWithCartIdTest extends TestCase
      *
      * @group apiPost
      */
-    public function the_old_cart_gets_deleted()
+    public function the_old_cart_gets_deleted(): void
     {
         $cart_front_end = Cart::factory()->create(['user_id' => null]);
         $product_front_end = Product::factory()->create();

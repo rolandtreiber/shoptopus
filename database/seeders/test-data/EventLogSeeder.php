@@ -12,7 +12,7 @@ class EventLogSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         EventLog::factory()->count(5)->create();
     }

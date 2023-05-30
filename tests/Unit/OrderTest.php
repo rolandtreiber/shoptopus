@@ -29,62 +29,62 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_original_price_field()
+    public function it_has_an_original_price_field(): void
     {
         $this->assertIsFloat($this->order->original_price);
     }
 
     /** @test */
-    public function it_has_a_subtotal_field()
+    public function it_has_a_subtotal_field(): void
     {
         $this->assertIsFloat($this->order->subtotal);
     }
 
     /** @test */
-    public function it_has_a_total_price_field()
+    public function it_has_a_total_price_field(): void
     {
         $this->assertIsFloat($this->order->total_price);
     }
 
     /** @test */
-    public function it_has_a_total_discount_field()
+    public function it_has_a_total_discount_field(): void
     {
         $this->assertIsFloat($this->order->total_discount);
     }
 
     /** @test */
-    public function it_has_a_delivery_cost_field()
+    public function it_has_a_delivery_cost_field(): void
     {
         $this->assertIsFloat($this->order->delivery_cost);
     }
 
     /** @test */
-    public function it_has_a_status_field()
+    public function it_has_a_status_field(): void
     {
         $this->assertEquals(OrderStatus::AwaitingPayment, $this->order->status);
     }
 
     /** @test */
-    public function it_has_a_currency_code_field()
+    public function it_has_a_currency_code_field(): void
     {
         $this->assertNotNull($this->order->currency_code);
         $this->assertEquals('GBP', $this->order->currency_code);
     }
 
     /** @test */
-    public function it_has_an_address()
+    public function it_has_an_address(): void
     {
         $this->assertInstanceOf(Address::class, $this->order->address);
     }
 
     /** @test */
-    public function it_belongs_to_a_user()
+    public function it_belongs_to_a_user(): void
     {
         $this->assertInstanceOf(User::class, $this->order->user);
     }
 
     /** @test */
-    public function it_may_belong_to_a_delivery_type()
+    public function it_may_belong_to_a_delivery_type(): void
     {
         $this->assertNull($this->order->delivery_type);
 
@@ -96,7 +96,7 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function it_may_belong_to_a_voucher_code()
+    public function it_may_belong_to_a_voucher_code(): void
     {
         $this->assertNull($this->order->voucher_code);
 
@@ -108,7 +108,7 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_payments()
+    public function it_may_have_many_payments(): void
     {
         $this->assertEmpty($this->order->payments);
 
@@ -118,7 +118,7 @@ class OrderTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_products()
+    public function it_may_have_many_products(): void
     {
         $this->assertEmpty($this->order->products);
 

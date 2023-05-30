@@ -6,7 +6,7 @@ use App\Models\Rating;
 
 class RatingObserver
 {
-    public function created(Rating $rating)
+    public function created(Rating $rating): void
     {
         $ratable = $rating->ratable;
         if ($ratable) {

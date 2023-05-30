@@ -12,7 +12,7 @@ class ProductAttributeSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         ProductAttribute::factory()->count(5)->create();
     }

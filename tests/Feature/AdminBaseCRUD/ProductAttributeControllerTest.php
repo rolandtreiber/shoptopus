@@ -27,7 +27,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attributes_can_be_listed()
+    public function test_product_attributes_can_be_listed(): void
     {
         $attributes = ProductAttribute::factory()->count(2)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -49,7 +49,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
      *
      * @throws Throwable
      */
-    public function test_product_attribute_can_be_shown()
+    public function test_product_attribute_can_be_shown(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $options = ProductAttributeOption::factory()->state([
@@ -74,7 +74,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_can_be_created()
+    public function test_product_attribute_can_be_created(): void
     {
         Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -97,7 +97,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attributes_can_be_updated()
+    public function test_product_attributes_can_be_updated(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -122,7 +122,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attributes_can_be_deleted()
+    public function test_product_attributes_can_be_deleted(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $options = ProductAttributeOption::factory()->state([
@@ -140,7 +140,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_can_be_created()
+    public function test_product_attribute_option_can_be_created(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -165,7 +165,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_can_be_updated()
+    public function test_product_attribute_option_can_be_updated(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([
@@ -195,7 +195,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_can_be_deleted()
+    public function test_product_attribute_option_can_be_deleted(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([
@@ -215,7 +215,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_creation_validation()
+    public function test_product_attribute_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-attribute'), [
@@ -230,7 +230,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_creation_validation()
+    public function test_product_attribute_option_creation_validation(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -248,7 +248,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_deletion_requires_the_right_Permission()
+    public function test_product_attribute_deletion_requires_the_right_Permission(): void
     {
         $attribute = ProductAttribute::factory()->create();
 
@@ -260,7 +260,7 @@ class ProductAttributeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_attribute_option_deletion_requires_the_right_Permission()
+    public function test_product_attribute_option_deletion_requires_the_right_Permission(): void
     {
         $attribute = ProductAttribute::factory()->create();
         $option = ProductAttributeOption::factory()->state([

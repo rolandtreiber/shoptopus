@@ -16,7 +16,7 @@ class CreateAddressTest extends TestCase
      *
      * @group apiPost
      */
-    public function unauthenticated_users_are_not_allowed_to_create_addresses()
+    public function unauthenticated_users_are_not_allowed_to_create_addresses(): void
     {
         $data = Address::factory()->raw();
 
@@ -31,7 +31,7 @@ class CreateAddressTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'address_line_1' => null,
@@ -52,7 +52,7 @@ class CreateAddressTest extends TestCase
      *
      * @group apiPost
      */
-    public function authenticated_users_can_create_addresses()
+    public function authenticated_users_can_create_addresses(): void
     {
         $user = User::factory()->create();
 
@@ -74,7 +74,7 @@ class CreateAddressTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_is_saved_for_the_currently_authenticated_user()
+    public function it_is_saved_for_the_currently_authenticated_user(): void
     {
         $address = Address::factory()->raw();
 
@@ -90,7 +90,7 @@ class CreateAddressTest extends TestCase
      *
      * @group apiPost
      */
-    public function the_longitude_and_latitude_must_match_the_exact_number_of_characters()
+    public function the_longitude_and_latitude_must_match_the_exact_number_of_characters(): void
     {
         $data = Address::factory()->raw([
             'lat' => 2000,

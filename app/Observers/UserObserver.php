@@ -33,7 +33,7 @@ class UserObserver
         $user->initials = substr($firstName, 0, 1).substr($lastName, 0, 1);
     }
 
-    public function created(User $user)
+    public function created(User $user): void
     {
         $cart = new Cart();
         $cart->user_id = $user->id;

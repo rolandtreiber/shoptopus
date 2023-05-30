@@ -26,7 +26,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_can_be_listed()
+    public function test_variant_can_be_listed(): void
     {
         $product = Product::factory()->create();
         $variants = ProductVariant::factory()->state([
@@ -53,7 +53,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_can_be_created()
+    public function test_variant_can_be_created(): void
     {
         Storage::fake('uploads');
         $product = Product::factory()->create();
@@ -91,7 +91,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_can_be_updated()
+    public function test_variant_can_be_updated(): void
     {
         Storage::fake('uploads');
         $product = Product::factory()->create();
@@ -140,7 +140,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_update_updates_parent_stock()
+    public function test_variant_update_updates_parent_stock(): void
     {
         $product = Product::factory()->create(['stock' => 14]);
 
@@ -174,7 +174,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_can_be_shown()
+    public function test_variant_can_be_shown(): void
     {
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();
@@ -201,7 +201,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_can_be_deleted()
+    public function test_variant_can_be_deleted(): void
     {
         $product = Product::factory()->create();
         $productVariant = ProductVariant::factory()->state([
@@ -220,7 +220,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_creation_validation()
+    public function test_variant_creation_validation(): void
     {
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -233,7 +233,7 @@ class ProductVariantControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_variant_update_validation()
+    public function test_variant_update_validation(): void
     {
         $product = Product::factory()->create();
         $attribute = ProductAttribute::factory()->create();

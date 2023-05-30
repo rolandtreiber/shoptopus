@@ -40,7 +40,7 @@ class OrderObserver
      *
      * @return void
      */
-    public function created(Order $order)
+    public function created(Order $order): void
     {
         $this->orderRepository->triggerNewOrderNotification($order);
     }

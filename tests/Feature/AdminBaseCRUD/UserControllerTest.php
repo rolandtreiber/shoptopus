@@ -19,7 +19,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_list_users()
+    public function test_can_list_users(): void
     {
         $systemUserIds = User::systemUsers()->pluck('id');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -38,7 +38,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_show_user()
+    public function test_can_show_user(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $systemUser = User::systemUsers()->first();
@@ -63,7 +63,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_create_user()
+    public function test_can_create_user(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.user'), [
@@ -82,7 +82,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_Permission_required_to_create_user()
+    public function test_Permission_required_to_create_user(): void
     {
         $this->actingAs($this->getRandomNonSuperAdminOrStoreManager());
         $response = $this->post(route('admin.api.create.user'), [
@@ -97,7 +97,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_update_user_as_super_admin()
+    public function test_can_update_user_as_super_admin(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $userToUpdateId = $this->getRandomNonSuperAdminOrStoreManager()->id;
@@ -124,7 +124,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_update_own_details()
+    public function test_can_update_own_details(): void
     {
         $user = $this->getRandomNonSuperAdminOrStoreManager();
         $this->actingAs($user);
@@ -147,7 +147,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_cannot_update_others_if_not_super_user()
+    public function test_cannot_update_others_if_not_super_user(): void
     {
         $user = $this->getRandomNonSuperAdminOrStoreManager();
         $this->actingAs($user);
@@ -165,7 +165,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_delete_user_as_super_admin()
+    public function test_can_delete_user_as_super_admin(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $userToUpdateId = $this->getRandomNonSuperAdminOrStoreManager()->id;
@@ -179,7 +179,7 @@ class UserControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_cannot_delete_user_as_non_super_admin()
+    public function test_cannot_delete_user_as_non_super_admin(): void
     {
         $user = $this->getRandomNonSuperAdminOrStoreManager();
         $this->actingAs($user);

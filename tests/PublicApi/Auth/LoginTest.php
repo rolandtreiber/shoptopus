@@ -26,7 +26,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'email' => null,
@@ -42,7 +42,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_requires_a_valid_email()
+    public function it_requires_a_valid_email(): void
     {
         $data = [
             'email' => 'lolevesgmail',
@@ -58,7 +58,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_requires_a_correct_password()
+    public function it_requires_a_correct_password(): void
     {
         $data = [
             'email' => $this->user->email,
@@ -76,7 +76,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_returns_the_correct_error_message_when_no_user_is_found()
+    public function it_returns_the_correct_error_message_when_no_user_is_found(): void
     {
         $data = [
             'email' => 'lolevesP@gmai.com',
@@ -94,7 +94,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function it_returns_the_authenticated_user_with_a_token_upon_successful_login()
+    public function it_returns_the_authenticated_user_with_a_token_upon_successful_login(): void
     {
         $this->artisan('passport:install');
 
@@ -142,7 +142,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function the_notifications_array_contains_all_the_unread_notifications()
+    public function the_notifications_array_contains_all_the_unread_notifications(): void
     {
         $this->artisan('passport:install');
 
@@ -184,7 +184,7 @@ class LoginTest extends TestCase
      *
      * @group apiPost
      */
-    public function users_without_a_password_are_sent_the_correct_error_response()
+    public function users_without_a_password_are_sent_the_correct_error_response(): void
     {
         $this->user->update(['password' => null]);
 

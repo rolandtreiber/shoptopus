@@ -14,7 +14,7 @@ class DiscountRuleSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $dr = new DiscountRule();
         $dr->type = DiscountType::Amount;

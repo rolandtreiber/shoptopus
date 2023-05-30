@@ -13,7 +13,7 @@ class ProductPageSummaryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $retailValue = Product::view('active')->get()->map(function ($product) {
             return floatval($product->final_price) * $product->stock;

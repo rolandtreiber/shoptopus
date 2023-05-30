@@ -18,7 +18,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_correct_format()
+    public function it_returns_the_correct_format(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -35,7 +35,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         ProductCategory::factory()->count(2)->create();
 
@@ -55,7 +55,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function soft_deleted_and_disabled_product_categories_are_not_returned()
+    public function soft_deleted_and_disabled_product_categories_are_not_returned(): void
     {
         ProductCategory::factory()->count(2)->create(['deleted_at' => now()]);
         ProductCategory::factory()->create(['enabled' => false]);
@@ -68,7 +68,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_count()
+    public function it_returns_the_count(): void
     {
         ProductCategory::factory()->count(2)->create();
 
@@ -80,7 +80,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_discount_rulessss()
+    public function it_returns_the_associated_discount_rulessss(): void
     {
         $pc = ProductCategory::factory()->create();
         $dr = DiscountRule::factory()->create([
@@ -123,7 +123,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function the_discount_rules_must_be_valid()
+    public function the_discount_rules_must_be_valid(): void
     {
         $pc = ProductCategory::factory()->create();
 
@@ -147,7 +147,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_its_subcategories()
+    public function it_returns_its_subcategories(): void
     {
         $pc = ProductCategory::factory()->create();
         $subcategories = ProductCategory::factory()->count(3)->create(['parent_id' => $pc->id]);
@@ -177,7 +177,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_ids(): void
     {
         $pc = ProductCategory::factory()->create();
         $p = Product::factory()->create();
@@ -206,7 +206,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function product_categories_can_be_filtered_by_id()
+    public function product_categories_can_be_filtered_by_id(): void
     {
         ProductCategory::factory()->count(3)->create();
         $product_category = ProductCategory::factory()->create();
@@ -222,7 +222,7 @@ class GetAllProductCategoriesTest extends TestCase
      *
      * @group apiGetAll
      */
-    public function filters_can_accept_multiple_parameters()
+    public function filters_can_accept_multiple_parameters(): void
     {
         ProductCategory::factory()->count(3)->create();
         $product_category1 = ProductCategory::factory()->create();

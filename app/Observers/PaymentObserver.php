@@ -34,7 +34,7 @@ class PaymentObserver
         $payment->description = $descriptionText;
     }
 
-    public function created(Payment $payment)
+    public function created(Payment $payment): void
     {
         if ($payment->type === PaymentType::Payment && $payment->payable_type === Order::class) {
             $this->invoiceRepository->create($payment->payable);
