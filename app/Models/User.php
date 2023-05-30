@@ -187,9 +187,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Send a password reset notification to the user.
-     *
-     * @param  string  $token
-     * @return void
      */
     public function sendPasswordResetNotification(string $token): void
     {
@@ -200,8 +197,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Send an email verification notification to the user.
-     *
-     * @return void
      */
     public function sendEmailVerificationNotification(): void
     {

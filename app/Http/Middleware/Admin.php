@@ -12,7 +12,6 @@ class Admin
     /**
      * Handle an incoming request.
      *
-     * @return mixed
      *
      * @throws AuthorizationException
      */

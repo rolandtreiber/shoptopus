@@ -527,8 +527,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
     /**
      * Calculate the final price
-     *
-     * @param  bool  $price
      */
     public function calculateFinalPrice(array $product, bool $price = false): string
     {

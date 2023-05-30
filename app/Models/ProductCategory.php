@@ -160,9 +160,6 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         return $this->children()->save($product_category);
     }
 
-    /**
-     * @return $this
-     */
     public function setChildrenIds(): ProductCategory
     {
         $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function (ProductCategory $category) {

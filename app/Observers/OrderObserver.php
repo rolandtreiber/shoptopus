@@ -24,8 +24,6 @@ class OrderObserver
 
     /**
      * Listen to the Order updating event.
-     *
-     * @return void
      */
     public function creating(Order $order): void
     {
@@ -37,8 +35,6 @@ class OrderObserver
 
     /**
      * Listen to the Order updating event.
-     *
-     * @return void
      */
     public function created(Order $order): void
     {
@@ -47,8 +43,6 @@ class OrderObserver
 
     /**
      * Listen to the Order updating event.
-     *
-     * @return void
      */
     public function updating(Order $order): void
     {

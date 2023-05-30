@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\DB;
 
 class VariantAttributeObserver
 {
-    /**
-     * @return void
-     */
     private function updateAttributeOptionsForVariant(VariantAttribute $variantAttribute): void
     {
         $variantId = $variantAttribute->product_variant_id;
@@ -19,17 +16,11 @@ class VariantAttributeObserver
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function created(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);
     }
 
-    /**
-     * @return void
-     */
     public function deleted(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);

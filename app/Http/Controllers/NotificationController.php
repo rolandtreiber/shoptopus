@@ -12,9 +12,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NotificationController extends Controller
 {
-    /**
-     * @param  Request  $request
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         /** @var User $user */

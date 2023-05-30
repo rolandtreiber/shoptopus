@@ -12,7 +12,6 @@ class OwnAccountOrSuperAdmin
     /**
      * Handle an incoming request.
      *
-     * @return mixed
      *
      * @throws AuthorizationException
      */

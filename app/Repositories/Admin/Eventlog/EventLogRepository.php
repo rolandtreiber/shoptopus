@@ -8,9 +8,6 @@ use App\Models\Order;
 
 class EventLogRepository implements EventLogRepositoryInterface
 {
-    /**
-     * @return void
-     */
     public function create(string $modelClass, $model, $type, $data = null): void
     {
         $eventLog = new EventLog();

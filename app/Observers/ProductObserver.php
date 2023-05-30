@@ -16,9 +16,6 @@ class ProductObserver
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @return void
-     */
     public function saving(Product $product): void
     {
         /** @var FileContent $firstImage */

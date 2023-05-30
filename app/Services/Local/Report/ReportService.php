@@ -62,9 +62,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getPalette(): array
     {
         return $this->palette;
@@ -358,9 +355,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addSingleLabel($label): ReportService
     {
         $this->labels[] = $label;
@@ -368,9 +362,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function makeSingleValueDatasetItem($label): ReportService
     {
         $dataset = [
@@ -383,9 +374,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @return $this
-     */
     public function addDataToSingleDataset($value): ReportService
     {
         $color = $this->shadow === true ? 'rgba(0,0,0,0.3)' : $this->palette[0];
@@ -439,8 +427,6 @@ class ReportService implements ReportServiceInterface
 
     /**
      * Appends the dataset to the $datasets array, then empties the array.
-     *
-     * @return $this
      */
     public function addDataset(array $dataset = null): ReportService
     {

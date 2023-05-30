@@ -13,7 +13,6 @@ class RatingSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */

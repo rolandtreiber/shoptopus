@@ -13,7 +13,6 @@ class SuperUser
     /**
      * Handle an incoming request.
      *
-     * @return mixed
      *
      * @throws AuthenticationException
      */

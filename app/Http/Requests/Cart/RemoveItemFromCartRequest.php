@@ -35,8 +35,6 @@ class RemoveItemFromCartRequest extends FormRequest
 
     /**
      * Prepare the data for validation.
-     *
-     * @return void
      */
     protected function prepareForValidation(): void
     {

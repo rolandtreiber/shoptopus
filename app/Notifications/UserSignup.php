@@ -40,8 +40,6 @@ class UserSignup extends BaseNotification implements UserNotification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array
      */
     public function toArray(): array
     {

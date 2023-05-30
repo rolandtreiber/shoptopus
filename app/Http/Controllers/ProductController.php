@@ -10,9 +10,6 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request): Response
     {
         return response()->noContent();

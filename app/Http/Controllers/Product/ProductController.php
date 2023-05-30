@@ -81,7 +81,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  Request  $request
      * @param  string  $slug
      */
     public function getAvailableAttributeOptionsForProduct(Product $product, ProductAvailableAttributeOptionsRequest $request): \Illuminate\Http\JsonResponse
