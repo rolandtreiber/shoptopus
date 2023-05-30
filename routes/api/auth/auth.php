@@ -6,11 +6,8 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'name' => 'api.',
 ], function () {
-    Route::group([
-        'name' => 'auth.',
-        'prefix' => 'auth',
-        'middleware' => 'api',
-    ], function () {
+    Route::prefix('auth')->middleware('api')->group([
+        'name' => 'auth.',], function () {
         Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
         Route::post('register', [AuthController::class, 'register'])->name('api.auth.register');
 
@@ -38,11 +35,8 @@ Route::group([
         //Route::post('update-password', [AuthController::class, 'updatePasswordFromResetFlow'])->name('api.update-password-from-reset-flow');
     });
 
-    Route::group([
-        'name' => 'auth.',
-        'prefix' => 'auth',
-        'middleware' => 'auth:api',
-    ], function () {
+    Route::prefix('auth')->middleware('auth:api')->group([
+        'name' => 'auth.',], function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('api.auth.logout');
 
         Route::get('details', [AuthController::class, 'details'])->name('api.auth.details');

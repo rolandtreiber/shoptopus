@@ -6,17 +6,13 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'name' => 'api.',
 ], function () {
-    Route::group([
-        'name' => 'products.',
-        'prefix' => 'products',
-    ], function () {
+    Route::prefix('products')->group([
+        'name' => 'products.',], function () {
         Route::get('/', [ProductController::class, 'getAll'])->name('api.products.getAll');
     });
 
-    Route::group([
-        'name' => 'product.',
-        'prefix' => 'product',
-    ], function () {
+    Route::prefix('product')->group([
+        'name' => 'product.',], function () {
         Route::get('/{id}', [ProductController::class, 'get'])->name('api.product.get');
         Route::get('/slug/{slug}', [ProductController::class, 'getBySlug'])->name('api.product.getBySlug');
 
