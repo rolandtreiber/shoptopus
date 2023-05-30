@@ -19,7 +19,7 @@ class ProductObserver
     /**
      * @return void
      */
-    public function saving(Product $product)
+    public function saving(Product $product): void
     {
         /** @var FileContent $firstImage */
         $firstImage = $product->images()->first();

@@ -191,7 +191,7 @@ class User extends Authenticatable implements Auditable, Exportable
      * @param  string  $token
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification(string $token): void
     {
         $url = config('app.frontend_url_public').'/reset-password?token='.$token;
 
@@ -203,7 +203,7 @@ class User extends Authenticatable implements Auditable, Exportable
      *
      * @return void
      */
-    public function sendEmailVerificationNotification()
+    public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmail());
     }

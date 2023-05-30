@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -13,7 +14,7 @@ class ProductPageSummaryResource extends JsonResource
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         $retailValue = Product::view('active')->get()->map(function ($product) {
             return floatval($product->final_price) * $product->stock;

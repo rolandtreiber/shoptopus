@@ -33,7 +33,7 @@ class DeleteAddressRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'id' => $this->route('id'),

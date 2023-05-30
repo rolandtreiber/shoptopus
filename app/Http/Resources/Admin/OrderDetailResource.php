@@ -18,7 +18,7 @@ class OrderDetailResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         $dt = $this->delivery_type;
 

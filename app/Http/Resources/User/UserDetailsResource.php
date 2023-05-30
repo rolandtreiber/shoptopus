@@ -18,7 +18,7 @@ class UserDetailsResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'id' => $this->id,

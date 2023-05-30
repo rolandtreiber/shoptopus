@@ -133,7 +133,7 @@ class AuthController extends Controller
     /**
      * @return Application|Factory|View
      */
-    public function checkPasswordResetToken($token)
+    public function checkPasswordResetToken($token): \Illuminate\View\View
     {
         $accessToken = AccessToken::where('token', '=', $token)->where('type', AccessTokenTypes::PasswordReset)->first();
         $now = Carbon::now();

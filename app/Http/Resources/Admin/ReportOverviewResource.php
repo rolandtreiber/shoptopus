@@ -12,7 +12,7 @@ class ReportOverviewResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'stats' => $this['stats'],

@@ -27,7 +27,7 @@ class OrderObserver
      *
      * @return void
      */
-    public function creating(Order $order)
+    public function creating(Order $order): void
     {
         if ($order->delivery_type) {
             $order->delivery_cost = $order->delivery_type->price;
@@ -50,7 +50,7 @@ class OrderObserver
      *
      * @return void
      */
-    public function updating(Order $order)
+    public function updating(Order $order): void
     {
         if ($order->isDirty(['voucher_code_id', 'delivery_type_id'])) {
             $dt = DeliveryType::find($order->delivery_type_id);

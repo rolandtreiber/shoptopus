@@ -17,7 +17,7 @@ class CustomerDetailResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         $latestOrderDate = null;
         if ($this->orders->count() > 0) {

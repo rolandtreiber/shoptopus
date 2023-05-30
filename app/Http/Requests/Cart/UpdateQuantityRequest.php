@@ -37,7 +37,7 @@ class UpdateQuantityRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'user_id' => $this->user()?->id,

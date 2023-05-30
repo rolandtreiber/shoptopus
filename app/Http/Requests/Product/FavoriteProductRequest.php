@@ -29,7 +29,7 @@ class FavoriteProductRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'productId' => $this->route('id'),

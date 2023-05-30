@@ -19,7 +19,7 @@ class OrderProductResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         /** @var Product $product */
         $product = $this->pivot;

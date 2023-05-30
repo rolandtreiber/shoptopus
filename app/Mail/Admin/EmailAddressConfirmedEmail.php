@@ -28,7 +28,7 @@ class EmailAddressConfirmedEmail extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build(): static
     {
         $address = config('constants.support_email');
         $subject = 'Email confirmation successful';

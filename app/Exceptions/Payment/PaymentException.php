@@ -13,7 +13,7 @@ class PaymentException extends \Exception
      *
      * @return void
      */
-    public function report(Throwable $exception)
+    public function report(Throwable $exception): void
     {
         parent::report($exception);
     }

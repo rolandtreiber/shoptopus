@@ -12,7 +12,7 @@ class ApplicationMetaInformationResource extends JsonResource
      *
      * @param  Request  $request
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'locales' => config('app.locales_supported'),

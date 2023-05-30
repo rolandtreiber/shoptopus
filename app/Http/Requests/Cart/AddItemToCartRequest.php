@@ -41,7 +41,7 @@ class AddItemToCartRequest extends FormRequest
      *
      * @return void
      */
-    protected function prepareForValidation()
+    protected function prepareForValidation(): void
     {
         $this->merge([
             'cart_id' => $this->cart_id ?: $this->user()?->cart?->id,

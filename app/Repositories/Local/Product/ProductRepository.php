@@ -530,7 +530,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
      *
      * @param  bool  $price
      */
-    public function calculateFinalPrice(array $product, $price = false): string
+    public function calculateFinalPrice(array $product, bool $price = false): string
     {
         if (! $price) {
             $price = $product['price'];
