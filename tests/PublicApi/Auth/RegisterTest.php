@@ -143,7 +143,7 @@ class RegisterTest extends TestCase
 
         Notification::assertSentTo($user, VerifyEmail::class);
 
-        Notification::assertTimesSent(1, VerifyEmail::class);
+        Notification::assertSentTimes(VerifyEmail::class, 1);
     }
 
     /**

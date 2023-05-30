@@ -83,7 +83,7 @@ class ResendVerificationEmailTest extends TestCase
 
         Notification::assertSentTo($this->user, VerifyEmail::class);
 
-        Notification::assertTimesSent(1, VerifyEmail::class);
+        Notification::assertSentTimes(VerifyEmail::class, 1);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
