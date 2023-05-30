@@ -20,6 +20,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_correct_format()
@@ -36,6 +37,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_all_required_fields()
@@ -55,6 +57,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_final_price_field()
@@ -70,6 +73,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function soft_deleted_products_are_not_returned()
@@ -81,6 +85,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_count()
@@ -92,6 +97,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_product_attributes_with_their_options()
@@ -146,6 +152,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()
@@ -168,6 +175,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_enabled_discount_rules()
@@ -210,6 +218,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function the_discount_rules_must_be_valid()
@@ -233,6 +242,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_product_categories_with_their_discount_rules()
@@ -280,6 +290,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_its_product_tags()
@@ -318,6 +329,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_does_not_contain_the_product_variants()
@@ -340,6 +352,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function products_can_be_filtered_by_categories()
@@ -371,6 +384,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function products_can_be_filtered_by_tags()
@@ -402,6 +416,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function products_can_be_filtered_by_multiple_relationships()
@@ -425,6 +440,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function products_can_be_filtered_by_attribute_options()
@@ -446,6 +462,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function products_can_be_filtered_by_id()
@@ -461,6 +478,7 @@ class GetAllProductsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function filters_can_accept_multiple_parameters()

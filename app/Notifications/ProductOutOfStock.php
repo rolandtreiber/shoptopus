@@ -23,8 +23,6 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array
      */
     public function via(): array
     {

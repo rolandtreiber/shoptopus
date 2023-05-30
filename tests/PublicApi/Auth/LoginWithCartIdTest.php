@@ -25,6 +25,7 @@ class LoginWithCartIdTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_existing_cart_of_the_user_is_correctly_merged()
@@ -73,6 +74,7 @@ class LoginWithCartIdTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function when_carts_are_merged_the_quantity_for_the_same_product_is_correctly_updated()
@@ -113,6 +115,7 @@ class LoginWithCartIdTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_old_cart_gets_deleted()

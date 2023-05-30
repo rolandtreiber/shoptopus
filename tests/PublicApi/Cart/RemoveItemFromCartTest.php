@@ -14,6 +14,7 @@ class RemoveItemFromCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function it_has_all_required_fields()
@@ -31,6 +32,7 @@ class RemoveItemFromCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function the_product_must_exists()
@@ -50,6 +52,7 @@ class RemoveItemFromCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function if_authenticated_the_cart_must_belong_to_the_user()
@@ -72,6 +75,7 @@ class RemoveItemFromCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function it_removes_the_product_from_the_cart()

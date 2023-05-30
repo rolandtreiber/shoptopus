@@ -51,8 +51,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Login
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -83,7 +81,7 @@ class AuthService implements AuthServiceInterface
                     'auth' => $this->createTokenAndGetAuthResponse($user),
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), $e->getCode());
         }
@@ -92,8 +90,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Register
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -126,7 +122,7 @@ class AuthService implements AuthServiceInterface
                     'auth' => $this->createTokenAndGetAuthResponse($user),
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
 
             if ($e->getCode() === Config::get('api_error_codes.services.auth.email_address_taken')) {
@@ -140,7 +136,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Get the authenticated user's details
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -156,7 +151,7 @@ class AuthService implements AuthServiceInterface
                     ],
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.details'));
         }
@@ -165,9 +160,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Verify the user's email address
      *
-     * @param  Request  $request
-     * @param  string  $id
-     * @return array
      *
      * @throws \Exception
      */
@@ -201,7 +193,7 @@ class AuthService implements AuthServiceInterface
             return [
                 'url' => $url,
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.verify'));
         }
@@ -210,8 +202,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Resend the verification email
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -229,7 +219,7 @@ class AuthService implements AuthServiceInterface
             }
 
             return ['data' => ['message' => $message]];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resendVerification'));
         }
@@ -238,7 +228,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Logout
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -254,7 +243,7 @@ class AuthService implements AuthServiceInterface
             $user->tokens->each->revoke();
 
             return ['data' => ['auth' => null]];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.logout'));
         }
@@ -263,8 +252,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Send password reset email
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -286,7 +273,7 @@ class AuthService implements AuthServiceInterface
             }
 
             return ['data' => ['message' => 'We have e-mailed your password reset link!']];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.sendPasswordReset'));
         }
@@ -295,8 +282,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Reset password
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -334,7 +319,7 @@ class AuthService implements AuthServiceInterface
             $user->notify(new PasswordResetSuccess());
 
             return ['data' => ['message' => 'Password successfully updated!']];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.resetPassword'));
         }
@@ -343,8 +328,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Get the target url to the Auth provider's authentication page
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -356,7 +339,7 @@ class AuthService implements AuthServiceInterface
                     'targetUrl' => $this->socialAccountService->getOAuthProviderTargetUrl($payload['provider']),
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.getOAuthProviderTargetUrl'));
         }
@@ -365,8 +348,6 @@ class AuthService implements AuthServiceInterface
     /**
      * Obtain the user information from the Auth provider
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -384,16 +365,13 @@ class AuthService implements AuthServiceInterface
                     'auth' => $this->createTokenAndGetAuthResponse($user),
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.handleOAuthProviderCallback'));
         }
     }
 
     /**
-     * @param  User  $user
-     * @return array
-     *
      * @throws \Exception
      */
     private function createTokenAndGetAuthResponse(User $user): array
@@ -406,9 +384,6 @@ class AuthService implements AuthServiceInterface
     }
 
     /**
-     * @param  User  $user
-     * @return array
-     *
      * @throws \Exception
      */
     private function normalisedUserDetails(User $user): array

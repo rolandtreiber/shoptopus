@@ -29,6 +29,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_can_return_a_product_by_its_id()
@@ -40,6 +41,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      * @group apiGetBySlug
      */
@@ -52,6 +54,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_required_fields()
@@ -66,6 +69,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_final_price_field()
@@ -79,6 +83,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_enabled_discount_rules()
@@ -120,6 +125,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function the_discount_rules_must_be_valid()
@@ -141,6 +147,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_its_product_categories_with_their_discount_rules()
@@ -188,6 +195,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_its_product_tags()
@@ -225,6 +233,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_its_product_variants()
@@ -262,6 +271,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_a_final_price_attribute_for_the_product_variants()
@@ -277,6 +287,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_product_variants()
@@ -334,6 +345,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_product_attributes_with_their_options()
@@ -387,6 +399,7 @@ class GetProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function the_product_attribute_options_must_be_enabled_and_not_soft_deleted()

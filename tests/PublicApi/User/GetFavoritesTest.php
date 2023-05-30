@@ -23,6 +23,7 @@ class GetFavoritesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function unauthenticated_users_are_not_allowed_to_get_favorite_products()
@@ -35,6 +36,7 @@ class GetFavoritesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function authenticated_users_can_get_their_favorited_products()

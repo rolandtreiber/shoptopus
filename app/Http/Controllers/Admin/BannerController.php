@@ -21,27 +21,16 @@ class BannerController extends Controller
 
     protected BannerRepositoryInterface $bannerRepository;
 
-    /**
-     * @param  BannerRepositoryInterface  $bannerRepository
-     */
     public function __construct(BannerRepositoryInterface $bannerRepository)
     {
         $this->bannerRepository = $bannerRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return BannerResource::collection(Banner::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  Banner  $banner
-     * @return BannerResource
-     */
     public function show(Banner $banner): BannerResource
     {
         return new BannerResource($banner);
@@ -49,9 +38,6 @@ class BannerController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  BannerStoreRequest  $request
-     * @return BannerResource
      */
     public function create(BannerStoreRequest $request): BannerResource
     {
@@ -66,10 +52,6 @@ class BannerController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  Banner  $banner
-     * @param  BannerUpdateRequest  $request
-     * @return BannerResource
      */
     public function update(Banner $banner, BannerUpdateRequest $request): BannerResource
     {
@@ -83,7 +65,6 @@ class BannerController extends Controller
     }
 
     /**
-     * @param  Banner  $banner
      * @return string[]
      */
     public function delete(Banner $banner): array
@@ -94,7 +75,6 @@ class BannerController extends Controller
     }
 
     /**
-     * @param  BannerBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -111,7 +91,6 @@ class BannerController extends Controller
     }
 
     /**
-     * @param  BannerBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

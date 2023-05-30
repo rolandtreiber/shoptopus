@@ -15,10 +15,6 @@ class OLDProductRepository
 {
     /**
      * Merge the product attributes into the corresponding products
-     *
-     * @param  array  $data
-     * @param  array  $products
-     * @return void
      */
     private function addAttributesToProduct(array $data, array &$products): void
     {
@@ -76,10 +72,6 @@ class OLDProductRepository
 
     /**
      * Merge the discount rules into the corresponding products
-     *
-     * @param  array  $data
-     * @param  array  $products
-     * @return void
      */
     private function addDiscountRuleToProduct(array $data, array &$products): void
     {
@@ -115,10 +107,6 @@ class OLDProductRepository
 
     /**
      * Merge the product tags into the corresponding products
-     *
-     * @param  array  $data
-     * @param  array  $products
-     * @return void
      */
     private function addTagsToProduct(array $data, array &$products): void
     {
@@ -148,6 +136,7 @@ class OLDProductRepository
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_the_valid_discount_rules_for_the_associated_products()
@@ -193,6 +182,7 @@ class OLDProductRepository
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_the_tags_for_the_associated_products()
@@ -235,6 +225,7 @@ class OLDProductRepository
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_the_attributes_with_their_corresponding_options_for_the_associated_products()

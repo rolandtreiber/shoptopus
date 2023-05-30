@@ -23,27 +23,16 @@ class VoucherCodeController extends Controller
 
     protected VoucherCodeRepositoryInterface $voucherCodeRepository;
 
-    /**
-     * @param  VoucherCodeRepositoryInterface  $voucherCodeRepository
-     */
     public function __construct(VoucherCodeRepositoryInterface $voucherCodeRepository)
     {
         $this->voucherCodeRepository = $voucherCodeRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return VoucherCodeListResource::collection(VoucherCode::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  VoucherCode  $voucherCode
-     * @return VoucherCodeDetailResource
-     */
     public function show(VoucherCode $voucherCode): VoucherCodeDetailResource
     {
         return new VoucherCodeDetailResource($voucherCode);
@@ -51,9 +40,6 @@ class VoucherCodeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  VoucherCodeStoreRequest  $request
-     * @return VoucherCodeListResource
      */
     public function create(VoucherCodeStoreRequest $request): VoucherCodeListResource
     {
@@ -67,10 +53,6 @@ class VoucherCodeController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  VoucherCode  $voucherCode
-     * @param  VoucherCodeUpdateRequest  $request
-     * @return VoucherCodeListResource
      */
     public function update(VoucherCode $voucherCode, VoucherCodeUpdateRequest $request): VoucherCodeListResource
     {
@@ -82,7 +64,6 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param  VoucherCode  $voucherCode
      * @return string[]
      */
     public function delete(VoucherCode $voucherCode): array
@@ -93,7 +74,6 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -107,7 +87,6 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -121,7 +100,6 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -142,7 +120,6 @@ class VoucherCodeController extends Controller
     }
 
     /**
-     * @param  VoucherCodeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

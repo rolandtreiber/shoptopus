@@ -97,17 +97,11 @@ class PaymentSource extends Model implements Auditable, Exportable
         'brand' => 'encrypted',
     ];
 
-    /**
-     * @return HasMany
-     */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

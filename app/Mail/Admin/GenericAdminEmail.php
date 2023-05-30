@@ -21,9 +21,6 @@ class GenericAdminEmail extends ArchiveableEmail
 
     /**
      * Create a new message instance.
-     *
-     * @param  Request  $request
-     * @param $recipient
      */
     public function __construct(Request $request, $recipient)
     {

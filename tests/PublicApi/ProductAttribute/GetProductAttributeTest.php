@@ -29,6 +29,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_can_return_a_product_attribute_by_its_id()
@@ -40,6 +41,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function an_attribute_without_options_are_excluded()
@@ -51,6 +53,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function an_attribute_without_products_are_excluded()
@@ -62,6 +65,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_required_fields()
@@ -76,6 +80,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_options()
@@ -111,6 +116,7 @@ class GetProductAttributeTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_product_ids()

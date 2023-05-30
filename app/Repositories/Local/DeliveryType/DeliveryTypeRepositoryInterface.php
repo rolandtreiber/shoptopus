@@ -7,8 +7,6 @@ interface DeliveryTypeRepositoryInterface
     /**
      * Get the delivery rules for the given delivery types
      *
-     * @param  array  $deliveryTypeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -17,8 +15,6 @@ interface DeliveryTypeRepositoryInterface
     /**
      * Get the orders for the given delivery types
      *
-     * @param  array  $deliveryTypeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -27,9 +23,6 @@ interface DeliveryTypeRepositoryInterface
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -37,9 +30,6 @@ interface DeliveryTypeRepositoryInterface
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array;
 }

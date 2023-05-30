@@ -31,6 +31,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_a_discount_rule_is_applied()
@@ -51,6 +52,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed()
@@ -80,6 +82,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed()
@@ -107,6 +110,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied()
@@ -134,6 +138,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied()
@@ -163,6 +168,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_a_category_discount_rule()
@@ -192,6 +198,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
@@ -224,6 +231,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed()
@@ -254,6 +262,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
     public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
@@ -286,6 +295,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_calculates_the_final_price_correctly_for_the_product_variants()

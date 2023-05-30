@@ -24,10 +24,6 @@ trait FilterTrait
 
     /**
      * Get filters
-     *
-     * @param  array  $filters
-     * @param $tableName
-     * @return object
      */
     public function getFilters($tableName, array $filters = []): object
     {
@@ -142,10 +138,6 @@ trait FilterTrait
 
     /**
      * Guess the table name for the relationship query
-     *
-     * @param  string  $local_name
-     * @param  string  $foreign_name
-     * @return string
      */
     private function getRelationshipTableName(string $local_name, string $foreign_name): string
     {
@@ -160,9 +152,6 @@ trait FilterTrait
 
     /**
      * get the string representation of the ORDER BY sql expression
-     *
-     * @param  array  $page_formatting
-     * @return string
      */
     protected function getOrderByString(array $page_formatting = []): string
     {
@@ -174,10 +163,6 @@ trait FilterTrait
 
     /**
      * get the string representation of the ORDER BY sql expression
-     *
-     * @param $filter_vars
-     * @param $page_formatting
-     * @return array
      */
     protected function getQueryParams($filter_vars, $page_formatting): array
     {
@@ -193,11 +178,6 @@ trait FilterTrait
 
     /**
      * Get the joint statement for the relationship query
-     *
-     * @param $table
-     * @param $local_name
-     * @param $local_key
-     * @return string
      */
     private function getJoinStatement($table, $local_name, $local_key): string
     {
@@ -208,12 +188,6 @@ trait FilterTrait
 
     /**
      * Get the where clause for the relationship
-     *
-     * @param  string  $table
-     * @param  string  $singular_relation_name
-     * @param  string  $filter_values
-     * @param  int  $count
-     * @return string
      */
     private function getRelationshipWhereClause(string $table, string $singular_relation_name, string $filter_values, int $count): string
     {

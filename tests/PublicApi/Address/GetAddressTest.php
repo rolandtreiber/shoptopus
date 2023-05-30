@@ -22,6 +22,7 @@ class GetAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function unauthenticated_users_are_not_allowed_to_get_addresses()
@@ -39,6 +40,7 @@ class GetAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_can_return_an_address_by_its_id()
@@ -51,6 +53,7 @@ class GetAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_required_fields()
@@ -66,6 +69,7 @@ class GetAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_owner_of_the_address()

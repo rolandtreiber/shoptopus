@@ -31,8 +31,6 @@ class SocialAccount extends Model
 
     /**
      * Get the owner of the social account
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -25,6 +25,7 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -39,6 +40,7 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_an_existing_email_address()
@@ -51,6 +53,7 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_a_success_response_if_the_email_has_already_been_verified()
@@ -66,6 +69,7 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_resends_the_verification_email_if_unverified()

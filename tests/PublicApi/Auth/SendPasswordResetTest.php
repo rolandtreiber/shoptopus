@@ -14,6 +14,7 @@ class SendPasswordResetTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function authenticated_users_cannot_reset_their_password()
@@ -25,6 +26,7 @@ class SendPasswordResetTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -34,6 +36,7 @@ class SendPasswordResetTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_sends_the_reset_link_successfully()

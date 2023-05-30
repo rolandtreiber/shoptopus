@@ -15,6 +15,7 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function authenticated_users_cannot_update_their_password()
@@ -24,6 +25,7 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -40,6 +42,7 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_updates_the_password_successfully()
@@ -70,6 +73,7 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function th_email_address_must_exists()
@@ -102,6 +106,7 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_token_expires_in_60_minutes()

@@ -153,7 +153,6 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     /**
      * Add a child category
      *
-     * @param  ProductCategory  $product_category
      * @return false|\Illuminate\Database\Eloquent\Model
      */
     public function addChildCategory(ProductCategory $product_category): \Illuminate\Database\Eloquent\Model|bool
@@ -173,9 +172,6 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         return $this;
     }
 
-    /**
-     * @return array
-     */
     public function childrenIds(): array
     {
         $this->allChildIds = [$this->id, ...$this->children()->availability('enabled')->get()->map(function (ProductCategory $category) {
@@ -197,15 +193,12 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     {
         $childIds = $this->childrenIds();
         array_walk_recursive($childIds, function ($a) use (&$return) {
-        $return[] = $a;
+            $return[] = $a;
         });
 
         return $return;
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function discount_rules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();
@@ -225,10 +218,6 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         return $this->belongsToMany(Product::class);
     }
 
-    /**
-     * @param  bool  $immediate
-     * @return BelongsToMany
-     */
     public function products(bool $immediate = true): BelongsToMany
     {
         if ($immediate) {

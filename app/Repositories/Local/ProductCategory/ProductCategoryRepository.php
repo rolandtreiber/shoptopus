@@ -17,8 +17,6 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the discount rules for the given product categories
      *
-     * @param  array  $productCategoryIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -45,7 +43,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $productCategoryIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -54,8 +52,6 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the products for the given product categories
      *
-     * @param  array  $productCategoryIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -73,7 +69,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 WHERE ppc.product_category_id IN ($dynamic_placeholders)
                 AND p.deleted_at IS NULL
             ", $productCategoryIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -82,8 +78,6 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the subcategories
      *
-     * @param  array  $productCategoryIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -102,7 +96,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
                 AND pc.enabled IS TRUE
                 AND pc.deleted_at IS NULL
             ", $productCategoryIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -111,9 +105,6 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -168,7 +159,7 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -176,9 +167,6 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

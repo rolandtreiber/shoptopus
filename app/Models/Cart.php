@@ -44,17 +44,11 @@ class Cart extends Model implements Auditable, Exportable
         'user_id' => 'string',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)->withPivot([

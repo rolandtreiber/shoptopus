@@ -21,8 +21,6 @@ class ModuleServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return string
      */
     public function boot(): string
     {

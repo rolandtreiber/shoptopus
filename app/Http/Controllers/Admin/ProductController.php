@@ -23,18 +23,11 @@ class ProductController extends Controller
 
     protected ProductRepositoryInterface $productRepository;
 
-    /**
-     * @param  ProductRepositoryInterface  $productRepository
-     */
     public function __construct(ProductRepositoryInterface $productRepository)
     {
         $this->productRepository = $productRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return ProductListResource::collection(Product::filtered([
@@ -43,18 +36,11 @@ class ProductController extends Controller
         ], $request)->view($request->view)->whereHasAttributeOptions($request->attribute_options)->whereHasTags($request->tags)->whereHasCategories($request->categories)->paginate($request->paginate));
     }
 
-    /**
-     * @return ProductPageSummaryResource
-     */
     public function summary(): ProductPageSummaryResource
     {
         return new ProductPageSummaryResource(null);
     }
 
-    /**
-     * @param  Product  $product
-     * @return ProductDetailResource
-     */
     public function show(Product $product): ProductDetailResource
     {
         return new ProductDetailResource($product);
@@ -62,9 +48,6 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductStoreRequest  $request
-     * @return ProductListResource
      */
     public function create(ProductStoreRequest $request): ProductListResource
     {
@@ -90,10 +73,6 @@ class ProductController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  ProductUpdateRequest  $request
-     * @param  Product  $product
-     * @return ProductListResource
      */
     public function update(ProductUpdateRequest $request, Product $product): ProductListResource
     {
@@ -110,7 +89,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  Product  $product
      * @return string[]
      */
     public function delete(Product $product): array
@@ -121,7 +99,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  ProductBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -135,7 +112,6 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  ProductBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

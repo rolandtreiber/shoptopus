@@ -14,8 +14,6 @@ class ErrorService implements ErrorServiceInterface
     /**
      * Log an exception
      *
-     * @param $exception
-     * @param  bool  $critical
      *
      * @todo - write critical error code
      */

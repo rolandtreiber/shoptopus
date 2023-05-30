@@ -21,27 +21,16 @@ class ProductTagController extends Controller
 
     protected ProductTagRepositoryInterface $productTagRepository;
 
-    /**
-     * @param  ProductTagRepositoryInterface  $productTagRepository
-     */
     public function __construct(ProductTagRepositoryInterface $productTagRepository)
     {
         $this->productTagRepository = $productTagRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return ProductTagListResource::collection(ProductTag::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  ProductTag  $tag
-     * @return ProductTagDetailResource
-     */
     public function show(ProductTag $tag): ProductTagDetailResource
     {
         return new ProductTagDetailResource($tag);
@@ -49,9 +38,6 @@ class ProductTagController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductTagStoreRequest  $request
-     * @return ProductTagListResource
      */
     public function create(ProductTagStoreRequest $request): ProductTagListResource
     {
@@ -66,10 +52,6 @@ class ProductTagController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  ProductTag  $tag
-     * @param  ProductTagUpdateRequest  $request
-     * @return ProductTagListResource
      */
     public function update(ProductTag $tag, ProductTagUpdateRequest $request): ProductTagListResource
     {
@@ -83,7 +65,6 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param  ProductTag  $tag
      * @return string[]
      */
     public function delete(ProductTag $tag): array
@@ -94,7 +75,6 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param  ProductTagBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -111,7 +91,6 @@ class ProductTagController extends Controller
     }
 
     /**
-     * @param  ProductTagBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

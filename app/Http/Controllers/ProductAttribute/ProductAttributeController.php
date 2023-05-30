@@ -17,9 +17,6 @@ class ProductAttributeController extends Controller
 
     /**
      * Get all models
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function getAll(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -31,17 +28,13 @@ class ProductAttributeController extends Controller
                 $this->productAttributeService->getAll($page_formatting, $filters),
                 $request
             ));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get all models for a specific product category
-     *
-     * @param  Request  $request
-     * @param  string  $product_category_id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function getAllForProductCategory(Request $request, string $product_category_id): \Illuminate\Http\JsonResponse
     {
@@ -53,23 +46,19 @@ class ProductAttributeController extends Controller
                 $this->productAttributeService->getAllForProductCategory($product_category_id, $page_formatting),
                 $request
             ));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get a single model
-     *
-     * @param  Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productAttributeService->get($id), $request));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }

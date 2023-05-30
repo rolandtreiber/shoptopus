@@ -24,6 +24,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_can_return_a_product_category_by_its_id()
@@ -35,6 +36,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      * @group apiGetBySlug
      */
@@ -47,6 +49,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_all_required_fields()
@@ -61,6 +64,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_discount_rules()
@@ -102,6 +106,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function the_discount_rules_must_be_valid()
@@ -123,6 +128,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_its_subcategories()
@@ -151,6 +157,7 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_the_associated_product_ids()

@@ -142,8 +142,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the social accounts of the user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function social_accounts(): HasMany
     {
@@ -152,8 +150,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the social accounts of the user.
-     *
-     * @return HasMany
      */
     public function addresses(): HasMany
     {
@@ -162,17 +158,12 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the orders of the user.
-     *
-     * @return HasMany
      */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
@@ -180,8 +171,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the payment sources of the user.
-     *
-     * @return HasMany
      */
     public function payment_sources(): HasMany
     {
@@ -190,8 +179,6 @@ class User extends Authenticatable implements Auditable, Exportable
 
     /**
      * Get the cart for the user.
-     *
-     * @return HasOne
      */
     public function cart(): HasOne
     {

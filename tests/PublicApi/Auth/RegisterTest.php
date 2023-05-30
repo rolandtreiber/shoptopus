@@ -14,6 +14,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -37,6 +38,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_a_valid_email()
@@ -55,6 +57,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_a_password_confirmation()
@@ -72,6 +75,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_password_has_a_minimum_number_of_characters()
@@ -90,6 +94,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_saves_the_user_to_the_database()
@@ -115,6 +120,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_sends_an_email_notification_upon_successful_registration()
@@ -142,6 +148,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_creates_an_access_token()
@@ -167,6 +174,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_creates_a_cart_for_the_user()
@@ -192,6 +200,7 @@ class RegisterTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_user_object_and_all_relevant_data()

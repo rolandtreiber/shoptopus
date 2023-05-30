@@ -23,6 +23,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -38,6 +39,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_a_valid_email()
@@ -53,6 +55,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_a_correct_password()
@@ -70,6 +73,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_correct_error_message_when_no_user_is_found()
@@ -87,6 +91,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_authenticated_user_with_a_token_upon_successful_login()
@@ -134,6 +139,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_notifications_array_contains_all_the_unread_notifications()
@@ -175,6 +181,7 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function users_without_a_password_are_sent_the_correct_error_response()

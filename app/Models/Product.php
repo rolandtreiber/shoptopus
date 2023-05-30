@@ -91,8 +91,10 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             'backup_stock' => $this->backup_stock,
             'rating' => $this->rating,
             'created_at' => $this->created_at,
-            'categories' => str_replace("-", "", implode(' ',$this->product_categories->pluck('id')->toArray())),
-            'tags' => str_replace("-", "", implode(' ',$this->product_tags->pluck('id')->each(function($item) {return str_replace("-", "", $item);})->toArray()))
+            'categories' => str_replace('-', '', implode(' ', $this->product_categories->pluck('id')->toArray())),
+            'tags' => str_replace('-', '', implode(' ', $this->product_tags->pluck('id')->each(function ($item) {
+            return str_replace('-', '', $item);
+            })->toArray())),
         ];
 
         return $result;
@@ -202,33 +204,21 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'cover_photo' => 'object',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function discount_rules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function product_categories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function product_tags(): BelongsToMany
     {
         return $this->belongsToMany(ProductTag::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function product_attributes(): BelongsToMany
     {
         return $this->belongsToMany(ProductAttribute::class)
@@ -236,9 +226,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             ->using(ProductProductAttribute::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function product_variants(): HasMany
     {
         return $this->hasMany(ProductVariant::class);
@@ -253,9 +240,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     /**
      * Calculate the total discounts
-     *
-     * @param $discounts
-     * @return mixed
      */
     private function calculateDiscountAmount($discounts): mixed
     {
@@ -275,7 +259,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
      * Calculate the final price with discounts
      *
      * @param  null  $price
-     * @return mixed
      */
     public function getFinalPriceAttribute($price = null): mixed
     {
@@ -312,9 +295,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
 
     /**
      * Updated at accessor
-     *
-     * @param $date
-     * @return string
      */
     public function getUpdatedAtAttribute($date): string
     {
@@ -336,10 +316,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         }
     }
 
-    /**
-     * @param $query
-     * @param  array|null  $tags
-     */
     public function scopeWhereHasTags($query, ?array $tags)
     {
         if ($tags && count($tags) > 0) {
@@ -348,10 +324,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         }
     }
 
-    /**
-     * @param $query
-     * @param  array|null  $categories
-     */
     public function scopeWhereHasCategories($query, ?array $categories)
     {
         if ($categories && count($categories) > 0) {
@@ -360,10 +332,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         }
     }
 
-    /**
-     * @param $query
-     * @param  array|null  $attributeOptions
-     */
     public function scopeWhereHasAttributeOptions($query, ?array $attributeOptions)
     {
         if ($attributeOptions && count($attributeOptions) > 0) {
@@ -380,9 +348,6 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         }
     }
 
-    /**
-     * @return array
-     */
     public function getAttributedTranslatedNameAttribute(): array
     {
         $attributes = $this->product_attributes;
@@ -404,22 +369,15 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         return $elements;
     }
 
-    /**
-     * @param  array|null  $categoryIds
-     */
     public function handleCategories(?array $categoryIds = [])
     {
         $this->product_categories()->detach();
         $this->product_categories()->sync($categoryIds);
     }
 
-    /**
-     * @param  array|null  $tagIds
-     */
     public function handleTags(?array $tagIds = [])
     {
         $this->product_tags()->detach();
         $this->product_tags()->sync($tagIds);
     }
-
 }

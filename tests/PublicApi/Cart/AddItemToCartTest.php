@@ -12,6 +12,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_has_all_required_fields()
@@ -29,6 +30,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_product_must_exists()
@@ -47,6 +49,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_quantity_must_be_at_least_one()
@@ -66,6 +69,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock()
@@ -85,6 +89,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable()
@@ -116,6 +121,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function if_the_cart_id_is_present_it_must_exists()
@@ -133,6 +139,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_creates_a_new_cart_and_adds_a_new_entry_to_the_cart_product_table_for_unauthenticated_users()
@@ -169,6 +176,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function existing_records_get_correctly_updated()
@@ -197,6 +205,7 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_all_required_data()

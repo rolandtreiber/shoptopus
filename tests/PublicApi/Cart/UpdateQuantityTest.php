@@ -26,6 +26,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function it_requires_a_valid_cart_id_and_a_valid_product_id()
@@ -41,6 +42,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function the_quantity_must_be_at_least_one()
@@ -61,6 +63,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock()
@@ -81,6 +84,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable()
@@ -114,6 +118,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function the_product_must_exists_in_the_cart()
@@ -134,6 +139,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function the_quantity_of_the_product_updates_correctly()
@@ -163,6 +169,7 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function it_returns_the_full_cart()

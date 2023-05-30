@@ -25,10 +25,6 @@ class OrderController extends Controller
         $this->orderRepository = $orderRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return OrderListResource::collection(Order::filtered([], $request)->search($request->search)->view($request->view)->join('users as user', 'orders.user_id', '=', 'user.id')->select('orders.*')->paginate($request->paginate));
@@ -36,9 +32,6 @@ class OrderController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  Order  $order
-     * @return OrderDetailResource
      */
     public function show(Order $order): OrderDetailResource
     {
@@ -47,10 +40,6 @@ class OrderController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  OrderStatusUpdateRequest  $request
-     * @param  Order  $order
-     * @return OrderListResource
      */
     public function updateStatus(OrderStatusUpdateRequest $request, Order $order): OrderListResource
     {
@@ -63,7 +52,6 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Order  $order
      * @return string[]
      */
     public function delete(Order $order): array
@@ -74,7 +62,6 @@ class OrderController extends Controller
     }
 
     /**
-     * @param  BulkOrderStatusUpdateRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

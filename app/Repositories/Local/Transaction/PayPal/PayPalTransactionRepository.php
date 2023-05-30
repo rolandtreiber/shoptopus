@@ -9,10 +9,6 @@ class PayPalTransactionRepository implements PayPalTransactionRepositoryInterfac
 {
     /**
      * Store transaction
-     *
-     * @param  HttpResponse  $transaction
-     * @param  string  $orderId
-     * @return HttpResponse
      */
     public function storeTransaction(HttpResponse $transaction, string $orderId): HttpResponse
     {

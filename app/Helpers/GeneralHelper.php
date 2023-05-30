@@ -28,11 +28,6 @@ class GeneralHelper
         return preg_replace('/(?<!\ )[A-Z]/', ' $0', $input);
     }
 
-    /**
-     * @param  int  $length
-     * @param  int  $mode
-     * @return string
-     */
     public static function generateRandomString(int $length = 10, int $mode = 0): string
     {
         switch ($mode) {
@@ -63,10 +58,6 @@ class GeneralHelper
         return $randomString;
     }
 
-    /**
-     * @param $url
-     * @return string
-     */
     public static function imageToDataUrl($url): string
     {
         $imageData = base64_encode(file_get_contents($url));
@@ -126,15 +117,11 @@ class GeneralHelper
                 $discounted = round($basePrice - (($basePrice / 100) * $discountAmount), 2);
                 break;
             default:
-            }
+        }
 
         return $discounted > 0 ? $discounted : 0;
     }
 
-    /**
-     * @param $amount
-     * @return string
-     */
     public static function displayPrice($amount): string
     {
         if (config('app.default_currency.side') === 'left') {

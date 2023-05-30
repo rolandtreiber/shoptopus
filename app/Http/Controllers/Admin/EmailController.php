@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Mail;
 class EmailController extends Controller
 {
     /**
-     * @param  SendEmailRequest  $request
      * @return string[]
      */
     public function sendEmail(SendEmailRequest $request): array
@@ -32,9 +31,6 @@ class EmailController extends Controller
         return ['message' => 'success'];
     }
 
-    /**
-     * @return Collection
-     */
     public function getUserOptions(): Collection
     {
         return DB::table('users')->select([DB::raw('CONCAT (name, " <", email, ">") as "option"')])->pluck('option');

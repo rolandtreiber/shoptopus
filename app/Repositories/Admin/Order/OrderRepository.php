@@ -12,11 +12,6 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    /**
-     * @param  array  $ids
-     * @param  int  $status
-     * @return bool
-     */
     public function bulkUpdateStatus(array $ids, int $status): bool
     {
         try {
@@ -28,10 +23,6 @@ class OrderRepository implements OrderRepositoryInterface
         }
     }
 
-    /**
-     * @param  Order  $order
-     * @return bool
-     */
     public function triggerNewOrderNotification(Order $order): bool
     {
         $result = true;

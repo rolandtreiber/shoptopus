@@ -20,10 +20,6 @@ class CartController extends Controller
 
     /**
      * Update a model
-     *
-     * @param  PatchRequest  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function update(PatchRequest $request, string $id): \Illuminate\Http\JsonResponse
     {
@@ -31,16 +27,13 @@ class CartController extends Controller
             $data = $this->cartService->update($id, $request->validated());
 
             return response()->json($this->putResponse($data));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Update quantity for a given product
-     *
-     * @param  UpdateQuantityRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function updateQuantity(UpdateQuantityRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -48,16 +41,13 @@ class CartController extends Controller
             $data = $this->cartService->updateQuantity($request->validated());
 
             return response()->json($this->putResponse($data));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Add item to cart.
-     *
-     * @param  AddItemToCartRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function addItem(AddItemToCartRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -65,16 +55,13 @@ class CartController extends Controller
             $data = $this->cartService->addItem($request->validated());
 
             return response()->json($this->postResponse($data));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Remove item from cart.
-     *
-     * @param  RemoveItemFromCartRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function removeItem(RemoveItemFromCartRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -82,7 +69,7 @@ class CartController extends Controller
             $this->cartService->removeItem($request->validated());
 
             return response()->json($this->deleteResponse());
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }

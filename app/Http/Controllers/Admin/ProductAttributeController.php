@@ -21,27 +21,16 @@ class ProductAttributeController extends Controller
 
     protected ProductAttributeRepositoryInterface $productAttributeRepository;
 
-    /**
-     * @param  ProductAttributeRepositoryInterface  $productAttributeRepository
-     */
     public function __construct(ProductAttributeRepositoryInterface $productAttributeRepository)
     {
         $this->productAttributeRepository = $productAttributeRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return ProductAttributeListResource::collection(ProductAttribute::filtered([], $request)->availability($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  ProductAttribute  $attribute
-     * @return ProductAttributeDetailResource
-     */
     public function show(ProductAttribute $attribute): ProductAttributeDetailResource
     {
         return new ProductAttributeDetailResource($attribute);
@@ -49,9 +38,6 @@ class ProductAttributeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductAttributeStoreRequest  $request
-     * @return ProductAttributeDetailResource
      */
     public function create(ProductAttributeStoreRequest $request): ProductAttributeDetailResource
     {
@@ -67,10 +53,6 @@ class ProductAttributeController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  ProductAttribute  $attribute
-     * @param  ProductAttributeUpdateRequest  $request
-     * @return ProductAttributeDetailResource
      */
     public function update(ProductAttribute $attribute, ProductAttributeUpdateRequest $request): ProductAttributeDetailResource
     {
@@ -85,7 +67,6 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param  ProductAttribute  $attribute
      * @return string[]
      */
     public function delete(ProductAttribute $attribute): array
@@ -96,7 +77,6 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param  ProductAttributeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -113,7 +93,6 @@ class ProductAttributeController extends Controller
     }
 
     /**
-     * @param  ProductAttributeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

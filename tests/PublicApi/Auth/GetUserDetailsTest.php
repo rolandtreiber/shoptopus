@@ -15,6 +15,7 @@ class GetUserDetailsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function unauthenticated_users_cannot_access_their_details()
@@ -27,6 +28,7 @@ class GetUserDetailsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function authenticated_users_can_get_their_details_containing_all_required_fields()
@@ -67,6 +69,7 @@ class GetUserDetailsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function the_notifications_array_contains_all_the_unread_notifications()
@@ -103,6 +106,7 @@ class GetUserDetailsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function the_favorites_array_contains_all_the_favorited_product_ids()

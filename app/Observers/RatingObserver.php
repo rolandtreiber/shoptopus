@@ -6,9 +6,6 @@ use App\Models\Rating;
 
 class RatingObserver
 {
-    /**
-     * @param  Rating  $rating
-     */
     public function created(Rating $rating)
     {
         $ratable = $rating->ratable;

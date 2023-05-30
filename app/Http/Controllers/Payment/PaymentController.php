@@ -18,9 +18,6 @@ class PaymentController extends Controller
 
     /**
      * Pay the order
-     *
-     * @param  ExecuteRequest  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function execute(ExecuteRequest $request): \Illuminate\Http\JsonResponse
     {
@@ -28,17 +25,13 @@ class PaymentController extends Controller
             return response()->json(
                 $this->getResponse([], $this->paymentService->executePayment($request->validated()), $request)
             );
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get a single payment provider settings
-     *
-     * @param  GetClientSettingsRequest  $request
-     * @param  string  $provider
-     * @return \Illuminate\Http\JsonResponse
      */
     public function getClientSettings(GetClientSettingsRequest $request, string $provider): \Illuminate\Http\JsonResponse
     {
@@ -46,7 +39,7 @@ class PaymentController extends Controller
             return response()->json(
                 $this->getResponse([], $this->paymentService->getClientSettings($provider, $request->validated()['orderId']), $request)
             );
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }

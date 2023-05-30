@@ -11,6 +11,7 @@ class LogoutTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function unauthenticated_users_cannot_logout()
@@ -23,6 +24,7 @@ class LogoutTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function authenticated_users_can_logout()

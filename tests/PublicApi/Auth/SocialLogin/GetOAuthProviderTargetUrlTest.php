@@ -11,6 +11,7 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_requires_a_provider_query_parameter()
@@ -21,6 +22,7 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_accepts_only_the_predefined_providers()
@@ -31,6 +33,7 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_a_target_url_for_facebook()
@@ -41,6 +44,7 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_returns_a_target_url_for_google()

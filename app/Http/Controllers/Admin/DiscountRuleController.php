@@ -23,27 +23,16 @@ class DiscountRuleController extends Controller
 
     protected DiscountRuleRepositoryInterface $discountRuleRepository;
 
-    /**
-     * @param  DiscountRuleRepositoryInterface  $discountRuleRepository
-     */
     public function __construct(DiscountRuleRepositoryInterface $discountRuleRepository)
     {
         $this->discountRuleRepository = $discountRuleRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return DiscountRuleListResource::collection(DiscountRule::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  DiscountRule  $discountRule
-     * @return DiscountRuleDetailResource
-     */
     public function show(DiscountRule $discountRule): DiscountRuleDetailResource
     {
         return new DiscountRuleDetailResource($discountRule);
@@ -51,9 +40,6 @@ class DiscountRuleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  DiscountRuleStoreRequest  $request
-     * @return DiscountRuleListResource
      */
     public function create(DiscountRuleStoreRequest $request): DiscountRuleListResource
     {
@@ -67,10 +53,6 @@ class DiscountRuleController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  DiscountRule  $discountRule
-     * @param  DiscountRuleUpdateRequest  $request
-     * @return DiscountRuleListResource
      */
     public function update(DiscountRule $discountRule, DiscountRuleUpdateRequest $request): DiscountRuleListResource
     {
@@ -82,7 +64,6 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param  DiscountRule  $discountRule
      * @return string[]
      */
     public function delete(DiscountRule $discountRule): array
@@ -93,7 +74,6 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -107,7 +87,6 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -121,7 +100,6 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -142,7 +120,6 @@ class DiscountRuleController extends Controller
     }
 
     /**
-     * @param  DiscountRuleBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

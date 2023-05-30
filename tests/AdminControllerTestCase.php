@@ -30,7 +30,6 @@ abstract class AdminControllerTestCase extends BaseTestCase
 
     /**
      * @param  \Illuminate\Contracts\Auth\Authenticatable|\Laravel\Passport\HasApiTokens  $user
-     * @param  array  $scopes
      * @return $this
      */
     protected function signIn($user = null, array $scopes = []): TestCase
@@ -42,9 +41,6 @@ abstract class AdminControllerTestCase extends BaseTestCase
         return $this;
     }
 
-    /**
-     * @return User
-     */
     public function getRandomNonSuperAdminOrStoreManager(): User
     {
         $nonAuthorizedUserRoleNames = Role::whereNotIn('name', ['super_admin', 'store_manager', 'customer'])->pluck('name')->toArray();

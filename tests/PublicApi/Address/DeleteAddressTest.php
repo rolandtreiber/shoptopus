@@ -21,6 +21,7 @@ class DeleteAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function unauthorised_users_are_not_allowed_to_delete_addresses()
@@ -38,6 +39,7 @@ class DeleteAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiDelete
      */
     public function authorised_users_can_delete_their_addresses()

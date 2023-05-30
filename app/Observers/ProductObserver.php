@@ -17,7 +17,6 @@ class ProductObserver
     }
 
     /**
-     * @param  Product  $product
      * @return void
      */
     public function saving(Product $product)

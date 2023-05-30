@@ -19,17 +19,11 @@ class ReportController extends Controller
         $this->reportRepository = $reportRepository;
     }
 
-    /**
-     * @return ReportOverviewResource
-     */
     public function getOverview(ReportOverviewRequest $request): ReportOverviewResource
     {
         return new ReportOverviewResource($this->reportRepository->getOverview($request->toArray()));
     }
 
-    /**
-     * @return ReportSalesResource
-     */
     public function getSales(ReportSalesRequest $request): ReportSalesResource
     {
         return new ReportSalesResource($this->reportRepository->getSales($request->toArray()));

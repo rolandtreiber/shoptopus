@@ -10,10 +10,6 @@ trait APIControllerTrait
     /**
      * Return a get response formatted with next and last pagination if requested
      *
-     * @param  array  $page_formatting
-     * @param  array  $query_response
-     * @param  Request  $request
-     * @return array
      *
      * @throws \Exception
      */
@@ -93,9 +89,6 @@ trait APIControllerTrait
 
     /**
      * Return a post response
-     *
-     * @param  array  $data
-     * @return array
      */
     protected function postResponse(array $data): array
     {
@@ -104,9 +97,6 @@ trait APIControllerTrait
 
     /**
      * Return a put response
-     *
-     * @param  array  $data
-     * @return array
      */
     protected function putResponse(array $data): array
     {
@@ -115,8 +105,6 @@ trait APIControllerTrait
 
     /**
      * Return a delete response
-     *
-     * @return array
      */
     protected function deleteResponse(): array
     {
@@ -125,12 +113,6 @@ trait APIControllerTrait
 
     /**
      * Format and return an error response
-     *
-     * @param  mixed  $e
-     * @param  string  $user_message
-     * @param  int|null  $error_code
-     * @param  int  $status_code
-     * @return \Illuminate\Http\JsonResponse
      */
     protected function errorResponse(mixed $e, string $user_message, int $error_code = null, int $status_code = 500): \Illuminate\Http\JsonResponse
     {
@@ -161,9 +143,6 @@ trait APIControllerTrait
 
     /**
      * Get and validate the filters from the query string
-     *
-     * @param  Request  $request
-     * @return array
      */
     protected function getAndValidateFilters(Request $request): array
     {
@@ -191,9 +170,6 @@ trait APIControllerTrait
 
     /**
      * Get and validate the page attributes from the query string
-     *
-     * @param  Request  $request
-     * @return array
      */
     protected function getPageFormatting(Request $request): array
     {
@@ -211,9 +187,6 @@ trait APIControllerTrait
 
     /**
      * Ensure $data is always an array of objects
-     *
-     * @param  array  $data
-     * @return array
      */
     protected function getFormattedData(array $data): array
     {
@@ -224,10 +197,6 @@ trait APIControllerTrait
 
     /**
      * Get the filters and page formatting
-     *
-     * @param  Request  $request
-     * @param  int|null  $per_page
-     * @return array
      */
     protected function getFiltersAndPageFormatting(Request $request, int $per_page = null): array
     {
@@ -243,8 +212,6 @@ trait APIControllerTrait
 
     /**
      * Get the current site URL
-     *
-     * @return string
      */
     protected function siteURL(): string
     {

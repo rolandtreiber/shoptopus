@@ -19,6 +19,7 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_has_all_required_fields()
@@ -34,6 +35,7 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
     public function it_requires_an_existing_order_id()

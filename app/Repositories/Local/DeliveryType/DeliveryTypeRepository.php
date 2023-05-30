@@ -17,8 +17,6 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the delivery rules for the given delivery types
      *
-     * @param  array  $deliveryTypeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -44,7 +42,7 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $deliveryTypeIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -53,8 +51,6 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the orders for the given delivery types
      *
-     * @param  array  $deliveryTypeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -80,7 +76,7 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
                 WHERE o.delivery_type_id IN ($dynamic_placeholders)
                 AND o.deleted_at IS NULL
             ", $deliveryTypeIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -89,9 +85,6 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -133,7 +126,7 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -141,9 +134,6 @@ class DeliveryTypeRepository extends ModelRepository implements DeliveryTypeRepo
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

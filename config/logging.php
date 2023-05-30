@@ -55,16 +55,16 @@ return [
 
     'channels' => [
         'elasticsearch' => [
-            'driver'         => 'monolog',
-            'level'          => 'debug',
-            'handler'        => ElasticsearchHandler::class,
-            'formatter'      => ElasticsearchFormatter::class,
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => ElasticsearchHandler::class,
+            'formatter' => ElasticsearchFormatter::class,
             'formatter_with' => [
                 'index' => env('ELASTIC_LOGS_INDEX'),
-                'type'  => '_doc',
+                'type' => '_doc',
             ],
-            'handler_with'   => [
-                'client' => config('app.env') !== 'testing' ? ClientBuilder::create()->setHosts([env('ELASTIC_SCHEME')."://".env('ELASTIC_HOST').":".env('ELASTIC_PORT')])->build() : null,
+            'handler_with' => [
+                'client' => config('app.env') !== 'testing' ? ClientBuilder::create()->setHosts([env('ELASTIC_SCHEME').'://'.env('ELASTIC_HOST').':'.env('ELASTIC_PORT')])->build() : null,
             ],
         ],
         'stack' => [

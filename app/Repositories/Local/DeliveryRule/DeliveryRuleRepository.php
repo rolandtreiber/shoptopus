@@ -17,8 +17,6 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     /**
      * Get the delivery types for the given delivery rules
      *
-     * @param  array  $deliveryTypeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -38,7 +36,7 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
                 AND dt.deleted_at IS NULL
                 AND dt.enabled IS TRUE
             ", $deliveryTypeIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -47,9 +45,6 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -77,7 +72,7 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -85,9 +80,6 @@ class DeliveryRuleRepository extends ModelRepository implements DeliveryRuleRepo
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

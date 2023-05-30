@@ -17,9 +17,6 @@ class ProductAttributeService extends ModelService implements ProductAttributeSe
     /**
      * Get all models for a specific product category
      *
-     * @param  string  $product_category_id
-     * @param  array  $page_formatting
-     * @return array
      *
      * @throws \Exception
      */

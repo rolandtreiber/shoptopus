@@ -23,18 +23,11 @@ class ProductCategoryController extends Controller
 
     protected ProductCategoryRepositoryInterface $productCategoryRepository;
 
-    /**
-     * @param  ProductCategoryRepositoryInterface  $productCategoryRepository
-     */
     public function __construct(ProductCategoryRepositoryInterface $productCategoryRepository)
     {
         $this->productCategoryRepository = $productCategoryRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         if (isset($request->filters['parent_id'])) {
@@ -50,19 +43,11 @@ class ProductCategoryController extends Controller
         return ProductCategoryListResource::collection($dataset->availability($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  Product  $product
-     * @param  ProductCategory  $category
-     * @return ProductCategoryDetailResource
-     */
     public function show(Product $product, ProductCategory $category): ProductCategoryDetailResource
     {
         return new ProductCategoryDetailResource($category);
     }
 
-    /**
-     * @return AnonymousResourceCollection
-     */
     public function getSelectData(): AnonymousResourceCollection
     {
         return ProductCategorySelectResource::collection(ProductCategory::where('enabled', 1)->get());
@@ -70,9 +55,6 @@ class ProductCategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductCategoryStoreRequest  $request
-     * @return ProductCategoryDetailResource
      */
     public function create(ProductCategoryStoreRequest $request): ProductCategoryDetailResource
     {
@@ -90,10 +72,6 @@ class ProductCategoryController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductCategoryUpdateRequest  $request
-     * @param  ProductCategory  $category
-     * @return ProductCategoryDetailResource
      */
     public function update(ProductCategoryUpdateRequest $request, ProductCategory $category): ProductCategoryDetailResource
     {
@@ -111,7 +89,6 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param  ProductCategory  $category
      * @return string[]
      */
     public function delete(ProductCategory $category): array
@@ -122,7 +99,6 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param  ProductCategoryBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -139,7 +115,6 @@ class ProductCategoryController extends Controller
     }
 
     /**
-     * @param  ProductCategoryBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

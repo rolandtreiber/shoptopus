@@ -7,10 +7,6 @@ use App\Models\ProductAttribute;
 
 trait HasAttributes
 {
-    /**
-     * @param $model
-     * @param $request
-     */
     public function handleAttributes($model, $request)
     {
         $modelClass = get_class($model);

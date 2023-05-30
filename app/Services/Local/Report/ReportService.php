@@ -55,10 +55,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @param  array  $labels
-     * @return ReportService
-     */
     public function setLabels(array $labels): ReportService
     {
         $this->labels = $labels;
@@ -194,9 +190,6 @@ class ReportService implements ReportServiceInterface
         return $series;
     }
 
-    /**
-     * @return array
-     */
     public function getDatasets(): array
     {
         return $this->datasets;
@@ -337,8 +330,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param $attr
-     * @param  bool  $cascade
      * @return $this
      * Creates a report dataset based on an attribute.
      */
@@ -368,7 +359,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param $label
      * @return $this
      */
     public function addSingleLabel($label): ReportService
@@ -379,7 +369,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param $label
      * @return $this
      */
     public function makeSingleValueDatasetItem($label): ReportService
@@ -395,7 +384,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param $value
      * @return $this
      */
     public function addDataToSingleDataset($value): ReportService
@@ -409,7 +397,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param  bool  $cascade
      * @return $this
      * Creates a report dataset based on the number of items.
      */
@@ -469,7 +456,6 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param $label
      * @return $this
      * Sets the label for the current dataset.
      */
@@ -480,10 +466,6 @@ class ReportService implements ReportServiceInterface
         return $this;
     }
 
-    /**
-     * @param  int|null  $type
-     * @return array
-     */
     public function getControlsFromType(int $type = null): array
     {
         switch ($type) {

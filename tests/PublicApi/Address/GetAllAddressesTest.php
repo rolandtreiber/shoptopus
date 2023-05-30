@@ -14,6 +14,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function unauthenticated_users_are_not_allowed_to_get_all_their_addresses()
@@ -26,6 +27,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_correct_format()
@@ -43,6 +45,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_all_addresses_for_the_user()
@@ -89,6 +92,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function soft_deleted_addresses_are_not_returned()
@@ -102,6 +106,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_count()
@@ -114,6 +119,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_all_required_fields()
@@ -131,6 +137,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function addresses_can_be_filtered_by_id()
@@ -146,6 +153,7 @@ class GetAllAddressesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function filters_can_accept_multiple_parameters()

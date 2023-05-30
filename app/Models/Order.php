@@ -154,57 +154,36 @@ class Order extends SearchableModel implements Auditable, Exportable
         }
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount', 'product_variant_id'])->using(OrderProduct::class);
     }
 
-    /**
-     * @return MorphMany
-     */
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function voucher_code(): BelongsTo
     {
         return $this->belongsTo(VoucherCode::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function delivery_type_relation(): BelongsTo
     {
         return $this->belongsTo(DeliveryType::class, 'delivery_type_id', 'id');
     }
 
-    /**
-     * @return DeliveryType|null
-     */
     public function getDeliveryTypeAttribute(): ?DeliveryType
     {
         // If the delivery type, the order associated with, was deleted, let's take the
@@ -225,9 +204,6 @@ class Order extends SearchableModel implements Auditable, Exportable
         }
     }
 
-    /**
-     * @return HasOne
-     */
     public function invoice(): HasOne
     {
         return $this->hasOne(Invoice::class);

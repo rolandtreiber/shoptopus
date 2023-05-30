@@ -27,10 +27,6 @@ class BulkOperationsTestCase extends TestCase
         $this->customer = $this->createUser(Role::findByName(UserRole::Customer));
     }
 
-    /**
-     * @param  Role  $role
-     * @return User
-     */
     public function createUser(Role $role): User
     {
         /** @var User $user */

@@ -21,6 +21,7 @@ class UpdateAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function unauthorised_users_are_not_allowed_to_update_addresses()
@@ -40,6 +41,7 @@ class UpdateAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function authorised_users_can_update_their_addresses()
@@ -59,6 +61,7 @@ class UpdateAddressTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
     public function the_longitude_and_latitude_must_match_the_exact_number_of_characters()

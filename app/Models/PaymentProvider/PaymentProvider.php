@@ -40,8 +40,6 @@ class PaymentProvider extends Model
 
     /**
      * A payment provider has many config.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function payment_provider_configs(): \Illuminate\Database\Eloquent\Relations\HasMany
     {

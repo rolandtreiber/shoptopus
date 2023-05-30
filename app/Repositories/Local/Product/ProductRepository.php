@@ -22,8 +22,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Save product to favorites
      *
-     * @param  string  $productId
-     * @return array
      *
      * @throws \Exception
      */
@@ -53,7 +51,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             }
 
             return ['favorited' => $favorited->exists()];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -62,8 +60,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the product attributes for the given products
      *
-     * @param  array  $productIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -95,7 +91,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 AND pa.deleted_at IS NULL
                 AND pa.enabled IS TRUE
             ", $productIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -104,8 +100,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the discount rules for the given products
      *
-     * @param  array  $productIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -132,7 +126,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 AND dr.deleted_at IS NULL
                 AND dr.enabled IS TRUE
             ", $productIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -141,8 +135,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the product categories for the given products
      *
-     * @param  array  $productIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -176,7 +168,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 AND pc.deleted_at IS NULL
                 AND pc.enabled IS TRUE
             ", $productIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -185,8 +177,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the product tags for the given products
      *
-     * @param  array  $productIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -210,7 +200,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 AND pt.deleted_at IS NULL
                 AND pt.enabled IS TRUE
             ", $productIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -219,8 +209,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the product variants
      *
-     * @param  array  $productIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -257,17 +245,12 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 AND pv.deleted_at IS NULL
                 AND pv.enabled IS TRUE
             ", $productIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
     }
 
-    /**
-     * @param  Product  $product
-     * @param  array  $selectedAttributeOptionIds
-     * @return array
-     */
     public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []): array
     {
         $baseQuery = DB::table('product_attribute_product_variant')
@@ -293,7 +276,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         })->toArray();
 
         array_walk_recursive($allOptions, function ($a) use (&$return) {
-        $return[] = $a;
+            $return[] = $a;
         });
         $availableAttributeOptionIds = array_values(array_unique($return ?? []));
         $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
@@ -326,9 +309,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -539,7 +519,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -548,9 +528,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
     /**
      * Calculate the final price
      *
-     * @param  array  $product
      * @param  bool  $price
-     * @return string
      */
     public function calculateFinalPrice(array $product, $price = false): string
     {
@@ -595,9 +573,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
@@ -627,9 +602,6 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
     /**
      * Calculate the total discounts
-     *
-     * @param $discounts
-     * @return mixed
      */
     private function calculateDiscountAmount($discounts): mixed
     {

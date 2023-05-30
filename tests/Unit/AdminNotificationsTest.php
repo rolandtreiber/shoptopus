@@ -92,6 +92,7 @@ class AdminNotificationsTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      *
      * @see https://github.com/laravel/framework/issues/19952

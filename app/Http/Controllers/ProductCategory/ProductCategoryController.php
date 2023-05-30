@@ -17,9 +17,6 @@ class ProductCategoryController extends Controller
 
     /**
      * Get all models
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function getAll(Request $request): \Illuminate\Http\JsonResponse
     {
@@ -29,23 +26,19 @@ class ProductCategoryController extends Controller
             $filters['parent_id'] = 'null';
 
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
 
     /**
      * Get a single model
-     *
-     * @param  Request  $request
-     * @param  string  $id
-     * @return \Illuminate\Http\JsonResponse
      */
     public function get(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productCategoryService->get($id), $request));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
@@ -54,14 +47,12 @@ class ProductCategoryController extends Controller
      * Get a single model by its slug
      *
      * @param \Illuminate\Http\Request
-     * @param  string  $slug
-     * @return \Illuminate\Http\JsonResponse
      */
     public function getBySlug(Request $request, string $slug): \Illuminate\Http\JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productCategoryService->getBySlug($slug), $request));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }

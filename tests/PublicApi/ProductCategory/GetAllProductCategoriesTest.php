@@ -15,6 +15,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_correct_format()
@@ -31,6 +32,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_all_required_fields()
@@ -50,6 +52,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function soft_deleted_and_disabled_product_categories_are_not_returned()
@@ -62,6 +65,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_count()
@@ -73,6 +77,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_discount_rulessss()
@@ -115,6 +120,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function the_discount_rules_must_be_valid()
@@ -138,6 +144,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_its_subcategories()
@@ -167,6 +174,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_product_ids()
@@ -195,6 +203,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function product_categories_can_be_filtered_by_id()
@@ -210,6 +219,7 @@ class GetAllProductCategoriesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function filters_can_accept_multiple_parameters()

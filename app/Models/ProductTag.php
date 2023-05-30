@@ -100,9 +100,6 @@ class ProductTag extends SearchableModel implements Auditable, Exportable, Impor
         'enabled' => 'boolean',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);

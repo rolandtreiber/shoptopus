@@ -12,7 +12,6 @@ class PassportServiceProvider extends \Laravel\Passport\PassportServiceProvider
     /**
      * Make the authorization service instance.
      *
-     * @return AuthorizationServer
      *
      * @throws BindingResolutionException
      */

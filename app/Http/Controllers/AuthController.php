@@ -65,7 +65,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @param  SignupRequest  $request
      * @return string[]
      *
      * @throws ApiValidationFailedException
@@ -93,7 +92,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @param  EmailConfirmationRequest  $request
      * @return string[]
      */
     public function confirmEmail(EmailConfirmationRequest $request): array
@@ -133,7 +131,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @param $token
      * @return Application|Factory|View
      */
     public function checkPasswordResetToken($token)
@@ -166,7 +163,6 @@ class AuthController extends Controller
     }
 
     /**
-     * @param  UpdatePasswordFromResetFlowRequest  $request
      * @return string[]
      */
     public function updatePasswordFromResetFlow(UpdatePasswordFromResetFlowRequest $request): array
@@ -203,9 +199,6 @@ class AuthController extends Controller
         ];
     }
 
-    /**
-     * @return UserDetailResource
-     */
     public function getAuthenticatedUser(): UserDetailResource
     {
         return new UserDetailResource(Auth()->user());

@@ -1,14 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductAttribute\ProductAttributeController;
+use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'name' => 'api.'
+    'name' => 'api.',
 ], function () {
     Route::group([
         'name' => 'product_attributes.',
-        'prefix' => 'product_attributes'
+        'prefix' => 'product_attributes',
     ], function () {
         Route::get('/', [ProductAttributeController::class, 'getAll'])->name('api.product_attributes.getAll');
         Route::get('/product_category/{product_category_id}', [ProductAttributeController::class, 'getAllForProductCategory'])
@@ -17,7 +17,7 @@ Route::group([
 
     Route::group([
         'name' => 'product_attribute.',
-        'prefix' => 'product_attribute'
+        'prefix' => 'product_attribute',
     ], function () {
         Route::get('/{id}', [ProductAttributeController::class, 'get'])->name('api.product_attribute.get');
     });

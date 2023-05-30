@@ -23,10 +23,6 @@ class ReportRepository implements ReportRepositoryInterface
         $this->reportService = $reportService;
     }
 
-    /**
-     * @param  array  $controls
-     * @return array
-     */
     public function getSignupsOverTime(array $controls): array
     {
         $start = $controls['start'];
@@ -49,10 +45,6 @@ class ReportRepository implements ReportRepositoryInterface
         return $service->getApexChartsResponse();
     }
 
-    /**
-     * @param  array  $controls
-     * @return array
-     */
     public function getRevenueOverTime(array $controls): array
     {
         $service = $this->getChartData([
@@ -89,9 +81,7 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
-     * @param  array  $controls
      * @param  null  $categoryId
-     * @return array
      */
     public function getProductBreakdown(array $controls, $categoryId = null): array
     {
@@ -148,9 +138,6 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getProductByStatusChartData(): array
     {
         $reportService = $this->reportService->setup();
@@ -186,10 +173,6 @@ class ReportRepository implements ReportRepositoryInterface
         return $reportService->getApexCompositePieResponse();
     }
 
-    /**
-     * @param  array  $controls
-     * @return array
-     */
     public function getOrdersByStatusChartData(array $controls): array
     {
         $reportService = $this->reportService->setup();
@@ -234,9 +217,6 @@ class ReportRepository implements ReportRepositoryInterface
         return $reportService->getApexCompositePieResponse();
     }
 
-    /**
-     * @return array
-     */
     public function getTotalOverviewValues(): array
     {
         $unsold = DB::table('products')
@@ -265,17 +245,12 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
-    /**
-     * @param $query
-     * @return string
-     */
     private function getSalesStatsRow($query): string
     {
         return $query->sum('total_price').' ('.$query->count().')';
     }
 
     /**
-     * @param  array  $controls
      * @return string[]
      */
     public function getSalesStats(array $controls): array
@@ -298,9 +273,6 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
-    /**
-     * @return array
-     */
     public function getOverviewStats(): array
     {
         $orders = Order::count();
@@ -317,10 +289,6 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
-    /**
-     * @param  array  $data
-     * @return array
-     */
     public function getOverview(array $data): array
     {
         $ordersByStatusChartData = $this->getOrdersByStatusChartData($this->reportService->getControlsFromType((int) $data['orders_overview_chart_range']));
@@ -339,10 +307,6 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
-    /**
-     * @param  array  $data
-     * @return ReportService
-     */
     public function getChartData(array $data): ReportService
     {
         $start = $data['date_from'];
@@ -384,7 +348,6 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
-     * @param  array  $data
      * @return array[]
      */
     public function getSales(array $data): array

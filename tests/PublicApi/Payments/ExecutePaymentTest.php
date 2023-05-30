@@ -29,6 +29,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function unauthenticated_users_are_not_allowed_to_execute_payments()
@@ -41,6 +42,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function unauthorised_users_are_not_allowed_to_execute_payments()
@@ -53,6 +55,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_throws_an_error_if_the_payment_gateway_is_not_supported()
@@ -69,6 +72,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_throws_an_error_if_the_order_status_is_not_awaiting_payment()

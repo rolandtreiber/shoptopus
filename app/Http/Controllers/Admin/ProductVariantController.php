@@ -17,21 +17,11 @@ class ProductVariantController extends Controller
 {
     use ProcessRequest, HasAttributes;
 
-    /**
-     * @param  ListRequest  $request
-     * @param  Product  $product
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request, Product $product): AnonymousResourceCollection
     {
         return ProductVariantResource::collection(ProductVariant::filtered([['product_id', $product->id]], $request)->paginate($request->paginate));
     }
 
-    /**
-     * @param  Product  $product
-     * @param  ProductVariant  $variant
-     * @return ProductVariantResource
-     */
     public function show(Product $product, ProductVariant $variant): ProductVariantResource
     {
         return new ProductVariantResource($variant);
@@ -39,10 +29,6 @@ class ProductVariantController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  Product  $product
-     * @param  ProductVariantStoreRequest  $request
-     * @return ProductVariantResource
      */
     public function create(Product $product, ProductVariantStoreRequest $request): ProductVariantResource
     {
@@ -61,11 +47,6 @@ class ProductVariantController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  Product  $product
-     * @param  ProductVariant  $variant
-     * @param  ProductVariantUpdateRequest  $request
-     * @return ProductVariantResource
      */
     public function update(Product $product, ProductVariant $variant, ProductVariantUpdateRequest $request): ProductVariantResource
     {
@@ -81,8 +62,6 @@ class ProductVariantController extends Controller
     }
 
     /**
-     * @param  Product  $product
-     * @param  ProductVariant  $variant
      * @return string[]
      */
     public function delete(Product $product, ProductVariant $variant): array

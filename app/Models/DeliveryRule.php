@@ -100,9 +100,6 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'delivery_type',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function delivery_type(): BelongsTo
     {
         return $this->belongsTo(DeliveryType::class);

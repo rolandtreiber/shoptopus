@@ -16,9 +16,6 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
 
     /**
      * Get the configs for the given payment provider
-     *
-     * @param  array  $paymentProviderIds
-     * @return array
      */
     public function getConfigs(array $paymentProviderIds = []): array
     {
@@ -39,9 +36,6 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {
@@ -62,9 +56,6 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
     /**
      * Get the required related models for the given payment provider
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -88,7 +79,7 @@ class PaymentProviderRepository extends ModelRepository implements PaymentProvid
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }

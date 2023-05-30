@@ -9,10 +9,6 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class UserRepository implements UserRepositoryInterface
 {
-    /**
-     * @param  User  $user
-     * @return bool
-     */
     public function triggerNewUserRegistrationNotification(User $user): bool
     {
         $result = true;

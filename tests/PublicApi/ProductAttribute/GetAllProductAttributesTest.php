@@ -16,6 +16,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_correct_format()
@@ -32,6 +33,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_all_required_fields()
@@ -56,6 +58,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function soft_deleted_and_disabled_product_attributes_are_not_returned()
@@ -73,6 +76,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_count()
@@ -89,6 +93,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_options()
@@ -132,6 +137,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function attributes_without_options_are_excluded()
@@ -147,6 +153,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function attributes_without_products_are_excluded()
@@ -160,6 +167,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_returns_the_associated_product_ids()
@@ -189,6 +197,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function it_can_filter_attributes_within_a_product_category()
@@ -222,6 +231,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function product_attributes_can_be_filtered_by_id()
@@ -244,6 +254,7 @@ class GetAllProductAttributesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGetAll
      */
     public function filters_can_accept_multiple_parameters()

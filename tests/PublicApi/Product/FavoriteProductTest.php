@@ -25,6 +25,7 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function unauthenticated_users_are_not_allowed_to_favorite_products()
@@ -37,6 +38,7 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function it_requires_a_valid_product_id()
@@ -48,6 +50,7 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function authorised_users_can_favorite_products()
@@ -69,6 +72,7 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
     public function a_product_can_be_unfavorited()

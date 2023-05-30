@@ -56,8 +56,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param  string  $orderId
-     * @return array
      *
      * @throws \Exception
      */
@@ -72,7 +70,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
                     : $this->config['CLIENT_ID']['test_value'],
                 'pay_pal_order_creation' => $this->createOrder($order),
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
@@ -81,9 +79,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Create a PayPal Order/Payment
      *
-     * @param  string  $orderId
-     * @param  array  $provider_payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -102,7 +97,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
         } catch (PaymentException $e) {
             $this->errorService->logException($e, true);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
@@ -110,9 +105,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
 
     /**
      * Format payment response
-     *
-     * @param  array  $executed_payment_response
-     * @return array
      */
     public function formatPaymentResponse(array $executed_payment_response): array
     {
@@ -128,8 +120,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Create a PayPal Order/Payment
      *
-     * @param  array  $order
-     * @return HttpResponse
      *
      * @throws \Exception
      */
@@ -144,7 +134,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
         } catch (PaymentException $e) {
             $this->errorService->logException($e, true);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
@@ -153,8 +143,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * ValidateResponse
      *
-     * @param  object  $response
-     * @return HttpResponse
      *
      * @throws PaymentException
      *
@@ -176,9 +164,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     /**
      * Setting up the JSON request body for creating the order with minimum request body. The intent in the
      * request body should be "AUTHORIZE" for authorize intent flow.
-     *
-     * @param  array  $order
-     * @return array
      */
     private function buildCreateOrderRequestBody(array $order): array
     {
@@ -206,9 +191,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
 
     /**
      * Get the return url
-     *
-     * @param  string  $orderId
-     * @return string
      */
     private function getCheckoutReturnUrl(string $orderId): string
     {
@@ -220,7 +202,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      * credentials context. Use this instance to invoke PayPal APIs, provided the
      * credentials have access.
      *
-     * @return PayPalHttpClient
      *
      * @throws \Exception
      */
@@ -228,7 +209,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
     {
         try {
             return new PayPalHttpClient($this->environment());
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
@@ -238,7 +219,6 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
      * Set up and return PayPal PHP SDK environment with PayPal access credentials.
      * This sample uses SandboxEnvironment. In production, use ProductionEnvironment.
      *
-     * @return SandboxEnvironment|ProductionEnvironment
      *
      * @throws \Exception
      */
@@ -257,7 +237,7 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
 
                 return new SandboxEnvironment($clientId, $clientSecret);
             }
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }

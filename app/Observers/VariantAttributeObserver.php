@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 class VariantAttributeObserver
 {
     /**
-     * @param  VariantAttribute  $variantAttribute
      * @return void
      */
     private function updateAttributeOptionsForVariant(VariantAttribute $variantAttribute)
@@ -21,7 +20,6 @@ class VariantAttributeObserver
     }
 
     /**
-     * @param  VariantAttribute  $variantAttribute
      * @return void
      */
     public function created(VariantAttribute $variantAttribute)
@@ -30,7 +28,6 @@ class VariantAttributeObserver
     }
 
     /**
-     * @param  VariantAttribute  $variantAttribute
      * @return void
      */
     public function deleted(VariantAttribute $variantAttribute)

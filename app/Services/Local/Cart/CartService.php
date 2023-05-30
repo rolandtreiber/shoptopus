@@ -17,8 +17,6 @@ class CartService extends ModelService implements CartServiceInterface
     /**
      * Get the user's cart
      *
-     * @param  string  $userId
-     * @return array
      *
      * @throws \Exception
      */
@@ -26,7 +24,7 @@ class CartService extends ModelService implements CartServiceInterface
     {
         try {
             return $this->modelRepository->getCartForUser($userId);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.getCartForUser'));
         }
@@ -35,8 +33,6 @@ class CartService extends ModelService implements CartServiceInterface
     /**
      * Add item to cart.
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -44,7 +40,7 @@ class CartService extends ModelService implements CartServiceInterface
     {
         try {
             return $this->modelRepository->addItem($payload);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.addItem'));
         }
@@ -53,8 +49,6 @@ class CartService extends ModelService implements CartServiceInterface
     /**
      * Remove item from cart.
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -62,7 +56,7 @@ class CartService extends ModelService implements CartServiceInterface
     {
         try {
             return $this->modelRepository->removeItem($payload);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.removeItem'));
         }
@@ -71,8 +65,6 @@ class CartService extends ModelService implements CartServiceInterface
     /**
      * Update quantity for a given product
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -80,7 +72,7 @@ class CartService extends ModelService implements CartServiceInterface
     {
         try {
             return $this->modelRepository->updateQuantity($payload);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.updateQuantity'));
         }
@@ -89,9 +81,6 @@ class CartService extends ModelService implements CartServiceInterface
     /**
      * Merge the user's carts
      *
-     * @param  string  $userId
-     * @param  string  $cartId
-     * @return array
      *
      * @throws \Exception
      */
@@ -99,7 +88,7 @@ class CartService extends ModelService implements CartServiceInterface
     {
         try {
             return $this->modelRepository->mergeUserCarts($cartId, $userId);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.mergeUserCarts'));
         }

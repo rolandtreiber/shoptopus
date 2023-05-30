@@ -6,10 +6,6 @@ use Illuminate\Support\Facades\DB;
 
 class FileRepository implements FileRepositoryInterface
 {
-    /**
-     * @param  array  $ids
-     * @return bool
-     */
     public function bulkDelete(array $ids): bool
     {
         try {
