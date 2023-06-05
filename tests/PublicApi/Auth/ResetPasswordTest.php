@@ -99,7 +99,7 @@ class ResetPasswordTest extends TestCase
             $this->sendRequest($data)->json('developer_message')
         );
 
-        $this->assertDatabaseHas('password_resets', ['email' => $user->email]);
+        $this->assertDatabaseHas('password_reset_tokens', ['email' => $user->email]);
 
         Notification::assertNotSentTo($user, PasswordResetSuccess::class);
     }

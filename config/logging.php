@@ -1,5 +1,8 @@
 <?php
 
+use Elasticsearch\ClientBuilder;
+use Monolog\Formatter\ElasticsearchFormatter;
+use Monolog\Handler\ElasticsearchHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -68,7 +71,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single', 'elasticsearch'],
+            'channels' => ['single'],
             'ignore_exceptions' => false,
         ],
 

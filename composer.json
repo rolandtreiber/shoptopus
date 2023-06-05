@@ -55,8 +55,7 @@
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
-        "phpunit/phpunit": "^9.5.10",
-        "ext-gd": "*",
+        "phpunit/phpunit": "^10.2.1",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {

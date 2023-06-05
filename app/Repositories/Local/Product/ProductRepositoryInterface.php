@@ -60,7 +60,7 @@ interface ProductRepositoryInterface
      *
      * @param  bool  $price
      */
-    public function calculateFinalPrice(array $product, $price = false): string;
+    public function calculateFinalPrice(array $product, bool $price = false): string;
 
     /**
      * @return mixed

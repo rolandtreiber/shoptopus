@@ -188,7 +188,7 @@ class User extends Authenticatable implements Auditable, Exportable
     /**
      * Send a password reset notification to the user.
      */
-    public function sendPasswordResetNotification(string $token): void
+    public function sendPasswordResetNotification($token): void
     {
         $url = config('app.frontend_url_public').'/reset-password?token='.$token;
 

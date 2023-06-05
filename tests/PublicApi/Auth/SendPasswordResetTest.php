@@ -49,13 +49,13 @@ class SendPasswordResetTest extends TestCase
             'email' => $user->email,
         ];
 
-        $this->assertDatabaseMissing('password_resets', ['email' => $user->email]);
+        $this->assertDatabaseMissing('password_reset_tokens', ['email' => $user->email]);
 
         $res = $this->sendRequest($data)->json('data.message');
 
         $this->assertEquals('We have e-mailed your password reset link!', $res);
 
-        $this->assertDatabaseHas('password_resets', [
+        $this->assertDatabaseHas('password_reset_tokens', [
             'email' => $user->email,
         ]);
 
