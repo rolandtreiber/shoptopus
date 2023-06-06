@@ -295,7 +295,7 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
-     *
+     * 
      * @group apiGet
      */
     public function it_calculates_the_final_price_correctly_for_the_product_variants(): void

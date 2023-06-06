@@ -64,7 +64,7 @@ class AddItemToCartTest extends TestCase
         $res = $this->sendRequest($data);
 
         $res->assertJsonValidationErrors(['quantity']);
-        $this->assertEquals('The quantity must be at least 1.', $res->json('errors.quantity.0'));
+        $this->assertEquals('The quantity field must be at least 1.', $res->json('errors.quantity.0'));
     }
 
     /**
