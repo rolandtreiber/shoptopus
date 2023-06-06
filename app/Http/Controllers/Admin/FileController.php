@@ -21,29 +21,16 @@ class FileController extends Controller
 
     protected FileRepositoryInterface $fileRepository;
 
-    /**
-     * @param  FileRepositoryInterface  $fileRepository
-     */
     public function __construct(FileRepositoryInterface $fileRepository)
     {
         $this->fileRepository = $fileRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return FileContentResource::collection(FileContent::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param $model
-     * @param $id
-     * @param $fileData
-     * @return FileContent
-     */
     private function storeFile($model, $id, $fileData): FileContent
     {
         $fileContent = new FileContent();
@@ -57,11 +44,6 @@ class FileController extends Controller
         return $fileContent;
     }
 
-    /**
-     * @param  FileContent  $file
-     * @param $fileData
-     * @return FileContent
-     */
     private function updateFile(FileContent $file, $fileData): FileContent
     {
         $file->url = $fileData['url'];
@@ -72,17 +54,12 @@ class FileController extends Controller
         return $file;
     }
 
-    /**
-     * @param  FileContent  $file
-     * @return FileContentResource
-     */
     public function show(FileContent $file): FileContentResource
     {
         return new FileContentResource($file);
     }
 
     /**
-     * @param  FileStoreRequest  $request
      * @return FileContentResource|AnonymousResourceCollection|void
      */
     public function create(FileStoreRequest $request)
@@ -105,8 +82,6 @@ class FileController extends Controller
     }
 
     /**
-     * @param  FileContent  $file
-     * @param  FileUpdateRequest  $request
      * @return FileContentResource|void
      */
     public function update(FileContent $file, FileUpdateRequest $request)
@@ -121,7 +96,6 @@ class FileController extends Controller
     }
 
     /**
-     * @param  FileContent  $file
      * @return string[]
      */
     public function delete(FileContent $file): array
@@ -132,7 +106,6 @@ class FileController extends Controller
     }
 
     /**
-     * @param  FileBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

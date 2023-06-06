@@ -24,11 +24,8 @@ class OrderObserver
 
     /**
      * Listen to the Order updating event.
-     *
-     * @param  Order  $order
-     * @return void
      */
-    public function creating(Order $order)
+    public function creating(Order $order): void
     {
         if ($order->delivery_type) {
             $order->delivery_cost = $order->delivery_type->price;
@@ -38,22 +35,16 @@ class OrderObserver
 
     /**
      * Listen to the Order updating event.
-     *
-     * @param  Order  $order
-     * @return void
      */
-    public function created(Order $order)
+    public function created(Order $order): void
     {
         $this->orderRepository->triggerNewOrderNotification($order);
     }
 
     /**
      * Listen to the Order updating event.
-     *
-     * @param  Order  $order
-     * @return void
      */
-    public function updating(Order $order)
+    public function updating(Order $order): void
     {
         if ($order->isDirty(['voucher_code_id', 'delivery_type_id'])) {
             $dt = DeliveryType::find($order->delivery_type_id);

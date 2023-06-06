@@ -12,11 +12,10 @@ class ProductCategorySeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         ProductCategory::factory()->count(10)->create();
 

@@ -6,16 +6,12 @@ interface UserServiceInterface
 {
     /**
      * Get the currently authenticated user instance
-     *
-     * @param  bool  $returnAsArray
-     * @return mixed
      */
     public function getCurrentUser(bool $returnAsArray = true): mixed;
 
     /**
      * Get the currently authenticated user's favorited products
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -24,7 +20,6 @@ interface UserServiceInterface
     /**
      * Get the currently authenticated user's favorited product ids
      *
-     * @return array
      *
      * @throws \Exception
      */

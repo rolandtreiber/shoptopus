@@ -22,8 +22,6 @@ class UserSignup extends BaseNotification implements UserNotification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array
      */
     public function via(): array
     {
@@ -42,10 +40,8 @@ class UserSignup extends BaseNotification implements UserNotification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'message' => $this->createMessage($this->data),

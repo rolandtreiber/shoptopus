@@ -8,14 +8,7 @@ use App\Models\Order;
 
 class EventLogRepository implements EventLogRepositoryInterface
 {
-    /**
-     * @param  string  $modelClass
-     * @param $model
-     * @param $type
-     * @param $data
-     * @return void
-     */
-    public function create(string $modelClass, $model, $type, $data = null)
+    public function create(string $modelClass, $model, $type, $data = null): void
     {
         $eventLog = new EventLog();
         switch ($modelClass) {

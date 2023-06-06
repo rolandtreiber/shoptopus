@@ -23,19 +23,19 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNotNull($this->product_category->name);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_name_field()
+    public function it_has_a_slug_generated_from_its_name_field(): void
     {
         $this->assertEquals(Str::slug($this->product_category->name), $this->product_category->slug);
     }
 
     /** @test */
-    public function it_returns_a_translated_name()
+    public function it_returns_a_translated_name(): void
     {
         $this->product_category
             ->setTranslation('name', 'en', 'english translation')
@@ -50,13 +50,13 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_description_field()
+    public function it_has_a_description_field(): void
     {
         $this->assertNotNull($this->product_category->description);
     }
 
     /** @test */
-    public function it_returns_a_translated_description()
+    public function it_returns_a_translated_description(): void
     {
         $this->product_category
             ->setTranslation('description', 'en', 'english translation')
@@ -71,25 +71,25 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_menu_image_field()
+    public function it_has_a_menu_image_field(): void
     {
         $this->assertNull($this->product_category->menu_image);
     }
 
     /** @test */
-    public function it_has_a_header_image_field()
+    public function it_has_a_header_image_field(): void
     {
         $this->assertNull($this->product_category->header_image);
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertTrue($this->product_category->enabled);
     }
 
     /** @test */
-    public function it_may_belong_to_a_parent()
+    public function it_may_belong_to_a_parent(): void
     {
         $this->assertNull($this->product_category->parent);
 
@@ -103,7 +103,7 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_has_children()
+    public function it_has_children(): void
     {
         $this->assertInstanceOf(
             \Illuminate\Database\Eloquent\Collection::class, $this->product_category->children
@@ -145,7 +145,7 @@ class ProductCategoryTest extends TestCase
 //    }
 
     /** @test */
-    public function it_may_have_many_valid_discount_rules()
+    public function it_may_have_many_valid_discount_rules(): void
     {
         $this->assertCount(0, $this->product_category->discount_rules);
 
@@ -168,7 +168,7 @@ class ProductCategoryTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_products()
+    public function it_may_have_many_products(): void
     {
         $this->assertCount(0, $this->product_category->products);
 

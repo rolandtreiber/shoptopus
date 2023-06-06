@@ -20,9 +20,10 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_can_make_a_request_to_get_the_client_settings_and_an_id_is_being_returned()
+    public function it_can_make_a_request_to_get_the_client_settings_and_an_id_is_being_returned(): void
     {
         $order = Order::factory()->create();
 

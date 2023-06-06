@@ -19,10 +19,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
 
     /**
      * Get all models for a specific product category
-     *
-     * @param  string  $product_category_id
-     * @param  array  $page_formatting
-     * @return array
      */
     public function getAllForProductCategory(string $product_category_id, array $page_formatting = []): array
     {
@@ -44,7 +40,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             $filters = ['custom_filter_vars' => $filter_vars];
 
             return $this->getAll($page_formatting, $filters);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -52,9 +48,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
 
     /**
      * Get the product attribute options for the given product attributes
-     *
-     * @param  array  $productAttributeIds
-     * @return array
      */
     public function getOptions(array $productAttributeIds = []): array
     {
@@ -84,7 +77,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             $sql .= ' GROUP BY pao.id';
 
             return DB::select($sql, $query_params);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -93,8 +86,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     /**
      * Get the products for the given product attributes
      *
-     * @param  array  $productAttributeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -113,7 +104,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                 AND p.deleted_at IS NULL
 
             ", $productAttributeIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -122,9 +113,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -179,7 +167,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -187,9 +175,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

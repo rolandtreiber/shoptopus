@@ -128,9 +128,6 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         'enabled' => 'boolean',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class);
@@ -166,17 +163,11 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         }
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(ProductCategory::class);
     }
 
-    /**
-     * @param $query
-     */
     public function scopeValid($query)
     {
         $now = Carbon::now();
@@ -185,9 +176,6 @@ class DiscountRule extends SearchableModel implements Auditable, Exportable, Imp
         return $query;
     }
 
-    /**
-     * @return bool
-     */
     public function isValid(): bool
     {
         $now = Carbon::now();

@@ -13,7 +13,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_gets_created()
+    public function test_invoice_gets_created(): void
     {
         $this->createPayment();
         $this->assertNotNull($this->invoice);
@@ -22,7 +22,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_has_the_right_address()
+    public function test_invoice_has_the_right_address(): void
     {
         $this->createPayment();
         $this->assertEquals($this->invoice->address->address_line_1, $this->order->address->address_line_1);
@@ -35,7 +35,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_has_the_right_payment()
+    public function test_invoice_has_the_right_payment(): void
     {
         $this->createPayment();
         $this->assertEquals($this->invoice->payment->amount, $this->order->payments()->first()->amount);
@@ -46,7 +46,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_has_the_right_totals()
+    public function test_invoice_has_the_right_totals(): void
     {
         $this->createPayment();
         $this->assertEquals($this->invoice->totals->delivery, $this->order->delivery_cost);
@@ -58,7 +58,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_has_the_right_delivery_type()
+    public function test_invoice_has_the_right_delivery_type(): void
     {
         $this->createPayment();
         $this->assertEquals($this->invoice->delivery_type->id, $this->order->delivery_type->id);
@@ -67,7 +67,7 @@ class InvoiceTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_has_all_products()
+    public function test_invoice_has_all_products(): void
     {
         $products = Product::factory()->count(3)->create();
         foreach ($products as $product) {

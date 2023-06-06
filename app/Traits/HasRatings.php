@@ -8,9 +8,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 trait HasRatings
 {
-    /**
-     * @return MorphMany|null
-     */
     public function ratings(): ?MorphMany
     {
 //        if (Module::enabled('ratings') === true) {

@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  */
 trait HasFile
 {
-    /**
-     * @return MorphOne
-     */
     public function fileContent(): MorphOne
     {
         return $this->morphOne(FileContent::class, 'fileable');

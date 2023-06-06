@@ -71,64 +71,36 @@ class FileContent extends SearchableModel
         }
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeImage($query): Builder
     {
         return $query->where('type', FileType::Image);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeAudio($query): Builder
     {
         return $query->where('type', FileType::Audio);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeVideo($query): Builder
     {
         return $query->where('type', FileType::Video);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopePdf($query): Builder
     {
         return $query->where('type', FileType::Pdf);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeSpreadsheet($query): Builder
     {
         return $query->where('type', FileType::Spreadsheet);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeDocument($query): Builder
     {
         return $query->where('type', FileType::TextDocument);
     }
 
-    /**
-     * @param $query
-     * @return Builder
-     */
     public function scopeOther($query): Builder
     {
         return $query->where('type', FileType::Other);

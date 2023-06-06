@@ -39,17 +39,11 @@ class Audit extends Model
         'auditable_id' => 'string',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->setConnection('mysql')->belongsTo(User::class);
     }
 
-    /**
-     * @return MorphTo
-     */
     public function auditable(): MorphTo
     {
         return $this->setConnection('mysql')->morphTo();

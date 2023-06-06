@@ -8,10 +8,8 @@ class ReportSalesRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
-     *
-     * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'revenue_over_time_range' => 'required',

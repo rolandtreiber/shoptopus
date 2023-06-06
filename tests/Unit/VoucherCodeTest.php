@@ -23,25 +23,25 @@ class VoucherCodeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_type_field()
+    public function it_has_a_type_field(): void
     {
         $this->assertEquals(DiscountType::Percentage, $this->voucher_code->type);
     }
 
     /** @test */
-    public function it_has_an_amount_field()
+    public function it_has_an_amount_field(): void
     {
         $this->assertNotNull($this->voucher_code->amount);
     }
 
     /** @test */
-    public function it_has_a_code()
+    public function it_has_a_code(): void
     {
         $this->assertNotNull($this->voucher_code->code);
     }
 
     /** @test */
-    public function it_has_a_valid_from_field()
+    public function it_has_a_valid_from_field(): void
     {
         $this->assertNotNull($this->voucher_code->valid_from);
 
@@ -49,7 +49,7 @@ class VoucherCodeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_valid_until_field()
+    public function it_has_a_valid_until_field(): void
     {
         $this->assertNotNull($this->voucher_code->valid_until);
 
@@ -57,13 +57,13 @@ class VoucherCodeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertTrue($this->voucher_code->enabled);
     }
 
     /** @test */
-    public function it_can_return_a_readable_value()
+    public function it_can_return_a_readable_value(): void
     {
         $this->voucher_code->update(['amount' => '15.00']);
 
@@ -75,7 +75,7 @@ class VoucherCodeTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_orders()
+    public function it_may_have_many_orders(): void
     {
         $this->assertEmpty($this->voucher_code->orders);
 

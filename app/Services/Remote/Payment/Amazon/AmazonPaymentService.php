@@ -54,8 +54,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param  string  $orderId
-     * @return array
      *
      * @throws \Exception
      */
@@ -79,7 +77,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
                     'signature' => $this->amazonClient->generateButtonSignature($payload),
                 ],
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -116,7 +114,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
         } catch (PaymentException $e) {
             $this->errorService->logException($e, true);
             throw $e;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -124,9 +122,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
 
     /**
      * Format payment response
-     *
-     * @param  array  $executed_payment_response
-     * @return array
      */
     public function formatPaymentResponse(array $executed_payment_response): array
     {
@@ -146,9 +141,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
      * Returns the payload needed for the signature
      *
      * @see https://github.com/amzn/amazon-pay-api-sdk-php/issues/9
-     *
-     * @param  array  $order
-     * @return array
      */
     private function getPayload(array $order): array
     {
@@ -183,9 +175,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
 
     /**
      * Get the return url
-     *
-     * @param  string  $orderId
-     * @return string
      */
     private function getCheckoutReturnUrl(string $orderId): string
     {
@@ -195,8 +184,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     /**
      * Validate the paymentResponse object
      *
-     * @param  array  $paymentResponse
-     * @return array
      *
      * @throws PaymentException
      */
@@ -212,7 +199,6 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
     /**
      * Create the client via the Amazon API
      *
-     * @return void
      *
      * @throws \Exception
      */
@@ -229,7 +215,7 @@ class AmazonPaymentService implements AmazonPaymentServiceInterface
                 // 'sandbox'       => !$this->isProduction,
                 'sandbox' => true,
             ]);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }

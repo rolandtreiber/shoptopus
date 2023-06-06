@@ -4,9 +4,6 @@ namespace Shoptopus\ExcelImportExport\traits;
 
 trait HasImportable
 {
-    /**
-     * @return array
-     */
     public function getImportableFields(): array
     {
         $importableFields = [];
@@ -25,18 +22,11 @@ trait HasImportable
         return [];
     }
 
-    /**
-     * @param $importableFields
-     * @return void
-     */
     public function setImportableFields($importableFields): void
     {
         $this->importableFields = $importableFields;
     }
 
-    /**
-     * @return array
-     */
     public function getImportableRelationships(): array
     {
         return $this->importableRelationships ?: [];
@@ -44,7 +34,6 @@ trait HasImportable
 
     /**
      * @param $importableFields
-     * @return void
      */
     public function setImportableRelationships($importableRelationships): void
     {

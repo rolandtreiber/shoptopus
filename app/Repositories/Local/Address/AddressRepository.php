@@ -17,8 +17,6 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     /**
      * Get the users for the given addresses
      *
-     * @param  array  $userIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -46,7 +44,7 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
                 WHERE u.id IN ($dynamic_placeholders)
                 AND u.deleted_at IS NULL
             ", $userIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -55,9 +53,6 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -83,7 +78,7 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -91,9 +86,6 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

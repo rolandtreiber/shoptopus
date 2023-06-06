@@ -25,13 +25,6 @@ class PaymentService implements PaymentServiceInterface
 
     private AmazonPaymentServiceInterface $amazonPaymentService;
 
-    /**
-     * @param  ErrorServiceInterface  $errorService
-     * @param  OrderRepositoryInterface  $orderRepository
-     * @param  StripePaymentServiceInterface  $stripePaymentService
-     * @param  PaypalPaymentServiceInterface  $paypalPaymentService
-     * @param  AmazonPaymentServiceInterface  $amazonPaymentService
-     */
     public function __construct(
         ErrorServiceInterface $errorService,
         OrderRepositoryInterface $orderRepository,
@@ -49,9 +42,6 @@ class PaymentService implements PaymentServiceInterface
     /**
      * Get the settings for a payment provider
      *
-     * @param  string  $provider
-     * @param  string  $orderId
-     * @return array
      *
      * @throws \Exception
      */
@@ -66,7 +56,7 @@ class PaymentService implements PaymentServiceInterface
             };
 
             return $public_settings;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.getClientSettings'));
         }
     }
@@ -74,8 +64,6 @@ class PaymentService implements PaymentServiceInterface
     /**
      * Execute a payment using the correct gateway
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -106,7 +94,7 @@ class PaymentService implements PaymentServiceInterface
         } catch (PaymentException $e) {
             $this->errorService->logException($e, true);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.execute'));
         }
     }
@@ -114,9 +102,6 @@ class PaymentService implements PaymentServiceInterface
     /**
      * Return a uniform response object from the API
      *
-     * @param  string  $provider
-     * @param  array  $executed_payment_response
-     * @return array
      *
      * @throws \Exception
      */
@@ -131,7 +116,7 @@ class PaymentService implements PaymentServiceInterface
             };
 
             return $api_response_payload;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.remote.payment.formatPaymentResponse'));
         }
     }

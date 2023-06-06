@@ -9,9 +9,6 @@ class ProductAttributeObserver
 {
     use ProcessRequest;
 
-    /**
-     * @param  ProductAttribute  $productAttribute
-     */
     public function deleting(ProductAttribute $productAttribute): void
     {
         $productAttribute->image && $this->deleteCurrentFile($productAttribute->image->file_name);

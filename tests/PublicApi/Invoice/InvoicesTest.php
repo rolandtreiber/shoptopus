@@ -15,7 +15,7 @@ class InvoicesTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invoice_can_be_downloaded()
+    public function test_invoice_can_be_downloaded(): void
     {
         $this->createPayment();
         $accessToken = AccessToken::where('accessable_type', Invoice::class)->where('accessable_id', $this->invoice->id)->first();
@@ -26,7 +26,7 @@ class InvoicesTest extends InvoicesTestCase
     /**
      * @test
      */
-    public function test_invalid_access_token_throws_error()
+    public function test_invalid_access_token_throws_error(): void
     {
         $this->createPayment();
         $accessToken = AccessToken::where('accessable_type', Invoice::class)->where('accessable_id', $this->invoice->id)->first();

@@ -19,19 +19,11 @@ class UserController extends Controller
 {
     use ProcessRequest;
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return UserListResource::collection(User::systemUsers()->filtered([], $request)->paginate(25));
     }
 
-    /**
-     * @param  User  $user
-     * @return UserDetailResource
-     */
     public function show(User $user): UserDetailResource
     {
         return new UserDetailResource($user);
@@ -39,9 +31,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  UserStoreRequest  $request
-     * @return UserDetailResource
      */
     public function create(UserStoreRequest $request): UserDetailResource
     {
@@ -62,10 +51,6 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  User  $user
-     * @param  UserUpdateRequest  $request
-     * @return UserDetailResource
      */
     public function update(User $user, UserUpdateRequest $request): UserDetailResource
     {
@@ -85,7 +70,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param  User  $user
      * @return string[]
      */
     public function delete(User $user): array

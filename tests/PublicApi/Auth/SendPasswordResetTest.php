@@ -14,9 +14,10 @@ class SendPasswordResetTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function authenticated_users_cannot_reset_their_password()
+    public function authenticated_users_cannot_reset_their_password(): void
     {
         $this->signIn()
             ->sendRequest()
@@ -25,18 +26,20 @@ class SendPasswordResetTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $this->sendRequest(['email' => null])->assertJsonValidationErrors(['email']);
     }
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_sends_the_reset_link_successfully()
+    public function it_sends_the_reset_link_successfully(): void
     {
         Notification::fake();
 
@@ -46,13 +49,13 @@ class SendPasswordResetTest extends TestCase
             'email' => $user->email,
         ];
 
-        $this->assertDatabaseMissing('password_resets', ['email' => $user->email]);
+        $this->assertDatabaseMissing('password_reset_tokens', ['email' => $user->email]);
 
         $res = $this->sendRequest($data)->json('data.message');
 
         $this->assertEquals('We have e-mailed your password reset link!', $res);
 
-        $this->assertDatabaseHas('password_resets', [
+        $this->assertDatabaseHas('password_reset_tokens', [
             'email' => $user->email,
         ]);
 

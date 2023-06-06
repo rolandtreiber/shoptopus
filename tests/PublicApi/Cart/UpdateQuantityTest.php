@@ -26,9 +26,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function it_requires_a_valid_cart_id_and_a_valid_product_id()
+    public function it_requires_a_valid_cart_id_and_a_valid_product_id(): void
     {
         $data = [
             'cart_id' => '1234',
@@ -41,9 +42,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function the_quantity_must_be_at_least_one()
+    public function the_quantity_must_be_at_least_one(): void
     {
         $product = Product::factory()->create();
 
@@ -54,16 +56,16 @@ class UpdateQuantityTest extends TestCase
         ];
 
         $res = $this->sendRequest($data);
-
         $res->assertJsonValidationErrors(['quantity']);
-        $this->assertEquals('The quantity must be at least 1.', $res->json('errors.quantity.0'));
+        $this->assertEquals('The quantity field must be at least 1.', $res->json('errors.quantity.0'));
     }
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock()
+    public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock(): void
     {
         $product = Product::factory()->create(['stock' => 0]);
 
@@ -81,9 +83,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable()
+    public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable(): void
     {
         $product = Product::factory()->create(['stock' => 1]);
 
@@ -114,9 +117,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function the_product_must_exists_in_the_cart()
+    public function the_product_must_exists_in_the_cart(): void
     {
         $product = Product::factory()->create(['stock' => 10]);
 
@@ -134,9 +138,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function the_quantity_of_the_product_updates_correctly()
+    public function the_quantity_of_the_product_updates_correctly(): void
     {
         $product = Product::factory()->create(['stock' => 10]);
 
@@ -163,9 +168,10 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function it_returns_the_full_cart()
+    public function it_returns_the_full_cart(): void
     {
         $product = Product::factory()->create(['stock' => 10]);
 

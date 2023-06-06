@@ -100,8 +100,6 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
 
     /**
      * Get the product for the product variant
-     *
-     * @return BelongsTo
      */
     public function product(): BelongsTo
     {
@@ -110,17 +108,12 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
 
     /**
      * Get the cover image for the product variant
-     *
-     * @return null|FileContent
      */
     public function cover_image(): ?FileContent
     {
         return $this->images()?->first();
     }
 
-    /**
-     * @return BelongsToMany
-     */
     public function product_variant_attributes(): BelongsToMany
     {
         return $this->belongsToMany(ProductAttribute::class)
@@ -128,9 +121,6 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
             ->using(VariantAttribute::class);
     }
 
-    /**
-     * @return array
-     */
     public function getNameAttribute(): array
     {
         $attributes = $this->product_variant_attributes;

@@ -28,9 +28,10 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_requires_a_valid_paypal_order_id_token()
+    public function it_requires_a_valid_paypal_order_id_token(): void
     {
         $order = Order::factory()->create(['user_id' => $this->user->id]);
 
@@ -52,9 +53,10 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function the_order_creation_fails_if_the_user_has_not_approved_the_transaction()
+    public function the_order_creation_fails_if_the_user_has_not_approved_the_transaction(): void
     {
         $order = Order::factory()->create(['user_id' => $this->user->id]);
 

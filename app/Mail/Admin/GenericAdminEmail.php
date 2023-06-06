@@ -21,9 +21,6 @@ class GenericAdminEmail extends ArchiveableEmail
 
     /**
      * Create a new message instance.
-     *
-     * @param  Request  $request
-     * @param $recipient
      */
     public function __construct(Request $request, $recipient)
     {
@@ -46,10 +43,8 @@ class GenericAdminEmail extends ArchiveableEmail
 
     /**
      * Build the message.
-     *
-     * @return $this
      */
-    public function build()
+    public function build(): static
     {
         $email = $this->view('email.admin-generic', ['body' => $this->body])->subject($this->subject);
         if (array_key_exists('files', $this->files)) {

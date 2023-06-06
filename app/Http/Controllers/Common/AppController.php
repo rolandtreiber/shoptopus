@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 
 class AppController extends Controller
 {
-    /**
-     * @return ApplicationMetaInformationResource
-     */
     public function getMetaInformation(): ApplicationMetaInformationResource
     {
         return new ApplicationMetaInformationResource(null);

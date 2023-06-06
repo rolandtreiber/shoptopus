@@ -9,10 +9,8 @@ class EventLogFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'message' => $this->faker->regexify('[A-Za-z0-9]{200}'),

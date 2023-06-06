@@ -45,9 +45,6 @@ class StripePaymentService implements StripePaymentServiceInterface
 
     /**
      * Get the settings for a payment provider
-     *
-     * @param  string  $orderId
-     * @return array
      */
     public function getClientSettings(string $orderId): array
     {
@@ -70,7 +67,7 @@ class StripePaymentService implements StripePaymentServiceInterface
                 'clientSecret' => $intent->client_secret,
                 'order_total' => $intent->amount,
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -78,16 +75,12 @@ class StripePaymentService implements StripePaymentServiceInterface
 
     /**
      * Execute payment
-     *
-     * @param  string  $orderId
-     * @param  array  $provider_payload
-     * @return array
      */
     public function executePayment(string $orderId, array $provider_payload): array
     {
         try {
             return $this->transactionRepository->storeTransaction($provider_payload, $orderId);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -95,9 +88,6 @@ class StripePaymentService implements StripePaymentServiceInterface
 
     /**
      * Format payment response
-     *
-     * @param  array  $executed_payment_response
-     * @return array
      */
     public function formatPaymentResponse(array $executed_payment_response): array
     {
@@ -109,7 +99,7 @@ class StripePaymentService implements StripePaymentServiceInterface
                 'payment_id' => $executed_payment_response['id'],
                 'provider' => 'Stripe',
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -118,8 +108,6 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Get the api key
      *
-     * @param  string  $type
-     * @return string
      *
      * @throws \Exception
      */
@@ -127,7 +115,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     {
         try {
             return app()->isProduction() ? $this->config[$type]['value'] : $this->config[$type]['test_value'];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -142,7 +130,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     {
         try {
             Stripe::setApiKey($this->getApikey('secret_key'));
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }

@@ -22,7 +22,7 @@ class AddressTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_generated_slug()
+    public function it_has_a_generated_slug(): void
     {
         $string = $this->address->user?->name ?? '';
         $string .= $this->address->name ? ' '.$this->address->name : '';
@@ -32,55 +32,55 @@ class AddressTest extends TestCase
     }
 
     /** @test */
-    public function it_has_an_address_line_1_field()
+    public function it_has_an_address_line_1_field(): void
     {
         $this->assertNotNull($this->address->address_line_1);
     }
 
     /** @test */
-    public function it_has_a_town_field()
+    public function it_has_a_town_field(): void
     {
         $this->assertNotNull($this->address->town);
     }
 
     /** @test */
-    public function it_has_a_post_code_field()
+    public function it_has_a_post_code_field(): void
     {
         $this->assertNotNull($this->address->post_code);
     }
 
     /** @test */
-    public function it_has_an_country_field()
+    public function it_has_an_country_field(): void
     {
         $this->assertEquals('UK', $this->address->country);
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNull($this->address->name);
     }
 
     /** @test */
-    public function it_has_an_address_line_2_field()
+    public function it_has_an_address_line_2_field(): void
     {
         $this->assertNull($this->address->address_line_2);
     }
 
     /** @test */
-    public function it_has_a_latitude_field()
+    public function it_has_a_latitude_field(): void
     {
         $this->assertNull($this->address->lat);
     }
 
     /** @test */
-    public function it_has_a_longitude_field()
+    public function it_has_a_longitude_field(): void
     {
         $this->assertNull($this->address->lon);
     }
 
     /** @test */
-    public function it_has_a_google_maps_url_attribute()
+    public function it_has_a_google_maps_url_attribute(): void
     {
         $this->assertNull($this->address->google_maps_url);
 
@@ -95,7 +95,7 @@ class AddressTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_a_user()
+    public function it_belongs_to_a_user(): void
     {
         $this->assertInstanceOf(User::class, $this->address->user);
     }

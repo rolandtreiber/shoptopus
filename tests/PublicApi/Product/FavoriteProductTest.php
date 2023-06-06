@@ -25,9 +25,10 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function unauthenticated_users_are_not_allowed_to_favorite_products()
+    public function unauthenticated_users_are_not_allowed_to_favorite_products(): void
     {
         $res = $this->sendRequest()->json();
 
@@ -37,9 +38,10 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_requires_a_valid_product_id()
+    public function it_requires_a_valid_product_id(): void
     {
         $this->signIn($this->user)
             ->postJson(route('api.product.favorite', ['id' => '12345']))
@@ -48,9 +50,10 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function authorised_users_can_favorite_products()
+    public function authorised_users_can_favorite_products(): void
     {
         $this->assertDatabaseMissing('favorited_products', [
             'user_id' => $this->user->id,
@@ -69,9 +72,10 @@ class FavoriteProductTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function a_product_can_be_unfavorited()
+    public function a_product_can_be_unfavorited(): void
     {
         $this->signIn($this->user);
 

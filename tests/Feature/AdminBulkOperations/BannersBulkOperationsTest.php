@@ -17,7 +17,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_enable_multiple_banners()
+    public function test_can_enable_multiple_banners(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => false,
@@ -41,7 +41,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_disable_multiple_banners()
+    public function test_can_disable_multiple_banners(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -65,7 +65,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_delete_multiple_banners()
+    public function test_can_delete_multiple_banners(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -86,7 +86,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_availability_update_validation()
+    public function test_bulk_banners_availability_update_validation(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -101,7 +101,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_availability_update_authorization()
+    public function test_bulk_banners_availability_update_authorization(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -117,7 +117,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_availability_update_authentication()
+    public function test_bulk_banners_availability_update_authentication(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -132,7 +132,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_availability_update_not_found_handled()
+    public function test_bulk_banners_availability_update_not_found_handled(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -148,7 +148,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_delete_validation()
+    public function test_bulk_banners_delete_validation(): void
     {
         $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.banners.bulk.delete'), []);
@@ -158,7 +158,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_delete_authorization()
+    public function test_bulk_banners_delete_authorization(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -173,7 +173,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_delete_authentication()
+    public function test_bulk_banners_delete_authentication(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,
@@ -187,7 +187,7 @@ class BannersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_banners_delete_not_found_handled()
+    public function test_bulk_banners_delete_not_found_handled(): void
     {
         $bannerIds = Banner::factory()->state([
             'enabled' => true,

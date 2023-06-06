@@ -23,27 +23,16 @@ class PaymentController extends Controller
 
     protected PaymentRepositoryInterface $paymentRepository;
 
-    /**
-     * @param  PaymentRepositoryInterface  $paymentRepository
-     */
     public function __construct(PaymentRepositoryInterface $paymentRepository)
     {
         $this->paymentRepository = $paymentRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return PaymentListResource::collection(Payment::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  Payment  $payment
-     * @return PaymentDetailResource
-     */
     public function show(Payment $payment): PaymentDetailResource
     {
         return new PaymentDetailResource($payment);
@@ -51,9 +40,6 @@ class PaymentController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  PaymentStoreRequest  $request
-     * @return PaymentDetailResource
      */
     public function create(PaymentStoreRequest $request): PaymentDetailResource
     {
@@ -68,10 +54,6 @@ class PaymentController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  Payment  $payment
-     * @param  PaymentUpdateRequest  $request
-     * @return PaymentDetailResource
      */
     public function update(Payment $payment, PaymentUpdateRequest $request): PaymentDetailResource
     {
@@ -85,7 +67,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param  Payment  $payment
      * @return string[]
      */
     public function delete(Payment $payment): array
@@ -96,7 +77,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * @param  PaymentStatusUpdateBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

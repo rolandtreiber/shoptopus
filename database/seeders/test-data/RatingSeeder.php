@@ -13,11 +13,10 @@ class RatingSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $productIds = Product::all()->pluck('id');
         $userIds = User::all()->pluck('id');

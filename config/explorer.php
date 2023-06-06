@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use App\Models\Product;
-use App\Models\ProductCategory;
-use App\Models\Rating;
 
 return [
     /*
@@ -23,7 +21,7 @@ return [
      * of the mapping possibilities can be found in the documentation of Explorer's repository.
      */
     'indexes' => [
-        Product::class
+        Product::class,
     ],
 
     /**

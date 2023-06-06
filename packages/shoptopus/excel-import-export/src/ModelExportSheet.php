@@ -38,17 +38,11 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
         $this->languages = config('excel_import_export.languages');
     }
 
-    /**
-     * @return string
-     */
     public function getModelName(): string
     {
         return $this->modelName;
     }
 
-    /**
-     * @return string
-     */
     public function getModelClass(): string
     {
         return $this->modelClass;
@@ -92,28 +86,16 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
         return $result;
     }
 
-    /**
-     * @return string
-     */
     public function title(): string
     {
         return $this->modelName;
     }
 
-    /**
-     * @return array
-     */
     public function headings(): array
     {
         return [...$this->fields, ...$this->exportableRelationships];
     }
 
-    /**
-     * @param $row
-     * @param $relationshipName
-     * @param $data
-     * @return string
-     */
     private function getRelationshipColumnValue($row, $relationshipName, $data): string
     {
         switch ($data['type']) {
@@ -132,10 +114,6 @@ class ModelExportSheet implements WithTitle, FromCollection, WithHeadings, WithM
         }
     }
 
-    /**
-     * @param $row
-     * @return array
-     */
     public function map($row): array
     {
         $result = $row->only($this->fields);

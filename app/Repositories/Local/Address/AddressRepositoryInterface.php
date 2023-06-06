@@ -7,8 +7,6 @@ interface AddressRepositoryInterface
     /**
      * Get the users for the given addresses
      *
-     * @param  array  $userIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -17,9 +15,6 @@ interface AddressRepositoryInterface
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -27,9 +22,6 @@ interface AddressRepositoryInterface
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array;
 }

@@ -15,18 +15,20 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function authenticated_users_cannot_update_their_password()
+    public function authenticated_users_cannot_update_their_password(): void
     {
         $this->signIn()->sendRequest()->assertRedirect();
     }
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'email' => null,
@@ -40,9 +42,10 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_updates_the_password_successfully()
+    public function it_updates_the_password_successfully(): void
     {
         Notification::fake();
 
@@ -70,9 +73,10 @@ class ResetPasswordTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function th_email_address_must_exists()
+    public function th_email_address_must_exists(): void
     {
         Notification::fake();
 
@@ -95,16 +99,17 @@ class ResetPasswordTest extends TestCase
             $this->sendRequest($data)->json('developer_message')
         );
 
-        $this->assertDatabaseHas('password_resets', ['email' => $user->email]);
+        $this->assertDatabaseHas('password_reset_tokens', ['email' => $user->email]);
 
         Notification::assertNotSentTo($user, PasswordResetSuccess::class);
     }
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function the_token_expires_in_60_minutes()
+    public function the_token_expires_in_60_minutes(): void
     {
         Notification::fake();
 

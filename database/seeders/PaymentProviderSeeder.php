@@ -10,10 +10,8 @@ class PaymentProviderSeeder extends Seeder
 {
     /**
      * Seed the application's database.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $payment_providers = config('payment_providers.providers');
 

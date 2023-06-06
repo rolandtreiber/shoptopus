@@ -17,8 +17,6 @@ class ProductService extends ModelService implements ProductServiceInterface
     /**
      * Save product to favorites
      *
-     * @param  string  $productId
-     * @return array
      *
      * @throws \Exception
      */
@@ -26,7 +24,7 @@ class ProductService extends ModelService implements ProductServiceInterface
     {
         try {
             return $this->modelRepository->favorite($productId);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.product.favorite'));
         }

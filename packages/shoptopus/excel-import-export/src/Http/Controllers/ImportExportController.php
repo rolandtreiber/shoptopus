@@ -17,7 +17,6 @@ class ImportExportController extends BaseController
     }
 
     /**
-     * @param  ExportRequest  $request
      * @return bool
      */
     public function export(ExportRequest $request)

@@ -19,34 +19,22 @@ class RatingController extends Controller
 
     protected RatingRepositoryInterface $ratingRepository;
 
-    /**
-     * @param  RatingRepositoryInterface  $ratingRepository
-     */
     public function __construct(RatingRepositoryInterface $ratingRepository)
     {
         $this->ratingRepository = $ratingRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return RatingListResource::collection(Rating::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    /**
-     * @param  Rating  $rating
-     * @return RatingDetailResource
-     */
     public function show(Rating $rating): RatingDetailResource
     {
         return new RatingDetailResource($rating);
     }
 
     /**
-     * @param  Rating  $rating
      * @return string[]
      */
     public function delete(Rating $rating): array
@@ -57,7 +45,6 @@ class RatingController extends Controller
     }
 
     /**
-     * @param  RatingBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -74,7 +61,6 @@ class RatingController extends Controller
     }
 
     /**
-     * @param  RatingBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

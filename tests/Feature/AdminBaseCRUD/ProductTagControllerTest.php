@@ -23,7 +23,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tags_can_be_listed()
+    public function test_product_tags_can_be_listed(): void
     {
         $tags = ProductTag::factory()->count(2)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -43,7 +43,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_can_be_shown()
+    public function test_product_tag_can_be_shown(): void
     {
         $tag = ProductTag::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -61,7 +61,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_can_be_created()
+    public function test_product_tag_can_be_created(): void
     {
         Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -90,7 +90,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_can_be_updated()
+    public function test_product_tag_can_be_updated(): void
     {
         Storage::fake('uploads');
         $tag = ProductTag::factory()->create();
@@ -123,7 +123,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_can_be_deleted()
+    public function test_product_tag_can_be_deleted(): void
     {
         $tag = ProductTag::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -135,7 +135,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_creation_validation()
+    public function test_product_tag_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.product-tag'), [
@@ -151,7 +151,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_creation_requires_appropriate_permission()
+    public function test_product_tag_creation_requires_appropriate_permission(): void
     {
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->post(route('admin.api.create.product-tag'), [
@@ -167,7 +167,7 @@ class ProductTagControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_product_tag_updating_requires_appropriate_permission()
+    public function test_product_tag_updating_requires_appropriate_permission(): void
     {
         $tag = ProductTag::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());

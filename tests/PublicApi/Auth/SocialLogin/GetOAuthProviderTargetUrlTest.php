@@ -11,9 +11,10 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_requires_a_provider_query_parameter()
+    public function it_requires_a_provider_query_parameter(): void
     {
         $this->expectException(\Illuminate\Routing\Exceptions\UrlGenerationException::class);
         $this->sendRequest(null);
@@ -21,9 +22,10 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_accepts_only_the_predefined_providers()
+    public function it_accepts_only_the_predefined_providers(): void
     {
         $this->sendRequest('invalidprovider')
             ->assertJsonValidationErrors(['provider']);
@@ -31,9 +33,10 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_a_target_url_for_facebook()
+    public function it_returns_a_target_url_for_facebook(): void
     {
         $this->sendRequest('facebook')
             ->assertJsonStructure(['data' => ['targetUrl']]);
@@ -41,9 +44,10 @@ class GetOAuthProviderTargetUrlTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_a_target_url_for_google()
+    public function it_returns_a_target_url_for_google(): void
     {
         $this->sendRequest('google')
             ->assertJsonStructure(['data' => ['targetUrl']]);

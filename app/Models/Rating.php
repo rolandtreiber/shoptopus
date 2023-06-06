@@ -107,9 +107,6 @@ class Rating extends SearchableModel implements Auditable, Exportable
         }
     }
 
-    /**
-     * @return MorphTo
-     */
     public function ratable(): MorphTo
     {
         return $this->morphTo();

@@ -9,10 +9,8 @@ class ProductTagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         ProductTag::factory()->count(50)->create();
     }

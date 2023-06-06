@@ -7,11 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class VariantAttributeObserver
 {
-    /**
-     * @param  VariantAttribute  $variantAttribute
-     * @return void
-     */
-    private function updateAttributeOptionsForVariant(VariantAttribute $variantAttribute)
+    private function updateAttributeOptionsForVariant(VariantAttribute $variantAttribute): void
     {
         $variantId = $variantAttribute->product_variant_id;
         $allAttributeOptions = DB::table('product_attribute_product_variant')->where('product_variant_id', $variantId)->pluck('product_attribute_option_id')->toArray();
@@ -20,20 +16,12 @@ class VariantAttributeObserver
         ]);
     }
 
-    /**
-     * @param  VariantAttribute  $variantAttribute
-     * @return void
-     */
-    public function created(VariantAttribute $variantAttribute)
+    public function created(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);
     }
 
-    /**
-     * @param  VariantAttribute  $variantAttribute
-     * @return void
-     */
-    public function deleted(VariantAttribute $variantAttribute)
+    public function deleted(VariantAttribute $variantAttribute): void
     {
         $this->updateAttributeOptionsForVariant($variantAttribute);
     }

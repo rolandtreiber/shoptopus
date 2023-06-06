@@ -47,8 +47,6 @@ class PayPalTransaction extends Model
 
     /**
      * An order item belongs to a transaction
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

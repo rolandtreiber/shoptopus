@@ -17,8 +17,6 @@ class UserService extends ModelService implements UserServiceInterface
     /**
      * Get the currently authenticated user instance
      *
-     * @param  bool  $returnAsArray
-     * @return mixed
      *
      * @throws \Exception
      */
@@ -26,7 +24,7 @@ class UserService extends ModelService implements UserServiceInterface
     {
         try {
             return $this->modelRepository->getCurrentUser($returnAsArray);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getCurrentUser'));
         }
@@ -35,7 +33,6 @@ class UserService extends ModelService implements UserServiceInterface
     /**
      * Get the currently authenticated user's favorited products
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -43,7 +40,7 @@ class UserService extends ModelService implements UserServiceInterface
     {
         try {
             return $this->modelRepository->favorites();
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.favorites'));
         }
@@ -52,7 +49,6 @@ class UserService extends ModelService implements UserServiceInterface
     /**
      * Get the currently authenticated user's favorited product ids
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -60,7 +56,7 @@ class UserService extends ModelService implements UserServiceInterface
     {
         try {
             return $this->modelRepository->getFavoritedProductIds();
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getFavoritedProductIds'));
         }

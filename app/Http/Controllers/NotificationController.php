@@ -12,10 +12,6 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class NotificationController extends Controller
 {
-    /**
-     * @param  Request  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         /** @var User $user */
@@ -38,9 +34,6 @@ class NotificationController extends Controller
         }
     }
 
-    /**
-     * @return JsonResponse
-     */
     public function clear(): JsonResponse
     {
         /** @var User $user */
@@ -50,10 +43,6 @@ class NotificationController extends Controller
         return response()->json([]);
     }
 
-    /**
-     * @param  Notification  $notification
-     * @return NotificationResource
-     */
     public function show(Notification $notification): NotificationResource
     {
         return new NotificationResource($notification);

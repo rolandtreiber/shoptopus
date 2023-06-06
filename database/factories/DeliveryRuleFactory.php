@@ -10,11 +10,10 @@ class DeliveryRuleFactory extends Factory
     /**
      * Define the model's default state.
      *
-     * @return array
      *
      * @throws \Exception
      */
-    public function definition()
+    public function definition(): array
     {
         $postcodes = [];
         $postcodeCount = random_int(0, 10);

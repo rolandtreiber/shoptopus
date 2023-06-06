@@ -24,25 +24,25 @@ class PaymentProviderConfigTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_setting_field()
+    public function it_has_a_setting_field(): void
     {
         $this->assertNotNull($this->payment_provider_config->setting);
     }
 
     /** @test */
-    public function it_has_a_value_field()
+    public function it_has_a_value_field(): void
     {
         $this->assertNotNull($this->payment_provider_config->value);
     }
 
     /** @test */
-    public function it_has_a_test_value_field()
+    public function it_has_a_test_value_field(): void
     {
         $this->assertNotNull($this->payment_provider_config->test_value);
     }
 
     /** @test */
-    public function it_belongs_to_payment_provider()
+    public function it_belongs_to_payment_provider(): void
     {
         $this->assertInstanceOf(PaymentProvider::class, $this->payment_provider_config->payment_provider);
     }

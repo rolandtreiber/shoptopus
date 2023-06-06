@@ -78,9 +78,6 @@ class ModelTemplateExport implements WithTitle, WithHeadings, FromArray
         }, $fields);
     }
 
-    /**
-     * @return string
-     */
     public function title(): string
     {
         return $this->modelData['name'];

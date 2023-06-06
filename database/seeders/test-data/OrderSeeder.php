@@ -20,11 +20,10 @@ class OrderSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $userIds = User::role('customer')->pluck('id');
         $products = Product::count();

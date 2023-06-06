@@ -22,8 +22,6 @@ class AccessToken extends Model
 
     /**
      * Get the route key for the model.
-     *
-     * @return string
      */
     public function getRouteKeyName(): string
     {
@@ -55,25 +53,16 @@ class AccessToken extends Model
         'expiry' => 'datetime',
     ];
 
-    /**
-     * @return BelongsTo
-     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
     public function issuer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'issuer_user_id');
     }
 
-    /**
-     * @return bool
-     */
     public function hasExpired(): bool
     {
         $now = \Carbon\Carbon::now();
@@ -82,9 +71,6 @@ class AccessToken extends Model
         return $expiry < $now;
     }
 
-    /**
-     * @return MorphTo
-     */
     public function accessable(): MorphTo
     {
         return $this->morphTo();

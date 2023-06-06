@@ -17,7 +17,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_enable_multiple_product_tags()
+    public function test_can_enable_multiple_product_tags(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => false,
@@ -41,7 +41,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_disable_multiple_product_tags()
+    public function test_can_disable_multiple_product_tags(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -65,7 +65,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_delete_multiple_product_tags()
+    public function test_can_delete_multiple_product_tags(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -86,7 +86,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_availability_update_validation()
+    public function test_bulk_product_tags_availability_update_validation(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -101,7 +101,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_availability_update_authorization()
+    public function test_bulk_product_tags_availability_update_authorization(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -117,7 +117,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_availability_update_authentication()
+    public function test_bulk_product_tags_availability_update_authentication(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -132,7 +132,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_availability_update_not_found_handled()
+    public function test_bulk_product_tags_availability_update_not_found_handled(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -148,7 +148,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_delete_validation()
+    public function test_bulk_product_tags_delete_validation(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -161,7 +161,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_delete_authorization()
+    public function test_bulk_product_tags_delete_authorization(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -176,7 +176,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_delete_authentication()
+    public function test_bulk_product_tags_delete_authentication(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,
@@ -190,7 +190,7 @@ class ProductTagsBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_product_tags_delete_not_found_handled()
+    public function test_bulk_product_tags_delete_not_found_handled(): void
     {
         $productTagIds = ProductTag::factory()->state([
             'enabled' => true,

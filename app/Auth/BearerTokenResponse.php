@@ -12,9 +12,6 @@ class BearerTokenResponse extends \League\OAuth2\Server\ResponseTypes\BearerToke
      * Add custom fields to your Bearer Token response here, then override
      * AuthorizationServer::getResponseType() to pull in your version of
      * this class rather than the default.
-     *
-     * @param  AccessTokenEntityInterface  $accessToken
-     * @return array
      */
     protected function getExtraParams(AccessTokenEntityInterface $accessToken): array
     {

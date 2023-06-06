@@ -31,9 +31,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_a_discount_rule_is_applied()
+    public function it_calculates_the_final_price_correctly_when_a_discount_rule_is_applied(): void
     {
         $discount_rule = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
@@ -51,9 +52,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed()
+    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -80,9 +82,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed()
+    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed(): void
     {
         $discount_rule1 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
@@ -107,9 +110,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied()
+    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_highest_rule_is_set_to_be_applied(): void
     {
         $discount_rule1 = DiscountRule::factory()->create([
             'type' => DiscountType::Amount,
@@ -134,9 +138,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied()
+    public function it_calculates_the_final_price_correctly_when_multiple_discount_rules_are_applied_and_stacking_is_disallowed_and_the_lowest_rule_is_set_to_be_applied(): void
     {
         Config::set('shoptopus.discount_rules.applied_discount', 'lowest');
 
@@ -163,9 +168,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_a_category_discount_rule()
+    public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_a_category_discount_rule(): void
     {
         $product_category = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
@@ -192,9 +198,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    public function it_calculates_the_final_price_correctly_when_it_has_a_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -224,9 +231,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed()
+    public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_disallowed(): void
     {
         $product_category = ProductCategory::factory()->create();
         $product_category_discount_rule = DiscountRule::factory()->create([
@@ -254,9 +262,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group repo
      */
-    public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed()
+    public function it_calculates_the_final_price_correctly_when_it_has_a_percentage_based_discount_rule_and_also_a_category_with_its_own_discount_rule_and_stacking_is_allowed(): void
     {
         Config::set('shoptopus.discount_rules.allow_discount_stacking', true);
 
@@ -286,9 +295,10 @@ class ProductRepositoryTest extends TestCase
 
     /**
      * @test
+     * 
      * @group apiGet
      */
-    public function it_calculates_the_final_price_correctly_for_the_product_variants()
+    public function it_calculates_the_final_price_correctly_for_the_product_variants(): void
     {
         $pv = ProductVariant::factory()->create(['product_id' => $this->product->id]);
 

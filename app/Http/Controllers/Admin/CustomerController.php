@@ -14,19 +14,11 @@ class CustomerController extends Controller
 {
     use ProcessRequest;
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return CustomerListResource::collection(User::customers()->view($request->view)->filtered([], $request)->paginate($request->paginate));
     }
 
-    /**
-     * @param  User  $customer
-     * @return CustomerDetailResource
-     */
     public function show(User $customer): CustomerDetailResource
     {
         $customer->load('cart.products');

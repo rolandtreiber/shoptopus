@@ -28,8 +28,6 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Get the target url to the Auth provider's authentication page
      *
-     * @param  string  $provider
-     * @return string
      *
      * @throws \Exception
      */
@@ -37,7 +35,7 @@ class SocialAccountService implements SocialAccountServiceInterface
     {
         try {
             return Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.getOAuthProviderTargetUrl'));
         }
@@ -46,8 +44,6 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Handle the Auth provider's callback
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -66,7 +62,7 @@ class SocialAccountService implements SocialAccountServiceInterface
             }
 
             return $this->findOrCreate($socialiteUser, $provider);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.handleOAuthProviderCallback'));
         }
     }
@@ -74,9 +70,6 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Find or create user instance by provider user instance and provider name
      *
-     * @param  ProviderUser  $providerUser
-     * @param  string  $provider
-     * @return array
      *
      * @throws \Exception
      */
@@ -121,8 +114,6 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Get a payload for creating a new social account
      *
-     * @param  ProviderUser  $providerUser
-     * @return array
      *
      * @throws \Exception
      */
@@ -142,9 +133,6 @@ class SocialAccountService implements SocialAccountServiceInterface
     /**
      * Get an access token from the given provider
      *
-     * @param  string  $provider
-     * @param  string  $authorization_code
-     * @return string
      *
      * @throws \Exception
      */

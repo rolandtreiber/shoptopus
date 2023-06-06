@@ -7,7 +7,6 @@ interface NotificationServiceInterface
     /**
      * Get currently authenticated user's notifications
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -15,9 +14,6 @@ interface NotificationServiceInterface
 
     /**
      * Mark a notification read
-     *
-     * @param  array  $payload
-     * @return array
      */
     public function markRead(array $payload): array;
 }

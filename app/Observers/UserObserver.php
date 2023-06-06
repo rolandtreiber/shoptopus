@@ -11,14 +11,9 @@ class UserObserver
 {
     /**
      * Handle events after all transactions are committed.
-     *
-     * @var bool
      */
     public bool $afterCommit = true;
 
-    /**
-     * @param  User  $user
-     */
     public function creating(User $user)
     {
         do {
@@ -27,9 +22,6 @@ class UserObserver
         $user->client_ref = $reference;
     }
 
-    /**
-     * @param  User  $user
-     */
     public function saving(User $user)
     {
         $firstName = $user->first_name;
@@ -41,10 +33,7 @@ class UserObserver
         $user->initials = substr($firstName, 0, 1).substr($lastName, 0, 1);
     }
 
-    /**
-     * @param  User  $user
-     */
-    public function created(User $user)
+    public function created(User $user): void
     {
         $cart = new Cart();
         $cart->user_id = $user->id;

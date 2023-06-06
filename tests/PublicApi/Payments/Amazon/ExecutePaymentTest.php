@@ -31,9 +31,10 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_requires_a_valid_checkout_session_id()
+    public function it_requires_a_valid_checkout_session_id(): void
     {
         $order = Order::factory()->create();
 
@@ -60,9 +61,10 @@ class ExecutePaymentTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_a_success_response()
+    public function it_returns_a_success_response(): void
     {
         $this->markTestSkipped('Skipped test');
 

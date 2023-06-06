@@ -22,10 +22,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Get all models
      *
-     * @param  array  $page_formatting
-     * @param  array  $filters
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -45,10 +41,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Get a single model
      *
-     * @param $value
-     * @param  string  $key
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -68,8 +60,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Get a single model by its slug
      *
-     * @param  string  $slug
-     * @return array
      *
      * @throws \Exception
      */
@@ -77,7 +67,7 @@ class ModelService implements ModelServiceInterface
     {
         try {
             return $this->modelRepository->get($slug, 'slug');
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), Config::get("api_error_codes.services.{$this->modelName}.get"));
         }
@@ -86,8 +76,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Create a model
      *
-     * @param  array  $payload
-     * @param  bool  $returnAsArray
      * @return mixed
      *
      * @throws \Exception
@@ -108,8 +96,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Update a model
      *
-     * @param  string  $id
-     * @param  array  $payload
      * @return mixed
      *
      * @throws \Exception
@@ -130,7 +116,6 @@ class ModelService implements ModelServiceInterface
     /**
      * Delete a model
      *
-     * @param  string  $id
      * @return mixed
      *
      * @throws \Exception

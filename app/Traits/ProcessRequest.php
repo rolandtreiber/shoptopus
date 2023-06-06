@@ -13,13 +13,6 @@ use Intervention\Image\Facades\Image;
 
 trait ProcessRequest
 {
-    /**
-     * @param $request
-     * @param $modelClass
-     * @param $modelId
-     * @param $deleteCurrent
-     * @return Collection
-     */
     public function saveFiles($request, $modelClass, $modelId, $deleteCurrent): Collection
     {
         if ($deleteCurrent) {
@@ -50,9 +43,6 @@ trait ProcessRequest
         return $files;
     }
 
-    /**
-     * @param $name
-     */
     public function deleteCurrentFile($name): void
     {
         if (env('APP_ENV') === 'local' || config('app.env') === 'testing') {
@@ -62,12 +52,6 @@ trait ProcessRequest
         }
     }
 
-    /**
-     * @param $file
-     * @param  int  $sizeX
-     * @param  int  $sizeY
-     * @return array|null
-     */
     public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
     {
         // Images

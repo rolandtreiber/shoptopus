@@ -43,8 +43,6 @@ class PaymentProviderConfig extends Model
 
     /**
      * Get the payment provider for the payment provider config.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function payment_provider(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -15,10 +15,6 @@ use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    /**
-     * @param  array  $ids
-     * @return bool
-     */
     public function bulkDelete(array $ids): bool
     {
         try {
@@ -30,10 +26,6 @@ class ProductRepository implements ProductRepositoryInterface
         }
     }
 
-    /**
-     * @param  array  $ids
-     * @return bool
-     */
     public function bulkArchive(array $ids): bool
     {
         try {
@@ -46,9 +38,6 @@ class ProductRepository implements ProductRepositoryInterface
     }
 
     /**
-     * @param  Product  $product
-     * @return bool
-     *
      * @throws NotificationException
      */
     public function triggerRunningLowNotification(Product $product): bool
@@ -75,10 +64,6 @@ class ProductRepository implements ProductRepositoryInterface
         return $result;
     }
 
-    /**
-     * @param  Product  $product
-     * @return bool
-     */
     public function triggerOutOfStockNotification(Product $product): bool
     {
         $result = true;

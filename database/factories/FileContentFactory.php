@@ -14,10 +14,8 @@ class FileContentFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $translated = $this->getTranslated($this->faker, ['title', 'description'], ['short', 'medium']);
 

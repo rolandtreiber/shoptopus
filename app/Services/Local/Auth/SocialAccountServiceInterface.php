@@ -9,8 +9,6 @@ interface SocialAccountServiceInterface
     /**
      * Get the target url to the Auth provider's authentication page
      *
-     * @param  string  $provider
-     * @return string
      *
      * @throws \Exception
      */
@@ -19,8 +17,6 @@ interface SocialAccountServiceInterface
     /**
      * Handle the Auth provider's callback
      *
-     * @param  array  $payload
-     * @return array
      *
      * @throws \Exception
      */
@@ -29,9 +25,6 @@ interface SocialAccountServiceInterface
     /**
      * Find or create user instance by provider user instance and provider name
      *
-     * @param  ProviderUser  $providerUser
-     * @param  string  $provider
-     * @return array
      *
      * @throws \Exception
      */
@@ -40,8 +33,6 @@ interface SocialAccountServiceInterface
     /**
      * Get a payload for creating a new social account
      *
-     * @param  ProviderUser  $providerUser
-     * @return array
      *
      * @throws \Exception
      */

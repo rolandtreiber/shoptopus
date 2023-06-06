@@ -18,21 +18,12 @@ class ProductAttributeOptionController extends Controller
 {
     use ProcessRequest;
 
-    /**
-     * @param  ProductAttribute  $attribute
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ProductAttribute $attribute, ListRequest $request): AnonymousResourceCollection
     {
         return ProductAttributeOptionListResource::collection(ProductAttributeOption::filtered([['product_attribute_id', $attribute->id]], $request)->paginate(25));
     }
 
     /**
-     * @param  ProductAttribute  $attribute
-     * @param  ProductAttributeOption  $option
-     * @return ProductAttributeOptionDetailResource
-     *
      * @throws OptionDoesNotBelongToAttributeException
      */
     public function show(ProductAttribute $attribute, ProductAttributeOption $option): ProductAttributeOptionDetailResource
@@ -46,10 +37,6 @@ class ProductAttributeOptionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  ProductAttribute  $attribute
-     * @param  ProductAttributeOptionStoreRequest  $request
-     * @return ProductAttributeOptionDetailResource
      */
     public function create(ProductAttribute $attribute, ProductAttributeOptionStoreRequest $request): ProductAttributeOptionDetailResource
     {
@@ -67,10 +54,6 @@ class ProductAttributeOptionController extends Controller
     /**
      * Update a resource.
      *
-     * @param  ProductAttribute  $attribute
-     * @param  ProductAttributeOption  $option
-     * @param  ProductAttributeOptionUpdateRequest  $request
-     * @return ProductAttributeOptionDetailResource
      *
      * @throws OptionDoesNotBelongToAttributeException
      */
@@ -90,8 +73,6 @@ class ProductAttributeOptionController extends Controller
     }
 
     /**
-     * @param  ProductAttribute  $attribute
-     * @param  ProductAttributeOption  $option
      * @return string[]
      *
      * @throws OptionDoesNotBelongToAttributeException

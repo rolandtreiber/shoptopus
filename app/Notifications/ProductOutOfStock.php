@@ -23,8 +23,6 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
 
     /**
      * Get the notification's delivery channels.
-     *
-     * @return array
      */
     public function via(): array
     {
@@ -43,17 +41,15 @@ class ProductOutOfStock extends BaseNotification implements UserNotification
 
     /**
      * Get the array representation of the notification.
-     *
-     * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'message' => $this->createMessage($this->data),
         ];
     }
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
         return (new MailMessage)
             ->greeting('Hello '.$notifiable->first_name.'!')

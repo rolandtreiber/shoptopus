@@ -22,7 +22,7 @@ class CustomerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_list_customers()
+    public function test_can_list_customers(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->get(route('admin.api.index.customers', [
@@ -36,7 +36,7 @@ class CustomerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_show_customer()
+    public function test_can_show_customer(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $customer = User::customers()->first();

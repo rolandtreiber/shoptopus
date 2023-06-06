@@ -24,9 +24,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_can_return_a_product_category_by_its_id()
+    public function it_can_return_a_product_category_by_its_id(): void
     {
         $this->sendRequest()
             ->assertOk()
@@ -35,10 +36,11 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      * @group apiGetBySlug
      */
-    public function it_can_return_a_product_category_by_its_slug()
+    public function it_can_return_a_product_category_by_its_slug(): void
     {
         $this->getJson(route('api.product_category.getBySlug', ['slug' => $this->product_category->slug]))
             ->assertOk()
@@ -47,9 +49,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_all_required_fields()
+    public function it_returns_all_required_fields(): void
     {
         $this->sendRequest()
             ->assertJsonStructure([
@@ -61,9 +64,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_the_associated_discount_rules()
+    public function it_returns_the_associated_discount_rules(): void
     {
         $dr = DiscountRule::factory()->create([
             'valid_from' => now()->subDay()->toDateTimeString(),
@@ -102,9 +106,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function the_discount_rules_must_be_valid()
+    public function the_discount_rules_must_be_valid(): void
     {
         $dr1 = DiscountRule::factory()->create([
             'valid_from' => now()->addDays(5)->toDateTimeString(),
@@ -123,9 +128,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_its_subcategories()
+    public function it_returns_its_subcategories(): void
     {
         $subcategories = ProductCategory::factory()->count(3)->create(['parent_id' => $this->product_category->id]);
 
@@ -151,9 +157,10 @@ class GetProductCategoryTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_returns_the_associated_product_ids()
+    public function it_returns_the_associated_product_ids(): void
     {
         $p = Product::factory()->create();
         $this->product_category->products()->attach($p->id);

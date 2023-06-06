@@ -13,11 +13,10 @@ class CartSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $cartsCount = Cart::count();
         $products = Product::count();

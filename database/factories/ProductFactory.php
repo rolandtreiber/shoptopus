@@ -14,10 +14,8 @@ class ProductFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         $translated = $this->getTranslated($this->faker, ['name', 'short_description', 'description', 'headline', 'subtitle'], ['short', 'medium', 'long', 'medium', 'medium']);
 

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\OrderStatus;
 use App\Models\Address;
 use App\Models\DeliveryType;
 use App\Models\User;
@@ -11,8 +12,6 @@ class OrderFactory extends Factory
 {
     /**
      * Define the model's default state.
-     *
-     * @return array
      */
     public function definition(): array
     {
@@ -22,6 +21,7 @@ class OrderFactory extends Factory
             'voucher_code_id' => null,
             'address_id' => Address::factory(),
             'currency_code' => 'GBP',
+            'status' => OrderStatus::AwaitingPayment
         ];
         if (env('APP_ENV') === 'testing') {
             $result['delivery_type_id'] = null;

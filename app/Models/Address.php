@@ -81,17 +81,12 @@ class Address extends Model implements Auditable, Exportable
 
     /**
      * An address belongs to a user
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * @return string|null
-     */
     public function getGoogleMapsUrlAttribute(): ?string
     {
         return $this->lat && $this->lon ? 'https://www.google.com/maps/@'.$this->lat.','.$this->lon.',14z' : null;

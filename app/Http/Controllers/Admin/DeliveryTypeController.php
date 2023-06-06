@@ -21,27 +21,16 @@ class DeliveryTypeController extends Controller
 
     protected DeliveryTypeRepositoryInterface $deliveryTypeRepository;
 
-    /**
-     * @param  DeliveryTypeRepositoryInterface  $deliveryTypeRepository
-     */
     public function __construct(DeliveryTypeRepositoryInterface $deliveryTypeRepository)
     {
         $this->deliveryTypeRepository = $deliveryTypeRepository;
     }
 
-    /**
-     * @param  ListRequest  $request
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request): AnonymousResourceCollection
     {
         return DeliveryTypeListResource::collection(DeliveryType::filtered([], $request)->availability($request->view)->paginate(25));
     }
 
-    /**
-     * @param  DeliveryType  $deliveryType
-     * @return DeliveryTypeDetailResource
-     */
     public function show(DeliveryType $deliveryType): DeliveryTypeDetailResource
     {
         return new DeliveryTypeDetailResource($deliveryType);
@@ -49,9 +38,6 @@ class DeliveryTypeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  DeliveryTypeStoreRequest  $request
-     * @return DeliveryTypeListResource
      */
     public function create(DeliveryTypeStoreRequest $request): DeliveryTypeListResource
     {
@@ -65,10 +51,6 @@ class DeliveryTypeController extends Controller
 
     /**
      * Update a resource.
-     *
-     * @param  DeliveryType  $deliveryType
-     * @param  DeliveryTypeUpdateRequest  $request
-     * @return DeliveryTypeListResource
      */
     public function update(DeliveryType $deliveryType, DeliveryTypeUpdateRequest $request): DeliveryTypeListResource
     {
@@ -80,7 +62,6 @@ class DeliveryTypeController extends Controller
     }
 
     /**
-     * @param  DeliveryType  $deliveryType
      * @return string[]
      */
     public function delete(DeliveryType $deliveryType): array
@@ -91,7 +72,6 @@ class DeliveryTypeController extends Controller
     }
 
     /**
-     * @param  DeliveryTypeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException
@@ -108,7 +88,6 @@ class DeliveryTypeController extends Controller
     }
 
     /**
-     * @param  DeliveryTypeBulkOperationRequest  $request
      * @return string[]
      *
      * @throws BulkOperationException

@@ -19,7 +19,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_can_send_email_to_multiple_users()
+    public function test_can_send_email_to_multiple_users(): void
     {
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
@@ -35,7 +35,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_email_archives_created()
+    public function test_email_archives_created(): void
     {
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
@@ -56,7 +56,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_email_validation()
+    public function test_bulk_email_validation(): void
     {
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
@@ -71,7 +71,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_email_authentication()
+    public function test_bulk_email_authentication(): void
     {
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');
@@ -85,7 +85,7 @@ class CustomersBulkOperationsTest extends BulkOperationsTestCase
     /**
      * @test
      */
-    public function test_bulk_email_authorization()
+    public function test_bulk_email_authorization(): void
     {
         Mail::fake();
         $emailAddresses = User::factory()->count(2)->create()->pluck('email');

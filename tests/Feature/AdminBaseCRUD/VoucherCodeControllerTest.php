@@ -23,7 +23,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_codes_can_be_listed()
+    public function test_voucher_codes_can_be_listed(): void
     {
         $voucherCodes = VoucherCode::factory()->count(3)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -46,7 +46,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_can_be_shown()
+    public function test_voucher_code_can_be_shown(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -66,7 +66,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_can_be_created()
+    public function test_voucher_code_can_be_created(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $validFrom = Carbon::now();
@@ -90,7 +90,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_can_be_updated()
+    public function test_voucher_code_can_be_updated(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -116,7 +116,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_can_be_deleted()
+    public function test_voucher_code_can_be_deleted(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -128,7 +128,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_creation_requires_appropriate_Permission()
+    public function test_voucher_code_creation_requires_appropriate_Permission(): void
     {
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $validFrom = Carbon::now();
@@ -145,7 +145,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_updating_requires_appropriate_Permission()
+    public function test_voucher_code_updating_requires_appropriate_Permission(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
@@ -165,7 +165,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_deletion_requires_appropriate_Permission()
+    public function test_voucher_code_deletion_requires_appropriate_Permission(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());
@@ -177,7 +177,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_creation_validation()
+    public function test_voucher_code_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $validFrom = Carbon::now();
@@ -194,7 +194,7 @@ class VoucherCodeControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_voucher_code_update_validation()
+    public function test_voucher_code_update_validation(): void
     {
         $voucherCode = VoucherCode::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());

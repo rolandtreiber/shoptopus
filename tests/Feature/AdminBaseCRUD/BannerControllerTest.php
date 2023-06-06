@@ -22,7 +22,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banners_can_be_listed()
+    public function test_banners_can_be_listed(): void
     {
         $banners = Banner::factory()->count(2)->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -42,7 +42,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_can_be_shown()
+    public function test_banner_can_be_shown(): void
     {
         $banner = Banner::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -60,7 +60,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_can_be_created()
+    public function test_banner_can_be_created(): void
     {
         Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -98,7 +98,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_can_be_updated()
+    public function test_banner_can_be_updated(): void
     {
         Storage::fake('uploads');
         $banner = Banner::factory()->create();
@@ -140,7 +140,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_can_be_deleted()
+    public function test_banner_can_be_deleted(): void
     {
         $banner = Banner::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -152,7 +152,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_creation_validation()
+    public function test_banner_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->post(route('admin.api.create.banner'), [
@@ -168,7 +168,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_creation_requires_appropriate_permission()
+    public function test_banner_creation_requires_appropriate_permission(): void
     {
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $response = $this->post(route('admin.api.create.banner'), [
@@ -184,7 +184,7 @@ class BannerControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_banner_updating_requires_appropriate_permission()
+    public function test_banner_updating_requires_appropriate_permission(): void
     {
         $banner = Banner::factory()->create();
         $this->actingAs(User::where('email', 'customer@m.com')->first());

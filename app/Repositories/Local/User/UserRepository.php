@@ -22,9 +22,6 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
 
     /**
      * Get the currently authenticated user instance
-     *
-     * @param  bool  $returnAsArray
-     * @return mixed
      */
     public function getCurrentUser(bool $returnAsArray = true): mixed
     {
@@ -36,7 +33,7 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
             }
 
             return $returnAsArray ? $user->toArray() : $user;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -45,7 +42,6 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     /**
      * Get the currently authenticated user's favorited products
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -55,7 +51,7 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
             return $this->productRepository->getAll([], [
                 'id' => implode(',', $this->getFavoritedProductIds()),
             ]);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -64,7 +60,6 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
     /**
      * Get the currently authenticated user's favorited product ids
      *
-     * @return array
      *
      * @throws \Exception
      */
@@ -80,7 +75,7 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
             $data = DB::select('SELECT fp.product_id FROM favorited_products AS fp WHERE fp.user_id = (?)', [$userId]);
 
             return ! empty($data) ? collect($data)->pluck('product_id')->toArray() : [];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -88,9 +83,6 @@ class UserRepository extends ModelRepository implements UserRepositoryInterface
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

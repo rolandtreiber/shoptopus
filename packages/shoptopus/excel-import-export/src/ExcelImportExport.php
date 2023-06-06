@@ -30,19 +30,12 @@ class ExcelImportExport implements ExcelImportExportInterface
         $this->languages = config('excel_import_export.languages');
     }
 
-    /**
-     * @param $modelName
-     * @return string
-     */
     public function getClassName($modelName): string
     {
         return config('excel_import_export.model_namespace').'\\'.$modelName;
     }
 
     /**
-     * @param $modelNames
-     * @return array
-     *
      * @throws ReflectionException
      */
     public function getModelClasses($modelNames): array
@@ -81,10 +74,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         return $models;
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getRelationships($class): array
     {
         $instance = new $class;
@@ -129,7 +118,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param $class
      * @return mixed
      */
     public function getFillableFields($class): array
@@ -137,46 +125,26 @@ class ExcelImportExport implements ExcelImportExportInterface
         return (new $class)->getFillable();
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getExportableFields($class): array
     {
         return (new $class)->getExportableFields();
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getImportableFields($class): array
     {
         return (new $class)->getImportableFields();
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getExportableRelationships($class): array
     {
         return (new $class)->getExportableRelationships();
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getImportableRelationships($class): array
     {
         return (new $class)->getImportableRelationships();
     }
 
-    /**
-     * @param $class
-     * @return array
-     */
     public function getImportableRelationshipDetails($class): array
     {
         $importableRelationships = $this->getImportableRelationships($class);
@@ -192,7 +160,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param $class
      * @return array|mixed
      */
     public function getTranslatableFields($class): mixed
@@ -205,9 +172,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  array  $models
-     * @return array
-     *
      * @throws ReflectionException
      */
     public function getExportModelMap(array $models = []): array
@@ -228,10 +192,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         return $modelMap;
     }
 
-    /**
-     * @param  string  $model
-     * @return array
-     */
     public function getImportModelDetails(string $model): array
     {
         $modelMap = [];
@@ -248,9 +208,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  array  $config
-     * @return BinaryFileResponse
-     *
      * @throws ReflectionException
      */
     private function generateExportFile(array $config): BinaryFileResponse
@@ -273,10 +230,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         return false;
     }
 
-    /**
-     * @param  array  $config
-     * @return BinaryFileResponse
-     */
     private function generateTemplateFile(array $config): BinaryFileResponse
     {
         $modelData = $this->getModelTemplateData($config['model']);
@@ -284,10 +237,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         return Excel::download(new ModelTemplateExport($modelData), $config['name'].' - TEMPLATE'.'.xlsx');
     }
 
-    /**
-     * @param $model
-     * @return array
-     */
     private function getModelTemplateData($model): array
     {
         $modelClass = $this->getClassName($model);
@@ -301,11 +250,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         return $modelData;
     }
 
-    /**
-     * @param  UploadedFile  $file
-     * @param  ExcelImportExportInterface  $excelImportExport
-     * @return array
-     */
     public function validate(UploadedFile $file, ExcelImportExportInterface $excelImportExport): array
     {
         $this->clearImportValidatorData();
@@ -332,11 +276,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         }
     }
 
-    /**
-     * @param  UploadedFile  $file
-     * @param  ExcelImportExportInterface  $excelImportExport
-     * @return array
-     */
     public function import(UploadedFile $file, ExcelImportExportInterface $excelImportExport): array
     {
         $this->clearImportValidatorData();
@@ -377,9 +316,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  array  $config
-     * @return BinaryFileResponse
-     *
      * @throws ReflectionException
      */
     public function export(array $config = []): BinaryFileResponse
@@ -401,9 +337,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @param $config
      * @return array
      *
      * @throws BindingResolutionException
@@ -435,9 +368,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @param $config
      * @return array
      *
      * @throws BindingResolutionException
@@ -487,11 +417,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param $key
-     * @param $value
-     * @param $relationshipData
-     * @return array
-     *
      * @throws BindingResolutionException
      */
     private function processRelationshipField($key, $value, $relationshipData): array
@@ -545,7 +470,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  Collection  $row
      * @return void
      *
      * @throws BindingResolutionException
@@ -584,7 +508,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  array  $rows
      * @return void
      *
      * @throws ImportException
@@ -643,9 +566,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         }
     }
 
-    /**
-     * @return void
-     */
     public function clearImportValidatorData(): void
     {
         $this->importValidatorData = [];
@@ -660,7 +580,6 @@ class ExcelImportExport implements ExcelImportExportInterface
     }
 
     /**
-     * @param  array  $data
      * @return void
      */
     public function setImportModelDetails(array $data)
@@ -668,9 +587,6 @@ class ExcelImportExport implements ExcelImportExportInterface
         $this->importModelDetails = $data;
     }
 
-    /**
-     * @return array
-     */
     public function getImportValidatorData(): array
     {
         return $this->importValidatorData;

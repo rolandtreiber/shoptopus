@@ -19,9 +19,10 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'provider' => null,
@@ -34,9 +35,10 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_requires_an_existing_order_id()
+    public function it_requires_an_existing_order_id(): void
     {
         $data = [
             'provider' => 'stripe',

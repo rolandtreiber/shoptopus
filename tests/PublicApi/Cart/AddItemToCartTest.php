@@ -12,9 +12,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = [
             'product_id' => null,
@@ -29,9 +30,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function the_product_must_exists()
+    public function the_product_must_exists(): void
     {
         $data = [
             'product_id' => '101',
@@ -47,9 +49,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function the_quantity_must_be_at_least_one()
+    public function the_quantity_must_be_at_least_one(): void
     {
         $product = Product::factory()->create();
 
@@ -61,14 +64,15 @@ class AddItemToCartTest extends TestCase
         $res = $this->sendRequest($data);
 
         $res->assertJsonValidationErrors(['quantity']);
-        $this->assertEquals('The quantity must be at least 1.', $res->json('errors.quantity.0'));
+        $this->assertEquals('The quantity field must be at least 1.', $res->json('errors.quantity.0'));
     }
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock()
+    public function it_returns_the_correct_error_message_when_the_product_is_out_of_stock(): void
     {
         $product = Product::factory()->create(['stock' => 0]);
 
@@ -85,9 +89,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable()
+    public function it_returns_the_correct_error_message_when_the_requested_quantity_is_unavailable(): void
     {
         $product = Product::factory()->create(['stock' => 1]);
 
@@ -116,9 +121,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function if_the_cart_id_is_present_it_must_exists()
+    public function if_the_cart_id_is_present_it_must_exists(): void
     {
         $product = Product::factory()->create();
 
@@ -133,9 +139,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_creates_a_new_cart_and_adds_a_new_entry_to_the_cart_product_table_for_unauthenticated_users()
+    public function it_creates_a_new_cart_and_adds_a_new_entry_to_the_cart_product_table_for_unauthenticated_users(): void
     {
         $product = Product::factory()->create();
 
@@ -169,9 +176,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function existing_records_get_correctly_updated()
+    public function existing_records_get_correctly_updated(): void
     {
         $product = Product::factory()->create();
 
@@ -197,9 +205,10 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_all_required_data()
+    public function it_returns_all_required_data(): void
     {
         $product = Product::factory()->create();
 

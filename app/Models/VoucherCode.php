@@ -27,6 +27,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $valid_from
  * @property mixed $valid_until
  * @property string $value
+ *
  * @mixin Builder
  */
 class VoucherCode extends SearchableModel implements Auditable, Exportable, Importable
@@ -145,17 +146,12 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
 
     /**
      * Get the orders where the voucher code was used.
-     *
-     * @return HasMany
      */
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    /**
-     * @return int
-     */
     public function getStatusAttribute(): int
     {
         $now = Carbon::now();

@@ -20,9 +20,10 @@ class GetClientSettingsTest extends PaymentTestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function stripe_can_make_a_request_to_get_the_client_secret_and_publishable_key()
+    public function stripe_can_make_a_request_to_get_the_client_secret_and_publishable_key(): void
     {
         $order = Order::factory()->create();
 

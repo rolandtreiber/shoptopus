@@ -23,14 +23,14 @@ class PaymentSourceTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_generated_slug()
+    public function it_has_a_generated_slug(): void
     {
         $string = $this->payment_source->user->last_name.' '.$this->payment_source->name;
         $this->assertEquals(Str::slug($string), $this->payment_source->slug);
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNotNull($this->payment_source->name);
     }
@@ -78,7 +78,7 @@ class PaymentSourceTest extends TestCase
 //    }
 
     /** @test */
-    public function it_may_belong_to_a_user()
+    public function it_may_belong_to_a_user(): void
     {
         //$this->assertNull($this->payment_source->user);
 
@@ -88,7 +88,7 @@ class PaymentSourceTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_payments()
+    public function it_may_have_many_payments(): void
     {
         $this->assertEmpty($this->payment_source->payments);
 

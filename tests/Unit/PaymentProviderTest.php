@@ -23,25 +23,25 @@ class PaymentProviderTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNotNull($this->payment_provider->name);
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertIsBool($this->payment_provider->enabled);
     }
 
     /** @test */
-    public function it_has_a_test_mode_field()
+    public function it_has_a_test_mode_field(): void
     {
         $this->assertIsBool($this->payment_provider->test_mode);
     }
 
     /** @test */
-    public function it_may_have_many_payment_provider_configs()
+    public function it_may_have_many_payment_provider_configs(): void
     {
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $this->payment_provider->payment_provider_configs);
     }

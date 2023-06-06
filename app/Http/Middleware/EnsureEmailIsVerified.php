@@ -11,11 +11,6 @@ class EnsureEmailIsVerified
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $redirectToRoute
-     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
      */
     public function handle(\Illuminate\Http\Request $request, Closure $next, string $redirectToRoute = null): \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse
     {

@@ -25,25 +25,25 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_price_field()
+    public function it_has_a_price_field(): void
     {
         $this->assertNotNull($this->product_variant->price);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_products_name_field()
+    public function it_has_a_slug_generated_from_its_products_name_field(): void
     {
         $this->assertEquals(Str::slug($this->product_variant->product->name), $this->product_variant->slug);
     }
 
     /** @test */
-    public function it_has_a_description_field()
+    public function it_has_a_description_field(): void
     {
         $this->assertNotNull($this->product_variant->description);
     }
 
     /** @test */
-    public function it_returns_a_translated_description()
+    public function it_returns_a_translated_description(): void
     {
         $this->product_variant
             ->setTranslation('description', 'en', 'english translation')
@@ -58,25 +58,25 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_product()
+    public function it_belongs_to_product(): void
     {
         $this->assertInstanceOf(Product::class, $this->product_variant->product);
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertTrue($this->product_variant->enabled);
     }
 
     /** @test */
-    public function it_has_a_final_price_attribute()
+    public function it_has_a_final_price_attribute(): void
     {
         $this->assertNotNull($this->product_variant->final_price);
     }
 
     /** @test */
-    public function it_may_have_a_cover_image()
+    public function it_may_have_a_cover_image(): void
     {
         $this->assertNull($this->product_variant->cover_image());
 
@@ -91,7 +91,7 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_product_variant_attributes()
+    public function it_may_have_many_product_variant_attributes(): void
     {
         $this->assertEmpty($this->product_variant->product_variant_attributes);
 
@@ -112,7 +112,7 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_the_parent_product_stock_value_correctly_when_saved()
+    public function it_updates_the_parent_product_stock_value_correctly_when_saved(): void
     {
         $this->product_variant->product->update(['stock' => 5]);
 
@@ -122,7 +122,7 @@ class ProductVariantTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_the_parent_product_stock_value_correctly_when_deleted()
+    public function it_updates_the_parent_product_stock_value_correctly_when_deleted(): void
     {
         $this->product_variant->delete();
 

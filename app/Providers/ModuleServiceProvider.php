@@ -9,10 +9,8 @@ class ModuleServiceProvider extends ServiceProvider
 {
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->singleton('module', function ($app) {
             return new ModuleService($app->config['shoptopus']['modules']);
@@ -21,8 +19,6 @@ class ModuleServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     *
-     * @return string
      */
     public function boot(): string
     {

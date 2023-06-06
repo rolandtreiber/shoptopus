@@ -27,7 +27,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
     Route::prefix('admin')->group(function () {
-
         // Products
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('admin.api.index.products');

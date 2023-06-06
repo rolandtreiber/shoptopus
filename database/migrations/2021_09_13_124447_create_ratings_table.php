@@ -9,10 +9,8 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Module::enabled('ratings') && Schema::create('ratings', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
@@ -33,10 +31,8 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Module::enabled('ratings') && Schema::dropIfExists('ratings');
     }

@@ -7,8 +7,6 @@ interface ProductServiceInterface
     /**
      * Save product to favorites
      *
-     * @param  string  $productId
-     * @return array
      *
      * @throws \Exception
      */

@@ -18,21 +18,12 @@ class DeliveryRuleController extends Controller
 {
     use ProcessRequest;
 
-    /**
-     * @param  ListRequest  $request
-     * @param  DeliveryType  $deliveryType
-     * @return AnonymousResourceCollection
-     */
     public function index(ListRequest $request, DeliveryType $deliveryType): AnonymousResourceCollection
     {
         return DeliveryRuleListResource::collection(DeliveryRule::filtered([['delivery_type_id', $deliveryType->id]], $request)->paginate(25));
     }
 
     /**
-     * @param  DeliveryType  $deliveryType
-     * @param  DeliveryRule  $deliveryRule
-     * @return DeliveryRuleDetailResource
-     *
      * @throws RuleDoesNotBelongToTypeException
      */
     public function show(DeliveryType $deliveryType, DeliveryRule $deliveryRule): DeliveryRuleDetailResource
@@ -46,10 +37,6 @@ class DeliveryRuleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  DeliveryType  $deliveryType
-     * @param  DeliveryRuleStoreRequest  $request
-     * @return DeliveryRuleListResource
      */
     public function create(DeliveryType $deliveryType, DeliveryRuleStoreRequest $request): DeliveryRuleListResource
     {
@@ -65,10 +52,6 @@ class DeliveryRuleController extends Controller
     /**
      * Update a resource.
      *
-     * @param  DeliveryType  $deliveryType
-     * @param  DeliveryRule  $deliveryRule
-     * @param  DeliveryRuleUpdateRequest  $request
-     * @return DeliveryRuleListResource
      *
      * @throws RuleDoesNotBelongToTypeException
      */
@@ -85,8 +68,6 @@ class DeliveryRuleController extends Controller
     }
 
     /**
-     * @param  DeliveryType  $deliveryType
-     * @param  DeliveryRule  $deliveryRule
      * @return string[]
      *
      * @throws RuleDoesNotBelongToTypeException

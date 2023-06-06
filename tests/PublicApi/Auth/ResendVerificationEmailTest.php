@@ -25,9 +25,10 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_has_all_required_fields()
+    public function it_has_all_required_fields(): void
     {
         $data = ['email' => null];
 
@@ -39,9 +40,10 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_requires_an_existing_email_address()
+    public function it_requires_an_existing_email_address(): void
     {
         $this->sendRequest(['email' => 'example@example.com'])
             ->assertJsonValidationErrors(['email']);
@@ -51,9 +53,10 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_returns_a_success_response_if_the_email_has_already_been_verified()
+    public function it_returns_a_success_response_if_the_email_has_already_been_verified(): void
     {
         $this->user->update(['email_verified_at' => now()]);
 
@@ -66,9 +69,10 @@ class ResendVerificationEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPost
      */
-    public function it_resends_the_verification_email_if_unverified()
+    public function it_resends_the_verification_email_if_unverified(): void
     {
         $data = ['email' => $this->user->email];
 
@@ -79,7 +83,7 @@ class ResendVerificationEmailTest extends TestCase
 
         Notification::assertSentTo($this->user, VerifyEmail::class);
 
-        Notification::assertTimesSent(1, VerifyEmail::class);
+        Notification::assertSentTimes(VerifyEmail::class, 1);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse

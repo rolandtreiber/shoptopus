@@ -10,10 +10,8 @@ class ServiceServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->app->bind(\App\Services\Local\Error\ErrorServiceInterface::class, \App\Services\Local\Error\ErrorService::class);
         $this->app->bind(\App\Services\Local\ModelServiceInterface::class, 'App\Services\ModelService');

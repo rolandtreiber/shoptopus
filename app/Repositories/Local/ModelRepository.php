@@ -26,11 +26,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Get all models
-     *
-     * @param  array  $page_formatting
-     * @param  array  $filters
-     * @param  array  $excludeRelationships
-     * @return array
      */
     public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []): array
     {
@@ -55,7 +50,7 @@ class ModelRepository implements ModelRepositoryInterface
                 'data' => $this->getModels($filter_vars, $page_formatting, $excludeRelationships),
                 'count' => $this->getCount($filter_vars),
             ];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -63,11 +58,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Get a single model
-     *
-     * @param $value
-     * @param  string  $key
-     * @param  array  $excludeRelationships
-     * @return array
      */
     public function get($value, string $key = 'id', array $excludeRelationships = []): array
     {
@@ -89,7 +79,7 @@ class ModelRepository implements ModelRepositoryInterface
             $result = $this->getModels($this->getFilters($this->model_table, $filters), $page_formatting, $excludeRelationships);
 
             return ! empty($result) ? $result[0] : [];
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -97,10 +87,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Create a model
-     *
-     * @param  array  $payload
-     * @param  bool  $returnAsArray
-     * @return mixed
      */
     public function post(array $payload, bool $returnAsArray = true): mixed
     {
@@ -114,7 +100,7 @@ class ModelRepository implements ModelRepositoryInterface
             return $returnAsArray
                 ? $model->toArray()
                 : $model;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -123,9 +109,6 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Update a model
      *
-     * @param  string  $id
-     * @param  array  $payload
-     * @return mixed
      *
      * @throws \Exception
      */
@@ -141,7 +124,7 @@ class ModelRepository implements ModelRepositoryInterface
             }
 
             return $model->toArray();
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -150,8 +133,6 @@ class ModelRepository implements ModelRepositoryInterface
     /**
      * Delete a model
      *
-     * @param  string  $id
-     * @return int
      *
      * @throws \Exception
      */
@@ -163,7 +144,7 @@ class ModelRepository implements ModelRepositoryInterface
             return $this->canBeSoftDeleted()
                 ? $query->update(['deleted_at' => now()])
                 : $query->delete();
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -171,11 +152,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Return the models based on the filters and apply page formatting if applicable
-     *
-     * @param $filter_vars
-     * @param  array  $page_formatting
-     * @param  array  $excludeRelationships
-     * @return array
      */
     public function getModels($filter_vars, array $page_formatting = [], array $excludeRelationships = []): array
     {
@@ -202,7 +178,7 @@ class ModelRepository implements ModelRepositoryInterface
             return $result && method_exists($this, 'getTheResultWithRelationships')
                 ? $this->getTheResultWithRelationships($result, $excludeRelationships)
                 : $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -210,9 +186,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Get the records count
-     *
-     * @param $filter_vars
-     * @return int
      */
     public function getCount($filter_vars): int
     {
@@ -224,8 +197,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Determine if the model has an active property
-     *
-     * @return bool
      */
     protected function hasActiveProperty(): bool
     {
@@ -234,8 +205,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Determine if the model has an enabled property
-     *
-     * @return bool
      */
     protected function hasEnabledProperty(): bool
     {
@@ -244,8 +213,6 @@ class ModelRepository implements ModelRepositoryInterface
 
     /**
      * Determine if the model has a soft deleted property
-     *
-     * @return bool
      */
     protected function canBeSoftDeleted(): bool
     {

@@ -16,11 +16,10 @@ class AddressSeeder extends Seeder
     /**
      * Run the database seeds.
      *
-     * @return void
      *
      * @throws Exception
      */
-    public function run()
+    public function run(): void
     {
         $faker = Factory::create();
         $customers = User::role('customer')->get();

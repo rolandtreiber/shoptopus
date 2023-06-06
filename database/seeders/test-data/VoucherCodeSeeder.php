@@ -9,10 +9,8 @@ class VoucherCodeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         VoucherCode::factory()->count(5)->create();
     }

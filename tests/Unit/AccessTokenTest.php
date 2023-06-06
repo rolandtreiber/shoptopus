@@ -21,19 +21,19 @@ class AccessTokenTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_type_field()
+    public function it_has_a_type_field(): void
     {
         $this->assertNotNull($this->access_token->type);
     }
 
     /** @test */
-    public function it_has_a_token_field()
+    public function it_has_a_token_field(): void
     {
         $this->assertNotNull($this->access_token->token);
     }
 
     /** @test */
-    public function it_belongs_to_a_user()
+    public function it_belongs_to_a_user(): void
     {
         $this->assertNotNull($this->access_token->user);
 
@@ -41,7 +41,7 @@ class AccessTokenTest extends TestCase
     }
 
     /** @test */
-    public function it_belongs_to_an_issuer()
+    public function it_belongs_to_an_issuer(): void
     {
         $this->assertNotNull($this->access_token->issuer);
 

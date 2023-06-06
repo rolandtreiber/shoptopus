@@ -22,7 +22,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rules_can_be_listed()
+    public function test_delivery_rules_can_be_listed(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRules = DeliveryRule::factory()->state([
@@ -49,7 +49,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_can_be_shown()
+    public function test_delivery_rule_can_be_shown(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
@@ -73,7 +73,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_can_be_created()
+    public function test_delivery_rule_can_be_created(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $postCodes = ['BS10', 'NX9'];
@@ -106,7 +106,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_can_be_updated()
+    public function test_delivery_rule_can_be_updated(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
@@ -143,7 +143,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_can_be_deleted()
+    public function test_delivery_rule_can_be_deleted(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
@@ -161,7 +161,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_creation_requires_appropriate_Permission()
+    public function test_delivery_rule_creation_requires_appropriate_Permission(): void
     {
         $this->actingAs(User::where('email', 'customer@m.com')->first());
         $deliveryType = DeliveryType::factory()->create();
@@ -184,7 +184,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_updating_requires_appropriate_Permission()
+    public function test_delivery_rule_updating_requires_appropriate_Permission(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
@@ -211,7 +211,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_deletion_requires_appropriate_Permission()
+    public function test_delivery_rule_deletion_requires_appropriate_Permission(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([
@@ -229,7 +229,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_creation_validation()
+    public function test_delivery_rule_creation_validation(): void
     {
         $this->actingAs(User::where('email', 'storemanager@m.com')->first());
         $deliveryType = DeliveryType::factory()->create();
@@ -245,7 +245,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_delivery_rule_update_validation()
+    public function test_delivery_rule_update_validation(): void
     {
         $deliveryType = DeliveryType::factory()->create();
         $deliveryRule = DeliveryRule::factory([

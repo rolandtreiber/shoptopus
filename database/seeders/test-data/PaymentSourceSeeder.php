@@ -9,10 +9,8 @@ class PaymentSourceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         PaymentSource::factory()->count(5)->create();
     }

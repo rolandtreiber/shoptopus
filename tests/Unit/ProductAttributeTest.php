@@ -24,19 +24,19 @@ class ProductAttributeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_name_field()
+    public function it_has_a_name_field(): void
     {
         $this->assertNotNull($this->product_attribute->name);
     }
 
     /** @test */
-    public function it_has_a_slug_generated_from_its_name_field()
+    public function it_has_a_slug_generated_from_its_name_field(): void
     {
         $this->assertEquals(Str::slug($this->product_attribute->name), $this->product_attribute->slug);
     }
 
     /** @test */
-    public function it_returns_a_translated_name()
+    public function it_returns_a_translated_name(): void
     {
         $this->product_attribute
             ->setTranslation('name', 'en', 'english translation')
@@ -51,25 +51,25 @@ class ProductAttributeTest extends TestCase
     }
 
     /** @test */
-    public function it_has_a_type_field()
+    public function it_has_a_type_field(): void
     {
         $this->assertEquals(ProductAttributeType::Text, $this->product_attribute->type);
     }
 
     /** @test */
-    public function it_has_image_field()
+    public function it_has_image_field(): void
     {
         $this->assertNull($this->product_attribute->image);
     }
 
     /** @test */
-    public function it_has_an_enabled_field()
+    public function it_has_an_enabled_field(): void
     {
         $this->assertTrue($this->product_attribute->enabled);
     }
 
     /** @test */
-    public function it_may_have_many_products()
+    public function it_may_have_many_products(): void
     {
         $this->assertCount(0, $this->product_attribute->products);
 
@@ -83,7 +83,7 @@ class ProductAttributeTest extends TestCase
     }
 
     /** @test */
-    public function it_may_have_many_options()
+    public function it_may_have_many_options(): void
     {
         $this->assertCount(0, $this->product_attribute->options);
 

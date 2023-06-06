@@ -17,8 +17,6 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
     /**
      * Get the orders for the given voucher codes
      *
-     * @param  array  $voucherCodeIds
-     * @return array
      *
      * @throws \Exception
      */
@@ -44,7 +42,7 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
                 WHERE o.voucher_code_id IN ($dynamic_placeholders)
                 AND o.deleted_at IS NULL
             ", $voucherCodeIds);
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -53,9 +51,6 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
     /**
      * Get the required related models for the given parent
      *
-     * @param $result
-     * @param  array  $excludeRelationships
-     * @return array
      *
      * @throws \Exception
      */
@@ -84,7 +79,7 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
             }
 
             return $result;
-        } catch (\Exception | \Error $e) {
+        } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
         }
@@ -92,9 +87,6 @@ class VoucherCodeRepository extends ModelRepository implements VoucherCodeReposi
 
     /**
      * Get the columns for selection
-     *
-     * @param  bool  $withTableNamePrefix
-     * @return array
      */
     public function getSelectableColumns(bool $withTableNamePrefix = true): array
     {

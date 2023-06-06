@@ -14,11 +14,8 @@ class CartProductListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
-     * @param  Request  $request
-     * @return array
      */
-    public function toArray($request)
+    public function toArray(Request $request): array
     {
         if ($this->pivot->product_variant_id) {
             /** @var ProductVariant $variant */

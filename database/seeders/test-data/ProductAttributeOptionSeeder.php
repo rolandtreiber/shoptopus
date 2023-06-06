@@ -10,10 +10,8 @@ class ProductAttributeOptionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
-     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $used = [];
         for ($i = 1; $i < 6; $i++) {

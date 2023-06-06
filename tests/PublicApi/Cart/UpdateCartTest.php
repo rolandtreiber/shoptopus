@@ -22,9 +22,10 @@ class UpdateCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function unauthorised_users_are_not_allowed_to_update_carts()
+    public function unauthorised_users_are_not_allowed_to_update_carts(): void
     {
         $data = Cart::factory()->raw();
 
@@ -41,9 +42,10 @@ class UpdateCartTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiPatch
      */
-    public function authorised_users_can_update_carts()
+    public function authorised_users_can_update_carts(): void
     {
         $user = User::factory()->create();
 

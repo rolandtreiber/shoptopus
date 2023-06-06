@@ -13,11 +13,8 @@ class ProductCategoryListResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
-     * @param  Request  $request
-     * @return array
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         $this->load(['children' => function ($q) use ($request) {
             $q->availability($request->view);

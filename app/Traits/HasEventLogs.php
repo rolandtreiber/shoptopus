@@ -10,9 +10,6 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  */
 trait HasEventLogs
 {
-    /**
-     * @return MorphMany|null
-     */
     public function eventLogs(): ?MorphMany
     {
         return $this->morphMany(EventLog::class, 'eventable');

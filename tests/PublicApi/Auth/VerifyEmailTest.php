@@ -23,9 +23,10 @@ class VerifyEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function it_requires_a_valid_url()
+    public function it_requires_a_valid_url(): void
     {
         $this->assertNull($this->user->email_verified_at);
 
@@ -42,9 +43,10 @@ class VerifyEmailTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function the_users_email_is_marked_verified_upon_successful_verification()
+    public function the_users_email_is_marked_verified_upon_successful_verification(): void
     {
         $url = URL::temporarySignedRoute(
             'verification.verify',
@@ -64,10 +66,6 @@ class VerifyEmailTest extends TestCase
         $this->assertNotNull($this->user->fresh()->email_verified_at);
     }
 
-    /**
-     * @param  string  $query_string
-     * @return \Illuminate\Testing\TestResponse
-     */
     protected function sendRequest(string $query_string = ''): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('verification.verify', ['id' => $this->user->id]).$query_string);

@@ -94,9 +94,6 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable,
         'enabled' => 'boolean',
     ];
 
-    /**
-     * @return BelongsToMany
-     */
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class)
@@ -104,9 +101,6 @@ class ProductAttribute extends SearchableModel implements Auditable, Exportable,
             ->using(ProductProductAttribute::class);
     }
 
-    /**
-     * @return HasMany
-     */
     public function options(): HasMany
     {
         return $this->hasMany(ProductAttributeOption::class);

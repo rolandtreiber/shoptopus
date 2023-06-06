@@ -31,7 +31,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_list_products()
+    public function test_can_list_products(): void
     {
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -49,7 +49,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_products_can_be_filtered_by_tags()
+    public function test_products_can_be_filtered_by_tags(): void
     {
         $products = Product::factory()->count(2)->create();
         $tag = ProductTag::factory()->create();
@@ -71,7 +71,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_can_create_product()
+    public function test_can_create_product(): void
     {
         Storage::fake('uploads');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
@@ -115,7 +115,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_update_product_uses_form_request_validation()
+    public function test_update_product_uses_form_request_validation(): void
     {
         $this->assertActionUsesFormRequest(
             ProductController::class,
@@ -124,7 +124,7 @@ class ProductControllerTest extends AdminControllerTestCase
         );
     }
 
-    public function test_can_update_product()
+    public function test_can_update_product(): void
     {
         Storage::fake('uploads');
 
@@ -169,7 +169,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_store_product_uses_form_request_validation()
+    public function test_store_product_uses_form_request_validation(): void
     {
         $this->assertActionUsesFormRequest(
             ProductController::class,
@@ -181,7 +181,7 @@ class ProductControllerTest extends AdminControllerTestCase
     /**
      * @test
      */
-    public function test_destroy_product_deletes()
+    public function test_destroy_product_deletes(): void
     {
         $product = Product::factory()->create();
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());

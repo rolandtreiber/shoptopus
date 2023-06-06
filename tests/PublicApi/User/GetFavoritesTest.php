@@ -23,9 +23,10 @@ class GetFavoritesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function unauthenticated_users_are_not_allowed_to_get_favorite_products()
+    public function unauthenticated_users_are_not_allowed_to_get_favorite_products(): void
     {
         $res = $this->sendRequest()->json();
 
@@ -35,9 +36,10 @@ class GetFavoritesTest extends TestCase
 
     /**
      * @test
+     *
      * @group apiGet
      */
-    public function authenticated_users_can_get_their_favorited_products()
+    public function authenticated_users_can_get_their_favorited_products(): void
     {
         $products = Product::factory()->count(2)->create();
 
