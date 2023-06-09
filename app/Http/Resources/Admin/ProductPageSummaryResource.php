@@ -19,7 +19,7 @@ class ProductPageSummaryResource extends JsonResource
 
         return [
             'total_stock' => Product::view('active')->pluck('stock')->sum(),
-            'retail_value' => $retailValue,
+            'retail_value' => round($retailValue, 2),
             'out_of_stock_items' => Product::view('active')->where('stock', 0)->count(),
             'running_low' => Product::view('active')->where('stock', '<>', 0)->where('stock', '<=', 15)->count(),
         ];
