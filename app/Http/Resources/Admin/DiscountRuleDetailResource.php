@@ -23,6 +23,7 @@ class DiscountRuleDetailResource extends JsonResource
             'type' => $this->type,
             'name' => $this->getTranslations('name'),
             'amount' => GeneralHelper::getDiscountValue($this->type, $this->amount),
+            'value' => $this->amount,
             'valid_from' => Carbon::parse($this->valid_from)->format('Y-m-d H:i'),
             'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
             'products' => ProductListResource::collection($this->products),

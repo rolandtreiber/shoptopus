@@ -170,7 +170,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
         return 0;
     }
 
-    public function getValueAttribute()
+    public function getValueAttribute(): string
     {
         return GeneralHelper::getDiscountValue($this->type, $this->amount);
     }

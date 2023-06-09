@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Rules\ContainsEmail;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SendEmailRequest extends FormRequest
@@ -13,7 +14,7 @@ class SendEmailRequest extends FormRequest
     {
         return [
             'addresses' => ['required'],
-            'addresses.*' => ['required'],
+            'addresses.*' => ['required', new ContainsEmail()],
         ];
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Enums\DiscountType;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class VoucherCodeStoreRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class VoucherCodeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'numeric'],
+            'type' => ['required', 'numeric', Rule::in(DiscountType::getValues())],
             'amount' => ['required', 'numeric'],
             'valid_from' => ['required', 'date'],
             'valid_until' => ['required', 'date'],

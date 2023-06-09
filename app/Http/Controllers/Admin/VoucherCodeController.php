@@ -44,11 +44,11 @@ class VoucherCodeController extends Controller
     public function create(VoucherCodeStoreRequest $request): VoucherCodeListResource
     {
         $data = $this->getProcessed($request, [], []);
-        $discountRule = new VoucherCode();
-        $discountRule->fill($data);
-        $discountRule->save();
+        $voucherCode = new VoucherCode();
+        $voucherCode->fill($data);
+        $voucherCode->save();
 
-        return new VoucherCodeListResource($discountRule);
+        return new VoucherCodeListResource($voucherCode);
     }
 
     /**
