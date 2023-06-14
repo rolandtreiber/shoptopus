@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\DeliveryTypeController;
 use App\Http\Controllers\Admin\DiscountRuleController;
 use App\Http\Controllers\Admin\EmailController;
 use App\Http\Controllers\Admin\FileController;
+use App\Http\Controllers\Admin\NoteController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductAttributeController;
@@ -301,6 +302,16 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
                 Route::get('/', [FileController::class, 'show'])->name('admin.api.show.file');
                 Route::delete('/', [FileController::class, 'delete'])->name('admin.api.delete.file');
                 Route::patch('/', [FileController::class, 'update'])->name('admin.api.update.file');
+            });
+        });
+
+        Route::get('notes', [NoteController::class, 'index'])->name('admin.api.index.notes');
+        Route::prefix('note')->group(function () {
+            Route::post('/', [NoteController::class, 'create'])->name('admin.api.create.note');
+            Route::prefix('{note}')->group(function () {
+                Route::get('/', [NoteController::class, 'show'])->name('admin.api.show.note');
+                Route::delete('/', [NoteController::class, 'delete'])->name('admin.api.delete.note');
+                Route::patch('/', [NoteController::class, 'update'])->name('admin.api.update.note');
             });
         });
 

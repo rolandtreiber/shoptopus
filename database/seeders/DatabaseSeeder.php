@@ -8,6 +8,7 @@ use Database\Seeders\TestData\BannerSeeder;
 use Database\Seeders\TestData\CartSeeder;
 use Database\Seeders\TestData\DeliveryTypeSeeder;
 use Database\Seeders\TestData\DiscountRuleSeeder;
+use Database\Seeders\TestData\NoteSeeder;
 use Database\Seeders\TestData\OrderSeeder;
 use Database\Seeders\TestData\ProductAttributeOptionSeeder;
 use Database\Seeders\TestData\ProductAttributeSeeder;
@@ -53,19 +54,20 @@ class DatabaseSeeder extends Seeder
                     RoleSeeder::class,
                     UserSeeder::class,
                     PaymentProviderSeeder::class,
-                    //                    BannerSeeder::class,
-                    //                    DeliveryTypeSeeder::class,
-                    //                    AddressSeeder::class,
-                    //                    DiscountRuleSeeder::class,
-                    //                    VoucherCodeSeeder::class,
-                    //                    ProductTagSeeder::class,
-                    //                    ProductCategorySeeder::class,
-                    //                    ProductAttributeSeeder::class,
-                    //                    ProductAttributeOptionSeeder::class,
-                    //                    ProductSeeder::class,
-                    //                    ProductVariantSeeder::class,
-                    //                    CartSeeder::class,
-                    //                    OrderSeeder::class,
+                    // BannerSeeder::class,
+                    // DeliveryTypeSeeder::class,
+                    // AddressSeeder::class,
+                    // DiscountRuleSeeder::class,
+                    // VoucherCodeSeeder::class,
+                    // ProductTagSeeder::class,
+                    // ProductCategorySeeder::class,
+                    // ProductAttributeSeeder::class,
+                    // ProductAttributeOptionSeeder::class,
+                    // ProductSeeder::class,
+                    // ProductVariantSeeder::class,
+                    // CartSeeder::class,
+                    // OrderSeeder::class,
+                    // NoteSeeder::class
                 ]);
 
                 Module::enabled('ratings') && $this->call([RatingSeeder::class]);

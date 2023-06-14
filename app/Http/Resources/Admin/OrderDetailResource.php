@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\AddressResource;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -41,6 +42,7 @@ class OrderDetailResource extends JsonResource
             ],
             'products' => OrderProductResource::collection($this->products),
             'event_logs' => EventLogResource::collection($this->eventLogs),
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

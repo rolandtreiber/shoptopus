@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\GeneralHelper;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,6 +31,7 @@ class OrderListResource extends JsonResource
             'user' => $this->user->name,
             'delivery_type' => $this->delivery_type->getTranslations('name'),
             'delivery_cost' => $this->delivery_cost,
+            'notes' => NoteResource::collection($this->notes),
             'town' => $this->address->town,
         ];
     }

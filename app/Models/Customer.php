@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\UserRole;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
@@ -18,5 +19,13 @@ class Customer extends User
             ->get();
 
         return self::hydrate($result->toArray());
+    }
+
+    /**
+     * @return MorphMany
+     */
+    public function notes(): MorphMany
+    {
+        return $this->morphMany(Note::class, 'noteable');
     }
 }

@@ -236,4 +236,12 @@ class Order extends SearchableModel implements Auditable, Exportable
         $this->save();
         Order::setEventDispatcher($dispatcher);
     }
+
+    /**
+     * @return MorphMany
+     */
+    public function notes(): MorphMany
+    {
+        return $this->morphMany(Note::class, 'noteable')->orderBy('updated_at', 'desc');
+    }
 }

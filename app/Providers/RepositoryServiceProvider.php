@@ -12,6 +12,8 @@ use App\Repositories\Admin\Eventlog\EventLogRepository;
 use App\Repositories\Admin\Eventlog\EventLogRepositoryInterface;
 use App\Repositories\Admin\File\FileRepository;
 use App\Repositories\Admin\File\FileRepositoryInterface;
+use App\Repositories\Admin\Note\NoteRepository;
+use App\Repositories\Admin\Note\NoteRepositoryInterface;
 use App\Repositories\Admin\Order\OrderRepository;
 use App\Repositories\Admin\Order\OrderRepositoryInterface;
 use App\Repositories\Admin\Payment\PaymentRepository;
@@ -71,5 +73,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductTagRepositoryInterface::class, ProductTagRepository::class);
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
         $this->app->bind(VoucherCodeRepositoryInterface::class, VoucherCodeRepository::class);
+        $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
     }
 }
