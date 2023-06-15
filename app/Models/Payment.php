@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\PaymentType;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +32,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Payment extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable, HasSlug;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasExportable, HasSlug, HasNote;
 
     /**
      * Get the options for generating the slug.

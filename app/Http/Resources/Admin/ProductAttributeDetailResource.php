@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\NoteResource;
 use App\Models\ProductAttribute;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -23,6 +24,7 @@ class ProductAttributeDetailResource extends JsonResource
             'image' => $this->image ? $this->image->url : null,
             'options' => ProductAttributeOptionListResource::collection($this->options),
             'enabled' => $this->enabled,
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

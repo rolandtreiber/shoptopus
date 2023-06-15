@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\OrderStatus;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -27,7 +28,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class DeliveryType extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, HasExportable, \OwenIt\Auditing\Auditable;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, HasExportable, \OwenIt\Auditing\Auditable, HasNote;
 
     /**
      * Get the options for generating the slug.

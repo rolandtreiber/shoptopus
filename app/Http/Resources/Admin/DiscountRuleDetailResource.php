@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Helpers\GeneralHelper;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\DiscountRule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -28,6 +29,7 @@ class DiscountRuleDetailResource extends JsonResource
             'valid_until' => Carbon::parse($this->valid_until)->format('Y-m-d H:i'),
             'products' => ProductListResource::collection($this->products),
             'categories' => ProductCategoryListResource::collection($this->categories),
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

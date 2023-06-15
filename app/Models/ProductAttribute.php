@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Requests\ListRequest;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,7 +32,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductAttribute extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable, HasNote;
 
     /**
      * Get the options for generating the slug.

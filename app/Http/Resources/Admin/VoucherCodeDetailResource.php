@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Enums\OrderStatus;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\VoucherCode;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -37,6 +38,7 @@ class VoucherCodeDetailResource extends JsonResource
             ])->where('voucher_code_id', $this->id)->count(),
             'enabled' => $this->enabled,
             'status' => $this->status,
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

@@ -4,11 +4,9 @@ namespace App\Repositories\Admin\Note;
 
 use App\Models\DeliveryType;
 use App\Models\DiscountRule;
-use App\Models\Invoice;
 use App\Models\Note;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Models\PaymentSource;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
@@ -26,7 +24,6 @@ class NoteRepository implements NoteRepositoryInterface {
             'user' => User::class,
             'order' => Order::class,
             'payment' => Payment::class,
-            'payment_source' => PaymentSource::class,
             'voucher_code' => VoucherCode::class,
             'discount_rule' => DiscountRule::class,
             'delivery_type' => DeliveryType::class,

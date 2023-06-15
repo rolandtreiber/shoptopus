@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\AvailabilityStatus;
 use App\Helpers\GeneralHelper;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -30,7 +31,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class DiscountRule extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, \OwenIt\Auditing\Auditable, HasExportable, HasImportable;
+    use HasFactory, HasUUID, HasTranslations, SoftDeletes, HasSlug, \OwenIt\Auditing\Auditable, HasExportable, HasImportable, HasNote;
 
     /**
      * Get the options for generating the slug.

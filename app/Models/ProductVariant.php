@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFiles;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,7 +29,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable;
+    use HasFactory, HasTranslations, HasFiles, HasUUID, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable, HasNote;
 
     /**
      * Get the options for generating the slug.

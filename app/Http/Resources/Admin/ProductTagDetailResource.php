@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\NoteResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -21,6 +22,7 @@ class ProductTagDetailResource extends JsonResource
             'description' => $this->getTranslations('description'),
             'display_badge' => $this->display_badge,
             'products' => ProductListResource::collection($this->products),
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

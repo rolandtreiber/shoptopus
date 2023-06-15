@@ -31,7 +31,6 @@ class OrderListResource extends JsonResource
             'user' => $this->user->name,
             'delivery_type' => $this->delivery_type->getTranslations('name'),
             'delivery_cost' => $this->delivery_cost,
-            'notes' => NoteResource::collection($this->notes),
             'town' => $this->address->town,
         ];
     }

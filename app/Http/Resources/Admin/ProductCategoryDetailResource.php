@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\NoteResource;
 use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,6 +28,7 @@ class ProductCategoryDetailResource extends JsonResource
             'children' => ProductCategoryListResource::collection($this->children),
             'products' => ProductListResource::collection($this->products()->get()),
             'enabled' => $this->enabled,
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

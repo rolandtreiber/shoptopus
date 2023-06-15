@@ -20,7 +20,7 @@ class NoteStoreRequest extends FormRequest
     public function rules(): array
     {
         $validNoteables = [
-            'user', 'order', 'payment', 'payment_source', 'voucher_code', 'discount_rule', 'delivery_type', 'product', 'product_variant', 'product_category', 'product_tag', 'product_attribute', 'product_attribute_option'
+            'user', 'order', 'payment', 'voucher_code', 'discount_rule', 'delivery_type', 'product', 'product_variant', 'product_category', 'product_tag', 'product_attribute', 'product_attribute_option'
         ];
 
         return [

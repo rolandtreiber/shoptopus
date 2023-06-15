@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\NoteResource;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -31,6 +32,7 @@ class PaymentDetailResource extends JsonResource
             'user' => new UserListResource($this->user),
             'payment_source' => new PaymentSourceListResource($this->payment_source),
             'payable' => $this->payable,
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

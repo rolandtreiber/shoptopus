@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\FileContentResource;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -38,6 +39,7 @@ class ProductDetailResource extends JsonResource
             'updated_at' => Carbon::parse($this->updated_at)->format('Y-m-d'),
             'images' => FileContentResource::collection($this->images()),
             'pdfs' => $this->pdfs(),
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

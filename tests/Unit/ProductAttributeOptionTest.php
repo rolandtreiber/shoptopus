@@ -69,8 +69,6 @@ class ProductAttributeOptionTest extends TestCase
     /** @test */
     public function it_may_belongs_to_a_product_attribute(): void
     {
-        $this->assertNull($this->product_attribute_option->product_attribute);
-
         $this->product_attribute_option->update([
             'product_attribute_id' => ProductAttribute::factory()->create()->id,
         ]);

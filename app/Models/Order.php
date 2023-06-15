@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasEventLogs;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,7 +48,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Order extends SearchableModel implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, \OwenIt\Auditing\Auditable, HasExportable, HasSlug;
+    use HasFactory, HasUUID, SoftDeletes, HasEventLogs, \OwenIt\Auditing\Auditable, HasExportable, HasSlug, HasNote;
 
     /**
      * Get the options for generating the slug.
@@ -235,13 +236,5 @@ class Order extends SearchableModel implements Auditable, Exportable
         $this->total_discount = $originalPrice - $this->total_price;
         $this->save();
         Order::setEventDispatcher($dispatcher);
-    }
-
-    /**
-     * @return MorphMany
-     */
-    public function notes(): MorphMany
-    {
-        return $this->morphMany(Note::class, 'noteable')->orderBy('updated_at', 'desc');
     }
 }

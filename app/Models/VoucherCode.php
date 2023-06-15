@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\AvailabilityStatus;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFile;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,7 +33,7 @@ use Spatie\Sluggable\SlugOptions;
  */
 class VoucherCode extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable, HasImportable;
+    use HasUUID, HasFactory, HasFile, \OwenIt\Auditing\Auditable, SoftDeletes, HasSlug, HasExportable, HasImportable, HasNote;
 
     /**
      * Get the options for generating the slug.

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmail;
 use App\Traits\HasFile;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use App\Traits\NotificationTrait;
 use App\Traits\Searchable;
@@ -59,7 +60,8 @@ class User extends Authenticatable implements Auditable, Exportable
         \OwenIt\Auditing\Auditable,
         Searchable,
         HasSlug,
-        HasExportable;
+        HasExportable,
+        HasNote;
 
     /**
      * Get the options for generating the slug.

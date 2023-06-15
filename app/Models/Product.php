@@ -6,6 +6,7 @@ use App\Enums\ProductStatus;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasEventLogs;
 use App\Traits\HasFiles;
+use App\Traits\HasNote;
 use App\Traits\HasRatings;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,7 +59,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         HasSlug,
         HasExportable,
         HasImportable,
-        Searchable;
+        Searchable,
+        HasNote;
 
     public function mappableAs(): array
     {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFile;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,7 +36,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductCategory extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable, HasNote;
 
     protected $exportableFields = [
         'slug',

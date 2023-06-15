@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Http\Resources\Common\NoteResource;
 use App\Models\DeliveryType;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -27,6 +28,7 @@ class DeliveryTypeDetailResource extends JsonResource
             'rules' => DeliveryRuleListResource::collection($this->deliveryRules),
             'order_count' => $this->getOrderCount(),
             'total_revenue' => $this->getTotalRevenue(),
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

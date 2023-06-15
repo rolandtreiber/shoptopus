@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasFile;
+use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +27,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class ProductAttributeOption extends SearchableModel implements Auditable, Exportable, Importable
 {
-    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable;
+    use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable, HasNote;
 
     /**
      * Get the options for generating the slug.

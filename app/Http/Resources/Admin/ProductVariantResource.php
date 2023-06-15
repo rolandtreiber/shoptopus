@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\FileContentResource;
+use App\Http\Resources\Common\NoteResource;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,6 +31,7 @@ class ProductVariantResource extends JsonResource
             'image' => $this->cover_image(),
             'sku' => $this->sku,
             'enabled' => $this->enabled,
+            'notes' => NoteResource::collection($this->notes),
         ];
     }
 }

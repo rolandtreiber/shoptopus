@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ProductAttribute;
 use App\Traits\TranslatableFactory;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -25,6 +26,7 @@ class ProductAttributeOptionFactory extends Factory
             'value' => random_int(1, 100),
             'image' => null,
             'enabled' => true,
+            'product_attribute_id' => ProductAttribute::factory()
         ];
     }
 }
