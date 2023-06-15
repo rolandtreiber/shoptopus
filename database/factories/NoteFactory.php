@@ -11,7 +11,7 @@ class NoteFactory extends Factory
     {
         return [
             "public" => $this->faker->boolean,
-            "note" => $this->faker->sentence,
+            "note" => "<p>".$this->faker->sentence."</p>",
             "user_id" => User::factory()
         ];
     }

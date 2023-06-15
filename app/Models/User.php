@@ -166,9 +166,22 @@ class User extends Authenticatable implements Auditable, Exportable
         return $this->hasMany(Order::class);
     }
 
+    /**
+     * Get the orders of the user.
+     */
+    public function latest_orders(): HasMany
+    {
+        return $this->hasMany(Order::class)->orderBy('created_at', 'desc')->limit(10);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function latest_payments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->orderBy('created_at', 'desc')->limit(10);
     }
 
     /**

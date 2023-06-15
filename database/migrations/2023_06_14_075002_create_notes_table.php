@@ -18,7 +18,7 @@ return new class extends Migration
             $table->uuid('noteable_id')->nullable();
             $table->boolean('public')->default(false);
             $table->index(['noteable_type', 'noteable_id']);
-            $table->foreignUuid('user_id')->constrained()->nullOnDelete();
+            $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }
