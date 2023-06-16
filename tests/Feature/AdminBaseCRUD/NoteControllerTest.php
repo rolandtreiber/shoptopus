@@ -324,10 +324,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -353,10 +353,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -381,10 +381,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -409,10 +409,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -437,10 +437,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -465,10 +465,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -493,10 +493,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -522,10 +522,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -550,10 +550,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -578,10 +578,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -606,10 +606,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 
@@ -635,10 +635,10 @@ class NoteControllerTest extends AdminControllerTestCase
 
         $response
             ->assertJson(fn (AssertableJson $json) => $json
-                ->where('data.notes.0.id', $note1->id)
-                ->where('data.notes.0.note', $note1->note)
-                ->where('data.notes.1.id', $note2->id)
-                ->where('data.notes.1.note', $note2->note)
+                ->where('data.notes.1.id', $note1->id)
+                ->where('data.notes.1.note', $note1->note)
+                ->where('data.notes.0.id', $note2->id)
+                ->where('data.notes.0.note', $note2->note)
                 ->etc());
     }
 

@@ -12,6 +12,6 @@ trait HasNote
      */
     public function notes(): MorphMany
     {
-        return $this->morphMany(Note::class, 'noteable')->orderBy('updated_at', 'desc');
+        return $this->morphMany(Note::class, 'noteable')->orderBy('id', 'desc');
     }
 }
