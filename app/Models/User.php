@@ -39,6 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $avatar
  * @property int  $is_favorite
  * @property Carbon $deleted_at
+ * @property Carbon $last_seen
  * @property Collection $addresses
  * @property Collection $orders
  * @property Collection $social_accounts
@@ -112,6 +113,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'avatar',
         'is_favorite',
         'deleted_at',
+        'last_seen'
     ];
 
     protected $appends = ['role_names'];
@@ -135,6 +137,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'email_verified_at' => 'datetime',
         'avatar' => 'object',
         'is_favorite' => 'boolean',
+        'last_seen' => 'datetime',
     ];
 
     public function getRoleNamesAttribute()

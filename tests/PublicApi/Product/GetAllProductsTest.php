@@ -2,6 +2,7 @@
 
 namespace Tests\PublicApi\Product;
 
+use App\Events\UserInteraction;
 use App\Models\DiscountRule;
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -9,9 +10,12 @@ use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
 use App\Models\ProductVariant;
+use App\Models\User;
 use App\Repositories\Local\Product\ProductRepository;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class GetAllProductsTest extends TestCase
@@ -490,6 +494,37 @@ class GetAllProductsTest extends TestCase
         $this->assertCount(2, $res->json('data'));
         $this->assertEquals($products[0]->id, $res->json('data.0.id'));
         $this->assertEquals($products[1]->id, $res->json('data.1.id'));
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_last_seen(): void
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+        $user->last_seen = null;
+        $user->save();
+        $products = Product::factory()->count(3)->create();
+        $this->sendRequest(['filter[id]' => implode(',', [$products[0]->id, $products[1]->id])]);
+        $user->refresh();
+        $this->assertTrue($user->last_seen->timestamp <= Carbon::now()->timestamp);
+    }
+
+    /**
+     * @test
+     */
+    public function it_triggers_user_interaction_event(): void
+    {
+        $user = User::factory()->create();
+        $products = Product::factory()->count(3)->create();
+        Event::fake();
+        $this->signIn($user);
+        $user->last_seen = null;
+        $user->save();
+        $this->sendRequest(['filter[id]' => implode(',', [$products[0]->id, $products[1]->id])]);
+        $user->refresh();
+        Event::assertDispatched(UserInteraction::class);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse

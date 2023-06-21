@@ -2,10 +2,13 @@
 
 namespace Tests\PublicApi\Cart;
 
+use App\Events\UserInteraction;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class RemoveItemFromCartTest extends TestCase
@@ -103,6 +106,52 @@ class RemoveItemFromCartTest extends TestCase
         ]);
 
         $this->assertEmpty($cart->products);
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_last_seen(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+        $cart = $user->cart;
+        $cart->products()->attach($product->id);
+        $this->signIn($user);
+
+        $data = [
+            'product_id' => $product->id,
+            'cart_id' => $cart->id,
+        ];
+        $user->last_seen = null;
+        $user->save();
+
+        $this->sendRequest($data)->json();
+        $user->refresh();
+        $this->assertTrue($user->last_seen->timestamp <= Carbon::now()->timestamp);
+    }
+
+    /**
+     * @test
+     */
+    public function it_triggers_user_interaction_event(): void
+    {
+        $user = User::factory()->create();
+        $product = Product::factory()->create();
+        $cart = $user->cart;
+        Event::fake();
+        $this->signIn($user);
+        $cart->products()->attach($product->id);
+
+        $data = [
+            'product_id' => $product->id,
+            'cart_id' => $cart->id,
+        ];
+        $user->last_seen = null;
+        $user->save();
+
+        $this->sendRequest($data)->json();
+        Event::assertDispatched(UserInteraction::class);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse

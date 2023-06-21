@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Helpers\GeneralHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
@@ -31,6 +32,7 @@ class UserFactory extends Factory
                 'file_name' => $avatar['file_name'],
             ],
             'is_favorite' => false,
+            'last_seen' => Carbon::now()
         ];
     }
 }

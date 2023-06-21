@@ -2,6 +2,8 @@
 
 namespace App\Services\Local\Auth;
 
+use App\Enums\UserInteractionType;
+use App\Events\UserInteraction;
 use App\Models\PasswordReset;
 use App\Models\User;
 use App\Notifications\PasswordResetSuccess;
@@ -76,6 +78,8 @@ class AuthService implements AuthServiceInterface
                 $this->cartService->mergeUserCarts($payload['cart_id'], $user->id);
             }
 
+            event(new UserInteraction(UserInteractionType::Login, User::class, $user->id));
+
             return [
                 'data' => [
                     'auth' => $this->createTokenAndGetAuthResponse($user),
@@ -115,6 +119,8 @@ class AuthService implements AuthServiceInterface
             if (! $user->hasVerifiedEmail()) {
                 $user->sendEmailVerificationNotification();
             }
+
+            event(new UserInteraction(UserInteractionType::Signup, User::class, $user->id));
 
             return [
                 'data' => [
@@ -185,6 +191,7 @@ class AuthService implements AuthServiceInterface
                     if (! $user->hasVerifiedEmail()) {
                         $user->markEmailAsVerified();
                     }
+                    event(new UserInteraction(UserInteractionType::EmailVerified, User::class, $user->id));
                 }
             }
 
@@ -241,6 +248,8 @@ class AuthService implements AuthServiceInterface
                 ->update(['revoked' => true]);
 
             $user->tokens->each->revoke();
+
+            event(new UserInteraction(UserInteractionType::Logout, User::class, $user->id));
 
             return ['data' => ['auth' => null]];
         } catch (\Exception|\Error $e) {

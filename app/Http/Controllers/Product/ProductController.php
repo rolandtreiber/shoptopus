@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Enums\UserInteractionType;
+use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\FavoriteProductRequest;
 use App\Http\Requests\Product\ProductAvailableAttributeOptionsRequest;
 use App\Models\Product;
+use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Product\ProductServiceInterface;
 use Illuminate\Http\Request;
@@ -29,6 +32,10 @@ class ProductController extends Controller
     {
         try {
             [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
+            if (Auth()->user()) {
+                $user = Auth()->user();
+                event(new UserInteraction(UserInteractionType::Browse, User::class, $user->id));
+            }
 
             return response()->json(
                 $this->getResponse($page_formatting, $this->productService->getAll(
@@ -75,6 +82,7 @@ class ProductController extends Controller
     {
         try {
             return response()->json($this->postResponse($this->productService->favorite($request->validated()['productId'])));
+
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('temporary')->default(false);
             $table->boolean('is_favorite')->default(false);
             $table->string('slug');
+            $table->timestamp('last_seen')->nullable();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();

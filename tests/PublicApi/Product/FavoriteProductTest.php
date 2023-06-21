@@ -2,9 +2,12 @@
 
 namespace Tests\PublicApi\Product;
 
+use App\Events\UserInteraction;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
 class FavoriteProductTest extends TestCase
@@ -92,6 +95,84 @@ class FavoriteProductTest extends TestCase
             'user_id' => $this->user->id,
             'product_id' => $this->product->id,
         ]);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiPost
+     */
+    public function favouriting_product_updates_last_seen(): void {
+        $this->assertDatabaseMissing('favorited_products', [
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+        ]);
+
+        $this->user->last_seen = null;
+        $this->user->save();
+
+        $this->signIn($this->user)
+            ->sendRequest()
+            ->assertOk();
+        $this->user->refresh();
+        $this->assertTrue($this->user->last_seen->timestamp <= Carbon::now()->timestamp);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiPost
+     */
+    public function favouriting_product_triggers_user_interaction_event(): void {
+        Event::fake();
+        $this->assertDatabaseMissing('favorited_products', [
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+        ]);
+
+        $this->signIn($this->user)
+            ->sendRequest()
+            ->assertOk();
+        $this->user->refresh();
+        Event::assertDispatched(UserInteraction::class);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiPost
+     */
+    public function unfavouriting_product_updates_last_seen(): void {
+        $this->signIn($this->user);
+        $this->sendRequest();
+        $this->assertDatabaseHas('favorited_products', [
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+        ]);
+
+        $this->sendRequest();
+        $this->user->refresh();
+        $this->assertTrue($this->user->last_seen->timestamp <= Carbon::now()->timestamp);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiPost
+     */
+    public function unfavouriting_product_triggers_user_interaction_event(): void {
+        Event::fake();
+        $this->signIn($this->user);
+        $this->sendRequest();
+        $this->assertDatabaseHas('favorited_products', [
+            'user_id' => $this->user->id,
+            'product_id' => $this->product->id,
+        ]);
+        $this->user->last_seen = null;
+        $this->user->save();
+        $this->sendRequest();
+        $this->user->refresh();
+        Event::assertDispatched(UserInteraction::class);
     }
 
     protected function sendRequest(): \Illuminate\Testing\TestResponse

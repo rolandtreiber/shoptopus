@@ -2,9 +2,13 @@
 
 namespace Tests\PublicApi\Auth;
 
+use App\Events\UserInteraction;
+use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -135,6 +139,45 @@ class LoginTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('oauth_access_tokens', ['user_id' => $this->user->id]);
+    }
+
+    /**
+     * @test
+     */
+    public function it_updates_last_seen(): void
+    {
+        $this->artisan('passport:install');
+        $this->user->last_seen = null;
+        $this->user->save();
+
+        $data = [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ];
+
+        $this->sendRequest($data);
+        $this->user->refresh();
+        $this->assertTrue($this->user->last_seen->timestamp <= Carbon::now()->timestamp);
+    }
+
+    /**
+     * @test
+     */
+    public function it_triggers_user_interaction_event(): void
+    {
+        Event::fake();
+        $this->artisan('passport:install');
+
+        $data = [
+            'email' => $this->user->email,
+            'password' => 'password',
+        ];
+
+        $this->sendRequest($data);
+
+        $this->user->last_seen = null;
+        $this->user->save();
+        Event::assertDispatched(UserInteraction::class);
     }
 
     /**

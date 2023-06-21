@@ -3,6 +3,8 @@
 namespace App\Repositories\Local\Product;
 
 use App\Enums\ProductAttributeType;
+use App\Enums\UserInteractionType;
+use App\Events\UserInteraction;
 use App\Helpers\GeneralHelper;
 use App\Models\FileContent;
 use App\Models\Product;
@@ -43,11 +45,13 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
             if ($favorited->exists()) {
                 $favorited->delete();
+                event(new UserInteraction(UserInteractionType::UnfavouritedProduct, Product::class, $productId));
             } else {
                 $table->insert([
                     'user_id' => $userId,
                     'product_id' => $productId,
                 ]);
+                event(new UserInteraction(UserInteractionType::FavouritedProduct, Product::class, $productId));
             }
 
             return ['favorited' => $favorited->exists()];
@@ -533,7 +537,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         if (! $price) {
             $price = $product['price'];
         }
-        
+
         $discount_rules = [];
 
         if (! empty($product['discount_rules'])) {

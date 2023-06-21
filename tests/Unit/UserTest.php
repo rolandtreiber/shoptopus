@@ -112,6 +112,12 @@ class UserTest extends TestCase
     }
 
     /** @test */
+    public function it_has_a_last_seen_field(): void
+    {
+        $this->assertNotNull($this->user->last_seen);
+    }
+
+    /** @test */
     public function it_may_have_many_addresses(): void
     {
         $this->assertCount(0, $this->user->addresses);

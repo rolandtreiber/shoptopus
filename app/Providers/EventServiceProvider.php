@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\UserInteraction;
 use App\Facades\Module;
+use App\Listeners\UpdateLastSeenUser;
 use App\Models\AccessToken;
 use App\Models\Banner;
 use App\Models\FileContent;
@@ -52,6 +54,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        UserInteraction::class => [
+            UpdateLastSeenUser::class
+        ]
     ];
 
     /**

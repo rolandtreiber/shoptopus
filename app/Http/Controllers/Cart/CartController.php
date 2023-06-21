@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Cart;
 
+use App\Enums\UserInteractionType;
+use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddItemToCartRequest;
 use App\Http\Requests\Cart\PatchRequest;
 use App\Http\Requests\Cart\RemoveItemFromCartRequest;
 use App\Http\Requests\Cart\UpdateQuantityRequest;
+use App\Models\Product;
 use App\Services\Local\Cart\CartServiceInterface;
 
 class CartController extends Controller
@@ -53,6 +56,7 @@ class CartController extends Controller
     {
         try {
             $data = $this->cartService->addItem($request->validated());
+            event(new UserInteraction(UserInteractionType::AddedItemToCart, Product::class, $request->product_id));
 
             return response()->json($this->postResponse($data));
         } catch (\Exception|\Error $e) {
@@ -67,6 +71,7 @@ class CartController extends Controller
     {
         try {
             $this->cartService->removeItem($request->validated());
+            event(new UserInteraction(UserInteractionType::RemovedItemFromCart, Product::class, $request->product_id));
 
             return response()->json($this->deleteResponse());
         } catch (\Exception|\Error $e) {
