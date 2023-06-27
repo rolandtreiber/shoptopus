@@ -42,8 +42,11 @@ class CustomerDetailResource extends JsonResource
             'cart' => new CartListResource($this->cart),
             'total_orders' => $this->orders()->count(),
             'total_spent' => $this->payments()->sum('amount'),
-            'latest_order_date' => $latestOrderDate?->format('d-m-Y H:i'),
+            'latest_order_date' => $latestOrderDate?->format('Y-m-d H:i:s'),
             'notes' => NoteResource::collection($this->notes),
+            'cart_item_count' => $this->cart->count(),
+            'last_seen' => $this->last_seen?->format('Y-m-d H:i:s'),
+            'ratings' => RatingListResource::collection($this->ratings)
         ];
     }
 }
