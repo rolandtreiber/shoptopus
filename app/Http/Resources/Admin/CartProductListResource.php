@@ -30,6 +30,7 @@ class CartProductListResource extends JsonResource
         }
 
         return [
+            'id' => $this->id,
             'name' => $this->getTranslations('name'),
             'quantity' => $this->pivot->quantity,
             'price' => $totalOriginalPrice,
@@ -37,6 +38,7 @@ class CartProductListResource extends JsonResource
             'final_price' => $totalFinalPrice,
             'item_full_price' => round($this->price, 2),
             'item_final_price' => round($this->final_price, 2),
+            'cover_photo_url' => $this->cover_photo ? $this->cover_photo->url : null,
             'variant' => ProductVariantListResource::make(ProductVariant::find($this->pivot->product_variant_id)),
         ];
     }

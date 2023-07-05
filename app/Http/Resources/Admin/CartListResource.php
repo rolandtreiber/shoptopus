@@ -30,8 +30,8 @@ class CartListResource extends JsonResource
             'last_updated' => $this->updated_at ? Carbon::parse($this->updated_at)->format('Y-m-d H:i:s') : 'never',
             'products_total' => $totalProductCount,
             'products' => CartProductListResource::collection($this->products),
-            'full_price' => $totalProductOriginalValue,
-            'price' => $totalProductCurrentValue,
+            'full_price' => round($totalProductOriginalValue, 2),
+            'price' => round($totalProductCurrentValue, 2),
         ];
     }
 }

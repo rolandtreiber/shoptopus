@@ -25,6 +25,11 @@ class PaymentRelationResource extends JsonResource
             'status' => $this->status,
             'payment_ref' => $this->payment_ref,
             'method_ref' => $this->method_ref,
+            'payment_method' => $this->payment_source->payment_method_id,
+            'brand' => $this->payment_source->brand,
+            'last_four' => $this->payment_source->last_four,
+            'exp_month' => $this->payment_source->exp_month,
+            'exp_year' => $this->payment_source->exp_year,
             'created_at' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             'source' => new PaymentSourceRelationResource($this->payment_source),
         ];

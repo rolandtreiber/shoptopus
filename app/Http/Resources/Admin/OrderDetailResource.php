@@ -41,7 +41,7 @@ class OrderDetailResource extends JsonResource
                 'description' => $dt->getTranslations('description'),
             ],
             'products' => OrderProductResource::collection($this->products),
-            'event_logs' => EventLogResource::collection($this->eventLogs),
+            'event_logs' => EventLogResource::collection($this->eventLogs()->orderByDesc('created_at')->get()),
             'notes' => NoteResource::collection($this->notes),
         ];
     }

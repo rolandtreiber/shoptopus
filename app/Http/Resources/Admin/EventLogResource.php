@@ -15,6 +15,7 @@ class EventLogResource extends JsonResource
         return [
             'type' => $this->type,
             'message' => $this->message,
+            'data' => $this->data,
             'created_at' => $this->created_at->format('Y-m-d H:i'),
         ];
     }

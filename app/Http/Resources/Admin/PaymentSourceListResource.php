@@ -24,7 +24,7 @@ class PaymentSourceListResource extends JsonResource
             'last_four' => $this->last_four,
             'brand' => $this->brand,
             'payment_method_id' => $this->payment_method_id,
-            'added' => $this->created_at->format('d-m-Y H:i'),
+            'added' => $this->created_at,
         ];
     }
 }
