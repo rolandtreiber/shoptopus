@@ -40,6 +40,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $avatar
  * @property int  $is_favorite
  * @property Carbon $deleted_at
+ * @property Carbon $created_at
  * @property Carbon $last_seen
  * @property Collection $addresses
  * @property Collection $orders

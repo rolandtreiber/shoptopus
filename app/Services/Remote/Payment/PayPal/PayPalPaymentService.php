@@ -228,9 +228,11 @@ class PayPalPaymentService implements PayPalPaymentServiceInterface
             if (app()->isProduction()) {
                 $clientId = $this->config['CLIENT_ID']['value'] ?: null;
                 $clientSecret = $this->config['SECRET']['value'] ?: null;
-                // TEMPORARY SandboxEnvironment in production while testing
-                return new SandboxEnvironment($clientId, $clientSecret);
-            // return new ProductionEnvironment($clientId, $clientSecret);
+                if (config('app.env') !== 'production') {
+                    return new SandboxEnvironment($clientId, $clientSecret);
+                } else {
+                    return new ProductionEnvironment($clientId, $clientSecret);
+                }
             } else {
                 $clientId = $this->config['CLIENT_ID']['test_value'] ?: null;
                 $clientSecret = $this->config['SECRET']['test_value'] ?: null;

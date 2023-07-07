@@ -39,8 +39,12 @@ class ReportService implements ReportServiceInterface
     /**
      * ReportHelper constructor.
      * Sets the palette
+     * @param Carbon|null $start
+     * @param Carbon|null $end
+     * @param integer|null $interval
+     * @param array|null $palette
      */
-    public function setup(Carbon $start = null, Carbon $end = null, $interval = null, $palette = null): ReportService
+    public function setup(Carbon $start = null, Carbon $end = null, $interval = null, array $palette = null): ReportService
     {
         $this->datasets = [];
         if ($start && $end && $interval !== null) {
@@ -68,7 +72,7 @@ class ReportService implements ReportServiceInterface
     }
 
     /**
-     * @param  mixed  $palette
+     * @param array $palette
      */
     public function setPalette($palette = null): ReportService
     {
@@ -171,6 +175,7 @@ class ReportService implements ReportServiceInterface
 
     public function getApexCompositePieResponse(): array
     {
+        $dataset = [];
         if ($this->datasets) {
             $dataset = $this->datasets[0];
         }

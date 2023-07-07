@@ -81,9 +81,9 @@ class ReportRepository implements ReportRepositoryInterface
     }
 
     /**
-     * @param  null  $categoryId
+     * @param string|null $categoryId
      */
-    public function getProductBreakdown(array $controls, $categoryId = null): array
+    public function getProductBreakdown(array $controls, string $categoryId = null): array
     {
         $topLevelCategories = ProductCategory::where('enabled', 1)->whereNull('parent_id')->select('id', 'name')->get();
 
@@ -225,7 +225,7 @@ class ReportRepository implements ReportRepositoryInterface
                     ->where('pv.enabled', 1);
             })->select([
                 DB::raw('CASE WHEN SUM(pv.price) IS NOT NULL THEN (SUM(pv.price) * SUM(pv.stock)) ELSE (SUM(products.price) * SUM(products.stock)) END AS value'),
-            ])->where('products.status', ProductStatus::Active)->groupBy('products.id')->pluck('value')->sum();
+            ])->where('products.status', ProductStatus::Active)->groupBy('products.id')->sum('value');
 
         $ordersTotal = DB::table('orders')->whereIn('status', [
             OrderStatus::Completed,

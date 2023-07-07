@@ -16,8 +16,8 @@ use stdClass;
 /**
  * @property string $user_id
  * @property string $order_id
- * @property StdClass $address
- * @property StdClass $payment
+ * @property Address $address
+ * @property array $payment
  * @property array $products
  * @property StdClass $voucher_code
  * @property StdClass $delivery_type

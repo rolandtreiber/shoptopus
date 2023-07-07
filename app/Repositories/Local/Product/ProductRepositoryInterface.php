@@ -6,6 +6,8 @@ use App\Models\Product;
 
 interface ProductRepositoryInterface
 {
+    public function getAll(array $page_formatting = [], array $filters = [], array $excludeRelationships = []): array;
+
     /**
      * Save product to favorites
      *

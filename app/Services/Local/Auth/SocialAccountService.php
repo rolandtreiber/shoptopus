@@ -34,6 +34,7 @@ class SocialAccountService implements SocialAccountServiceInterface
     public function getOAuthProviderTargetUrl(string $provider): string
     {
         try {
+            // @phpstan-ignore-next-line
             return Socialite::driver($provider)->stateless()->redirect()->getTargetUrl();
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
@@ -52,7 +53,7 @@ class SocialAccountService implements SocialAccountServiceInterface
         try {
             $provider = $payload['provider'];
             $code = $payload['code'];
-
+            // @phpstan-ignore-next-line
             $socialiteUser = Socialite::driver($provider)->stateless()->userFromToken(
                 $this->getAccessTokenFromProvider($provider, $code)
             );

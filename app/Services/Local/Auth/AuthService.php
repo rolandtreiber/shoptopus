@@ -65,7 +65,7 @@ class AuthService implements AuthServiceInterface
                 throw new \Exception('User not found.', Config::get('api_error_codes.services.auth.login_user_incorrect'));
             }
 
-            if (is_null($user->password)) {
+            if (empty($user->password)) {
                 // Must have signed up with a social account.
                 throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.must_reset_password'));
             }
@@ -195,7 +195,7 @@ class AuthService implements AuthServiceInterface
                 }
             }
 
-            $url = Config::get('app.frontend_url_public')."/{$uri}?message=".urlencode($message).'&status='.urlencode($statusCode);
+            $url = Config::get('app.frontend_url_public')."/{$uri}?message=".urlencode($message).'&status='.urlencode((string) $statusCode);
 
             return [
                 'url' => $url,
@@ -277,9 +277,7 @@ class AuthService implements AuthServiceInterface
                 ]
             );
 
-            if ($user && $passwordReset) {
-                $user->sendPasswordResetNotification($passwordReset->token);
-            }
+            $user->sendPasswordResetNotification($passwordReset->token);
 
             return ['data' => ['message' => 'We have e-mailed your password reset link!']];
         } catch (\Exception|\Error $e) {

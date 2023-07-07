@@ -7,6 +7,9 @@ use App\Traits\FilterTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * @method getSelectableColumns()
+ */
 class ModelRepository implements ModelRepositoryInterface
 {
     use FilterTrait;

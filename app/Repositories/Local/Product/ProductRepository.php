@@ -488,7 +488,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                                         array_push($model_variant['product_attributes'], $attributeData);
                                     } else {
-                                        foreach ($model_variant['product_attributes'] as &$attribute) {
+                                        // @phpstan-ignore-next-line
+                                        foreach ((array) $model_variant['product_attributes'] as &$attribute) {
                                             if (! in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
                                                 && $attribute['id'] === $product_variant['product_attribute_id']
                                             ) {
@@ -504,6 +505,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             }
                         } elseif (is_null($product_variant['product_attribute_id']) && $attribute_option['id']) {
                             foreach ($model['product_variants'] as &$model_variant) {
+                                // @phpstan-ignore-next-line
                                 foreach ($model_variant['product_attributes'] as &$attribute) {
                                     if (
                                         ! in_array($attribute_option['id'], array_column($attribute['options'], 'id'))

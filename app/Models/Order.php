@@ -8,6 +8,7 @@ use App\Traits\HasEventLogs;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -38,7 +39,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Address $address
  * @property User $user
  * @property Invoice $invoice
- * @property Product[] $products
+ * @property Collection<Product> $products
  * @property mixed $pivot
  * @property float $delivery
  * @property Payment[] $payments

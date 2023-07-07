@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * @property string $message
  * @property int $type
  * @property mixed $data
+ * @property Carbon $created_at
  */
 class EventLog extends Model
 {

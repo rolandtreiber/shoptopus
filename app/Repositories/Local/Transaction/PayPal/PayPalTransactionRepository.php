@@ -5,6 +5,9 @@ namespace App\Repositories\Local\Transaction\PayPal;
 use App\Models\Transaction\PayPalTransaction;
 use PayPalHttp\HttpResponse;
 
+/**
+ * @mixin PayPalTransaction
+ */
 class PayPalTransactionRepository implements PayPalTransactionRepositoryInterface
 {
     /**
@@ -12,6 +15,7 @@ class PayPalTransactionRepository implements PayPalTransactionRepositoryInterfac
      */
     public function storeTransaction(HttpResponse $transaction, string $orderId): HttpResponse
     {
+        /** @var object{'id': string, 'intent': string, 'status': string, 'purchase_units': array, 'payer': object} $result */
         $result = $transaction->result;
 
         PayPalTransaction::create([

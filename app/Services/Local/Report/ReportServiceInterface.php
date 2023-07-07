@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 interface ReportServiceInterface
 {
     // Setup
-    public function setup(Carbon $start, Carbon $end, $interval): ReportService;
+    public function setup(Carbon $start = null, Carbon $end = null, $interval = null, array $palette = null): ReportService;
 
     // Styles
     public function setPalette($palette = null): ReportService;

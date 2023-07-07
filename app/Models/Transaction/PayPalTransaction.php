@@ -5,6 +5,23 @@ namespace App\Models\Transaction;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property string $order_id
+ * @property string $transaction_id
+ * @property integer $status_code
+ * @property string $intent
+ * @property string $status
+ * @property string $reference_id
+ * @property string $charge_amount
+ * @property string $currency_code
+ * @property string $merchant_id
+ * @property string $merchant_email
+ * @property string $soft_descriptor
+ * @property string $payer_firstname
+ * @property string $payer_surname
+ * @property string $payer_email
+ * @property string $payer_id
+ */
 class PayPalTransaction extends Model
 {
     /**

@@ -4,6 +4,8 @@ namespace App\Services\Local\User;
 
 interface UserServiceInterface
 {
+    public function post(array $payload, bool $returnAsArray = true);
+
     /**
      * Get the currently authenticated user instance
      */

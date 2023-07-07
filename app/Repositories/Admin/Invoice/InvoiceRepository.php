@@ -56,7 +56,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             $product->pivot->product_variant_id !== null && $result['product_variant_id'] = $product->pivot->product_variant_id;
 
             return $result;
-        });
+        })->toArray();
 
         $invoice->voucher_code = $voucherCode;
         $invoice->delivery_type = $deliveryType;

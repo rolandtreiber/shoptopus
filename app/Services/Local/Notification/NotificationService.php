@@ -19,11 +19,11 @@ class NotificationService implements NotificationServiceInterface
     /**
      * Get currently authenticated user's notifications
      *
-     * @param  null  $userId
+     * @param string|null $userId
      *
      * @throws \Exception
      */
-    public function getAllUnreadNotificationsForUser($userId = null): array
+    public function getAllUnreadNotificationsForUser(string $userId = null): array
     {
         try {
             if (! $userId) {

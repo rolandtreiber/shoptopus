@@ -18,12 +18,9 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @property mixed $image
- * @property mixed $id
  * @property mixed $type
  * @property mixed $product_attribute_id
  * @property mixed $value
- *
- * @mixin SearchableModel
  */
 class ProductAttributeOption extends SearchableModel implements Auditable, Exportable, Importable
 {

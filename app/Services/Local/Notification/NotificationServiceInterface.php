@@ -10,7 +10,7 @@ interface NotificationServiceInterface
      *
      * @throws \Exception
      */
-    public function getAllUnreadNotificationsForUser(): array;
+    public function getAllUnreadNotificationsForUser(string $userId = null): array;
 
     /**
      * Mark a notification read

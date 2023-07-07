@@ -24,12 +24,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed|string $code
  * @property int $type
  * @property float $amount
- * @property string $id
  * @property mixed $valid_from
  * @property mixed $valid_until
  * @property string $value
- *
- * @mixin Builder
  */
 class VoucherCode extends SearchableModel implements Auditable, Exportable, Importable
 {

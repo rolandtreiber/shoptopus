@@ -37,7 +37,7 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
      */
     public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
-        try {
+//        try {
 //            $ids = collect($result)->pluck('user_id')->toArray();
 //
 //            foreach ($result as &$model) {
@@ -58,10 +58,10 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
 //            }
 
             return $result;
-        } catch (\Exception|\Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
+//        } catch (\Exception|\Error $e) {
+//            $this->errorService->logException($e);
+//            throw $e;
+//        }
     }
 
     /**

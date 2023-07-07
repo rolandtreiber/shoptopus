@@ -28,11 +28,12 @@ class StripePaymentService implements StripePaymentServiceInterface
     private StripeTransactionRepositoryInterface $transactionRepository;
 
     public function __construct(
-        ErrorServiceInterface $errorService,
-        PaymentProviderService $paymentProviderService,
+        ErrorServiceInterface                $errorService,
+        PaymentProviderService               $paymentProviderService,
         StripeTransactionRepositoryInterface $transactionRepository,
-        OrderServiceInterface $orderService
-    ) {
+        OrderServiceInterface                $orderService
+    )
+    {
         $this->errorService = $errorService;
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
@@ -91,18 +92,13 @@ class StripePaymentService implements StripePaymentServiceInterface
      */
     public function formatPaymentResponse(array $executed_payment_response): array
     {
-        try {
-            return [
-                'success' => $executed_payment_response['status'] === 'succeeded',
-                'status_code' => $executed_payment_response['status'] === 'succeeded' ? 200 : 500,
-                'status' => $executed_payment_response['status'] === 'succeeded' ? 'CREATED' : 'NON_STANDARD',
-                'payment_id' => $executed_payment_response['id'],
-                'provider' => 'Stripe',
-            ];
-        } catch (\Exception|\Error $e) {
-            $this->errorService->logException($e);
-            throw $e;
-        }
+        return [
+            'success' => $executed_payment_response['status'] === 'succeeded',
+            'status_code' => $executed_payment_response['status'] === 'succeeded' ? 200 : 500,
+            'status' => $executed_payment_response['status'] === 'succeeded' ? 'CREATED' : 'NON_STANDARD',
+            'payment_id' => $executed_payment_response['id'],
+            'provider' => 'Stripe',
+        ];
     }
 
     /**
