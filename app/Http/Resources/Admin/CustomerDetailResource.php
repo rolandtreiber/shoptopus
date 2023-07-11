@@ -4,6 +4,7 @@ namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\AddressResource;
 use App\Http\Resources\Common\NoteResource;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,6 +21,7 @@ class CustomerDetailResource extends JsonResource
     {
         $latestOrderDate = null;
         if ($this->orders->count() > 0) {
+            /** @var Order $latestOrder */
             $latestOrder = $this->orders()->orderByDesc('created_at')->first();
             $latestOrderDate = $latestOrder->created_at;
         }

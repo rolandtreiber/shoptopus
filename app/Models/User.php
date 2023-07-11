@@ -41,9 +41,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property int  $is_favorite
  * @property Carbon $deleted_at
  * @property Carbon $created_at
- * @property Carbon $last_seen
- * @property Collection $addresses
- * @property Collection $orders
+ * @property Carbon|null $last_seen
+ * @property Collection<Address> $addresses
+ * @property Collection<Order> $orders
  * @property Collection $social_accounts
  * @property Collection $payment_sources
  * @property Collection $payments

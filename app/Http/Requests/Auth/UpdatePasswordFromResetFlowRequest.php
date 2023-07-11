@@ -7,7 +7,8 @@ use App\Http\Requests\FormRequest;
 /**
  * Class UpdatePasswordFromResetFlowRequest
  *
- * @property mixed password
+ * @property string $password
+ * @property string $password_reset_token
  */
 final class UpdatePasswordFromResetFlowRequest extends FormRequest
 {

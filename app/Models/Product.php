@@ -26,7 +26,6 @@ use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
-use stdClass;
 
 /**
  * @method static count()
@@ -45,11 +44,14 @@ use stdClass;
  * @property int $backup_stock
  * @property Collection $tags
  * @property Collection $fileContents
- * @property string $updated_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @property FileContent|array<string, string>|null $cover_photo
+ * @property FileContent $coverPhoto
  * @property string $parent_id
  * @property float $rating
  * @property Collection<ProductAttribute>|null $product_attributes
+ * @property Collection<ProductVariant>|null $product_variants
  */
 class Product extends SearchableModel implements Auditable, Exportable, Importable, Explored
 {

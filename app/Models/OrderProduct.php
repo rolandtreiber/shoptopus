@@ -12,11 +12,12 @@ use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
 /**
- * @property mixed $unit_price
- * @property mixed $product_id
- * @property mixed $product_variant_id
- * @property mixed $amount
- * @property mixed $order
+ * @property float $unit_price
+ * @property string $product_id
+ * @property string $product_variant_id
+ * @property integer $amount
+ * @property integer $quantity
+ * @property Order $order
  * @property string $sku
  * @property float|mixed $full_price
  * @property float|mixed $final_price
