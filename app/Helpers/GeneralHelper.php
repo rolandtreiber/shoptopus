@@ -71,7 +71,7 @@ class GeneralHelper
     }
 
     /**
-     * @param  null  $timestamp
+     * @param  Carbon|string|null  $timestamp
      */
     public static function getFormattedTimestamp($timestamp = null): string
     {

@@ -13,6 +13,7 @@ class PaymentException extends \Exception
      */
     public function report(Throwable $exception): void
     {
+        // @phpstan-ignore-next-line
         parent::report($exception);
     }
 }

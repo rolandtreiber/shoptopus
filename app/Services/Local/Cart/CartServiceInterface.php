@@ -31,4 +31,6 @@ interface CartServiceInterface
      * Merge the user's carts
      */
     public function mergeUserCarts(string $userId, string $cartId): array;
+
+    public function update(string $id, array $payload);
 }

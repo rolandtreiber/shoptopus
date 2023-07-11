@@ -23,7 +23,7 @@ use stdClass;
 /**
  * @method static count()
  *
- * @property stdClass|null $badge
+ * @property FileContent|array|null $badge
  * @property bool $display_badge
  * @property bool $enabled
  * @property Date $updated_at

@@ -37,7 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon $email_verified_at
  * @property string $password
  * @property string $client_ref
- * @property string $avatar
+ * @property array|null|FileContent $avatar
  * @property int  $is_favorite
  * @property Carbon $deleted_at
  * @property Carbon $created_at

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\ProductCategory;
 
 use App\Http\Controllers\Controller;
 use App\Services\Local\ProductCategory\ProductCategoryServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductCategoryController extends Controller
@@ -46,7 +47,9 @@ class ProductCategoryController extends Controller
     /**
      * Get a single model by its slug
      *
-     * @param \Illuminate\Http\Request
+     * @param Request $request
+     * @param string $slug
+     * @return JsonResponse
      */
     public function getBySlug(Request $request, string $slug): \Illuminate\Http\JsonResponse
     {

@@ -65,4 +65,6 @@ interface AuthServiceInterface
      * Obtain the user information from the Auth provider
      */
     public function handleOAuthProviderCallback(array $payload): array;
+
+    public function details(): array;
 }

@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Product\ProductServiceInterface;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -28,7 +29,7 @@ class ProductController extends Controller
     /**
      * Get all models
      */
-    public function getAll(Request $request): \Illuminate\Http\JsonResponse
+    public function getAll(Request $request): JsonResponse
     {
         try {
             [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
@@ -52,7 +53,7 @@ class ProductController extends Controller
     /**
      * Get a single model
      */
-    public function get(Request $request, string $id): \Illuminate\Http\JsonResponse
+    public function get(Request $request, string $id): JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productService->get($id), $request));
@@ -64,9 +65,11 @@ class ProductController extends Controller
     /**
      * Get a single model by its slug
      *
-     * @param \Illuminate\Http\Request
+     * @param Request $request
+     * @param string $slug
+     * @return JsonResponse
      */
-    public function getBySlug(Request $request, string $slug): \Illuminate\Http\JsonResponse
+    public function getBySlug(Request $request, string $slug): JsonResponse
     {
         try {
             return response()->json($this->getResponse([], $this->productService->getBySlug($slug), $request));
@@ -78,7 +81,7 @@ class ProductController extends Controller
     /**
      * Favorite a single model
      */
-    public function favorite(FavoriteProductRequest $request): \Illuminate\Http\JsonResponse
+    public function favorite(FavoriteProductRequest $request): JsonResponse
     {
         try {
             return response()->json($this->postResponse($this->productService->favorite($request->validated()['productId'])));
@@ -89,9 +92,11 @@ class ProductController extends Controller
     }
 
     /**
-     * @param  string  $slug
+     * @param Product $product
+     * @param ProductAvailableAttributeOptionsRequest $request
+     * @return JsonResponse
      */
-    public function getAvailableAttributeOptionsForProduct(Product $product, ProductAvailableAttributeOptionsRequest $request): \Illuminate\Http\JsonResponse
+    public function getAvailableAttributeOptionsForProduct(Product $product, ProductAvailableAttributeOptionsRequest $request): JsonResponse
     {
         try {
             return response()->json($this->productRepository->getAvailableAttributeOptions($product, $request->selected_attribute_options ?: []));
