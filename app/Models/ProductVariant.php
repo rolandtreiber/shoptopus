@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
@@ -26,6 +27,7 @@ use Spatie\Translatable\HasTranslations;
  * @property bool $enabled
  * @property array $attribute_options
  * @property string $name
+ * @method images()
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
 {
@@ -96,7 +98,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
      */
     public function getFinalPriceAttribute()
     {
-        return $this->product->getFinalPriceAttribute($this->price);
+        return $this->price;
     }
 
     /**
@@ -132,7 +134,10 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
             $text = $this->product->setLocale($languageKey)->name.' - ';
             $attributeTexts = [];
             foreach ($attributes as $attribute) {
+                /** @var ProductAttribute $attribute */
                 $option = $attribute->pivot->option;
+
+                // @phpstan-ignore-next-line - phpstan doesn't seem to understand that translatable fields return string after setLocale()
                 $attributeTexts[] = '('.$attribute->setLocale($languageKey)->name.') '.$option->setLocale($languageKey)->name;
             }
             $elements[$languageKey] = $text.implode(', ', $attributeTexts);

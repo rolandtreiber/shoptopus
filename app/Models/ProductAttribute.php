@@ -29,6 +29,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $type
  * @property string $product_attribute_id
  * @property float $price
+ * @property VariantAttribute $pivot
  */
 class ProductAttribute extends SearchableModel implements Auditable, Exportable, Importable
 {

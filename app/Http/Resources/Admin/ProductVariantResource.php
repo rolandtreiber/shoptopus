@@ -22,6 +22,7 @@ class ProductVariantResource extends JsonResource
         return [
             'id' => $this->id,
             'stock' => $this->stock,
+            'name' => $this->name,
             'description' => $this->getTranslations('description'),
             'price' => $this->price,
             'attributes' => AttributeResource::collection($this->product_variant_attributes),
