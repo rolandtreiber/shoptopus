@@ -15,7 +15,7 @@ class Content extends Model implements Auditable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'contentable_type',
@@ -27,7 +27,7 @@ class Content extends Model implements Auditable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'integer',

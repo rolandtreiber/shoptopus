@@ -43,7 +43,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'delivery_type_id',
@@ -62,7 +62,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',

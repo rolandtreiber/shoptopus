@@ -30,9 +30,12 @@ class NewOrder extends BaseNotification implements UserNotification
         return ['broadcast', 'database', 'mail'];
     }
 
-    public function broadcastOn(): PrivateChannel
+    /**
+     * @return array<PrivateChannel>
+     */
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('user-'.$this->userId.'-notifications');
+        return [new PrivateChannel('user-'.$this->userId.'-notifications')];
     }
 
     public function broadcastType()

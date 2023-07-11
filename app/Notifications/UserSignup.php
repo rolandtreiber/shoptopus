@@ -28,12 +28,15 @@ class UserSignup extends BaseNotification implements UserNotification
         return ['broadcast', 'database'];
     }
 
-    public function broadcastOn(): PrivateChannel
+    /**
+     * @return array<PrivateChannel>
+     */
+    public function broadcastOn(): array
     {
-        return new PrivateChannel('user-'.$this->userId.'-notifications');
+        return [new PrivateChannel('user-'.$this->userId.'-notifications')];
     }
 
-    public function broadcastType()
+    public function broadcastType(): string
     {
         return 'user-signup';
     }

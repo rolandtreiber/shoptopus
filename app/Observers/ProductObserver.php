@@ -18,7 +18,7 @@ class ProductObserver
 
     public function saving(Product $product): void
     {
-        /** @var FileContent $firstImage */
+        /** @var FileContent|null $firstImage */
         $firstImage = $product->images()->first();
         if ($firstImage && (! $product->cover_photo || $product->cover_photo->file_name !== $firstImage->file_name)) {
             $product->cover_photo = [

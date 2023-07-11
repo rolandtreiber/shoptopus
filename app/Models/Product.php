@@ -9,6 +9,7 @@ use App\Traits\HasFiles;
 use App\Traits\HasNote;
 use App\Traits\HasRatings;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,6 +26,7 @@ use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
+use stdClass;
 
 /**
  * @method static count()
@@ -36,15 +38,15 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $id
  * @property float $final_price
  * @property int $status
+ * @property OrderProduct $pivot
+ * @property string $sku
  * @property int $stock
  * @property int $purchase_count
  * @property int $backup_stock
- * @property \Illuminate\Database\Eloquent\Collection $tags
- * @property \Illuminate\Database\Eloquent\Collection $fileContents
- * @property FileContent $coverPhoto
+ * @property Collection $tags
+ * @property Collection $fileContents
  * @property string $updated_at
- * @property mixed $sku
- * @property mixed $cover_photo
+ * @property FileContent|array<string, string>|null $cover_photo
  */
 class Product extends SearchableModel implements Auditable, Exportable, Importable, Explored
 {
@@ -171,7 +173,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -192,7 +194,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',

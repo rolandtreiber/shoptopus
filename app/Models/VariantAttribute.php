@@ -5,6 +5,11 @@ namespace App\Models;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
 
+/**
+ * @property string $product_attribute_id
+ * @property string $product_variant_id
+ * @property string $product_attribute_option_id
+ */
 class VariantAttribute extends MorphPivot
 {
     use HasUUID;

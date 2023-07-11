@@ -12,7 +12,7 @@ class SocialAccount extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'user_id',
@@ -23,7 +23,7 @@ class SocialAccount extends Model
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'created_at', 'updated_at',

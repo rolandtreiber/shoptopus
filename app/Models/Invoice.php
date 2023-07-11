@@ -19,10 +19,11 @@ use stdClass;
  * @property Address $address
  * @property array $payment
  * @property array $products
- * @property StdClass $voucher_code
- * @property StdClass $delivery_type
- * @property StdClass $totals
+ * @property VoucherCode|null $voucher_code
+ * @property DeliveryType|null $delivery_type
+ * @property array<string, float> $totals
  * @property string $slug
+ * @property int $type
  * @property User $user
  * @property Order $order
  */

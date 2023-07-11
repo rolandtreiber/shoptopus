@@ -45,7 +45,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'type',
@@ -100,7 +100,7 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',

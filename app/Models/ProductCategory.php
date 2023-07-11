@@ -84,7 +84,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -99,7 +99,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',

@@ -15,7 +15,7 @@ class StripeTransaction extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'order_id',
@@ -45,7 +45,7 @@ class StripeTransaction extends Model
     /**
      * The attributes that should be hidden for arrays.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $hidden = [
         'created_at',

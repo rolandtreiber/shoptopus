@@ -7,6 +7,8 @@ use App\Enums\PaymentType;
 use App\Models\AccessToken;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -38,22 +40,27 @@ class InvoiceRepository implements InvoiceRepositoryInterface
             'source' => $payment->payment_source,
         ];
         $invoice->products = $products->map(function ($product) {
+            /** @var OrderProduct $pivot */
+            // @phpstan-ignore-next-line
+            $pivot = $product->pivot;
+
+            /** @var Product $product */
             $result = [
-                'id' => $product->pivot->id,
+                'id' => $pivot->id,
                 'sku' => $product->sku,
-                'name' => $product->pivot->name,
-                'type' => $product->pivot->product_variant_id !== null ? 'product_variant' : 'product',
-                'amount' => $product->pivot->amount,
-                'full_price' => $product->pivot->full_price,
-                'product_id' => $product->pivot->product_id,
-                'unit_price' => $product->pivot->unit_price,
-                'final_price' => $product->pivot->final_price,
-                'unit_discount' => $product->pivot->unit_discount,
-                'total_discount' => $product->pivot->total_discount,
-                'original_unit_price' => $product->pivot->original_unit_price,
+                'name' => $pivot->name,
+                'type' => $pivot->product_variant_id !== null ? 'product_variant' : 'product',
+                'amount' => $pivot->amount,
+                'full_price' => $pivot->full_price,
+                'product_id' => $pivot->product_id,
+                'unit_price' => $pivot->unit_price,
+                'final_price' => $pivot->final_price,
+                'unit_discount' => $pivot->unit_discount,
+                'total_discount' => $pivot->total_discount,
+                'original_unit_price' => $pivot->original_unit_price,
                 'image' => $product->cover_photo ? $this->getImage($product->cover_photo->url) : null,
             ];
-            $product->pivot->product_variant_id !== null && $result['product_variant_id'] = $product->pivot->product_variant_id;
+            $pivot->product_variant_id !== null && $result['product_variant_id'] = $pivot->product_variant_id;
 
             return $result;
         })->toArray();

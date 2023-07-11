@@ -20,8 +20,8 @@ class VerifyEmail extends Notification
     /**
      * Get the notification's channels.
      *
-     * @param  mixed  $notifiable
-     * @return array|string
+     * @param mixed $notifiable
+     * @return array
      */
     public function via($notifiable): array
     {

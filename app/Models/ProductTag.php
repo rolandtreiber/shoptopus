@@ -17,11 +17,12 @@ use Shoptopus\ExcelImportExport\traits\HasImportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
+use stdClass;
 
 /**
  * @method static count()
  *
- * @property string $badge
+ * @property stdClass|null $badge
  * @property bool $display_badge
  * @property bool $enabled
  * @property Date $updated_at
@@ -79,7 +80,7 @@ class ProductTag extends SearchableModel implements Auditable, Exportable, Impor
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'name',
@@ -92,7 +93,7 @@ class ProductTag extends SearchableModel implements Auditable, Exportable, Impor
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',

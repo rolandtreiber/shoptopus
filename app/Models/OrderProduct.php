@@ -17,6 +17,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $product_variant_id
  * @property mixed $amount
  * @property mixed $order
+ * @property string $sku
  * @property float|mixed $full_price
  * @property float|mixed $final_price
  * @property float|mixed $original_unit_price
@@ -64,7 +65,7 @@ class OrderProduct extends MorphPivot implements Exportable
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'product_id' => 'string',

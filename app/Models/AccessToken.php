@@ -12,7 +12,7 @@ use Illuminate\Support\Carbon;
 /**
  * @property string $accessable_type
  * @property string $accessable_id
- * @property string $type
+ * @property int $type
  * @property string $user_id
  * @property string $issuer_user_id
  */
@@ -31,7 +31,7 @@ class AccessToken extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<string>
      */
     protected $fillable = [
         'type',
@@ -44,7 +44,7 @@ class AccessToken extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'id' => 'string',
