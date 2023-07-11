@@ -34,7 +34,8 @@ use Spatie\Translatable\HasTranslations;
  * @property bool $enabled
  * @property Collection $children
  * @property Date $updated_at
- * @property mixed $id
+ * @property string $parent_id
+ * @property string $id
  */
 class ProductCategory extends SearchableModel implements Auditable, Exportable, Importable
 {

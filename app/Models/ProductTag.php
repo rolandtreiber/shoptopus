@@ -8,6 +8,7 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Date;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -26,6 +27,8 @@ use stdClass;
  * @property bool $display_badge
  * @property bool $enabled
  * @property Date $updated_at
+ * @property string $id
+ * @property Collection<Product> $products
  */
 class ProductTag extends SearchableModel implements Auditable, Exportable, Importable
 {

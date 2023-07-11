@@ -6,15 +6,20 @@ use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
+use stdClass;
 
 /**
  * @property string $id
  * @property string $note
  * @property string $user_id
- * @property User $user
+ * @property User|null $user
  * @property string $noteable_id
  * @property string $noteable_type
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * @property stdClass $noteable
  */
 class Note extends Model implements Auditable
 {

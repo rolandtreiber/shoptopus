@@ -2,15 +2,25 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @property string $id
+ * @property Carbon $created_at
+ * @property mixed $data
+ * @property string $read_at
+ */
 class NotificationResource extends JsonResource
 {
+    public string $type;
+
     /**
      * Transform the resource into an array.
      *
-     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     * @param Request $request
+     * @return array
      */
     public function toArray(Request $request): array
     {

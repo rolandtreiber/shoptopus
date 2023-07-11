@@ -3,9 +3,13 @@
 namespace App\Http\Resources\Admin;
 
 use App\Http\Resources\Common\NoteResource;
+use App\Models\ProductTag;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin ProductTag
+ */
 class ProductTagDetailResource extends JsonResource
 {
     /**

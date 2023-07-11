@@ -49,6 +49,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Collection $payments
  * @property Cart $cart
  * @property mixed $unreadNotifications
+ * @property string $initials
+ * @property string $name
  */
 class User extends Authenticatable implements Auditable, Exportable
 {

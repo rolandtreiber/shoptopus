@@ -2,9 +2,13 @@
 
 namespace App\Http\Resources\Common;
 
+use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @mixin Note
+ */
 class NoteDetailResource extends JsonResource
 {
     /**
@@ -21,7 +25,7 @@ class NoteDetailResource extends JsonResource
                 'name' => $this->user->name,
                 'id' => $this->user->id
             ] : null,
-            'noteable' => $this->npteable,
+            'noteable' => $this->noteable,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

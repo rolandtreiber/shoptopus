@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Collection;
+use Illuminate\Support\Carbon;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
@@ -27,6 +27,9 @@ use Spatie\Translatable\HasTranslations;
  * @property bool $enabled
  * @property array $attribute_options
  * @property string $name
+ * @property int $stock
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  * @method images()
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable
