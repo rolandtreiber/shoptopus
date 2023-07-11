@@ -6,7 +6,9 @@ use App\Traits\HasFile;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Traits\Date;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,6 +39,8 @@ use Spatie\Translatable\HasTranslations;
 class ProductCategory extends SearchableModel implements Auditable, Exportable, Importable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable, HasNote;
+
+    private array $allChildIds;
 
     protected $exportableFields = [
         'slug',
@@ -154,9 +158,9 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
     /**
      * Add a child category
      *
-     * @return false|\Illuminate\Database\Eloquent\Model
+     * @return false|Model
      */
-    public function addChildCategory(ProductCategory $product_category): \Illuminate\Database\Eloquent\Model|bool
+    public function addChildCategory(ProductCategory $product_category): Model|bool
     {
         return $this->children()->save($product_category);
     }
@@ -216,7 +220,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
         return $this->belongsToMany(Product::class);
     }
 
-    public function products(bool $immediate = true): BelongsToMany
+    public function products(bool $immediate = true): BelongsToMany|Builder
     {
         if ($immediate) {
             return $this->belongsToMany(Product::class);

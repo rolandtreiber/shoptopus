@@ -47,6 +47,9 @@ use stdClass;
  * @property Collection $fileContents
  * @property string $updated_at
  * @property FileContent|array<string, string>|null $cover_photo
+ * @property string $parent_id
+ * @property float $rating
+ * @property Collection<ProductAttribute>|null $product_attributes
  */
 class Product extends SearchableModel implements Auditable, Exportable, Importable, Explored
 {
@@ -262,9 +265,9 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     /**
      * Calculate the final price with discounts
      *
-     * @param  null  $price
+     * @param float|null $price
      */
-    public function getFinalPriceAttribute($price = null): mixed
+    public function getFinalPriceAttribute(float $price = null): mixed
     {
         if (! $price) {
             $price = $this->price;
@@ -320,25 +323,40 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         }
     }
 
-    public function scopeWhereHasTags($query, ?array $tags)
+    /**
+     * @param $query
+     * @param array|null $tags
+     * @return void
+     */
+    public function scopeWhereHasTags($query, ?array $tags): void
     {
-        if ($tags && count($tags) > 0) {
+        if (($tags !== null) && count($tags) > 0) {
             $productIdsWithTags = DB::table('product_product_tag')->whereIn('product_tag_id', $tags)->pluck('product_id');
             $query->whereIn('id', $productIdsWithTags);
         }
     }
 
+    /**
+     * @param $query
+     * @param array|null $categories
+     * @return void
+     */
     public function scopeWhereHasCategories($query, ?array $categories)
     {
-        if ($categories && count($categories) > 0) {
+        if (($categories !== null) && count($categories) > 0) {
             $productIdsWithTags = DB::table('product_product_category')->whereIn('product_category_id', $categories)->pluck('product_id');
             $query->whereIn('id', $productIdsWithTags);
         }
     }
 
+    /**
+     * @param $query
+     * @param array|null $attributeOptions
+     * @return void
+     */
     public function scopeWhereHasAttributeOptions($query, ?array $attributeOptions)
     {
-        if ($attributeOptions && count($attributeOptions) > 0) {
+        if (($attributeOptions !== null) && count($attributeOptions) > 0) {
             $productIdsWithAttributeOptions = DB::table('product_product_attribute')
                 ->whereIn('product_attribute_option_id', $attributeOptions)
                 ->pluck('product_id');
@@ -355,7 +373,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
     public function getAttributedTranslatedNameAttribute(): array
     {
         $attributes = $this->product_attributes;
-        if (! $attributes || count($attributes) === 0) {
+        if (($attributes === null) || count($attributes) === 0) {
             return $this->getTranslations('name');
         }
         $languages = config('app.locales_supported');
@@ -365,6 +383,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             $attributeTexts = [];
             foreach ($attributes as $attribute) {
                 $option = $attribute->pivot->option;
+                // @phpstan-ignore-next-line
                 $attributeTexts[] = '('.$attribute->setLocale($languageKey)->name.') '.$option->setLocale($languageKey)->name;
             }
             $elements[$languageKey] = $text.implode(', ', $attributeTexts);
