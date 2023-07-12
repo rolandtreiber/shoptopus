@@ -132,3 +132,26 @@ In case you need to override any of the above, you can do so by specifying them 
 You can access the application through the specified port, such as http://localhost:5555
 
 This utility was designed with production use in mind allowing for easy tracing and debugging in case something would behave incorrectly.
+
+# Larastan
+
+[Larastan](https://github.com/nunomaduro/larastan) is a wrapper for Phpstan, that is a code quality tool for php applications. It is optimized specifically to Laravel.
+
+> According to the docs, the main benefits are:
+>- Adds static typing to Laravel to improve developer productivity and code quality
+>- Supports most of Laravel's beautiful magic
+>- Discovers bugs in your code
+
+Larastan is installed for Shoptopus and the code should not have any error flagged by it.
+### Running the analysis
+Once the composer packages are installed, simply run:
+```./vendor/bin/phpstan --memory-limit=2G```\
+There is also a shell script as a shorthand for the exact same thing in the `phpstan` file.\
+To run it, simply use: ```$ ./phpstan```
+
+Ideally you should see **[OK] No errors** displayed at the end like so:
+![Screenshot](./docs/screenshots/larastan-no-errors.png)
+
+In case there is any error, either correct it or ignore it by adding ```// @phpstan-ignore-next-line``` above the problematic line.\
+In the latter case, it would be nice to also provide a short explanation why the error was not fixable.
+
