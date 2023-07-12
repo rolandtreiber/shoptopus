@@ -37,7 +37,7 @@ class OrderProductResource extends JsonResource
             'final_price' => round((float) $this->pivot->final_price, 2),
             'unit_discount' => round((float) $this->pivot->unit_discount, 2),
             'total_discount' => round((float) $this->pivot->total_discount, 2),
-            'cover_photo_url' => $this->coverPhoto === null ? $this->coverPhoto->url : null,
+            'cover_photo_url' => $this->coverPhoto?->url,
         ];
     }
 }

@@ -47,7 +47,7 @@ use Spatie\Translatable\HasTranslations;
  * @property Carbon $created_at
  * @property Carbon $updated_at
  * @property FileContent|array<string, string>|null $cover_photo
- * @property FileContent $coverPhoto
+ * @property FileContent|null $coverPhoto
  * @property string $parent_id
  * @property float $rating
  * @property Collection<ProductAttribute>|null $product_attributes
