@@ -91,7 +91,7 @@ MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 ```
 The email client is available on the following url:
-```http://0.0.0.0:8025```
+[http://0.0.0.0:8025](http://0.0.0.0:8025)
 
 ![Screenshot](./docs/screenshots/mailhog.png)
 
