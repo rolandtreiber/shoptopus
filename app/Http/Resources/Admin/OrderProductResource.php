@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Models\FileContent;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -11,6 +12,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @mixin Product
  * @mixin Order
+ * @property FileContent|null $coverPhoto
  */
 class OrderProductResource extends JsonResource
 {
@@ -19,10 +21,12 @@ class OrderProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        /** @var Product $product */
-        $product = $this->pivot;
         $productVariant = $this->pivot->product_variant_id ? new ProductVariantResource(ProductVariant::find($this->pivot->product_variant_id)) : null;
-        $productNameTranslations = $product->getTranslations('name');
+
+        $coverPhotoUrl = $this->coverPhoto?->url;
+        if (!$coverPhotoUrl && $productVariant !==  null) {
+            $coverPhotoUrl = $productVariant->images()->count() > 0 ? $productVariant->images()->first()->url : null;
+        }
 
         return [
             'id' => $this->pivot->id,
@@ -37,7 +41,7 @@ class OrderProductResource extends JsonResource
             'final_price' => round((float) $this->pivot->final_price, 2),
             'unit_discount' => round((float) $this->pivot->unit_discount, 2),
             'total_discount' => round((float) $this->pivot->total_discount, 2),
-            'cover_photo_url' => $this->coverPhoto?->url,
+            'cover_photo_url' => $coverPhotoUrl,
         ];
     }
 }

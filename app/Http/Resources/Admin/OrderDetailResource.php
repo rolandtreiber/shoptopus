@@ -2,8 +2,11 @@
 
 namespace App\Http\Resources\Admin;
 
+use App\Enums\AccessTokenType;
 use App\Http\Resources\Common\AddressResource;
 use App\Http\Resources\Common\NoteResource;
+use App\Models\AccessToken;
+use App\Models\Invoice;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -20,6 +23,14 @@ class OrderDetailResource extends JsonResource
     public function toArray(Request $request): array
     {
         $dt = $this->delivery_type;
+        $invoice = $this->invoice;
+        if ($invoice) {
+            $accessToken = AccessToken::where([
+                'accessable_type' => Invoice::class,
+                'accessable_id' => $invoice->id,
+                'type' => AccessTokenType::Invoice
+            ])->first();
+        }
 
         return [
             'id' => $this->id,
@@ -43,6 +54,7 @@ class OrderDetailResource extends JsonResource
             'products' => OrderProductResource::collection($this->products),
             'event_logs' => EventLogResource::collection($this->eventLogs()->orderByDesc('created_at')->get()),
             'notes' => NoteResource::collection($this->notes),
+            'invoice_access_token' => $accessToken?->token
         ];
     }
 }

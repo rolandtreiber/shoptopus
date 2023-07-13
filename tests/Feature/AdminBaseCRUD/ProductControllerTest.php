@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
+use App\Enums\FileType;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\User;
@@ -42,6 +44,66 @@ class ProductControllerTest extends AdminControllerTestCase
                 ->where('data.0.price', $product->price)
                 ->where('data.0.final_price', $product->final_price)
                 ->has('data', 1)
+                ->etc()
+            );
+    }
+
+    /**
+     * @test
+     */
+    public function test_can_retrieve_an_individual_product(): void
+    {
+        $product = Product::factory()->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.product', ['product' => $product->id]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.id', $product->id)
+                ->where('data.name', $product->getTranslations('name'))
+                ->where('data.price', $product->price)
+                ->where('data.final_price', $product->final_price)
+                ->etc()
+            );
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_has_the_right_cover_photo(): void
+    {
+        $product = Product::factory()->create();
+        $image = FileContent::factory()->state([
+            'type' => FileType::Image,
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $product->save();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.product', ['product' => $product->id]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.cover_photo.file_name', $image->file_name)
+                ->where('data.cover_photo.url', $image->url)
+                ->etc()
+            );
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_cover_photo_cleared_if_file_deleted(): void
+    {
+        $product = Product::factory()->create();
+        $image = FileContent::factory()->state([
+            'type' => FileType::Image,
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $product->save();
+        $image->delete();
+        $product->refresh();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.product', ['product' => $product->id]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json->where('data.cover_photo', null)
                 ->etc()
             );
     }

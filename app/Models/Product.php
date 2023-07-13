@@ -194,6 +194,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'rating',
         'sku',
         'deleted_at',
+        'cover_photo'
     ];
 
     /**

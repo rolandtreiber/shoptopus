@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Traits\HasFiles;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -30,6 +31,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int $stock
  * @property Carbon $created_at
  * @property Carbon $updated_at
+ * @property Collection<FileContent> $images
  * @method images()
  */
 class ProductVariant extends SearchableModel implements Auditable, Exportable

@@ -6,6 +6,9 @@ use App\Models\FileContent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
+/**
+ * @property Collection<FileContent> $images
+ */
 trait HasFiles
 {
     public function deleteWithAttachments()

@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property string|null $url
+ * @property string|null $title
+ * @property string|null $file_name
+ * @property string|null $description
+ */
 class FileContent extends SearchableModel
 {
     use HasFactory, HasUUID, HasTranslations;
