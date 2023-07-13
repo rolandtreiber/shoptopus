@@ -24,6 +24,7 @@ class OrderDetailResource extends JsonResource
     {
         $dt = $this->delivery_type;
         $invoice = $this->invoice;
+        $accessToken = null;
         if ($invoice) {
             $accessToken = AccessToken::where([
                 'accessable_type' => Invoice::class,
