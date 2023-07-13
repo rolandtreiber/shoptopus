@@ -79,6 +79,22 @@ You can use artisan and composer commands as normal, however you need to **prepe
 `$ php artisan test` -> `$ docker-compose run sh-artisan test`\
 `$ php artisan composer install` -> `$ docker-compose run sh-composer install`
 
+# Emails
+Local email testing can be done via Mailhog.\
+To use it, simply set the mail settings in your .env filt to the following:
+```angular2html
+MAIL_DRIVER=smtp
+MAIL_HOST=sh-mailhog
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+```
+The email client is available on the following url:
+```http://0.0.0.0:8025```
+
+![Screenshot](./docs/screenshots/mailhog.png)
+
 # ElasticSearch
 Available 
 - externally (from your machine) on http://es.shoptopus.test:9200
