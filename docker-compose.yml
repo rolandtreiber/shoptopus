@@ -123,6 +123,7 @@ services:
     environment:
       - xpack.security.enabled=false
       - "discovery.type=single-node"
+      - ES_JAVA_OPTS="-Xms750m -Xmx750m"
     labels:
       - traefik.enable=true
       - traefik.http.routers.sh-elasticsearch.rule:Host(`es.shoptopus.test`)
