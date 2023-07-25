@@ -23,7 +23,7 @@ pipeline {
         }
         stage("Copy .env file") {
             steps {
-                sh 'cp ./.env.example ./.env'
+                sh 'cp ./.env.pipeline ./.env'
             }
         }
         stage("Start Docker") {
