@@ -24,6 +24,7 @@ pipeline {
         stage("Copy .env file") {
             steps {
                 sh 'cp ./.env.pipeline ./.env'
+                sh 'cat ./.env'
             }
         }
         stage("Start Docker") {
