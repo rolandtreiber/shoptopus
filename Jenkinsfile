@@ -34,7 +34,7 @@ pipeline {
         }
         stage("Run Composer Install") {
             steps {
-                sh 'docker compose run --rm sh-composer install --no-interaction'
+                sh 'docker compose run --rm sh-composer install --ignore-platform-reqs --no-interaction'
             }
         }
         stage("Run Tests") {
