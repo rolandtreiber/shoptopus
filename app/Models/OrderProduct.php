@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Concerns\HasTimestamps;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphPivot;
+use Illuminate\Support\Carbon;
+use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
@@ -24,11 +27,14 @@ use Spatie\Translatable\HasTranslations;
  * @property float|mixed $original_unit_price
  * @property float|mixed $unit_discount
  * @property float|mixed $total_discount
+ * @property Carbon $created_at
+ * @property Carbon|null $updated_at
  */
-class OrderProduct extends MorphPivot implements Exportable
+class OrderProduct extends MorphPivot implements Exportable, Auditable
 {
     use HasTranslations;
     use HasUUID;
+    use HasTimestamps;
     use HasSlug, \OwenIt\Auditing\Auditable, HasExportable;
 
     protected $table = 'order_product';
@@ -52,6 +58,10 @@ class OrderProduct extends MorphPivot implements Exportable
         'slug',
         'amount',
         'name',
+        'created_at',
+        'returned',
+        'returned_at',
+        'return_reason'
     ];
 
     /**
@@ -71,6 +81,8 @@ class OrderProduct extends MorphPivot implements Exportable
     protected $casts = [
         'product_id' => 'string',
         'product_variant_id' => 'string',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
     ];
 
     public function order(): BelongsTo

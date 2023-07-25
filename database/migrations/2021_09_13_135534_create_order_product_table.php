@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_product', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->timestamps();
             $table->foreignUuid('order_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignUuid('product_id')->nullable()->constrained()->nullOnDelete();
             $table->foreignUuid('product_variant_id')->nullable()->constrained()->nullOnDelete();
@@ -24,6 +25,9 @@ return new class extends Migration
             $table->unsignedDecimal('final_price')->default(0);
             $table->unsignedDecimal('unit_discount')->default(0);
             $table->unsignedDecimal('total_discount')->default(0);
+            $table->boolean('returned')->default(false);
+            $table->dateTime('returned_at')->nullable();
+            $table->string('return_reason')->nullable();
             $table->string('slug');
             $table->unique(['order_id', 'product_id']);
         });

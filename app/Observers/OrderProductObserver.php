@@ -5,10 +5,25 @@ namespace App\Observers;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use Illuminate\Support\Carbon;
 
 class OrderProductObserver
 {
-    public function saving(OrderProduct $orderProduct)
+    /**
+     * @param OrderProduct $orderProduct
+     * @return void
+     */
+    public function creating(OrderProduct $orderProduct): void
+    {
+        $orderProduct->created_at = $orderProduct->order->created_at;
+        $orderProduct->updated_at = Carbon::now();
+    }
+
+    /**
+     * @param OrderProduct $orderProduct
+     * @return void
+     */
+    public function saving(OrderProduct $orderProduct): void
     {
         $product = Product::find($orderProduct->product_id);
 
@@ -28,6 +43,7 @@ class OrderProductObserver
             $orderProduct->name = $product->attributedTranslatedName;
         }
 
+        $orderProduct->updated_at = Carbon::now();
         $orderProduct->full_price = round($fullPrice * $orderProduct->amount, 2);
         $orderProduct->final_price = round($finalPrice * $orderProduct->amount, 2);
 
@@ -38,7 +54,11 @@ class OrderProductObserver
         $orderProduct->total_discount = round(($fullPrice * $orderProduct->amount) - ($finalPrice * $orderProduct->amount), 2);
     }
 
-    public function saved(OrderProduct $orderProduct)
+    /**
+     * @param OrderProduct $orderProduct
+     * @return void
+     */
+    public function saved(OrderProduct $orderProduct): void
     {
         $order = $orderProduct->order;
         $order->recalculatePrices();

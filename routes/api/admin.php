@@ -128,7 +128,7 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.api.show.dashboard');
 
         // Reports
-        Route::get('/report', [ReportController::class, 'chart'])->name('admin.api.show.report');
+        Route::post('/report', [ReportController::class, 'getChart'])->name('admin.api.show.report');
 
         // Notifications
         Route::get('/notifications', [UserController::class, 'getNotifications'])->name('admin.api.user.get.notifications');
@@ -319,6 +319,7 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
         Route::prefix('reports')->group(function () {
             Route::post('overview', [ReportController::class, 'getOverview'])->name('admin.api.show.report.overview');
             Route::post('sales', [ReportController::class, 'getSales'])->name('admin.api.show.report.sales');
+            Route::post('product-ratings/{product}', [ReportController::class, 'getProductRatings'])->name('admin.api.show.report.product.ratings');
         });
 
         // Emails

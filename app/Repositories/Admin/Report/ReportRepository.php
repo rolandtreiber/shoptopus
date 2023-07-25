@@ -11,8 +11,9 @@ use App\Models\ProductCategory;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use JetBrains\PhpStorm\NoReturn;
 
 class ReportRepository implements ReportRepositoryInterface
 {
@@ -309,10 +310,14 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function getChartData(array $data): ReportService
     {
-        $start = $data['date_from'];
-        $end = $data['date_to'];
+        $start = Carbon::parse($data['date_from']);
+        $end = Carbon::parse($data['date_to']);
         $interval = $data['interval'];
-        $cascade = $data['cascade'];
+        if (array_key_exists('cascade', $data)) {
+            $cascade = $data['cascade'];
+        } else {
+            $cascade = false;
+        }
         $reportService = $this->reportService->setup($start, $end, $interval);
         $reportService->randomizeColors($data['randomize_colors']);
         $reportService->setShadow(false);
@@ -366,5 +371,57 @@ class ReportRepository implements ReportRepositoryInterface
             'products_breakdown' => $productsBreakdown,
             'totals' => $totalOverviewValues,
         ];
+    }
+
+    /**
+     * @param Product $product
+     * @return array
+     */
+    public function getProductRatings(Product $product): array
+    {
+        $reportService = $this->reportService->setup();
+        $ratings = DB::table('ratings')->where([
+            'ratable_type' => Product::class,
+            'ratable_id' => $product->id
+        ])
+            ->select(['ratings.rating', DB::raw('count(*) as total')])
+            ->groupBy('ratings.rating')->get();
+        $color = 0;
+        $count = [];
+        $bgColor = [];
+        $labels = [];
+        $stars = [
+            1 => 1,
+            2 => 2,
+            3 => 3,
+            4 => 4,
+            5 => 5,
+        ];
+        $palette = $reportService->getPalette();
+        foreach ($stars as $star) {
+            $labels[] = $star;
+            $total = 0;
+            foreach ($ratings as $r) {
+                if ($r['rating'] === $star) {
+                    $total+=$r['total'];
+                }
+            }
+            $count[] = $total;
+            $bgColor[] = $palette[$color];
+            $color++;
+            if ($color == 9) {
+                $color = 0;
+            }
+        }
+
+        $reportService->addDataset([
+            'label' => 'Ratings',
+            'borderColor' => 'transparent',
+            'backgroundColor' => $bgColor,
+            'data' => $count,
+            'labels' => $labels,
+        ])->setLabels($labels);
+
+        return $reportService->getApexCompositePieResponse();
     }
 }
