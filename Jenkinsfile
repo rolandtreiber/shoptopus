@@ -30,6 +30,7 @@ pipeline {
             steps {
                 sh 'make up'
                 sh 'docker compose ps'
+                sleep(time:30, unit: 'SECONDS')
             }
         }
         stage("Run Composer Install") {
