@@ -21,6 +21,11 @@ pipeline {
                 }
             }
         }
+        stage("Copy .env file") {
+            steps {
+                sh 'cp ./.env.example ./.env'
+            }
+        }
         stage("Start Docker") {
             steps {
                 sh 'make up'
@@ -29,12 +34,12 @@ pipeline {
         }
         stage("Run Composer Install") {
             steps {
-                sh 'docker compose run --rm composer install --no-interaction'
+                sh 'docker compose run --rm sh-composer install --no-interaction'
             }
         }
         stage("Run Tests") {
             steps {
-                sh 'docker compose run --rm artisan test'
+                sh 'docker compose run --rm sh-artisan test'
             }
         }
     }
