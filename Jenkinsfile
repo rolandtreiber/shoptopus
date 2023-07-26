@@ -29,7 +29,7 @@ pipeline {
         }
         stage("Change Elasticsearch data folder permissions") {
             steps {
-                sh 'chmod -R 777 ./elasticsearch_data'
+                sh 'chmod 777 ./elasticsearch_data'
             }
         }
         stage("Start Docker") {
