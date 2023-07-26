@@ -27,11 +27,6 @@ pipeline {
                 sh 'cat ./.env'
             }
         }
-        stage("Check Elasticsearch") {
-            steps {
-                sh 'curl -X GET http://127.0.0.1:9450'
-            }
-        }
         stage("Start Docker") {
             steps {
                 sh 'make up'
