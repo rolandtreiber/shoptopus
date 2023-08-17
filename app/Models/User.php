@@ -212,7 +212,7 @@ class User extends Authenticatable implements Auditable, Exportable
      */
     public function sendPasswordResetNotification($token): void
     {
-        $url = config('app.frontend_url_public').'/reset-password?token='.$token;
+        $url = config('app.frontend_url_public').'/reset-password?token='.$token.'&email='.$this->email;
 
         $this->notify(new ResetPasswordNotification($url));
     }
