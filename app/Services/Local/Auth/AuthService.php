@@ -266,23 +266,25 @@ class AuthService implements AuthServiceInterface
      */
     public function sendPasswordReset(array $payload): array
     {
-        try {
-            $user = User::whereEmail($payload['email'])->firstOrFail();
+        $user = User::whereEmail($payload['email'])->first();
+        if (!$user) {
+            return ['data' => ['message' => 'If the email is in our system, we have e-mailed your password reset link!']];
+        } else {
+            try {
+                $passwordReset = PasswordReset::updateOrCreate(
+                    ['email' => $user->email],
+                    [
+                        'email' => $user->email,
+                        'token' => Str::random(60),
+                    ]
+                );
 
-            $passwordReset = PasswordReset::updateOrCreate(
-                ['email' => $user->email],
-                [
-                    'email' => $user->email,
-                    'token' => Str::random(60),
-                ]
-            );
-
-            $user->sendPasswordResetNotification($passwordReset->token);
-
-            return ['data' => ['message' => 'We have e-mailed your password reset link!']];
-        } catch (\Exception|\Error $e) {
-            $this->errorService->logException($e);
-            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.sendPasswordReset'));
+                $user->sendPasswordResetNotification($passwordReset->token);
+                return ['data' => ['message' => 'If the email is in our system, we have e-mailed your password reset link!']];
+            } catch (\Exception|\Error $e) {
+                $this->errorService->logException($e);
+                throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.auth.sendPasswordReset'));
+            }
         }
     }
 
