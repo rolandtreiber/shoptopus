@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+/**
+ * @group password-reset
+ */
 class SendPasswordResetTest extends TestCase
 {
     use RefreshDatabase;
@@ -53,7 +56,7 @@ class SendPasswordResetTest extends TestCase
 
         $res = $this->sendRequest($data)->json('data.message');
 
-        $this->assertEquals('We have e-mailed your password reset link!', $res);
+        $this->assertEquals('If the email is in our system, we have e-mailed your password reset link!', $res);
 
         $this->assertDatabaseHas('password_reset_tokens', [
             'email' => $user->email,
