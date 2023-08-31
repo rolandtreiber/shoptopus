@@ -21,13 +21,34 @@ pipeline {
                 }
             }
         }
+        stage("Copy .env file") {
+            steps {
+                sh 'cp ./.env.example ./.env'
+            }
+        }
+        stage("Start Docker") {
+            steps {
+                sh 'make up'
+                sh 'docker compose ps'
+            }
+        }
+        stage("Delete .env file") {
+            steps {
+                sh 'rm ./.env'
+            }
+        }        
+        stage("Create artifact") {
+            steps {
+                zip zipFile: 'shoptopus.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/'
+            }
+        }
         stage("Copy artifact") {
             steps {
                 fileOperations([fileCopyOperation(
                 excludes: '',
                 flattenFiles: false,
-                includes: 'artifact.zip',
-                targetLocation: "/Users/rolandtreiber/Sites/shoptopus"
+                includes: 'shoptopus.zip',
+                targetLocation: "/Users/rolandtreiber/Sites"
                 )])
             }
         }
