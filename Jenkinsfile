@@ -38,12 +38,14 @@ pipeline {
             }
         }
         stage("Copy artifact") {
-            fileOperations([fileCopyOperation(
-            excludes: '',
-            flattenFiles: false,
-            includes: 'artifact.zip',
-            targetLocation: "/Users/rolandtreiber/Sites/shoptopus"
-            )])
+            steps {
+                fileOperations([fileCopyOperation(
+                excludes: '',
+                flattenFiles: false,
+                includes: 'artifact.zip',
+                targetLocation: "/Users/rolandtreiber/Sites/shoptopus"
+                )])
+            }
         }
     }
     post {
