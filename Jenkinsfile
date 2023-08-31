@@ -32,11 +32,19 @@ pipeline {
                 sh 'docker compose ps'
             }
         }
-        stage("Publish") {
+        stage("Create artifact") {
             steps {
                 zip zipFile: 'artifact.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/'
             }
-        }        
+        }
+        stage("Copy artifact") {
+            fileOperations([fileCopyOperation(
+            excludes: '',
+            flattenFiles: false,
+            includes: 'artifact.zip',
+            targetLocation: "/Users/rolandtreiber/Sites/shoptopus"
+            )])
+        }
     }
     post {
         always {
