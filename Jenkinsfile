@@ -31,6 +31,16 @@ pipeline {
                 sh 'rm ./.env'
             }
         }        
+        stage("Copy artifact") {
+            steps {
+                fileOperations([fileCopyOperation(
+                excludes: '',
+                flattenFiles: false,
+                includes: 'shoptopus.zip',
+                targetLocation: "/Users/rolandtreiber/Sites"
+                )])
+            }
+        }
         stage("Unzip artifact in place") {
             steps {
                 sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip -d /Users/rolandtreiber/Sites/shoptopus'
