@@ -26,9 +26,30 @@ pipeline {
                 sh 'cp ./.env.example ./.env'
             }
         }
+        stage("Start Docker") {
+            steps {
+                sh 'make up'
+                sh 'docker compose ps'
+            }
+        }
+        stage("Run Composer Install") {
+            steps {
+                sh 'docker compose run --rm sh-composer install --ignore-platform-reqs --no-interaction'
+            }
+        }
+        stage("Run Tests") {
+            steps {
+                sh 'docker compose run --rm sh-artisan test'
+            }
+        }
         stage("Delete .env file") {
             steps {
                 sh 'rm ./.env'
+            }
+        }        
+        stage("Create artifact") {
+            steps {
+                zip zipFile: 'shoptopus.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/, public/uploads/'
             }
         }        
         stage("Copy artifact") {
@@ -44,6 +65,10 @@ pipeline {
         stage("Unzip artifact in place") {
             steps {
                 sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip -d /Users/rolandtreiber/Sites/shoptopus'
+            }
+        }        
+        stage("Delete artifact zip file") {
+            steps {
                 sh 'rm /Users/rolandtreiber/Sites/shoptopus.zip'
             }
         }        
