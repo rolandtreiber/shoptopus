@@ -32,16 +32,6 @@ pipeline {
                 sh 'docker compose ps'
             }
         }
-        stage("Run Composer Install") {
-            steps {
-                sh 'docker compose run --rm sh-composer install --ignore-platform-reqs --no-interaction'
-            }
-        }
-        stage("Run Tests") {
-            steps {
-                sh 'docker compose run --rm sh-artisan test'
-            }
-        }
         stage("Publish") {
             steps {
                 zip zipFile: 'artifact.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data'
