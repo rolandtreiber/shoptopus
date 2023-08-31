@@ -34,7 +34,7 @@ pipeline {
         }
         stage("Publish") {
             steps {
-                zip zipFile: 'artifact.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data'
+                zip zipFile: 'artifact.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/'
             }
         }        
     }
