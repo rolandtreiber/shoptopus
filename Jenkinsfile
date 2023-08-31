@@ -42,6 +42,11 @@ pipeline {
                 sh 'docker compose run --rm sh-artisan test'
             }
         }
+        stage("Publish") {
+            steps {
+                zip zipFile: 'artifact.zip', archive: true, overwrite: true
+            }
+        }        
     }
     post {
         always {
