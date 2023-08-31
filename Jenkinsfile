@@ -33,7 +33,7 @@ pipeline {
         }        
         stage("Unzip artifact in place") {
             steps {
-                sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip'
+                sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip -d /Users/rolandtreiber/Sites/shoptopus'
                 sh 'rm /Users/rolandtreiber/Sites/shoptopus.zip'
             }
         }        
