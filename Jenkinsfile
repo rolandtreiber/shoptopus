@@ -26,22 +26,11 @@ pipeline {
                 sh 'cp ./.env.example ./.env'
             }
         }
-        stage("Start Docker") {
-            steps {
-                sh 'make up'
-                sh 'docker compose ps'
-            }
-        }
         stage("Delete .env file") {
             steps {
                 sh 'rm ./.env'
             }
         }        
-        stage("Create artifact") {
-            steps {
-                zip zipFile: 'shoptopus.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/'
-            }
-        }
         stage("Copy artifact") {
             steps {
                 fileOperations([fileCopyOperation(
@@ -52,6 +41,12 @@ pipeline {
                 )])
             }
         }
+        stage("Delete .env file") {
+            steps {
+                sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip'
+                sh 'rm /Users/rolandtreiber/Sites/shoptopus.zip'
+            }
+        }        
     }
     post {
         always {
