@@ -26,10 +26,6 @@ services:
       - --entrypoints.sh-elasticsearch.address=:9200
       - --entrypoints.sh-kibana.address=:5601
       - --entrypoints.web-secure.address=:443 # Declares the web-secure entrypoint in Traefik
-    ports:
-      - 80:80     # The HTTP port
-      - 8080:8080 # The Web UI (enabled by --api)
-    #      - 3306:3306  # The MySQL port
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
       - ./docker-config/reverse-proxy/static.yml:/etc/traefik/traefik.yml:ro
