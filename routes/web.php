@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InvoiceController;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/invoice/{token}', [InvoiceController::class, 'download'])->name('invoice.download');
+
+Route::get('/admin/{argOne?}/{argTwo?}/{argThree?}/{argFour?}/{argFive?}', function () {
+    return File::get(public_path() . '/admin/index.html');
+});
