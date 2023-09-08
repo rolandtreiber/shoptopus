@@ -20,14 +20,11 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
 
     private Carbon $validUntil;
 
-    private Carbon $now;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->validFrom = Carbon::now()->subDay();
         $this->validUntil = Carbon::now()->addMonth();
-        $this->now = Carbon::now();
     }
 
     /**
@@ -46,11 +43,11 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
-            'valid_until' => $this->now->format('Y-m-d H:i:s'),
+            'valid_until' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
-            'valid_until' => $this->now->format('Y-m-d H:i:s'),
+            'valid_until' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -70,11 +67,11 @@ class DiscountRulesBulkOperationsTest extends BulkOperationsTestCase
         $response->assertOk();
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[0],
-            'valid_from' => $this->now->format('Y-m-d H:i:s'),
+            'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('discount_rules', [
             'id' => $discountRuleIds[1],
-            'valid_from' => $this->now->format('Y-m-d H:i:s'),
+            'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 
