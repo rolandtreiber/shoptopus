@@ -20,14 +20,11 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
 
     private Carbon $validUntil;
 
-    private Carbon $now;
-
     protected function setUp(): void
     {
         parent::setUp();
         $this->validFrom = Carbon::now()->subDay();
         $this->validUntil = Carbon::now()->addMonth();
-        $this->now = Carbon::now();
     }
 
     /**
@@ -46,11 +43,11 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $response->assertOk();
         $this->assertDatabaseHas('voucher_codes', [
             'id' => $voucherCodeIds[0],
-            'valid_until' => $this->now->format('Y-m-d H:i:s'),
+            'valid_until' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('voucher_codes', [
             'id' => $voucherCodeIds[1],
-            'valid_until' => $this->now->format('Y-m-d H:i:s'),
+            'valid_until' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 
@@ -70,11 +67,11 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
         $response->assertOk();
         $this->assertDatabaseHas('voucher_codes', [
             'id' => $voucherCodeIds[0],
-            'valid_from' => $this->now->format('Y-m-d H:i:s'),
+            'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
         $this->assertDatabaseHas('voucher_codes', [
             'id' => $voucherCodeIds[1],
-            'valid_from' => $this->now->format('Y-m-d H:i:s'),
+            'valid_from' => Carbon::now()->format('Y-m-d H:i:s'),
         ]);
     }
 

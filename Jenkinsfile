@@ -29,24 +29,54 @@ pipeline {
         stage("Start Docker") {
             steps {
                 sh 'make up'
-                sh 'docker compose ps'
+                sh 'docker compose -f docker-compose-ci.yml ps'
             }
         }
         stage("Run Composer Install") {
             steps {
-                sh 'docker compose run --rm sh-composer install --ignore-platform-reqs --no-interaction'
+                sh 'docker compose -f docker-compose-ci.yml run --rm sh-composer install --ignore-platform-reqs --no-interaction'
             }
         }
         stage("Run Tests") {
             steps {
-                sh 'docker compose run --rm sh-artisan test'
+                sh 'docker compose -f docker-compose-ci.yml run --rm sh-artisan test'
+            }
+        }
+        stage("Delete .env file") {
+            steps {
+                sh 'rm ./.env'
+            }
+        }
+        stage("Create artifact") {
+            steps {
+                zip zipFile: 'shoptopus.zip', archive: true, overwrite: true, exclude: 'elasticsearch_data/, public/uploads/'
+            }
+        }
+        stage("Copy artifact") {
+            steps {
+                fileOperations([fileCopyOperation(
+                excludes: '',
+                flattenFiles: false,
+                includes: 'shoptopus.zip',
+                targetLocation: "/Users/rolandtreiber/Sites"
+                )])
+            }
+        }
+        stage("Unzip artifact in place") {
+            steps {
+                sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip -d /Users/rolandtreiber/Sites/shoptopus'
+            }
+        }
+        stage("Delete artifact zip file") {
+            steps {
+                sh 'rm /Users/rolandtreiber/Sites/shoptopus.zip'
             }
         }
     }
     post {
         always {
-            sh 'docker compose down --remove-orphans -v'
-            sh 'docker compose ps'
+            sh 'docker compose -f docker-compose-ci.yml down --remove-orphans -v'
+            sh 'docker compose -f docker-compose-ci.yml ps'
         }
     }
 }

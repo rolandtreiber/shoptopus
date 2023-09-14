@@ -1,0 +1,212 @@
+version: '3.5'
+
+networks:
+  app-network:
+    external: false
+    name: app-network
+    driver: bridge
+  traefik:
+    name: traefik
+    external: false
+
+services:
+  # Reverse Proxy
+  sh-reverse-proxy:
+    image: traefik:v2.4 # The official Traefik docker image
+    networks:
+      - traefik
+    command:
+      - --log.level=DEBUG
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --providers.file.directory=/config
+      - --entrypoints.web.address=:80
+      - --entrypoints.mysql.address=:3306
+      - --entrypoints.sh-elasticsearch.address=:9200
+      - --entrypoints.sh-kibana.address=:5601
+      - --entrypoints.web-secure.address=:443 # Declares the web-secure entrypoint in Traefik
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ./docker-config/reverse-proxy/static.yml:/etc/traefik/traefik.yml:ro
+      - ./docker-config/reverse-proxy/dynamic.yml:/etc/traefik/dynamic.yml:ro
+      - ./docker-config/reverse-proxy/ssl/:/etc/certs:ro
+
+  sh-site:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: nginx.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-site
+    labels:
+      - traefik.enable=true
+      - traefik.port=443
+      - traefik.docker.network=traefik
+      - traefik.http.routers.sh-site.rule=Host(`shoptopus.test`)
+      - traefik.http.routers.sh-site.priority=100
+      - traefik.http.middlewares.sh-site.redirectscheme.scheme=https
+      - traefik.http.routers.sh-site.tls=true
+    volumes:
+      - ./:/var/www/html:delegated
+    working_dir: /var/www/html
+    depends_on:
+      - sh-php
+      - sh-redis
+      - sh-mysql
+      - sh-mailhog
+    networks:
+      - traefik
+
+  sh-mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: sh-mysql
+    tty: true
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sh-mysql.rule:Host(`mysql.shoptopus.test`)
+      - traefik.http.routers.sh-mysql.priority=100
+      - traefik.http.services.sh-mysql.loadbalancer.server.port:3306
+    environment:
+      MYSQL_DATABASE: shoptopus
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+      - traefik
+
+  sh-php:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-php
+    labels:
+      - traefik-enable=false
+    volumes:
+      - ./:/var/www/html:delegated
+    networks:
+      - app-network
+      - traefik
+
+  sh-redis:
+    image: redis:alpine
+    container_name: sh-redis
+    labels:
+      - traefik.enable=false
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
+
+  sh-elasticsearch:
+    container_name: sh-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sh-elasticsearch.rule:Host(`es.shoptopus.test`)
+      - traefik.http.routers.sh-elasticsearch.priority=100
+      - traefik.http.services.sh-elasticsearch.loadbalancer.server.port:9200
+    networks:
+      - app-network
+      - traefik
+    ports:
+      - 9200:9200
+    volumes:
+      - ./elasticsearch_data:/usr/share/elasticsearch/data
+
+  sh-kibana:
+    container_name: sh-kibana
+    image: docker.elastic.co/kibana/kibana:7.11.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://sh-elasticsearch:9200
+      - LOGGING_TIMEZONE=Europe/London
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sh-kibana.rule:Host(`kb.shoptopus.test`)
+      - traefik.http.routers.sh-kibana.priority=100
+      - traefik.http.services.sh-kibana.loadbalancer.server.port:5601
+    networks:
+      - app-network
+      - traefik
+    depends_on:
+      - sh-elasticsearch
+    ports:
+      - 5601:5601
+
+  sh-composer:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - sh-php
+    entrypoint: ['composer']
+    networks:
+      - app-network
+
+  sh-npm:
+    image: node:13.7
+    container_name: sh-admin
+    volumes:
+      - ../shoptopus-admin-react:/app
+    labels:
+      - traefik.enable=false
+    working_dir: /app
+    entrypoint: ['npm']
+    networks:
+      - app-network
+
+  sh-artisan:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-artisan
+    labels:
+      - traefik.enable=false
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - sh-mysql
+    working_dir: /var/www/html
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - app-network
+
+  sh-mailhog:
+    image: mailhog/mailhog:latest
+    container_name: sh-mailhog
+    labels:
+      - traefik.enable=false
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - app-network

@@ -14,6 +14,10 @@ return [
         'host' => env('ELASTIC_HOST', 'sh-elasticsearch'),
         'port' => env('ELASTIC_PORT', '9200'),
         'scheme' => env('ELASTIC_SCHEME', 'http'),
+        'auth' => [
+            'username' => env('ELASTIC_USER', 'elastic'),
+            'password' => env('ELASTIC_PASSWORD', 'password')
+        ],
     ],
 
     /**

@@ -61,6 +61,6 @@ class fresh extends Command
         file_put_contents('.env', $envFile);
         $this->info('.env file updated with new id / secret: '.$id.' / '.$secret);
 
-        return 1;
+        return 0;
     }
 }
