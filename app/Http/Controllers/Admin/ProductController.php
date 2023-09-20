@@ -79,11 +79,15 @@ class ProductController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'short_description', 'description']);
         $product->fill($data);
         $product->save();
-        $this->saveFiles($request, Product::class, $product->id, true);
+        $this->saveFiles($request, Product::class, $product->id, $request->has('attachments') || $request->hasFile('attachments'));
         $product->save();
         $this->handleAttributes($product, $request);
-        $product->handleCategories($request->product_categories);
-        $product->handleTags($request->product_tags);
+        if ($request->has('product_categories')) {
+            $product->handleCategories($request->product_categories);
+        }
+        if ($request->has('product_tags')) {
+            $product->handleTags($request->product_tags);
+        }
 
         return new ProductListResource($product);
     }

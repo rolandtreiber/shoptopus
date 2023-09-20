@@ -21,6 +21,7 @@ class ProductDetailResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'slug' => $this->slug,
             'name' => $this->getTranslations('name'),
             'description' => $this->getTranslations('description'),
             'short_description' => $this->getTranslations('short_description'),

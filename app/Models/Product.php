@@ -39,6 +39,7 @@ use Spatie\Translatable\HasTranslations;
  * @property int $status
  * @property OrderProduct $pivot
  * @property string $sku
+ * @property string $slug
  * @property int $stock
  * @property int $purchase_count
  * @property int $backup_stock
