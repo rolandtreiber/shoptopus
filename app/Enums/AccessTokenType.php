@@ -12,4 +12,7 @@ final class AccessTokenType extends Enum
     public const General = 0;
 
     public const Invoice = 1;
+
+    public const Review = 2;
+
 }

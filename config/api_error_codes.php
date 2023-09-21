@@ -64,6 +64,7 @@ return [
             'getAll' => 2001,
             'getAllInCategory' => 2002,
             'favorite' => 2003,
+            'review' => 2004,
         ],
         'product_attribute' => [
             'get' => 2100,

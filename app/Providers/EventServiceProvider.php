@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\OrderCompletedEvent;
 use App\Events\UserInteraction;
 use App\Facades\Module;
+use App\Listeners\OrderCompletedListener;
 use App\Listeners\UpdateLastSeenUser;
 use App\Models\AccessToken;
 use App\Models\Banner;
@@ -56,6 +58,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserInteraction::class => [
             UpdateLastSeenUser::class
+        ],
+        OrderCompletedEvent::class => [
+            OrderCompletedListener::class
         ]
     ];
 

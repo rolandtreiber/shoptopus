@@ -18,4 +18,6 @@ interface ProductServiceInterface
 
     public function getBySlug(string $slug): array;
 
+    public function saveReview(string $productId, array $data): array;
+
 }

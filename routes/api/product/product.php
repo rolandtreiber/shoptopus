@@ -25,5 +25,8 @@ Route::group([
         Route::post('/{id}/favorite', [ProductController::class, 'favorite'])
             ->middleware('auth:api')
             ->name('api.product.favorite');
+
+        Route::post('/{id}/rating', [ProductController::class, 'saveReview'])
+            ->name('api.product.save.review');
     });
 });

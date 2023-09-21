@@ -13,8 +13,11 @@ use Illuminate\Support\Carbon;
  * @property string $accessable_type
  * @property string $accessable_id
  * @property int $type
+ * @property User $issuer
+ * @property User $user
  * @property string $user_id
  * @property string $issuer_user_id
+ * @property Carbon $expiry
  */
 class AccessToken extends Model
 {

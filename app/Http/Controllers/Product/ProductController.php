@@ -5,17 +5,20 @@ namespace App\Http\Controllers\Product;
 use App\Enums\UserInteractionType;
 use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\CreateReviewRequest;
 use App\Http\Requests\Product\FavoriteProductRequest;
 use App\Http\Requests\Product\ProductAvailableAttributeOptionsRequest;
 use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Product\ProductServiceInterface;
+use App\Traits\ProcessRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use ProcessRequest;
     private ProductServiceInterface $productService;
 
     private ProductRepositoryInterface $productRepository;
@@ -100,6 +103,17 @@ class ProductController extends Controller
     {
         try {
             return response()->json($this->productRepository->getAvailableAttributeOptions($product, $request->selected_attribute_options ?: []));
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
+    }
+
+    public function saveReview(Product $id, CreateReviewRequest $request): JsonResponse
+    {
+        try {
+            $this->saveFiles($request, Product::class, $id->id, true);
+
+            return response()->json($this->productService->saveReview($id->id, $request->toArray()));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }

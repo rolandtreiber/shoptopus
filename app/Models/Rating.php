@@ -19,6 +19,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $id
  * @property mixed $ratable
  * @property User $user
+ * @property string $user_id
  * @property int $rating
  * @property string $language_prefix
  * @property string $description
@@ -51,6 +52,7 @@ class Rating extends SearchableModel implements Auditable, Exportable
     protected $fillable = [
         'ratable_type',
         'ratable_id',
+        'user_id',
         'rating',
         'description',
         'title',
