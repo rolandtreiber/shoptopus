@@ -226,7 +226,7 @@ class ReportRepository implements ReportRepositoryInterface
                     ->where('pv.enabled', 1);
             })->select([
                 DB::raw('CASE WHEN SUM(pv.price) IS NOT NULL THEN (SUM(pv.price) * SUM(pv.stock)) ELSE (SUM(products.price) * SUM(products.stock)) END AS value'),
-            ])->where('products.status', ProductStatus::Active)->groupBy('products.id')->sum('value');
+            ])->where('products.status', ProductStatus::Active)->groupBy('products.id')->get()->sum('value');
 
         $ordersTotal = DB::table('orders')->whereIn('status', [
             OrderStatus::Completed,
