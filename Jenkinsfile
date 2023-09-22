@@ -72,6 +72,16 @@ pipeline {
                 sh 'rm /Users/rolandtreiber/Sites/shoptopus.zip'
             }
         }
+        stage("Running the migrations") {
+            steps {
+                sh '/usr/local/bin/php /Users/rolandtreiber/Sites/shoptopus/artisan migrate'
+            }
+        }
+        stage("Restart supervisor") {
+            steps {
+                sh 'supervisorctl restart all'
+            }
+        }
     }
     post {
         always {
