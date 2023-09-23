@@ -5,14 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\ProductBulkOperationRequest;
+use App\Http\Requests\Admin\ProductInsightsRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\ProductDetailResource;
+use App\Http\Resources\Admin\ProductInsightsResource;
 use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductPageSummaryResource;
 use App\Models\Product;
 use App\Repositories\Admin\Product\ProductRepositoryInterface;
+use App\Repositories\Admin\Report\ReportRepositoryInterface;
+use App\Services\Local\Report\ReportServiceInterface;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -22,10 +26,16 @@ class ProductController extends Controller
     use ProcessRequest, HasAttributes;
 
     protected ProductRepositoryInterface $productRepository;
+    protected ReportRepositoryInterface $reportRepository;
+    protected ReportServiceInterface $reportService;
 
-    public function __construct(ProductRepositoryInterface $productRepository)
+    public function __construct(ProductRepositoryInterface $productRepository,
+                                ReportRepositoryInterface $reportRepository,
+                                ReportServiceInterface $reportService)
     {
         $this->productRepository = $productRepository;
+        $this->reportRepository = $reportRepository;
+        $this->reportService = $reportService;
     }
 
     public function index(ListRequest $request): AnonymousResourceCollection
@@ -126,5 +136,20 @@ class ProductController extends Controller
             return ['status' => 'Success'];
         }
         throw new BulkOperationException();
+    }
+
+    /**
+     * @param Product $product
+     * @param ProductInsightsRequest $request
+     * @return ProductInsightsResource
+     */
+    public function insights(Product $product, ProductInsightsRequest $request)
+    {
+        $controls = $this->reportService->getControlsFromType($request->sales_chart_range);
+        return new ProductInsightsResource([
+            'product' => $product,
+            'overall_satisfaction' => $this->reportRepository->getOverallSatisfactionByRatable(Product::class, $product->id),
+            'sales_timeline' => $this->reportRepository->getProductSalesTimeline($product, $controls)
+        ]);
     }
 }

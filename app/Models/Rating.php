@@ -25,7 +25,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $description
  * @property string $title
  * @property string $ratable_type
- * @property int $ratable_id
+ * @property string $ratable_id
  * @property bool $verified
  * @property bool $enabled
  * @property Carbon $created_at

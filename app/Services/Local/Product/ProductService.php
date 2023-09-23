@@ -49,6 +49,7 @@ class ProductService extends ModelService implements ProductServiceInterface
         try {
             /** @var AccessToken $token */
             $token = AccessToken::where('token', $data['token'])->first();
+            // @phpstan-ignore-next-line
             if (!$token || $token->type !== AccessTokenType::Review) {
                 throw new InvalidAccessTokenException();
             }

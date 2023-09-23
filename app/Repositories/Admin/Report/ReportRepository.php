@@ -8,9 +8,11 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Rating;
 use App\Models\User;
 use App\Services\Local\Report\ReportService;
 use App\Services\Local\Report\ReportServiceInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use JetBrains\PhpStorm\NoReturn;
@@ -220,6 +222,7 @@ class ReportRepository implements ReportRepositoryInterface
 
     public function getTotalOverviewValues(): array
     {
+        // @phpstan-ignore-next-line
         $unsold = DB::table('products')
             ->leftJoin('product_variants as pv', function ($join) {
                 $join->on('products.id', 'pv.product_id')
@@ -274,6 +277,54 @@ class ReportRepository implements ReportRepositoryInterface
         ];
     }
 
+    public function getOverallSatisfactionByRatable($ratableType, $ratableId): array
+    {
+        $reportService = $this->reportService->setup();
+        $ratings = Rating::where([
+            'ratable_type' => $ratableType,
+            'ratable_id' => $ratableId
+            ])->groupBy('rating')->select(DB::raw("COUNT(ratings.rating) as count, rating"))->get()->toArray();
+
+        $color = 0;
+        $count = [];
+        $bgColor = [];
+        $labels = [];
+        $stars = [
+            1 => 1,
+            2 => 2,
+            3 => 3,
+            4 => 4,
+            5 => 5,
+        ];
+        $palette = $reportService->getPalette();
+
+        foreach ($stars as $star) {
+            $labels[] = $star;
+            $total = 0;
+            foreach ($ratings as $r) {
+                if ($r['rating'] === $star) {
+                    $total = $r['count'];
+                }
+            }
+            $count[] = $total;
+            $bgColor[] = $palette[$color];
+            $color++;
+            if ($color == 9) {
+                $color = 0;
+            }
+        }
+
+        $reportService->addDataset([
+            'label' => 'Ratings',
+            'borderColor' => 'transparent',
+            'backgroundColor' => $bgColor,
+            'data' => $count,
+            'labels' => $labels,
+        ])->setLabels($labels);
+
+        return $reportService->getApexCompositePieResponse();
+    }
+
     public function getOverviewStats(): array
     {
         $orders = Order::count();
@@ -325,12 +376,20 @@ class ReportRepository implements ReportRepositoryInterface
         foreach ($data['models'] as $m) {
             $model = new $m['model'];
             $query = $model->where('created_at', '>=', $start)->where('created_at', '<=', $end);
+            if (array_key_exists('with', $m)) {
+                foreach ($m['with'] as $w) {
+                    $query = $query->with($w);
+                }
+            }
 
             if (array_key_exists('conditions', $m)) {
                 foreach ($m['conditions'] as $condition) {
                     switch ($condition[0]) {
                         case 'whereIn':
                             $query = $query->whereIn($condition[1], $condition[2]);
+                            break;
+                        case 'whereHas':
+                            $query = $query->whereHas($condition[1], $condition[2]);
                             break;
                         default:
                             $query = $query->where($condition[1], $condition[2], $condition[3]);
@@ -339,7 +398,6 @@ class ReportRepository implements ReportRepositoryInterface
             }
 
             $data = $query->get();
-
             $reportService->setItems($data);
             if (! isset($m['attribute'])) {
                 $reportService->makeReportDatasetByNumberOfItems($cascade)->addLabel($m['label'])->addDataset();
@@ -423,5 +481,43 @@ class ReportRepository implements ReportRepositoryInterface
         ])->setLabels($labels);
 
         return $reportService->getApexCompositePieResponse();
+    }
+
+    public function getProductSalesTimeline(Product $product, array $controls): array
+    {
+        $start = Carbon::parse($controls['start']);
+        $end = Carbon::parse($controls['end']);
+        $interval = $controls['interval'];
+        $reportService = $this->reportService->setup($start, $end, $interval);
+        $reportService->randomizeColors(false);
+        $reportService->setShadow(false);
+
+        $completedOrders = Order::where('status', OrderStatus::Completed)->with('products')->whereHas('products', function (Builder $query) use($product) {
+            $query->where('products.id', '=', $product->id);
+        })->get();
+        foreach ($completedOrders as $order) {
+            // @phpstan-ignore-next-line
+            $order->product_count = $order->products[0]->pivot->amount;
+        }
+        $reportService->setShadow(true);
+        $reportService->setItems($completedOrders);
+        $reportService->makeReportDatasetByAttribute('product_count')->addLabel('Completed Orders')->addDataset();
+
+        $otherStatusOrders = Order::whereIn('status', [
+            OrderStatus::Paid,
+            OrderStatus::Processing,
+            OrderStatus::InTransit,
+        ])->with('products')->whereHas('products', function (Builder $query) use($product) {
+            $query->where('products.id', '=', $product->id);
+        })->get();
+        foreach ($otherStatusOrders as $order) {
+            // @phpstan-ignore-next-line
+            $order->product_count = $order->products[0]->pivot->amount;
+        }
+        $reportService->setShadow(true);
+        $reportService->setItems($otherStatusOrders);
+        $reportService->makeReportDatasetByAttribute('product_count')->addLabel('Paid Orders (Paid, Processing, In Transit)')->addDataset();
+
+        return $reportService->getApexChartsResponse();
     }
 }

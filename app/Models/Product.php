@@ -37,6 +37,7 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $id
  * @property float $final_price
  * @property int $status
+ * @property Collection<Order> $orders
  * @property OrderProduct $pivot
  * @property string $sku
  * @property string $slug
@@ -407,4 +408,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         $this->product_tags()->detach();
         $this->product_tags()->sync($tagIds);
     }
-}
+
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount', 'product_variant_id'])->using(OrderProduct::class);
+    }}

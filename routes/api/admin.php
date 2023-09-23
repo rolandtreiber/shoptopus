@@ -43,6 +43,7 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
                 Route::get('/', [ProductController::class, 'show'])->name('admin.api.show.product');
                 Route::delete('/', [ProductController::class, 'delete'])->name('admin.api.delete.product');
                 Route::patch('/', [ProductController::class, 'update'])->name('admin.api.update.product');
+                Route::get('/insights', [ProductController::class, 'insights'])->name('admin.api.show.product-insights');
 
                 // Product Variants
                 Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.api.index.product-variants');

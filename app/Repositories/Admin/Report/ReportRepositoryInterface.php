@@ -13,4 +13,9 @@ interface ReportRepositoryInterface
     public function getSales(array $data);
 
     public function getProductRatings(Product $product);
+
+    public function getOverallSatisfactionByRatable($ratableType, $ratableId): array;
+
+    public function getProductSalesTimeline(Product $product, array $controls): array;
+
 }
