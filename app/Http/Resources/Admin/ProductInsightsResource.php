@@ -20,11 +20,13 @@ class ProductInsightsResource extends JsonResource
 
         $latestOrders = $product->orders()->orderByDesc('created_at')->limit(5)->get()->map(function($order) {
             return [
+                'id' => $order->id,
                 'user' => [
                     'id' => $order['user']['id'],
                     'name' => $order['user']['name']
                 ],
-                'placed_at' => $order['created_at'],
+                'slug' => $order->slug,
+                'placed_at' => $order['created_at']->format('Y-m-d H:i:s'),
                 'amount' => $order['pivot']['amount'],
                 'status' => $order['status'],
                 'order_total' => $order['pivot']['final_price']
