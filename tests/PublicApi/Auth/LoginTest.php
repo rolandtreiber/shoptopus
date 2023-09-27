@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
+/**
+ * @group login
+ */
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
