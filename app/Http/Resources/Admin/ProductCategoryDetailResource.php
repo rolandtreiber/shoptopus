@@ -26,7 +26,7 @@ class ProductCategoryDetailResource extends JsonResource
             'parent_id' => $this->parent_id,
             'tree' => $this->tree(),
             'children' => ProductCategoryListResource::collection($this->children),
-            'products' => ProductListResource::collection($this->products()->get()),
+            'products' => ProductListResource::collection($this->products(false)->get()),
             'enabled' => $this->enabled,
             'notes' => NoteResource::collection($this->notes),
         ];

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
 class AuthService implements AuthServiceInterface
@@ -70,21 +71,39 @@ class AuthService implements AuthServiceInterface
                 throw new \Exception('No password set.', Config::get('api_error_codes.services.auth.must_reset_password'));
             }
 
-            if (! Hash::check($payload['password'], $user->password)) {
+            $response = Http::asForm()->post(config('app.env') === 'local' ? 'sh-site/oauth/token' : config('app.url').'/oauth/token', [
+                'grant_type' => 'password',
+                'client_id' => config('passport.grant_id'),
+                'client_secret' => config('passport.secret'),
+                'username' => $payload['email'],
+                'password' => $payload['password'],
+                'scope' => '',
+                ]);
+
+            if ($response->status() !== 200) {
                 throw new \Exception('Hash check fail', Config::get('api_error_codes.services.auth.loginUserIncorrect'));
+            } else {
+                if (isset($payload['cart_id'])) {
+                    $this->cartService->mergeUserCarts($payload['cart_id'], $user->id);
+                }
+
+                event(new UserInteraction(UserInteractionType::Login, User::class, $user->id));
+
+                $responseData = $response->json();
+
+                return [
+                    'data' => [
+                        'auth' => [
+                            'token_type' => $responseData['token_type'],
+                            'token' => $responseData['access_token'],
+                            'refresh_token' => $responseData['refresh_token'],
+                            'expires_in' => $responseData['expires_in'],
+                            'user' => $this->normalisedUserDetails($user)
+                        ]
+                    ]
+                ];
             }
 
-            if (isset($payload['cart_id'])) {
-                $this->cartService->mergeUserCarts($payload['cart_id'], $user->id);
-            }
-
-            event(new UserInteraction(UserInteractionType::Login, User::class, $user->id));
-
-            return [
-                'data' => [
-                    'auth' => $this->createTokenAndGetAuthResponse($user),
-                ],
-            ];
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw new \Exception($e->getMessage(), $e->getCode());
