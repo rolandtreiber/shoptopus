@@ -23,8 +23,6 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validFrom = Carbon::now()->subDay();
-        $this->validUntil = Carbon::now()->addMonth();
     }
 
     /**
@@ -32,6 +30,9 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
      */
     public function test_can_expire_multiple_voucher_codes(): void
     {
+        $this->validFrom = Carbon::now()->subDay();
+        $this->validUntil = Carbon::now()->addMonth();
+
         $voucherCodeIds = VoucherCode::factory()->state([
             'valid_from' => $this->validFrom,
             'valid_until' => $this->validUntil,
@@ -56,6 +57,9 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
      */
     public function test_can_start_multiple_voucher_codes(): void
     {
+        $this->validFrom = Carbon::now()->subDay();
+        $this->validUntil = Carbon::now()->addMonth();
+
         $voucherCodeIds = VoucherCode::factory()->state([
             'valid_from' => $this->validFrom->addMonth(),
             'valid_until' => $this->validUntil->addMonths(3),
@@ -80,6 +84,9 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
      */
     public function test_can_make_active_for_one_day_multiple_voucher_codes(): void
     {
+        $this->validFrom = Carbon::now()->subDay();
+        $this->validUntil = Carbon::now()->addMonth();
+
         $voucherCodeIds = VoucherCode::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
             'valid_until' => $this->validUntil->subMonth(),
@@ -107,6 +114,9 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
      */
     public function test_can_make_active_for_one_week_multiple_voucher_codes(): void
     {
+        $this->validFrom = Carbon::now()->subDay();
+        $this->validUntil = Carbon::now()->addMonth();
+
         $voucherCodeIds = VoucherCode::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
             'valid_until' => $this->validUntil->subMonth(),
@@ -134,6 +144,9 @@ class VoucherCodesBulkOperationsTest extends BulkOperationsTestCase
      */
     public function test_can_make_active_for_one_month_multiple_voucher_codes(): void
     {
+        $this->validFrom = Carbon::now()->subDay();
+        $this->validUntil = Carbon::now()->addMonth();
+
         $voucherCodeIds = VoucherCode::factory()->state([
             'valid_from' => $this->validFrom->subMonths(2),
             'valid_until' => $this->validUntil->subMonth(),
