@@ -7,6 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * @property mixed $menu_image
  * @property mixed $header_image
+ * @property boolean $clear_images
  */
 class ProductCategoryUpdateRequest extends FormRequest
 {
@@ -17,6 +18,7 @@ class ProductCategoryUpdateRequest extends FormRequest
     {
         return [
             'name' => ['json'],
+            'clear_images' => ['sometimes', 'boolean']
         ];
     }
 }

@@ -81,8 +81,10 @@ class ProductCategoryController extends Controller
         unset($data['header_image']);
         unset($data['menu_image']);
         $category->fill($data);
-        $category->menu_image = $request->hasFile('menu_image') ? $this->saveFileAndGetUrl($request->menu_image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]) : null;
-        $category->header_image = $request->hasFile('header_image') ? $this->saveFileAndGetUrl($request->header_image, config('shoptopus.header_image_dimensions')[0], config('shoptopus.header_image_dimensions')[1]) : null;
+        if ($request->clear_images !== false) {
+            $category->menu_image = $request->hasFile('menu_image') ? $this->saveFileAndGetUrl($request->menu_image, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]) : null;
+            $category->header_image = $request->hasFile('header_image') ? $this->saveFileAndGetUrl($request->header_image, config('shoptopus.header_image_dimensions')[0], config('shoptopus.header_image_dimensions')[1]) : null;
+        }
         $category->save();
 
         return new ProductCategoryDetailResource($category);
