@@ -21,6 +21,7 @@ class ProductAttributeOptionListResource extends JsonResource
             'name' => $this->getTranslations('name'),
             'value' => $this->value,
             'image' => $this->image ? $this->image->url : null,
+            'products_count' => $this->products()->count(),
             'product_variants_count' => $this->product_variants()->count(),
             'enabled' => $this->enabled,
         ];
