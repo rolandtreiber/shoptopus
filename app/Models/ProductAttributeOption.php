@@ -5,7 +5,10 @@ namespace App\Models;
 use App\Traits\HasFile;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
@@ -20,6 +23,8 @@ use Spatie\Translatable\HasTranslations;
  * @property mixed $image
  * @property mixed $type
  * @property mixed $product_attribute_id
+ * @property Collection<ProductVariant> $product_variants
+ * @property Collection<Product> $products
  * @property mixed $value
  */
 class ProductAttributeOption extends SearchableModel implements Auditable, Exportable, Importable
@@ -93,8 +98,25 @@ class ProductAttributeOption extends SearchableModel implements Auditable, Expor
         'enabled' => 'boolean',
     ];
 
-    public function product_attribute(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function product_attribute(): BelongsTo
     {
         return $this->belongsTo(ProductAttribute::class);
     }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function product_variants(): BelongsToMany
+    {
+        return $this->belongsToMany(ProductVariant::class, 'product_attribute_product_variant', 'product_attribute_option_id', 'product_variant_id');
+    }
+
+    /**
+     * @return BelongsToMany
+     */
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_product_attribute', 'product_attribute_option_id', 'product_id');
+    }
+
 }
