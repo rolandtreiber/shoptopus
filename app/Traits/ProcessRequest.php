@@ -55,7 +55,7 @@ trait ProcessRequest
     public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
     {
         // Images
-        $imageFormats = ['jpg', 'jpeg', 'gif', 'png'];
+        $imageFormats = ['jpg', 'jpeg', 'gif', 'png', 'webp'];
         $spreadsheetFormats = ['xls', 'xlsx', 'csv'];
         $textFormats = ['txt', 'doc', 'docx'];
         $audioFormats = ['mp3', 'wma', 'wav', 'ogg'];
@@ -68,7 +68,7 @@ trait ProcessRequest
             $data = $img->resize($sizeX, $sizeY, function ($const) {
                 $const->aspectRatio();
             })->encode('jpg', 80);
-            if (env('APP_ENV') === 'development' || config('app.env') === 'local' || config('app.env') === 'testing') {
+            if (config('app.env') === 'development' || config('app.env') === 'local' || config('app.env') === 'testing') {
                 Storage::disk('uploads')->put($fileName, $data);
                 $url = config('app.url').'/uploads/'.$fileName;
             } else {
@@ -79,7 +79,7 @@ trait ProcessRequest
             $fileName = Str::random(40).'.'.strtolower($file->extension());
             /** @var File $data */
             $data = $file;
-            if (env('APP_ENV') === 'development' || config('app.env') === 'local' || config('app.env') === 'testing') {
+            if (config('app.env') === 'development' || config('app.env') === 'local' || config('app.env') === 'testing') {
                 Storage::disk('uploads')->put($fileName, $data->getContent());
                 $url = config('app.url').'/uploads/'.$fileName;
             } else {
