@@ -13,6 +13,7 @@ use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductInsightsResource;
 use App\Http\Resources\Admin\ProductListResource;
 use App\Http\Resources\Admin\ProductPageSummaryResource;
+use App\Models\PaidFileContent;
 use App\Models\Product;
 use App\Repositories\Admin\Product\ProductRepositoryInterface;
 use App\Repositories\Admin\Report\ReportRepositoryInterface;
@@ -20,6 +21,7 @@ use App\Services\Local\Report\ReportServiceInterface;
 use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Request;
 
 class ProductController extends Controller
 {
@@ -151,5 +153,33 @@ class ProductController extends Controller
             'overall_satisfaction' => $this->reportRepository->getOverallSatisfactionByRatable(Product::class, $product->id),
             'sales_timeline' => $this->reportRepository->getProductSalesTimeline($product, $controls)
         ]);
+    }
+
+    /**
+     * @param Product $product
+     * @param $request
+     * @return string[]
+     */
+    public function savePaidFile(Product $product, $request): array
+    {
+        if ($request->hasFile('file')) {
+            $file = $this->savePaidFileAndGetUrl($request->file);
+                    if ($file) {
+                        $paidFileContent = new PaidFileContent();
+                        $paidFileContent->fileable_type = Product::class;
+                        $paidFileContent->fileable_id = $product->id;
+                        $paidFileContent->url = $file['url'];
+                        $paidFileContent->file_name = $file['file_name'];
+                        $paidFileContent->type = $file['type'];
+                        if ($paidFileContent->save()) {
+                            return [
+                                'status' => 'success'
+                            ];
+                        };
+                    }
+                }
+        return [
+            'status' => 'error'
+        ];
     }
 }

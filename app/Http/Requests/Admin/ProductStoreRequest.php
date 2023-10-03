@@ -27,6 +27,8 @@ class ProductStoreRequest extends FormRequest
             'stock' => ['sometimes', 'numeric'],
             'backup_stock' => ['sometimes', 'numeric'],
             'product_attributes' => ['sometimes', 'array'],
+            'weight' => ['sometimes', 'numeric'],
+            'virtual' => ['sometimes', 'boolean']
         ];
     }
 }

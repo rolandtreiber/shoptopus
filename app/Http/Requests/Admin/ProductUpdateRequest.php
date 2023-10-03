@@ -22,6 +22,8 @@ class ProductUpdateRequest extends FormRequest
         return [
             'name' => ['string', 'max:255'],
             'price' => ['sometimes', 'numeric'],
+            'weight' => ['sometimes', 'numeric'],
+            'virtual' => ['sometimes', 'boolean']
         ];
     }
 }

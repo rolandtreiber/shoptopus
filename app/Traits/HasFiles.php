@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\FileContent;
+use App\Models\PaidFileContent;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
@@ -17,6 +18,11 @@ trait HasFiles
             $fileContent->delete();
         }
         $this->delete();
+    }
+
+    public function paidFileContents(): MorphMany
+    {
+        return $this->morphMany(PaidFileContent::class, 'fileable');
     }
 
     public function fileContents(): MorphMany

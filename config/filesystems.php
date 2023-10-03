@@ -62,6 +62,13 @@ return [
             'url' => env('APP_URL').'/uploads',
         ],
 
+        'paid' => [
+            'driver' => 'local',
+            'root' => storage_path('app/paid'),
+            'url' => env('APP_URL').'/storage',
+            'throw' => false,
+        ],
+
     ],
 
     /*

@@ -29,6 +29,8 @@ return new class extends Migration
             $table->unsignedBigInteger('stock')->default(0);
             $table->unsignedBigInteger('backup_stock')->nullable()->default(0);
             $table->string('sku', 50)->unique()->nullable();
+            $table->boolean('virtual')->nullable()->default(false);
+            $table->integer('weight')->nullable()->default(0);
             $table->json('cover_photo')->nullable();
             Module::enabled('ratings') && $table->float('rating')->nullable();
             $table->softDeletes();

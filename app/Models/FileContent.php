@@ -12,6 +12,8 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $url
  * @property string|null $title
  * @property string|null $file_name
+ * @property string $fileable_type
+ * @property string $fileable_id
  * @property string|null $description
  */
 class FileContent extends SearchableModel

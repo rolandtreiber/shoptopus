@@ -125,6 +125,27 @@ trait ProcessRequest
         ];
     }
 
+    public function savePaidFileAndGetUrl($file): ?array
+    {
+        $fileName = Str::random(40).'.'.strtolower($file->extension());
+        /** @var File $data */
+        $data = $file;
+        if (config('app.env') === 'development' || config('app.env') === 'local' || config('app.env') === 'testing') {
+            Storage::disk('paid')->put($fileName, $data->getContent());
+            $url = config('app.url').'/api/download-paid-file/'.$fileName.'?token=';
+        } else {
+            // TODO: optimize this for production
+            Storage::disk('digitalocean')->put($fileName, $data->getContent(), ['visibility' => 'public']);
+            $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
+        }
+
+        return [
+            'type' => FileType::DownloadOnly,
+            'url' => $url,
+            'file_name' => $fileName,
+        ];
+    }
+
     public function getProcessed($request, $dateFields = [], $jsonFields = [])
     {
         $data = $request->toArray();

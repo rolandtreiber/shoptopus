@@ -24,4 +24,7 @@ final class FileType extends Enum
     const TextDocument = 6;
 
     const Other = 7;
+
+    const DownloadOnly = 8;
+
 }

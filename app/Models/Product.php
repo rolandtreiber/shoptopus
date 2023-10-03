@@ -52,6 +52,8 @@ use Spatie\Translatable\HasTranslations;
  * @property FileContent|null $coverPhoto
  * @property string $parent_id
  * @property float $rating
+ * @property boolean $virtual
+ * @property integer $weight
  * @property Collection<ProductAttribute>|null $product_attributes
  * @property Collection<ProductVariant>|null $product_variants
  */
@@ -133,6 +135,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'backup_stock',
         'rating',
         'final_price',
+        'weight',
+        'virtual',
         'sku',
     ];
 
@@ -152,6 +156,12 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         ],
         'backup_stock' => [
             'validation' => ['integer', 'min:0'],
+        ],
+        'weight' => [
+            'validation' => ['integer', 'min:0'],
+        ],
+        'virtual' => [
+            'validation' => ['boolean'],
         ],
         'sku' => [
             'validation' => ['max:20', 'unique:products,sku'],
@@ -196,7 +206,9 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'rating',
         'sku',
         'deleted_at',
-        'cover_photo'
+        'cover_photo',
+        'weight',
+        'virtual'
     ];
 
     /**
@@ -214,6 +226,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'final_price' => 'decimal:2',
         'rating' => 'decimal:2',
         'cover_photo' => 'object',
+        'virtual' => 'boolean'
     ];
 
     public function discount_rules(): BelongsToMany
