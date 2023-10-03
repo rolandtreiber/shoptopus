@@ -2,6 +2,9 @@
 
 namespace App\Repositories\Admin\DiscountRule;
 
+use App\Models\DiscountRule;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
 interface DiscountRuleRepositoryInterface
 {
     public function bulkExpire(array $ids): bool;
@@ -11,4 +14,9 @@ interface DiscountRuleRepositoryInterface
     public function bulkActivateForPeriod(array $ids, int $type): bool;
 
     public function bulkDelete(array $ids): bool;
+
+    public function getAvailableCategories(DiscountRule $discountRule): AnonymousResourceCollection;
+
+    public function getAvailableProducts(DiscountRule $discountRule): AnonymousResourceCollection;
+
 }

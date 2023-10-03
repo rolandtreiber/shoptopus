@@ -227,6 +227,16 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
                 Route::get('/', [DiscountRuleController::class, 'show'])->name('admin.api.show.discount-rule');
                 Route::delete('/', [DiscountRuleController::class, 'delete'])->middleware('super_user')->name('admin.api.delete.discount-rule');
                 Route::patch('/', [DiscountRuleController::class, 'update'])->middleware('super_user')->name('admin.api.update.discount-rule');
+                Route::get('/available-categories', [DiscountRuleController::class, 'getAvailableCategories'])->middleware('super_user')->name('admin.api.show.discount-rule.available-categories');
+                Route::get('/available-products', [DiscountRuleController::class, 'getAvailableProducts'])->middleware('super_user')->name('admin.api.show.discount-rule.available-products');
+                Route::prefix('/products/{product}')->group(function () {
+                    Route::post('/', [DiscountRuleController::class, 'addProduct'])->middleware('super_user')->name('admin.api.discount-rule.attach-product');
+                    Route::delete('/', [DiscountRuleController::class, 'removeProduct'])->middleware('super_user')->name('admin.api.discount-rule.detach-product');
+                });
+                Route::prefix('/product-categories/{productCategory}')->group(function () {
+                    Route::post('/', [DiscountRuleController::class, 'addProductCategory'])->middleware('super_user')->name('admin.api.discount-rule.attach-product-category');
+                    Route::delete('/', [DiscountRuleController::class, 'removeProductCategory'])->middleware('super_user')->name('admin.api.discount-rule.detach-product-category');
+                });
             });
         });
 

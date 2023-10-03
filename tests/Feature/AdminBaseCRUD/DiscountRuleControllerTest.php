@@ -4,6 +4,8 @@ namespace Tests\Feature\AdminBaseCRUD;
 
 use App\Enums\DiscountType;
 use App\Models\DiscountRule;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -245,4 +247,258 @@ class DiscountRuleControllerTest extends AdminControllerTestCase
         ]);
         $response->assertStatus(422);
     }
+
+    /**
+     * @test
+     */
+    public function test_available_categories_can_be_listed_for_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        $productCategories = ProductCategory::factory()->count(3)->create();
+        $rule->categories()->attach($productCategories[0]);
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.discount-rule.available-categories', [
+            'discountRule' => $rule
+        ]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.0.id', $productCategories[1]->id)
+                ->where('data.1.id', $productCategories[2]->id)
+                ->etc());
+    }
+
+    /**
+     * @test
+     */
+    public function test_available_products_can_be_listed_for_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        $products = Product::factory()->count(3)->create();
+        $rule->products()->attach($products[0]);
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.discount-rule.available-products', [
+            'discountRule' => $rule
+        ]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.0.id', $products[1]->id)
+                ->where('data.1.id', $products[2]->id)
+                ->etc());
+    }
+
+    /**
+     * @test
+     */
+    public function test_category_can_be_attached_to_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var ProductCategory $productCategory */
+        $productCategory = ProductCategory::factory()->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->post(route('admin.api.discount-rule.attach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $this->assertDatabaseHas('discount_rule_product_category', [
+            'discount_rule_id' => $rule->id,
+           'product_category_id' => $productCategory->id
+        ]);
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.categories.0.id', $productCategory->id)
+                ->etc());
+    }
+
+    /**
+     * @test
+     */
+    public function test_category_can_be_detached_from_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var ProductCategory $productCategory */
+        $productCategory = ProductCategory::factory()->create();
+        $rule->categories()->attach($productCategory);
+        $this->assertDatabaseHas('discount_rule_product_category', [
+            'discount_rule_id' => $rule->id,
+            'product_category_id' => $productCategory->id
+        ]);
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->delete(route('admin.api.discount-rule.detach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $response->assertOk();
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.id', $rule->id)
+                ->count('data.categories', 0)
+                ->etc());
+        $this->assertDatabaseMissing('discount_rule_product_category', [
+            'discount_rule_id' => $rule->id,
+            'product_category_id' => $productCategory->id
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_can_be_attached_to_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var Product $product */
+        $product = Product::factory()->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->post(route('admin.api.discount-rule.attach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+        $this->assertDatabaseHas('discount_rule_product', [
+            'discount_rule_id' => $rule->id,
+            'product_id' => $product->id
+        ]);
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.products.0.id', $product->id)
+                ->etc());
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_can_be_detached_from_discount_rule(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var ProductCategory $product */
+        $product = Product::factory()->create();
+        $rule->products()->attach($product);
+        $this->assertDatabaseHas('discount_rule_product', [
+            'discount_rule_id' => $rule->id,
+            'product_id' => $product->id
+        ]);
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->delete(route('admin.api.discount-rule.detach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+        $response->assertOk();
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.id', $rule->id)
+                ->count('data.products', 0)
+                ->etc());
+        $this->assertDatabaseMissing('discount_rule_product', [
+            'discount_rule_id' => $rule->id,
+            'product_id' => $product->id
+        ]);
+    }
+
+    /**
+     * @test
+     */
+    public function test_category_attaching_and_detaching_requires_authentication(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var ProductCategory $productCategory */
+        $productCategory = ProductCategory::factory()->create();
+        $response = $this->post(route('admin.api.discount-rule.attach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $response->assertStatus(500);
+
+        $rule->categories()->attach($productCategory);
+        $this->assertDatabaseHas('discount_rule_product_category', [
+            'discount_rule_id' => $rule->id,
+            'product_category_id' => $productCategory->id
+        ]);
+        $response = $this->delete(route('admin.api.discount-rule.detach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $response->assertStatus(500);
+    }
+    /**
+     * @test
+     */
+    public function test_category_attaching_and_detaching_requires_super_user_role(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var ProductCategory $productCategory */
+        $productCategory = ProductCategory::factory()->create();
+        $this->actingAs(User::where('email', 'customer@m.com')->first());
+        $response = $this->post(route('admin.api.discount-rule.attach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $response->assertForbidden();
+
+        $rule->categories()->attach($productCategory);
+        $this->assertDatabaseHas('discount_rule_product_category', [
+            'discount_rule_id' => $rule->id,
+            'product_category_id' => $productCategory->id
+        ]);
+        $response = $this->delete(route('admin.api.discount-rule.detach-product-category', [
+            'discountRule' => $rule,
+            'productCategory' => $productCategory
+        ]));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_attaching_and_detaching_requires_authentication(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var Product $product */
+        $product = Product::factory()->create();
+        $response = $this->post(route('admin.api.discount-rule.attach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+        $response->assertStatus(500);
+
+        $rule->products()->attach($product);
+        $response = $this->delete(route('admin.api.discount-rule.detach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+
+        $response->assertStatus(500);
+    }
+
+    /**
+     * @test
+     */
+    public function test_product_attaching_and_detaching_requires_super_user_role(): void
+    {
+        /** @var DiscountRule $rule */
+        $rule = DiscountRule::factory()->create();
+        /** @var Product $product */
+        $product = Product::factory()->create();
+        $this->actingAs(User::where('email', 'customer@m.com')->first());
+        $response = $this->post(route('admin.api.discount-rule.attach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+        $response->assertForbidden();
+
+        $rule->products()->attach($product);
+        $response = $this->delete(route('admin.api.discount-rule.detach-product', [
+            'discountRule' => $rule,
+            'product' => $product
+        ]));
+
+        $response->assertForbidden();
+    }
+
 }

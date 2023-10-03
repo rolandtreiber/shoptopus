@@ -12,6 +12,8 @@ use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\DiscountRuleDetailResource;
 use App\Http\Resources\Admin\DiscountRuleListResource;
 use App\Models\DiscountRule;
+use App\Models\Product;
+use App\Models\ProductCategory;
 use App\Repositories\Admin\DiscountRule\DiscountRuleRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -131,4 +133,67 @@ class DiscountRuleController extends Controller
         }
         throw new BulkOperationException();
     }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @return AnonymousResourceCollection
+     */
+    public function getAvailableCategories(DiscountRule $discountRule): AnonymousResourceCollection
+    {
+        return $this->discountRuleRepository->getAvailableCategories($discountRule);
+    }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @return AnonymousResourceCollection
+     */
+    public function getAvailableProducts(DiscountRule $discountRule): AnonymousResourceCollection
+    {
+        return $this->discountRuleRepository->getAvailableProducts($discountRule);
+    }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @param ProductCategory $productCategory
+     * @return DiscountRuleDetailResource
+     */
+    public function addProductCategory(DiscountRule $discountRule, ProductCategory $productCategory): DiscountRuleDetailResource
+    {
+        $discountRule->categories()->attach($productCategory);
+        return new DiscountRuleDetailResource($discountRule);
+    }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @param Product $product
+     * @return DiscountRuleDetailResource
+     */
+    public function addProduct(DiscountRule $discountRule, Product $product): DiscountRuleDetailResource
+    {
+        $discountRule->products()->attach($product);
+        return new DiscountRuleDetailResource($discountRule);
+    }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @param ProductCategory $productCategory
+     * @return DiscountRuleDetailResource
+     */
+    public function removeProductCategory(DiscountRule $discountRule, ProductCategory $productCategory): DiscountRuleDetailResource
+    {
+        $discountRule->categories()->detach($productCategory);
+        return new DiscountRuleDetailResource($discountRule);
+    }
+
+    /**
+     * @param DiscountRule $discountRule
+     * @param Product $product
+     * @return DiscountRuleDetailResource
+     */
+    public function removeProduct(DiscountRule $discountRule, Product $product): DiscountRuleDetailResource
+    {
+        $discountRule->products()->detach($product);
+        return new DiscountRuleDetailResource($discountRule);
+    }
+
 }
