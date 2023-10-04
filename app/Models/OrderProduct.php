@@ -18,6 +18,7 @@ use Spatie\Translatable\HasTranslations;
  * @property float $unit_price
  * @property string $product_id
  * @property string $product_variant_id
+ * @property array<string>|null $urls
  * @property integer $amount
  * @property integer $quantity
  * @property Order $order
@@ -57,6 +58,7 @@ class OrderProduct extends MorphPivot implements Exportable, Auditable
     protected $exportableFields = [
         'slug',
         'amount',
+        'urls',
         'name',
         'created_at',
         'returned',
@@ -81,6 +83,7 @@ class OrderProduct extends MorphPivot implements Exportable, Auditable
     protected $casts = [
         'product_id' => 'string',
         'product_variant_id' => 'string',
+        'urls' => 'json',
         'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];

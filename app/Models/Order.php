@@ -168,7 +168,7 @@ class Order extends SearchableModel implements Auditable, Exportable
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount', 'product_variant_id'])->using(OrderProduct::class);
+        return $this->belongsToMany(Product::class)->withPivot(['id', 'name', 'amount', 'full_price', 'original_unit_price', 'unit_price', 'final_price', 'unit_discount', 'total_discount', 'product_variant_id', 'urls'])->using(OrderProduct::class);
     }
 
     public function payments(): MorphMany
@@ -237,5 +237,10 @@ class Order extends SearchableModel implements Auditable, Exportable
         $this->total_discount = $originalPrice - $this->total_price;
         $this->save();
         Order::setEventDispatcher($dispatcher);
+    }
+
+    public function hasVirtualProduct()
+    {
+        return $this->products->where('virtual', true)->count() > 0;
     }
 }

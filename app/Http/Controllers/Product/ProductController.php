@@ -8,11 +8,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateReviewRequest;
 use App\Http\Requests\Product\FavoriteProductRequest;
 use App\Http\Requests\Product\ProductAvailableAttributeOptionsRequest;
+use App\Models\PaidFileContent;
 use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Product\ProductServiceInterface;
 use App\Traits\ProcessRequest;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

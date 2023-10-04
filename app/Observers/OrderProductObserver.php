@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Enums\AccessTokenType;
+use App\Models\AccessToken;
 use App\Models\OrderProduct;
+use App\Models\PaidFileContent;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Support\Carbon;
@@ -25,6 +28,7 @@ class OrderProductObserver
      */
     public function saving(OrderProduct $orderProduct): void
     {
+        /** @var Product $product */
         $product = Product::find($orderProduct->product_id);
 
         if ($orderProduct->product_variant_id) {
@@ -52,6 +56,25 @@ class OrderProductObserver
 
         $orderProduct->unit_discount = round($fullPrice - $finalPrice, 2);
         $orderProduct->total_discount = round(($fullPrice * $orderProduct->amount) - ($finalPrice * $orderProduct->amount), 2);
+
+        $orderUserId = $orderProduct->order->user->id;
+        if ($product->virtual === true) {
+            $urls = [];
+            $paidFileContents = $product->paidFileContents;
+            foreach ($paidFileContents as $paidFileContent) {
+                $accessToken = new AccessToken();
+                $accessToken->accessable_id = $paidFileContent->id;
+                $accessToken->accessable_type = PaidFileContent::class;
+                $accessToken->user_id = $orderUserId;
+                $accessToken->issuer_user_id = $orderUserId;
+                $accessToken->expiry = Carbon::now()->addYears(10);
+                $accessToken->type = AccessTokenType::PaidFileAccess;
+                $accessToken->save();
+                $urls[] = config('app.url').'/api/download-paid-file/'.$paidFileContent->id.'?token=' . $accessToken->token;
+            }
+            $orderProduct->urls = $urls;
+        }
+
     }
 
     /**

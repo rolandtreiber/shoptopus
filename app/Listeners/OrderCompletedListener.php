@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Enums\AccessTokenType;
 use App\Events\OrderCompletedEvent;
+use App\Mail\DigitalDeliveryEmail;
 use App\Mail\ReviewRequestEmail;
 use App\Models\AccessToken;
 use App\Models\Order;
@@ -28,6 +29,9 @@ class OrderCompletedListener
             $token->expiry = $now->addYear();
             $token->save();
             Mail::to($event->order->user->email)->send(new ReviewRequestEmail($token, $event->order, $event->order->user));
+            if ($event->order->hasVirtualProduct()) {
+                Mail::to($event->order->user->email)->send(new DigitalDeliveryEmail($event->order, $event->order->user));
+            }
         }
     }
 }

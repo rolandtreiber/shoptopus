@@ -52,6 +52,15 @@ trait ProcessRequest
         }
     }
 
+    public function deleteCurrentPaidFile($name): void
+    {
+        if (env('APP_ENV') === 'development' || env('APP_ENV') === 'local' || config('app.env') === 'testing') {
+            Storage::disk('paid')->delete($name);
+        } else {
+            Storage::disk('digitalocean')->delete($name);
+        }
+    }
+
     public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
     {
         // Images
@@ -146,7 +155,13 @@ trait ProcessRequest
         ];
     }
 
-    public function getProcessed($request, $dateFields = [], $jsonFields = [])
+    /**
+     * @param $request
+     * @param $dateFields
+     * @param $jsonFields
+     * @return mixed
+     */
+    public function getProcessed($request, $dateFields = [], $jsonFields = []): mixed
     {
         $data = $request->toArray();
         foreach ($data as $key => $field) {

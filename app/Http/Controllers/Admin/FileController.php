@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\FileBulkOperationRequest;
 use App\Http\Requests\Admin\FileStoreRequest;
 use App\Http\Requests\Admin\FileUpdateRequest;
+use App\Http\Requests\FormRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Common\FileContentResource;
 use App\Models\FileContent;
@@ -14,6 +15,7 @@ use App\Repositories\Admin\File\FileRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {

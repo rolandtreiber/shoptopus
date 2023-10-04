@@ -44,6 +44,11 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
                 Route::delete('/', [ProductController::class, 'delete'])->name('admin.api.delete.product');
                 Route::patch('/', [ProductController::class, 'update'])->name('admin.api.update.product');
                 Route::get('/insights', [ProductController::class, 'insights'])->name('admin.api.show.product-insights');
+                Route::get('/paid-contents', [ProductController::class, 'listPaidFiles'])->name('admin.api.list.paid-files');
+                Route::post('/paid-content', [ProductController::class, 'savePaidFile'])->middleware('super_user')->name('admin.api.save.paid-file');
+                Route::patch('/paid-content/{paidFileContent}', [ProductController::class, 'updatePaidFile'])->middleware('super_user')->name('admin.api.update.paid-file');
+                Route::delete('/paid-content/{paidFileContent}', [ProductController::class, 'deletePaidFile'])->middleware('super_user')->name('admin.api.delete.paid-file');
+                Route::get('/paid-content/{paidFileContent}/download', [ProductController::class, 'downloadPaidFileAsAdmin'])->name('admin.download.paid-file');
 
                 // Product Variants
                 Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.api.index.product-variants');

@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exceptions\ApiValidationFailedException;
 use App\Exceptions\BulkOperationException;
+use App\Exceptions\PaidFileDoesntBelongToProductException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\ProductBulkOperationRequest;
 use App\Http\Requests\Admin\ProductInsightsRequest;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Http\Requests\Admin\SavePaidFileRequest;
+use App\Http\Requests\Admin\UpdatePaidFileRequest;
+use App\Http\Requests\FormRequest;
 use App\Http\Requests\ListRequest;
+use App\Http\Resources\Admin\PaidFileResource;
 use App\Http\Resources\Admin\ProductDetailResource;
 use App\Http\Resources\Admin\ProductInsightsResource;
 use App\Http\Resources\Admin\ProductListResource;
@@ -22,6 +28,8 @@ use App\Traits\HasAttributes;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProductController extends Controller
 {
@@ -32,8 +40,8 @@ class ProductController extends Controller
     protected ReportServiceInterface $reportService;
 
     public function __construct(ProductRepositoryInterface $productRepository,
-                                ReportRepositoryInterface $reportRepository,
-                                ReportServiceInterface $reportService)
+                                ReportRepositoryInterface  $reportRepository,
+                                ReportServiceInterface     $reportService)
     {
         $this->productRepository = $productRepository;
         $this->reportRepository = $reportRepository;
@@ -157,29 +165,103 @@ class ProductController extends Controller
 
     /**
      * @param Product $product
-     * @param $request
-     * @return string[]
+     * @return AnonymousResourceCollection
      */
-    public function savePaidFile(Product $product, $request): array
+    public function listPaidFiles(Product $product): AnonymousResourceCollection
+    {
+        return PaidFileResource::collection($product->paidFileContents);
+    }
+
+    /**
+     * @param Product $product
+     * @param SavePaidFileRequest $request
+     * @return PaidFileResource
+     * @throws ApiValidationFailedException
+     */
+    public function savePaidFile(Product $product, SavePaidFileRequest $request): PaidFileResource
     {
         if ($request->hasFile('file')) {
+            $data = $this->getProcessed($request, [], ['title', 'description']);
             $file = $this->savePaidFileAndGetUrl($request->file);
-                    if ($file) {
-                        $paidFileContent = new PaidFileContent();
-                        $paidFileContent->fileable_type = Product::class;
-                        $paidFileContent->fileable_id = $product->id;
-                        $paidFileContent->url = $file['url'];
-                        $paidFileContent->file_name = $file['file_name'];
-                        $paidFileContent->type = $file['type'];
-                        if ($paidFileContent->save()) {
-                            return [
-                                'status' => 'success'
-                            ];
-                        };
+            if ($file) {
+                $paidFileContent = new PaidFileContent();
+                $paidFileContent->fileable_type = Product::class;
+                $paidFileContent->fileable_id = $product->id;
+                $paidFileContent->url = $file['url'];
+                $paidFileContent->file_name = $file['file_name'];
+                $paidFileContent->type = $file['type'];
+                $paidFileContent->title = $data['title'];
+                $paidFileContent->description = $data['description'];
+                if ($paidFileContent->save()) {
+                    return new PaidFileResource($paidFileContent);
+                };
+            }
+        }
+        throw new ApiValidationFailedException('No file was provided');
+    }
+
+    /**
+     * @param Product $product
+     * @param PaidFileContent $paidFileContent
+     * @param UpdatePaidFileRequest $request
+     * @return PaidFileResource
+     * @throws ApiValidationFailedException
+     * @throws PaidFileDoesntBelongToProductException
+     */
+    public function updatePaidFile(Product $product, PaidFileContent $paidFileContent, UpdatePaidFileRequest $request): PaidFileResource
+    {
+        if ($paidFileContent->fileable_id === $product->id) {
+            if ($request->hasFile('file')) {
+                $data = $this->getProcessed($request, [], ['title', 'description']);
+                $file = $this->savePaidFileAndGetUrl($request->file);
+                if ($file) {
+                    $this->deleteCurrentPaidFile($paidFileContent->file_name);
+                    $paidFileContent->url = $file['url'];
+                    $paidFileContent->file_name = $file['file_name'];
+                    $paidFileContent->type = $file['type'];
+                    if ($request->title) {
+                        $paidFileContent->title = $data['title'];
                     }
+                    if ($request->description) {
+                        $paidFileContent->description = $data['description'];
+                    }
+                    if ($paidFileContent->save()) {
+                        return new PaidFileResource($paidFileContent);
+                    };
                 }
-        return [
-            'status' => 'error'
-        ];
+            }
+            throw new ApiValidationFailedException('No file was provided');
+        } else {
+            throw new PaidFileDoesntBelongToProductException();
+        }
+    }
+
+    /**
+     * @param Product $product
+     * @param PaidFileContent $paidFileContent
+     * @return array
+     * @throws PaidFileDoesntBelongToProductException
+     */
+    public function deletePaidFile(Product $product, PaidFileContent $paidFileContent): array
+    {
+        if ($paidFileContent->fileable_id === $product->id) {
+            $this->deleteCurrentPaidFile($paidFileContent->file_name);
+            $paidFileContent->delete();
+            return [
+                'status' => 'File Deleted'
+            ];
+        } else {
+            throw new PaidFileDoesntBelongToProductException();
+        }
+    }
+
+    /**
+     * @param Product $product
+     * @param PaidFileContent $paidFileContent
+     * @return StreamedResponse
+     */
+    public function downloadPaidFileAsAdmin(Product $product, PaidFileContent $paidFileContent): StreamedResponse
+    {
+        return Storage::disk('paid')->download($paidFileContent->file_name);
     }
 }

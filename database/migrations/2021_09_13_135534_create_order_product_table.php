@@ -29,6 +29,7 @@ return new class extends Migration
             $table->dateTime('returned_at')->nullable();
             $table->string('return_reason')->nullable();
             $table->string('slug');
+            $table->json('urls')->nullable();
             $table->unique(['order_id', 'product_id']);
         });
     }

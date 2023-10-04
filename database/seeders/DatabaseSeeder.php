@@ -18,6 +18,7 @@ use Database\Seeders\TestData\ProductTagSeeder;
 use Database\Seeders\TestData\ProductVariantSeeder;
 use Database\Seeders\TestData\RatingSeeder;
 use Database\Seeders\TestData\UserSeeder;
+use Database\Seeders\TestData\VirtualProductSeeder;
 use Database\Seeders\TestData\VoucherCodeSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Mail;
@@ -54,20 +55,21 @@ class DatabaseSeeder extends Seeder
                     RoleSeeder::class,
                     UserSeeder::class,
                     PaymentProviderSeeder::class,
-                     BannerSeeder::class,
-                     DeliveryTypeSeeder::class,
-                     AddressSeeder::class,
-                     DiscountRuleSeeder::class,
-                     VoucherCodeSeeder::class,
-                     ProductTagSeeder::class,
-                     ProductCategorySeeder::class,
-                     ProductAttributeSeeder::class,
-                     ProductAttributeOptionSeeder::class,
-                     ProductSeeder::class,
-                     ProductVariantSeeder::class,
-                     CartSeeder::class,
-                     OrderSeeder::class,
-                     NoteSeeder::class
+                    BannerSeeder::class,
+                    DeliveryTypeSeeder::class,
+                    AddressSeeder::class,
+                    DiscountRuleSeeder::class,
+                    VoucherCodeSeeder::class,
+                    ProductTagSeeder::class,
+                    ProductCategorySeeder::class,
+                    ProductAttributeSeeder::class,
+                    ProductAttributeOptionSeeder::class,
+                    ProductSeeder::class,
+                    ProductVariantSeeder::class,
+                    VirtualProductSeeder::class,
+                    CartSeeder::class,
+                    OrderSeeder::class,
+                    NoteSeeder::class
                 ]);
 
                 Module::enabled('ratings') && $this->call([RatingSeeder::class]);

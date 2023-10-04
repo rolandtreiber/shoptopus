@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @property Collection<FileContent> $images
+ * @property Collection<PaidFileContent> $paidFileContents
  */
 trait HasFiles
 {

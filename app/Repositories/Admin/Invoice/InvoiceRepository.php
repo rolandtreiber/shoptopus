@@ -51,6 +51,7 @@ class InvoiceRepository implements InvoiceRepositoryInterface
                 'name' => $pivot->name,
                 'type' => $pivot->product_variant_id !== null ? 'product_variant' : 'product',
                 'amount' => $pivot->amount,
+                'urls' => $pivot->urls ? $pivot->urls : null,
                 'full_price' => $pivot->full_price,
                 'product_id' => $pivot->product_id,
                 'unit_price' => $pivot->unit_price,

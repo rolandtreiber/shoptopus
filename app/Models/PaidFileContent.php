@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use App\Enums\FileType;
 use App\Traits\HasUUID;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
 
 /**
+ * @property string $id
  * @property string|null $url
  * @property string|null $title
  * @property string|null $file_name
@@ -22,7 +21,7 @@ class PaidFileContent extends Model
 {
     use HasFactory, HasUUID, HasTranslations;
 
-    public $translatable = ['title', 'description'];
+    public array $translatable = ['title', 'description'];
 
     /**
      * The attributes that are mass assignable.

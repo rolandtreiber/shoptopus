@@ -30,6 +30,7 @@ class fresh extends Command
     {
         $file = new Filesystem;
         $file->cleanDirectory('public/uploads');
+        $file->cleanDirectory('storage/app/paid');
         $seed = $this->option('seed');
         $this->call('db:wipe', ['--database' => 'logs']);
         if ($seed !== true) {

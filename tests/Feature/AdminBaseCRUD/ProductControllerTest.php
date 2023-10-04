@@ -2,14 +2,18 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
+use App\Enums\AccessTokenType;
 use App\Enums\FileType;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Requests\Admin\ProductStoreRequest;
 use App\Http\Requests\Admin\ProductUpdateRequest;
+use App\Models\AccessToken;
 use App\Models\FileContent;
+use App\Models\PaidFileContent;
 use App\Models\Product;
 use App\Models\ProductTag;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -251,4 +255,401 @@ class ProductControllerTest extends AdminControllerTestCase
 
         $this->assertSoftDeleted($product);
     }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_save_paid_file_content_for_product(): void
+    {
+        Storage::fake('uploads');
+
+        $product = Product::factory()->state(['virtual' => true])->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->post(route('admin.api.save.paid-file', [
+            'product' => $product->id,
+        ]), [
+            'title' => json_encode([
+                'en' => 'Test file ENG',
+                'de' => 'Test file GER',
+            ]),
+            'description' => json_encode([
+                'en' => 'Test file description ENG',
+                'de' => 'Test file description GER',
+            ]),
+            'file' => UploadedFile::fake()->image('product_image2.jpg')
+        ]);
+        $response->assertCreated();
+        $jsonResponse = $response->json();
+        Storage::disk('paid')->assertExists($jsonResponse['data']['file_name']);
+        $this->assertDatabaseHas('paid_file_contents', [
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ]);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_update_paid_file_content_for_product(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        Storage::disk('paid')->assertExists($paidFileContent->file_name);
+
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->patch(route('admin.api.update.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]), [
+            'title' => json_encode([
+                'en' => 'UPDATED Test file ENG title',
+                'de' => 'AKTUALISIERT Test file GER title',
+            ]),
+            'description' => json_encode([
+                'en' => 'UPDATED Test file description ENG description',
+                'de' => 'AKTUALISIERT Test file description GER description',
+            ]),
+            'file' => UploadedFile::fake()->image('product_image2.jpg')
+        ]);
+        $response->assertOk();
+        Storage::disk('paid')->assertMissing($paidFileContent->file_name);
+        $jsonResponse = $response->json();
+        Storage::disk('paid')->assertExists($jsonResponse['data']['file_name']);
+        $this->assertDatabaseHas('paid_file_contents', [
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ]);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_delete_paid_file_contents_from_product(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        Storage::disk('paid')->assertExists($paidFileContent->file_name);
+
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->delete(route('admin.api.delete.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]));
+        $response->assertOk();
+        Storage::disk('paid')->assertMissing($paidFileContent->file_name);
+        $this->assertDatabaseMissing('paid_file_contents', [
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ]);
+    }
+
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_retrieve_paid_file_contents_for_product(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContents = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->count(3)->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.list.paid-files', [
+            'product' => $product->id
+        ]));
+        $response
+            ->assertJson(fn (AssertableJson $json) => $json
+                ->where('data.0.id', $paidFileContents[0]->id)
+                ->where('data.0.title.en', $paidFileContents[0]->title)
+                ->where('data.0.description.en', $paidFileContents[0]->description)
+                ->where('data.1.id', $paidFileContents[1]->id)
+                ->where('data.1.title.en', $paidFileContents[1]->title)
+                ->where('data.1.description.en', $paidFileContents[1]->description)
+                ->where('data.2.id', $paidFileContents[2]->id)
+                ->where('data.2.title.en', $paidFileContents[2]->title)
+                ->where('data.2.description.en', $paidFileContents[2]->description)
+                ->count('data', 3)
+                ->etc());
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_download_paid_file_contents_as_admin_and_manager(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.download.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]));
+        $response->assertDownload();
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_can_download_paid_file_contents_as_user_with_valid_access_token(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $accessToken = new AccessToken();
+        $accessToken->accessable_id = $paidFileContent->id;
+        $accessToken->accessable_type = PaidFileContent::class;
+        $accessToken->type = AccessTokenType::PaidFileAccess;
+        $accessToken->expiry = Carbon::now()->addYear();
+        $accessToken->save();
+        $response = $this->get(route('public.api.download-paid-file', [
+            'paidFileContent' => $paidFileContent->id,
+            'token' => $accessToken->token
+        ]));
+        $response->assertDownload();
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_download_paid_file_contents_as_user_fails_if_token_expired(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $accessToken = new AccessToken();
+        $accessToken->accessable_id = $paidFileContent->id;
+        $accessToken->accessable_type = PaidFileContent::class;
+        $accessToken->type = AccessTokenType::PaidFileAccess;
+        $accessToken->expiry = Carbon::now()->subMinute();
+        $accessToken->save();
+        $response = $this->get(route('public.api.download-paid-file', [
+            'paidFileContent' => $paidFileContent->id,
+            'token' => $accessToken->token
+        ]));
+        $response->assertJson([
+            "status" => "error",
+            "message" => "Token expired"
+        ]);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_download_paid_file_contents_as_user_fails_if_token_invalid(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $response = $this->get(route('public.api.download-paid-file', [
+            'paidFileContent' => $paidFileContent->id,
+            'token' => 'INVALID'
+        ]));
+        $response->assertJson([
+            "status" => "error",
+            "message" => "Something went wrong"
+        ]);
+    }
+
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_cannot_download_paid_file_contents_as_non_super_user(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $this->actingAs(User::where('email', 'customer@m.com')->first());
+        $response = $this->get(route('admin.download.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_downloading_paid_file_content_as_super_user_requires_authentication(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        $response = $this->get(route('admin.download.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]));
+        $response->assertStatus(500);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_saving_paid_file_content_requires_authentication(): void
+    {
+        Storage::fake('uploads');
+
+        $product = Product::factory()->state(['virtual' => true])->create();
+        $response = $this->post(route('admin.api.save.paid-file', [
+            'product' => $product->id,
+        ]), [
+            'title' => json_encode([
+                'en' => 'Test file ENG',
+                'de' => 'Test file GER',
+            ]),
+            'description' => json_encode([
+                'en' => 'Test file description ENG',
+                'de' => 'Test file description GER',
+            ]),
+            'file' => UploadedFile::fake()->image('product_image2.jpg')
+        ]);
+        $response->assertStatus(500);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_updating_paid_file_content_requires_authentication(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        Storage::disk('paid')->assertExists($paidFileContent->file_name);
+
+        $response = $this->patch(route('admin.api.update.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]), [
+            'title' => json_encode([
+                'en' => 'UPDATED Test file ENG title',
+                'de' => 'AKTUALISIERT Test file GER title',
+            ]),
+            'description' => json_encode([
+                'en' => 'UPDATED Test file description ENG description',
+                'de' => 'AKTUALISIERT Test file description GER description',
+            ]),
+            'file' => UploadedFile::fake()->image('product_image2.jpg')
+        ]);
+        $response->assertStatus(500);
+    }
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_retrieving_paid_file_contents_requires_authentication(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContents = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->count(3)->create();
+        $response = $this->get(route('admin.api.list.paid-files', [
+            'product' => $product->id
+        ]));
+        $response->assertStatus(500);
+    }
+
+
+    /**
+     * @test
+     * @group paid-file-contents
+     */
+    public function test_deleting_paid_file_contents_requires_authentication(): void
+    {
+        Storage::fake('uploads');
+
+        /** @var Product $product */
+        $product = Product::factory()->state(['virtual' => true])->create();
+        /** @var PaidFileContent $paidFileContent */
+        $paidFileContent = PaidFileContent::factory()->state([
+            'fileable_type' => Product::class,
+            'fileable_id' => $product->id
+        ])->create();
+        Storage::disk('paid')->assertExists($paidFileContent->file_name);
+        $response = $this->delete(route('admin.api.delete.paid-file', [
+            'product' => $product->id,
+            'paidFileContent' => $paidFileContent->id
+        ]));
+        $response->assertStatus(500);
+    }
+
 }

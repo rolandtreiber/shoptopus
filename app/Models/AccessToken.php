@@ -15,6 +15,7 @@ use Illuminate\Support\Carbon;
  * @property int $type
  * @property User $issuer
  * @property User $user
+ * @property string $token
  * @property string $user_id
  * @property string $issuer_user_id
  * @property Carbon $expiry

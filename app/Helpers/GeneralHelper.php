@@ -165,4 +165,39 @@ class GeneralHelper
             'file_name' => $fileName,
         ];
     }
+
+    public static function getPaidFileFromSamples($directory = null, $prefix = null, $number = null)
+    {
+        $storagePath = 'app/test-data-images';
+        if ($directory) {
+            $storagePath .= '/'.$directory;
+        }
+        $dir = storage_path($storagePath);
+
+        ! $prefix && $prefix = '*';
+
+        if (! $number) {
+            $pattern = $dir.'/'.$prefix.'*.*';
+        } else {
+            $pattern = $dir.'/'.$prefix.$number.'.*';
+        }
+
+        $files = glob($pattern);
+        $file = $files[array_rand($files)];
+
+        $contents = file_get_contents($file);
+        $extension = pathinfo(parse_url($file, PHP_URL_PATH), PATHINFO_EXTENSION);
+
+        $fileName = Str::random(40).'.'.$extension;
+
+        Storage::disk('local')->delete('public/uploads/'.$fileName);
+        Storage::disk('paid')->put($fileName, $contents);
+        $url = config('app.url').'/api/download-paid-file/'.$fileName.'?token=';
+
+        return [
+            'type' => FileType::DownloadOnly,
+            'url' => $url,
+            'file_name' => $fileName,
+        ];
+    }
 }
