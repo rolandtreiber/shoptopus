@@ -60,7 +60,7 @@ class DeliveryRuleTest extends TestCase
     /** @test */
     public function it_has_a_distance_unit_field(): void
     {
-        $this->assertEquals('mile', $this->delivery_rule->distance_unit);
+        $this->assertEquals('meter', $this->delivery_rule->distance_unit);
     }
 
     /** @test */

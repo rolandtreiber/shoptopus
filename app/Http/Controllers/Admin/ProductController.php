@@ -192,6 +192,7 @@ class ProductController extends Controller
                 $paidFileContent->type = $file['type'];
                 $paidFileContent->title = $data['title'];
                 $paidFileContent->description = $data['description'];
+                $paidFileContent->size = $file['size'];
                 if ($paidFileContent->save()) {
                     return new PaidFileResource($paidFileContent);
                 };

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->uuidMorphs('fileable');
             $table->text('title')->nullable();
             $table->text('description')->nullable();
+            $table->string('size', 50)->nullable();
             $table->tinyInteger('type')->default(FileType::Image);
             $table->timestamps();
         });

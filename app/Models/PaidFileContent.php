@@ -12,6 +12,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string|null $url
  * @property string|null $title
  * @property string|null $file_name
+ * @property string|null $size
  * @property string $fileable_type
  * @property string $fileable_id
  * @property string|null $description
@@ -37,6 +38,7 @@ class PaidFileContent extends Model
         'file_name',
         'description',
         'type',
+        'size'
     ];
 
     /**

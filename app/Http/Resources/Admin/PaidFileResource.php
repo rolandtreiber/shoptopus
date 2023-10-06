@@ -23,7 +23,8 @@ class PaidFileResource extends JsonResource
             'file_name' => $this->file_name,
             'url' => $this->url,
             'title' => $this->getTranslations('title'),
-            'description' => $this->getTranslations('description')
+            'description' => $this->getTranslations('description'),
+            'size' => $this->size
         ];
     }
 }

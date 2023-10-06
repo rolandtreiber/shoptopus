@@ -33,6 +33,7 @@ class PaidFileContentFactory extends Factory
             'file_name' => $file['file_name'],
             'description' => $translated['description'],
             'type' => $file['type'],
+            'size' => $file['size']
         ];
     }
 }

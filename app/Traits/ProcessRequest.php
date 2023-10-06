@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Enums\FileType;
 use App\Models\FileContent;
 use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
@@ -134,7 +135,7 @@ trait ProcessRequest
         ];
     }
 
-    public function savePaidFileAndGetUrl($file): ?array
+    public function savePaidFileAndGetUrl(UploadedFile $file): ?array
     {
         $fileName = Str::random(40).'.'.strtolower($file->extension());
         /** @var File $data */
@@ -152,6 +153,7 @@ trait ProcessRequest
             'type' => FileType::DownloadOnly,
             'url' => $url,
             'file_name' => $fileName,
+            'size' => $file->getSize()
         ];
     }
 
