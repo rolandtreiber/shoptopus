@@ -10,6 +10,7 @@ use Illuminate\Http\UploadedFile;
  * @property UploadedFile $file
  * @property string $title
  * @property string $description
+ * @property string|null $original_file_name
  */
 class UpdatePaidFileRequest extends FormRequest
 {
@@ -21,7 +22,9 @@ class UpdatePaidFileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => ['required'],
+            'file' => ['sometimes'],
+            'title' => ['sometimes', 'json'],
+            'description' => ['sometimes', 'json'],
         ];
     }
 }

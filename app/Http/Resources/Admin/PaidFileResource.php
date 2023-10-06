@@ -21,6 +21,7 @@ class PaidFileResource extends JsonResource
         return [
             'id' => $this->id,
             'file_name' => $this->file_name,
+            'original_file_name' => $this->original_file_name,
             'url' => $this->url,
             'title' => $this->getTranslations('title'),
             'description' => $this->getTranslations('description'),

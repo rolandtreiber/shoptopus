@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('paid_file_contents', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
             $table->string('url');
+            $table->string('original_file_name');
             $table->string('file_name');
             $table->uuidMorphs('fileable');
             $table->text('title')->nullable();

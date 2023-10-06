@@ -11,6 +11,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $id
  * @property string|null $url
  * @property string|null $title
+ * @property string|null $original_file_name
  * @property string|null $file_name
  * @property string|null $size
  * @property string $fileable_type
@@ -35,6 +36,7 @@ class PaidFileContent extends Model
         'fileable_id',
         'title',
         'url',
+        'original_file_name',
         'file_name',
         'description',
         'type',

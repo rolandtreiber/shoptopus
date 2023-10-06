@@ -188,6 +188,7 @@ class ProductController extends Controller
                 $paidFileContent->fileable_type = Product::class;
                 $paidFileContent->fileable_id = $product->id;
                 $paidFileContent->url = $file['url'];
+                $paidFileContent->original_file_name = $request['original_file_name'];
                 $paidFileContent->file_name = $file['file_name'];
                 $paidFileContent->type = $file['type'];
                 $paidFileContent->title = $data['title'];
@@ -212,26 +213,30 @@ class ProductController extends Controller
     public function updatePaidFile(Product $product, PaidFileContent $paidFileContent, UpdatePaidFileRequest $request): PaidFileResource
     {
         if ($paidFileContent->fileable_id === $product->id) {
+            $data = $this->getProcessed($request, [], ['title', 'description']);
             if ($request->hasFile('file')) {
-                $data = $this->getProcessed($request, [], ['title', 'description']);
                 $file = $this->savePaidFileAndGetUrl($request->file);
                 if ($file) {
                     $this->deleteCurrentPaidFile($paidFileContent->file_name);
                     $paidFileContent->url = $file['url'];
                     $paidFileContent->file_name = $file['file_name'];
                     $paidFileContent->type = $file['type'];
-                    if ($request->title) {
-                        $paidFileContent->title = $data['title'];
-                    }
-                    if ($request->description) {
-                        $paidFileContent->description = $data['description'];
-                    }
-                    if ($paidFileContent->save()) {
-                        return new PaidFileResource($paidFileContent);
-                    };
                 }
             }
-            throw new ApiValidationFailedException('No file was provided');
+            if ($request->title) {
+                $paidFileContent->title = $data['title'];
+            }
+            if ($request->description) {
+                $paidFileContent->description = $data['description'];
+            }
+            if ($request->original_file_name) {
+                $paidFileContent->original_file_name = $data['original_file_name'];
+            }
+            if ($paidFileContent->save()) {
+                return new PaidFileResource($paidFileContent);
+            } else {
+                throw new ApiValidationFailedException('Something went wrong updating the file content.');
+            }
         } else {
             throw new PaidFileDoesntBelongToProductException();
         }
