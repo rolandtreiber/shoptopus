@@ -277,6 +277,7 @@ class ProductControllerTest extends AdminControllerTestCase
                 'en' => 'Test file description ENG',
                 'de' => 'Test file description GER',
             ]),
+            'original_file_name' => 'product_image2.jpg',
             'file' => UploadedFile::fake()->image('product_image2.jpg')
         ]);
         $response->assertCreated();

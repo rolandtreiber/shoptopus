@@ -198,6 +198,7 @@ class GeneralHelper
             'type' => FileType::DownloadOnly,
             'url' => $url,
             'file_name' => $fileName,
+            'original_file_name' => $fileName,
             'size' => strlen($contents)
         ];
     }

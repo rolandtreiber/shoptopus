@@ -31,6 +31,7 @@ class PaidFileContentFactory extends Factory
             'fileable_id' => $fileable::factory(),
             'title' => $translated['title'],
             'file_name' => $file['file_name'],
+            'original_file_name' => $file['original_file_name'],
             'description' => $translated['description'],
             'type' => $file['type'],
             'size' => $file['size']
