@@ -21,6 +21,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $min_distance
  * @property int|null $max_distance
  * @property string $distance_unit
+ * @property boolean $enabled
  * @property float|null $lat
  * @property float|null $lon
  * @property int $status

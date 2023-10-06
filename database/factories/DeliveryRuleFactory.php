@@ -36,7 +36,7 @@ class DeliveryRuleFactory extends Factory
             'max_weight' => $maxWeight,
             'min_distance' => $minDistance,
             'max_distance' => $maxDistance,
-            'distance_unit' => 'mile',
+            'distance_unit' => 'meter',
             'lat' => $this->faker->latitude(),
             'lon' => $this->faker->longitude(),
             'enabled' => true,

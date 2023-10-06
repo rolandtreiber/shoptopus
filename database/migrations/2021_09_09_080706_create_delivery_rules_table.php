@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('max_weight')->nullable();
             $table->unsignedBigInteger('min_distance')->nullable();
             $table->unsignedBigInteger('max_distance')->nullable();
-            $table->string('distance_unit')->default('mile');
+            $table->string('distance_unit')->default('meter');
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
             $table->tinyInteger('status')->default(1);

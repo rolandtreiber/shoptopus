@@ -27,6 +27,7 @@ class DeliveryRuleListResource extends JsonResource
             'lat' => $this->lat,
             'lon' => $this->lon,
             'status' => $this->status,
+            'enabled' => $this->enabled
         ];
     }
 }
