@@ -20,10 +20,12 @@ class RatingDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'user' => [
+                'id' => $this->user->id,
                 'name' => $this->user->name,
                 'client_ref' => $this->user->client_ref,
                 'avatar' => $this->user->avatar,
-                'email' => $this->user->last_seen,
+                'email' => $this->user->email,
+                'last_seen' => Carbon::parse($this->user->last_seen)->format('Y-m-d H:i:s'),
                 'slug' => $this->user->slug,
                 'created_at' => $this->user->created_at
             ],
