@@ -92,6 +92,11 @@ class Rating extends SearchableModel implements Auditable, Exportable
         'user',
     ];
 
+    /**
+     * @param $query
+     * @param $view
+     * @return void
+     */
     public function scopeView($query, $view)
     {
         switch ($view) {
@@ -109,13 +114,27 @@ class Rating extends SearchableModel implements Auditable, Exportable
         }
     }
 
+    /**
+     * @return MorphTo
+     */
     public function ratable(): MorphTo
     {
         return $this->morphTo();
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function rated(): string
+    {
+        return str_replace("App\Models\\", '', $this->ratable_type);
     }
 }

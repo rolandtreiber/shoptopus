@@ -14,7 +14,7 @@ class UserObserver
      */
     public bool $afterCommit = true;
 
-    public function creating(User $user)
+    public function creating(User $user): void
     {
         do {
             $reference = GeneralHelper::generateRandomString(8, RandomStringMode::UppercaseAndNumbers);
@@ -22,7 +22,7 @@ class UserObserver
         $user->client_ref = $reference;
     }
 
-    public function saving(User $user)
+    public function saving(User $user): void
     {
         $firstName = $user->first_name;
         $lastName = $user->last_name;
