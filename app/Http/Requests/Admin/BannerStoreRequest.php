@@ -19,7 +19,7 @@ class BannerStoreRequest extends FormRequest
             'description' => ['required', 'json'],
             'button_text' => ['sometimes', 'json'],
             'button_url' => ['sometimes'],
-            'show_button' => ['sometimes', 'boolean'],
+            'show_button' => ['sometimes'],
         ];
     }
 }
