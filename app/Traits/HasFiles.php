@@ -65,4 +65,10 @@ trait HasFiles
     {
         return $this->morphMany(FileContent::class, 'fileable')->other()->get();
     }
+
+    public function nonImageFiles(): Collection
+    {
+        return $this->morphMany(FileContent::class, 'fileable')->nonimage()->get();
+    }
+
 }

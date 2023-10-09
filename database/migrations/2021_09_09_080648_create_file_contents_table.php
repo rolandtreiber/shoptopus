@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('url');
             $table->string('file_name');
             $table->uuidMorphs('fileable');
+            $table->string('original_file_name')->nullable();
+            $table->string('size', 50)->nullable();
             $table->text('title')->nullable();
             $table->text('description')->nullable();
             $table->tinyInteger('type')->default(FileType::Image);

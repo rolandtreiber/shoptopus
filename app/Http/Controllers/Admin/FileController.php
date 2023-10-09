@@ -9,13 +9,18 @@ use App\Http\Requests\Admin\FileStoreRequest;
 use App\Http\Requests\Admin\FileUpdateRequest;
 use App\Http\Requests\FormRequest;
 use App\Http\Requests\ListRequest;
+use App\Http\Resources\Admin\FileContentDetailResource;
 use App\Http\Resources\Common\FileContentResource;
 use App\Models\FileContent;
+use App\Models\PaidFileContent;
+use App\Models\Product;
 use App\Repositories\Admin\File\FileRepositoryInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class FileController extends Controller
 {
@@ -33,7 +38,7 @@ class FileController extends Controller
         return FileContentResource::collection(FileContent::filtered([], $request)->view($request->view)->paginate($request->paginate));
     }
 
-    private function storeFile($model, $id, $fileData): FileContent
+    private function storeFile($model, $id, $fileData, $requestData): FileContent
     {
         $fileContent = new FileContent();
         $fileContent['fileable_type'] = 'App\\Models\\'.$model;
@@ -41,6 +46,12 @@ class FileController extends Controller
         $fileContent->url = $fileData['url'];
         $fileContent->file_name = $fileData['file_name'];
         $fileContent->type = $fileData['type'];
+        if (array_key_exists('title', $requestData)) {
+            $fileContent->title = $requestData['title'];
+        }
+        if (array_key_exists('description', $requestData)) {
+            $fileContent->description = $requestData['description'];
+        }
         $fileContent->save();
 
         return $fileContent;
@@ -56,9 +67,13 @@ class FileController extends Controller
         return $file;
     }
 
-    public function show(FileContent $file): FileContentResource
+    /**
+     * @param FileContent $file
+     * @return FileContentDetailResource
+     */
+    public function show(FileContent $file): FileContentDetailResource
     {
-        return new FileContentResource($file);
+        return new FileContentDetailResource($file);
     }
 
     /**
@@ -66,16 +81,17 @@ class FileController extends Controller
      */
     public function create(FileStoreRequest $request)
     {
+        $data = $this->getProcessed($request, [], ['title', 'description']);
         if ($request->hasFile('file')) {
             $fileData = $this->saveFileAndGetUrl($request->file);
-            $file = $this->storeFile($request->model, $request->id, $fileData);
+            $file = $this->storeFile($request->model, $request->id, $fileData, $data);
 
             return new FileContentResource($file);
         } elseif ($request->hasFile('files')) {
             $files = new Collection();
             foreach ($request->file('files') as $file) {
                 $fileData = $this->saveFileAndGetUrl($file);
-                $file = $this->storeFile($request->model, $request->id, $fileData);
+                $file = $this->storeFile($request->model, $request->id, $fileData, $data);
                 $files->add($file);
             }
 
@@ -88,13 +104,23 @@ class FileController extends Controller
      */
     public function update(FileContent $file, FileUpdateRequest $request)
     {
-        $this->deleteCurrentFile($file->file_name);
+        $data = $this->getProcessed($request, [], ['title', 'description']);
         if ($request->hasFile('file')) {
+            $this->deleteCurrentFile($file->file_name);
             $fileData = $this->saveFileAndGetUrl($request->file);
-            $updatedFile = $this->updateFile($file, $fileData);
-
-            return new FileContentResource($updatedFile);
+            $this->updateFile($file, $fileData);
         }
+        if (array_key_exists('title', $data)) {
+            $file->title = $data['title'];
+        }
+        if (array_key_exists('description', $data)) {
+            $file->description = $data['description'];
+        }
+        if (array_key_exists('type', $data)) {
+            $file->type = $data['type'];
+        }
+        $file->save();
+        return new FileContentResource($file->refresh());
     }
 
     /**
@@ -119,4 +145,5 @@ class FileController extends Controller
         }
         throw new BulkOperationException();
     }
+
 }

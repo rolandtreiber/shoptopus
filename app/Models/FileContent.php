@@ -6,6 +6,7 @@ use App\Enums\FileType;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -76,6 +77,9 @@ class FileContent extends SearchableModel
             case 'other':
                 $query->where('type', FileType::Other);
                 break;
+            case 'nonimage':
+                $query->whereIn('type', [FileType::TextDocument, FileType::Spreadsheet, FileType::Pdf, FileType::Audio, FileType::Video, FileType::Other]);
+                break;
         }
     }
 
@@ -112,5 +116,15 @@ class FileContent extends SearchableModel
     public function scopeOther($query): Builder
     {
         return $query->where('type', FileType::Other);
+    }
+
+    public function fileable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+
+    public function entityType(): string
+    {
+        return str_replace("App\Models\\", '', $this->fileable_type);
     }
 }
