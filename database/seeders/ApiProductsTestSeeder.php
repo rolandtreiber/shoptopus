@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\ProductAttributeType;
+use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
@@ -27,9 +28,14 @@ class ApiProductsTestSeeder extends Seeder
         ]));
     }
 
-    protected function addRelationships($products)
+    protected function addRelationships($products) : void
     {
         foreach ($products as $product) {
+            $image = FileContent::factory()->create([
+                'fileable_type' => get_class($product),
+                'fileable_id' => $product->id,
+            ]);
+
             // Product Tags
             // ProductTag::factory()->count(2)->create()->each(fn($tag) => $tag->products()->attach($product->id));
 
