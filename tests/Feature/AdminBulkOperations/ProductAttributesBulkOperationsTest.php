@@ -137,7 +137,7 @@ class ProductAttributesBulkOperationsTest extends BulkOperationsTestCase
         $productAttributeIds = ProductAttribute::factory()->state([
             'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
-        $this->signIn($this->storeManager);
+        $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.product-attributes.bulk.update-availability'), [
             'ids' => [...$productAttributeIds, 'invalid id'],
             'availability' => false,

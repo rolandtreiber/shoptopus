@@ -137,7 +137,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
-        $this->signIn($this->storeManager);
+        $this->signIn($this->superAdmin);
         $response = $this->post(route('admin.api.product-categories.bulk.update-availability'), [
             'ids' => [...$productCategoryIds, 'invalid id'],
         ]);
@@ -191,7 +191,7 @@ class ProductCategoriesBulkOperationsTest extends BulkOperationsTestCase
         $productCategoryIds = ProductCategory::factory()->state([
             'enabled' => true,
         ])->count(3)->create()->pluck('id')->toArray();
-        $this->signIn($this->storeManager);
+        $this->signIn($this->superAdmin);
         $response = $this->delete(route('admin.api.product-categories.bulk.delete'), [
             'ids' => [...$productCategoryIds, 'invalid id'],
         ]);

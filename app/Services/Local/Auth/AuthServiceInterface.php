@@ -67,4 +67,6 @@ interface AuthServiceInterface
     public function handleOAuthProviderCallback(array $payload): array;
 
     public function details(): array;
+
+    public function flushRolesAndPermissions(): void;
 }

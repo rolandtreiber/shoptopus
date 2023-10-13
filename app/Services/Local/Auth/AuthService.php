@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\Auth;
 
+use App\Enums\Permission as PermissionOptions;
 use App\Enums\UserInteractionType;
 use App\Events\UserInteraction;
 use App\Models\PasswordReset;
@@ -14,11 +15,13 @@ use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Notification\NotificationServiceInterface;
 use App\Services\Local\User\UserServiceInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class AuthService implements AuthServiceInterface
@@ -454,5 +457,51 @@ class AuthService implements AuthServiceInterface
             'notifications' => $notifications,
             'favorites' => $this->userService->getFavoritedProductIds(),
         ];
+    }
+
+    public function flushRolesAndPermissions(): void
+    {
+        Schema::disableForeignKeyConstraints();
+        DB::table('roles')->truncate();
+        DB::table('permissions')->truncate();
+        DB::table('role_has_permissions')->truncate();
+        $now = Carbon::now()->format('Y-m-d H:i:s');
+        $roleRecords = array_map(function($role) use ($now) {
+            return [
+                'name' => $role,
+                'guard_name' => 'api',
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
+        }, array_keys(config('roles')));
+        DB::table('roles')->insert($roleRecords);
+
+        $permissionRecords = array_map(function($permission) use ($now) {
+            return [
+                'name' => $permission,
+                'guard_name' => 'api',
+                'created_at' => $now,
+                'updated_at' => $now
+            ];
+        }, PermissionOptions::getValues());
+
+        DB::table('permissions')->insert($permissionRecords);
+
+        $roles = DB::table('roles')->select(['id', 'name'])->get();
+        $permissions = DB::table('permissions')->select(['id', 'name'])->get();
+
+        $roleHasPermissions = [];
+        foreach ($roles as $role) {
+            $associatedPermissions = config('roles')[$role['name']];
+            $associatedPermissionIds = $permissions->whereIn('name', $associatedPermissions)->pluck('id')->toArray();
+            foreach ($associatedPermissionIds as $associatedPermissionId) {
+                $roleHasPermissions[] = [
+                    'permission_id' => $associatedPermissionId,
+                    'role_id' => $role['id'],
+                ];
+            }
+        }
+        DB::table('role_has_permissions')->insert($roleHasPermissions);
+        Schema::enableForeignKeyConstraints();
     }
 }

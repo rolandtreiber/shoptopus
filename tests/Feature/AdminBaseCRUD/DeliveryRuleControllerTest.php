@@ -231,7 +231,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
      */
     public function test_delivery_rule_creation_validation(): void
     {
-        $this->actingAs(User::where('email', 'storemanager@m.com')->first());
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $deliveryType = DeliveryType::factory()->create();
         $response = $this->post(route('admin.api.create.delivery-rule', [
             'deliveryType' => $deliveryType,
@@ -251,7 +251,7 @@ class DeliveryRuleControllerTest extends AdminControllerTestCase
         $deliveryRule = DeliveryRule::factory([
             'delivery_type_id' => $deliveryType->id,
         ])->create();
-        $this->actingAs(User::where('email', 'storemanager@m.com')->first());
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.delivery-rule', [
             'deliveryType' => $deliveryType,
             'deliveryRule' => $deliveryRule,

@@ -49,7 +49,6 @@ class DatabaseSeeder extends Seeder
                 ]);
                 break;
             default:
-
                 $this->call([
                     ApiProductsTestSeeder::class,
                     RoleSeeder::class,
