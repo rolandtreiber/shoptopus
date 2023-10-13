@@ -20,6 +20,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $ratable
  * @property User $user
  * @property string $user_id
+ * @property string $slug
  * @property int $rating
  * @property string $language_prefix
  * @property string $description

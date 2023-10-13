@@ -249,6 +249,7 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
         Route::get('users', [UserController::class, 'index'])->name('admin.api.index.users');
         Route::prefix('user')->group(function () {
             Route::post('/', [UserController::class, 'create'])->middleware(['role:super_admin'])->name('admin.api.create.user');
+            Route::patch('/avatar', [UserController::class, 'changeProfileImage'])->name('admin.api.update.avatar');
             Route::prefix('{user}')->group(function () {
                 Route::get('/', [UserController::class, 'show'])->name('admin.api.show.user');
                 Route::delete('/', [UserController::class, 'delete'])->middleware(['own_or_super_admin'])->name('admin.api.delete.user');

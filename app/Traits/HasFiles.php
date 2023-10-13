@@ -33,41 +33,49 @@ trait HasFiles
 
     public function images(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->image()->get();
     }
 
     public function audioFiles(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->audio()->get();
     }
 
     public function videoFiles(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->video()->get();
     }
 
     public function pdfs(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->pdf()->get();
     }
 
     public function spreadsheets(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->spreadsheet()->get();
     }
 
     public function documents(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->document()->get();
     }
 
     public function otherFiles(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->other()->get();
     }
 
     public function nonImageFiles(): Collection
     {
+        // @phpstan-ignore-next-line
         return $this->morphMany(FileContent::class, 'fileable')->nonimage()->get();
     }
 

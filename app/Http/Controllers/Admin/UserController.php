@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\RandomStringMode;
 use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateUserProfilePhotoRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
 use App\Http\Requests\ListRequest;
@@ -14,6 +15,7 @@ use App\Models\User;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class UserController extends Controller
 {
@@ -67,6 +69,24 @@ class UserController extends Controller
         $user->save();
 
         return new UserDetailResource($user);
+    }
+
+    /**
+     * Dedicated endpoint for updating the user avatar (and touching nothing else)
+     */
+    public function changeProfileImage(UpdateUserProfilePhotoRequest $request): UserDetailResource
+    {
+        $user = Auth()->user();
+        if ($user) {
+            isset($user->avatar) && $this->deleteCurrentFile($user->avatar->file_name);
+            if ($request->hasFile('avatar')) {
+                $user->avatar = $this->saveFileAndGetUrl($request->avatar, config('shoptopus.user_avatar_dimensions')[0], config('shoptopus.user_avatar_dimensions')[1]);
+                $user->save();
+            }
+
+            return new UserDetailResource($user);
+        }
+        throw new ResourceNotFoundException("User not found");
     }
 
     /**
