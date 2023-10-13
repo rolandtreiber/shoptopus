@@ -456,6 +456,7 @@ class AuthService implements AuthServiceInterface
             'cart' => $this->cartService->getCartForUser($user->id),
             'notifications' => $notifications,
             'favorites' => $this->userService->getFavoritedProductIds(),
+            'permissions' => $user->getAllPermissionNames(),
         ];
     }
 

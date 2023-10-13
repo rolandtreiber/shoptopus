@@ -263,4 +263,11 @@ class User extends Authenticatable implements Auditable, Exportable
     {
         return $this->hasMany(Rating::class);
     }
+
+    public function getAllPermissionNames(): array
+    {
+        return $this->roles->map(function ($role) {
+            return $role->permissions;
+        })->collapse()->pluck('name')->unique()->toArray();
+    }
 }
