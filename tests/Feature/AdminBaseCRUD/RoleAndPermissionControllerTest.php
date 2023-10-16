@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\AdminBaseCRUD;
 
-use App\Exceptions\CannotDeleteRoleException;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -26,7 +26,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
         $response
             ->assertJson(fn(AssertableJson $json) => $json
                 ->where('data.0.name', 'super_admin')
-                ->count('data', 7)
+                ->count('data', 4)
                 ->etc());
     }
 
@@ -38,7 +38,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
         $response
             ->assertJson(fn(AssertableJson $json) => $json
                 ->where('data.0.name', 'users.can.invite')
-                ->count('data', 110)
+                ->count('data', 104)
                 ->etc());
     }
 
@@ -51,7 +51,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
         ]));
         $response
             ->assertJson(fn(AssertableJson $json) => $json
-                ->count('data', 105)
+                ->count('data', 104)
                 ->etc());
     }
 
@@ -125,6 +125,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
     /** @test */
     public function test_permission_can_be_assigned_to_role(): void
     {
+        Notification::fake();
         $role = new Role();
         $role->name = 'Test Role';
         $role->save();
@@ -150,6 +151,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
     /** @test */
     public function test_permission_can_be_removed_from_role(): void
     {
+        Notification::fake();
         $role = Role::findByName('store_manager');
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $permission = Permission::findByName('users.can.update');
@@ -160,7 +162,7 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
         $response->assertOk();
         $response
             ->assertJson(fn(AssertableJson $json) => $json
-                ->count('data', 70)
+                ->count('data', 69)
                 ->etc());
         $this->assertDatabaseMissing('role_has_permissions', [
             'role_id' => $role->id,

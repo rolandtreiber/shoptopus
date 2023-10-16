@@ -160,19 +160,4 @@ final class Permission extends Enum
 
     // Import
     const CanMassImportRecords = 'can.import.mass.records';
-
-    // Customer
-    const CanViewOwnAccount = 'can-view-own-account';
-
-    const CanShop = 'can-shop';
-
-    const CanActAsCustomer = 'can-act-as-customer';
-
-    // Seller
-    const OwnProductsCanUpdate = 'own-products.can.create';
-
-    const OwnProductsCanDelete = 'own-products.can.delete';
-
-    // Seller
-    const CanAccessAuditables = 'auditables.can.view';
 }

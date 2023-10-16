@@ -20,7 +20,6 @@ class NoteSeeder extends Seeder
         $adminRoles = [
             Role::findByName(UserRole::Admin)->id,
             Role::findByName(UserRole::SuperAdmin)->id,
-            Role::findByName(UserRole::Seller)->id,
             Role::findByName(UserRole::StoreAssistant)->id,
             Role::findByName(UserRole::StoreManager)->id
         ];

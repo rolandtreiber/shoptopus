@@ -10,12 +10,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property string $id
  * @property Carbon $created_at
  * @property mixed $data
+ * @property string $type
  * @property string $read_at
  */
 class NotificationResource extends JsonResource
 {
-    public string $type;
-
     /**
      * Transform the resource into an array.
      *

@@ -58,7 +58,7 @@ class VirtualProductSeeder extends Seeder
         $discountedCount = random_int(1, round($virtualProducts->count() / 2));
         for ($i = 1; $i < $discountedCount; $i++) {
             do {
-                $productId = rand(1, $virtualProducts->count());
+                $productId = rand(1, $virtualProducts->count() - 1);
             } while (in_array($productId, $discounted));
             $discounted[] = $productId;
             Product::find($productIds[$productId])->discount_rules()->attach((new DiscountRule)->findNthId(random_int(0, DiscountRule::count() - 1)));

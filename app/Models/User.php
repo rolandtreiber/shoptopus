@@ -22,6 +22,7 @@ use Laravel\Passport\HasApiTokens;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Sluggable\HasSlug;
@@ -44,6 +45,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property Carbon|null $last_seen
  * @property Collection<Address> $addresses
  * @property Collection<Order> $orders
+ * @property Collection<Permission> $permissions
+ * @property Collection<Role> $roles
  * @property Collection $social_accounts
  * @property Collection $payment_sources
  * @property Collection $payments
@@ -266,6 +269,7 @@ class User extends Authenticatable implements Auditable, Exportable
 
     public function getAllPermissionNames(): array
     {
+        // @phpstan-ignore-next-line - reaosn for ignoring is that the Role model is defined in the Spatie library, therefore we don't have control over it
         return $this->roles->map(function ($role) {
             return $role->permissions;
         })->collapse()->pluck('name')->unique()->toArray();

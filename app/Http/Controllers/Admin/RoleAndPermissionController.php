@@ -10,6 +10,8 @@ use App\Http\Resources\Admin\PermissionListResource;
 use App\Http\Resources\Admin\RoleListResource;
 use App\Http\Resources\Admin\UserListResource;
 use App\Models\User;
+use App\Notifications\ProductRunningLow;
+use App\Notifications\RoleUpdated;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -21,7 +23,7 @@ class RoleAndPermissionController extends Controller
      */
     public function listRoles(): AnonymousResourceCollection
     {
-        return RoleListResource::collection(Role::all());
+        return RoleListResource::collection(Role::whereNot('name', 'customer')->get());
     }
 
     /**
@@ -57,7 +59,7 @@ class RoleAndPermissionController extends Controller
     public function createRole(StoreRoleRequest $request): RoleListResource
     {
         $role = new Role();
-        $role->name = $request->name;
+        $role->name = str_replace(" ", "_", strtolower($request->name));
         $role->guard_name = 'api';
         $role->save();
         return new RoleListResource($role);
@@ -70,7 +72,7 @@ class RoleAndPermissionController extends Controller
      */
     public function updateRole(Role $role, StoreRoleRequest $request): RoleListResource
     {
-        $role->name = $request->name;
+        $role->name = str_replace(" ", "_", strtolower($request->name));
         $role->save();
         return new RoleListResource($role);
     }
@@ -103,6 +105,10 @@ class RoleAndPermissionController extends Controller
     public function assignPermissionToRole(Role $role, Permission $permission): AnonymousResourceCollection
     {
         $role->givePermissionTo($permission);
+        // @phpstan-ignore-next-line
+        $role->users->map(function (User $user) {
+            $user->notify(new RoleUpdated($user->id));
+        });
         return PermissionListResource::collection($role->permissions()->get());
     }
 
@@ -114,6 +120,10 @@ class RoleAndPermissionController extends Controller
     public function removePermissionFromRole(Role $role, Permission $permission): AnonymousResourceCollection
     {
         $role->revokePermissionTo($permission);
+        // @phpstan-ignore-next-line
+        $role->users->map(function (User $user) {
+            $user->notify(new RoleUpdated($user->id));
+        });
         return PermissionListResource::collection($role->permissions()->get());
     }
 
@@ -125,6 +135,7 @@ class RoleAndPermissionController extends Controller
     public function assignRoleToUser(Role $role, User $user): AnonymousResourceCollection
     {
         $role->users()->attach($user);
+        $user->notify(new RoleUpdated($user->id));
         return UserListResource::collection($role->users()->get());
     }
 
@@ -136,6 +147,7 @@ class RoleAndPermissionController extends Controller
     public function removeRoleFromUser(Role $role, User $user): AnonymousResourceCollection
     {
         $role->users()->detach($user);
+        $user->notify(new RoleUpdated($user->id));
         return UserListResource::collection($role->users()->get());
     }
 

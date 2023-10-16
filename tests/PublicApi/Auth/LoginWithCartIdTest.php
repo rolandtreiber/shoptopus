@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
+/**
+ * @group login-with-cart-id
+ */
 class LoginWithCartIdTest extends TestCase
 {
     use RefreshDatabase;

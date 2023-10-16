@@ -11,7 +11,6 @@ return [
         Permission::UsersCanList,
         Permission::UsersCanDelete,
         // Customers
-        Permission::CanActAsCustomer,
         Permission::CustomersCanSee,
         Permission::CustomersCanList,
         Permission::CustomersCanCreate,
@@ -135,7 +134,6 @@ return [
     ],
     'admin' => [
         // Customers
-        Permission::CanActAsCustomer,
         Permission::CustomersCanSee,
         Permission::CustomersCanList,
         Permission::CustomersCanCreate,
@@ -259,7 +257,6 @@ return [
     ],
     'store_manager' => [
         // Customers
-        Permission::CanActAsCustomer,
         Permission::CustomersCanSee,
         Permission::CustomersCanList,
         Permission::CustomersCanCreate,
@@ -347,7 +344,6 @@ return [
     ],
     'store_assistant' => [
         // Customers
-        Permission::CanActAsCustomer,
         Permission::CustomersCanSee,
         Permission::CustomersCanList,
         Permission::CustomersCanCreate,
@@ -405,17 +401,5 @@ return [
         Permission::EmailsCanSee,
         Permission::EmailsCanSend,
     ],
-    'seller' => [
-        Permission::ProductsCanCreate,
-        Permission::OwnProductsCanUpdate,
-        Permission::OwnProductsCanDelete,
-        Permission::CanActAsCustomer,
-    ],
-    'customer' => [
-        Permission::CanShop,
-        Permission::CanViewOwnAccount,
-    ],
-    'auditor' => [
-        Permission::CanAccessAuditables,
-    ],
+    'customer' => []
 ];
