@@ -91,12 +91,12 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
         $this->actingAs(User::where('email', 'superadmin@m.com')->first());
         $response = $this->patch(route('admin.api.update.role', [
             'role' => 3,
-            'name' => 'UPDATED'
+            'name' => 'Updated'
         ]));
         $response
             ->assertJson(fn(AssertableJson $json) => $json
                 ->where('data.id', 3)
-                ->where('data.name', 'UPDATED')
+                ->where('data.name', 'updated')
                 ->etc());
     }
 
