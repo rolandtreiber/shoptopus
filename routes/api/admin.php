@@ -348,6 +348,7 @@ Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
             Route::prefix('{role}')->group(function () {
                 Route::get('/permissions', [RoleAndPermissionController::class, 'getPermissionsForRole'])->name('admin.api.show.role.permissions');
                 Route::get('/users', [RoleAndPermissionController::class, 'getUsersWithRole'])->name('admin.api.show.role.users');
+                Route::get('/available-users', [RoleAndPermissionController::class, 'getAvailableUsersForRole'])->name('admin.api.show.available.users.for.role');
                 Route::delete('/', [RoleAndPermissionController::class, 'deleteRole'])->name('admin.api.delete.role');
                 Route::delete('/permission/{permission}', [RoleAndPermissionController::class, 'removePermissionFromRole'])->name('admin.api.remove.permission.from.role');
                 Route::post('/permission/{permission}', [RoleAndPermissionController::class, 'assignPermissionToRole'])->name('admin.api.assign.permission.to.role');

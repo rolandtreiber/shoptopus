@@ -70,6 +70,19 @@ class RoleAndPermissionControllerTest extends AdminControllerTestCase
                 ->etc());
     }
 
+    /** @test */
+    public function test_available_users_can_be_retrieved_for_a_role(): void
+    {
+        $this->actingAs(User::where('email', 'superadmin@m.com')->first());
+        $response = $this->get(route('admin.api.show.available.users.for.role', [
+            'role' => Role::findByName('store_manager')
+        ]));
+        $response
+            ->assertJson(fn(AssertableJson $json) => $json
+                ->count('data', 4)
+                ->etc());
+    }
+
     /** @test
      */
     public function test_role_can_be_created(): void

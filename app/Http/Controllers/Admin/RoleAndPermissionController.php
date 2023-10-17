@@ -9,10 +9,12 @@ use App\Http\Requests\Admin\StoreRoleRequest;
 use App\Http\Resources\Admin\PermissionListResource;
 use App\Http\Resources\Admin\RoleListResource;
 use App\Http\Resources\Admin\UserListResource;
+use App\Http\Resources\Admin\UserSelectResourceForRoleManagement;
 use App\Models\User;
 use App\Notifications\ProductRunningLow;
 use App\Notifications\RoleUpdated;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -149,6 +151,17 @@ class RoleAndPermissionController extends Controller
         $role->users()->detach($user);
         $user->notify(new RoleUpdated($user->id));
         return UserListResource::collection($role->users()->get());
+    }
+
+    public function getAvailableUsersForRole(Role $role)//: AnonymousResourceCollection
+    {
+        $roleId = $role->id;
+        $userIdsWithRole = DB::table('model_has_roles')->where([
+            'role_id' => $roleId,
+            'model_type' => User::class,
+        ])->select('model_id')->get()->pluck('model_id')->toArray();
+        $users = User::SystemUsers()->whereNotIn('id', $userIdsWithRole)->get();
+        return UserSelectResourceForRoleManagement::collection($users);
     }
 
 }
