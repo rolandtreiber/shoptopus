@@ -50,28 +50,29 @@ class DatabaseSeeder extends Seeder
                 break;
             default:
                 $this->call([
-                    ApiProductsTestSeeder::class,
                     RoleSeeder::class,
                     UserSeeder::class,
-                    PaymentProviderSeeder::class,
-                    BannerSeeder::class,
-                    DeliveryTypeSeeder::class,
-                    AddressSeeder::class,
-                    DiscountRuleSeeder::class,
-                    VoucherCodeSeeder::class,
-                    ProductTagSeeder::class,
-                    ProductCategorySeeder::class,
-                    ProductAttributeSeeder::class,
-                    ProductAttributeOptionSeeder::class,
-                    ProductSeeder::class,
-                    ProductVariantSeeder::class,
-                    VirtualProductSeeder::class,
-                    CartSeeder::class,
-                    OrderSeeder::class,
-                    NoteSeeder::class
+                    TestStore1Seeder::class
+//                    PaymentProviderSeeder::class,
+//                    ApiProductsTestSeeder::class,
+//                    BannerSeeder::class,
+//                    DeliveryTypeSeeder::class,
+//                    AddressSeeder::class,
+//                    DiscountRuleSeeder::class,
+//                    VoucherCodeSeeder::class,
+//                    ProductTagSeeder::class,
+//                    ProductCategorySeeder::class,
+//                    ProductAttributeSeeder::class,
+//                    ProductAttributeOptionSeeder::class,
+//                    ProductSeeder::class,
+//                    ProductVariantSeeder::class,
+//                    VirtualProductSeeder::class,
+//                    CartSeeder::class,
+//                    OrderSeeder::class,
+//                    NoteSeeder::class
                 ]);
 
-                Module::enabled('ratings') && $this->call([RatingSeeder::class]);
+//                Module::enabled('ratings') && $this->call([RatingSeeder::class]);
         }
     }
 }

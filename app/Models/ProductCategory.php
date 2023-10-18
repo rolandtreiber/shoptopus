@@ -36,12 +36,15 @@ use Spatie\Translatable\HasTranslations;
  * @property Date $updated_at
  * @property string $parent_id
  * @property string $id
+ * @property string $slug
+ *
  */
 class ProductCategory extends SearchableModel implements Auditable, Exportable, Importable
 {
     use HasFactory, SoftDeletes, HasTranslations, HasFile, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable, HasImportable, HasNote;
 
     private array $allChildIds;
+    protected $keyType = 'string';
 
     protected $exportableFields = [
         'slug',
@@ -59,7 +62,7 @@ class ProductCategory extends SearchableModel implements Auditable, Exportable, 
 
     protected $importableFields = [
         'name' => [
-            'validation' => ['unique:product_categories,name'],
+            'validation' => ['unique:product_categories,name,NULL,id,deleted_at,NULL'],
         ],
         'description',
         'enabled' => [

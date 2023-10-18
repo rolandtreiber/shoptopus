@@ -29,6 +29,7 @@ class ProductCategoryDetailResource extends JsonResource
             'products' => ProductListResource::collection($this->products(false)->get()),
             'enabled' => $this->enabled,
             'notes' => NoteResource::collection($this->notes),
+            'slug' => $this->slug
         ];
     }
 }

@@ -91,6 +91,9 @@ return [
         'en' => [
             'label' => 'English',
         ],
+        'hu' => [
+            'label' => 'Magyar',
+        ],
         'de' => [
             'label' => 'Deutsch',
         ],
@@ -197,6 +200,7 @@ return [
         Sichikawa\LaravelSendgridDriver\SendgridTransportServiceProvider::class,
         App\Providers\ServiceServiceProvider::class,
         App\Providers\RepositoryServiceProvider::class,
+        App\Providers\TranslationServiceProvider::class
     ])->toArray(),
 
     /*

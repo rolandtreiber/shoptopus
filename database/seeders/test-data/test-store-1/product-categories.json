@@ -1,0 +1,157 @@
+[
+    {
+        "name": "(T)Clothing",
+        "description": "(T)Clothing for all occasions",
+        "enabled": true,
+        "parent_id": null,
+        "slug": "clothing-1",
+        "children": [
+            {
+                "name": "(T)Ladies clothing",
+                "description": "(T)Everything from blouses, skirts, tops and all",
+                "slug": "womans-clothing-1",
+                "enabled": true
+            },
+            {
+                "name": "(T)Men's clothing",
+                "description": "(T)Everything from suits, ties, trousers and all",
+                "slug": "mens-clothing-1",
+                "enabled": true
+            }
+        ]
+    },
+    {
+        "name": "(T)Footwear",
+        "description": "(T)Footwear for all occasions and purposes",
+        "enabled": true,
+        "parent_id": null,
+        "slug": "footwear-1",
+        "children": [
+            {
+                "name": "(T)Ladies footwear",
+                "description": "(T)Fancy shoes, slippers and everything in-between",
+                "enabled": true,
+                "slug": "womans-footwear-1",
+                "children": [
+                    {
+                        "name": "(T)Sneakers",
+                        "description": "(T)Wide selection if sneakers available",
+                        "enabled": true,
+                        "slug": "womans-footwear-sneakers-1"
+                    },
+                    {
+                        "name": "(T)Sandal",
+                        "description": "(T)Wide selection if sandals available",
+                        "enabled": true,
+                        "slug": "womans-footwear-sandals-1"
+                    },
+                    {
+                        "name": "(T)Boots",
+                        "description": "(T)Wide selection if boots available",
+                        "enabled": true,
+                        "slug": "womans-footwear-boots-1"
+                    },
+                    {
+                        "name": "(T)Platform Shoes",
+                        "description": "(T)Wide selection if platform shoes available",
+                        "enabled": true,
+                        "slug": "womans-footwear-platform-shoes-1"
+                    }
+                ]
+            },
+            {
+                "name": "(T)Men's footwear",
+                "description": "(T)Fancy shoes, slippers and everything in-between",
+                "enabled": true,
+                "slug": "mens-footwear-1",
+                "children": [
+                    {
+                        "name": "(T)Loafers",
+                        "description": "(T)Wide selection if loafers available",
+                        "enabled": true,
+                        "slug": "mens-footwear-sneakers-1"
+                    },
+                    {
+                        "name": "(T)Sneakers",
+                        "description": "(T)Wide selection if sneakers available",
+                        "enabled": true,
+                        "slug": "mens-footwear-sneakers-1"
+                    },
+                    {
+                        "name": "(T)Sandal",
+                        "description": "(T)Wide selection if sandals available",
+                        "enabled": true,
+                        "slug": "mens-footwear-sandals-1"
+                    },
+                    {
+                        "name": "(T)Boots",
+                        "description": "(T)Wide selection if boots available",
+                        "enabled": true,
+                        "slug": "mens-footwear-boots-1"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "(T)Accessories",
+        "description": "(T)From sunglasses to jewellery we got you covered",
+        "enabled": true,
+        "parent_id": null,
+        "slug": "accessories-1",
+        "children": [
+            {
+                "name": "(T)Ladies accessories",
+                "description": "(T)Jewellery, sunglasses, hats, scarves and more...",
+                "enabled": true,
+                "slug": "womans-accessories-1",
+                "children": [
+                    {
+                        "name": "(T)Sunglasses",
+                        "description": "(T)Protect your eyes and be stylish",
+                        "enabled": true,
+                        "slug": "womans-accessories-sunglasses-1"
+                    },
+                    {
+                        "name": "(T)Jewellery",
+                        "description": "(T)Beautiful range of jewellery from the largest brands",
+                        "enabled": true,
+                        "slug": "womans-accessories-jewellery-1"
+                    },
+                    {
+                        "name": "(T)Hats",
+                        "description": "(T)Find the hat that makes you feel special!",
+                        "enabled": true,
+                        "slug": "womans-accessories-hats-1"
+                    }
+                ]
+            },
+            {
+                "name": "(T)Mens accessories",
+                "description": "(T)Jewellery, sunglasses, hats, scarves, ties and more...",
+                "enabled": true,
+                "slug": "mens-accessories-1",
+                "children": [
+                    {
+                        "name": "(T)Sunglasses",
+                        "description": "(T)Protect your eyes and be cool",
+                        "enabled": true,
+                        "slug": "mens-accessories-sunglasses-1"
+                    },
+                    {
+                        "name": "(T)Jewellery",
+                        "description": "(T)Beautiful range of jewellery from the largest brands",
+                        "enabled": true,
+                        "slug": "mens-accessories-jewellery-1"
+                    },
+                    {
+                        "name": "(T)Ties",
+                        "description": "(T)Find the tie that makes you feel special!",
+                        "enabled": true,
+                        "slug": "mens-accessories-ties-1"
+                    }
+                ]
+            }
+        ]
+    }
+]

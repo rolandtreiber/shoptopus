@@ -25,6 +25,7 @@
         "bensampo/laravel-enum": "^6.3",
         "elasticsearch/elasticsearch": "7.16",
         "google/apiclient": "^2.12",
+        "google/cloud-translate": "^1.15",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.6",
         "jeroen-g/explorer": "^3.5",
