@@ -5,18 +5,42 @@
         "enabled": true,
         "parent_id": null,
         "slug": "clothing-1",
+        "menu_image": {
+            "url": "/sample-store-data/sample-store-1/category-clothing-menu-image.jpg",
+            "file_name": "category-clothing-menu-image.jpg"
+        },
+        "header_image": {
+            "url": "/sample-store-data/sample-store-1/category-clothing-header-image.jpg",
+            "file_name": "category-clothing-header-image.jpg"
+        },
         "children": [
             {
                 "name": "(T)Ladies clothing",
                 "description": "(T)Everything from blouses, skirts, tops and all",
                 "slug": "womans-clothing-1",
-                "enabled": true
+                "enabled": true,
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-clothing-menu-image.jpg",
+                    "file_name": "category-ladies-clothing-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-clothing-header-image.jpg",
+                    "file_name": "category-ladies-clothing-header-image.jpg"
+                }
             },
             {
                 "name": "(T)Men's clothing",
                 "description": "(T)Everything from suits, ties, trousers and all",
                 "slug": "mens-clothing-1",
-                "enabled": true
+                "enabled": true,
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-clothing-menu-image.jpg",
+                    "file_name": "category-mens-clothing-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-clothing-header-image.jpg",
+                    "file_name": "category-mens-clothing-header-image.jpg"
+                }
             }
         ]
     },
@@ -26,12 +50,28 @@
         "enabled": true,
         "parent_id": null,
         "slug": "footwear-1",
+        "menu_image": {
+            "url": "/sample-store-data/sample-store-1/category-footwear-menu-image.jpg",
+            "file_name": "category-footwear-menu-image.jpg"
+        },
+        "header_image": {
+            "url": "/sample-store-data/sample-store-1/category-footwear-header-image.jpg",
+            "file_name": "category-footwear-header-image.jpg"
+        },
         "children": [
             {
                 "name": "(T)Ladies footwear",
                 "description": "(T)Fancy shoes, slippers and everything in-between",
                 "enabled": true,
                 "slug": "womans-footwear-1",
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-footwear-menu-image.jpg",
+                    "file_name": "category-ladies-footwear-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-footwear-header-image.jpg",
+                    "file_name": "category-ladies-footwear-header-image.jpg"
+                },
                 "children": [
                     {
                         "name": "(T)Sneakers",
@@ -64,6 +104,14 @@
                 "description": "(T)Fancy shoes, slippers and everything in-between",
                 "enabled": true,
                 "slug": "mens-footwear-1",
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-footwear-menu-image.jpg",
+                    "file_name": "category-mens-footwear-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-footwear-header-image.jpg",
+                    "file_name": "category-mens-footwear-header-image.jpg"
+                },
                 "children": [
                     {
                         "name": "(T)Loafers",
@@ -99,12 +147,28 @@
         "enabled": true,
         "parent_id": null,
         "slug": "accessories-1",
+        "menu_image": {
+            "url": "/sample-store-data/sample-store-1/category-accessories-menu-image.jpg",
+            "file_name": "category-accessories-menu-image.jpg"
+        },
+        "header_image": {
+            "url": "/sample-store-data/sample-store-1/category-accessories-header-image.jpg",
+            "file_name": "category-accessories-header-image.jpg"
+        },
         "children": [
             {
                 "name": "(T)Ladies accessories",
                 "description": "(T)Jewellery, sunglasses, hats, scarves and more...",
                 "enabled": true,
                 "slug": "womans-accessories-1",
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-accessories-menu-image.jpg",
+                    "file_name": "category-ladies-accessories-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-ladies-accessories-header-image.jpg",
+                    "file_name": "category-ladies-accessories-header-image.jpg"
+                },
                 "children": [
                     {
                         "name": "(T)Sunglasses",
@@ -131,6 +195,14 @@
                 "description": "(T)Jewellery, sunglasses, hats, scarves, ties and more...",
                 "enabled": true,
                 "slug": "mens-accessories-1",
+                "menu_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-accessories-menu-image.jpg",
+                    "file_name": "category-mens-accessories-menu-image.jpg"
+                },
+                "header_image": {
+                    "url": "/sample-store-data/sample-store-1/category-mens-accessories-header-image.jpg",
+                    "file_name": "category-mens-accessories-header-image.jpg"
+                },
                 "children": [
                     {
                         "name": "(T)Sunglasses",

@@ -38,25 +38,25 @@ class TestStore1Seeder extends Seeder
             $sanitised['created_at'] = Carbon::now();
             array_walk($sanitised, function(&$a, $b) use ($availableLanguages, $row) {
                 $value = $a;
-                if (str_contains($a, "(T)")) {
-                    $translatable = str_replace("(T)", "", $a);
+                if (is_string($a)) {
+                    if (str_contains($a, "(T)")) {
+                        $translatable = str_replace("(T)", "", $a);
 //                    $translatables = $this->translationService->translate($translatable, $availableLanguages);
-                    $translatables = [];
-                    $translatables['en'] = $translatable;
-                    $a = $translatables;
-                }
-
-                if (str_contains($b, "_id") && $b !== "parent_id") {
-                    $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
-                    $a = ($model::where('slug', $a)->first())->id;
-                }
-
-                try {
-                    if (str_contains($value, "(JSON)")) {
-                        $a = json_decode(str_replace("(JSON)", "", $value));
+                        $translatables = [];
+                        $translatables['en'] = $translatable;
+                        $a = $translatables;
                     }
-                } catch (\TypeError $e) {
-                    dd($a);
+
+                    if (str_contains($b, "_id") && $b !== "parent_id") {
+                        $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                        $a = ($model::where('slug', $a)->first())->id;
+                    }
+                } elseif (is_array($a)) {
+                    array_walk($a, function(&$val, $key) {
+                        if ($key === "url") {
+                            $val = config('app.url') . $val;
+                        }
+                    });
                 }
             });
             $record = (new $model());

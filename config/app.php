@@ -94,12 +94,12 @@ return [
         'hu' => [
             'label' => 'Magyar',
         ],
-        'de' => [
-            'label' => 'Deutsch',
-        ],
-        'fr' => [
-            'label' => 'Francais',
-        ],
+//        'de' => [
+//            'label' => 'Deutsch',
+//        ],
+//        'fr' => [
+//            'label' => 'Francais',
+//        ],
     ],
 
     'default_currency' => [
