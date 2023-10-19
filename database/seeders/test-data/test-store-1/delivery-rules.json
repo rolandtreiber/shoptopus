@@ -1,0 +1,86 @@
+[
+    {
+        "delivery_type_id": "local-small-1",
+        "min_weight": 0,
+        "max_weight": 10000,
+        "lat": "51.4990343",
+        "lon": "-0.0914655",
+        "min_distance": 0,
+        "max_distance": 4500,
+        "slug": "local-small-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "local-small-1",
+        "min_weight": 0,
+        "max_weight": 10000,
+        "lat": "51.8803789",
+        "lon": "-0.4376852",
+        "min_distance": 0,
+        "max_distance": 4500,
+        "slug": "local-small-rule-2",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "local-heavy-1",
+        "min_weight": 10000,
+        "max_weight": 25000,
+        "lat": "51.4990343",
+        "lon": "-0.0914655",
+        "min_distance": 0,
+        "max_distance": 4500,
+        "slug": "local-heavy-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "local-heavy-1",
+        "min_weight": 10000,
+        "max_weight": 25000,
+        "lat": "51.8803789",
+        "lon": "-0.4376852",
+        "min_distance": 0,
+        "max_distance": 4500,
+        "slug": "local-heavy-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "standard-small-1",
+        "min_weight": 0,
+        "max_weight": 10000,
+        "lat": null,
+        "lon": null,
+        "min_distance": null,
+        "max_distance": null,
+        "slug": "standard-small-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "standard-heavy-1",
+        "min_weight": 10000,
+        "max_weight": 15000,
+        "lat": null,
+        "lon": null,
+        "min_distance": null,
+        "max_distance": null,
+        "slug": "standard-heavy-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    },
+    {
+        "delivery_type_id": "overnight-1",
+        "min_weight": 0,
+        "max_weight": 25000,
+        "lat": null,
+        "lon": null,
+        "min_distance": null,
+        "max_distance": null,
+        "slug": "overnight-rule-1",
+        "enabled": 1,
+        "postcodes": "(JSON)[]"
+    }
+]

@@ -1,0 +1,37 @@
+[
+    {
+        "name": "(T)Local (free up to 10kg)",
+        "description": "(T)You enjoy free delivery within 5km range from our warehouse.",
+        "price": 0,
+        "slug": "local-small-1",
+        "enabled": 1
+    },
+    {
+        "name": "(T)Local Heavy (10-25kg)",
+        "description": "(T)If you live nearby, we deliver to your door.",
+        "price": 2.99,
+        "slug": "local-heavy-1",
+        "enabled": 1
+    },
+    {
+        "name": "(T)Standard Small (under 5kg)",
+        "description": "(T)Royal mail delivery. (approximately 3-5 days)",
+        "price": 7.99,
+        "slug": "standard-small-1",
+        "enabled": 1
+    },
+    {
+        "name": "(T)Standard Heavy (5kg - 15kg)",
+        "description": "(T)DPD (approximately 4-10 days)",
+        "price": 8.99,
+        "slug": "standard-heavy-1",
+        "enabled": 1
+    },
+    {
+        "name": "(T)Overnight delivery",
+        "description": "(T)DPD overnight (1 day)",
+        "price": 11.99,
+        "slug": "overnight-1",
+        "enabled": 1
+    }
+]

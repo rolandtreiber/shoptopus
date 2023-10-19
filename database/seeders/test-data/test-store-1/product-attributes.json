@@ -1,0 +1,20 @@
+[
+    {
+        "name": "(T)Size",
+        "enabled": true,
+        "slug": "size-1",
+        "type": 1
+    },
+    {
+        "name": "(T)Material",
+        "enabled": true,
+        "slug": "material-1",
+        "type": 2
+    },
+    {
+        "name": "(T)Colour",
+        "enabled": true,
+        "slug": "colour-1",
+        "type": 3
+    }
+]

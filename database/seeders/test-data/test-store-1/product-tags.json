@@ -1,0 +1,16 @@
+[
+    {
+        "name": "(T)Organic",
+        "slug": "tag-organic-1",
+        "description": "(T)Made exclusively from organic materials",
+        "display_badge": 1,
+        "enabled": 1
+    },
+    {
+        "name": "(T)Sustainable",
+        "slug": "tag-sustainable-1",
+        "description": "(T)From sustainable sources",
+        "display_badge": 1,
+        "enabled": 1
+    }
+]

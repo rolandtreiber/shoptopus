@@ -2,7 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\DeliveryRule;
+use App\Models\DeliveryType;
+use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
+use App\Models\ProductTag;
+use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,13 +36,27 @@ class TestStore1Seeder extends Seeder
             }
             $sanitised['id'] = (string)Str::orderedUuid();
             $sanitised['created_at'] = Carbon::now();
-            array_walk($sanitised, function(&$a, $b) use ($availableLanguages) {
+            array_walk($sanitised, function(&$a, $b) use ($availableLanguages, $row) {
+                $value = $a;
                 if (str_contains($a, "(T)")) {
                     $translatable = str_replace("(T)", "", $a);
-                    $translatables = $this->translationService->translate($translatable, $availableLanguages);
-//                    $translatables = [];
+//                    $translatables = $this->translationService->translate($translatable, $availableLanguages);
+                    $translatables = [];
                     $translatables['en'] = $translatable;
                     $a = $translatables;
+                }
+
+                if (str_contains($b, "_id") && $b !== "parent_id") {
+                    $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                    $a = ($model::where('slug', $a)->first())->id;
+                }
+
+                try {
+                    if (str_contains($value, "(JSON)")) {
+                        $a = json_decode(str_replace("(JSON)", "", $value));
+                    }
+                } catch (\TypeError $e) {
+                    dd($a);
                 }
             });
             $record = (new $model());
@@ -58,9 +78,33 @@ class TestStore1Seeder extends Seeder
      */
     public function run(): void
     {
-        $categoriesData = file_get_contents(__DIR__ . "/test-data/test-store-1/product-categories.json");
-        // Import categories
-        $this->importRecords(ProductCategory::class, json_decode($categoriesData, true));
+        // Import product categories
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-categories.json");
+        $this->importRecords(ProductCategory::class, json_decode($data, true));
+
+        // Import product attributes
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-attributes.json");
+        $this->importRecords(ProductAttribute::class, json_decode($data, true));
+
+        // Import product attribute options
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-attribute-options.json");
+        $this->importRecords(ProductAttributeOption::class, json_decode($data, true));
+
+        // Import product tags
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-tags.json");
+        $this->importRecords(ProductTag::class, json_decode($data, true));
+
+        // Import voucher codes
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/voucher-codes.json");
+        $this->importRecords(VoucherCode::class, json_decode($data, true));
+
+        // Import delivery types
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/delivery-types.json");
+        $this->importRecords(DeliveryType::class, json_decode($data, true));
+
+        // Import delivery rules
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/delivery-rules.json");
+        $this->importRecords(DeliveryRule::class, json_decode($data, true));
 
     }
 }

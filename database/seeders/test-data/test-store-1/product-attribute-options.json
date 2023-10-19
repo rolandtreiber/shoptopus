@@ -1,0 +1,205 @@
+[
+    {
+        "name": "(T)XL",
+        "value": "XL",
+        "enabled": 1,
+        "slug": "option-xl-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)L",
+        "value": "L",
+        "enabled": 1,
+        "slug": "option-l-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)M",
+        "value": "M",
+        "enabled": 1,
+        "slug": "option-m-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)S",
+        "value": "S",
+        "enabled": 1,
+        "slug": "option-s-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)XS",
+        "value": "XS",
+        "enabled": 1,
+        "slug": "option-xs-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)10",
+        "value": "10",
+        "enabled": 1,
+        "slug": "option-10-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)9",
+        "value": "9",
+        "enabled": 1,
+        "slug": "option-9-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)9.5",
+        "value": "9.5",
+        "enabled": 1,
+        "slug": "option-9.5-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)9",
+        "value": "9",
+        "enabled": 1,
+        "slug": "option-9-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)8.5",
+        "value": "8.5",
+        "enabled": 1,
+        "slug": "option-8.5-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)Fabric",
+        "value": "fabric",
+        "enabled": 1,
+        "slug": "option-fabric-1",
+        "product_attribute_id": "material-1"
+    },
+    {
+        "name": "(T)Faux Leather",
+        "value": "faux leather",
+        "enabled": 1,
+        "slug": "option-faux-leather-1",
+        "product_attribute_id": "material-1"
+    },
+    {
+        "name": "(T)Leather",
+        "value": "leather",
+        "enabled": 1,
+        "slug": "option-leather-1",
+        "product_attribute_id": "material-1"
+    },
+    {
+        "name": "(T)Leather",
+        "value": "leather",
+        "enabled": 1,
+        "slug": "option-leather-1",
+        "product_attribute_id": "material-1"
+    },
+    {
+        "name": "(T)Rubber",
+        "value": "rubber",
+        "enabled": 1,
+        "slug": "option-rubber-1",
+        "product_attribute_id": "material-1"
+    },
+    {
+        "name": "(T)White",
+        "value": "#ffffff",
+        "enabled": 1,
+        "slug": "option-white-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Light Gray",
+        "value": "#cfcdca",
+        "enabled": 1,
+        "slug": "option-lightgray-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Middle Gray",
+        "value": "#969696",
+        "enabled": 1,
+        "slug": "option-middlegray-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Dark Gray",
+        "value": "#383838",
+        "enabled": 1,
+        "slug": "option-darkgray-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Black",
+        "value": "#000000",
+        "enabled": 1,
+        "slug": "option-black-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Light Blue",
+        "value": "#778bf2",
+        "enabled": 1,
+        "slug": "option-lightblue-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Bright Blue",
+        "value": "#2145ff",
+        "enabled": 1,
+        "slug": "option-brightblue-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Midnight Blue",
+        "value": "#001061",
+        "enabled": 1,
+        "slug": "option-midnightblue-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Light Green",
+        "value": "#6aeb83",
+        "enabled": 1,
+        "slug": "option-lightgreen-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Bright Green",
+        "value": "#16db3c",
+        "enabled": 1,
+        "slug": "option-brightgreen-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Dark Green",
+        "value": "#00400c",
+        "enabled": 1,
+        "slug": "option-darkgreen-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Light Red",
+        "value": "#e87d7d",
+        "enabled": 1,
+        "slug": "option-lightred-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Bright Red",
+        "value": "#e81515",
+        "enabled": 1,
+        "slug": "option-brightred-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Dark Red",
+        "value": "#470101",
+        "enabled": 1,
+        "slug": "option-darkred-1",
+        "product_attribute_id": "colour-1"
+    }
+]
