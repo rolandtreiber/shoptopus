@@ -3,18 +3,30 @@
         "name": "(T)Size",
         "enabled": true,
         "slug": "size-1",
-        "type": 1
+        "type": 1,
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-size.jpg",
+            "file_name": "attribute-size.jpg"
+        }
     },
     {
         "name": "(T)Material",
         "enabled": true,
         "slug": "material-1",
-        "type": 2
+        "type": 2,
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-material.jpg",
+            "file_name": "attribute-material.jpg"
+        }
     },
     {
         "name": "(T)Colour",
         "enabled": true,
         "slug": "colour-1",
-        "type": 3
+        "type": 3,
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-colour.jpg",
+            "file_name": "attribute-colour.jpg"
+        }
     }
 ]

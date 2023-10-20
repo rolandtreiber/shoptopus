@@ -74,35 +74,44 @@
         "value": "fabric",
         "enabled": 1,
         "slug": "option-fabric-1",
-        "product_attribute_id": "material-1"
+        "product_attribute_id": "material-1",
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-option-fabric.jpg",
+            "file_name": "attribute-option-fabric.jpg"
+        }
     },
     {
         "name": "(T)Faux Leather",
         "value": "faux leather",
         "enabled": 1,
         "slug": "option-faux-leather-1",
-        "product_attribute_id": "material-1"
+        "product_attribute_id": "material-1",
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-option-faux-leather.jpg",
+            "file_name": "attribute-option-faux-leather.jpg"
+        }
     },
     {
         "name": "(T)Leather",
         "value": "leather",
         "enabled": 1,
         "slug": "option-leather-1",
-        "product_attribute_id": "material-1"
-    },
-    {
-        "name": "(T)Leather",
-        "value": "leather",
-        "enabled": 1,
-        "slug": "option-leather-1",
-        "product_attribute_id": "material-1"
+        "product_attribute_id": "material-1",
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-option-leather.jpg",
+            "file_name": "attribute-option-leather.jpg"
+        }
     },
     {
         "name": "(T)Rubber",
         "value": "rubber",
         "enabled": 1,
         "slug": "option-rubber-1",
-        "product_attribute_id": "material-1"
+        "product_attribute_id": "material-1",
+        "image": {
+            "url": "/sample-store-data/sample-store-1/attribute-option-rubber.jpg",
+            "file_name": "attribute-option-rubber.jpg"
+        }
     },
     {
         "name": "(T)White",
