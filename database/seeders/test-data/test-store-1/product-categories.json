@@ -26,7 +26,79 @@
                 "header_image": {
                     "url": "/sample-store-data/sample-store-1/category-ladies-clothing-header-image.jpg",
                     "file_name": "category-ladies-clothing-header-image.jpg"
-                }
+                },
+                "children": [
+                    {
+                        "name": "(T)Polo shirts",
+                        "description": "(T)Wide selection of polo shirts",
+                        "slug": "womans-polo-shirts-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-polo-shirts-menu-image.jpg",
+                            "file_name": "category-ladies-polo-shirts-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-polo-shirts-header-image.jpg",
+                            "file_name": "category-ladies-polo-shirts-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Skirts",
+                        "description": "(T)Wide selection of skirts",
+                        "slug": "womans-skirts-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-skirts-menu-image.jpg",
+                            "file_name": "category-ladies-skirts-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-skirts-header-image.jpg",
+                            "file_name": "category-ladies-skirts-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Jumpers",
+                        "description": "(T)Wide selection of jumpers",
+                        "slug": "ladies-jumpers-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-jumpers-menu-image.jpg",
+                            "file_name": "category-ladies-jumpers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-jumpers-header-image.jpg",
+                            "file_name": "category-ladies-jumpers-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Trousers",
+                        "description": "(T)Wide selection of trousers",
+                        "slug": "ladies-trousers-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-trousers-menu-image.jpg",
+                            "file_name": "category-ladies-trousers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-trousers-header-image.jpg",
+                            "file_name": "category-ladies-trousers-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Socks",
+                        "description": "(T)Wide selection of socks",
+                        "slug": "womans-socks-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-socks-menu-image.jpg",
+                            "file_name": "category-ladies-socks-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-socks-header-image.jpg",
+                            "file_name": "category-ladies-socks-header-image.jpg"
+                        }
+                    }
+                ]
             },
             {
                 "name": "(T)Men's clothing",
@@ -40,7 +112,79 @@
                 "header_image": {
                     "url": "/sample-store-data/sample-store-1/category-mens-clothing-header-image.jpg",
                     "file_name": "category-mens-clothing-header-image.jpg"
-                }
+                },
+                "children": [
+                    {
+                        "name": "(T)T-shirts",
+                        "description": "(T)Wide selection of t-shirts",
+                        "slug": "mens-t-shirts-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-t-shirts-menu-image.jpg",
+                            "file_name": "category-mens-t-shirts-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-t-shirts-header-image.jpg",
+                            "file_name": "category-mens-t-shirts-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Shirts",
+                        "description": "(T)Wide selection of shirts",
+                        "slug": "mens-shirts-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-shirts-menu-image.jpg",
+                            "file_name": "category-mens-shirts-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-shirts-header-image.jpg",
+                            "file_name": "category-mens-shirts-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Jumpers",
+                        "description": "(T)Wide selection of jumpers",
+                        "slug": "mens-jumpers-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-jumpers-menu-image.jpg",
+                            "file_name": "category-mens-jumpers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-jumpers-header-image.jpg",
+                            "file_name": "category-mens-jumpers-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Trousers",
+                        "description": "(T)Wide selection of trousers",
+                        "slug": "mens-trousers-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-trousers-menu-image.jpg",
+                            "file_name": "category-mens-trousers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-trousers-header-image.jpg",
+                            "file_name": "category-mens-trousers-header-image.jpg"
+                        }
+                    },
+                    {
+                        "name": "(T)Socks",
+                        "description": "(T)Wide selection of socks",
+                        "slug": "mens-socks-1",
+                        "enabled": true,
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-socks-menu-image.jpg",
+                            "file_name": "category-mens-socks-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-socks-header-image.jpg",
+                            "file_name": "category-mens-socks-header-image.jpg"
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -77,25 +221,57 @@
                         "name": "(T)Sneakers",
                         "description": "(T)Wide selection if sneakers available",
                         "enabled": true,
-                        "slug": "womans-footwear-sneakers-1"
+                        "slug": "womans-footwear-sneakers-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sneakers-menu-image.jpg",
+                            "file_name": "category-ladies-sneakers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sneakers-header-image.jpg",
+                            "file_name": "category-ladies-sneakers-header-image.jpg"
+                        }
                     },
                     {
-                        "name": "(T)Sandal",
+                        "name": "(T)Sandals",
                         "description": "(T)Wide selection if sandals available",
                         "enabled": true,
-                        "slug": "womans-footwear-sandals-1"
+                        "slug": "womans-footwear-sandals-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sandals-menu-image.jpg",
+                            "file_name": "category-ladies-sandals-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sandals-header-image.jpg",
+                            "file_name": "category-ladies-sandals-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Boots",
                         "description": "(T)Wide selection if boots available",
                         "enabled": true,
-                        "slug": "womans-footwear-boots-1"
+                        "slug": "womans-footwear-boots-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-boots-menu-image.jpg",
+                            "file_name": "category-ladies-boots-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-boots-header-image.jpg",
+                            "file_name": "category-ladies-boots-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Platform Shoes",
                         "description": "(T)Wide selection if platform shoes available",
                         "enabled": true,
-                        "slug": "womans-footwear-platform-shoes-1"
+                        "slug": "womans-footwear-platform-shoes-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-platform-shoes-menu-image.jpg",
+                            "file_name": "category-ladies-platform-shoes-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-platform-shoes-header-image.jpg",
+                            "file_name": "category-ladies-platform-shoes-header-image.jpg"
+                        }
                     }
                 ]
             },
@@ -117,25 +293,57 @@
                         "name": "(T)Loafers",
                         "description": "(T)Wide selection if loafers available",
                         "enabled": true,
-                        "slug": "mens-footwear-sneakers-1"
+                        "slug": "mens-footwear-loafers-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-loafers-menu-image.jpg",
+                            "file_name": "category-mens-loafers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-loafers-header-image.jpg",
+                            "file_name": "category-mens-loafers-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Sneakers",
                         "description": "(T)Wide selection if sneakers available",
                         "enabled": true,
-                        "slug": "mens-footwear-sneakers-1"
+                        "slug": "mens-footwear-sneakers-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sneakers-menu-image.jpg",
+                            "file_name": "category-mens-sneakers-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sneakers-header-image.jpg",
+                            "file_name": "category-mens-sneakers-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Sandal",
                         "description": "(T)Wide selection if sandals available",
                         "enabled": true,
-                        "slug": "mens-footwear-sandals-1"
+                        "slug": "mens-footwear-sandals-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sandals-menu-image.jpg",
+                            "file_name": "category-mens-sandals-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sandals-header-image.jpg",
+                            "file_name": "category-mens-sandals-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Boots",
                         "description": "(T)Wide selection if boots available",
                         "enabled": true,
-                        "slug": "mens-footwear-boots-1"
+                        "slug": "mens-footwear-boots-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-boots-menu-image.jpg",
+                            "file_name": "category-mens-boots-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-boots-header-image.jpg",
+                            "file_name": "category-mens-boots-header-image.jpg"
+                        }
                     }
                 ]
             }
@@ -174,19 +382,43 @@
                         "name": "(T)Sunglasses",
                         "description": "(T)Protect your eyes and be stylish",
                         "enabled": true,
-                        "slug": "womans-accessories-sunglasses-1"
+                        "slug": "womans-accessories-sunglasses-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sunglasses-menu-image.jpg",
+                            "file_name": "category-ladies-sunglasses-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-sunglasses-header-image.jpg",
+                            "file_name": "category-ladies-sunglasses-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Jewellery",
                         "description": "(T)Beautiful range of jewellery from the largest brands",
                         "enabled": true,
-                        "slug": "womans-accessories-jewellery-1"
+                        "slug": "womans-accessories-jewellery-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-jewellery-menu-image.jpg",
+                            "file_name": "category-ladies-jewellery-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-jewellery-header-image.jpg",
+                            "file_name": "category-ladies-jewellery-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Hats",
                         "description": "(T)Find the hat that makes you feel special!",
                         "enabled": true,
-                        "slug": "womans-accessories-hats-1"
+                        "slug": "womans-accessories-hats-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-hats-menu-image.jpg",
+                            "file_name": "category-ladies-hats-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-ladies-hats-header-image.jpg",
+                            "file_name": "category-ladies-hats-header-image.jpg"
+                        }
                     }
                 ]
             },
@@ -208,19 +440,43 @@
                         "name": "(T)Sunglasses",
                         "description": "(T)Protect your eyes and be cool",
                         "enabled": true,
-                        "slug": "mens-accessories-sunglasses-1"
+                        "slug": "mens-accessories-sunglasses-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sunglasses-menu-image.jpg",
+                            "file_name": "category-mens-sunglasses-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-sunglasses-header-image.jpg",
+                            "file_name": "category-mens-sunglasses-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Jewellery",
                         "description": "(T)Beautiful range of jewellery from the largest brands",
                         "enabled": true,
-                        "slug": "mens-accessories-jewellery-1"
+                        "slug": "mens-accessories-jewellery-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-jewellery-menu-image.jpg",
+                            "file_name": "category-mens-jewellery-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-jewellery-header-image.jpg",
+                            "file_name": "category-mens-jewellery-header-image.jpg"
+                        }
                     },
                     {
                         "name": "(T)Ties",
                         "description": "(T)Find the tie that makes you feel special!",
                         "enabled": true,
-                        "slug": "mens-accessories-ties-1"
+                        "slug": "mens-accessories-ties-1",
+                        "menu_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-ties-menu-image.jpg",
+                            "file_name": "category-mens-ties-menu-image.jpg"
+                        },
+                        "header_image": {
+                            "url": "/sample-store-data/sample-store-1/category-mens-ties-header-image.jpg",
+                            "file_name": "category-mens-ties-header-image.jpg"
+                        }
                     }
                 ]
             }
