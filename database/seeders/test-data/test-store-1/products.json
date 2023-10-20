@@ -1,0 +1,572 @@
+[
+    {
+        "name": "Classic Cotton T-Shirt",
+        "short_description": "Timeless style in this classic cotton t-shirt.",
+        "description": "Elevate your casual look with this Classic Cotton T-Shirt. The timeless design and high-quality cotton make it perfect for any occasion. Whether for a day out with friends or a relaxed evening, this t-shirt offers both style and comfort. Available in various colors to match your look.",
+        "price": 16.99,
+        "slug": "men-t-shirts-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for casual occasions and relaxed evenings.",
+        "stock": 30,
+        "backup_stock": 150,
+        "sku": "M-T001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/1.jpg",
+            "file_name": "1.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Performance T-Shirt",
+        "short_description": "Elevate your workout with this comfortable performance t-shirt.",
+        "description": "Upgrade your athletic style with this Sporty Performance T-Shirt. The moisture-wicking fabric and comfortable fit provide support during workouts or sports activities. Whether for a run or a game of basketball, this t-shirt is a versatile addition to your collection.",
+        "price": 18.50,
+        "slug": "men-t-shirts-2",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Moisture-wicking fabric for comfort during exercise.",
+        "stock": 40,
+        "backup_stock": 180,
+        "sku": "M-T002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/2.jpg",
+            "file_name": "2.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Crew Neck T-Shirt",
+        "short_description": "Stay casual and comfy in this versatile crew neck t-shirt.",
+        "description": "Find comfort in this Casual Crew Neck T-Shirt. The classic crew neck design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this t-shirt keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
+        "price": 14.99,
+        "slug": "men-t-shirts-3",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile crew neck for easy and laid-back days.",
+        "stock": 25,
+        "backup_stock": 120,
+        "sku": "M-T003",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/3.jpg",
+            "file_name": "3.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Dress Shirt",
+        "short_description": "Timeless style in this classic dress shirt.",
+        "description": "Elevate your formal look with this Classic Dress Shirt. The timeless design and high-quality fabric make it perfect for any special occasion. Whether for a business meeting or a formal event, this dress shirt offers both style and sophistication. Available in various colors to match your ensemble.",
+        "price": 28.99,
+        "slug": "men-shirts-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for formal events and business meetings.",
+        "stock": 35,
+        "backup_stock": 160,
+        "sku": "M-S001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/4.jpg",
+            "file_name": "4.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Business Casual Shirt",
+        "short_description": "Elevate your office attire with this business casual shirt.",
+        "description": "Upgrade your professional style with this Business Casual Shirt. The modern design and comfortable fit make it ideal for the office or business meetings. Whether for a day at work or a corporate event, this shirt adds a touch of sophistication to your wardrobe.",
+        "price": 22.50,
+        "slug": "men-shirts-2",
+        "headline": "Business Elegance",
+        "subtitle": "Ideal for office attire and corporate events.",
+        "stock": 45,
+        "backup_stock": 190,
+        "sku": "M-S002",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/5.jpg",
+            "file_name": "5.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Casual Checkered Shirt",
+        "short_description": "Stay casual and stylish with this versatile checkered shirt.",
+        "description": "Find style and comfort in this Casual Checkered Shirt. The checkered pattern and versatile design make it perfect for both casual and semi-formal occasions. Crafted from soft, breathable materials, this shirt keeps you looking great. Whether for a weekend outing or a casual dinner, it's a versatile addition to your wardrobe.",
+        "price": 24.99,
+        "slug": "men-shirts-3",
+        "headline": "Casual Versatility",
+        "subtitle": "Ideal for both casual and semi-formal occasions.",
+        "stock": 50,
+        "backup_stock": 200,
+        "sku": "M-S003",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/6.jpg",
+            "file_name": "6.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Classic Wool Jumper",
+        "short_description": "Timeless warmth in this classic wool jumper.",
+        "description": "Stay warm in style with this Classic Wool Jumper. The timeless design and high-quality wool make it perfect for chilly days. Whether for a winter outing or a cozy evening by the fireplace, this jumper offers both warmth and elegance. Available in various colors to suit your taste.",
+        "price": 29.99,
+        "slug": "men-jumpers-1",
+        "headline": "Timeless Warmth",
+        "subtitle": "Perfect for winter outings and cozy evenings.",
+        "stock": 40,
+        "backup_stock": 180,
+        "sku": "M-J001",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/7.jpg",
+            "file_name": "7.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Casual V-Neck Jumper",
+        "short_description": "Stay casual and comfy in this versatile v-neck jumper.",
+        "description": "Find comfort in this Casual V-Neck Jumper. The classic v-neck design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this jumper keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
+        "price": 21.50,
+        "slug": "men-jumpers-2",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile v-neck for easy and laid-back days.",
+        "stock": 30,
+        "backup_stock": 120,
+        "sku": "M-J002",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/8.jpg",
+            "file_name": "8.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Sporty Zip-Up Jumper",
+        "short_description": "Elevate your sporty look with this comfortable zip-up jumper.",
+        "description": "Upgrade your athletic style with this Sporty Zip-Up Jumper. The zip-up design and comfortable fit provide support during workouts or sports activities. Whether for a run or a game of basketball, this jumper is a versatile addition to your collection.",
+        "price": 25.99,
+        "slug": "men-jumpers-3",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Zip-up style for comfort during exercise.",
+        "stock": 35,
+        "backup_stock": 160,
+        "sku": "M-J003",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/9.jpg",
+            "file_name": "9.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Dress Trousers",
+        "short_description": "Timeless style in these classic dress trousers.",
+        "description": "Elevate your formal look with these Classic Dress Trousers. The timeless design and high-quality fabric make them perfect for any special occasion. Whether for a business meeting or a formal event, these trousers offer both style and sophistication. Available in various colors to match your ensemble.",
+        "price": 27.99,
+        "slug": "men-trousers-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for formal events and business meetings.",
+        "stock": 40,
+        "backup_stock": 170,
+        "sku": "M-TR001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/10.jpg",
+            "file_name": "10.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Chino Trousers",
+        "short_description": "Stay casual and comfy in these versatile chino trousers.",
+        "description": "Find comfort in these Casual Chino Trousers. The classic chino design and versatile style make them perfect for laid-back days. Crafted from soft, breathable materials, these trousers keep you comfortable. Whether for a weekend at home or a casual day out, they're a must-have in your wardrobe.",
+        "price": 19.50,
+        "slug": "men-trousers-2",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile chino style for easy and laid-back days.",
+        "stock": 35,
+        "backup_stock": 150,
+        "sku": "M-TR002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/11.jpg",
+            "file_name": "11.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Track Pants",
+        "short_description": "Elevate your sporty look with these comfortable track pants.",
+        "description": "Upgrade your athletic style with these Sporty Track Pants. The relaxed fit and comfortable design provide support during workouts or sports activities. Whether for a run or a game of basketball, these track pants are a versatile addition to your collection.",
+        "price": 22.99,
+        "slug": "men-trousers-3",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Relaxed fit for comfort during exercise.",
+        "stock": 50,
+        "backup_stock": 200,
+        "sku": "M-TR003",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/12.jpg",
+            "file_name": "12.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Classic Cotton Crew Socks",
+        "short_description": "Timeless comfort in these classic cotton crew socks.",
+        "description": "Elevate your style with these Classic Cotton Crew Socks. The timeless design and soft, breathable cotton make them perfect for any occasion. Whether for a formal event or a special evening out, these socks offer both comfort and elegance. Available in various colors to match your look.",
+        "price": 12.99,
+        "slug": "men-socks-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for formal events and special evenings.",
+        "stock": 30,
+        "backup_stock": 150,
+        "sku": "M-SK001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/13.jpg",
+            "file_name": "13.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Ankle Socks",
+        "short_description": "Elevate your workout with these comfortable ankle socks.",
+        "description": "Upgrade your athletic style with these Sporty Ankle Socks. The cushioned design and snug fit provide comfort and support during workouts or outdoor activities. Whether for a run or a sports event, these socks are a versatile addition to your collection.",
+        "price": 14.50,
+        "slug": "men-socks-2",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Cushioned design for comfort and support during exercise.",
+        "stock": 40,
+        "backup_stock": 180,
+        "sku": "M-SK002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/14.jpg",
+            "file_name": "14.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Low-Cut Socks",
+        "short_description": "Stay casual and comfy with these versatile low-cut socks.",
+        "description": "Find comfort in these Casual Low-Cut Socks. Their low-cut design and versatile style make them perfect for laid-back days. Crafted from soft, breathable materials, these socks keep your feet happy. Whether for a weekend at home or a casual day out, they're a must-have in your sock collection.",
+        "price": 11.99,
+        "slug": "men-socks-3",
+        "headline": "Casual Comfort",
+        "subtitle": "Low-cut style for easy and laid-back days.",
+        "stock": 25,
+        "backup_stock": 120,
+        "sku": "M-SK003",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/15.jpg",
+            "file_name": "15.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Polo Shirt",
+        "short_description": "Timeless style in this classic polo shirt.",
+        "description": "Elevate your casual look with this Classic Polo Shirt. The timeless design and high-quality fabric make it perfect for any occasion. Whether for a day out with friends or a relaxed evening, this polo shirt offers both style and comfort. Available in various colors to match your look.",
+        "price": 17.99,
+        "slug": "ladies-polo-shirts-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for casual occasions and relaxed evenings.",
+        "stock": 30,
+        "backup_stock": 150,
+        "sku": "W-P001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/16.jpg",
+            "file_name": "16.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Performance Polo",
+        "short_description": "Elevate your sporty look with this comfortable performance polo shirt.",
+        "description": "Upgrade your athletic style with this Sporty Performance Polo Shirt. The moisture-wicking fabric and comfortable fit provide support during workouts or sports activities. Whether for a run or a game of tennis, this polo shirt is a versatile addition to your collection.",
+        "price": 19.50,
+        "slug": "ladies-polo-shirts-2",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Moisture-wicking fabric for comfort during exercise.",
+        "stock": 35,
+        "backup_stock": 160,
+        "sku": "W-P002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/17.jpg",
+            "file_name": "17.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Short Sleeve Polo",
+        "short_description": "Stay casual and comfy in this versatile short sleeve polo shirt.",
+        "description": "Find comfort in this Casual Short Sleeve Polo Shirt. The classic short sleeve design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this polo shirt keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
+        "price": 15.99,
+        "slug": "ladies-polo-shirts-3",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile short sleeves for easy and laid-back days.",
+        "stock": 25,
+        "backup_stock": 120,
+        "sku": "W-P003",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/18.jpg",
+            "file_name": "18.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Elegant A-Line Skirt",
+        "short_description": "Elevate your style with this elegant A-line skirt.",
+        "description": "Turn heads with this Elegant A-Line Skirt. The classic A-line design and high-quality fabric make it perfect for special occasions. Whether for a romantic date night or an elegant event, this skirt offers both style and grace. Available in various colors to match your ensemble.",
+        "price": 28.99,
+        "slug": "ladies-skirts-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for special occasions and elegant events.",
+        "stock": 35,
+        "backup_stock": 160,
+        "sku": "W-S001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/19.jpg",
+            "file_name": "19.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Denim Skirt",
+        "short_description": "Stay casual and stylish in this versatile denim skirt.",
+        "description": "Find style and comfort in this Casual Denim Skirt. The denim fabric and versatile design make it perfect for both casual and semi-formal occasions. Crafted from soft, breathable materials, this skirt keeps you looking great. Whether for a weekend outing or a casual dinner, it's a versatile addition to your wardrobe.",
+        "price": 24.50,
+        "slug": "ladies-skirts-2",
+        "headline": "Casual Versatility",
+        "subtitle": "Ideal for both casual and semi-formal occasions.",
+        "stock": 45,
+        "backup_stock": 190,
+        "sku": "W-S002",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/20.jpg",
+            "file_name": "20.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Floral Midi Skirt",
+        "short_description": "Elevate your style with this comfortable floral midi skirt.",
+        "description": "Upgrade your wardrobe with this Floral Midi Skirt. The floral print and comfortable fit provide a touch of elegance during casual or semi-formal occasions. Whether for a brunch date or a garden party, this skirt is a versatile addition to your collection.",
+        "price": 22.99,
+        "slug": "ladies-skirts-3",
+        "headline": "Elevate Your Wardrobe",
+        "subtitle": "Floral elegance for casual and semi-formal occasions.",
+        "stock": 50,
+        "backup_stock": 200,
+        "sku": "W-S003",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/21.jpg",
+            "file_name": "21.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Classic Wool Jumper",
+        "short_description": "Timeless warmth in this classic wool jumper.",
+        "description": "Stay warm in style with this Classic Wool Jumper. The timeless design and high-quality wool make it perfect for chilly days. Whether for a winter outing or a cozy evening by the fireplace, this jumper offers both warmth and elegance. Available in various colors to suit your taste.",
+        "price": 29.99,
+        "slug": "ladies-jumpers-1",
+        "headline": "Timeless Warmth",
+        "subtitle": "Perfect for winter outings and cozy evenings.",
+        "stock": 40,
+        "backup_stock": 180,
+        "sku": "W-J001",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/22.jpg",
+            "file_name": "22.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Casual V-Neck Jumper",
+        "short_description": "Stay casual and comfy in this versatile v-neck jumper.",
+        "description": "Find comfort in this Casual V-Neck Jumper. The classic v-neck design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this jumper keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
+        "price": 21.50,
+        "slug": "ladies-jumpers-2",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile v-neck for easy and laid-back days.",
+        "stock": 30,
+        "backup_stock": 120,
+        "sku": "W-J002",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/23.jpg",
+            "file_name": "23.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Sporty Zip-Up Jumper",
+        "short_description": "Elevate your sporty look with this comfortable zip-up jumper.",
+        "description": "Upgrade your athletic style with this Sporty Zip-Up Jumper. The zip-up design and comfortable fit provide support during workouts or sports activities. Whether for a run or a game of basketball, this jumper is a versatile addition to your collection.",
+        "price": 25.99,
+        "slug": "ladies-jumpers-3",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Zip-up style for comfort during exercise.",
+        "stock": 35,
+        "backup_stock": 160,
+        "sku": "W-J003",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/24.jpg",
+            "file_name": "24.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Dress Trousers",
+        "short_description": "Timeless style in these classic dress trousers.",
+        "description": "Elevate your formal look with these Classic Dress Trousers. The timeless design and high-quality fabric make them perfect for any special occasion. Whether for a business meeting or a formal event, these trousers offer both style and sophistication. Available in various colors to match your ensemble.",
+        "price": 27.99,
+        "slug": "ladies-trousers-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for formal events and business meetings.",
+        "stock": 40,
+        "backup_stock": 170,
+        "sku": "W-TR001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/25.jpg",
+            "file_name": "25.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Chino Trousers",
+        "short_description": "Stay casual and comfy in these versatile chino trousers.",
+        "description": "Find comfort in these Casual Chino Trousers. The classic chino design and versatile style make them perfect for laid-back days. Crafted from soft, breathable materials, these trousers keep you comfortable. Whether for a weekend at home or a casual day out, they're a must-have in your wardrobe.",
+        "price": 19.50,
+        "slug": "ladies-trousers-2",
+        "headline": "Casual Comfort",
+        "subtitle": "Versatile chino style for easy and laid-back days.",
+        "stock": 35,
+        "backup_stock": 150,
+        "sku": "W-TR002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/26.jpg",
+            "file_name": "26.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Track Pants",
+        "short_description": "Elevate your sporty look with these comfortable track pants.",
+        "description": "Upgrade your athletic style with these Sporty Track Pants. The relaxed fit and comfortable design provide support during workouts or sports activities. Whether for a run or a game of basketball, these track pants are a versatile addition to your collection.",
+        "price": 22.99,
+        "slug": "ladies-trousers-3",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Relaxed fit for comfort during exercise.",
+        "stock": 50,
+        "backup_stock": 200,
+        "sku": "W-TR003",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/27.jpg",
+            "file_name": "27.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Classic Cotton Crew Socks",
+        "short_description": "Timeless comfort in these classic cotton crew socks.",
+        "description": "Elevate your style with these Classic Cotton Crew Socks. The timeless design and soft, breathable cotton make them perfect for any occasion. Whether for a formal event or a special evening out, these socks offer both comfort and elegance. Available in various colors to match your look.",
+        "price": 12.99,
+        "slug": "ladies-socks-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for formal events and special evenings.",
+        "stock": 30,
+        "backup_stock": 150,
+        "sku": "W-SK001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/28.jpg",
+            "file_name": "28.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Ankle Socks",
+        "short_description": "Elevate your workout with these comfortable ankle socks.",
+        "description": "Upgrade your athletic style with these Sporty Ankle Socks. The cushioned design and snug fit provide comfort and support during workouts or outdoor activities. Whether for a run or a sports event, these socks are a versatile addition to your collection.",
+        "price": 14.50,
+        "slug": "ladies-socks-2",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Cushioned design for comfort and support during exercise.",
+        "stock": 40,
+        "backup_stock": 180,
+        "sku": "W-SK002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/29.jpg",
+            "file_name": "29.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Low-Cut Socks",
+        "short_description": "Stay casual and comfy with these versatile low-cut socks.",
+        "description": "Find comfort in these Casual Low-Cut Socks. Their low-cut design and versatile style make them perfect for laid-back days. Crafted from soft, breathable materials, these socks keep your feet happy. Whether for a weekend at home or a casual day out, they're a must-have in your sock collection.",
+        "price": 11.99,
+        "slug": "ladies-socks-3",
+        "headline": "Casual Comfort",
+        "subtitle": "Low-cut style for easy and laid-back days.",
+        "stock": 25,
+        "backup_stock": 120,
+        "sku": "W-SK003",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/30.jpg",
+            "file_name": "30.jpg"
+        },
+        "status": 1
+    }
+]

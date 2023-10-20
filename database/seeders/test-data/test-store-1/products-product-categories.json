@@ -1,0 +1,38 @@
+[
+    {
+        "product_id": "men-t-shirts-1",
+        "product_category_id": "clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-1",
+        "product_category_id": "mens-clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-1",
+        "product_category_id": "mens-t-shirts-1"
+    },
+    {
+        "product_id": "men-t-shirts-2",
+        "product_category_id": "clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-2",
+        "product_category_id": "mens-clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-2",
+        "product_category_id": "mens-t-shirts-1"
+    },
+    {
+        "product_id": "men-t-shirts-3",
+        "product_category_id": "clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-3",
+        "product_category_id": "mens-clothing-1"
+    },
+    {
+        "product_id": "men-t-shirts-3",
+        "product_category_id": "mens-t-shirts-1"
+    }
+]

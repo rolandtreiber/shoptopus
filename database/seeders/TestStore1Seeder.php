@@ -4,9 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
+use App\Models\ProductProductCategory;
 use App\Models\ProductTag;
 use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
@@ -25,6 +27,21 @@ class TestStore1Seeder extends Seeder
     ) {
         $this->translationService = $translationService;
     }
+
+    private function importPivotRecords(string $table, array $data): bool
+    {
+        foreach ($data as $row) {
+            array_walk($row, function(&$a, $b) {
+                if (str_contains($b, "_id") && $b !== "parent_id") {
+                    $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                    $a = ($model::where('slug', $a)->first())->id;
+                }
+            });
+            DB::table($table)->insert([$row]);
+        }
+        return true;
+    }
+
     private function importRecords(string $model, array $data): bool
     {
         $availableLanguages = array_keys(array_diff_key(config('app.locales_supported'), array_flip(["en"])));
@@ -34,8 +51,8 @@ class TestStore1Seeder extends Seeder
             } else {
                 $sanitised = $row;
             }
-            $sanitised['id'] = (string)Str::orderedUuid();
-            $sanitised['created_at'] = Carbon::now();
+                $sanitised['id'] = (string)Str::orderedUuid();
+                $sanitised['created_at'] = Carbon::now();
             array_walk($sanitised, function(&$a, $b) use ($availableLanguages, $row) {
                 $value = $a;
                 if (is_string($a)) {
@@ -105,6 +122,14 @@ class TestStore1Seeder extends Seeder
         // Import delivery rules
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/delivery-rules.json");
         $this->importRecords(DeliveryRule::class, json_decode($data, true));
+
+        // Import products
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/products.json");
+        $this->importRecords(Product::class, json_decode($data, true));
+
+        // Import product product categories (pivot)
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/products-product-categories.json");
+        $this->importPivotRecords('product_product_category', json_decode($data, true));
 
     }
 }
