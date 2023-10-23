@@ -568,5 +568,803 @@
             "file_name": "30.jpg"
         },
         "status": 1
+    },
+    {
+        "name": "Casual Slip-On Sneakers",
+        "short_description": "Stay comfy and stylish in these slip-on sneakers.",
+        "description": "Elevate your casual style with these Casual Slip-On Sneakers. The slip-on design and comfortable fit make them perfect for everyday wear. Whether for a day out with friends or a quick trip to the store, these sneakers are a versatile addition to your collection.",
+        "price": 28.99,
+        "slug": "ladies-sneakers-1",
+        "headline": "Effortless Style",
+        "subtitle": "Slip-on design for easy and stylish wear.",
+        "stock": 42,
+        "backup_stock": 120,
+        "sku": "W-SN001",
+        "virtual": false,
+        "weight": 215,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/31.jpg",
+            "file_name": "31.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Running Sneakers",
+        "short_description": "Elevate your workout with these comfortable running sneakers.",
+        "description": "Upgrade your athletic style with these Sporty Running Sneakers. The cushioned design and supportive fit provide comfort during workouts or outdoor activities. Whether for a morning jog or a sports event, these running sneakers are a versatile addition to your collection.",
+        "price": 25.50,
+        "slug": "ladies-sneakers-2",
+        "headline": "Elevate Your Workouts",
+        "subtitle": "Cushioned design for comfort during exercise.",
+        "stock": 50,
+        "backup_stock": 180,
+        "sku": "W-SN002",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/32.jpg",
+            "file_name": "32.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Fashion High-Top Sneakers",
+        "short_description": "Upgrade your style with these trendy high-top sneakers.",
+        "description": "Elevate your fashion game with these Fashion High-Top Sneakers. The trendy high-top design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these high-top sneakers are a versatile addition to your collection.",
+        "price": 29.99,
+        "slug": "ladies-sneakers-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "High-top design for a fashionable look.",
+        "stock": 38,
+        "backup_stock": 150,
+        "sku": "W-SN003",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/33.jpg",
+            "file_name": "33.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Casual Slide Sandals",
+        "short_description": "Stay comfy and stylish in these slide sandals.",
+        "description": "Elevate your casual style with these Casual Slide Sandals. The slide design and comfortable fit make them perfect for everyday wear. Whether for a day out with friends or a quick trip to the store, these sandals are a versatile addition to your collection.",
+        "price": 19.99,
+        "slug": "ladies-sandals-1",
+        "headline": "Effortless Style",
+        "subtitle": "Slide design for easy and stylish wear.",
+        "stock": 45,
+        "backup_stock": 130,
+        "sku": "W-SA001",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/34.jpg",
+            "file_name": "34.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Strappy Beach Sandals",
+        "short_description": "Elevate your beach look with these comfortable strappy sandals.",
+        "description": "Upgrade your beach style with these Strappy Beach Sandals. The strappy design and lightweight fit provide comfort during beach vacations or sunny days. Whether for a beach day or a poolside party, these sandals are a versatile addition to your collection.",
+        "price": 23.50,
+        "slug": "ladies-sandals-2",
+        "headline": "Beach Elegance",
+        "subtitle": "Strappy design for comfort during beach days.",
+        "stock": 36,
+        "backup_stock": 160,
+        "sku": "W-SA002",
+        "virtual": false,
+        "weight": 215,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/35.jpg",
+            "file_name": "35.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Fashion Wedge Sandals",
+        "short_description": "Upgrade your style with these trendy wedge sandals.",
+        "description": "Elevate your fashion game with these Fashion Wedge Sandals. The trendy wedge design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these wedge sandals are a versatile addition to your collection.",
+        "price": 28.99,
+        "slug": "ladies-sandals-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Wedge design for a fashionable look.",
+        "stock": 40,
+        "backup_stock": 140,
+        "sku": "W-SA003",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/36.jpg",
+            "file_name": "36.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Ankle Boots",
+        "short_description": "Timeless style in these classic ankle boots.",
+        "description": "Elevate your fashion game with these Classic Ankle Boots. The timeless design and high-quality materials make them perfect for a stylish look. Whether for a night out or a casual dinner, these ankle boots offer both style and sophistication. Available in various colors to match your ensemble.",
+        "price": 27.99,
+        "slug": "ladies-boots-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for stylish evenings and casual outings.",
+        "stock": 47,
+        "backup_stock": 180,
+        "sku": "W-BO001",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/37.jpg",
+            "file_name": "37.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Lace-Up Combat Boots",
+        "short_description": "Elevate your style with these lace-up combat boots.",
+        "description": "Upgrade your fashion game with these Lace-Up Combat Boots. The lace-up design and durable construction make them perfect for a stylish and rugged look. Whether for a night out or a casual dinner, these combat boots offer style and versatility.",
+        "price": 26.50,
+        "slug": "ladies-boots-2",
+        "headline": "Rugged Elegance",
+        "subtitle": "Lace-up design for a stylish and sturdy look.",
+        "stock": 38,
+        "backup_stock": 160,
+        "sku": "W-BO002",
+        "virtual": false,
+        "weight": 235,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/38.jpg",
+            "file_name": "38.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Fashion Knee-High Boots",
+        "short_description": "Upgrade your style with these trendy knee-high boots.",
+        "description": "Elevate your fashion game with these Fashion Knee-High Boots. The trendy knee-high design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these knee-high boots offer style and sophistication. Available in various colors to match your ensemble.",
+        "price": 29.99,
+        "slug": "ladies-boots-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Knee-high design for a fashionable look.",
+        "stock": 44,
+        "backup_stock": 150,
+        "sku": "W-BO003",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/39.jpg",
+            "file_name": "39.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Platform Slip-On Shoes",
+        "short_description": "Elevate your style with these trendy platform slip-on shoes.",
+        "description": "Elevate your fashion game with these Platform Slip-On Shoes. The trendy platform design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these platform slip-on shoes offer style and sophistication. Available in various colors to match your ensemble.",
+        "price": 28.99,
+        "slug": "ladies-platform-shoes-1",
+        "headline": "Trendy Elegance",
+        "subtitle": "Platform design for a fashionable look.",
+        "stock": 40,
+        "backup_stock": 140,
+        "sku": "W-PS001",
+        "virtual": false,
+        "weight": 235,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/40.jpg",
+            "file_name": "40.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Chunky Heel Platform Sandals",
+        "short_description": "Elevate your style with these trendy chunky heel platform sandals.",
+        "description": "Upgrade your fashion game with these Chunky Heel Platform Sandals. The chunky heel platform design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these platform sandals offer style and sophistication. Available in various colors to match your ensemble.",
+        "price": 29.50,
+        "slug": "ladies-platform-shoes-2",
+        "headline": "Trendy Elegance",
+        "subtitle": "Chunky heel platform design for a fashionable look.",
+        "stock": 42,
+        "backup_stock": 160,
+        "sku": "W-PS002",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/41.jpg",
+            "file_name": "41.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Lace-Up Platform Boots",
+        "short_description": "Elevate your style with these trendy lace-up platform boots.",
+        "description": "Upgrade your fashion game with these Lace-Up Platform Boots. The lace-up platform design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these platform boots offer style and sophistication. Available in various colors to match your ensemble.",
+        "price": 31.99,
+        "slug": "ladies-platform-shoes-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Lace-up platform design for a fashionable look.",
+        "stock": 37,
+        "backup_stock": 150,
+        "sku": "W-PS003",
+        "virtual": false,
+        "weight": 245,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/42.jpg",
+            "file_name": "42.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Leather Loafers",
+        "short_description": "Timeless style in these classic leather loafers.",
+        "description": "Elevate your fashion game with these Classic Leather Loafers. The timeless design and high-quality leather make them perfect for a stylish look. Whether for a night out or a casual dinner, these loafers offer both style and sophistication.",
+        "price": 27.99,
+        "slug": "mens-loafers-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for stylish evenings and casual outings.",
+        "stock": 46,
+        "backup_stock": 180,
+        "sku": "M-LO001",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/43.jpg",
+            "file_name": "43.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Suede Tassel Loafers",
+        "short_description": "Elevate your style with these suede tassel loafers.",
+        "description": "Upgrade your fashion game with these Suede Tassel Loafers. The tassel design and suede construction make them perfect for a stylish and refined look. Whether for a night out or a formal event, these loafers offer style and versatility.",
+        "price": 26.50,
+        "slug": "mens-loafers-2",
+        "headline": "Refined Elegance",
+        "subtitle": "Tassel design for a stylish and polished look.",
+        "stock": 39,
+        "backup_stock": 160,
+        "sku": "M-LO002",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/44.jpg",
+            "file_name": "44.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Fashion Slip-On Loafers",
+        "short_description": "Elevate your style with these trendy slip-on loafers.",
+        "description": "Upgrade your fashion game with these Fashion Slip-On Loafers. The slip-on design and chic details make them perfect for a stylish look. Whether for a night out or a casual dinner, these slip-on loafers offer style and sophistication.",
+        "price": 29.99,
+        "slug": "mens-loafers-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Slip-on design for a fashionable look.",
+        "stock": 43,
+        "backup_stock": 150,
+        "sku": "M-LO003",
+        "virtual": false,
+        "weight": 235,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/45.jpg",
+            "file_name": "45.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Casual Slide Sandals",
+        "short_description": "Stay comfy and stylish in these slide sandals.",
+        "description": "Elevate your casual style with these Casual Slide Sandals. The slide design and comfortable fit make them perfect for everyday wear. Whether for a day out with friends or a quick trip to the store, these sandals are a versatile addition to your collection.",
+        "price": 19.99,
+        "slug": "mens-sandals-1",
+        "headline": "Effortless Style",
+        "subtitle": "Slide design for easy and stylish wear.",
+        "stock": 44,
+        "backup_stock": 140,
+        "sku": "M-SA001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/46.jpg",
+            "file_name": "46.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Outdoor Sandals",
+        "short_description": "Elevate your outdoor activities with these comfortable sporty sandals.",
+        "description": "Upgrade your outdoor style with these Sporty Outdoor Sandals. The comfortable fit and durable design provide support during outdoor activities. Whether for a hiking trip or a camping adventure, these sporty sandals are a versatile addition to your collection.",
+        "price": 23.50,
+        "slug": "mens-sandals-2",
+        "headline": "Elevate Your Adventures",
+        "subtitle": "Comfortable design for outdoor activities.",
+        "stock": 38,
+        "backup_stock": 160,
+        "sku": "M-SA002",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/47.jpg",
+            "file_name": "47.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Fashion Flip-Flops",
+        "short_description": "Upgrade your beach look with these trendy fashion flip-flops.",
+        "description": "Elevate your beach style with these Fashion Flip-Flops. The trendy flip-flop design and chic details make them perfect for a stylish beach day. Whether for a beach outing or a poolside party, these fashion flip-flops are a versatile addition to your collection.",
+        "price": 21.99,
+        "slug": "mens-sandals-3",
+        "headline": "Beach Elegance",
+        "subtitle": "Trendy design for a stylish beach look.",
+        "stock": 43,
+        "backup_stock": 150,
+        "sku": "M-SA003",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/48.jpg",
+            "file_name": "48.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Leather Boots",
+        "short_description": "Timeless style in these classic leather boots.",
+        "description": "Elevate your fashion game with these Classic Leather Boots. The timeless design and high-quality leather make them perfect for a stylish look. Whether for a night out or a casual dinner, these boots offer both style and sophistication.",
+        "price": 27.99,
+        "slug": "mens-boots-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Perfect for stylish evenings and casual outings.",
+        "stock": 49,
+        "backup_stock": 190,
+        "sku": "M-BO001",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/49.jpg",
+            "file_name": "49.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Stylish Chelsea Boots",
+        "short_description": "Elevate your style with these trendy Chelsea boots.",
+        "description": "Upgrade your fashion game with these Stylish Chelsea Boots. The Chelsea boot design and stylish details make them perfect for a fashionable look. Whether for a night out or a casual dinner, these Chelsea boots offer style and sophistication.",
+        "price": 26.50,
+        "slug": "mens-boots-2",
+        "headline": "Trendy Elegance",
+        "subtitle": "Chelsea boot design for a fashionable look.",
+        "stock": 41,
+        "backup_stock": 170,
+        "sku": "M-BO002",
+        "virtual": false,
+        "weight": 245,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/50.jpg",
+            "file_name": "50.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Outdoor Hiking Boots",
+        "short_description": "Elevate your outdoor adventures with these comfortable hiking boots.",
+        "description": "Upgrade your outdoor game with these Outdoor Hiking Boots. The comfortable fit and durable design provide support during hiking and outdoor activities. Whether for a hiking trip or a camping adventure, these hiking boots are a versatile addition to your collection.",
+        "price": 29.99,
+        "slug": "mens-boots-3",
+        "headline": "Elevate Your Adventures",
+        "subtitle": "Comfortable design for outdoor activities.",
+        "stock": 45,
+        "backup_stock": 160,
+        "sku": "M-BO003",
+        "virtual": false,
+        "weight": 250,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/51.jpg",
+            "file_name": "51.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Sporty Men's Sneakers",
+        "short_description": "Stay active and stylish with these sporty sneakers.",
+        "description": "Elevate your sports and fashion game with these Sporty Men's Sneakers. The sporty design and comfortable fit make them perfect for a trendy look and active lifestyle. Whether for running or casual outings, these sneakers offer both style and comfort.",
+        "price": 25.99,
+        "slug": "mens-sneakers-1",
+        "headline": "Stylish and Active",
+        "subtitle": "Sporty design for a trendy look and active lifestyle.",
+        "stock": 42,
+        "backup_stock": 180,
+        "sku": "M-SN001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/70.jpg",
+            "file_name": "70.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Canvas Sneakers",
+        "short_description": "Upgrade your casual style with these classic canvas sneakers.",
+        "description": "Elevate your casual fashion with these Classic Canvas Sneakers. The canvas material and timeless design make them perfect for a classic and comfortable look. Whether for a day out or a weekend stroll, these sneakers offer both style and ease.",
+        "price": 22.50,
+        "slug": "mens-sneakers-2",
+        "headline": "Timeless Comfort",
+        "subtitle": "Canvas material for a classic and comfortable look.",
+        "stock": 38,
+        "backup_stock": 170,
+        "sku": "M-SN002",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/71.jpg",
+            "file_name": "71.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Modern High-Top Sneakers",
+        "short_description": "Stay trendy with these modern high-top sneakers.",
+        "description": "Elevate your fashion game with these Modern High-Top Sneakers. The high-top design and stylish details make them perfect for a trendy look. Whether for a night out with friends or a casual outing, these sneakers offer both style and flair.",
+        "price": 28.99,
+        "slug": "mens-sneakers-3",
+        "headline": "Trendy and Stylish",
+        "subtitle": "High-top design for a trendy and fashionable look.",
+        "stock": 44,
+        "backup_stock": 160,
+        "sku": "M-SN003",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/72.jpg",
+            "file_name": "72.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Chic Cat-Eye Sunglasses",
+        "short_description": "Elevate your style with these chic cat-eye sunglasses.",
+        "description": "Upgrade your fashion game with these Chic Cat-Eye Sunglasses. The cat-eye design and stylish details make them perfect for a fashionable look. Whether for a day out with friends or a beach outing, these sunglasses offer both style and sun protection.",
+        "price": 24.99,
+        "slug": "ladies-sunglasses-1",
+        "headline": "Trendy Elegance",
+        "subtitle": "Cat-eye design for a fashionable look.",
+        "stock": 42,
+        "backup_stock": 180,
+        "sku": "W-SG001",
+        "virtual": false,
+        "weight": 205,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/52.jpg",
+            "file_name": "52.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Vintage Round Sunglasses",
+        "short_description": "Add a vintage touch to your look with these round sunglasses.",
+        "description": "Elevate your style with these Vintage Round Sunglasses. The round frame design and retro details make them perfect for a unique look. Whether for a music festival or a day at the park, these sunglasses are a versatile addition to your collection.",
+        "price": 22.50,
+        "slug": "ladies-sunglasses-2",
+        "headline": "Retro Charm",
+        "subtitle": "Round frame for a vintage touch.",
+        "stock": 39,
+        "backup_stock": 170,
+        "sku": "W-SG002",
+        "virtual": false,
+        "weight": 210,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/53.jpg",
+            "file_name": "53.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Sporty Polarized Sunglasses",
+        "short_description": "Stay active with these sporty polarized sunglasses.",
+        "description": "Upgrade your outdoor adventures with these Sporty Polarized Sunglasses. The polarized lenses and comfortable fit provide eye protection during outdoor activities. Whether for a hiking trip or a day at the beach, these sporty sunglasses are a versatile addition to your collection.",
+        "price": 26.99,
+        "slug": "ladies-sunglasses-3",
+        "headline": "Elevate Your Adventures",
+        "subtitle": "Polarized lenses for outdoor activities.",
+        "stock": 45,
+        "backup_stock": 160,
+        "sku": "W-SG003",
+        "virtual": false,
+        "weight": 215,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/54.jpg",
+            "file_name": "54.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Crystal Drop Earrings",
+        "short_description": "Add a touch of elegance with these crystal drop earrings.",
+        "description": "Elevate your style with these Crystal Drop Earrings. The crystal design and elegant details make them perfect for a sophisticated look. Whether for a special occasion or a formal event, these earrings offer both style and grace.",
+        "price": 19.99,
+        "slug": "ladies-earrings-1",
+        "headline": "Elegant Sparkle",
+        "subtitle": "Crystal drops for an elegant touch.",
+        "stock": 47,
+        "backup_stock": 195,
+        "sku": "W-ER001",
+        "virtual": false,
+        "weight": 220,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/55.jpg",
+            "file_name": "55.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Pearl Stud Earrings",
+        "short_description": "Timeless elegance with these pearl stud earrings.",
+        "description": "Upgrade your style with these Pearl Stud Earrings. The classic pearl design and timeless details make them perfect for a refined look. Whether for a wedding or a romantic dinner, these earrings are a versatile addition to your collection.",
+        "price": 16.50,
+        "slug": "ladies-earrings-2",
+        "headline": "Timeless Beauty",
+        "subtitle": "Pearl studs for a classic touch.",
+        "stock": 50,
+        "backup_stock": 190,
+        "sku": "W-ER002",
+        "virtual": false,
+        "weight": 225,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/56.jpg",
+            "file_name": "56.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Statement Tassel Earrings",
+        "short_description": "Make a statement with these trendy tassel earrings.",
+        "description": "Elevate your fashion game with these Statement Tassel Earrings. The tassel design and trendy details make them perfect for a stylish look. Whether for a night out with friends or a party, these earrings offer both style and flair.",
+        "price": 24.99,
+        "slug": "ladies-earrings-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Tassel design for a fashionable look.",
+        "stock": 43,
+        "backup_stock": 150,
+        "sku": "W-ER003",
+        "virtual": false,
+        "weight": 230,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/57.jpg",
+            "file_name": "57.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Wide-Brim Straw Hat",
+        "short_description": "Stay sun-protected with this wide-brim straw hat.",
+        "description": "Elevate your beach style with this Wide-Brim Straw Hat. The wide brim design and comfortable fit make it perfect for sun protection and a stylish beach day. Whether for a beach outing or a poolside party, this hat is a versatile addition to your collection.",
+        "price": 22.99,
+        "slug": "ladies-hats-1",
+        "headline": "Beach Elegance",
+        "subtitle": "Wide-brim for sun protection and style.",
+        "stock": 46,
+        "backup_stock": 180,
+        "sku": "W-HA001",
+        "virtual": false,
+        "weight": 235,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/58.jpg",
+            "file_name": "58.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Fedora Hat",
+        "short_description": "Add a touch of class with this classic fedora hat.",
+        "description": "Upgrade your style with this Classic Fedora Hat. The timeless design and elegant details make it perfect for a refined look. Whether for a garden party or a day at the races, this fedora hat is a versatile addition to your collection.",
+        "price": 18.50,
+        "slug": "ladies-hats-2",
+        "headline": "Timeless Charm",
+        "subtitle": "Classic fedora for a touch of class.",
+        "stock": 48,
+        "backup_stock": 170,
+        "sku": "W-HA002",
+        "virtual": false,
+        "weight": 240,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/59.jpg",
+            "file_name": "59.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Trendy Bucket Hat",
+        "short_description": "Stay trendy with this fashionable bucket hat.",
+        "description": "Elevate your fashion game with this Trendy Bucket Hat. The bucket hat design and stylish details make it perfect for a fashionable look. Whether for a day out with friends or a music festival, this hat offers both style and flair.",
+        "price": 26.99,
+        "slug": "ladies-hats-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Bucket hat design for a fashionable look.",
+        "stock": 44,
+        "backup_stock": 160,
+        "sku": "W-HA003",
+        "virtual": false,
+        "weight": 245,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/60.jpg",
+            "file_name": "60.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Classic Silk Tie",
+        "short_description": "Add a touch of elegance with this classic silk tie.",
+        "description": "Elevate your style with this Classic Silk Tie. The silk material and timeless design make it perfect for a refined look. Whether for a formal event or a business meeting, this tie is a versatile addition to your collection.",
+        "price": 19.99,
+        "slug": "mens-ties-1",
+        "headline": "Timeless Charm",
+        "subtitle": "Silk material for a touch of elegance.",
+        "stock": 45,
+        "backup_stock": 195,
+        "sku": "M-TI001",
+        "virtual": false,
+        "weight": 250,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/61.jpg",
+            "file_name": "61.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Striped Business Tie",
+        "short_description": "Upgrade your business attire with this striped tie.",
+        "description": "Upgrade your business style with this Striped Business Tie. The striped pattern and elegant details make it perfect for a professional look. Whether for a board meeting or a corporate event, this tie is a versatile addition to your collection.",
+        "price": 16.50,
+        "slug": "mens-ties-2",
+        "headline": "Professional Elegance",
+        "subtitle": "Striped pattern for a professional look.",
+        "stock": 49,
+        "backup_stock": 185,
+        "sku": "M-TI002",
+        "virtual": false,
+        "weight": 255,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/62.jpg",
+            "file_name": "62.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Modern Skinny Tie",
+        "short_description": "Stay trendy with this modern skinny tie.",
+        "description": "Upgrade your fashion game with this Modern Skinny Tie. The skinny design and stylish details make it perfect for a fashionable look. Whether for a night out or a special occasion, this tie offers both style and flair.",
+        "price": 24.99,
+        "slug": "mens-ties-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Skinny design for a fashionable look.",
+        "stock": 47,
+        "backup_stock": 175,
+        "sku": "M-TI003",
+        "virtual": false,
+        "weight": 260,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/63.jpg",
+            "file_name": "63.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Aviator Sunglasses",
+        "short_description": "Upgrade your style with these classic aviator sunglasses.",
+        "description": "Elevate your fashion game with these Aviator Sunglasses. The classic aviator design and timeless details make them perfect for a stylish look. Whether for a day out with friends or a road trip, these sunglasses offer both style and sun protection.",
+        "price": 21.99,
+        "slug": "mens-sunglasses-1",
+        "headline": "Timeless Elegance",
+        "subtitle": "Classic aviator design for a stylish look.",
+        "stock": 43,
+        "backup_stock": 190,
+        "sku": "M-SG001",
+        "virtual": false,
+        "weight": 265,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/64.jpg",
+            "file_name": "64.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Sporty Wraparound Sunglasses",
+        "short_description": "Stay active with these sporty wraparound sunglasses.",
+        "description": "Upgrade your outdoor adventures with these Sporty Wraparound Sunglasses. The wraparound design and polarized lenses provide eye protection during outdoor activities. Whether for a hiking trip or a day at the beach, these sporty sunglasses are a versatile addition to your collection.",
+        "price": 19.50,
+        "slug": "mens-sunglasses-2",
+        "headline": "Elevate Your Adventures",
+        "subtitle": "Wraparound design for outdoor activities.",
+        "stock": 48,
+        "backup_stock": 180,
+        "sku": "M-SG002",
+        "virtual": false,
+        "weight": 270,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/65.jpg",
+            "file_name": "65.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Modern Square Sunglasses",
+        "short_description": "Stay trendy with these modern square sunglasses.",
+        "description": "Upgrade your fashion game with these Modern Square Sunglasses. The square frame design and stylish details make them perfect for a fashionable look. Whether for a night out with friends or a music festival, these sunglasses offer both style and flair.",
+        "price": 26.99,
+        "slug": "mens-sunglasses-3",
+        "headline": "Trendy Elegance",
+        "subtitle": "Square frame for a fashionable look.",
+        "stock": 50,
+        "backup_stock": 170,
+        "sku": "M-SG003",
+        "virtual": false,
+        "weight": 275,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/66.jpg",
+            "file_name": "66.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Leather Cuff Bracelet",
+        "short_description": "Upgrade your style with this leather cuff bracelet.",
+        "description": "Elevate your fashion game with this Leather Cuff Bracelet. The leather material and stylish details make it perfect for a fashionable look. Whether for a night out with friends or a special occasion, this bracelet offers both style and flair.",
+        "price": 18.99,
+        "slug": "mens-bracelets-1",
+        "headline": "Trendy Elegance",
+        "subtitle": "Leather material for a fashionable look.",
+        "stock": 46,
+        "backup_stock": 185,
+        "sku": "M-BR001",
+        "virtual": false,
+        "weight": 280,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/67.jpg",
+            "file_name": "67.jpg"
+        },
+        "status": 2
+    },
+    {
+        "name": "Stainless Steel Link Bracelet",
+        "short_description": "Add a touch of elegance with this stainless steel link bracelet.",
+        "description": "Upgrade your style with this Stainless Steel Link Bracelet. The stainless steel material and classic design make it perfect for a refined look. Whether for a formal event or a business meeting, this bracelet is a versatile addition to your collection.",
+        "price": 22.50,
+        "slug": "mens-bracelets-2",
+        "headline": "Timeless Charm",
+        "subtitle": "Stainless steel for a touch of elegance.",
+        "stock": 45,
+        "backup_stock": 195,
+        "sku": "M-BR002",
+        "virtual": false,
+        "weight": 285,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/68.jpg",
+            "file_name": "68.jpg"
+        },
+        "status": 1
+    },
+    {
+        "name": "Beaded Charm Bracelet",
+        "short_description": "Stay stylish with this beaded charm bracelet.",
+        "description": "Elevate your fashion game with this Beaded Charm Bracelet. The beaded design and trendy details make it perfect for a fashionable look. Whether for a casual day out or a party, this bracelet offers both style and flair.",
+        "price": 24.99,
+        "slug": "mens-bracelets-3",
+        "headline": "Stylish Elegance",
+        "subtitle": "Beaded design for a fashionable look.",
+        "stock": 47,
+        "backup_stock": 190,
+        "sku": "M-BR003",
+        "virtual": false,
+        "weight": 290,
+        "cover_photo": {
+            "url": "/sample-store-data/sample-store-1/product-images/69.jpg",
+            "file_name": "69.jpg"
+        },
+        "status": 2
     }
 ]

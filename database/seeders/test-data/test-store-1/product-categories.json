@@ -59,7 +59,7 @@
                     {
                         "name": "(T)Jumpers",
                         "description": "(T)Wide selection of jumpers",
-                        "slug": "ladies-jumpers-1",
+                        "slug": "womans-jumpers-1",
                         "enabled": true,
                         "menu_image": {
                             "url": "/sample-store-data/sample-store-1/category-ladies-jumpers-menu-image.jpg",
@@ -73,7 +73,7 @@
                     {
                         "name": "(T)Trousers",
                         "description": "(T)Wide selection of trousers",
-                        "slug": "ladies-trousers-1",
+                        "slug": "womans-trousers-1",
                         "enabled": true,
                         "menu_image": {
                             "url": "/sample-store-data/sample-store-1/category-ladies-trousers-menu-image.jpg",
