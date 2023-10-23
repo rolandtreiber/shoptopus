@@ -4,12 +4,14 @@ namespace Database\Seeders;
 
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
+use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
 use App\Models\ProductProductCategory;
 use App\Models\ProductTag;
+use App\Models\ProductVariant;
 use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
 use Carbon\Carbon;
@@ -28,15 +30,23 @@ class TestStore1Seeder extends Seeder
         $this->translationService = $translationService;
     }
 
-    private function importPivotRecords(string $table, array $data): bool
+    private function importPivotRecords(string $table, array $data, bool $hasId = false): bool
     {
         foreach ($data as $row) {
             array_walk($row, function(&$a, $b) {
                 if (str_contains($b, "_id") && $b !== "parent_id") {
-                    $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
-                    $a = ($model::where('slug', $a)->first())->id;
+                    $modelClass = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                    $model = ($modelClass::where('slug', $a)->first());
+                    if ($model) {
+                        $a = $model->id;
+                    } else {
+                        dd($a, $b, $modelClass);
+                    }
                 }
             });
+            if ($hasId) {
+                $row['id'] = (string)Str::orderedUuid();
+            }
             DB::table($table)->insert([$row]);
         }
         return true;
@@ -64,16 +74,39 @@ class TestStore1Seeder extends Seeder
                         $a = $translatables;
                     }
 
-                    if (str_contains($b, "_id") && $b !== "parent_id") {
-                        $model = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                    if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "fileable_id") {
+                        $modelClass = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                        $model = ($modelClass::where('slug', $a)->first());
+                        if ($model) {
+                            $a = $model->id;
+                        } else {
+                            dd($a, $b, $modelClass);
+                        }
+                    }
+
+                    if (str_contains($b, "able_id")) {
+                        $type = str_replace("_id", "_type", $b);
+                        $model = $row[$type];
                         $a = ($model::where('slug', $a)->first())->id;
                     }
+
                 } elseif (is_array($a)) {
-                    array_walk($a, function(&$val, $key) {
-                        if ($key === "url") {
-                            $val = config('app.url') . $val;
-                        }
-                    });
+                    if ($b === "attribute_options") {
+                        $a = array_map(function ($item) {
+                            $attributeOption = DB::table('product_attribute_options')->where('slug', $item)->select('id')->first();
+                            if ($attributeOption) {
+                                return $attributeOption['id'];
+                            } else {
+                                dd($item);
+                            }
+                        }, $a);
+                    } else {
+                        array_walk($a, function(&$val, $key) {
+                            if ($key === "url") {
+                                $val = config('app.url') . $val;
+                            }
+                        });
+                    }
                 }
             });
             $record = (new $model());
@@ -131,5 +164,16 @@ class TestStore1Seeder extends Seeder
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/products-product-categories.json");
         $this->importPivotRecords('product_product_category', json_decode($data, true));
 
+        // Import product_variants
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-variants.json");
+        $this->importRecords(ProductVariant::class, json_decode($data, true));
+
+        // Import product attribute option product variant
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-attribute-product-variants.json");
+        $this->importPivotRecords('product_attribute_product_variant', json_decode($data, true), true);
+
+        // Import file contents
+//        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/file-contents.json");
+//        $this->importRecords(FileContent::class, json_decode($data, true));
     }
 }

@@ -13,8 +13,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/1.jpg",
-            "file_name": "1.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-1.jpg",
+            "file_name": "mens-t-shirts-1.jpg"
         },
         "status": 1
     },
@@ -32,8 +32,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/2.jpg",
-            "file_name": "2.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-2.jpg",
+            "file_name": "mens-t-shirts-2.jpg"
         },
         "status": 2
     },
@@ -42,7 +42,7 @@
         "short_description": "Stay casual and comfy in this versatile crew neck t-shirt.",
         "description": "Find comfort in this Casual Crew Neck T-Shirt. The classic crew neck design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this t-shirt keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
         "price": 14.99,
-        "slug": "men-t-shirts-3",
+        "slug": "casual-crew-neck-t-shirt",
         "headline": "Casual Comfort",
         "subtitle": "Versatile crew neck for easy and laid-back days.",
         "stock": 25,
@@ -51,8 +51,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/3.jpg",
-            "file_name": "3.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3.jpg",
+            "file_name": "mens-t-shirts-3.jpg"
         },
         "status": 1
     },
@@ -70,8 +70,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/4.jpg",
-            "file_name": "4.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-1.jpg",
+            "file_name": "mens-shirt-1.jpg"
         },
         "status": 2
     },
@@ -80,7 +80,7 @@
         "short_description": "Elevate your office attire with this business casual shirt.",
         "description": "Upgrade your professional style with this Business Casual Shirt. The modern design and comfortable fit make it ideal for the office or business meetings. Whether for a day at work or a corporate event, this shirt adds a touch of sophistication to your wardrobe.",
         "price": 22.50,
-        "slug": "men-shirts-2",
+        "slug": "business-casual-shirt",
         "headline": "Business Elegance",
         "subtitle": "Ideal for office attire and corporate events.",
         "stock": 45,
@@ -89,8 +89,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/5.jpg",
-            "file_name": "5.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2.jpg",
+            "file_name": "2.jpg"
         },
         "status": 1
     },
@@ -108,8 +108,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/6.jpg",
-            "file_name": "6.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-3.jpg",
+            "file_name": "3.jpg"
         },
         "status": 2
     },
@@ -127,8 +127,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/7.jpg",
-            "file_name": "7.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-1.jpg",
+            "file_name": "mens-jumpers-1.jpg"
         },
         "status": 1
     },
@@ -146,8 +146,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/8.jpg",
-            "file_name": "8.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-2.jpg",
+            "file_name": "mens-jumpers-1.jpg"
         },
         "status": 2
     },
@@ -165,8 +165,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/9.jpg",
-            "file_name": "9.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-3.jpg",
+            "file_name": "mens-jumpers-3.jpg"
         },
         "status": 1
     },
@@ -184,8 +184,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/10.jpg",
-            "file_name": "10.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-1.jpg",
+            "file_name": "mens-trousers-1.jpg"
         },
         "status": 2
     },
@@ -203,8 +203,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/11.jpg",
-            "file_name": "11.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-2.jpg",
+            "file_name": "mens-trousers-2.jpg"
         },
         "status": 1
     },
@@ -222,8 +222,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/12.jpg",
-            "file_name": "12.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-3.jpg",
+            "file_name": "mens-trousers-3.jpg"
         },
         "status": 2
     },
@@ -241,8 +241,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/13.jpg",
-            "file_name": "13.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-socks-1.jpg",
+            "file_name": "mens-socks-1.jpg"
         },
         "status": 1
     },
@@ -260,8 +260,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/14.jpg",
-            "file_name": "14.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-socks-2.jpg",
+            "file_name": "mens-socks-2.jpg"
         },
         "status": 2
     },
@@ -279,8 +279,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/15.jpg",
-            "file_name": "15.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-socks-3.jpg",
+            "file_name": "mens-socks-3.jpg"
         },
         "status": 1
     },
@@ -289,7 +289,7 @@
         "short_description": "Timeless style in this classic polo shirt.",
         "description": "Elevate your casual look with this Classic Polo Shirt. The timeless design and high-quality fabric make it perfect for any occasion. Whether for a day out with friends or a relaxed evening, this polo shirt offers both style and comfort. Available in various colors to match your look.",
         "price": 17.99,
-        "slug": "ladies-polo-shirts-1",
+        "slug": "classic-polo-shirt",
         "headline": "Timeless Elegance",
         "subtitle": "Perfect for casual occasions and relaxed evenings.",
         "stock": 30,
@@ -298,8 +298,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/16.jpg",
-            "file_name": "16.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1.jpg",
+            "file_name": "ladies-polo-shirts-1.jpg"
         },
         "status": 1
     },
@@ -317,8 +317,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/17.jpg",
-            "file_name": "17.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-2.jpg",
+            "file_name": "ladies-polo-shirts-2.jpg"
         },
         "status": 2
     },
@@ -327,7 +327,7 @@
         "short_description": "Stay casual and comfy in this versatile short sleeve polo shirt.",
         "description": "Find comfort in this Casual Short Sleeve Polo Shirt. The classic short sleeve design and versatile style make it perfect for laid-back days. Crafted from soft, breathable materials, this polo shirt keeps you comfortable. Whether for a weekend at home or a casual day out, it's a must-have in your wardrobe.",
         "price": 15.99,
-        "slug": "ladies-polo-shirts-3",
+        "slug": "casual-short-sleeve-polo",
         "headline": "Casual Comfort",
         "subtitle": "Versatile short sleeves for easy and laid-back days.",
         "stock": 25,
@@ -336,8 +336,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/18.jpg",
-            "file_name": "18.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3.jpg",
+            "file_name": "ladies-polo-shirts-3.jpg"
         },
         "status": 1
     },
@@ -346,7 +346,7 @@
         "short_description": "Elevate your style with this elegant A-line skirt.",
         "description": "Turn heads with this Elegant A-Line Skirt. The classic A-line design and high-quality fabric make it perfect for special occasions. Whether for a romantic date night or an elegant event, this skirt offers both style and grace. Available in various colors to match your ensemble.",
         "price": 28.99,
-        "slug": "ladies-skirts-1",
+        "slug": "elegant-a-line-skirt",
         "headline": "Timeless Elegance",
         "subtitle": "Perfect for special occasions and elegant events.",
         "stock": 35,
@@ -355,8 +355,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/19.jpg",
-            "file_name": "19.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1.jpg",
+            "file_name": "ladies-skirts-1.jpg"
         },
         "status": 2
     },
@@ -374,8 +374,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/20.jpg",
-            "file_name": "20.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-2.jpg",
+            "file_name": "ladies-skirts-2.jpg"
         },
         "status": 1
     },
@@ -393,8 +393,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/21.jpg",
-            "file_name": "21.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-3.jpg",
+            "file_name": "ladies-skirts-3.jpg"
         },
         "status": 2
     },
@@ -412,8 +412,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/22.jpg",
-            "file_name": "22.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-1.jpg",
+            "file_name": "ladies-jumpers-1.jpg"
         },
         "status": 1
     },
@@ -431,8 +431,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/23.jpg",
-            "file_name": "23.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-2.jpg",
+            "file_name": "ladies-jumpers-2.jpg"
         },
         "status": 2
     },
@@ -441,7 +441,7 @@
         "short_description": "Elevate your sporty look with this comfortable zip-up jumper.",
         "description": "Upgrade your athletic style with this Sporty Zip-Up Jumper. The zip-up design and comfortable fit provide support during workouts or sports activities. Whether for a run or a game of basketball, this jumper is a versatile addition to your collection.",
         "price": 25.99,
-        "slug": "ladies-jumpers-3",
+        "slug": "sporty-zip-up-jumper",
         "headline": "Elevate Your Workouts",
         "subtitle": "Zip-up style for comfort during exercise.",
         "stock": 35,
@@ -450,8 +450,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/24.jpg",
-            "file_name": "24.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3.jpg",
+            "file_name": "ladies-jumpers-3.jpg"
         },
         "status": 1
     },
@@ -469,8 +469,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/25.jpg",
-            "file_name": "25.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-1.jpg",
+            "file_name": "ladies-trousers-1.jpg"
         },
         "status": 2
     },
@@ -479,7 +479,7 @@
         "short_description": "Stay casual and comfy in these versatile chino trousers.",
         "description": "Find comfort in these Casual Chino Trousers. The classic chino design and versatile style make them perfect for laid-back days. Crafted from soft, breathable materials, these trousers keep you comfortable. Whether for a weekend at home or a casual day out, they're a must-have in your wardrobe.",
         "price": 19.50,
-        "slug": "ladies-trousers-2",
+        "slug": "casual-chino-trousers",
         "headline": "Casual Comfort",
         "subtitle": "Versatile chino style for easy and laid-back days.",
         "stock": 35,
@@ -488,8 +488,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/26.jpg",
-            "file_name": "26.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2.jpg",
+            "file_name": "ladies-trousers-2.jpg"
         },
         "status": 1
     },
@@ -507,8 +507,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/27.jpg",
-            "file_name": "27.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-3.jpg",
+            "file_name": "ladies-trousers-3.jpg"
         },
         "status": 2
     },
@@ -526,8 +526,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/28.jpg",
-            "file_name": "28.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-1.jpg",
+            "file_name": "ladies-socks-1.jpg"
         },
         "status": 1
     },
@@ -545,8 +545,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/29.jpg",
-            "file_name": "29.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-2.jpg",
+            "file_name": "ladies-socks-2.jpg"
         },
         "status": 2
     },
@@ -564,8 +564,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/30.jpg",
-            "file_name": "30.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-3.jpg",
+            "file_name": "ladies-socks-3.jpg"
         },
         "status": 1
     },
@@ -583,8 +583,8 @@
         "virtual": false,
         "weight": 215,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/31.jpg",
-            "file_name": "31.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-1.jpg",
+            "file_name": "ladies-sneakers-1.jpg"
         },
         "status": 1
     },
@@ -593,7 +593,7 @@
         "short_description": "Elevate your workout with these comfortable running sneakers.",
         "description": "Upgrade your athletic style with these Sporty Running Sneakers. The cushioned design and supportive fit provide comfort during workouts or outdoor activities. Whether for a morning jog or a sports event, these running sneakers are a versatile addition to your collection.",
         "price": 25.50,
-        "slug": "ladies-sneakers-2",
+        "slug": "sporty-running-sneakers",
         "headline": "Elevate Your Workouts",
         "subtitle": "Cushioned design for comfort during exercise.",
         "stock": 50,
@@ -602,8 +602,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/32.jpg",
-            "file_name": "32.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2.jpg",
+            "file_name": "ladies-sneakers-2.jpg"
         },
         "status": 2
     },
@@ -621,8 +621,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/33.jpg",
-            "file_name": "33.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-3.jpg",
+            "file_name": "ladies-sneakers-3.jpg"
         },
         "status": 1
     },
@@ -640,8 +640,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/34.jpg",
-            "file_name": "34.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-1.jpg",
+            "file_name": "ladies-sandals-1.jpg"
         },
         "status": 1
     },
@@ -659,8 +659,8 @@
         "virtual": false,
         "weight": 215,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/35.jpg",
-            "file_name": "35.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-2.jpg",
+            "file_name": "ladies-sandals-2.jpg"
         },
         "status": 2
     },
@@ -678,8 +678,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/36.jpg",
-            "file_name": "36.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-3.jpg",
+            "file_name": "ladies-sandals-3.jpg"
         },
         "status": 1
     },
@@ -688,7 +688,7 @@
         "short_description": "Timeless style in these classic ankle boots.",
         "description": "Elevate your fashion game with these Classic Ankle Boots. The timeless design and high-quality materials make them perfect for a stylish look. Whether for a night out or a casual dinner, these ankle boots offer both style and sophistication. Available in various colors to match your ensemble.",
         "price": 27.99,
-        "slug": "ladies-boots-1",
+        "slug": "classic-ankle-boots",
         "headline": "Timeless Elegance",
         "subtitle": "Perfect for stylish evenings and casual outings.",
         "stock": 47,
@@ -697,8 +697,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/37.jpg",
-            "file_name": "37.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1.jpg",
+            "file_name": "ladies-boots-1.jpg"
         },
         "status": 2
     },
@@ -716,8 +716,8 @@
         "virtual": false,
         "weight": 235,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/38.jpg",
-            "file_name": "38.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-2.jpg",
+            "file_name": "ladies-boots-2.jpg"
         },
         "status": 1
     },
@@ -735,8 +735,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/39.jpg",
-            "file_name": "39.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-3.jpg",
+            "file_name": "ladies-boots-3.jpg"
         },
         "status": 2
     },
@@ -754,8 +754,8 @@
         "virtual": false,
         "weight": 235,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/40.jpg",
-            "file_name": "40.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-1.jpg",
+            "file_name": "ladies-platform-shoes-1.jpg"
         },
         "status": 1
     },
@@ -773,8 +773,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/41.jpg",
-            "file_name": "41.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-2.jpg",
+            "file_name": "ladies-platform-shoes-2.jpg"
         },
         "status": 2
     },
@@ -792,8 +792,8 @@
         "virtual": false,
         "weight": 245,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/42.jpg",
-            "file_name": "42.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-3.jpg",
+            "file_name": "ladies-platform-shoes-3.jpg"
         },
         "status": 1
     },
@@ -802,7 +802,7 @@
         "short_description": "Timeless style in these classic leather loafers.",
         "description": "Elevate your fashion game with these Classic Leather Loafers. The timeless design and high-quality leather make them perfect for a stylish look. Whether for a night out or a casual dinner, these loafers offer both style and sophistication.",
         "price": 27.99,
-        "slug": "mens-loafers-1",
+        "slug": "classic-leather-loafers",
         "headline": "Timeless Elegance",
         "subtitle": "Perfect for stylish evenings and casual outings.",
         "stock": 46,
@@ -811,8 +811,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/43.jpg",
-            "file_name": "43.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1.jpg",
+            "file_name": "mens-loafers-1.jpg"
         },
         "status": 2
     },
@@ -830,8 +830,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/44.jpg",
-            "file_name": "44.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-2.jpg",
+            "file_name": "mens-loafers-2.jpg"
         },
         "status": 1
     },
@@ -849,8 +849,8 @@
         "virtual": false,
         "weight": 235,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/45.jpg",
-            "file_name": "45.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-3.jpg",
+            "file_name": "mens-loafers-3.jpg"
         },
         "status": 2
     },
@@ -868,8 +868,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/46.jpg",
-            "file_name": "46.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-1.jpg",
+            "file_name": "mens-sandals-1.jpg"
         },
         "status": 1
     },
@@ -887,8 +887,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/47.jpg",
-            "file_name": "47.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-2.jpg",
+            "file_name": "mens-sandals-2.jpg"
         },
         "status": 2
     },
@@ -906,8 +906,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/48.jpg",
-            "file_name": "48.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-3.jpg",
+            "file_name": "mens-sandals-3.jpg"
         },
         "status": 1
     },
@@ -925,8 +925,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/49.jpg",
-            "file_name": "49.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-boots-1.jpg",
+            "file_name": "mens-boots-1.jpg"
         },
         "status": 2
     },
@@ -944,8 +944,8 @@
         "virtual": false,
         "weight": 245,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/50.jpg",
-            "file_name": "50.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-boots-2.jpg",
+            "file_name": "mens-boots-2.jpg"
         },
         "status": 1
     },
@@ -954,7 +954,7 @@
         "short_description": "Elevate your outdoor adventures with these comfortable hiking boots.",
         "description": "Upgrade your outdoor game with these Outdoor Hiking Boots. The comfortable fit and durable design provide support during hiking and outdoor activities. Whether for a hiking trip or a camping adventure, these hiking boots are a versatile addition to your collection.",
         "price": 29.99,
-        "slug": "mens-boots-3",
+        "slug": "outdoor-hiking-boots",
         "headline": "Elevate Your Adventures",
         "subtitle": "Comfortable design for outdoor activities.",
         "stock": 45,
@@ -963,8 +963,8 @@
         "virtual": false,
         "weight": 250,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/51.jpg",
-            "file_name": "51.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3.jpg",
+            "file_name": "mens-boots-3.jpg"
         },
         "status": 2
     },
@@ -982,8 +982,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/70.jpg",
-            "file_name": "70.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-1.jpg",
+            "file_name": "mens-sneakers-1.jpg"
         },
         "status": 1
     },
@@ -1001,8 +1001,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/71.jpg",
-            "file_name": "71.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-2.jpg",
+            "file_name": "mens-sneakers-2.jpg"
         },
         "status": 2
     },
@@ -1011,7 +1011,7 @@
         "short_description": "Stay trendy with these modern high-top sneakers.",
         "description": "Elevate your fashion game with these Modern High-Top Sneakers. The high-top design and stylish details make them perfect for a trendy look. Whether for a night out with friends or a casual outing, these sneakers offer both style and flair.",
         "price": 28.99,
-        "slug": "mens-sneakers-3",
+        "slug": "modern-high-top-sneakers",
         "headline": "Trendy and Stylish",
         "subtitle": "High-top design for a trendy and fashionable look.",
         "stock": 44,
@@ -1020,8 +1020,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/72.jpg",
-            "file_name": "72.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3.jpg",
+            "file_name": "mens-sneakers-3.jpg"
         },
         "status": 1
     },
@@ -1039,8 +1039,8 @@
         "virtual": false,
         "weight": 205,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/52.jpg",
-            "file_name": "52.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-1.jpg",
+            "file_name": "ladies-sunglasses-1.jpg"
         },
         "status": 1
     },
@@ -1058,8 +1058,8 @@
         "virtual": false,
         "weight": 210,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/53.jpg",
-            "file_name": "53.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-2.jpg",
+            "file_name": "ladies-sunglasses-2.jpg"
         },
         "status": 2
     },
@@ -1077,8 +1077,8 @@
         "virtual": false,
         "weight": 215,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/54.jpg",
-            "file_name": "54.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-3.jpg",
+            "file_name": "ladies-sunglasses-3.jpg"
         },
         "status": 1
     },
@@ -1096,8 +1096,8 @@
         "virtual": false,
         "weight": 220,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/55.jpg",
-            "file_name": "55.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-1.jpg",
+            "file_name": "ladies-jewellery-1.jpg"
         },
         "status": 2
     },
@@ -1115,8 +1115,8 @@
         "virtual": false,
         "weight": 225,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/56.jpg",
-            "file_name": "56.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-2.jpg",
+            "file_name": "ladies-jewellery-2.jpg"
         },
         "status": 1
     },
@@ -1134,8 +1134,8 @@
         "virtual": false,
         "weight": 230,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/57.jpg",
-            "file_name": "57.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-3.jpg",
+            "file_name": "ladies-jewellery-3.jpg"
         },
         "status": 2
     },
@@ -1153,8 +1153,8 @@
         "virtual": false,
         "weight": 235,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/58.jpg",
-            "file_name": "58.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-1.jpg",
+            "file_name": "ladies-hats-1.jpg"
         },
         "status": 1
     },
@@ -1172,8 +1172,8 @@
         "virtual": false,
         "weight": 240,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/59.jpg",
-            "file_name": "59.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-2.jpg",
+            "file_name": "ladies-hats-2.jpg"
         },
         "status": 2
     },
@@ -1191,8 +1191,8 @@
         "virtual": false,
         "weight": 245,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/60.jpg",
-            "file_name": "60.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-3.jpg",
+            "file_name": "ladies-hats-3.jpg"
         },
         "status": 1
     },
@@ -1210,8 +1210,8 @@
         "virtual": false,
         "weight": 250,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/61.jpg",
-            "file_name": "61.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ties-1.jpg",
+            "file_name": "ties-1.jpg"
         },
         "status": 2
     },
@@ -1229,8 +1229,8 @@
         "virtual": false,
         "weight": 255,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/62.jpg",
-            "file_name": "62.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ties-2.jpg",
+            "file_name": "ties-2.jpg"
         },
         "status": 1
     },
@@ -1248,8 +1248,8 @@
         "virtual": false,
         "weight": 260,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/63.jpg",
-            "file_name": "63.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/ties-3.jpg",
+            "file_name": "ties-3.jpg"
         },
         "status": 2
     },
@@ -1267,8 +1267,8 @@
         "virtual": false,
         "weight": 265,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/64.jpg",
-            "file_name": "64.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-1.jpg",
+            "file_name": "mens-sunglasses-1.jpg"
         },
         "status": 1
     },
@@ -1286,8 +1286,8 @@
         "virtual": false,
         "weight": 270,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/65.jpg",
-            "file_name": "65.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-2.jpg",
+            "file_name": "mens-sunglasses-2.jpg"
         },
         "status": 2
     },
@@ -1305,8 +1305,8 @@
         "virtual": false,
         "weight": 275,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/66.jpg",
-            "file_name": "66.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-3.jpg",
+            "file_name": "mens-sunglasses-3.jpg"
         },
         "status": 1
     },
@@ -1324,8 +1324,8 @@
         "virtual": false,
         "weight": 280,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/67.jpg",
-            "file_name": "67.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-1.jpg",
+            "file_name": "mens-jewellery-1.jpg"
         },
         "status": 2
     },
@@ -1343,8 +1343,8 @@
         "virtual": false,
         "weight": 285,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/68.jpg",
-            "file_name": "68.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-2.jpg",
+            "file_name": "mens-jewellery-2.jpg"
         },
         "status": 1
     },
@@ -1362,9 +1362,10 @@
         "virtual": false,
         "weight": 290,
         "cover_photo": {
-            "url": "/sample-store-data/sample-store-1/product-images/69.jpg",
-            "file_name": "69.jpg"
+            "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-3.jpg",
+            "file_name": "mens-jewellery-3.jpg"
         },
         "status": 2
     }
+
 ]

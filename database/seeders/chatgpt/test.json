@@ -1,0 +1,12 @@
+{
+    "countries":[
+        {
+            "name": "Indonesia",
+            "capital": "Jakarata"
+        },
+        {
+            "name": "Philippines",
+            "capital": "Manila"
+        }
+    ]
+}

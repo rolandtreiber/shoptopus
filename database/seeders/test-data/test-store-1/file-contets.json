@@ -1,0 +1,1282 @@
+[
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-boots-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-boots-1",
+        "title": "",
+        "description": "",
+        "size": 303,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-boots-1-dark-blue",
+        "title": "",
+        "description": "",
+        "size": 292,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-boots-1-green",
+        "title": "",
+        "description": "",
+        "size": 266,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-boots-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-boots-2",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-boots-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-boots-3",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-hats-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-hats-1",
+        "title": "",
+        "description": "",
+        "size": 325,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-hats-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-hats-2",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-hats-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-hats-3",
+        "title": "",
+        "description": "",
+        "size": 344,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jewellery-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jewellery-1",
+        "title": "",
+        "description": "",
+        "size": 325,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jewellery-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jewellery-2",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jewellery-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jewellery-3",
+        "title": "",
+        "description": "",
+        "size": 276,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jumpers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jumpers-1",
+        "title": "",
+        "description": "",
+        "size": 260,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jumpers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jumpers-2",
+        "title": "",
+        "description": "",
+        "size": 349,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jumpers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jumpers-3",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jumpers-3-bright-blue",
+        "title": "",
+        "description": "",
+        "size": 330,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-jumpers-3-green",
+        "title": "",
+        "description": "",
+        "size": 338,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-platform-shoes-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-platform-shoes-1",
+        "title": "",
+        "description": "",
+        "size": 277,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-platform-shoes-1-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-platform-shoes-1-2",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-platform-shoes-1-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-platform-shoes-1-3",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-platform-shoes-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-platform-shoes-2",
+        "title": "",
+        "description": "",
+        "size": 328,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-platform-shoes-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-platform-shoes-3",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1",
+        "title": "",
+        "description": "",
+        "size": 283,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue",
+        "title": "",
+        "description": "",
+        "size": 323,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1-green",
+        "title": "",
+        "description": "",
+        "size": 307,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1-light-blue",
+        "title": "",
+        "description": "",
+        "size": 349,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1-pink",
+        "title": "",
+        "description": "",
+        "size": 309,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-1-red",
+        "title": "",
+        "description": "",
+        "size": 329,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-2",
+        "title": "",
+        "description": "",
+        "size": 325,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-3",
+        "title": "",
+        "description": "",
+        "size": 311,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue",
+        "title": "",
+        "description": "",
+        "size": 264,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-3-green",
+        "title": "",
+        "description": "",
+        "size": 328,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-3-pink",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-polo-shirts-3_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-polo-shirts-3_1",
+        "title": "",
+        "description": "",
+        "size": 322,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sandals-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sandals-1",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sandals-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sandals-2",
+        "title": "",
+        "description": "",
+        "size": 320,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sandals-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sandals-3",
+        "title": "",
+        "description": "",
+        "size": 317,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-skirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-skirts-1",
+        "title": "",
+        "description": "",
+        "size": 336,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-skirts-1-bright-green",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-skirts-1-dark-blue",
+        "title": "",
+        "description": "",
+        "size": 285,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-skirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-skirts-2",
+        "title": "",
+        "description": "",
+        "size": 304,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-skirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-skirts-3",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-1",
+        "title": "",
+        "description": "",
+        "size": 258,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-2",
+        "title": "",
+        "description": "",
+        "size": 295,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-2-green",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-2-red",
+        "title": "",
+        "description": "",
+        "size": 263,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-3",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-4.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-4",
+        "title": "",
+        "description": "",
+        "size": 305,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sneakers-5.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sneakers-5",
+        "title": "",
+        "description": "",
+        "size": 260,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-socks-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-socks-1",
+        "title": "",
+        "description": "",
+        "size": 271,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-socks-1_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-socks-1_1",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-socks-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-socks-2",
+        "title": "",
+        "description": "",
+        "size": 254,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-socks-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-socks-3",
+        "title": "",
+        "description": "",
+        "size": 285,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-socks-5.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-socks-5",
+        "title": "",
+        "description": "",
+        "size": 252,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sunglasses-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sunglasses-1",
+        "title": "",
+        "description": "",
+        "size": 301,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sunglasses-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sunglasses-2",
+        "title": "",
+        "description": "",
+        "size": 271,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-sunglasses-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-sunglasses-3",
+        "title": "",
+        "description": "",
+        "size": 346,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-1",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-1-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-1-blue",
+        "title": "",
+        "description": "",
+        "size": 344,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-1-peach.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-1-peach",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-1-pink",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-2",
+        "title": "",
+        "description": "",
+        "size": 348,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-t-shirts-2_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-t-shirts-2_1",
+        "title": "",
+        "description": "",
+        "size": 282,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-1",
+        "title": "",
+        "description": "",
+        "size": 307,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-1_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-1_1",
+        "title": "",
+        "description": "",
+        "size": 278,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-2",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-2-bright-blue",
+        "title": "",
+        "description": "",
+        "size": 339,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-2-green",
+        "title": "",
+        "description": "",
+        "size": 276,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-3",
+        "title": "",
+        "description": "",
+        "size": 263,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ladies-trousers-3_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ladies-trousers-3_1",
+        "title": "",
+        "description": "",
+        "size": 285,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-1",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-2",
+        "title": "",
+        "description": "",
+        "size": 288,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3-black-1",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3-black-2",
+        "title": "",
+        "description": "",
+        "size": 303,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3-black-3",
+        "title": "",
+        "description": "",
+        "size": 338,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3-blue-1",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-boots-3-blue-2",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jewellery-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jewellery-1",
+        "title": "",
+        "description": "",
+        "size": 327,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jewellery-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jewellery-2",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jewellery-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jewellery-3",
+        "title": "",
+        "description": "",
+        "size": 340,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jumpers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jumpers-1",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jumpers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jumpers-2",
+        "title": "",
+        "description": "",
+        "size": 292,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-jumpers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-jumpers-3",
+        "title": "",
+        "description": "",
+        "size": 322,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-loafers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-loafers-1",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-loafers-1-green",
+        "title": "",
+        "description": "",
+        "size": 321,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-loafers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-loafers-2",
+        "title": "",
+        "description": "",
+        "size": 255,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-loafers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-loafers-3",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sandals-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sandals-1",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sandals-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sandals-2",
+        "title": "",
+        "description": "",
+        "size": 300,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sandals-2-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sandals-2-2",
+        "title": "",
+        "description": "",
+        "size": 255,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sandals-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sandals-3",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-shirt-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-shirt-1",
+        "title": "",
+        "description": "",
+        "size": 250,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-shirt-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-shirt-2",
+        "title": "",
+        "description": "",
+        "size": 310,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-shirt-2-bright-green",
+        "title": "",
+        "description": "",
+        "size": 264,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-shirt-2-bright-red",
+        "title": "",
+        "description": "",
+        "size": 279,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-shirt-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-shirt-3",
+        "title": "",
+        "description": "",
+        "size": 310,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-1",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-1 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-1 2",
+        "title": "",
+        "description": "",
+        "size": 265,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-2",
+        "title": "",
+        "description": "",
+        "size": 251,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-2 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-2 2",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-3",
+        "title": "",
+        "description": "",
+        "size": 296,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-3 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-3 2",
+        "title": "",
+        "description": "",
+        "size": 279,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-3-2-green",
+        "title": "",
+        "description": "",
+        "size": 300,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-4.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-4",
+        "title": "",
+        "description": "",
+        "size": 330,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sneakers-5.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sneakers-5",
+        "title": "",
+        "description": "",
+        "size": 283,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-socks-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-socks-1",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-socks-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-socks-2",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-socks-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-socks-3",
+        "title": "",
+        "description": "",
+        "size": 340,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sunglasses-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sunglasses-1",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sunglasses-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sunglasses-2",
+        "title": "",
+        "description": "",
+        "size": 287,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-sunglasses-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-sunglasses-3",
+        "title": "",
+        "description": "",
+        "size": 321,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-1",
+        "title": "",
+        "description": "",
+        "size": 294,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-2",
+        "title": "",
+        "description": "",
+        "size": 346,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-3",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-3-blue",
+        "title": "",
+        "description": "",
+        "size": 265,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-3-green",
+        "title": "",
+        "description": "",
+        "size": 322,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-t-shirts-3-orange",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-trousers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-trousers-1",
+        "title": "",
+        "description": "",
+        "size": 278,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-trousers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-trousers-2",
+        "title": "",
+        "description": "",
+        "size": 303,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "mens-trousers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "mens-trousers-3",
+        "title": "",
+        "description": "",
+        "size": 306,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "size-chart.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "size-chart",
+        "title": "",
+        "description": "",
+        "size": 264,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "size-chart-shoes",
+        "title": "",
+        "description": "",
+        "size": 266,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "soze-chart-jumper.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "soze-chart-jumper",
+        "title": "",
+        "description": "",
+        "size": 330,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ties-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ties-1",
+        "title": "",
+        "description": "",
+        "size": 265,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ties-1-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ties-1-2",
+        "title": "",
+        "description": "",
+        "size": 343,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ties-1-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ties-1-3",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ties-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ties-2",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/",
+        "file_name": "ties-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "ties-3",
+        "title": "",
+        "description": "",
+        "size": 317,
+        "type": 1
+    }
+]

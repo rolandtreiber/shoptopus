@@ -42,13 +42,6 @@
         "product_attribute_id": "size-1"
     },
     {
-        "name": "(T)9",
-        "value": "9",
-        "enabled": 1,
-        "slug": "option-9-1",
-        "product_attribute_id": "size-1"
-    },
-    {
         "name": "(T)9.5",
         "value": "9.5",
         "enabled": 1,
@@ -67,6 +60,13 @@
         "value": "8.5",
         "enabled": 1,
         "slug": "option-8.5-1",
+        "product_attribute_id": "size-1"
+    },
+    {
+        "name": "(T)8",
+        "value": "8",
+        "enabled": 1,
+        "slug": "option-8-1",
         "product_attribute_id": "size-1"
     },
     {
@@ -209,6 +209,20 @@
         "value": "#470101",
         "enabled": 1,
         "slug": "option-darkred-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Pink",
+        "value": "#dc4cfc",
+        "enabled": 1,
+        "slug": "option-pink-1",
+        "product_attribute_id": "colour-1"
+    },
+    {
+        "name": "(T)Bright Orange",
+        "value": "#ed8309",
+        "enabled": 1,
+        "slug": "option-brightorange-1",
         "product_attribute_id": "colour-1"
     }
 ]

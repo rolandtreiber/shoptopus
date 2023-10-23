@@ -24,15 +24,15 @@
         "product_category_id": "mens-t-shirts-1"
     },
     {
-        "product_id": "men-t-shirts-3",
+        "product_id": "casual-crew-neck-t-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-t-shirts-3",
+        "product_id": "casual-crew-neck-t-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-t-shirts-3",
+        "product_id": "casual-crew-neck-t-shirt",
         "product_category_id": "mens-t-shirts-1"
     },
     {
@@ -48,15 +48,15 @@
         "product_category_id": "mens-shirts-1"
     },
     {
-        "product_id": "men-shirts-2",
+        "product_id": "business-casual-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-shirts-2",
+        "product_id": "business-casual-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-shirts-2",
+        "product_id": "business-casual-shirt",
         "product_category_id": "mens-shirts-1"
     },
     {
@@ -181,15 +181,15 @@
     },
 
     {
-        "product_id": "ladies-polo-shirts-1",
+        "product_id": "classic-polo-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-1",
+        "product_id": "classic-polo-shirt",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-1",
+        "product_id": "classic-polo-shirt",
         "product_category_id": "womans-polo-shirts-1"
     },
     {
@@ -205,27 +205,27 @@
         "product_category_id": "womans-polo-shirts-1"
     },
     {
-        "product_id": "ladies-polo-shirts-3",
+        "product_id": "casual-short-sleeve-polo",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-3",
+        "product_id": "casual-short-sleeve-polo",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-3",
+        "product_id": "casual-short-sleeve-polo",
         "product_category_id": "womans-polo-shirts-1"
     },
     {
-        "product_id": "ladies-skirts-1",
+        "product_id": "elegant-a-line-skirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-skirts-1",
+        "product_id": "elegant-a-line-skirt",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-skirts-1",
+        "product_id": "elegant-a-line-skirt",
         "product_category_id": "womans-skirts-1"
     },
     {
@@ -277,15 +277,15 @@
         "product_category_id": "womans-jumpers-1"
     },
     {
-        "product_id": "ladies-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "womans-jumpers-1"
     },
     {
@@ -301,15 +301,15 @@
         "product_category_id": "womans-trousers-1"
     },
     {
-        "product_id": "ladies-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "womans-trousers-1"
     },
     {
@@ -373,15 +373,15 @@
         "product_category_id": "womans-footwear-sneakers-1"
     },
     {
-        "product_id": "ladies-sneakers-2",
+        "product_id": "sporty-running-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-2",
+        "product_id": "sporty-running-sneakers",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-2",
+        "product_id": "sporty-running-sneakers",
         "product_category_id": "womans-footwear-sneakers-1"
     },
     {
@@ -433,15 +433,15 @@
         "product_category_id": "womans-footwear-sandals-1"
     },
     {
-        "product_id": "ladies-boots-1",
+        "product_id": "classic-ankle-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-boots-1",
+        "product_id": "classic-ankle-boots",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-boots-1",
+        "product_id": "classic-ankle-boots",
         "product_category_id": "womans-footwear-boots-1"
     },
     {
@@ -529,27 +529,27 @@
         "product_category_id": "mens-footwear-sneakers-1"
     },
     {
-        "product_id": "mens-sneakers-3",
+        "product_id": "modern-high-top-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sneakers-3",
+        "product_id": "modern-high-top-sneakers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sneakers-3",
+        "product_id": "modern-high-top-sneakers",
         "product_category_id": "mens-footwear-sneakers-1"
     },
     {
-        "product_id": "mens-loafers-1",
+        "product_id": "classic-leather-loafers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-loafers-1",
+        "product_id": "classic-leather-loafers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-loafers-1",
+        "product_id": "classic-leather-loafers",
         "product_category_id": "mens-footwear-loafers-1"
     },
     {
@@ -637,15 +637,15 @@
         "product_category_id": "mens-footwear-boots-1"
     },
     {
-        "product_id": "mens-boots-3",
+        "product_id": "outdoor-hiking-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-boots-3",
+        "product_id": "outdoor-hiking-boots",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-boots-3",
+        "product_id": "outdoor-hiking-boots",
         "product_category_id": "mens-footwear-boots-1"
     },
     {
