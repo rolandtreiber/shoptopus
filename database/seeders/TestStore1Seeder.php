@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
+use App\Models\DiscountRule;
 use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -186,8 +187,17 @@ class TestStore1Seeder extends Seeder
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-attribute-product-variants.json");
         $this->importPivotRecords('product_attribute_product_variant', json_decode($data, true), true);
 
+        // Import discount rules
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/discount-rules.json");
+        $this->importRecords(DiscountRule::class, json_decode($data, true));
+
+        // Import product attribute option product variant
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/discount-rule-product-category.json");
+        $this->importPivotRecords('discount_rule_product_category', json_decode($data, true));
+
         // Import file contents
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/file-contents.json");
         $this->importRecords(FileContent::class, json_decode($data, true));
+
     }
 }

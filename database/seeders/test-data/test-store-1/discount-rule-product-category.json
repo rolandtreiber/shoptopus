@@ -1,0 +1,10 @@
+[
+    {
+        "discount_rule_id": "5-off-from-all-ties",
+        "product_category_id": "mens-accessories-ties-1"
+    },
+    {
+        "discount_rule_id": "2-off-from-all-mens-accessories",
+        "product_category_id": "mens-accessories-1"
+    }
+]
