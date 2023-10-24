@@ -1,0 +1,2662 @@
+[
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1.jpg",
+        "file_name": "ladies-boots-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-ankle-boots",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-dark-blue.jpg",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-blue-8",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-dark-blue.jpg",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-blue-85",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-dark-blue.jpg",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-blue-9",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-dark-blue.jpg",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-blue-95",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-dark-blue.jpg",
+        "file_name": "ladies-boots-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-blue-10",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-green.jpg",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-green-8",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-green.jpg",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-green-85",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-green.jpg",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-green-9",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-green.jpg",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-green-95",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-1-green.jpg",
+        "file_name": "ladies-boots-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-boots-1-dark-green-10",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-2.jpg",
+        "file_name": "ladies-boots-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "lace-up-combat-boots",
+        "title": "",
+        "description": "",
+        "size": 349,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-boots-3.jpg",
+        "file_name": "ladies-boots-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "fashion-knee-high-boots",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-1.jpg",
+        "file_name": "ladies-hats-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "wide-brim-straw-hat",
+        "title": "",
+        "description": "",
+        "size": 330,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-2.jpg",
+        "file_name": "ladies-hats-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-fedora-hat",
+        "title": "",
+        "description": "",
+        "size": 327,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-hats-3.jpg",
+        "file_name": "ladies-hats-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-fedora-hat",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-1.jpg",
+        "file_name": "ladies-jewellery-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "crystal-drop-earrings",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-2.jpg",
+        "file_name": "ladies-jewellery-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "pearl-stud-earrings",
+        "title": "",
+        "description": "",
+        "size": 321,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jewellery-3.jpg",
+        "file_name": "ladies-jewellery-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "statement-tassel-earrings",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-1.jpg",
+        "file_name": "ladies-jumpers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-wool-jumper",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-2.jpg",
+        "file_name": "ladies-jumpers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-v-neck-jumper",
+        "title": "",
+        "description": "",
+        "size": 260,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3.jpg",
+        "file_name": "ladies-jumpers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-zip-up-jumper-1",
+        "title": "",
+        "description": "",
+        "size": 328,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-bright-blue.jpg",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-blue-xs",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-bright-blue.jpg",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-blue-s",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-bright-blue.jpg",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-blue-m",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-bright-blue.jpg",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-blue-l",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-bright-blue.jpg",
+        "file_name": "ladies-jumpers-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-blue-xl",
+        "title": "",
+        "description": "",
+        "size": 267,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-green.jpg",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-green-xs",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-green.jpg",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-green-s",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-green.jpg",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-green-m",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-green.jpg",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-green-l",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-jumpers-3-green.jpg",
+        "file_name": "ladies-jumpers-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-jumpers-3-bright-green-xl",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-1.jpg",
+        "file_name": "ladies-platform-shoes-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "platform-slip-on-shoes",
+        "title": "",
+        "description": "",
+        "size": 258,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-1-2.jpg",
+        "file_name": "ladies-platform-shoes-1-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "platform-slip-on-shoes",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-1-3.jpg",
+        "file_name": "ladies-platform-shoes-1-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "platform-slip-on-shoes",
+        "title": "",
+        "description": "",
+        "size": 250,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-2.jpg",
+        "file_name": "ladies-platform-shoes-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "chunky-heel-platform-sandals",
+        "title": "",
+        "description": "",
+        "size": 328,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-platform-shoes-3.jpg",
+        "file_name": "ladies-platform-shoes-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "lace-up-platform-boots",
+        "title": "",
+        "description": "",
+        "size": 278,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1.jpg",
+        "file_name": "ladies-polo-shirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-polo-shirt",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-dark-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue-xs",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-dark-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue-s",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-dark-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue-m",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-dark-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue-l",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-dark-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-dark-blue-xl",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-green.jpg",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-green-xs",
+        "title": "",
+        "description": "",
+        "size": 318,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-green.jpg",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-green-s",
+        "title": "",
+        "description": "",
+        "size": 318,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-green.jpg",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-green-m",
+        "title": "",
+        "description": "",
+        "size": 318,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-green.jpg",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-green-l",
+        "title": "",
+        "description": "",
+        "size": 318,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-green.jpg",
+        "file_name": "ladies-polo-shirts-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-green-xl",
+        "title": "",
+        "description": "",
+        "size": 318,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-light-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-blue-xs",
+        "title": "",
+        "description": "",
+        "size": 332,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-light-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-blue-s",
+        "title": "",
+        "description": "",
+        "size": 332,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-light-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-blue-m",
+        "title": "",
+        "description": "",
+        "size": 332,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-light-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-blue-l",
+        "title": "",
+        "description": "",
+        "size": 332,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-light-blue.jpg",
+        "file_name": "ladies-polo-shirts-1-light-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-blue-xl",
+        "title": "",
+        "description": "",
+        "size": 332,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-pink.jpg",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-pink-xs",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-pink.jpg",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-pink-s",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-pink.jpg",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-pink-m",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-pink.jpg",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-pink-l",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-pink.jpg",
+        "file_name": "ladies-polo-shirts-1-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-pink-xl",
+        "title": "",
+        "description": "",
+        "size": 261,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-red.jpg",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-red-xs",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-red.jpg",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-red-s",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-red.jpg",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-red-m",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-red.jpg",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-red-l",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-1-red.jpg",
+        "file_name": "ladies-polo-shirts-1-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-1-bright-red-xl",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-2.jpg",
+        "file_name": "ladies-polo-shirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-performance-polo",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3.jpg",
+        "file_name": "ladies-polo-shirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-short-sleeve-polo",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-bright-blue.jpg",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue-xs",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-bright-blue.jpg",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue-s",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-bright-blue.jpg",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue-m",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-bright-blue.jpg",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue-l",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-bright-blue.jpg",
+        "file_name": "ladies-polo-shirts-3-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-blue-xl",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-green.jpg",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-green-xs",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-green.jpg",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-green-s",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-green.jpg",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-green-m",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-green.jpg",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-green-l",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-green.jpg",
+        "file_name": "ladies-polo-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-bright-green-xl",
+        "title": "",
+        "description": "",
+        "size": 326,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-pink.jpg",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-pink-xs",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-pink.jpg",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-pink-s",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-pink.jpg",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-pink-m",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-pink.jpg",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-pink-l",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3-pink.jpg",
+        "file_name": "ladies-polo-shirts-3-pink.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-polo-shirts-3-pink-xl",
+        "title": "",
+        "description": "",
+        "size": 259,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-polo-shirts-3_1.jpg",
+        "file_name": "ladies-polo-shirts-3_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-short-sleeve-polo",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart.jpg",
+        "file_name": "size-chart.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-polo-shirt",
+        "title": "",
+        "description": "",
+        "size": 323,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart.jpg",
+        "file_name": "size-chart.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-performance-polo",
+        "title": "",
+        "description": "",
+        "size": 284,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart.jpg",
+        "file_name": "size-chart.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-short-sleeve-polo",
+        "title": "",
+        "description": "",
+        "size": 307,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-1.jpg",
+        "file_name": "ladies-sandals-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-slide-sandals",
+        "title": "",
+        "description": "",
+        "size": 265,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-2.jpg",
+        "file_name": "ladies-sandals-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "strappy-beach-sandals",
+        "title": "",
+        "description": "",
+        "size": 349,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sandals-3.jpg",
+        "file_name": "ladies-sandals-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "fashion-wedge-sandals",
+        "title": "",
+        "description": "",
+        "size": 340,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1.jpg",
+        "file_name": "ladies-skirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "elegant-a-line-skirt",
+        "title": "",
+        "description": "",
+        "size": 282,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-bright-green.jpg",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-bright-green-xs",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-bright-green.jpg",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-bright-green-s",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-bright-green.jpg",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-bright-green-m",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-bright-green.jpg",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-bright-green-l",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-bright-green.jpg",
+        "file_name": "ladies-skirts-1-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-bright-green-xl",
+        "title": "",
+        "description": "",
+        "size": 286,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-dark-blue.jpg",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-dark-blue-xs",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-dark-blue.jpg",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-dark-blue-s",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-dark-blue.jpg",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-dark-blue-m",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-dark-blue.jpg",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-dark-blue-l",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-1-dark-blue.jpg",
+        "file_name": "ladies-skirts-1-dark-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-skirts-1-dark-blue-xl",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-2.jpg",
+        "file_name": "ladies-skirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-denim-skirt",
+        "title": "",
+        "description": "",
+        "size": 282,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-skirts-3.jpg",
+        "file_name": "ladies-skirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "floral-midi-skirt",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-1.jpg",
+        "file_name": "ladies-sneakers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-slip-on-sneakers",
+        "title": "",
+        "description": "",
+        "size": 300,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2.jpg",
+        "file_name": "ladies-sneakers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-running-sneakers",
+        "title": "",
+        "description": "",
+        "size": 309,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-green.jpg",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-green-8",
+        "title": "",
+        "description": "",
+        "size": 314,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-green.jpg",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-green-85",
+        "title": "",
+        "description": "",
+        "size": 314,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-green.jpg",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-green-9",
+        "title": "",
+        "description": "",
+        "size": 314,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-green.jpg",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-green-95",
+        "title": "",
+        "description": "",
+        "size": 314,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-green.jpg",
+        "file_name": "ladies-sneakers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-green-10",
+        "title": "",
+        "description": "",
+        "size": 314,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-red.jpg",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-red-8",
+        "title": "",
+        "description": "",
+        "size": 297,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-red.jpg",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-red-85",
+        "title": "",
+        "description": "",
+        "size": 297,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-red.jpg",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-red-9",
+        "title": "",
+        "description": "",
+        "size": 297,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-red.jpg",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-red-95",
+        "title": "",
+        "description": "",
+        "size": 297,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-2-red.jpg",
+        "file_name": "ladies-sneakers-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "ladies-sneakers-2-bright-red-10",
+        "title": "",
+        "description": "",
+        "size": 297,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sneakers-3.jpg",
+        "file_name": "ladies-sneakers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "fashion-high-top-sneakers",
+        "title": "",
+        "description": "",
+        "size": 340,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-1.jpg",
+        "file_name": "ladies-socks-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-cotton-crew-socks-1",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-1_1.jpg",
+        "file_name": "ladies-socks-1_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-cotton-crew-socks-1",
+        "title": "",
+        "description": "",
+        "size": 284,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-2.jpg",
+        "file_name": "ladies-socks-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-ankle-socks-1",
+        "title": "",
+        "description": "",
+        "size": 270,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-socks-3.jpg",
+        "file_name": "ladies-socks-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-low-cut-socks-1",
+        "title": "",
+        "description": "",
+        "size": 337,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-1.jpg",
+        "file_name": "ladies-sunglasses-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "chic-cat-eye-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 336,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-2.jpg",
+        "file_name": "ladies-sunglasses-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "vintage-round-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-sunglasses-3.jpg",
+        "file_name": "ladies-sunglasses-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-polarized-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 304,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-1.jpg",
+        "file_name": "ladies-trousers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-dress-trousers-1",
+        "title": "",
+        "description": "",
+        "size": 275,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-1_1.jpg",
+        "file_name": "ladies-trousers-1_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-dress-trousers-1",
+        "title": "",
+        "description": "",
+        "size": 277,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2.jpg",
+        "file_name": "ladies-trousers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-chino-trousers-1",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-bright-blue.jpg",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightblue-xs",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-bright-blue.jpg",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightblue-s",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-bright-blue.jpg",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightblue-m",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-bright-blue.jpg",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightblue-l",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-bright-blue.jpg",
+        "file_name": "ladies-trousers-2-bright-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightblue-xl",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-green.jpg",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightgreen-xs",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-green.jpg",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightgreen-s",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-green.jpg",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightgreen-m",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-green.jpg",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightgreen-l",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-2-green.jpg",
+        "file_name": "ladies-trousers-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-chino-trousers-brightgreen-xl",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-3.jpg",
+        "file_name": "ladies-trousers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-track-pants-1",
+        "title": "",
+        "description": "",
+        "size": 323,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ladies-trousers-3_1.jpg",
+        "file_name": "ladies-trousers-3_1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-track-pants-1",
+        "title": "",
+        "description": "",
+        "size": 252,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-1.jpg",
+        "file_name": "mens-boots-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-leather-boots",
+        "title": "",
+        "description": "",
+        "size": 317,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-2.jpg",
+        "file_name": "mens-boots-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "stylish-chelsea-boots",
+        "title": "",
+        "description": "",
+        "size": 343,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3.jpg",
+        "file_name": "mens-boots-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "outdoor-hiking-boots",
+        "title": "",
+        "description": "",
+        "size": 334,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-1.jpg",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-8",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-1.jpg",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-85",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-1.jpg",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-9",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-1.jpg",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-95",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-1.jpg",
+        "file_name": "mens-boots-3-black-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-10",
+        "title": "",
+        "description": "",
+        "size": 315,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-2.jpg",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-8",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-2.jpg",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-85",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-2.jpg",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-9",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-2.jpg",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-95",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-2.jpg",
+        "file_name": "mens-boots-3-black-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-10",
+        "title": "",
+        "description": "",
+        "size": 293,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-3.jpg",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-8",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-3.jpg",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-85",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-3.jpg",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-9",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-3.jpg",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-95",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-black-3.jpg",
+        "file_name": "mens-boots-3-black-3.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-black-10",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-1.jpg",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-8",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-1.jpg",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-85",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-1.jpg",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-9",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-1.jpg",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-95",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-1.jpg",
+        "file_name": "mens-boots-3-blue-1.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-10",
+        "title": "",
+        "description": "",
+        "size": 257,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-2.jpg",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-8",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-2.jpg",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-85",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-2.jpg",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-9",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-2.jpg",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-95",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-boots-3-blue-2.jpg",
+        "file_name": "mens-boots-3-blue-2.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "outdoor-hiking-boots-midnightblue-10",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-1.jpg",
+        "file_name": "mens-jewellery-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "leather-cuff-bracelet",
+        "title": "",
+        "description": "",
+        "size": 323,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-2.jpg",
+        "file_name": "mens-jewellery-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "stainless-steel-link-bracelet",
+        "title": "",
+        "description": "",
+        "size": 327,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jewellery-3.jpg",
+        "file_name": "mens-jewellery-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "beaded-charm-bracelet",
+        "title": "",
+        "description": "",
+        "size": 276,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-1.jpg",
+        "file_name": "mens-jumpers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-elegant-wool-jumper",
+        "title": "",
+        "description": "",
+        "size": 294,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-2.jpg",
+        "file_name": "mens-jumpers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-v-neck-modern-jumper",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-jumpers-3.jpg",
+        "file_name": "mens-jumpers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-zip-up-jumper",
+        "title": "",
+        "description": "",
+        "size": 252,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1.jpg",
+        "file_name": "mens-loafers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-leather-loafers",
+        "title": "",
+        "description": "",
+        "size": 338,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-gray.jpg",
+        "file_name": "mens-loafers-1-gray.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgray-8",
+        "title": "",
+        "description": "",
+        "size": 272,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-gray.jpg",
+        "file_name": "mens-loafers-1-gray.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgray-85",
+        "title": "",
+        "description": "",
+        "size": 272,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-gray.jpg",
+        "file_name": "mens-loafers-1-gray.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgray-9",
+        "title": "",
+        "description": "",
+        "size": 272,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-gray.jpg",
+        "file_name": "mens-loafers-1-gray.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgray-95",
+        "title": "",
+        "description": "",
+        "size": 272,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-gray.jpg",
+        "file_name": "mens-loafers-1-gray.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgray-10",
+        "title": "",
+        "description": "",
+        "size": 272,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-green.jpg",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgreen-8",
+        "title": "",
+        "description": "",
+        "size": 350,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-green.jpg",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgreen-85",
+        "title": "",
+        "description": "",
+        "size": 350,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-green.jpg",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgreen-9",
+        "title": "",
+        "description": "",
+        "size": 350,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-green.jpg",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgreen-95",
+        "title": "",
+        "description": "",
+        "size": 350,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-1-green.jpg",
+        "file_name": "mens-loafers-1-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "classic-leather-loafers-darkgreen-10",
+        "title": "",
+        "description": "",
+        "size": 350,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-2.jpg",
+        "file_name": "mens-loafers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "suede-tassel-loafers",
+        "title": "",
+        "description": "",
+        "size": 299,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-loafers-3.jpg",
+        "file_name": "mens-loafers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "fashion-slip-on-loafers",
+        "title": "",
+        "description": "",
+        "size": 280,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-1.jpg",
+        "file_name": "mens-sandals-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-slide-sandals-1",
+        "title": "",
+        "description": "",
+        "size": 294,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-2.jpg",
+        "file_name": "mens-sandals-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-outdoor-sandals",
+        "title": "",
+        "description": "",
+        "size": 287,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-2-2.jpg",
+        "file_name": "mens-sandals-2-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-outdoor-sandals",
+        "title": "",
+        "description": "",
+        "size": 312,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sandals-3.jpg",
+        "file_name": "mens-sandals-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "fashion-flip-flops",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-1.jpg",
+        "file_name": "mens-shirt-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-dress-shirt",
+        "title": "",
+        "description": "",
+        "size": 307,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2.jpg",
+        "file_name": "mens-shirt-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "business-casual-shirt",
+        "title": "",
+        "description": "",
+        "size": 258,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-midnightblue.jpg",
+        "file_name": "mens-shirt-2-midnightblue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-midnightblue-xs",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-midnightblue.jpg",
+        "file_name": "mens-shirt-2-midnightblue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-midnightblue-s",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-midnightblue.jpg",
+        "file_name": "mens-shirt-2-midnightblue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-midnightblue-m",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-midnightblue.jpg",
+        "file_name": "mens-shirt-2-midnightblue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-midnightblue-l",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-midnightblue.jpg",
+        "file_name": "mens-shirt-2-midnightblue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-midnightblue-xl",
+        "title": "",
+        "description": "",
+        "size": 253,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-green.jpg",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkgreen-xs",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-green.jpg",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkgreen-s",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-green.jpg",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkgreen-m",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-green.jpg",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkgreen-l",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-green.jpg",
+        "file_name": "mens-shirt-2-bright-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkgreen-xl",
+        "title": "",
+        "description": "",
+        "size": 313,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-red.jpg",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkred-xs",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-red.jpg",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkred-s",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-red.jpg",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkred-m",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-red.jpg",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkred-l",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-2-bright-red.jpg",
+        "file_name": "mens-shirt-2-bright-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "business-casual-shirt-darkred-xl",
+        "title": "",
+        "description": "",
+        "size": 274,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-shirt-3.jpg",
+        "file_name": "mens-shirt-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-checkered-shirt",
+        "title": "",
+        "description": "",
+        "size": 276,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-1.jpg",
+        "file_name": "mens-sneakers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-mens-sneakers",
+        "title": "",
+        "description": "",
+        "size": 270,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-1 2.jpg",
+        "file_name": "mens-sneakers-1 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-mens-sneakers",
+        "title": "",
+        "description": "",
+        "size": 265,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-2.jpg",
+        "file_name": "mens-sneakers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-canvas-sneakers",
+        "title": "",
+        "description": "",
+        "size": 331,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-2 2.jpg",
+        "file_name": "mens-sneakers-2 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-canvas-sneakers",
+        "title": "",
+        "description": "",
+        "size": 347,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3.jpg",
+        "file_name": "mens-sneakers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "modern-high-top-sneakers",
+        "title": "",
+        "description": "",
+        "size": 304,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3 2.jpg",
+        "file_name": "mens-sneakers-3 2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "modern-high-top-sneakers",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-red.jpg",
+        "file_name": "mens-sneakers-3-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightred-8",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-red.jpg",
+        "file_name": "mens-sneakers-3-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightred-85",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-red.jpg",
+        "file_name": "mens-sneakers-3-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightred-9",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-red.jpg",
+        "file_name": "mens-sneakers-3-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightred-95",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-red.jpg",
+        "file_name": "mens-sneakers-3-2-red.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightred-10",
+        "title": "",
+        "description": "",
+        "size": 342,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-green.jpg",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightgreen-8",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-green.jpg",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightgreen-85",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-green.jpg",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightgreen-9",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-green.jpg",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightgreen-95",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sneakers-3-2-green.jpg",
+        "file_name": "mens-sneakers-3-2-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "modern-high-top-sneakers-brightgreen-10",
+        "title": "",
+        "description": "",
+        "size": 345,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-socks-1.jpg",
+        "file_name": "mens-socks-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-cotton-crew-socks",
+        "title": "",
+        "description": "",
+        "size": 317,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-socks-2.jpg",
+        "file_name": "mens-socks-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-ankle-socks",
+        "title": "",
+        "description": "",
+        "size": 346,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-socks-3.jpg",
+        "file_name": "mens-socks-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-low-cut-socks",
+        "title": "",
+        "description": "",
+        "size": 298,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-1.jpg",
+        "file_name": "mens-sunglasses-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "aviator-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 252,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-2.jpg",
+        "file_name": "mens-sunglasses-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-wraparound-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 273,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-sunglasses-3.jpg",
+        "file_name": "mens-sunglasses-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "modern-square-sunglasses",
+        "title": "",
+        "description": "",
+        "size": 264,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-1.jpg",
+        "file_name": "mens-t-shirts-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-cotton-t-shirt",
+        "title": "",
+        "description": "",
+        "size": 327,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-2.jpg",
+        "file_name": "mens-t-shirts-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-performance-t-shirt",
+        "title": "",
+        "description": "",
+        "size": 281,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3.jpg",
+        "file_name": "mens-t-shirts-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-crew-neck-t-shirt",
+        "title": "",
+        "description": "",
+        "size": 329,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-white.jpg",
+        "file_name": "mens-t-shirts-3-white.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-white-xs",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-white.jpg",
+        "file_name": "mens-t-shirts-3-white.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-white-s",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-white.jpg",
+        "file_name": "mens-t-shirts-3-white.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-white-m",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-white.jpg",
+        "file_name": "mens-t-shirts-3-white.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-white-l",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-white.jpg",
+        "file_name": "mens-t-shirts-3-white.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-white-xl",
+        "title": "",
+        "description": "",
+        "size": 291,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-blue.jpg",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightblue-xs",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-blue.jpg",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightblue-s",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-blue.jpg",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightblue-m",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-blue.jpg",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightblue-l",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-blue.jpg",
+        "file_name": "mens-t-shirts-3-blue.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightblue-xl",
+        "title": "",
+        "description": "",
+        "size": 333,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-green.jpg",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightgreen-xs",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-green.jpg",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightgreen-s",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-green.jpg",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightgreen-m",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-green.jpg",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightgreen-l",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-green.jpg",
+        "file_name": "mens-t-shirts-3-green.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightgreen-xl",
+        "title": "",
+        "description": "",
+        "size": 308,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-orange.jpg",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightorange-xs",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-orange.jpg",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightorange-s",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-orange.jpg",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightorange-m",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-orange.jpg",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightorange-l",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-t-shirts-3-orange.jpg",
+        "file_name": "mens-t-shirts-3-orange.jpg",
+        "fileable_type": "App\\Models\\ProductVariant",
+        "fileable_id": "casual-crew-neck-t-shirt-brightorange-xl",
+        "title": "",
+        "description": "",
+        "size": 262,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-1.jpg",
+        "file_name": "mens-trousers-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-dress-trousers",
+        "title": "",
+        "description": "",
+        "size": 343,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-2.jpg",
+        "file_name": "mens-trousers-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-chino-trousers",
+        "title": "",
+        "description": "",
+        "size": 251,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/mens-trousers-3.jpg",
+        "file_name": "mens-trousers-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-track-pants",
+        "title": "",
+        "description": "",
+        "size": 289,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-mens-sneakers",
+        "title": "",
+        "description": "",
+        "size": 329,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-canvas-sneakers",
+        "title": "",
+        "description": "",
+        "size": 292,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "modern-high-top-sneakers",
+        "title": "",
+        "description": "",
+        "size": 307,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-leather-boots",
+        "title": "",
+        "description": "",
+        "size": 281,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "stylish-chelsea-boots",
+        "title": "",
+        "description": "",
+        "size": 254,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/size-chart-shoes.jpg",
+        "file_name": "size-chart-shoes.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "outdoor-hiking-boots",
+        "title": "",
+        "description": "",
+        "size": 322,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/soze-chart-jumper.jpg",
+        "file_name": "soze-chart-jumper.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-elegant-wool-jumper",
+        "title": "",
+        "description": "",
+        "size": 277,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/soze-chart-jumper.jpg",
+        "file_name": "soze-chart-jumper.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "casual-v-neck-modern-jumper",
+        "title": "",
+        "description": "",
+        "size": 335,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/soze-chart-jumper.jpg",
+        "file_name": "soze-chart-jumper.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "sporty-zip-up-jumper",
+        "title": "",
+        "description": "",
+        "size": 278,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ties-1.jpg",
+        "file_name": "ties-1.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-silk-tie",
+        "title": "",
+        "description": "",
+        "size": 329,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ties-1-2.jpg",
+        "file_name": "ties-1-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-silk-tie",
+        "title": "",
+        "description": "",
+        "size": 336,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ties-1-3.jpg",
+        "file_name": "ties-1-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "classic-silk-tie",
+        "title": "",
+        "description": "",
+        "size": 321,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ties-2.jpg",
+        "file_name": "ties-2.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "striped-business-tie",
+        "title": "",
+        "description": "",
+        "size": 289,
+        "type": 1
+    },
+    {
+        "url": "/sample-store-data/sample-store-1/product-images/ties-3.jpg",
+        "file_name": "ties-3.jpg",
+        "fileable_type": "App\\Models\\Product",
+        "fileable_id": "modern-skinny-tie",
+        "title": "",
+        "description": "",
+        "size": 289,
+        "type": 1
+    }
+]

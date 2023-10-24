@@ -100,52 +100,52 @@
         "product_attribute_option_id": "option-10-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-xs",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-xs",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightblue-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-xs",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-xs",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-xs-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-s",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-s",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightblue-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-s",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-s",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-s-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-m",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-m",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightblue-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-m",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-m",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-m-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-l",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-l",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightblue-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-l",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-l",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-l-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-xl",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-xl",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightblue-1"
     },
     {
-        "product_variant_id": "ladies-jumpers-3-blight-blue-xl",
+        "product_variant_id": "ladies-jumpers-3-bright-blue-xl",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-xl-1"
     },
@@ -900,204 +900,204 @@
         "product_attribute_option_id": "option-xl-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-xs",
+        "product_variant_id": "outdoor-hiking-boots-black-8",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-black-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-xs",
+        "product_variant_id": "outdoor-hiking-boots-black-8",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xs-1"
+        "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-s",
+        "product_variant_id": "outdoor-hiking-boots-black-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-black-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-s",
+        "product_variant_id": "outdoor-hiking-boots-black-85",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-s-1"
+        "product_attribute_option_id": "option-8.5-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-m",
+        "product_variant_id": "outdoor-hiking-boots-black-9",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-black-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-m",
+        "product_variant_id": "outdoor-hiking-boots-black-9",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-m-1"
+        "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-l",
+        "product_variant_id": "outdoor-hiking-boots-black-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-black-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-l",
+        "product_variant_id": "outdoor-hiking-boots-black-95",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-l-1"
+        "product_attribute_option_id": "option-9.5-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-xl",
+        "product_variant_id": "outdoor-hiking-boots-black-10",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-black-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-black-xl",
+        "product_variant_id": "outdoor-hiking-boots-black-10",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xl-1"
+        "product_attribute_option_id": "option-10-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-xs",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-8",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-midnightblue-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-xs",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-8",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xs-1"
+        "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-s",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-midnightblue-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-s",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-85",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-s-1"
+        "product_attribute_option_id": "option-8.5-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-m",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-9",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-midnightblue-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-m",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-9",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-m-1"
+        "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-l",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-midnightblue-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-l",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-95",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-l-1"
+        "product_attribute_option_id": "option-9.5-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-xl",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-10",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-midnightblue-1"
     },
     {
-        "product_variant_id": "outdoor-hiking-boots-midnightblue-xl",
+        "product_variant_id": "outdoor-hiking-boots-midnightblue-10",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xl-1"
+        "product_attribute_option_id": "option-10-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-xs",
+        "product_variant_id": "classic-leather-loafers-darkgray-8",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgray-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-xs",
+        "product_variant_id": "classic-leather-loafers-darkgray-8",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xs-1"
+        "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-s",
+        "product_variant_id": "classic-leather-loafers-darkgray-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgray-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-s",
+        "product_variant_id": "classic-leather-loafers-darkgray-85",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-s-1"
+        "product_attribute_option_id": "option-8.5-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-m",
+        "product_variant_id": "classic-leather-loafers-darkgray-9",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgray-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-m",
+        "product_variant_id": "classic-leather-loafers-darkgray-9",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-m-1"
+        "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-l",
+        "product_variant_id": "classic-leather-loafers-darkgray-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgray-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-l",
+        "product_variant_id": "classic-leather-loafers-darkgray-95",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-l-1"
+        "product_attribute_option_id": "option-9.5-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-xl",
+        "product_variant_id": "classic-leather-loafers-darkgray-10",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgray-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgray-xl",
+        "product_variant_id": "classic-leather-loafers-darkgray-10",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xl-1"
+        "product_attribute_option_id": "option-10-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-xs",
+        "product_variant_id": "classic-leather-loafers-darkgreen-8",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgreen-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-xs",
+        "product_variant_id": "classic-leather-loafers-darkgreen-8",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xs-1"
+        "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-s",
+        "product_variant_id": "classic-leather-loafers-darkgreen-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgreen-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-s",
+        "product_variant_id": "classic-leather-loafers-darkgreen-85",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-s-1"
+        "product_attribute_option_id": "option-8.5-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-m",
+        "product_variant_id": "classic-leather-loafers-darkgreen-9",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgreen-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-m",
+        "product_variant_id": "classic-leather-loafers-darkgreen-9",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-m-1"
+        "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-l",
+        "product_variant_id": "classic-leather-loafers-darkgreen-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgreen-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-l",
+        "product_variant_id": "classic-leather-loafers-darkgreen-95",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-l-1"
+        "product_attribute_option_id": "option-9.5-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-xl",
+        "product_variant_id": "classic-leather-loafers-darkgreen-10",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-darkgreen-1"
     },
     {
-        "product_variant_id": "classic-leather-loafers-darkgreen-xl",
+        "product_variant_id": "classic-leather-loafers-darkgreen-10",
         "product_attribute_id": "size-1",
-        "product_attribute_option_id": "option-xl-1"
+        "product_attribute_option_id": "option-10-1"
     },
     {
         "product_variant_id": "business-casual-shirt-midnightblue-xs",
@@ -1260,12 +1260,12 @@
         "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightred-8.5",
+        "product_variant_id": "modern-high-top-sneakers-brightred-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightred-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightred-8.5",
+        "product_variant_id": "modern-high-top-sneakers-brightred-85",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-8.5-1"
     },
@@ -1280,12 +1280,12 @@
         "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightred-9.5",
+        "product_variant_id": "modern-high-top-sneakers-brightred-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightred-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightred-9.5",
+        "product_variant_id": "modern-high-top-sneakers-brightred-95",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-9.5-1"
     },
@@ -1310,12 +1310,12 @@
         "product_attribute_option_id": "option-8-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightgreen-8.5",
+        "product_variant_id": "modern-high-top-sneakers-brightgreen-85",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightgreen-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightgreen-8.5",
+        "product_variant_id": "modern-high-top-sneakers-brightgreen-85",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-8.5-1"
     },
@@ -1330,12 +1330,12 @@
         "product_attribute_option_id": "option-9-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightgreen-9.5",
+        "product_variant_id": "modern-high-top-sneakers-brightgreen-95",
         "product_attribute_id": "colour-1",
         "product_attribute_option_id": "option-brightgreen-1"
     },
     {
-        "product_variant_id": "modern-high-top-sneakers-brightgreen-9.5",
+        "product_variant_id": "modern-high-top-sneakers-brightgreen-95",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-9.5-1"
     },
@@ -1548,5 +1548,995 @@
         "product_variant_id": "casual-crew-neck-t-shirt-brightorange-xl",
         "product_attribute_id": "size-1",
         "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-t-shirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-t-shirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-t-shirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-t-shirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-t-shirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-t-shirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-t-shirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-t-shirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-t-shirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-t-shirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-dress-shirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-dress-shirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-dress-shirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-dress-shirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-dress-shirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "casual-checkered-shirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "casual-checkered-shirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "casual-checkered-shirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "casual-checkered-shirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "casual-checkered-shirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-elegant-wool-jumper-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-elegant-wool-jumper-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-elegant-wool-jumper-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-elegant-wool-jumper-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-elegant-wool-jumper-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-modern-jumper-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-modern-jumper-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-modern-jumper-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-modern-jumper-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-modern-jumper-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "sporty-zip-up-jumper-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "sporty-zip-up-jumper-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "sporty-zip-up-jumper-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "sporty-zip-up-jumper-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "sporty-zip-up-jumper-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "casual-chino-trousers-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "casual-chino-trousers-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "casual-chino-trousers-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "casual-chino-trousers-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "casual-chino-trousers-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-polo-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-polo-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-polo-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-polo-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "sporty-performance-polo-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "casual-denim-skirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "casual-denim-skirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "casual-denim-skirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "casual-denim-skirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "casual-denim-skirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "floral-midi-skirt-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "floral-midi-skirt-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "floral-midi-skirt-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "floral-midi-skirt-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "floral-midi-skirt-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-wool-jumper-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-wool-jumper-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-wool-jumper-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-wool-jumper-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-wool-jumper-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-jumper-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-jumper-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-jumper-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-jumper-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "casual-v-neck-jumper-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-1-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-1-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-1-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-1-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "classic-dress-trousers-1-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-1-xs",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xs-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-1-s",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-s-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-1-m",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-m-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-1-l",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-l-1"
+    },
+    {
+        "product_variant_id": "sporty-track-pants-1-xl",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-xl-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-1-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-1-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "classic-cotton-crew-socks-1-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-1-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-1-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "sporty-ankle-socks-1-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-1-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-1-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "casual-low-cut-socks-1-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "casual-slip-on-sneakers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "casual-slip-on-sneakers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "casual-slip-on-sneakers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "casual-slip-on-sneakers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "casual-slip-on-sneakers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "fashion-high-top-sneakers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "fashion-high-top-sneakers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "fashion-high-top-sneakers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "fashion-high-top-sneakers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "fashion-high-top-sneakers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "strappy-beach-sandals-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "strappy-beach-sandals-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "strappy-beach-sandals-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "strappy-beach-sandals-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "strappy-beach-sandals-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "fashion-wedge-sandals-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "fashion-wedge-sandals-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "fashion-wedge-sandals-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "fashion-wedge-sandals-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "fashion-wedge-sandals-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "lace-up-combat-boots-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "lace-up-combat-boots-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "lace-up-combat-boots-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "lace-up-combat-boots-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "lace-up-combat-boots-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "fashion-knee-high-boots-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "fashion-knee-high-boots-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "fashion-knee-high-boots-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "fashion-knee-high-boots-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "fashion-knee-high-boots-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "platform-slip-on-shoes-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "platform-slip-on-shoes-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "platform-slip-on-shoes-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "platform-slip-on-shoes-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "platform-slip-on-shoes-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "chunky-heel-platform-sandals-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "chunky-heel-platform-sandals-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "chunky-heel-platform-sandals-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "chunky-heel-platform-sandals-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "chunky-heel-platform-sandals-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "lace-up-platform-boots-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "lace-up-platform-boots-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "lace-up-platform-boots-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "lace-up-platform-boots-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "lace-up-platform-boots-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "suede-tassel-loafers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "suede-tassel-loafers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "suede-tassel-loafers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "suede-tassel-loafers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "suede-tassel-loafers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "fashion-slip-on-loafers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "fashion-slip-on-loafers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "fashion-slip-on-loafers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "fashion-slip-on-loafers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "fashion-slip-on-loafers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-1-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-1-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-1-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-1-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "casual-slide-sandals-1-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "sporty-outdoor-sandals-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "sporty-outdoor-sandals-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "sporty-outdoor-sandals-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "sporty-outdoor-sandals-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "sporty-outdoor-sandals-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "fashion-flip-flops-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "fashion-flip-flops-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "fashion-flip-flops-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "fashion-flip-flops-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "fashion-flip-flops-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "classic-leather-boots-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "classic-leather-boots-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "classic-leather-boots-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "classic-leather-boots-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "classic-leather-boots-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "stylish-chelsea-boots-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "stylish-chelsea-boots-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "stylish-chelsea-boots-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "stylish-chelsea-boots-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "stylish-chelsea-boots-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "sporty-mens-sneakers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "sporty-mens-sneakers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "sporty-mens-sneakers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "sporty-mens-sneakers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "sporty-mens-sneakers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
+    },
+    {
+        "product_variant_id": "classic-canvas-sneakers-8",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8-1"
+    },
+    {
+        "product_variant_id": "classic-canvas-sneakers-8.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-8.5-1"
+    },
+    {
+        "product_variant_id": "classic-canvas-sneakers-9",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9-1"
+    },
+    {
+        "product_variant_id": "classic-canvas-sneakers-9.5",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-9.5-1"
+    },
+    {
+        "product_variant_id": "classic-canvas-sneakers-10",
+        "product_attribute_id": "size-1",
+        "product_attribute_option_id": "option-10-1"
     }
 ]

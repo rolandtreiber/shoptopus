@@ -1,26 +1,26 @@
 [
     {
-        "product_id": "men-t-shirts-1",
+        "product_id": "classic-cotton-t-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-t-shirts-1",
+        "product_id": "classic-cotton-t-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-t-shirts-1",
+        "product_id": "classic-cotton-t-shirt",
         "product_category_id": "mens-t-shirts-1"
     },
     {
-        "product_id": "men-t-shirts-2",
+        "product_id": "sporty-performance-t-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-t-shirts-2",
+        "product_id": "sporty-performance-t-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-t-shirts-2",
+        "product_id": "sporty-performance-t-shirt",
         "product_category_id": "mens-t-shirts-1"
     },
     {
@@ -36,15 +36,15 @@
         "product_category_id": "mens-t-shirts-1"
     },
     {
-        "product_id": "men-shirts-1",
+        "product_id": "classic-dress-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-shirts-1",
+        "product_id": "classic-dress-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-shirts-1",
+        "product_id": "classic-dress-shirt",
         "product_category_id": "mens-shirts-1"
     },
     {
@@ -60,123 +60,123 @@
         "product_category_id": "mens-shirts-1"
     },
     {
-        "product_id": "men-shirts-3",
+        "product_id": "casual-checkered-shirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-shirts-3",
+        "product_id": "casual-checkered-shirt",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-shirts-3",
+        "product_id": "casual-checkered-shirt",
         "product_category_id": "mens-shirts-1"
     },
     {
-        "product_id": "men-jumpers-1",
+        "product_id": "classic-elegant-wool-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-jumpers-1",
+        "product_id": "classic-elegant-wool-jumper",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-jumpers-1",
+        "product_id": "classic-elegant-wool-jumper",
         "product_category_id": "mens-jumpers-1"
     },
     {
-        "product_id": "men-jumpers-2",
+        "product_id": "casual-v-neck-modern-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-jumpers-2",
+        "product_id": "casual-v-neck-modern-jumper",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-jumpers-2",
+        "product_id": "casual-v-neck-modern-jumper",
         "product_category_id": "mens-jumpers-1"
     },
     {
-        "product_id": "men-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-jumpers-3",
+        "product_id": "sporty-zip-up-jumper",
         "product_category_id": "mens-jumpers-1"
     },
     {
-        "product_id": "men-trousers-1",
+        "product_id": "classic-dress-trousers",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-trousers-1",
+        "product_id": "classic-dress-trousers",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-trousers-1",
+        "product_id": "classic-dress-trousers",
         "product_category_id": "mens-trousers-1"
     },
     {
-        "product_id": "men-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-trousers-2",
+        "product_id": "casual-chino-trousers",
         "product_category_id": "mens-trousers-1"
     },
     {
-        "product_id": "men-trousers-3",
+        "product_id": "sporty-track-pants",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-trousers-3",
+        "product_id": "sporty-track-pants",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-trousers-3",
+        "product_id": "sporty-track-pants",
         "product_category_id": "mens-trousers-1"
     },
     {
-        "product_id": "men-socks-1",
+        "product_id": "classic-cotton-crew-socks",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-socks-1",
+        "product_id": "classic-cotton-crew-socks",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-socks-1",
+        "product_id": "classic-cotton-crew-socks",
         "product_category_id": "mens-socks-1"
     },
     {
-        "product_id": "men-socks-2",
+        "product_id": "sporty-ankle-socks",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-socks-2",
+        "product_id": "sporty-ankle-socks",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-socks-2",
+        "product_id": "sporty-ankle-socks",
         "product_category_id": "mens-socks-1"
     },
     {
-        "product_id": "men-socks-3",
+        "product_id": "casual-low-cut-socks",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "men-socks-3",
+        "product_id": "casual-low-cut-socks",
         "product_category_id": "mens-clothing-1"
     },
     {
-        "product_id": "men-socks-3",
+        "product_id": "casual-low-cut-socks",
         "product_category_id": "mens-socks-1"
     },
 
@@ -193,15 +193,15 @@
         "product_category_id": "womans-polo-shirts-1"
     },
     {
-        "product_id": "ladies-polo-shirts-2",
+        "product_id": "sporty-performance-polo",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-2",
+        "product_id": "sporty-performance-polo",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-polo-shirts-2",
+        "product_id": "sporty-performance-polo",
         "product_category_id": "womans-polo-shirts-1"
     },
     {
@@ -229,147 +229,147 @@
         "product_category_id": "womans-skirts-1"
     },
     {
-        "product_id": "ladies-skirts-2",
+        "product_id": "casual-denim-skirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-skirts-2",
+        "product_id": "casual-denim-skirt",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-skirts-2",
+        "product_id": "casual-denim-skirt",
         "product_category_id": "womans-skirts-1"
     },
     {
-        "product_id": "ladies-skirts-3",
+        "product_id": "floral-midi-skirt",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-skirts-3",
+        "product_id": "floral-midi-skirt",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-skirts-3",
+        "product_id": "floral-midi-skirt",
         "product_category_id": "womans-skirts-1"
     },
     {
-        "product_id": "ladies-jumpers-1",
+        "product_id": "classic-wool-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-1",
+        "product_id": "classic-wool-jumper",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-1",
+        "product_id": "classic-wool-jumper",
         "product_category_id": "womans-jumpers-1"
     },
     {
-        "product_id": "ladies-jumpers-2",
+        "product_id": "casual-v-neck-jumper",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-2",
+        "product_id": "casual-v-neck-jumper",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-jumpers-2",
+        "product_id": "casual-v-neck-jumper",
         "product_category_id": "womans-jumpers-1"
     },
     {
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "product_category_id": "womans-jumpers-1"
     },
     {
-        "product_id": "ladies-trousers-1",
+        "product_id": "classic-dress-trousers-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-trousers-1",
+        "product_id": "classic-dress-trousers-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-trousers-1",
+        "product_id": "classic-dress-trousers-1",
         "product_category_id": "womans-trousers-1"
     },
     {
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "product_category_id": "womans-trousers-1"
     },
     {
-        "product_id": "ladies-trousers-3",
+        "product_id": "sporty-track-pants-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-trousers-3",
+        "product_id": "sporty-track-pants-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-trousers-3",
+        "product_id": "sporty-track-pants-1",
         "product_category_id": "womans-trousers-1"
     },
     {
-        "product_id": "ladies-socks-1",
+        "product_id": "classic-cotton-crew-socks-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-socks-1",
+        "product_id": "classic-cotton-crew-socks-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-socks-1",
+        "product_id": "classic-cotton-crew-socks-1",
         "product_category_id": "womans-socks-1"
     },
     {
-        "product_id": "ladies-socks-2",
+        "product_id": "sporty-ankle-socks-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-socks-2",
+        "product_id": "sporty-ankle-socks-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-socks-2",
+        "product_id": "sporty-ankle-socks-1",
         "product_category_id": "womans-socks-1"
     },
     {
-        "product_id": "ladies-socks-3",
+        "product_id": "casual-low-cut-socks-1",
         "product_category_id": "clothing-1"
     },
     {
-        "product_id": "ladies-socks-3",
+        "product_id": "casual-low-cut-socks-1",
         "product_category_id": "womans-clothing-1"
     },
     {
-        "product_id": "ladies-socks-3",
+        "product_id": "casual-low-cut-socks-1",
         "product_category_id": "womans-socks-1"
     },
     {
-        "product_id": "ladies-sneakers-1",
+        "product_id": "casual-slip-on-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-1",
+        "product_id": "casual-slip-on-sneakers",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-1",
+        "product_id": "casual-slip-on-sneakers",
         "product_category_id": "womans-footwear-sneakers-1"
     },
     {
@@ -385,51 +385,51 @@
         "product_category_id": "womans-footwear-sneakers-1"
     },
     {
-        "product_id": "ladies-sneakers-3",
+        "product_id": "fashion-high-top-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-3",
+        "product_id": "fashion-high-top-sneakers",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sneakers-3",
+        "product_id": "fashion-high-top-sneakers",
         "product_category_id": "womans-footwear-sneakers-1"
     },
     {
-        "product_id": "ladies-sandals-1",
+        "product_id": "casual-slide-sandals",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sandals-1",
+        "product_id": "casual-slide-sandals",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sandals-1",
+        "product_id": "casual-slide-sandals",
         "product_category_id": "womans-footwear-sandals-1"
     },
     {
-        "product_id": "ladies-sandals-2",
+        "product_id": "strappy-beach-sandals",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sandals-2",
+        "product_id": "strappy-beach-sandals",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sandals-2",
+        "product_id": "strappy-beach-sandals",
         "product_category_id": "womans-footwear-sandals-1"
     },
     {
-        "product_id": "ladies-sandals-3",
+        "product_id": "fashion-wedge-sandals",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-sandals-3",
+        "product_id": "fashion-wedge-sandals",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-sandals-3",
+        "product_id": "fashion-wedge-sandals",
         "product_category_id": "womans-footwear-sandals-1"
     },
     {
@@ -445,87 +445,87 @@
         "product_category_id": "womans-footwear-boots-1"
     },
     {
-        "product_id": "ladies-boots-2",
+        "product_id": "lace-up-combat-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-boots-2",
+        "product_id": "lace-up-combat-boots",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-boots-2",
+        "product_id": "lace-up-combat-boots",
         "product_category_id": "womans-footwear-boots-1"
     },
     {
-        "product_id": "ladies-boots-3",
+        "product_id": "fashion-knee-high-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-boots-3",
+        "product_id": "fashion-knee-high-boots",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-boots-3",
+        "product_id": "fashion-knee-high-boots",
         "product_category_id": "womans-footwear-boots-1"
     },
     {
-        "product_id": "ladies-platform-shoes-1",
+        "product_id": "platform-slip-on-shoes",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-1",
+        "product_id": "platform-slip-on-shoes",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-1",
+        "product_id": "platform-slip-on-shoes",
         "product_category_id": "womans-footwear-platform-shoes-1"
     },
     {
-        "product_id": "ladies-platform-shoes-2",
+        "product_id": "chunky-heel-platform-sandals",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-2",
+        "product_id": "chunky-heel-platform-sandals",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-2",
+        "product_id": "chunky-heel-platform-sandals",
         "product_category_id": "womans-footwear-platform-shoes-1"
     },
     {
-        "product_id": "ladies-platform-shoes-3",
+        "product_id": "lace-up-platform-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-3",
+        "product_id": "lace-up-platform-boots",
         "product_category_id": "womans-footwear-1"
     },
     {
-        "product_id": "ladies-platform-shoes-3",
+        "product_id": "lace-up-platform-boots",
         "product_category_id": "womans-footwear-platform-shoes-1"
     },
     {
-        "product_id": "mens-sneakers-1",
+        "product_id": "sporty-mens-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sneakers-1",
+        "product_id": "sporty-mens-sneakers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sneakers-1",
+        "product_id": "sporty-mens-sneakers",
         "product_category_id": "mens-footwear-sneakers-1"
     },
     {
-        "product_id": "mens-sneakers-2",
+        "product_id": "classic-canvas-sneakers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sneakers-2",
+        "product_id": "classic-canvas-sneakers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sneakers-2",
+        "product_id": "classic-canvas-sneakers",
         "product_category_id": "mens-footwear-sneakers-1"
     },
     {
@@ -553,87 +553,87 @@
         "product_category_id": "mens-footwear-loafers-1"
     },
     {
-        "product_id": "mens-loafers-2",
+        "product_id": "suede-tassel-loafers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-loafers-2",
+        "product_id": "suede-tassel-loafers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-loafers-2",
+        "product_id": "suede-tassel-loafers",
         "product_category_id": "mens-footwear-loafers-1"
     },
     {
-        "product_id": "mens-loafers-3",
+        "product_id": "fashion-slip-on-loafers",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-loafers-3",
+        "product_id": "fashion-slip-on-loafers",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-loafers-3",
+        "product_id": "fashion-slip-on-loafers",
         "product_category_id": "mens-footwear-loafers-1"
     },
     {
-        "product_id": "mens-sandals-1",
+        "product_id": "casual-slide-sandals-1",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sandals-1",
+        "product_id": "casual-slide-sandals-1",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sandals-1",
+        "product_id": "casual-slide-sandals-1",
         "product_category_id": "mens-footwear-sandals-1"
     },
     {
-        "product_id": "mens-sandals-2",
+        "product_id": "sporty-outdoor-sandals",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sandals-2",
+        "product_id": "sporty-outdoor-sandals",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sandals-2",
+        "product_id": "sporty-outdoor-sandals",
         "product_category_id": "mens-footwear-sandals-1"
     },
     {
-        "product_id": "mens-sandals-3",
+        "product_id": "fashion-flip-flops",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-sandals-3",
+        "product_id": "fashion-flip-flops",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-sandals-3",
+        "product_id": "fashion-flip-flops",
         "product_category_id": "mens-footwear-sandals-1"
     },
     {
-        "product_id": "mens-boots-1",
+        "product_id": "classic-leather-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-boots-1",
+        "product_id": "classic-leather-boots",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-boots-1",
+        "product_id": "classic-leather-boots",
         "product_category_id": "mens-footwear-boots-1"
     },
     {
-        "product_id": "mens-boots-2",
+        "product_id": "stylish-chelsea-boots",
         "product_category_id": "footwear-1"
     },
     {
-        "product_id": "mens-boots-2",
+        "product_id": "stylish-chelsea-boots",
         "product_category_id": "mens-footwear-1"
     },
     {
-        "product_id": "mens-boots-2",
+        "product_id": "stylish-chelsea-boots",
         "product_category_id": "mens-footwear-boots-1"
     },
     {
@@ -649,219 +649,219 @@
         "product_category_id": "mens-footwear-boots-1"
     },
     {
-        "product_id": "ladies-sunglasses-1",
+        "product_id": "chic-cat-eye-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-1",
+        "product_id": "chic-cat-eye-sunglasses",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-1",
+        "product_id": "chic-cat-eye-sunglasses",
         "product_category_id": "womans-accessories-sunglasses-1"
     },
     {
-        "product_id": "ladies-sunglasses-2",
+        "product_id": "vintage-round-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-2",
+        "product_id": "vintage-round-sunglasses",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-2",
+        "product_id": "vintage-round-sunglasses",
         "product_category_id": "womans-accessories-sunglasses-1"
     },
     {
-        "product_id": "ladies-sunglasses-3",
+        "product_id": "sporty-polarized-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-3",
+        "product_id": "sporty-polarized-sunglasses",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-sunglasses-3",
+        "product_id": "sporty-polarized-sunglasses",
         "product_category_id": "womans-accessories-sunglasses-1"
     },
     {
-        "product_id": "ladies-earrings-1",
+        "product_id": "crystal-drop-earrings",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-earrings-1",
+        "product_id": "crystal-drop-earrings",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-earrings-1",
+        "product_id": "crystal-drop-earrings",
         "product_category_id": "womans-accessories-jewellery-1"
     },
     {
-        "product_id": "ladies-earrings-2",
+        "product_id": "pearl-stud-earrings",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-earrings-2",
+        "product_id": "pearl-stud-earrings",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-earrings-2",
+        "product_id": "pearl-stud-earrings",
         "product_category_id": "womans-accessories-jewellery-1"
     },
     {
-        "product_id": "ladies-earrings-3",
+        "product_id": "statement-tassel-earrings",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-earrings-3",
+        "product_id": "statement-tassel-earrings",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-earrings-3",
+        "product_id": "statement-tassel-earrings",
         "product_category_id": "womans-accessories-jewellery-1"
     },
     {
-        "product_id": "ladies-hats-1",
+        "product_id": "wide-brim-straw-hat",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-hats-1",
+        "product_id": "wide-brim-straw-hat",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-hats-1",
+        "product_id": "wide-brim-straw-hat",
         "product_category_id": "womans-accessories-hats-1"
     },
     {
-        "product_id": "ladies-hats-2",
+        "product_id": "classic-fedora-hat",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-hats-2",
+        "product_id": "classic-fedora-hat",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-hats-2",
+        "product_id": "classic-fedora-hat",
         "product_category_id": "womans-accessories-hats-1"
     },
     {
-        "product_id": "ladies-hats-3",
+        "product_id": "trendy-bucket-hat",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "ladies-hats-3",
+        "product_id": "trendy-bucket-hat",
         "product_category_id": "womans-accessories-1"
     },
     {
-        "product_id": "ladies-hats-3",
+        "product_id": "trendy-bucket-hat",
         "product_category_id": "womans-accessories-hats-1"
     },
     {
-        "product_id": "mens-ties-1",
+        "product_id": "classic-silk-tie",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-ties-1",
+        "product_id": "classic-silk-tie",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-ties-1",
+        "product_id": "classic-silk-tie",
         "product_category_id": "mens-accessories-ties-1"
     },
     {
-        "product_id": "mens-ties-2",
+        "product_id": "striped-business-tie",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-ties-2",
+        "product_id": "striped-business-tie",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-ties-2",
+        "product_id": "striped-business-tie",
         "product_category_id": "mens-accessories-ties-1"
     },
     {
-        "product_id": "mens-ties-3",
+        "product_id": "modern-skinny-tie",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-ties-3",
+        "product_id": "modern-skinny-tie",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-ties-3",
+        "product_id": "modern-skinny-tie",
         "product_category_id": "mens-accessories-ties-1"
     },
     {
-        "product_id": "mens-sunglasses-1",
+        "product_id": "aviator-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-1",
+        "product_id": "aviator-sunglasses",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-1",
+        "product_id": "aviator-sunglasses",
         "product_category_id": "mens-accessories-sunglasses-1"
     },
     {
-        "product_id": "mens-sunglasses-2",
+        "product_id": "sporty-wraparound-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-2",
+        "product_id": "sporty-wraparound-sunglasses",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-2",
+        "product_id": "sporty-wraparound-sunglasses",
         "product_category_id": "mens-accessories-sunglasses-1"
     },
     {
-        "product_id": "mens-sunglasses-3",
+        "product_id": "modern-square-sunglasses",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-3",
+        "product_id": "modern-square-sunglasses",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-sunglasses-3",
+        "product_id": "modern-square-sunglasses",
         "product_category_id": "mens-accessories-sunglasses-1"
     },
     {
-        "product_id": "mens-bracelets-1",
+        "product_id": "leather-cuff-bracelet",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-bracelets-1",
+        "product_id": "leather-cuff-bracelet",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-bracelets-1",
+        "product_id": "leather-cuff-bracelet",
         "product_category_id": "mens-accessories-jewellery-1"
     },
     {
-        "product_id": "mens-bracelets-2",
+        "product_id": "stainless-steel-link-bracelet",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-bracelets-2",
+        "product_id": "stainless-steel-link-bracelet",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-bracelets-2",
+        "product_id": "stainless-steel-link-bracelet",
         "product_category_id": "mens-accessories-jewellery-1"
     },
     {
-        "product_id": "mens-bracelets-3",
+        "product_id": "beaded-charm-bracelet",
         "product_category_id": "accessories-1"
     },
     {
-        "product_id": "mens-bracelets-3",
+        "product_id": "beaded-charm-bracelet",
         "product_category_id": "mens-accessories-1"
     },
     {
-        "product_id": "mens-bracelets-3",
+        "product_id": "beaded-charm-bracelet",
         "product_category_id": "mens-accessories-jewellery-1"
     }
 

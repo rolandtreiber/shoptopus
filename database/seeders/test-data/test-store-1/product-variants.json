@@ -130,9 +130,9 @@
         ]
     },
     {
-        "slug": "ladies-jumpers-3-blight-blue-xs",
+        "slug": "ladies-jumpers-3-bright-blue-xs",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-BLUE-XS",
@@ -143,9 +143,9 @@
         ]
     },
     {
-        "slug": "ladies-jumpers-3-blight-blue-s",
+        "slug": "ladies-jumpers-3-bright-blue-s",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-BLUE-S",
@@ -156,9 +156,9 @@
         ]
     },
     {
-        "slug": "ladies-jumpers-3-blight-blue-m",
+        "slug": "ladies-jumpers-3-bright-blue-m",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-BLUE-M",
@@ -169,9 +169,9 @@
         ]
     },
     {
-        "slug": "ladies-jumpers-3-blight-blue-l",
+        "slug": "ladies-jumpers-3-bright-blue-l",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-BLUE-L",
@@ -182,9 +182,9 @@
         ]
     },
     {
-        "slug": "ladies-jumpers-3-blight-blue-xl",
+        "slug": "ladies-jumpers-3-bright-blue-xl",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-BLUE-XL",
@@ -197,7 +197,7 @@
     {
         "slug": "ladies-jumpers-3-bright-green-xs",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-GREEN-XS",
@@ -210,7 +210,7 @@
     {
         "slug": "ladies-jumpers-3-bright-green-s",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-GREEN-S",
@@ -223,7 +223,7 @@
     {
         "slug": "ladies-jumpers-3-bright-green-m",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-GREEN-M",
@@ -236,7 +236,7 @@
     {
         "slug": "ladies-jumpers-3-bright-green-l",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-GREEN-L",
@@ -249,7 +249,7 @@
     {
         "slug": "ladies-jumpers-3-bright-green-xl",
         "price": "25.99",
-        "product_id": "sporty-zip-up-jumper",
+        "product_id": "sporty-zip-up-jumper-1",
         "data": "",
         "stock": 12,
         "sku": "W-J003-GREEN-XL",
@@ -1042,7 +1042,7 @@
     {
         "slug": "casual-chino-trousers-brightblue-xs",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 50,
         "sku": "W-TR002-BRIGHTBLUE-XS",
@@ -1055,7 +1055,7 @@
     {
         "slug": "casual-chino-trousers-brightblue-s",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 1,
         "sku": "W-TR002-BRIGHTBLUE-S",
@@ -1068,7 +1068,7 @@
     {
         "slug": "casual-chino-trousers-brightblue-m",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 42,
         "sku": "W-TR002-BRIGHTBLUE-M",
@@ -1081,7 +1081,7 @@
     {
         "slug": "casual-chino-trousers-brightblue-l",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 31,
         "sku": "W-TR002-BRIGHTBLUE-L",
@@ -1094,7 +1094,7 @@
     {
         "slug": "casual-chino-trousers-brightblue-xl",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 18,
         "sku": "W-TR002-BRIGHTBLUE-XL",
@@ -1107,7 +1107,7 @@
     {
         "slug": "casual-chino-trousers-brightgreen-xs",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 3,
         "sku": "W-TR002-BRIGHTGREEN-XS",
@@ -1120,7 +1120,7 @@
     {
         "slug": "casual-chino-trousers-brightgreen-s",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 16,
         "sku": "W-TR002-BRIGHTGREEN-S",
@@ -1133,7 +1133,7 @@
     {
         "slug": "casual-chino-trousers-brightgreen-m",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 45,
         "sku": "W-TR002-BRIGHTGREEN-M",
@@ -1146,7 +1146,7 @@
     {
         "slug": "casual-chino-trousers-brightgreen-l",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 11,
         "sku": "W-TR002-BRIGHTGREEN-L",
@@ -1159,7 +1159,7 @@
     {
         "slug": "casual-chino-trousers-brightgreen-xl",
         "price": 12.99,
-        "product_id": "casual-chino-trousers",
+        "product_id": "casual-chino-trousers-1",
         "data": "",
         "stock": 29,
         "sku": "W-TR002-BRIGHTGREEN-XL",
@@ -1170,263 +1170,263 @@
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-black-xs",
+        "slug": "outdoor-hiking-boots-black-8",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 9,
-        "sku": "M-BO003-BLACK-XS",
+        "sku": "M-BO003-BLACK-8",
         "description": "",
         "attribute_options": [
             "option-black-1",
-            "option-xs-1"
+            "option-8-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-black-s",
+        "slug": "outdoor-hiking-boots-black-85",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 23,
-        "sku": "M-BO003-BLACK-S",
+        "sku": "M-BO003-BLACK-85",
         "description": "",
         "attribute_options": [
             "option-black-1",
-            "option-s-1"
+            "option-8.5-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-black-m",
+        "slug": "outdoor-hiking-boots-black-9",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 36,
-        "sku": "M-BO003-BLACK-M",
+        "sku": "M-BO003-BLACK-9",
         "description": "",
         "attribute_options": [
             "option-black-1",
-            "option-m-1"
+            "option-9-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-black-l",
+        "slug": "outdoor-hiking-boots-black-95",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 13,
-        "sku": "M-BO003-BLACK-L",
+        "sku": "M-BO003-BLACK-95",
         "description": "",
         "attribute_options": [
             "option-black-1",
-            "option-l-1"
+            "option-9.5-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-black-xl",
+        "slug": "outdoor-hiking-boots-black-10",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 6,
-        "sku": "M-BO003-BLACK-XL",
+        "sku": "M-BO003-BLACK-10",
         "description": "",
         "attribute_options": [
             "option-black-1",
-            "option-xl-1"
+            "option-10-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-midnightblue-xs",
+        "slug": "outdoor-hiking-boots-midnightblue-8",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 34,
-        "sku": "M-BO003-MIDNIGHTBLUE-XS",
+        "sku": "M-BO003-MIDNIGHTBLUE-8",
         "description": "",
         "attribute_options": [
             "option-midnightblue-1",
-            "option-xs-1"
+            "option-8-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-midnightblue-s",
+        "slug": "outdoor-hiking-boots-midnightblue-85",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 14,
-        "sku": "M-BO003-MIDNIGHTBLUE-S",
+        "sku": "M-BO003-MIDNIGHTBLUE-85",
         "description": "",
         "attribute_options": [
             "option-midnightblue-1",
-            "option-s-1"
+            "option-8.5-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-midnightblue-m",
+        "slug": "outdoor-hiking-boots-midnightblue-9",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 38,
-        "sku": "M-BO003-MIDNIGHTBLUE-M",
+        "sku": "M-BO003-MIDNIGHTBLUE-9",
         "description": "",
         "attribute_options": [
             "option-midnightblue-1",
-            "option-m-1"
+            "option-9-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-midnightblue-l",
+        "slug": "outdoor-hiking-boots-midnightblue-95",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 9,
-        "sku": "M-BO003-MIDNIGHTBLUE-L",
+        "sku": "M-BO003-MIDNIGHTBLUE-95",
         "description": "",
         "attribute_options": [
             "option-midnightblue-1",
-            "option-l-1"
+            "option-9.5-1"
         ]
     },
     {
-        "slug": "outdoor-hiking-boots-midnightblue-xl",
+        "slug": "outdoor-hiking-boots-midnightblue-10",
         "price": 29.99,
         "product_id": "outdoor-hiking-boots",
         "data": "",
         "stock": 14,
-        "sku": "M-BO003-MIDNIGHTBLUE-XL",
+        "sku": "M-BO003-MIDNIGHTBLUE-10",
         "description": "",
         "attribute_options": [
             "option-midnightblue-1",
-            "option-xl-1"
+            "option-10-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgray-xs",
+        "slug": "classic-leather-loafers-darkgray-8",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 44,
-        "sku": "M-LO001-DARKGRAY-XS",
+        "sku": "M-LO001-DARKGRAY-8",
         "description": "",
         "attribute_options": [
             "option-darkgray-1",
-            "option-xs-1"
+            "option-8-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgray-s",
+        "slug": "classic-leather-loafers-darkgray-85",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 51,
-        "sku": "M-LO001-DARKGRAY-S",
+        "sku": "M-LO001-DARKGRAY-85",
         "description": "",
         "attribute_options": [
             "option-darkgray-1",
-            "option-s-1"
+            "option-8.5-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgray-m",
+        "slug": "classic-leather-loafers-darkgray-9",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 36,
-        "sku": "M-LO001-DARKGRAY-M",
+        "sku": "M-LO001-DARKGRAY-9",
         "description": "",
         "attribute_options": [
             "option-darkgray-1",
-            "option-m-1"
+            "option-9-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgray-l",
+        "slug": "classic-leather-loafers-darkgray-95",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 15,
-        "sku": "M-LO001-DARKGRAY-L",
+        "sku": "M-LO001-DARKGRAY-95",
         "description": "",
         "attribute_options": [
             "option-darkgray-1",
-            "option-l-1"
+            "option-9.5-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgray-xl",
+        "slug": "classic-leather-loafers-darkgray-10",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 48,
-        "sku": "M-LO001-DARKGRAY-XL",
+        "sku": "M-LO001-DARKGRAY-10",
         "description": "",
         "attribute_options": [
             "option-darkgray-1",
-            "option-xl-1"
+            "option-10-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgreen-xs",
+        "slug": "classic-leather-loafers-darkgreen-8",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 12,
-        "sku": "M-LO001-DARKGREEN-XS",
+        "sku": "M-LO001-DARKGREEN-8",
         "description": "",
         "attribute_options": [
             "option-darkgreen-1",
-            "option-xs-1"
+            "option-8-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgreen-s",
+        "slug": "classic-leather-loafers-darkgreen-85",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 31,
-        "sku": "M-LO001-DARKGREEN-S",
+        "sku": "M-LO001-DARKGREEN-85",
         "description": "",
         "attribute_options": [
             "option-darkgreen-1",
-            "option-s-1"
+            "option-8.5-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgreen-m",
+        "slug": "classic-leather-loafers-darkgreen-9",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 26,
-        "sku": "M-LO001-DARKGREEN-M",
+        "sku": "M-LO001-DARKGREEN-9",
         "description": "",
         "attribute_options": [
             "option-darkgreen-1",
-            "option-m-1"
+            "option-9-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgreen-l",
+        "slug": "classic-leather-loafers-darkgreen-95",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 7,
-        "sku": "M-LO001-DARKGREEN-L",
+        "sku": "M-LO001-DARKGREEN-95",
         "description": "",
         "attribute_options": [
             "option-darkgreen-1",
-            "option-l-1"
+            "option-9.5-1"
         ]
     },
     {
-        "slug": "classic-leather-loafers-darkgreen-xl",
+        "slug": "classic-leather-loafers-darkgreen-10",
         "price": 29.99,
         "product_id": "classic-leather-loafers",
         "data": "",
         "stock": 3,
-        "sku": "M-LO001-DARKGREEN-XL",
+        "sku": "M-LO001-DARKGREEN-10",
         "description": "",
         "attribute_options": [
             "option-darkgreen-1",
-            "option-xl-1"
+            "option-10-1"
         ]
     },
     {
@@ -1638,7 +1638,7 @@
         ]
     },
     {
-        "slug": "modern-high-top-sneakers-brightred-8.5",
+        "slug": "modern-high-top-sneakers-brightred-85",
         "price": 29.99,
         "product_id": "modern-high-top-sneakers",
         "data": "",
@@ -1664,7 +1664,7 @@
         ]
     },
     {
-        "slug": "modern-high-top-sneakers-brightred-9.5",
+        "slug": "modern-high-top-sneakers-brightred-95",
         "price": 29.99,
         "product_id": "modern-high-top-sneakers",
         "data": "",
@@ -1703,7 +1703,7 @@
         ]
     },
     {
-        "slug": "modern-high-top-sneakers-brightgreen-8.5",
+        "slug": "modern-high-top-sneakers-brightgreen-85",
         "price": 29.99,
         "product_id": "modern-high-top-sneakers",
         "data": "",
@@ -1729,7 +1729,7 @@
         ]
     },
     {
-        "slug": "modern-high-top-sneakers-brightgreen-9.5",
+        "slug": "modern-high-top-sneakers-brightgreen-95",
         "price": 29.99,
         "product_id": "modern-high-top-sneakers",
         "data": "",
@@ -2012,6 +2012,2382 @@
         "attribute_options": [
             "option-brightorange-1",
             "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-t-shirt-xs",
+        "price": 16.99,
+        "product_id": "classic-cotton-t-shirt",
+        "data": "",
+        "stock": 51,
+        "sku": "M-T001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-t-shirt-s",
+        "price": 16.99,
+        "product_id": "classic-cotton-t-shirt",
+        "data": "",
+        "stock": 41,
+        "sku": "M-T001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-t-shirt-m",
+        "price": 16.99,
+        "product_id": "classic-cotton-t-shirt",
+        "data": "",
+        "stock": 47,
+        "sku": "M-T001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-t-shirt-l",
+        "price": 16.99,
+        "product_id": "classic-cotton-t-shirt",
+        "data": "",
+        "stock": 47,
+        "sku": "M-T001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-t-shirt-xl",
+        "price": 16.99,
+        "product_id": "classic-cotton-t-shirt",
+        "data": "",
+        "stock": 43,
+        "sku": "M-T001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-t-shirt-xs",
+        "price": 18.5,
+        "product_id": "sporty-performance-t-shirt",
+        "data": "",
+        "stock": 50,
+        "sku": "M-T002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-t-shirt-s",
+        "price": 18.5,
+        "product_id": "sporty-performance-t-shirt",
+        "data": "",
+        "stock": 11,
+        "sku": "M-T002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-t-shirt-m",
+        "price": 18.5,
+        "product_id": "sporty-performance-t-shirt",
+        "data": "",
+        "stock": 50,
+        "sku": "M-T002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-t-shirt-l",
+        "price": 18.5,
+        "product_id": "sporty-performance-t-shirt",
+        "data": "",
+        "stock": 22,
+        "sku": "M-T002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-t-shirt-xl",
+        "price": 18.5,
+        "product_id": "sporty-performance-t-shirt",
+        "data": "",
+        "stock": 29,
+        "sku": "M-T002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-shirt-xs",
+        "price": 28.99,
+        "product_id": "classic-dress-shirt",
+        "data": "",
+        "stock": 21,
+        "sku": "M-S001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-shirt-s",
+        "price": 28.99,
+        "product_id": "classic-dress-shirt",
+        "data": "",
+        "stock": 48,
+        "sku": "M-S001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-shirt-m",
+        "price": 28.99,
+        "product_id": "classic-dress-shirt",
+        "data": "",
+        "stock": 42,
+        "sku": "M-S001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-shirt-l",
+        "price": 28.99,
+        "product_id": "classic-dress-shirt",
+        "data": "",
+        "stock": 3,
+        "sku": "M-S001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-shirt-xl",
+        "price": 28.99,
+        "product_id": "classic-dress-shirt",
+        "data": "",
+        "stock": 33,
+        "sku": "M-S001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "casual-checkered-shirt-xs",
+        "price": 24.99,
+        "product_id": "casual-checkered-shirt",
+        "data": "",
+        "stock": 46,
+        "sku": "M-S003-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "casual-checkered-shirt-s",
+        "price": 24.99,
+        "product_id": "casual-checkered-shirt",
+        "data": "",
+        "stock": 36,
+        "sku": "M-S003-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "casual-checkered-shirt-m",
+        "price": 24.99,
+        "product_id": "casual-checkered-shirt",
+        "data": "",
+        "stock": 43,
+        "sku": "M-S003-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "casual-checkered-shirt-l",
+        "price": 24.99,
+        "product_id": "casual-checkered-shirt",
+        "data": "",
+        "stock": 0,
+        "sku": "M-S003-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "casual-checkered-shirt-xl",
+        "price": 24.99,
+        "product_id": "casual-checkered-shirt",
+        "data": "",
+        "stock": 22,
+        "sku": "M-S003-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-elegant-wool-jumper-xs",
+        "price": 29.99,
+        "product_id": "classic-elegant-wool-jumper",
+        "data": "",
+        "stock": 53,
+        "sku": "M-J001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-elegant-wool-jumper-s",
+        "price": 29.99,
+        "product_id": "classic-elegant-wool-jumper",
+        "data": "",
+        "stock": 40,
+        "sku": "M-J001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-elegant-wool-jumper-m",
+        "price": 29.99,
+        "product_id": "classic-elegant-wool-jumper",
+        "data": "",
+        "stock": 2,
+        "sku": "M-J001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-elegant-wool-jumper-l",
+        "price": 29.99,
+        "product_id": "classic-elegant-wool-jumper",
+        "data": "",
+        "stock": 49,
+        "sku": "M-J001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-elegant-wool-jumper-xl",
+        "price": 29.99,
+        "product_id": "classic-elegant-wool-jumper",
+        "data": "",
+        "stock": 22,
+        "sku": "M-J001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-modern-jumper-xs",
+        "price": 21.5,
+        "product_id": "casual-v-neck-modern-jumper",
+        "data": "",
+        "stock": 8,
+        "sku": "M-J002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-modern-jumper-s",
+        "price": 21.5,
+        "product_id": "casual-v-neck-modern-jumper",
+        "data": "",
+        "stock": 22,
+        "sku": "M-J002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-modern-jumper-m",
+        "price": 21.5,
+        "product_id": "casual-v-neck-modern-jumper",
+        "data": "",
+        "stock": 5,
+        "sku": "M-J002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-modern-jumper-l",
+        "price": 21.5,
+        "product_id": "casual-v-neck-modern-jumper",
+        "data": "",
+        "stock": 35,
+        "sku": "M-J002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-modern-jumper-xl",
+        "price": 21.5,
+        "product_id": "casual-v-neck-modern-jumper",
+        "data": "",
+        "stock": 38,
+        "sku": "M-J002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "sporty-zip-up-jumper-xs",
+        "price": 25.99,
+        "product_id": "sporty-zip-up-jumper",
+        "data": "",
+        "stock": 9,
+        "sku": "M-J003-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "sporty-zip-up-jumper-s",
+        "price": 25.99,
+        "product_id": "sporty-zip-up-jumper",
+        "data": "",
+        "stock": 53,
+        "sku": "M-J003-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "sporty-zip-up-jumper-m",
+        "price": 25.99,
+        "product_id": "sporty-zip-up-jumper",
+        "data": "",
+        "stock": 29,
+        "sku": "M-J003-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "sporty-zip-up-jumper-l",
+        "price": 25.99,
+        "product_id": "sporty-zip-up-jumper",
+        "data": "",
+        "stock": -1,
+        "sku": "M-J003-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "sporty-zip-up-jumper-xl",
+        "price": 25.99,
+        "product_id": "sporty-zip-up-jumper",
+        "data": "",
+        "stock": 47,
+        "sku": "M-J003-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-xs",
+        "price": 27.99,
+        "product_id": "classic-dress-trousers",
+        "data": "",
+        "stock": 41,
+        "sku": "M-TR001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-s",
+        "price": 27.99,
+        "product_id": "classic-dress-trousers",
+        "data": "",
+        "stock": 3,
+        "sku": "M-TR001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-m",
+        "price": 27.99,
+        "product_id": "classic-dress-trousers",
+        "data": "",
+        "stock": 50,
+        "sku": "M-TR001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-l",
+        "price": 27.99,
+        "product_id": "classic-dress-trousers",
+        "data": "",
+        "stock": 7,
+        "sku": "M-TR001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-xl",
+        "price": 27.99,
+        "product_id": "classic-dress-trousers",
+        "data": "",
+        "stock": 18,
+        "sku": "M-TR001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "casual-chino-trousers-xs",
+        "price": 19.5,
+        "product_id": "casual-chino-trousers",
+        "data": "",
+        "stock": 48,
+        "sku": "M-TR002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "casual-chino-trousers-s",
+        "price": 19.5,
+        "product_id": "casual-chino-trousers",
+        "data": "",
+        "stock": 43,
+        "sku": "M-TR002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "casual-chino-trousers-m",
+        "price": 19.5,
+        "product_id": "casual-chino-trousers",
+        "data": "",
+        "stock": 21,
+        "sku": "M-TR002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "casual-chino-trousers-l",
+        "price": 19.5,
+        "product_id": "casual-chino-trousers",
+        "data": "",
+        "stock": 31,
+        "sku": "M-TR002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "casual-chino-trousers-xl",
+        "price": 19.5,
+        "product_id": "casual-chino-trousers",
+        "data": "",
+        "stock": 39,
+        "sku": "M-TR002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-xs",
+        "price": 22.99,
+        "product_id": "sporty-track-pants",
+        "data": "",
+        "stock": 16,
+        "sku": "M-TR003-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-s",
+        "price": 22.99,
+        "product_id": "sporty-track-pants",
+        "data": "",
+        "stock": 10,
+        "sku": "M-TR003-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-m",
+        "price": 22.99,
+        "product_id": "sporty-track-pants",
+        "data": "",
+        "stock": 45,
+        "sku": "M-TR003-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-l",
+        "price": 22.99,
+        "product_id": "sporty-track-pants",
+        "data": "",
+        "stock": 29,
+        "sku": "M-TR003-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-xl",
+        "price": 22.99,
+        "product_id": "sporty-track-pants",
+        "data": "",
+        "stock": 0,
+        "sku": "M-TR003-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-8",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks",
+        "data": "",
+        "stock": 51,
+        "sku": "M-SK001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-9",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks",
+        "data": "",
+        "stock": 8,
+        "sku": "M-SK001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-10",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks",
+        "data": "",
+        "stock": 24,
+        "sku": "M-SK001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-8",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks",
+        "data": "",
+        "stock": 10,
+        "sku": "M-SK002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-9",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks",
+        "data": "",
+        "stock": 2,
+        "sku": "M-SK002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-10",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks",
+        "data": "",
+        "stock": 51,
+        "sku": "M-SK002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-8",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks",
+        "data": "",
+        "stock": 49,
+        "sku": "M-SK003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-9",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks",
+        "data": "",
+        "stock": 45,
+        "sku": "M-SK003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-10",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks",
+        "data": "",
+        "stock": 19,
+        "sku": "M-SK003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-polo-xs",
+        "price": 19.5,
+        "product_id": "sporty-performance-polo",
+        "data": "",
+        "stock": -1,
+        "sku": "W-P002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-polo-s",
+        "price": 19.5,
+        "product_id": "sporty-performance-polo",
+        "data": "",
+        "stock": 3,
+        "sku": "W-P002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-polo-m",
+        "price": 19.5,
+        "product_id": "sporty-performance-polo",
+        "data": "",
+        "stock": 12,
+        "sku": "W-P002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-polo-l",
+        "price": 19.5,
+        "product_id": "sporty-performance-polo",
+        "data": "",
+        "stock": 3,
+        "sku": "W-P002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "sporty-performance-polo-xl",
+        "price": 19.5,
+        "product_id": "sporty-performance-polo",
+        "data": "",
+        "stock": 6,
+        "sku": "W-P002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "casual-denim-skirt-xs",
+        "price": 24.5,
+        "product_id": "casual-denim-skirt",
+        "data": "",
+        "stock": 30,
+        "sku": "W-S002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "casual-denim-skirt-s",
+        "price": 24.5,
+        "product_id": "casual-denim-skirt",
+        "data": "",
+        "stock": 1,
+        "sku": "W-S002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "casual-denim-skirt-m",
+        "price": 24.5,
+        "product_id": "casual-denim-skirt",
+        "data": "",
+        "stock": 29,
+        "sku": "W-S002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "casual-denim-skirt-l",
+        "price": 24.5,
+        "product_id": "casual-denim-skirt",
+        "data": "",
+        "stock": 25,
+        "sku": "W-S002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "casual-denim-skirt-xl",
+        "price": 24.5,
+        "product_id": "casual-denim-skirt",
+        "data": "",
+        "stock": 13,
+        "sku": "W-S002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "floral-midi-skirt-xs",
+        "price": 22.99,
+        "product_id": "floral-midi-skirt",
+        "data": "",
+        "stock": 27,
+        "sku": "W-S003-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "floral-midi-skirt-s",
+        "price": 22.99,
+        "product_id": "floral-midi-skirt",
+        "data": "",
+        "stock": 38,
+        "sku": "W-S003-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "floral-midi-skirt-m",
+        "price": 22.99,
+        "product_id": "floral-midi-skirt",
+        "data": "",
+        "stock": 22,
+        "sku": "W-S003-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "floral-midi-skirt-l",
+        "price": 22.99,
+        "product_id": "floral-midi-skirt",
+        "data": "",
+        "stock": 7,
+        "sku": "W-S003-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "floral-midi-skirt-xl",
+        "price": 22.99,
+        "product_id": "floral-midi-skirt",
+        "data": "",
+        "stock": 42,
+        "sku": "W-S003-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-wool-jumper-xs",
+        "price": 29.99,
+        "product_id": "classic-wool-jumper",
+        "data": "",
+        "stock": 3,
+        "sku": "W-J001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-wool-jumper-s",
+        "price": 29.99,
+        "product_id": "classic-wool-jumper",
+        "data": "",
+        "stock": 53,
+        "sku": "W-J001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-wool-jumper-m",
+        "price": 29.99,
+        "product_id": "classic-wool-jumper",
+        "data": "",
+        "stock": 28,
+        "sku": "W-J001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-wool-jumper-l",
+        "price": 29.99,
+        "product_id": "classic-wool-jumper",
+        "data": "",
+        "stock": 17,
+        "sku": "W-J001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-wool-jumper-xl",
+        "price": 29.99,
+        "product_id": "classic-wool-jumper",
+        "data": "",
+        "stock": 36,
+        "sku": "W-J001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-jumper-xs",
+        "price": 21.5,
+        "product_id": "casual-v-neck-jumper",
+        "data": "",
+        "stock": 8,
+        "sku": "W-J002-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-jumper-s",
+        "price": 21.5,
+        "product_id": "casual-v-neck-jumper",
+        "data": "",
+        "stock": 22,
+        "sku": "W-J002-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-jumper-m",
+        "price": 21.5,
+        "product_id": "casual-v-neck-jumper",
+        "data": "",
+        "stock": 51,
+        "sku": "W-J002-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-jumper-l",
+        "price": 21.5,
+        "product_id": "casual-v-neck-jumper",
+        "data": "",
+        "stock": 23,
+        "sku": "W-J002-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "casual-v-neck-jumper-xl",
+        "price": 21.5,
+        "product_id": "casual-v-neck-jumper",
+        "data": "",
+        "stock": 0,
+        "sku": "W-J002-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-1-xs",
+        "price": 29.99,
+        "product_id": "classic-dress-trousers-1",
+        "data": "",
+        "stock": 28,
+        "sku": "W-TR001-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-1-s",
+        "price": 29.99,
+        "product_id": "classic-dress-trousers-1",
+        "data": "",
+        "stock": 36,
+        "sku": "W-TR001-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-1-m",
+        "price": 29.99,
+        "product_id": "classic-dress-trousers-1",
+        "data": "",
+        "stock": 2,
+        "sku": "W-TR001-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-1-l",
+        "price": 29.99,
+        "product_id": "classic-dress-trousers-1",
+        "data": "",
+        "stock": 43,
+        "sku": "W-TR001-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "classic-dress-trousers-1-xl",
+        "price": 29.99,
+        "product_id": "classic-dress-trousers-1",
+        "data": "",
+        "stock": 1,
+        "sku": "W-TR001-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-1-xs",
+        "price": 22.99,
+        "product_id": "sporty-track-pants-1",
+        "data": "",
+        "stock": 6,
+        "sku": "W-TR003-XS",
+        "description": "",
+        "attribute_options": [
+            "option-xs-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-1-s",
+        "price": 22.99,
+        "product_id": "sporty-track-pants-1",
+        "data": "",
+        "stock": 17,
+        "sku": "W-TR003-S",
+        "description": "",
+        "attribute_options": [
+            "option-s-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-1-m",
+        "price": 22.99,
+        "product_id": "sporty-track-pants-1",
+        "data": "",
+        "stock": 3,
+        "sku": "W-TR003-M",
+        "description": "",
+        "attribute_options": [
+            "option-m-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-1-l",
+        "price": 22.99,
+        "product_id": "sporty-track-pants-1",
+        "data": "",
+        "stock": 12,
+        "sku": "W-TR003-L",
+        "description": "",
+        "attribute_options": [
+            "option-l-1"
+        ]
+    },
+    {
+        "slug": "sporty-track-pants-1-xl",
+        "price": 22.99,
+        "product_id": "sporty-track-pants-1",
+        "data": "",
+        "stock": 0,
+        "sku": "W-TR003-XL",
+        "description": "",
+        "attribute_options": [
+            "option-xl-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-1-8",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks-1",
+        "data": "",
+        "stock": 40,
+        "sku": "W-SK001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-1-9",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks-1",
+        "data": "",
+        "stock": 26,
+        "sku": "W-SK001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "classic-cotton-crew-socks-1-10",
+        "price": 12.99,
+        "product_id": "classic-cotton-crew-socks-1",
+        "data": "",
+        "stock": 40,
+        "sku": "W-SK001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-1-8",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks-1",
+        "data": "",
+        "stock": 34,
+        "sku": "W-SK002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-1-9",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks-1",
+        "data": "",
+        "stock": 18,
+        "sku": "W-SK002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "sporty-ankle-socks-1-10",
+        "price": 14.5,
+        "product_id": "sporty-ankle-socks-1",
+        "data": "",
+        "stock": 53,
+        "sku": "W-SK002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-1-8",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks-1",
+        "data": "",
+        "stock": 26,
+        "sku": "W-SK003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-1-9",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks-1",
+        "data": "",
+        "stock": 27,
+        "sku": "W-SK003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "casual-low-cut-socks-1-10",
+        "price": 11.99,
+        "product_id": "casual-low-cut-socks-1",
+        "data": "",
+        "stock": 18,
+        "sku": "W-SK003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "casual-slip-on-sneakers-8",
+        "price": 28.99,
+        "product_id": "casual-slip-on-sneakers",
+        "data": "",
+        "stock": 4,
+        "sku": "W-SN001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "casual-slip-on-sneakers-8.5",
+        "price": 28.99,
+        "product_id": "casual-slip-on-sneakers",
+        "data": "",
+        "stock": 41,
+        "sku": "W-SN001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slip-on-sneakers-9",
+        "price": 28.99,
+        "product_id": "casual-slip-on-sneakers",
+        "data": "",
+        "stock": 20,
+        "sku": "W-SN001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "casual-slip-on-sneakers-9.5",
+        "price": 28.99,
+        "product_id": "casual-slip-on-sneakers",
+        "data": "",
+        "stock": 33,
+        "sku": "W-SN001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slip-on-sneakers-10",
+        "price": 28.99,
+        "product_id": "casual-slip-on-sneakers",
+        "data": "",
+        "stock": 45,
+        "sku": "W-SN001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "fashion-high-top-sneakers-8",
+        "price": 29.99,
+        "product_id": "fashion-high-top-sneakers",
+        "data": "",
+        "stock": 18,
+        "sku": "W-SN003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "fashion-high-top-sneakers-8.5",
+        "price": 29.99,
+        "product_id": "fashion-high-top-sneakers",
+        "data": "",
+        "stock": 53,
+        "sku": "W-SN003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-high-top-sneakers-9",
+        "price": 29.99,
+        "product_id": "fashion-high-top-sneakers",
+        "data": "",
+        "stock": 30,
+        "sku": "W-SN003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "fashion-high-top-sneakers-9.5",
+        "price": 29.99,
+        "product_id": "fashion-high-top-sneakers",
+        "data": "",
+        "stock": 13,
+        "sku": "W-SN003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-high-top-sneakers-10",
+        "price": 29.99,
+        "product_id": "fashion-high-top-sneakers",
+        "data": "",
+        "stock": 10,
+        "sku": "W-SN003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-8",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals",
+        "data": "",
+        "stock": 6,
+        "sku": "W-SA001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-8.5",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals",
+        "data": "",
+        "stock": 50,
+        "sku": "W-SA001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-9",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals",
+        "data": "",
+        "stock": 15,
+        "sku": "W-SA001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-9.5",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals",
+        "data": "",
+        "stock": 2,
+        "sku": "W-SA001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-10",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals",
+        "data": "",
+        "stock": 45,
+        "sku": "W-SA001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "strappy-beach-sandals-8",
+        "price": 23.5,
+        "product_id": "strappy-beach-sandals",
+        "data": "",
+        "stock": 0,
+        "sku": "W-SA002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "strappy-beach-sandals-8.5",
+        "price": 23.5,
+        "product_id": "strappy-beach-sandals",
+        "data": "",
+        "stock": 44,
+        "sku": "W-SA002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "strappy-beach-sandals-9",
+        "price": 23.5,
+        "product_id": "strappy-beach-sandals",
+        "data": "",
+        "stock": 2,
+        "sku": "W-SA002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "strappy-beach-sandals-9.5",
+        "price": 23.5,
+        "product_id": "strappy-beach-sandals",
+        "data": "",
+        "stock": 2,
+        "sku": "W-SA002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "strappy-beach-sandals-10",
+        "price": 23.5,
+        "product_id": "strappy-beach-sandals",
+        "data": "",
+        "stock": 9,
+        "sku": "W-SA002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "fashion-wedge-sandals-8",
+        "price": 28.99,
+        "product_id": "fashion-wedge-sandals",
+        "data": "",
+        "stock": 17,
+        "sku": "W-SA003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "fashion-wedge-sandals-8.5",
+        "price": 28.99,
+        "product_id": "fashion-wedge-sandals",
+        "data": "",
+        "stock": 46,
+        "sku": "W-SA003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-wedge-sandals-9",
+        "price": 28.99,
+        "product_id": "fashion-wedge-sandals",
+        "data": "",
+        "stock": 37,
+        "sku": "W-SA003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "fashion-wedge-sandals-9.5",
+        "price": 28.99,
+        "product_id": "fashion-wedge-sandals",
+        "data": "",
+        "stock": 21,
+        "sku": "W-SA003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-wedge-sandals-10",
+        "price": 28.99,
+        "product_id": "fashion-wedge-sandals",
+        "data": "",
+        "stock": 10,
+        "sku": "W-SA003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "lace-up-combat-boots-8",
+        "price": 26.5,
+        "product_id": "lace-up-combat-boots",
+        "data": "",
+        "stock": -1,
+        "sku": "W-BO002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "lace-up-combat-boots-8.5",
+        "price": 26.5,
+        "product_id": "lace-up-combat-boots",
+        "data": "",
+        "stock": 0,
+        "sku": "W-BO002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "lace-up-combat-boots-9",
+        "price": 26.5,
+        "product_id": "lace-up-combat-boots",
+        "data": "",
+        "stock": 16,
+        "sku": "W-BO002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "lace-up-combat-boots-9.5",
+        "price": 26.5,
+        "product_id": "lace-up-combat-boots",
+        "data": "",
+        "stock": 37,
+        "sku": "W-BO002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "lace-up-combat-boots-10",
+        "price": 26.5,
+        "product_id": "lace-up-combat-boots",
+        "data": "",
+        "stock": 34,
+        "sku": "W-BO002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "fashion-knee-high-boots-8",
+        "price": 29.99,
+        "product_id": "fashion-knee-high-boots",
+        "data": "",
+        "stock": 32,
+        "sku": "W-BO003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "fashion-knee-high-boots-8.5",
+        "price": 29.99,
+        "product_id": "fashion-knee-high-boots",
+        "data": "",
+        "stock": 14,
+        "sku": "W-BO003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-knee-high-boots-9",
+        "price": 29.99,
+        "product_id": "fashion-knee-high-boots",
+        "data": "",
+        "stock": 34,
+        "sku": "W-BO003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "fashion-knee-high-boots-9.5",
+        "price": 29.99,
+        "product_id": "fashion-knee-high-boots",
+        "data": "",
+        "stock": 10,
+        "sku": "W-BO003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-knee-high-boots-10",
+        "price": 29.99,
+        "product_id": "fashion-knee-high-boots",
+        "data": "",
+        "stock": 12,
+        "sku": "W-BO003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "platform-slip-on-shoes-8",
+        "price": 28.99,
+        "product_id": "platform-slip-on-shoes",
+        "data": "",
+        "stock": 31,
+        "sku": "W-PS001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "platform-slip-on-shoes-8.5",
+        "price": 28.99,
+        "product_id": "platform-slip-on-shoes",
+        "data": "",
+        "stock": 30,
+        "sku": "W-PS001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "platform-slip-on-shoes-9",
+        "price": 28.99,
+        "product_id": "platform-slip-on-shoes",
+        "data": "",
+        "stock": 4,
+        "sku": "W-PS001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "platform-slip-on-shoes-9.5",
+        "price": 28.99,
+        "product_id": "platform-slip-on-shoes",
+        "data": "",
+        "stock": 18,
+        "sku": "W-PS001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "platform-slip-on-shoes-10",
+        "price": 28.99,
+        "product_id": "platform-slip-on-shoes",
+        "data": "",
+        "stock": 45,
+        "sku": "W-PS001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "chunky-heel-platform-sandals-8",
+        "price": 29.5,
+        "product_id": "chunky-heel-platform-sandals",
+        "data": "",
+        "stock": 3,
+        "sku": "W-PS002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "chunky-heel-platform-sandals-8.5",
+        "price": 29.5,
+        "product_id": "chunky-heel-platform-sandals",
+        "data": "",
+        "stock": 20,
+        "sku": "W-PS002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "chunky-heel-platform-sandals-9",
+        "price": 29.5,
+        "product_id": "chunky-heel-platform-sandals",
+        "data": "",
+        "stock": 10,
+        "sku": "W-PS002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "chunky-heel-platform-sandals-9.5",
+        "price": 29.5,
+        "product_id": "chunky-heel-platform-sandals",
+        "data": "",
+        "stock": 14,
+        "sku": "W-PS002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "chunky-heel-platform-sandals-10",
+        "price": 29.5,
+        "product_id": "chunky-heel-platform-sandals",
+        "data": "",
+        "stock": 6,
+        "sku": "W-PS002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "lace-up-platform-boots-8",
+        "price": 31.99,
+        "product_id": "lace-up-platform-boots",
+        "data": "",
+        "stock": 5,
+        "sku": "W-PS003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "lace-up-platform-boots-8.5",
+        "price": 31.99,
+        "product_id": "lace-up-platform-boots",
+        "data": "",
+        "stock": 11,
+        "sku": "W-PS003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "lace-up-platform-boots-9",
+        "price": 31.99,
+        "product_id": "lace-up-platform-boots",
+        "data": "",
+        "stock": -1,
+        "sku": "W-PS003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "lace-up-platform-boots-9.5",
+        "price": 31.99,
+        "product_id": "lace-up-platform-boots",
+        "data": "",
+        "stock": 41,
+        "sku": "W-PS003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "lace-up-platform-boots-10",
+        "price": 31.99,
+        "product_id": "lace-up-platform-boots",
+        "data": "",
+        "stock": 48,
+        "sku": "W-PS003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "suede-tassel-loafers-8",
+        "price": 26.5,
+        "product_id": "suede-tassel-loafers",
+        "data": "",
+        "stock": 0,
+        "sku": "M-LO002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "suede-tassel-loafers-8.5",
+        "price": 26.5,
+        "product_id": "suede-tassel-loafers",
+        "data": "",
+        "stock": 0,
+        "sku": "M-LO002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "suede-tassel-loafers-9",
+        "price": 26.5,
+        "product_id": "suede-tassel-loafers",
+        "data": "",
+        "stock": 4,
+        "sku": "M-LO002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "suede-tassel-loafers-9.5",
+        "price": 26.5,
+        "product_id": "suede-tassel-loafers",
+        "data": "",
+        "stock": 11,
+        "sku": "M-LO002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "suede-tassel-loafers-10",
+        "price": 26.5,
+        "product_id": "suede-tassel-loafers",
+        "data": "",
+        "stock": 27,
+        "sku": "M-LO002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "fashion-slip-on-loafers-8",
+        "price": 29.99,
+        "product_id": "fashion-slip-on-loafers",
+        "data": "",
+        "stock": 32,
+        "sku": "M-LO003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "fashion-slip-on-loafers-8.5",
+        "price": 29.99,
+        "product_id": "fashion-slip-on-loafers",
+        "data": "",
+        "stock": 16,
+        "sku": "M-LO003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-slip-on-loafers-9",
+        "price": 29.99,
+        "product_id": "fashion-slip-on-loafers",
+        "data": "",
+        "stock": 2,
+        "sku": "M-LO003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "fashion-slip-on-loafers-9.5",
+        "price": 29.99,
+        "product_id": "fashion-slip-on-loafers",
+        "data": "",
+        "stock": 1,
+        "sku": "M-LO003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-slip-on-loafers-10",
+        "price": 29.99,
+        "product_id": "fashion-slip-on-loafers",
+        "data": "",
+        "stock": 34,
+        "sku": "M-LO003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-1-8",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals-1",
+        "data": "",
+        "stock": 19,
+        "sku": "M-SA001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-1-8.5",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals-1",
+        "data": "",
+        "stock": 17,
+        "sku": "M-SA001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-1-9",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals-1",
+        "data": "",
+        "stock": 42,
+        "sku": "M-SA001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-1-9.5",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals-1",
+        "data": "",
+        "stock": 14,
+        "sku": "M-SA001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "casual-slide-sandals-1-10",
+        "price": 19.99,
+        "product_id": "casual-slide-sandals-1",
+        "data": "",
+        "stock": 39,
+        "sku": "M-SA001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "sporty-outdoor-sandals-8",
+        "price": 23.5,
+        "product_id": "sporty-outdoor-sandals",
+        "data": "",
+        "stock": 39,
+        "sku": "M-SA002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "sporty-outdoor-sandals-8.5",
+        "price": 23.5,
+        "product_id": "sporty-outdoor-sandals",
+        "data": "",
+        "stock": 28,
+        "sku": "M-SA002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "sporty-outdoor-sandals-9",
+        "price": 23.5,
+        "product_id": "sporty-outdoor-sandals",
+        "data": "",
+        "stock": 41,
+        "sku": "M-SA002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "sporty-outdoor-sandals-9.5",
+        "price": 23.5,
+        "product_id": "sporty-outdoor-sandals",
+        "data": "",
+        "stock": 2,
+        "sku": "M-SA002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "sporty-outdoor-sandals-10",
+        "price": 23.5,
+        "product_id": "sporty-outdoor-sandals",
+        "data": "",
+        "stock": 0,
+        "sku": "M-SA002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "fashion-flip-flops-8",
+        "price": 21.99,
+        "product_id": "fashion-flip-flops",
+        "data": "",
+        "stock": 5,
+        "sku": "M-SA003-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "fashion-flip-flops-8.5",
+        "price": 21.99,
+        "product_id": "fashion-flip-flops",
+        "data": "",
+        "stock": 26,
+        "sku": "M-SA003-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-flip-flops-9",
+        "price": 21.99,
+        "product_id": "fashion-flip-flops",
+        "data": "",
+        "stock": 4,
+        "sku": "M-SA003-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "fashion-flip-flops-9.5",
+        "price": 21.99,
+        "product_id": "fashion-flip-flops",
+        "data": "",
+        "stock": 3,
+        "sku": "M-SA003-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "fashion-flip-flops-10",
+        "price": 21.99,
+        "product_id": "fashion-flip-flops",
+        "data": "",
+        "stock": 7,
+        "sku": "M-SA003-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "classic-leather-boots-8",
+        "price": 27.99,
+        "product_id": "classic-leather-boots",
+        "data": "",
+        "stock": 4,
+        "sku": "M-BO001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "classic-leather-boots-8.5",
+        "price": 27.99,
+        "product_id": "classic-leather-boots",
+        "data": "",
+        "stock": 51,
+        "sku": "M-BO001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "classic-leather-boots-9",
+        "price": 27.99,
+        "product_id": "classic-leather-boots",
+        "data": "",
+        "stock": 45,
+        "sku": "M-BO001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "classic-leather-boots-9.5",
+        "price": 27.99,
+        "product_id": "classic-leather-boots",
+        "data": "",
+        "stock": 48,
+        "sku": "M-BO001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "classic-leather-boots-10",
+        "price": 27.99,
+        "product_id": "classic-leather-boots",
+        "data": "",
+        "stock": 3,
+        "sku": "M-BO001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "stylish-chelsea-boots-8",
+        "price": 26.5,
+        "product_id": "stylish-chelsea-boots",
+        "data": "",
+        "stock": 1,
+        "sku": "M-BO002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "stylish-chelsea-boots-8.5",
+        "price": 26.5,
+        "product_id": "stylish-chelsea-boots",
+        "data": "",
+        "stock": 41,
+        "sku": "M-BO002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "stylish-chelsea-boots-9",
+        "price": 26.5,
+        "product_id": "stylish-chelsea-boots",
+        "data": "",
+        "stock": 30,
+        "sku": "M-BO002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "stylish-chelsea-boots-9.5",
+        "price": 26.5,
+        "product_id": "stylish-chelsea-boots",
+        "data": "",
+        "stock": 32,
+        "sku": "M-BO002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "stylish-chelsea-boots-10",
+        "price": 26.5,
+        "product_id": "stylish-chelsea-boots",
+        "data": "",
+        "stock": 0,
+        "sku": "M-BO002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "sporty-mens-sneakers-8",
+        "price": 25.99,
+        "product_id": "sporty-mens-sneakers",
+        "data": "",
+        "stock": 20,
+        "sku": "M-SN001-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "sporty-mens-sneakers-8.5",
+        "price": 25.99,
+        "product_id": "sporty-mens-sneakers",
+        "data": "",
+        "stock": 31,
+        "sku": "M-SN001-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "sporty-mens-sneakers-9",
+        "price": 25.99,
+        "product_id": "sporty-mens-sneakers",
+        "data": "",
+        "stock": 44,
+        "sku": "M-SN001-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "sporty-mens-sneakers-9.5",
+        "price": 25.99,
+        "product_id": "sporty-mens-sneakers",
+        "data": "",
+        "stock": 3,
+        "sku": "M-SN001-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "sporty-mens-sneakers-10",
+        "price": 25.99,
+        "product_id": "sporty-mens-sneakers",
+        "data": "",
+        "stock": 9,
+        "sku": "M-SN001-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
+        ]
+    },
+    {
+        "slug": "classic-canvas-sneakers-8",
+        "price": 22.5,
+        "product_id": "classic-canvas-sneakers",
+        "data": "",
+        "stock": 13,
+        "sku": "M-SN002-8",
+        "description": "",
+        "attribute_options": [
+            "option-8-1"
+        ]
+    },
+    {
+        "slug": "classic-canvas-sneakers-8.5",
+        "price": 22.5,
+        "product_id": "classic-canvas-sneakers",
+        "data": "",
+        "stock": 17,
+        "sku": "M-SN002-8.5",
+        "description": "",
+        "attribute_options": [
+            "option-8.5-1"
+        ]
+    },
+    {
+        "slug": "classic-canvas-sneakers-9",
+        "price": 22.5,
+        "product_id": "classic-canvas-sneakers",
+        "data": "",
+        "stock": 28,
+        "sku": "M-SN002-9",
+        "description": "",
+        "attribute_options": [
+            "option-9-1"
+        ]
+    },
+    {
+        "slug": "classic-canvas-sneakers-9.5",
+        "price": 22.5,
+        "product_id": "classic-canvas-sneakers",
+        "data": "",
+        "stock": 19,
+        "sku": "M-SN002-9.5",
+        "description": "",
+        "attribute_options": [
+            "option-9.5-1"
+        ]
+    },
+    {
+        "slug": "classic-canvas-sneakers-10",
+        "price": 22.5,
+        "product_id": "classic-canvas-sneakers",
+        "data": "",
+        "stock": 4,
+        "sku": "M-SN002-10",
+        "description": "",
+        "attribute_options": [
+            "option-10-1"
         ]
     }
 ]

@@ -1,20 +1,32 @@
-const productId = "casual-crew-neck-t-shirt"
-const sku = "M-T003"
-const price = 14.99
+const productId = "classic-canvas-sneakers"
+const sku = "M-SN002"
+const price = 22.5
 const attributeOptions = [
+    // [
+    //     "white",
+    //     "brightblue",
+    //     "brightgreen",
+    //     "brightorange",
+    // ],
+    // [
+    //     "8",
+    //     "9",
+    //     "10",
+    // ],
     [
-        "white",
-        "brightblue",
-        "brightgreen",
-        "brightorange",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
     ],
-    [
-        "xs",
-        "s",
-        "m",
-        "l",
-        "xl",
-    ]
+    // [
+    //     "xs",
+    //     "s",
+    //     "m",
+    //     "l",
+    //     "xl",
+    // ]
 ]
 
 function getRandomInt(min, max) {
@@ -58,20 +70,21 @@ const getCombinationDataset = (el1, el2 = null) => {
     }
 }
 const getCombinations = () => {
-    attributeOptions[0].forEach((el1) => {
+    if (attributeOptions.length === 2) {
+        attributeOptions[0].forEach((el1) => {
             attributeOptions[1].forEach((el2) => {
                 combinations.push(getCombinationDataset(el1, el2))
             })
+        })
+    } else {
+        attributeOptions[0].forEach((el1) => {
+            combinations.push(getCombinationDataset(el1))
+        })
     }
-    )
 }
 
 const getVariants = (attributeOptions) => {
-    if (attributeOptions.length === 2) {
         getCombinations()
-    } else {
-        combinations = [...attributeOptions[0]]
-    }
     // attributeOptions.map(getVariant)
     console.log(combinations)
 }

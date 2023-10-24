@@ -16,6 +16,7 @@ use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -47,7 +48,11 @@ class TestStore1Seeder extends Seeder
             if ($hasId) {
                 $row['id'] = (string)Str::orderedUuid();
             }
+            try {
             DB::table($table)->insert([$row]);
+            } catch (QueryException $exception) {
+                dd($row);
+            }
         }
         return true;
     }
@@ -86,8 +91,17 @@ class TestStore1Seeder extends Seeder
 
                     if (str_contains($b, "able_id")) {
                         $type = str_replace("_id", "_type", $b);
-                        $model = $row[$type];
-                        $a = ($model::where('slug', $a)->first())->id;
+                        $modelClass = $row[$type];
+                        $model = ($modelClass::where('slug', $a)->first());
+                        if ($model) {
+                            $a = $model->id;
+                        } else {
+                            dd($a, $b, $modelClass);
+                        }
+                    }
+
+                    if (str_contains($b, "url")) {
+                        $a = config('app.url') . $a;
                     }
 
                 } elseif (is_array($a)) {
@@ -173,7 +187,7 @@ class TestStore1Seeder extends Seeder
         $this->importPivotRecords('product_attribute_product_variant', json_decode($data, true), true);
 
         // Import file contents
-//        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/file-contents.json");
-//        $this->importRecords(FileContent::class, json_decode($data, true));
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/file-contents.json");
+        $this->importRecords(FileContent::class, json_decode($data, true));
     }
 }
