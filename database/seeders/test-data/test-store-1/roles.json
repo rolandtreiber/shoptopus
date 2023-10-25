@@ -1,0 +1,22 @@
+[
+    {
+        "name": "super_admin",
+        "guard_name": "api"
+    },
+    {
+        "name": "admin",
+        "guard_name": "api"
+    },
+    {
+        "name": "store_manager",
+        "guard_name": "api"
+    },
+    {
+        "name": "store_assistant",
+        "guard_name": "api"
+    },
+    {
+        "name": "customer",
+        "guard_name": "api"
+    }
+]

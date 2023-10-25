@@ -2,10 +2,18 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
+use App\Models\Banner;
+use App\Models\Cart;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\DiscountRule;
 use App\Models\FileContent;
+use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\Payment;
+use App\Models\PaymentProvider\PaymentProvider;
+use App\Models\PaymentSource;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductAttributeOption;
@@ -13,31 +21,50 @@ use App\Models\ProductCategory;
 use App\Models\ProductProductCategory;
 use App\Models\ProductTag;
 use App\Models\ProductVariant;
+use App\Models\User;
 use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\QueryException;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification as NotificationFacade;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use stdClass;
 
 class TestStore1Seeder extends Seeder
 {
     private TranslationService $translationService;
+
     public function __construct(
         TranslationService $translationService
-    ) {
+    )
+    {
         $this->translationService = $translationService;
     }
 
     private function importPivotRecords(string $table, array $data, bool $hasId = false): bool
     {
         foreach ($data as $row) {
-            array_walk($row, function(&$a, $b) {
-                if (str_contains($b, "_id") && $b !== "parent_id") {
-                    $modelClass = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+            array_walk($row, function (&$a, $b) use ($row) {
+                if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "model_id" && $b !== "role_id" && $b !== "permission_id") {
+                    if ($a !== null) {
+                        $modelClass = "App\\Models\\" . str_replace("Id", "", str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                        $model = ($modelClass::where('slug', $a)->first());
+                        if ($model) {
+                            $a = $model->id;
+                        } else {
+                            dd($a, $b, $modelClass);
+                        }
+                    }
+                }
+
+                if (str_contains($b, "model_id")) {
+                    $type = str_replace("_id", "_type", $b);
+                    $modelClass = $row[$type];
                     $model = ($modelClass::where('slug', $a)->first());
                     if ($model) {
                         $a = $model->id;
@@ -45,12 +72,14 @@ class TestStore1Seeder extends Seeder
                         dd($a, $b, $modelClass);
                     }
                 }
+
+
             });
             if ($hasId) {
                 $row['id'] = (string)Str::orderedUuid();
             }
             try {
-            DB::table($table)->insert([$row]);
+                DB::table($table)->insert([$row]);
             } catch (QueryException $exception) {
                 dd($row);
             }
@@ -58,7 +87,7 @@ class TestStore1Seeder extends Seeder
         return true;
     }
 
-    private function importRecords(string $model, array $data): bool
+    private function importRecords(string $model, array $data, $needsIdPopulated = true): bool
     {
         $availableLanguages = array_keys(array_diff_key(config('app.locales_supported'), array_flip(["en"])));
         foreach ($data as $row) {
@@ -67,9 +96,11 @@ class TestStore1Seeder extends Seeder
             } else {
                 $sanitised = $row;
             }
+            if ($needsIdPopulated) {
                 $sanitised['id'] = (string)Str::orderedUuid();
-                $sanitised['created_at'] = Carbon::now();
-            array_walk($sanitised, function(&$a, $b) use ($availableLanguages, $row) {
+            }
+            $sanitised['created_at'] = Carbon::now();
+            array_walk($sanitised, function (&$a, $b) use ($availableLanguages, $row) {
                 $value = $a;
                 if (is_string($a)) {
                     if (str_contains($a, "(T)")) {
@@ -80,8 +111,8 @@ class TestStore1Seeder extends Seeder
                         $a = $translatables;
                     }
 
-                    if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "fileable_id") {
-                        $modelClass = "App\\Models\\".str_replace("Id", "",  str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
+                    if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "fileable_id" && $b !== "source_id" && $b !== "payable_id" && $b !== "stripe_user_id" && $b !== "payment_method_id") {
+                        $modelClass = "App\\Models\\" . str_replace("Id", "", str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
                         $model = ($modelClass::where('slug', $a)->first());
                         if ($model) {
                             $a = $model->id;
@@ -101,7 +132,13 @@ class TestStore1Seeder extends Seeder
                         }
                     }
 
-                    if (str_contains($b, "url")) {
+                    if (str_contains($b, "password")) {
+                        $a = bcrypt($a);
+                    }
+
+                    if (str_contains($b, "button_url")) {
+                        $a = config('app.frontend_url_public') . $a;
+                    } else if (str_contains($b, "url")) {
                         $a = config('app.url') . $a;
                     }
 
@@ -116,7 +153,7 @@ class TestStore1Seeder extends Seeder
                             }
                         }, $a);
                     } else {
-                        array_walk($a, function(&$val, $key) {
+                        array_walk($a, function (&$val, $key) {
                             if ($key === "url") {
                                 $val = config('app.url') . $val;
                             }
@@ -143,6 +180,33 @@ class TestStore1Seeder extends Seeder
      */
     public function run(): void
     {
+        Mail::fake();
+        NotificationFacade::fake();
+
+        // Import roles
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/roles.json");
+        $this->importRecords(Role::class, json_decode($data, true), false);
+
+        // Import permissions
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/permissions.json");
+        $this->importRecords(Permission::class, json_decode($data, true), false);
+
+        // Import payment providers
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/payment-providers.json");
+        $this->importRecords(PaymentProvider::class, json_decode($data, true), false);
+
+        // Import role has permissions (pivot)
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/role-has-permissions.json");
+        $this->importPivotRecords('role_has_permissions', json_decode($data, true));
+
+        // Import users
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/users.json");
+        $this->importRecords(User::class, json_decode($data, true));
+
+        // Import product product categories (pivot)
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/model-has-roles.json");
+        $this->importPivotRecords('model_has_roles', json_decode($data, true));
+
         // Import product categories
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/product-categories.json");
         $this->importRecords(ProductCategory::class, json_decode($data, true));
@@ -195,9 +259,41 @@ class TestStore1Seeder extends Seeder
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/discount-rule-product-category.json");
         $this->importPivotRecords('discount_rule_product_category', json_decode($data, true));
 
+        // Import banners
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/banners.json");
+        $this->importRecords(Banner::class, json_decode($data, true));
+
         // Import file contents
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/file-contents.json");
         $this->importRecords(FileContent::class, json_decode($data, true));
+
+        // Import addresses
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/addresses.json");
+        $this->importRecords(Address::class, json_decode($data, true));
+
+        // Import payment sources
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/payment-sources.json");
+        $this->importRecords(PaymentSource::class, json_decode($data, true));
+
+        // Import orders
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/orders.json");
+        $this->importRecords(Order::class, json_decode($data, true));
+
+        // Import order products
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/order-products.json");
+        $this->importRecords(OrderProduct::class, json_decode($data, true));
+
+        // Import payments
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/payments.json");
+        $this->importRecords(Payment::class, json_decode($data, true));
+
+        // Import carts
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/carts.json");
+        $this->importRecords(Cart::class, json_decode($data, true));
+
+        // Import cart products
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/cart-products.json");
+        $this->importPivotRecords('cart_product', json_decode($data, true));
 
     }
 }

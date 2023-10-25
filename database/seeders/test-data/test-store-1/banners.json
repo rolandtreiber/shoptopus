@@ -1,0 +1,38 @@
+[
+    {
+        "title": "(T)Chic Styles for Modern Women - Explore Our Latest Collection!",
+        "description": "(T)Discover trendy ladies' clothing, perfect for every occasion. Shop now for the latest fashion must-haves!",
+        "show_button": true,
+        "enabled": 1,
+        "button_text": "(T)Discover",
+        "button_url": "/categories/womans-clothing-1",
+        "background_image": {
+            "url": "/sample-store-data/sample-store-1/banner-1.jpg",
+            "file_name": "banner-1.jpg"
+        }
+    },
+    {
+        "title": "(T)Step Up Your Style with Men's Sneakers - Get the Hottest Kicks Now!",
+        "description": "(T)Elevate your footwear game with our latest men's sneakers collection. Comfort and style in every step. Shop now!",
+        "show_button": true,
+        "enabled": 1,
+        "button_text": "(T)Check it out",
+        "button_url": "/categories/mens-footwear-sneakers-1",
+        "background_image": {
+            "url": "/sample-store-data/sample-store-1/banner-2.jpg",
+            "file_name": "banner-2.jpg"
+        }
+    },
+    {
+        "title": "(T)£2 off from all men's accessories!",
+        "description": "(T)Save more on ties, jewellery and sunglasses!",
+        "show_button": true,
+        "enabled": 1,
+        "button_text": "(T)Check it out",
+        "button_url": "/categories/mens-accessories-1",
+        "background_image": {
+            "url": "/sample-store-data/sample-store-1/banner-3.jpg",
+            "file_name": "banner-3.jpg"
+        }
+    }
+]

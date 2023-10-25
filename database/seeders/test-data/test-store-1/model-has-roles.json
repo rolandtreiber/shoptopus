@@ -1,0 +1,112 @@
+[
+  {
+    "role_id": 1,
+    "model_type": "App\\Models\\User",
+    "model_id": "imogen-edwards"
+  },
+  {
+    "role_id": 2,
+    "model_type": "App\\Models\\User",
+    "model_id": "rebecca-price"
+  },
+  {
+    "role_id": 3,
+    "model_type": "App\\Models\\User",
+    "model_id": "emma-morgan"
+  },
+  {
+    "role_id": 4,
+    "model_type": "App\\Models\\User",
+    "model_id": "laura-harrison"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "darren-hall"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "alice-cooper"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "jackson-khan"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "eleanor-holmes"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "ian-cox"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "florence-cox"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "samuel-murphy"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "jodie-johnson"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "jordan-adams"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "gavin-holmes"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "lucy-martin"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "ashley-shaw"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "tiffany-roberts"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "rosie-cook"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "charles-shaw"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "rosie-thomas"
+  },
+  {
+    "role_id": 5,
+    "model_type": "App\\Models\\User",
+    "model_id": "charlotte-lewis"
+  },
+  {
+    "role_id": 1,
+    "model_type": "App\\Models\\User",
+    "model_id": "charlotte-lewis"
+  }
+]

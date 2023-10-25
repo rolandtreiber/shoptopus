@@ -26,7 +26,7 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
         $userIds = User::role('customer')->pluck('id');
-        $products = Product::count();
+        $products = Product::where('status', ProductStatus::Active)->count();
         $productIds = DB::table('products')->where('status', ProductStatus::Active)->pluck('id')->toArray();
 
         $ordersToCreate = random_int(10, 15);

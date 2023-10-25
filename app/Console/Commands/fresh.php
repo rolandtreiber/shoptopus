@@ -3,6 +3,13 @@
 namespace App\Console\Commands;
 
 use App\Models\Product;
+use Database\Seeders\DatabaseSeeder;
+use Database\Seeders\PaymentProviderSeeder;
+use Database\Seeders\RoleSeeder;
+use Database\Seeders\TestData\AddressSeeder;
+use Database\Seeders\TestData\CartSeeder;
+use Database\Seeders\TestData\OrderSeeder;
+use Database\Seeders\TestStore1Seeder;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Artisan;
@@ -14,7 +21,7 @@ class fresh extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:fresh {--seed}';
+    protected $signature = 'shop:fresh {--seed} {--random}';
 
     /**
      * The console command description.
@@ -32,12 +39,18 @@ class fresh extends Command
         $file->cleanDirectory('public/uploads');
         $file->cleanDirectory('storage/app/paid');
         $seed = $this->option('seed');
+        $random = $this->option('random');
         $this->call('db:wipe', ['--database' => 'logs']);
         if ($seed !== true) {
             $this->call('migrate:fresh');
             $this->info('Database refreshed');
         } else {
-            $this->call('migrate:fresh', ['--seed' => true]);
+            if ($random !== true) {
+                $this->call('migrate:fresh');
+                $this->call('db:seed', ['--class' => "TestStore1Seeder"]);
+            } else {
+                $this->call('migrate:fresh', ['--seed' => true]);
+            }
             $this->info('Database refreshed and seeded');
         }
         $this->call('scout:flush', ['model' => Product::class]);

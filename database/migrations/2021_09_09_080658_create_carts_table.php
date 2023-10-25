@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->unique()->primary();
             $table->foreignUuid('user_id')->nullable()->constrained()->nullOnDelete();
             $table->string('ip_address', 100)->nullable();
+            $table->string('slug');
             $table->timestamps();
         });
 

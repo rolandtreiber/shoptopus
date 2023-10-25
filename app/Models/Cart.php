@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed $user_id
@@ -22,7 +24,7 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
  */
 class Cart extends Model implements Auditable, Exportable
 {
-    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, HasExportable;
+    use HasFactory, HasUUID, \OwenIt\Auditing\Auditable, HasExportable, HasSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +45,16 @@ class Cart extends Model implements Auditable, Exportable
         'id' => 'string',
         'user_id' => 'string',
     ];
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom(['user.name'])
+            ->saveSlugsTo('slug');
+    }
 
     public function user(): BelongsTo
     {

@@ -1,0 +1,443 @@
+[
+    {
+        "first_name": "Imogen",
+        "last_name": "Edwards",
+        "email": "superadmin@m.com",
+        "password": "shop",
+        "name": "Miss Imogen Edwards",
+        "initials": "IE",
+        "prefix": "MR",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar5.jpg",
+            "file_name": "avatar5.jpg"
+        },
+        "email_verified_at": "2023-10-25 09:00:25",
+        "client_ref": "FJEBEGGR",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "imogen-edwards",
+        "last_seen": "2023-10-25 09:09:20",
+        "remember_token": null
+    },
+    {
+        "first_name": "Rebecca",
+        "last_name": "Price",
+        "email": "admin@m.com",
+        "password": "shop",
+        "name": "MR Rebecca Price",
+        "initials": "RP",
+        "prefix": "MRS",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar4.jpg",
+            "file_name": "avatar4.jpg"
+        },
+        "email_verified_at": "2023-10-25 09:00:25",
+        "client_ref": "3H937C4S",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "rebecca-price",
+        "last_seen": "2023-10-25 09:00:25",
+        "remember_token": null
+    },
+    {
+        "first_name": "Emma",
+        "last_name": "Morgan",
+        "email": "storemanager@m.com",
+        "password": "shop",
+        "name": "MR Emma Morgan",
+        "initials": "EM",
+        "prefix": "Miss",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar11.jpg",
+            "file_name": "avatar11.jpg"
+        },
+        "email_verified_at": "2023-10-25 09:00:25",
+        "client_ref": "NMQQ1SKY",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "emma-morgan",
+        "last_seen": "2023-10-25 09:00:25",
+        "remember_token": null
+    },
+    {
+        "first_name": "Laura",
+        "last_name": "Harrison",
+        "email": "storeassistant@m.com",
+        "password": "shop",
+        "name": "Jr Laura Harrison",
+        "initials": "LH",
+        "prefix": "",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar13.jpg",
+            "file_name": "avatar13.jpg"
+        },
+        "email_verified_at": "2023-10-25 09:00:25",
+        "client_ref": "ZB6TUI27",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "laura-harrison",
+        "last_seen": "2023-10-25 09:00:25",
+        "remember_token": null
+    },
+    {
+        "first_name": "Darren",
+        "last_name": "Hall",
+        "email": "customer1@m.com",
+        "password": "shop",
+        "name": "MRs Darren Hall",
+        "initials": "DH",
+        "prefix": "MR",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar14.jpg",
+            "file_name": "avatar14.jpg"
+        },
+        "email_verified_at": "2023-10-25 09:00:25",
+        "client_ref": "72P0P3QG",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "darren-hall",
+        "last_seen": "2023-10-25 09:00:25",
+        "remember_token": null
+    },
+    {
+        "first_name": "Alice",
+        "last_name": "Cooper",
+        "email": "customer2@m.com",
+        "password": "shop",
+        "name": "Alice Cooper",
+        "initials": "AC",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar9.jpg",
+            "file_name": "avatar9.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "FWFIB1EK",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "alice-cooper",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Jackson",
+        "last_name": "Khan",
+        "email": "customer3@m.com",
+        "password": "shop",
+        "name": "Jackson Khan",
+        "initials": "JK",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar7.jpg",
+            "file_name": "avatar7.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "PZJ17REV",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "jackson-khan",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Eleanor",
+        "last_name": "Holmes",
+        "email": "customer4@m.com",
+        "password": "shop",
+        "name": "Eleanor Holmes",
+        "initials": "EH",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar15.jpg",
+            "file_name": "avatar15.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "OSEGEOIF",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "eleanor-holmes",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Ian",
+        "last_name": "Cox",
+        "email": "customer5@m.com",
+        "password": "shop",
+        "name": "Ian Cox",
+        "initials": "IC",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar10.jpg",
+            "file_name": "avatar10.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "76HTW2XY",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "ian-cox",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Florence",
+        "last_name": "Cox",
+        "email": "customer6@m.com",
+        "password": "shop",
+        "name": "Florence Cox",
+        "initials": "FC",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar13.jpg",
+            "file_name": "avatar13.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "C1M6N2CO",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "florence-cox",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Samuel",
+        "last_name": "Murphy",
+        "email": "customer7@m.com",
+        "password": "shop",
+        "name": "Samuel Murphy",
+        "initials": "SM",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar16.jpg",
+            "file_name": "avatar16.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "YPXELRWN",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "samuel-murphy",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Jodie",
+        "last_name": "Johnson",
+        "email": "customer8@m.com",
+        "password": "shop",
+        "name": "Jodie Johnson",
+        "initials": "JJ",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar4.jpg",
+            "file_name": "avatar4.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "595KRYLT",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "jodie-johnson",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Jordan",
+        "last_name": "Adams",
+        "email": "customer9@m.com",
+        "password": "shop",
+        "name": "Jordan Adams",
+        "initials": "JA",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar8.jpg",
+            "file_name": "avatar8.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "6BO10PYL",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "jordan-adams",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Gavin",
+        "last_name": "Holmes",
+        "email": "customer10@m.com",
+        "password": "shop",
+        "name": "Gavin Holmes",
+        "initials": "GH",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar12.jpg",
+            "file_name": "avatar12.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "AREIMH1Q",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "gavin-holmes",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Lucy",
+        "last_name": "Martin",
+        "email": "customer11@m.com",
+        "password": "shop",
+        "name": "Lucy Martin",
+        "initials": "LM",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar3.jpg",
+            "file_name": "avatar3.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "9B99MVY3",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "lucy-martin",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Ashley",
+        "last_name": "Shaw",
+        "email": "customer12@m.com",
+        "password": "shop",
+        "name": "Ashley Shaw",
+        "initials": "AS",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar2.jpg",
+            "file_name": "avatar2.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "CC8VSMH5",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "ashley-shaw",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Tiffany",
+        "last_name": "Roberts",
+        "email": "customer13@m.com",
+        "password": "shop",
+        "name": "Tiffany Roberts",
+        "initials": "TR",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar1.jpg",
+            "file_name": "avatar1.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "Y9Y2U847",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "tiffany-roberts",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Rosie",
+        "last_name": "Cook",
+        "email": "customer14@m.com",
+        "password": "shop",
+        "name": "Rosie Cook",
+        "initials": "RC",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar11.jpg",
+            "file_name": "avatar11.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "ADAJZNFB",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "rosie-cook",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Charles",
+        "last_name": "Shaw",
+        "email": "customer15@m.com",
+        "password": "shop",
+        "name": "Charles Shaw",
+        "initials": "CS",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar14.jpg",
+            "file_name": "avatar14.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "S44EOGOJ",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "charles-shaw",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Rosie",
+        "last_name": "Thomas",
+        "email": "customer16@m.com",
+        "password": "shop",
+        "name": "Rosie Thomas",
+        "initials": "RT",
+        "prefix": null,
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar15.jpg",
+            "file_name": "avatar15.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "5T98NKL5",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "rosie-thomas",
+        "last_seen": "2023-10-25 09:00:26",
+        "remember_token": null
+    },
+    {
+        "first_name": "Roland",
+        "last_name": "Treiber",
+        "email": "rolandtreiber@gmail.com",
+        "password": "shop",
+        "name": "Roland Treiber",
+        "initials": "RT",
+        "prefix": "MR",
+        "phone": null,
+        "avatar": {
+            "url": "/sample-store-data/avatars/avatar16.jpg",
+            "file_name": "avatar16.jpg"
+        },
+        "email_verified_at": null,
+        "client_ref": "XSF259EQ",
+        "temporary": 0,
+        "is_favorite": 0,
+        "slug": "charlotte-lewis",
+        "last_seen": "2023-10-25 09:00:27",
+        "remember_token": null
+    }
+]

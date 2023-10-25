@@ -1,0 +1,418 @@
+[
+    {
+        "name": "users.can.invite",
+        "guard_name": "api"
+    },
+    {
+        "name": "users.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "users.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "users.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "users.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "products.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "products.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "products.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "products.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "products.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.variants.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.variants.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.variants.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.variants.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.variants.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.categories.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.categories.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.categories.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.categories.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.categories.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attributes.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attributes.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attributes.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attributes.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attributes.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attribute.options.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attribute.options.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attribute.options.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attribute.options.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.attribute.options.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.tags.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.tags.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.tags.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.tags.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "product.tags.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "orders.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "orders.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "orders.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "orders.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "orders.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "discount.rules.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "discount.rules.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "discount.rules.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "discount.rules.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "discount.rules.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "voucher.codes.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "voucher.codes.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "voucher.codes.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "voucher.codes.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "voucher.codes.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.types.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.types.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.types.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.types.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.types.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.rules.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.rules.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.rules.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.rules.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "delivery.rules.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "customers.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "customers.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "customers.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "customers.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "customers.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "payments.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "payments.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "payments.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "payments.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "payments.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "notes.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "notes.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "notes.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "notes.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "notes.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "ratings.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "ratings.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "ratings.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "ratings.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "ratings.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "banners.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "banners.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "banners.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "banners.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "banners.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "files.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "files.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "files.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "files.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "files.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "paid.files.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "paid.files.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "paid.files.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "paid.files.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "paid.files.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "reports.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "reports.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "reports.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "reports.can.delete",
+        "guard_name": "api"
+    },
+    {
+        "name": "reports.can.update",
+        "guard_name": "api"
+    },
+    {
+        "name": "emails.can.see",
+        "guard_name": "api"
+    },
+    {
+        "name": "emails.can.list",
+        "guard_name": "api"
+    },
+    {
+        "name": "export.can.create",
+        "guard_name": "api"
+    },
+    {
+        "name": "can.import.mass.records",
+        "guard_name": "api"
+    }
+]

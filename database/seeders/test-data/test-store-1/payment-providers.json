@@ -1,0 +1,17 @@
+[
+    {
+        "name": "paypal",
+        "enabled": 1,
+        "test_mode": 1
+    },
+    {
+        "name": "stripe",
+        "enabled": 1,
+        "test_mode": 1
+    },
+    {
+        "name": "amazon",
+        "enabled": 1,
+        "test_mode": 1
+    }
+]
