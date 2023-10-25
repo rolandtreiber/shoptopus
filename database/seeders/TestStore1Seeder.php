@@ -105,8 +105,11 @@ class TestStore1Seeder extends Seeder
                 if (is_string($a)) {
                     if (str_contains($a, "(T)")) {
                         $translatable = str_replace("(T)", "", $a);
-//                    $translatables = $this->translationService->translate($translatable, $availableLanguages);
-                        $translatables = [];
+                        if (config('app.auto_translate_test_data') === true) {
+                            $translatables = $this->translationService->translate($translatable, $availableLanguages);
+                        } else {
+                            $translatables = [];
+                        }
                         $translatables['en'] = $translatable;
                         $a = $translatables;
                     }

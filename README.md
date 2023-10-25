@@ -58,7 +58,13 @@ Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel
 - Run `$ docker-compose run sh-artisan optimize:clear`
 
 ## Migrations and test data
-- Run `$ docker-compose run sh-artisan shop:fresh --seed`
+- Run `$ docker-compose run sh-artisan shop:fresh`
+- Select the appropriate option for your use-case.
+
+## Take a database snapshot
+- Run `$ ./db_snapshot.sh`
+
+> Please note that this command will replace the snapshot you may have in the `/seeders/test-data-db-dump` folder.
 
 ## Tests
 - Run `$ docker-compose run sh-artisan test`

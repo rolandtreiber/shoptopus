@@ -153,13 +153,13 @@ class RoleAndPermissionController extends Controller
         return UserListResource::collection($role->users()->get());
     }
 
-    public function getAvailableUsersForRole(Role $role)//: AnonymousResourceCollection
+    public function getAvailableUsersForRole(Role $role): AnonymousResourceCollection
     {
         $roleId = $role->id;
         $userIdsWithRole = DB::table('model_has_roles')->where([
             'role_id' => $roleId,
             'model_type' => User::class,
-        ])->select('model_id')->get()->pluck('model_id')->toArray();
+        ])->select('model_id')->pluck('model_id')->toArray();
         $users = User::SystemUsers()->whereNotIn('id', $userIdsWithRole)->get();
         return UserSelectResourceForRoleManagement::collection($users);
     }

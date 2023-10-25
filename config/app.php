@@ -91,16 +91,15 @@ return [
         'en' => [
             'label' => 'English',
         ],
-        'hu' => [
-            'label' => 'Magyar',
+        'de' => [
+            'label' => 'Deutsch',
         ],
-//        'de' => [
-//            'label' => 'Deutsch',
-//        ],
-//        'fr' => [
-//            'label' => 'Francais',
-//        ],
+        'fr' => [
+            'label' => 'Francais',
+        ],
     ],
+
+    'auto_translate_test_data' => env("AUTO_TRANSLATE_TEST_DATA", false),
 
     'default_currency' => [
         'name' => 'GBP',
