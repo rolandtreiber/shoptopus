@@ -21,7 +21,7 @@ class fresh extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:fresh';
+    protected $signature = 'shop:fresh {--cypress}';
 
     /**
      * The console command description.
@@ -42,17 +42,21 @@ class fresh extends Command
      */
     public function handle(): int
     {
-        $mode = $this->choice(
-            'What would you like to do?',
-            $this->choices,
-            0
-        );
+        $cypress = $this->option('cypress');
+
+        if (!$cypress) {
+            $mode = $this->choice(
+                'What would you like to do?',
+                $this->choices,
+                0
+            );
+        } else {
+            $mode = 'cypress';
+        }
 
         $file = new Filesystem;
         $file->cleanDirectory('public/uploads');
         $file->cleanDirectory('storage/app/paid');
-//        $seed = $this->option('seed');
-//        $random = $this->option('random');
         $this->call('db:wipe', ['--database' => 'logs']);
 
         switch ($mode) {
@@ -82,6 +86,9 @@ class fresh extends Command
                 $this->call('db:seed', ['--class' => "DumpImportSeeder"]);
                 $this->info('Database refreshed and seeded');
                 break;
+            case 'cypress':
+                $this->call('migrate:fresh');
+                $this->call('db:seed', ['--class' => "TestStore1Seeder"]);
         }
 
         $this->info('Indexing products in Elasticsearch');

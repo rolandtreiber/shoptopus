@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BrowserTestController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// If the environment isn't local, the route shouldn't even exist let alone not wipe the database.
+if (config('app.env') === 'local') {
+    Route::get('/cypress-init', [BrowserTestController::class, 'cypressInit'])->name('cypress.init');
+}
 
 Route::get('/invoice/{token}', [InvoiceController::class, 'download'])->name('invoice.download');
 
