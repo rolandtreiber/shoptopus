@@ -2,6 +2,8 @@
 
 namespace App\Services\Local\Product;
 
+use Illuminate\Database\Eloquent\Collection;
+
 interface ProductServiceInterface
 {
     /**
@@ -19,5 +21,7 @@ interface ProductServiceInterface
     public function getBySlug(string $slug): array;
 
     public function saveReview(string $productId, array $data): array;
+
+    public function search(string $search): Collection;
 
 }

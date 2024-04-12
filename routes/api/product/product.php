@@ -11,6 +11,7 @@ Route::group([
         'prefix' => 'products'
     ], function () {
         Route::get('/', [ProductController::class, 'getAll'])->name('api.products.getAll');
+        Route::get('/search/{search}', [ProductController::class, 'search'])->name('api.product.search');
     });
 
     Route::group([

@@ -79,8 +79,11 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             'id' => 'keyword',
             'price' => 'float',
             'name' => 'nested',
+            'name_composite' => 'text',
             'headline' => 'nested',
+            'headline_composite' => 'text',
             'description' => 'nested',
+            'description_composite' => 'text',
             'purchase_count' => 'long',
             'rating' => 'float',
             'created_at' => 'date',
@@ -94,8 +97,11 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             'id' => $this->id,
             'parent_id' => $this->parent_id,
             'name' => $this->getTranslations('name'),
-            'headline' => $this->getTranslations('headline'),
+            'name_composite' => $this->getTranslationsAsPlainText('name'),
+            'headline' => $this->getTranslations('short_description'),
+            'headline_composite' => $this->getTranslationsAsPlainText('short_description'),
             'description' => $this->getTranslations('description'),
+            'description_composite' => $this->getTranslationsAsPlainText('description'),
             'slug' => $this->slug,
             'status' => $this->status,
             'purchase_count' => $this->purchase_count,
@@ -110,6 +116,15 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
             })->toArray())),
         ];
 
+        return $result;
+    }
+
+    public function getTranslationsAsPlainText($field) {
+        $languages = array_keys(config('app.locales_supported'));
+        $result = "";
+        foreach ($languages as $languagePrefix) {
+            $result .= "" . $this->getTranslations($field)[$languagePrefix] . " ";
+        }
         return $result;
     }
 

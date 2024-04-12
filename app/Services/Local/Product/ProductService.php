@@ -15,7 +15,10 @@ use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
+use JeroenG\Explorer\Domain\Syntax\Matching;
+use JeroenG\Explorer\Domain\Syntax\Nested;
 
 class ProductService extends ModelService implements ProductServiceInterface
 {
@@ -92,5 +95,10 @@ class ProductService extends ModelService implements ProductServiceInterface
             $this->errorService->logException($e);
             throw new Exception($e->getMessage(), Config::get('api_error_codes.services.product.review'));
         }
+    }
+
+    public function search(string $search): Collection
+    {
+        return Product::search($search)->get();
     }
 }

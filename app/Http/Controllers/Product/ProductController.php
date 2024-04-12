@@ -21,6 +21,7 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     use ProcessRequest;
+
     private ProductServiceInterface $productService;
 
     private ProductRepositoryInterface $productRepository;
@@ -51,7 +52,7 @@ class ProductController extends Controller
                 ), $request)
             );
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
@@ -63,8 +64,18 @@ class ProductController extends Controller
         try {
             return response()->json($this->getResponse([], $this->productService->get($id), $request));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
+    }
+
+    public function search(Request $request, string $search): JsonResponse
+    {
+        try {
+            return response()->json($this->getResponse([], $this->productService->search($search)->toArray(), $request));
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
+        }
+
     }
 
     /**
@@ -79,7 +90,7 @@ class ProductController extends Controller
         try {
             return response()->json($this->getResponse([], $this->productService->getBySlug($slug), $request));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
@@ -92,7 +103,7 @@ class ProductController extends Controller
             return response()->json($this->postResponse($this->productService->favorite($request->validated()['productId'])));
 
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
@@ -106,7 +117,7 @@ class ProductController extends Controller
         try {
             return response()->json($this->productRepository->getAvailableAttributeOptions($product, $request->selected_attribute_options ?: []));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
@@ -117,7 +128,7 @@ class ProductController extends Controller
 
             return response()->json($this->productService->saveReview($id->id, $request->toArray()));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 }
