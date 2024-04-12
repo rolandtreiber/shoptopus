@@ -14,7 +14,10 @@ class BrowserTestController extends Controller
         if (config('app.env') !== 'local') {
             return 'This function only available in local environment.';
         }
-        shell_exec('php ../artisan shop:fresh --cypress');
+        $output = shell_exec('php ../artisan shop:fresh --cypress');
+
+        echo "<pre>".$output."</pre>";
+        echo "</hr>";
 
         return 'Database ready for browser testing.';
     }
