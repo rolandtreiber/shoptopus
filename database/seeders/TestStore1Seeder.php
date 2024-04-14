@@ -13,6 +13,7 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Payment;
 use App\Models\PaymentProvider\PaymentProvider;
+use App\Models\PaymentProvider\PaymentProviderConfig;
 use App\Models\PaymentSource;
 use App\Models\Product;
 use App\Models\ProductAttribute;
@@ -197,6 +198,10 @@ class TestStore1Seeder extends Seeder
         // Import payment providers
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/payment-providers.json");
         $this->importRecords(PaymentProvider::class, json_decode($data, true), false);
+
+        // Import payment providers
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/payment-provider-configs.json");
+        $this->importRecords(PaymentProviderConfig::class, json_decode($data, true), false);
 
         // Import role has permissions (pivot)
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/role-has-permissions.json");

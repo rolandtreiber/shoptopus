@@ -1,0 +1,72 @@
+[
+    {
+        "payment_provider_id": 1,
+        "setting": "ACCOUNT",
+        "value": "please fill me in",
+        "test_value": "sb-pd7l36548568@business.example.com",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 1,
+        "setting": "CLIENT_ID",
+        "value": "please fill me in",
+        "test_value": "AZ5lQ63RAr3OTAaXjU1IXkn5Crc7yz5-dzsWFeXVLAYwS0zZNWVgawPC9clve7NBxk6BN4rRUbPufoN1",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 1,
+        "setting": "SECRET",
+        "value": "please fill me in",
+        "test_value": "EIiNt58yvqqPifJ642GAo_YIacM53xLr-k4pSKr-ibW0U2MfoL01J4VvAvN2A9WemBeKnKZCi3IA5fgG",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 2,
+        "setting": "publishable_key",
+        "value": "",
+        "test_value": "pk_test_F4SM8MqfiMvIuoKDH1gr41ip",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 2,
+        "setting": "secret_key",
+        "value": "",
+        "test_value": "sk_test_zFtEsC7sGxxJ9ZfFMc8DyYTJ",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 3,
+        "setting": "MERCHANT_ID",
+        "value": "A2RMNQMF7YBV4O",
+        "test_value": "A2RMNQMF7YBV4O",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 3,
+        "setting": "STORE_ID",
+        "value": "amzn1.application-oa2-client.47cf04c2ad834c17a07dd1bf93f89529",
+        "test_value": "amzn1.application-oa2-client.8d30e996f49a41f98c335f401e82271e",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 3,
+        "setting": "PUBLIC_KEY_ID",
+        "value": "SANDBOX-AGV66EJQUQY4HJVL2JQX7CAD",
+        "test_value": "SANDBOX-AEFRLZ5IH5IT5U2EJC5CF4TA",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 3,
+        "setting": "REGION",
+        "value": "UK",
+        "test_value": "UK",
+        "public": 0
+    },
+    {
+        "payment_provider_id": 3,
+        "setting": "STORE_NAME",
+        "value": "Winzum",
+        "test_value": "Shoptopus",
+        "public": 0
+    }
+]

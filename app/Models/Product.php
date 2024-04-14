@@ -119,11 +119,14 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         return $result;
     }
 
-    public function getTranslationsAsPlainText($field) {
+    public function getTranslationsAsPlainText($field): string
+    {
         $languages = array_keys(config('app.locales_supported'));
         $result = "";
         foreach ($languages as $languagePrefix) {
-            $result .= "" . $this->getTranslations($field)[$languagePrefix] . " ";
+            if (array_key_exists($languagePrefix, $this->getTranslations($field))) {
+                $result .= "" . $this->getTranslations($field)[$languagePrefix] . " ";
+            }
         }
         return $result;
     }
