@@ -81,7 +81,7 @@ class ModelRepository implements ModelRepositoryInterface
 
             $result = $this->getModels($this->getFilters($this->model_table, $filters), $page_formatting, $excludeRelationships);
 
-            return ! empty($result) ? $result[0] : [];
+            return !empty($result) ? $result[0] : [];
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -159,8 +159,8 @@ class ModelRepository implements ModelRepositoryInterface
     public function getModels($filter_vars, array $page_formatting = [], array $excludeRelationships = []): array
     {
         try {
-            if (! empty($page_formatting)) {
-                $order_by_string = ' '.$this->getOrderByString($page_formatting).' LIMIT ?, ?;';
+            if (!empty($page_formatting)) {
+                $order_by_string = ' ' . $this->getOrderByString($page_formatting) . ' LIMIT ?, ?;';
                 $query_params = $this->getQueryParams($filter_vars, $page_formatting);
             } else {
                 $order_by_string = '';
@@ -174,7 +174,7 @@ class ModelRepository implements ModelRepositoryInterface
             $sql .= " FROM $this->model_table";
             $sql .= $filter_vars->filter_string;
             $sql .= $order_by_string;
-            $result = DB::select($sql, $query_params);
+            $result = $this->processJsonFields(DB::select($sql, $query_params));
 
             //dd(DB::getQueryLog());
 
@@ -187,6 +187,21 @@ class ModelRepository implements ModelRepositoryInterface
         }
     }
 
+    private function processJsonFields($data)
+    {
+        $jsonFields = array_merge($this->model->translatable ?: [], ['cover_photo', 'menu_image', 'header_image', 'image']);
+        foreach ($jsonFields as $jsonField) {
+            try {
+                $data = array_map(function ($model) use ($jsonField) {
+                    array_key_exists($jsonField, $model) && $model[$jsonField] = json_decode($model[$jsonField]);
+                    return $model;
+                }, $data);
+            } catch (\Exception $exception) {
+            }
+        }
+        return $data;
+    }
+
     /**
      * Get the records count
      */
@@ -195,7 +210,7 @@ class ModelRepository implements ModelRepositoryInterface
         $sql = "SELECT count(*) AS count FROM $this->model_table $filter_vars->filter_string";
         $result = DB::select($sql, $filter_vars->query_parameters);
 
-        return ! empty($result) ? (int) $result[0]['count'] : 0;
+        return !empty($result) ? (int)$result[0]['count'] : 0;
     }
 
     /**

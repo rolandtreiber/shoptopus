@@ -32,7 +32,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         try {
             $userId = Auth::id();
 
-            if (! $userId) {
+            if (!$userId) {
                 throw new \Exception('Unauthenticated.');
             }
 
@@ -255,6 +255,33 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         }
     }
 
+    /**
+     * Get the product images
+     *
+     *
+     * @throws \Exception
+     */
+    public function getImages(array $productIds = []): array
+    {
+        try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productIds)), ',');
+            return DB::select("
+                SELECT
+                    fc.file_name,
+                    fc.url,
+                    fc.title,
+                    fc.description,
+                    fc.fileable_type
+                FROM file_contents AS fc
+                WHERE fc.fileable_id IN ($dynamic_placeholders)
+                AND fc.fileable_type = "."\"App\\\Models\\\Product\""."
+            ", $productIds);
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
     public function getAvailableAttributeOptions(Product $product, array $selectedAttributeOptionIds = []): array
     {
         $baseQuery = DB::table('product_attribute_product_variant')
@@ -272,7 +299,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             ]);
 
         foreach ($selectedAttributeOptionIds as $attributeOptionId) {
-            $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%'.$attributeOptionId.'%');
+            $variantAttributeOptionsQuery->where('attribute_options', 'LIKE', '%' . $attributeOptionId . '%');
         }
 
         $allOptions = $variantAttributeOptionsQuery->pluck('attribute_options')->map(function ($attributeOptions) {
@@ -325,25 +352,30 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         $product_categories = [];
         $product_tags = [];
         $product_variants = [];
+        $images = [];
 
-        if (! in_array('product_attributes', $excludeRelationships)) {
+        if (!in_array('product_attributes', $excludeRelationships)) {
             $product_attributes = $this->getProductAttributes($ids);
         }
 
-        if (! in_array('discount_rules', $excludeRelationships)) {
+        if (!in_array('discount_rules', $excludeRelationships)) {
             $discount_rules = $this->getDiscountRules($ids);
         }
 
-        if (! in_array('product_categories', $excludeRelationships)) {
+        if (!in_array('product_categories', $excludeRelationships)) {
             $product_categories = $this->getProductCategories($ids);
         }
 
-        if (! in_array('product_tags', $excludeRelationships)) {
+        if (!in_array('product_tags', $excludeRelationships)) {
             $product_tags = $this->getProductTags($ids);
         }
 
-        if (! in_array('product_variants', $excludeRelationships)) {
+        if (!in_array('product_variants', $excludeRelationships)) {
             $product_variants = $this->getProductVariants($ids);
+        }
+
+        if (!in_array('images', $excludeRelationships)) {
+            $images = $this->getImages($ids);
         }
 
         try {
@@ -355,6 +387,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 $model['product_categories'] = [];
                 $model['product_tags'] = [];
                 $model['product_variants'] = [];
+                $model['images'] = $images;
 
                 foreach ($product_attributes as $product_attribute) {
                     if ($product_attribute['product_id'] === $modelId) {
@@ -367,18 +400,18 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                         $options_data = [
                             'id' => $product_attribute['option_id'],
-                            'name' => $product_attribute['option_name'],
+                            'name' => json_decode($product_attribute['option_name']),
                             'slug' => $product_attribute['option_slug'],
                             'value' => $product_attribute['option_value'],
                             'image' => $product_attribute['option_image'],
                         ];
 
-                        if (! $attribute_exists) {
+                        if (!$attribute_exists) {
                             $attribute_data = [
                                 'id' => $product_attribute['id'],
-                                'name' => $product_attribute['name'],
+                                'name' => json_decode($product_attribute['name']),
                                 'slug' => $product_attribute['slug'],
-                                'type' => strtolower(ProductAttributeType::fromValue((int) $product_attribute['type'])->key),
+                                'type' => strtolower(ProductAttributeType::fromValue((int)$product_attribute['type'])->key),
                                 'image' => $product_attribute['image'],
                                 'options' => [],
                             ];
@@ -391,7 +424,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         } else {
                             if ($options_data['id']) {
                                 foreach ($model['product_attributes'] as &$attribute) {
-                                    if (! in_array($options_data['id'], array_column($attribute['options'], 'id'))
+                                    if (!in_array($options_data['id'], array_column($attribute['options'], 'id'))
                                         && $attribute['id'] === $product_attribute['option_product_attribute_id']
                                     ) {
                                         array_push($attribute['options'], $options_data);
@@ -415,12 +448,12 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     if ($product_category['product_id'] === $modelId) {
                         $category = [
                             'id' => $product_category['id'],
-                            'name' => $product_category['name'],
+                            'name' => json_decode($product_category['name']),
                             'slug' => $product_category['slug'],
                             'parent_id' => $product_category['parent_id'],
-                            'description' => $product_category['description'],
-                            'menu_image' => $product_category['menu_image'],
-                            'header_image' => $product_category['header_image'],
+                            'description' => json_decode($product_category['description']),
+                            'menu_image' => json_decode($product_category['menu_image']),
+                            'header_image' => json_decode($product_category['header_image']),
                             'discount_rules' => [],
                         ];
 
@@ -445,14 +478,14 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                 foreach ($product_variants as $product_variant) {
                     if ($product_variant['product_id'] === $modelId) {
-                        if (! in_array($product_variant['id'], array_column($model['product_variants'], 'id'))) {
+                        if (!in_array($product_variant['id'], array_column($model['product_variants'], 'id'))) {
                             $variantData = [
                                 'id' => $product_variant['id'],
                                 'slug' => $product_variant['slug'],
                                 'price' => $product_variant['price'],
                                 'data' => $product_variant['data'],
                                 'stock' => $product_variant['stock'],
-                                'description' => $product_variant['description'],
+                                'description' => json_decode($product_variant['description']),
                                 'sku' => $product_variant['sku'],
                                 'final_price' => $this->calculateFinalPrice($model, $product_variant['price']),
                                 'product_attributes' => [],
@@ -463,7 +496,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                         $attribute_option = [
                             'id' => $product_variant['product_attribute_option_id'],
-                            'name' => $product_variant['product_attribute_option_name'],
+                            'name' => json_decode($product_variant['product_attribute_option_name']),
                             'slug' => $product_variant['product_attribute_option_slug'],
                             'value' => $product_variant['product_attribute_option_value'],
                             'image' => $product_variant['product_attribute_option_image'],
@@ -472,12 +505,12 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                         if ($product_variant['product_attribute_id']) {
                             foreach ($model['product_variants'] as &$model_variant) {
                                 if ($model_variant['id'] === $product_variant['id']) {
-                                    if (! in_array($product_variant['product_attribute_id'], array_column($model_variant['product_attributes'], 'id'))) {
+                                    if (!in_array($product_variant['product_attribute_id'], array_column($model_variant['product_attributes'], 'id'))) {
                                         $attributeData = [
                                             'id' => $product_variant['product_attribute_id'],
                                             'name' => $product_variant['product_attribute_name'],
                                             'slug' => $product_variant['product_attribute_slug'],
-                                            'type' => strtolower(ProductAttributeType::fromValue((int) $product_variant['product_attribute_type'])->key),
+                                            'type' => strtolower(ProductAttributeType::fromValue((int)$product_variant['product_attribute_type'])->key),
                                             'image' => $product_variant['product_attribute_image'],
                                             'options' => [],
                                         ];
@@ -488,9 +521,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
                                         array_push($model_variant['product_attributes'], $attributeData);
                                     } else {
-                                        // @phpstan-ignore-next-line
-                                        foreach ((array) $model_variant['product_attributes'] as &$attribute) {
-                                            if (! in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                        foreach ((array)$model_variant['product_attributes'] as &$attribute) {
+                                            if (!in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
                                                 && $attribute['id'] === $product_variant['product_attribute_id']
                                             ) {
                                                 array_push($attribute['options'], $attribute_option);
@@ -505,10 +537,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                             }
                         } elseif (is_null($product_variant['product_attribute_id']) && $attribute_option['id']) {
                             foreach ($model['product_variants'] as &$model_variant) {
-                                // @phpstan-ignore-next-line
                                 foreach ($model_variant['product_attributes'] as &$attribute) {
                                     if (
-                                        ! in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
+                                        !in_array($attribute_option['id'], array_column($attribute['options'], 'id'))
                                         && $attribute['id'] === $product_variant['product_attribute_id']
                                     ) {
                                         array_push($attribute['options'], $attribute_option);
@@ -536,24 +567,24 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
      */
     public function calculateFinalPrice(array $product, $price = false): string
     {
-        if (! $price) {
+        if (!$price) {
             $price = $product['price'];
         }
 
         $discount_rules = [];
 
-        if (! empty($product['discount_rules'])) {
-            $discount_rules = collect($product['discount_rules'])->map(fn ($rule) => [
+        if (!empty($product['discount_rules'])) {
+            $discount_rules = collect($product['discount_rules'])->map(fn($rule) => [
                 'id' => $rule['id'],
                 'amount' => $rule['amount'],
                 'type' => $rule['type'],
             ])->toArray();
         }
 
-        if (! empty($product['product_categories'])) {
+        if (!empty($product['product_categories'])) {
             foreach ($product['product_categories'] as $category) {
-                if (! empty($category['discount_rules'])) {
-                    $discount_rules = array_merge($discount_rules, collect($category['discount_rules'])->map(fn ($rule) => [
+                if (!empty($category['discount_rules'])) {
+                    $discount_rules = array_merge($discount_rules, collect($category['discount_rules'])->map(fn($rule) => [
                         'id' => $rule['id'],
                         'amount' => $rule['amount'],
                         'type' => $rule['type'],
@@ -564,7 +595,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
 
         $basePrice = $price;
 
-        if (! empty($discount_rules)) {
+        if (!empty($discount_rules)) {
             $discounts = array_map(function ($rule) use ($basePrice) {
                 return $basePrice - GeneralHelper::getDiscountedValue($rule['type'], $rule['amount'], $basePrice);
             }, array_unique($discount_rules, SORT_REGULAR));
@@ -572,7 +603,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             $price = $price - $this->calculateDiscountAmount($discounts);
         }
 
-        return number_format((float) $price, 2, '.', '');
+        return number_format((float)$price, 2, '.', '');
     }
 
     /**
@@ -600,7 +631,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         return $withTableNamePrefix
             ? $columns
             : array_map(function ($column_name) {
-                return str_replace($this->model_table.'.', '', $column_name);
+                return str_replace($this->model_table . '.', '', $column_name);
             }, $columns);
     }
 
