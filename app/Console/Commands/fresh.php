@@ -84,6 +84,7 @@ class fresh extends Command
                 break;
             case $this->choices[3]:
                 $this->call('db:seed', ['--class' => "DumpImportSeeder"]);
+                $this->call('migrate:refresh', ['--path' => '/database/migrations/2021_09_10_075846_create_audits_table.php']);
                 $this->info('Database refreshed and seeded');
                 break;
             case 'cypress':
