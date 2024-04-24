@@ -14,8 +14,12 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
+        // The product_id field is a helper field to make it simpler to get all images for the main product through all its variants.
+        // Without a direct link to the product, we'd have to find the parent product through its variants which is a costly database operation.
+        // The downside is that in any case where the file is not linked to a product variant, this field is redundant.
         Schema::create('file_contents', function (Blueprint $table) {
             $table->uuid('id')->unique()->primary();
+            $table->foreignUuid('product_id')->nullable()->constrained()->nullOnDelete();
             $table->string('url');
             $table->string('file_name');
             $table->uuidMorphs('fileable');

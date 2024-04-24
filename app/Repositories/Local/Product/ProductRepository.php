@@ -273,7 +273,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     fc.description,
                     fc.fileable_type
                 FROM file_contents AS fc
-                WHERE fc.fileable_id IN ($dynamic_placeholders)
+                WHERE fc.product_id IN ($dynamic_placeholders)
                 AND fc.fileable_type = "."\"App\\\Models\\\Product\""."
             ", $productIds);
         } catch (\Exception|\Error $e) {
@@ -315,10 +315,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
         $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
         $files = FileContent::where('fileable_type', Product::class)
-            ->where('fileable_id', $product->id)
+            ->where('product_id', $product->id)
             ->get();
         $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
-            ->whereIn('fileable_id', $variantIds)
+            ->where('product_id', $product->id)
             ->get();
 
         return [
