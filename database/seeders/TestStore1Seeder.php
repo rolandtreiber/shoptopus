@@ -22,6 +22,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductProductCategory;
 use App\Models\ProductTag;
 use App\Models\ProductVariant;
+use App\Models\Rating;
 use App\Models\User;
 use App\Models\VoucherCode;
 use App\Services\Remote\Translations\TranslationService;
@@ -115,7 +116,7 @@ class TestStore1Seeder extends Seeder
                         $a = $translatables;
                     }
 
-                    if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "fileable_id" && $b !== "source_id" && $b !== "payable_id" && $b !== "stripe_user_id" && $b !== "payment_method_id") {
+                    if (str_contains($b, "_id") && $b !== "parent_id" && $b !== "ratable_id" && $b !== "fileable_id" && $b !== "source_id" && $b !== "payable_id" && $b !== "stripe_user_id" && $b !== "payment_method_id") {
                         $modelClass = "App\\Models\\" . str_replace("Id", "", str_replace(" ", "", ucwords(str_replace("_", " ", $b))));
                         $model = ($modelClass::where('slug', $a)->first());
                         if ($model) {
@@ -302,6 +303,10 @@ class TestStore1Seeder extends Seeder
         // Import cart products
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/cart-products.json");
         $this->importPivotRecords('cart_product', json_decode($data, true));
+
+        // Import ratings
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/ratings.json");
+        $this->importRecords(Rating::class, json_decode($data, true));
 
     }
 }
