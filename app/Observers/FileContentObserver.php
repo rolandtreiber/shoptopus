@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\FileContent;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Traits\ProcessRequest;
 use Illuminate\Support\Facades\DB;
 
@@ -22,4 +23,15 @@ class FileContentObserver
             }
         }
     }
+
+    public function creating(FileContent $fileContent): void
+    {
+        if ($fileContent->fileable_type === ProductVariant::class) {
+            $fileContent->product_id = $fileContent->fileable->product_id;
+        }
+        if ($fileContent->fileable_type === Product::class) {
+            $fileContent->product_id = $fileContent->fileable->id;
+        }
+    }
+
 }
