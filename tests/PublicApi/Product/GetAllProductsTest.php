@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
+/**
+ * @group all_products
+ */
 class GetAllProductsTest extends TestCase
 {
     use RefreshDatabase;
