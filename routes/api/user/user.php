@@ -12,5 +12,6 @@ Route::group([
         'middleware' => 'auth:api'
     ], function () {
         Route::get('/favorites', [UserController::class, 'favorites'])->name('api.user.favorites');
+        Route::get('/account', [UserController::class, 'getAccountDetails'])->name('api.user.accountDetails');
     });
 });

@@ -26,4 +26,7 @@ interface UserServiceInterface
      * @throws \Exception
      */
     public function getFavoritedProductIds(): array;
+
+    public function getAccountDetails(): array;
+
 }
