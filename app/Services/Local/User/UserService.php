@@ -61,4 +61,12 @@ class UserService extends ModelService implements UserServiceInterface
             throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.user.getFavoritedProductIds'));
         }
     }
+
+    /**
+     * @throws \Exception
+     */
+    public function getAccountDetails(): array
+    {
+        return $this->getCurrentUser(true);
+    }
 }
