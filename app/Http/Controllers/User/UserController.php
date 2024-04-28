@@ -9,6 +9,7 @@ use App\Services\Local\User\UserServiceInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -74,6 +75,26 @@ class UserController extends Controller
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
+    }
+
+    /**
+     * Soft delete the user's own account
+     */
+    public function deleteAccount(): JsonResponse
+    {
+        try {
+
+            /** @var User $user */
+            $user = Auth()->user();
+            $user->delete();
+            return response()->json(
+                ['message' => 'User account deleted']
+            );
+
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
+
     }
 
 }
