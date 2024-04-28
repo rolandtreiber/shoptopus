@@ -2,6 +2,8 @@
 
 namespace App\Services\Local\User;
 
+use App\Http\Resources\Admin\UserDetailResource;
+use App\Models\User;
 use App\Repositories\Local\User\UserRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;

@@ -165,7 +165,7 @@ trait ProcessRequest
      */
     public function getProcessed($request, $dateFields = [], $jsonFields = []): mixed
     {
-        $data = $request->toArray();
+        $data = !is_array($request) ? $request->toArray() : $request;
         foreach ($data as $key => $field) {
             if (in_array($key, $jsonFields)) {
                 $query = json_decode($field, true);
