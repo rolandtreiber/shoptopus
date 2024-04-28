@@ -12,6 +12,7 @@ Route::group([
         'middleware' => 'auth:api'
     ], function () {
         Route::get('/favorites', [UserController::class, 'favorites'])->name('api.user.favorites');
-        Route::get('/account', [UserController::class, 'getAccountDetails'])->name('api.user.accountDetails');
+        Route::post('/account', [UserController::class, 'updateAccountDetails'])->name('api.user.update.accountDetails');
+        Route::get('/account', [UserController::class, 'getAccountDetails'])->name('api.user.get.accountDetails');
     });
 });
