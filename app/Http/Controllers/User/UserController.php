@@ -61,7 +61,9 @@ class UserController extends Controller
             if (array_key_exists("email", $data)) {
                 unset($data['email']);
             }
-            isset($user->avatar) && $this->deleteCurrentFile($user->avatar->file_name);
+            if ($request->hasFile('avatar') && $user->avatar) {
+                $this->deleteCurrentFile($user->avatar->file_name);
+            }
             if (array_key_exists('password', $data) && array_key_exists('password_confirmation', $data)) {
                 if ($data['password'] === $data['password_confirmation']) {
                     $data['password'] = Hash::make($data['password']);
