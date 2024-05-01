@@ -40,4 +40,8 @@ RUN mkdir -p /usr/src/php/ext/redis \
     && echo 'redis' >> /usr/src/php-available-exts \
     && docker-php-ext-install redis
 
+RUN cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini && \
+    sed -i 's/upload_max_filesize = 20M/upload_max_filesize = 128M/g' /usr/local/etc/php/php.ini && \
+    sed -i 's/memory_limit = 128M/memory_limit = 1024M/g' /usr/local/etc/php/php.ini
+
 CMD ["php-fpm", "-y", "/usr/local/etc/php-fpm.conf", "-R"]
