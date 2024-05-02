@@ -38,6 +38,7 @@ class ApplicationMetaInformationResource extends JsonResource
             'default_locale' => config('app.locale'),
             'default_currency' => config('app.default_currency'),
             'google_maps_api_key' => config('app.google_maps_api_key'),
+            'available_user_prefixes' => config('users.available_prefixes'),
             'enums' => $enums
         ];
     }
