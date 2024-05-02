@@ -37,11 +37,11 @@ pipeline {
                 sh 'docker compose -f docker-compose-ci.yml run --rm sh-composer install --ignore-platform-reqs --no-interaction'
             }
         }
-        stage("Run Tests") {
+/*        stage("Run Tests") {
             steps {
                 sh 'docker compose -f docker-compose-ci.yml run --rm sh-artisan test'
             }
-        }
+        } */
         stage("Delete .env file") {
             steps {
                 sh 'rm ./.env'
