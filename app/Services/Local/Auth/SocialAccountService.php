@@ -172,6 +172,22 @@ class SocialAccountService implements SocialAccountServiceInterface
             $response = $client->fetchAccessTokenWithAuthCode(urldecode($authorization_code));
 
             $accessToken = $response['access_token'];
+        } elseif ($provider === 'linkedin-openid') {
+            // @see https://www.linkedin.com/developers/apps
+
+            $response = Http::get('https://www.linkedin.com/oauth/v2/accessToken?', [
+                'grant_type' => 'authorization_code',
+                'client_id' => Config::get('services.linkedin-openid.client_id'),
+                'redirect_uri' => Config::get('services.linkedin-openid.redirect'),
+                'client_secret' => Config::get('services.linkedin-openid.client_secret'),
+                'code' => $authorization_code,
+            ])->json(); // access_token, token_type, expires_in
+
+           if (isset($response['error'])) {
+               throw new \Exception($response['error']);
+           }
+
+            $accessToken = $response['access_token'];
         }
 
         return $accessToken;
