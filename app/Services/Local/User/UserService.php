@@ -2,12 +2,16 @@
 
 namespace App\Services\Local\User;
 
+use App\Enums\RandomStringMode;
+use App\Helpers\GeneralHelper;
 use App\Http\Resources\Admin\UserDetailResource;
+use App\Mail\UserAccountSuccessfullyDeactivatedEmail;
 use App\Models\User;
 use App\Repositories\Local\User\UserRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Mail;
 
 class UserService extends ModelService implements UserServiceInterface
 {
@@ -70,5 +74,44 @@ class UserService extends ModelService implements UserServiceInterface
     public function getAccountDetails(): array
     {
         return $this->getCurrentUser(true);
+    }
+
+    public function deleteAccount(User $user, bool $anonimize = false): void
+    {
+        if ($anonimize) {
+            do {
+                $emailReplacement = GeneralHelper::generateRandomString(20, RandomStringMode::UppercaseAndLowecase) . "@deactivated.com";
+                $firstNameReplacement = GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndLowecase);
+                $lastNameReplacement = GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndLowecase);
+                $phoneReplacement = GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndLowecase);
+            } while (User::where('email', $emailReplacement)->first() !== null);
+            Mail::to($user->email)->send(new UserAccountSuccessfullyDeactivatedEmail(
+                $anonimize,
+                $user->email,
+                $user->first_name,
+                $user->last_name,
+                $user->phone,
+                $emailReplacement,
+                $firstNameReplacement,
+                $lastNameReplacement,
+                $phoneReplacement
+            ));
+            $user->email = $emailReplacement;
+            $user->first_name = $firstNameReplacement;
+            $user->last_name = $lastNameReplacement;
+            $user->phone = $phoneReplacement;
+        } else {
+            Mail::to($user->email)->send(new UserAccountSuccessfullyDeactivatedEmail(
+                $anonimize,
+                $user->email,
+                $user->first_name,
+                $user->last_name,
+                $user->phone
+            ));
+            $uniqueRandomPart = GeneralHelper::generateRandomString(10, RandomStringMode::UppercaseAndLowecase);
+            $user->email = "DEACTIVATED-".$uniqueRandomPart."-".$user->email;
+        }
+        $user->save();
+        $user->delete();
     }
 }
