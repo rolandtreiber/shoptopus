@@ -150,6 +150,8 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+    'support_email' => env('SUPPORT_EMAIL', env('MAIL_FROM_ADDRESS', 'noreply@shoptopus.com')),
+
     /*
     |--------------------------------------------------------------------------
     | Maintenance Mode Driver

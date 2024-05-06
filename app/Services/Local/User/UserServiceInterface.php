@@ -2,6 +2,8 @@
 
 namespace App\Services\Local\User;
 
+use App\Models\User;
+
 interface UserServiceInterface
 {
     public function post(array $payload, bool $returnAsArray = true);
@@ -29,4 +31,5 @@ interface UserServiceInterface
 
     public function getAccountDetails(): array;
 
+    public function deleteAccount(User $user, bool $anonimize = false): void;
 }

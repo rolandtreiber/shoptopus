@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\DeleteUserAccountRequest;
 use App\Http\Requests\User\UpdateUserAccountRequest;
 use App\Models\User;
 use App\Services\Local\User\UserServiceInterface;
@@ -82,13 +83,13 @@ class UserController extends Controller
     /**
      * Soft delete the user's own account
      */
-    public function deleteAccount(): JsonResponse
+    public function deleteAccount(DeleteUserAccountRequest $request): JsonResponse
     {
         try {
 
             /** @var User $user */
             $user = Auth()->user();
-            $user->delete();
+            $this->userService->deleteAccount($user, $request->anonimize === "1");
             return response()->json(
                 ['message' => 'User account deleted']
             );
