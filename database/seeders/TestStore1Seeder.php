@@ -83,7 +83,7 @@ class TestStore1Seeder extends Seeder
             try {
                 DB::table($table)->insert([$row]);
             } catch (QueryException $exception) {
-                dd($row);
+                dd($exception->getMessage(), $row);
             }
         }
         return true;
@@ -264,9 +264,13 @@ class TestStore1Seeder extends Seeder
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/discount-rules.json");
         $this->importRecords(DiscountRule::class, json_decode($data, true));
 
-        // Import product attribute option product variant
+        // Import product category discount rule
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/discount-rule-product-category.json");
         $this->importPivotRecords('discount_rule_product_category', json_decode($data, true));
+
+        // Import product tag product
+        $data = file_get_contents(__DIR__ . "/test-data/test-store-1/products-product-tags.json");
+        $this->importPivotRecords('product_product_tag', json_decode($data, true));
 
         // Import banners
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/banners.json");

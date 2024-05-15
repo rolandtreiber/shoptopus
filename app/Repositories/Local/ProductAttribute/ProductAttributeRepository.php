@@ -58,7 +58,8 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
 
             $sql = 'SELECT pao.product_attribute_id, pao.id, pao.name, pao.slug, pao.value, pao.image';
             $sql .= ' FROM product_attribute_options AS pao';
-            $sql .= ' JOIN product_product_attribute AS ppa ON ppa.product_attribute_option_id = pao.id AND ppa.product_id IS NOT NULL';
+            $sql .= ' LEFT JOIN product_product_attribute AS ppa ON ppa.product_attribute_option_id = pao.id AND ppa.product_id IS NOT NULL';
+            $sql .= ' LEFT JOIN product_attribute_product_variant AS papv ON papv.product_attribute_option_id = pao.id AND papv.product_variant_id IS NOT NULL';
 
             if ($this->product_category_id) {
                 $sql .= ' JOIN product_product_category AS ppc ON ppc.product_id = ppa.product_id';
@@ -111,6 +112,32 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     }
 
     /**
+     * Get the products for the given product attributes
+     *
+     *
+     * @throws \Exception
+     */
+    public function getProductVariantIds(array $productAttributeIds = []): array
+    {
+        try {
+            $dynamic_placeholders = trim(str_repeat('?,', count($productAttributeIds)), ',');
+            return DB::select("
+                SELECT
+                    papv.product_attribute_id,
+                    papv.product_variant_id
+                FROM product_variants AS pv
+                JOIN product_attribute_product_variant AS papv ON papv.product_variant_id = pv.id AND papv.product_attribute_option_id IS NOT NULL
+                WHERE papv.product_attribute_id IN ($dynamic_placeholders)
+                AND pv.deleted_at IS NULL
+
+            ", $productAttributeIds);
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Get the required related models for the given parent
      *
      *
@@ -119,7 +146,6 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
     public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
         $ids = collect($result)->pluck('id')->toArray();
-
         $options = [];
         $products = [];
 
@@ -131,6 +157,10 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
             $products = $this->getProductIds($ids);
         }
 
+        if (! in_array('products_variants', $excludeRelationships)) {
+            $productVariants = $this->getProductVariantIds($ids);
+        }
+
         try {
             foreach ($result as $key => &$model) {
                 $modelId = $model['id'];
@@ -139,8 +169,11 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
 
                 $model['options'] = [];
                 $model['product_ids'] = [];
+                $model['product_variant_ids'] = [];
 
                 foreach ($options as $option) {
+                    $option['name'] = json_decode($option['name']);
+                    $option['image'] = json_decode($option['image']);
                     if ($option['product_attribute_id'] === $modelId) {
                         unset($option['product_attribute_id']);
                         array_push($model['options'], $option);
@@ -161,7 +194,15 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
                     }
                 }
 
-                if (empty($model['product_ids'])) {
+                foreach ($productVariants as $productVariant) {
+                    if ($productVariant['product_attribute_id'] === $modelId
+                        && ! in_array($productVariant['product_variant_id'], array_column($model['product_variant_ids'], 'id'))
+                    ) {
+                        array_push($model['product_variant_ids'], $productVariant['product_variant_id']);
+                    }
+                }
+
+                if (empty($model['product_ids']) && empty($model['product_variant_ids'])) {
                     array_splice($result, $key, 1);
                 }
             }
