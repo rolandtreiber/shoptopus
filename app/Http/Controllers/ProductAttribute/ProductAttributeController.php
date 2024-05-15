@@ -22,7 +22,6 @@ class ProductAttributeController extends Controller
     {
         try {
             [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
-
             return response()->json($this->getResponse(
                 $page_formatting,
                 $this->productAttributeService->getAll($page_formatting, $filters),
