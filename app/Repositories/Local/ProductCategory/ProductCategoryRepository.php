@@ -153,6 +153,10 @@ class ProductCategoryRepository extends ModelRepository implements ProductCatego
 
                 foreach ($subcategories as $subcategory) {
                     if ($subcategory['parent_id'] === $modelId) {
+                        $subcategory['name'] = json_decode($subcategory['name']);
+                        $subcategory['description'] = json_decode($subcategory['description']);
+                        $subcategory['menu_image'] = json_decode($subcategory['menu_image']);
+                        $subcategory['header_image'] = json_decode($subcategory['header_image']);
                         array_push($model['subcategories'], $subcategory);
                     }
                 }
