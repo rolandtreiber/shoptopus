@@ -148,6 +148,7 @@ class ProductAttributeRepository extends ModelRepository implements ProductAttri
         $ids = collect($result)->pluck('id')->toArray();
         $options = [];
         $products = [];
+        $productVariants = [];
 
         if (! in_array('options', $excludeRelationships)) {
             $options = $this->getOptions($ids);

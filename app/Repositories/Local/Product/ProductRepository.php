@@ -508,10 +508,10 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                                     if (!in_array($product_variant['product_attribute_id'], array_column($model_variant['product_attributes'], 'id'))) {
                                         $attributeData = [
                                             'id' => $product_variant['product_attribute_id'],
-                                            'name' => $product_variant['product_attribute_name'],
+                                            'name' => json_decode($product_variant['product_attribute_name']),
                                             'slug' => $product_variant['product_attribute_slug'],
                                             'type' => strtolower(ProductAttributeType::fromValue((int)$product_variant['product_attribute_type'])->key),
-                                            'image' => $product_variant['product_attribute_image'],
+                                            'image' => json_decode($product_variant['product_attribute_image']),
                                             'options' => [],
                                         ];
 

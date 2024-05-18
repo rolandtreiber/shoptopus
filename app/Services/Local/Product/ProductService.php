@@ -97,8 +97,15 @@ class ProductService extends ModelService implements ProductServiceInterface
         }
     }
 
-    public function search(string $search): Collection
+    public function search(string $search, array $pageFormatting = []): array
     {
-        return Product::search($search)->get();
+        try {
+            $matchedProductIds = Product::search($search)->get()->pluck('id')->toArray();
+            return $this->getAll($pageFormatting, ['id' => implode(",",$matchedProductIds)], []);
+        } catch (Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw new Exception($e->getMessage(), Config::get('api_error_codes.services.product.favorite'));
+        }
+
     }
 }

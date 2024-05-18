@@ -71,7 +71,8 @@ class ProductController extends Controller
     public function search(Request $request, string $search): JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->productService->search($search)->toArray(), $request));
+            [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
+            return response()->json($this->getResponse([], $this->productService->search($search, $page_formatting), $request));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
