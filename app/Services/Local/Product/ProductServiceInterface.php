@@ -22,6 +22,6 @@ interface ProductServiceInterface
 
     public function saveReview(string $productId, array $data): array;
 
-    public function search(string $search): Collection;
+    public function search(string $search, array $pageFormatting = []): array;
 
 }
