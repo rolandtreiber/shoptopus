@@ -92,6 +92,9 @@ class fresh extends Command
                 $this->call('db:seed', ['--class' => "TestStore1Seeder"]);
         }
 
+        Product::all()->each(function (Product $product) {
+            $product->updateAvailableAttributeOptions();
+        });
         $this->info('Indexing products in Elasticsearch');
         $this->call('scout:flush', ['model' => Product::class]);
         $this->call('scout:import', ['model' => Product::class]);

@@ -54,6 +54,7 @@ use Spatie\Translatable\HasTranslations;
  * @property float $rating
  * @property boolean $virtual
  * @property integer $weight
+ * @property array $available_attribute_options
  * @property Collection<ProductAttribute>|null $product_attributes
  * @property Collection<ProductVariant>|null $product_variants
  */
@@ -226,7 +227,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'deleted_at',
         'cover_photo',
         'weight',
-        'virtual'
+        'virtual',
+        'available_attribute_options'
     ];
 
     /**
@@ -244,8 +246,29 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         'final_price' => 'decimal:2',
         'rating' => 'decimal:2',
         'cover_photo' => 'object',
-        'virtual' => 'boolean'
+        'virtual' => 'boolean',
+        'available_attribute_options' => 'array'
     ];
+
+    public function updateAvailableAttributeOptions(): Product
+    {
+        $options = [];
+        foreach ($this->product_attributes as $attribute) {
+            $options[] = $attribute->pivot->product_attribute_option_id;
+        }
+
+        foreach ($this->product_variants as $variant) {
+            $variantAttributes = $variant->product_variant_attributes;
+            foreach ($variantAttributes as $variantAttribute) {
+                $options[] = $variantAttribute->pivot->product_attribute_option_id;;
+            }
+        }
+
+        $options = array_values(array_unique($options));
+        $this->available_attribute_options = $options;
+        $this->save();
+        return $this;
+    }
 
     public function discount_rules(): BelongsToMany
     {
