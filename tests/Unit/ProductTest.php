@@ -519,7 +519,6 @@ class ProductTest extends TestCase
 
     /**
      * @test
-     * @group work
      */
     public function available_attribute_options_correctly_updated(): void
     {

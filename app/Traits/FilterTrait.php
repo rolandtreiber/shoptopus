@@ -68,58 +68,54 @@ trait FilterTrait
             }
 
             foreach ($filters as $filter_column => $filter_value) {
-                // $isSearchQuery = $filter_column === 'search';
-                $isCustomQuery = is_array($filter_value);
-
-                if ($isCustomQuery) {
-                    $filter_value = $filter_value['value'];
-                }
-
-                if (is_array($filter_value)) {
-                    $filter_value = implode(',', $filter_value);
-                } elseif (strtolower($filter_value) === 'true') {
-                    $filter_value = 1;
-                } elseif (strtolower($filter_value) === 'false') {
-                    $filter_value = 0;
-                } elseif (strtolower($filter_value) === 'null' || $filter_value === null) {
-                    $filter_value = 'NULL';
-                } elseif (strtolower($filter_value) === '!null') {
-                    $filter_value = 'NOT NULL';
-                }
-
-                $filter_column = $table_prefix.$filter_column;
                 $first_sql_clause = $count === 0 ? 'WHERE' : 'AND';
-
-                if ($filter_value === 'NULL' || $filter_value === 'NOT NULL') {
-                    $filter_string .= " $first_sql_clause $filter_column IS $filter_value";
+                if ($filter_column === 'available_attribute_options') {
+                    foreach ($filter_value as $attributeOptionId) {
+                        $first_sql_clause = $count === 0 ? 'WHERE' : 'AND';
+                        $filter_string .= " " . $first_sql_clause . " available_attribute_options LIKE \"%".$attributeOptionId."%\"";
+                        $count++;
+                    }
                 } else {
-                    $dynamic_filters = explode(',', $filter_value);
-                    $dynamic_placeholders = trim(str_repeat('?,', count($dynamic_filters)), ',');
+                    $isCustomQuery = is_array($filter_value);
 
                     if ($isCustomQuery) {
-                        $filter_operator = $filter_value['operator'];
-
-                        if (strtolower($filter_operator) === 'exclude') {
-                            $filter_string = $filter_string." $first_sql_clause $filter_column NOT IN ($dynamic_placeholders)";
-                        } else {
-                            $filter_string = $filter_string." $first_sql_clause $filter_column $filter_operator $dynamic_placeholders";
-                        }
-                    } else {
-                        $filter_string .= " $first_sql_clause $filter_column IN ($dynamic_placeholders)";
-//                            if ($isSearchQuery) {
-//                                $searchableColumns = array_map(function($column) use ($table_prefix) {
-//                                    return $table_prefix . $column;
-//                                }, $searchableColumns);
-//
-//                                $columns = implode(',', $searchableColumns);
-//
-//                                $filter_string .= " $first_sql_clause CONCAT(' ', $columns) LIKE CONCAT( '%','?','%')";
-//                            } else {
-//                                $filter_string .= " $first_sql_clause $filter_column IN ($dynamic_placeholders)";
-//                            }
+                        $filter_value = $filter_value['value'];
                     }
 
-                    $query_parameters = array_merge($query_parameters, $dynamic_filters);
+                    if (is_array($filter_value)) {
+                        $filter_value = implode(',', $filter_value);
+                    } elseif (strtolower($filter_value) === 'true') {
+                        $filter_value = 1;
+                    } elseif (strtolower($filter_value) === 'false') {
+                        $filter_value = 0;
+                    } elseif (strtolower($filter_value) === 'null' || $filter_value === null) {
+                        $filter_value = 'NULL';
+                    } elseif (strtolower($filter_value) === '!null') {
+                        $filter_value = 'NOT NULL';
+                    }
+
+                    $filter_column = $table_prefix.$filter_column;
+
+                    if ($filter_value === 'NULL' || $filter_value === 'NOT NULL') {
+                        $filter_string .= " $first_sql_clause $filter_column IS $filter_value";
+                    } else {
+                        $dynamic_filters = explode(',', $filter_value);
+                        $dynamic_placeholders = trim(str_repeat('?,', count($dynamic_filters)), ',');
+
+                        if ($isCustomQuery) {
+                            $filter_operator = $filter_value['operator'];
+
+                            if (strtolower($filter_operator) === 'exclude') {
+                                $filter_string = $filter_string." $first_sql_clause $filter_column NOT IN ($dynamic_placeholders)";
+                            } else {
+                                $filter_string = $filter_string." $first_sql_clause $filter_column $filter_operator $dynamic_placeholders";
+                            }
+                        } else {
+                            $filter_string .= " $first_sql_clause $filter_column IN ($dynamic_placeholders)";
+                        }
+
+                        $query_parameters = array_merge($query_parameters, $dynamic_filters);
+                    }
                 }
 
                 $count++;
@@ -129,7 +125,6 @@ trait FilterTrait
                 $filter_string .= " GROUP BY {$local_key}";
             }
         }
-
         return (object) [
             'filter_string' => $filter_string,
             'query_parameters' => $query_parameters,
