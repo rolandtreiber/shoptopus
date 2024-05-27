@@ -25,7 +25,13 @@ trait APIControllerTrait
                 }
             }
 
-            $filter_query_param_string .= "filter[$key]=$filter_value&";
+            if (!is_array($filter_value)) {
+                $filter_query_param_string .= "filter[$key]=$filter_value&";
+            } else {
+                foreach ($filter_value as $value) {
+                    $filter_query_param_string .= "filter[$key][]=$value&";
+                }
+            }
         }
 
         //if we sent in pagination and returned the correct data structure from the service layer the below code will run
@@ -41,7 +47,7 @@ trait APIControllerTrait
             $response = [
                 'message' => 'OK',
                 'data' => $query_response['data'],
-                'page' => $current_offset,
+                'page' => ceil($current_offset),
                 'per_page' => (int) $page_formatting['limit'],
                 'next' => $path_string.$next_offset.$pagination_query_string,
                 'previous' => $path_string.$previous_offset.$pagination_query_string,
@@ -149,13 +155,8 @@ trait APIControllerTrait
         $relation_queries = [];
         $filters = $request->query('filter') ?? [];
 
-        $options = $request->query('options') ?? [];
         $categories = $request->query('product_categories') ?? [];
         $tags = $request->query('product_tags') ?? [];
-
-        if (! empty($options)) {
-            $relation_queries += ['product_attribute_options' => $options];
-        }
 
         if (! empty($categories)) {
             $relation_queries += ['product_categories' => $categories];
@@ -165,6 +166,9 @@ trait APIControllerTrait
             $relation_queries += ['product_tags' => $tags];
         }
 
+//        if (! empty($filters['available_attribute_options'])) {
+//            dd($filters['available_attribute_options']);
+//        }
         return $relation_queries + $filters;
     }
 

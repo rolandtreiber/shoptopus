@@ -21,6 +21,7 @@ trait HasAttributes
                         }
                     }
                 }
+                $model->updateAvailableAttributeOptions();
             } else {
                 $model->product_variant_attributes()->detach();
                 if ($request->product_attributes) {
@@ -31,6 +32,7 @@ trait HasAttributes
                         }
                     }
                 }
+                $model->product->updateAvailableAttributeOptions();
             }
         }
     }

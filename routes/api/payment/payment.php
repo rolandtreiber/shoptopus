@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Local\Payment\PaymentController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Payment\PaymentController;
 
 Route::group([
     'name' => 'api.'

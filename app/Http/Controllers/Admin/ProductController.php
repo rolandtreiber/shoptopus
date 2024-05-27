@@ -81,6 +81,7 @@ class ProductController extends Controller
         if ($request->product_attributes) {
             $this->handleAttributes($product, $request);
         }
+        $product->updateAvailableAttributeOptions();
         if ($request->product_categories) {
             $product->handleCategories($request->product_categories);
         }

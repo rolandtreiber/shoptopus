@@ -209,8 +209,11 @@ class ModelRepository implements ModelRepositoryInterface
     {
         $sql = "SELECT count(*) AS count FROM $this->model_table $filter_vars->filter_string";
         $result = DB::select($sql, $filter_vars->query_parameters);
+        $total = array_reduce($result, function($res, $item) {
+            return $res += $item['count']; }
+        );
 
-        return !empty($result) ? (int)$result[0]['count'] : 0;
+        return !empty($result) ? $total : 0;
     }
 
     /**

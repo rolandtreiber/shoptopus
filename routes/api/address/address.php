@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Local\Address\AddressController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Address\AddressController;
 
 Route::group([
     'name' => 'api.'

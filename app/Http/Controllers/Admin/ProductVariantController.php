@@ -41,6 +41,8 @@ class ProductVariantController extends Controller
         if ($request->product_attributes) {
             $this->handleAttributes($productVariant, $request);
         }
+        $productVariant->product->updateAvailableAttributeOptions();
+
 
         return new ProductVariantResource($productVariant);
     }
@@ -66,7 +68,9 @@ class ProductVariantController extends Controller
      */
     public function delete(Product $product, ProductVariant $variant): array
     {
+        $parentProduct = $variant->product;
         $variant->deleteWithAttachments();
+        $parentProduct->updateAvailableAttributeOptions();
 
         return ['status' => 'Success'];
     }

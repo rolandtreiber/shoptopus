@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Rating\RatingController;
+use App\Http\Controllers\Local\Rating\RatingController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([

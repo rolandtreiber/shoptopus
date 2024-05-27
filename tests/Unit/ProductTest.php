@@ -8,6 +8,7 @@ use App\Models\DiscountRule;
 use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductAttribute;
+use App\Models\ProductAttributeOption;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
 use App\Models\ProductVariant;
@@ -514,5 +515,30 @@ class ProductTest extends TestCase
         $this->assertCount(1, $this->product->fresh()->product_variants);
 
         $this->assertInstanceOf(ProductVariant::class, $this->product->product_variants()->first());
+    }
+
+    /**
+     * @test
+     */
+    public function available_attribute_options_correctly_updated(): void
+    {
+        $productVariant = ProductVariant::factory()->create();
+        /** @var Product $product */
+        $product = $productVariant->product;
+        $option1 = ProductAttributeOption::factory()->create();
+        $option2 = ProductAttributeOption::factory()->create();
+        $option3 = ProductAttributeOption::factory()->create();
+        $product->product_attributes()->attach($option1->product_attribute, ['product_attribute_option_id' => $option1->id]);
+        $productVariant->product_variant_attributes()->attach($option2->product_attribute, ['product_attribute_option_id' => $option2->id]);
+        $productVariant->product_variant_attributes()->attach($option3->product_attribute, ['product_attribute_option_id' => $option3->id]);
+        $product->updateAvailableAttributeOptions()->available_attribute_options;
+        $this->assertTrue(in_array($option1->id, $product->available_attribute_options));
+        $this->assertTrue(in_array($option2->id, $product->available_attribute_options));
+        $this->assertTrue(in_array($option3->id, $product->available_attribute_options));
+
+        $productVariant->product_variant_attributes()->detach($option3->product_attribute, ['product_attribute_option_id' => $option3->id]);
+        $product->refresh()->updateAvailableAttributeOptions()->available_attribute_options;
+        $this->assertFalse(in_array($option3->id, $product->available_attribute_options));
+
     }
 }

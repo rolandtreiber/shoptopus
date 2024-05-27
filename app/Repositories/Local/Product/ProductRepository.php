@@ -627,6 +627,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             "{$this->model_table}.subtitle",
             "{$this->model_table}.rating",
             "{$this->model_table}.cover_photo",
+            "{$this->model_table}.available_attribute_options",
         ];
 
         return $withTableNamePrefix

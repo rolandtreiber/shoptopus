@@ -32,6 +32,7 @@ return new class extends Migration
             $table->boolean('virtual')->nullable()->default(false);
             $table->integer('weight')->nullable()->default(0);
             $table->json('cover_photo')->nullable();
+            $table->json('available_attribute_options')->nullable();
             Module::enabled('ratings') && $table->float('rating')->nullable();
             $table->softDeletes();
             $table->timestamps();
