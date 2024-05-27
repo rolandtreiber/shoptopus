@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Local\ProductAttribute\ProductAttributeController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductAttribute\ProductAttributeController;
 
 Route::group([
     'name' => 'api.'

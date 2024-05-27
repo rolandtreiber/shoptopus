@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\BrowserTestController;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\BrowserTest\BrowserTestController;
+use App\Http\Controllers\Common\InvoiceController;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 

@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Local\Product\ProductController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Product\ProductController;
 
 Route::group([
     'name' => 'api.'
