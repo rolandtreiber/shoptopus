@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\ProductTagController;
+use App\Http\Controllers\Local\ProductTag\ProductTagController;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
