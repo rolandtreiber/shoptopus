@@ -6,6 +6,7 @@ use App\Models\SocialAccount;
 use App\Models\User;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\User\UserServiceInterface;
+use Carbon\Carbon;
 use Google_Client;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -127,6 +128,7 @@ class SocialAccountService implements SocialAccountServiceInterface
             'last_name' => $name['last_name'],
             'email' => $providerUser->getEmail(),
             'phone' => null,
+            'email_verified_at' => Carbon::now()->toDateTimeString(),
             'password' => null,
         ];
     }

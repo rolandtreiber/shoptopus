@@ -31,6 +31,8 @@ use App\Services\Local\ProductAttribute\ProductAttributeService;
 use App\Services\Local\ProductAttribute\ProductAttributeServiceInterface;
 use App\Services\Local\ProductCategory\ProductCategoryService;
 use App\Services\Local\ProductCategory\ProductCategoryServiceInterface;
+use App\Services\Local\ProductTag\ProductTagService;
+use App\Services\Local\ProductTag\ProductTagServiceInterface;
 use App\Services\Local\Rating\RatingService;
 use App\Services\Local\Rating\RatingServiceInterface;
 use App\Services\Local\Report\ReportService;
@@ -74,6 +76,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(ProductServiceInterface::class, ProductService::class);
         $this->app->bind(ProductAttributeServiceInterface::class, ProductAttributeService::class);
         $this->app->bind(ProductCategoryServiceInterface::class, ProductCategoryService::class);
+        $this->app->bind(ProductTagServiceInterface::class, ProductTagService::class);
         $this->app->bind(PaymentServiceInterface::class, PaymentService::class);
         $this->app->bind(PaymentProviderServiceInterface::class, PaymentProviderService::class);
         $this->app->bind(VoucherCodeServiceInterface::class, VoucherCodeService::class);
