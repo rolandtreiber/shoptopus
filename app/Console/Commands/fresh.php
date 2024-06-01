@@ -21,7 +21,7 @@ class fresh extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:fresh {--cypress}';
+    protected $signature = 'shop:fresh {--cypress} {--option=}';
 
     /**
      * The console command description.
@@ -43,13 +43,18 @@ class fresh extends Command
     public function handle(): int
     {
         $cypress = $this->option('cypress');
+        $option = $this->option('option');
 
         if (!$cypress) {
-            $mode = $this->choice(
-                'What would you like to do?',
-                $this->choices,
-                0
-            );
+            if (!$option) {
+                $mode = $this->choice(
+                    'What would you like to do?',
+                    $this->choices,
+                    0
+                );
+            } else {
+                $mode = $this->choices[$option];
+            }
         } else {
             $mode = 'cypress';
         }

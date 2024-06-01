@@ -472,6 +472,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 foreach ($product_tags as $product_tag) {
                     if ($product_tag['product_id'] === $modelId) {
                         unset($product_tag['product_id']);
+                        $product_tag['name'] = json_decode($product_tag['name']);
+                        $product_tag['description'] = json_decode($product_tag['description']);
+                        $product_tag['badge'] = json_decode($product_tag['badge']);
                         array_push($model['product_tags'], $product_tag);
                     }
                 }
