@@ -70,7 +70,12 @@ class ProductController extends Controller
     {
         try {
             [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
-            return response()->json($this->getResponse([], $this->productService->search($search, $page_formatting), $request));
+            $data = $this->productService->search($search, $page_formatting);
+
+            return response()->json($this->getResponse($page_formatting, [
+                'data' => $data['data'],
+                'count' => $data['count']
+            ], $request));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
