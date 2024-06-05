@@ -111,6 +111,10 @@ return [
     |
     */
 
+    'elasticsearch' => [
+        'max_hits_returned' => 200
+    ],
+
     'algolia' => [
         'id' => env('ALGOLIA_APP_ID', ''),
         'secret' => env('ALGOLIA_SECRET', ''),
