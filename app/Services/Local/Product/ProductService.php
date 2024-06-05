@@ -100,7 +100,7 @@ class ProductService extends ModelService implements ProductServiceInterface
     public function search(string $search, array $pageFormatting = []): array
     {
         try {
-            $matchedProductIds = Product::search($search)->get()->pluck('id')->toArray();
+            $matchedProductIds = Product::search($search)->take(config('scout.elasticsearch.max_hits_returned'))->get()->pluck('id')->toArray();
             return $this->getAll($pageFormatting, ['id' => implode(",",$matchedProductIds)], []);
         } catch (Exception|\Error $e) {
             $this->errorService->logException($e);

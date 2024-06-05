@@ -39,11 +39,10 @@ trait APIControllerTrait
             $current_offset = ($page_formatting['offset'] / $page_formatting['limit']) + 1;
             $next_offset = $current_offset + 1;
             $previous_offset = $current_offset - 1;
-            $last_offset = round($query_response['count'] / $page_formatting['limit'], 0, PHP_ROUND_HALF_UP);
+            $last_offset = ceil(round($query_response['count'] / (int) $page_formatting['limit'], 3));
 
             $path_string = $this->siteURL().$request->path().'/?'.$filter_query_param_string.'page[offset]=';
             $pagination_query_string = '&page[limit]='.$page_formatting['limit'];
-
             $response = [
                 'message' => 'OK',
                 'data' => $query_response['data'],
