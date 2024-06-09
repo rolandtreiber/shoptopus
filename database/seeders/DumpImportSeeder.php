@@ -18,7 +18,7 @@ class DumpImportSeeder extends Seeder
         $files = scandir(database_path() . '/seeders/test-data/db-dump');
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         foreach ($files as $file) {
-            if (($file !== '.') && ($file !== '..')) {
+            if (($file !== '.') && ($file !== '..') && str_contains($file, ".sql")) {
                 $sql = file_get_contents(database_path() . '/seeders/test-data/db-dump/' . $file);
                 if ($sql) {
                     DB::unprepared($sql);
