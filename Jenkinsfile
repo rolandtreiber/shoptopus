@@ -62,6 +62,11 @@ pipeline {
                 )])
             }
         }
+        stage("Delete already existing DB snapshots") {
+            steps {
+                sh 'rm -rf /Users/rolandtreiber/Sites/shoptopus/database/seeders/test-data/db-dump/*'
+            }
+        }
         stage("Unzip artifact in place") {
             steps {
                 sh 'unzip -o /Users/rolandtreiber/Sites/shoptopus.zip -d /Users/rolandtreiber/Sites/shoptopus'
