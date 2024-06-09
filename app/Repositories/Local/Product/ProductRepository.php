@@ -325,12 +325,12 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
             'available_attribute_options' => $availableAttributeOptionIds,
             'variant_ids' => $variantIds,
             'lowest_variant_price' => [
-                'original' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
-                'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                'original' => $product->getFinalPriceAttribute($lowestVariantPrice ? $lowestVariantPrice['price'] : null),
+                'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice ? $lowestVariantPrice['price'] : null),
             ],
             'highest_variant_price' => [
-                'original' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
-                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice['price']),
+                'original' => $product->getFinalPriceAttribute($highestVariantPrice ? $highestVariantPrice['price'] : null),
+                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice ? $highestVariantPrice['price'] : null),
             ],
             'files' => $files->merge($variantFiles),
             'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock'),
