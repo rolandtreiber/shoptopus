@@ -311,30 +311,48 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         });
         $availableAttributeOptionIds = array_values(array_unique($return ?? []));
         $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
-        $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
-        $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
-        $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
         $files = FileContent::where('fileable_type', Product::class)
             ->where('product_id', $product->id)
             ->get();
-        $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
-            ->where('product_id', $product->id)
-            ->get();
 
-        return [
-            'available_attribute_options' => $availableAttributeOptionIds,
-            'variant_ids' => $variantIds,
-            'lowest_variant_price' => [
-                'original' => $product->getFinalPriceAttribute($lowestVariantPrice ? $lowestVariantPrice['price'] : null),
-                'discounted' => $product->getFinalPriceAttribute($lowestVariantPrice ? $lowestVariantPrice['price'] : null),
-            ],
-            'highest_variant_price' => [
-                'original' => $product->getFinalPriceAttribute($highestVariantPrice ? $highestVariantPrice['price'] : null),
-                'discounted' => $product->getFinalPriceAttribute($highestVariantPrice ? $highestVariantPrice['price'] : null),
-            ],
-            'files' => $files->merge($variantFiles),
-            'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock'),
-        ];
+        if (count($variantIds) > 0) {
+            $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
+            $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
+            $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
+            $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
+                ->where('product_id', $product->id)
+                ->get();
+
+            return [
+                'available_attribute_options' => $availableAttributeOptionIds,
+                'variant_ids' => $variantIds,
+                'lowest_variant_price' => [
+                    'original' => (float) $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                    'discounted' => (float) $product->getFinalPriceAttribute($lowestVariantPrice['price']),
+                ],
+                'highest_variant_price' => [
+                    'original' => (float) $product->getFinalPriceAttribute($highestVariantPrice['price']),
+                    'discounted' => (float) $product->getFinalPriceAttribute($highestVariantPrice['price']),
+                ],
+                'files' => $files->merge($variantFiles),
+                'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock'),
+            ];
+        } else {
+            return [
+                'available_attribute_options' => [],
+                'variant_ids' => [],
+                'lowest_variant_price' => [
+                    'original' => (float) $product->price,
+                    'discounted' => $product->getFinalPriceAttribute(),
+                ],
+                'highest_variant_price' => [
+                    'original' => (float) $product->price,
+                    'discounted' => $product->getFinalPriceAttribute(),
+                ],
+                'files' => $files,
+                'stock' => $product->stock,
+            ];
+        }
     }
 
     /**
