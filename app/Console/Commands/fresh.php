@@ -34,7 +34,8 @@ class fresh extends Command
         "Wipe the databases without seeding any data",
         "Wipe the databases and seed randomly generated data",
         "Wipe the databases and seed the fix test store data (id-s, timestamps and translations (if configured so) are generated on the fly)",
-        "Wipe the databases and restore the snapshot saved earlier"
+        "Wipe the databases and restore the snapshot saved earlier",
+        "Wipe the databases and restore the snapshot saved earlier and align file urls to app url"
     ];
 
     /**
@@ -89,6 +90,11 @@ class fresh extends Command
                 break;
             case $this->choices[3]:
                 $this->call('db:seed', ['--class' => "DumpImportSeeder"]);
+                $this->call('migrate:refresh', ['--path' => '/database/migrations/2021_09_10_075846_create_audits_table.php']);
+                $this->info('Database refreshed and seeded');
+                break;
+            case $this->choices[4]:
+                $this->call('db:seed', ['--class' => "DumpImportSeederFixUrls"]);
                 $this->call('migrate:refresh', ['--path' => '/database/migrations/2021_09_10_075846_create_audits_table.php']);
                 $this->info('Database refreshed and seeded');
                 break;
