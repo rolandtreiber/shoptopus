@@ -6,6 +6,7 @@ use App\Enums\ProductAttributeType;
 use App\Enums\UserInteractionType;
 use App\Events\UserInteraction;
 use App\Helpers\GeneralHelper;
+use App\Http\Resources\Common\FileContentResource;
 use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\ProductVariant;
@@ -311,16 +312,13 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
         });
         $availableAttributeOptionIds = array_values(array_unique($return ?? []));
         $variantIds = $variantAttributeOptionsQuery->pluck('product_variant.id');
-        $files = FileContent::where('fileable_type', Product::class)
-            ->where('product_id', $product->id)
-            ->get();
 
         if (count($variantIds) > 0) {
             $variantsBaseQuery = DB::table('product_variants')->where('product_id', $product->id)->whereIn('id', $variantIds)->select('price');
             $lowestVariantPrice = $variantsBaseQuery->clone()->orderBy('price')->first();
             $highestVariantPrice = $variantsBaseQuery->clone()->orderByDesc('price')->first();
             $variantFiles = FileContent::where('fileable_type', ProductVariant::class)
-                ->where('product_id', $product->id)
+                ->whereIn('fileable_id', $variantIds)
                 ->get();
 
             return [
@@ -334,7 +332,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     'original' => (float) $product->getFinalPriceAttribute($highestVariantPrice['price']),
                     'discounted' => (float) $product->getFinalPriceAttribute($highestVariantPrice['price']),
                 ],
-                'files' => $files->merge($variantFiles),
+                'files' => FileContentResource::collection($variantFiles),
                 'stock' => DB::table('product_variants')->whereIn('id', $variantIds)->sum('stock'),
             ];
         } else {
@@ -349,7 +347,7 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     'original' => (float) $product->price,
                     'discounted' => $product->getFinalPriceAttribute(),
                 ],
-                'files' => $files,
+                'files' => [],
                 'stock' => $product->stock,
             ];
         }
