@@ -457,6 +457,7 @@ class AuthService implements AuthServiceInterface
             'notifications' => $notifications,
             'favorites' => $this->userService->getFavoritedProductIds(),
             'permissions' => $user->getAllPermissionNames(),
+            'roles' => $user->getRoleNames(),
         ];
     }
 
