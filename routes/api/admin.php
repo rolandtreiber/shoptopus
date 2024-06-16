@@ -28,7 +28,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VoucherCodeController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:api', 'admin', 'set.locale')->group(function () {
+Route::middleware('auth:api', 'set.locale')->group(function () {
     Route::prefix('admin')->group(function () {
         // Products
         Route::prefix('products')->group(function () {
