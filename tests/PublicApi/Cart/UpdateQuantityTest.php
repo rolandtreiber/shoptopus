@@ -188,7 +188,6 @@ class UpdateQuantityTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPatch
      */
     public function it_returns_the_full_cart(): void
@@ -208,6 +207,7 @@ class UpdateQuantityTest extends TestCase
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 4,
         ];
 
@@ -223,6 +223,7 @@ class UpdateQuantityTest extends TestCase
         return $this->patchJson(route('api.cart.updateQuantity', $data['cart_id']),
             [
                 'product_id' => $data['product_id'],
+                'product_variant_id' => array_key_exists('product_variant_id', $data) ? $data['product_variant_id'] : null,
                 'quantity' => $data['quantity'],
             ]);
     }

@@ -12,6 +12,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
+/**
+ * @group remove-item-from-cart
+ */
 class RemoveItemFromCartTest extends TestCase
 {
     use RefreshDatabase;
@@ -96,6 +99,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
 
@@ -122,6 +126,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
         $user->last_seen = null;
@@ -150,7 +155,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
-            'procuct_variant_id' => null,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
         $user->last_seen = null;

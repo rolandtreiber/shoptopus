@@ -38,9 +38,9 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 ->where('cart_id', $cart['id'])
                 ->where('product_id', $payload['product_id']);
             if ($payload['product_variant_id']) {
-                $cart_product_item = $cart_product_table->where('product_variant_id', $payload['product_variant_id']);
+                $cart_product_item = $cart_product_item->where('product_variant_id', $payload['product_variant_id']);
             } else {
-                $cart_product_item = $cart_product_table->whereNull('product_variant_id');
+                $cart_product_item = $cart_product_item->whereNull('product_variant_id');
             }
 
             if ($cart_product_item->exists()) {
@@ -76,10 +76,17 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         try {
             $cart = $this->get($payload['cart_id']);
 
-            DB::table('cart_product')
+            $cart_product_item = DB::table('cart_product')
                 ->where('cart_id', $cart['id'])
-                ->where('product_id', $payload['product_id'])
-                ->delete();
+                ->where('product_id', $payload['product_id']);
+
+            if ($payload['product_variant_id']) {
+                $cart_product_item = $cart_product_item->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product_item = $cart_product_item->whereNull('product_variant_id');
+            }
+
+            $cart_product_item->delete();
 
             return $this->get(value: $cart['id'], excludeRelationships: ['user']);
         } catch (\Exception|\Error $e) {
@@ -99,6 +106,13 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $cart_product = $cart_product_table
                 ->where('cart_id', $payload['cart_id'])
                 ->where('product_id', $payload['product_id']);
+
+            if ($payload['product_variant_id']) {
+                $cart_product = $cart_product->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product = $cart_product->whereNull('product_variant_id');
+            }
+
 
             if (! $cart_product->exists()) {
                 throw new \Exception('Cart or product cannot be found.', Config::get('api_error_codes.services.cart.productNotFound'));

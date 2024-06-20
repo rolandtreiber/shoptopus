@@ -146,7 +146,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function it_creates_a_new_cart_and_adds_a_new_entry_to_the_cart_product_table_for_unauthenticated_users(): void
@@ -155,6 +154,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -191,6 +191,7 @@ class AddItemToCartTest extends TestCase
 
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
@@ -261,6 +262,7 @@ class AddItemToCartTest extends TestCase
         $this->signIn($user);
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
@@ -288,6 +290,7 @@ class AddItemToCartTest extends TestCase
         $this->signIn($user);
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
