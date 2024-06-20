@@ -26,7 +26,6 @@ class UpdateQuantityRequest extends FormRequest
     {
         return [
             'product_id' => 'bail|required|string|exists:products,id',
-            'cart_id' => 'required|string|exists:carts,id',
             'user_id' => 'nullable|string|exists:users,id',
             'quantity' => Cart::quantityValidationRule($this->product_id),
         ];

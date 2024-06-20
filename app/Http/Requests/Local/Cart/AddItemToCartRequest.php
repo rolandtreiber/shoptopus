@@ -14,7 +14,6 @@ class AddItemToCartRequest extends FormRequest
     {
         $cart_id = $this->cart_id;
         $user = $this->user();
-
         if ($cart_id && $user) {
             return $user->cart->id === $cart_id;
         }
@@ -32,7 +31,7 @@ class AddItemToCartRequest extends FormRequest
             'quantity' => Cart::quantityValidationRule($this->product_id),
             'cart_id' => 'nullable|string|exists:carts,id',
             'user_id' => 'nullable|string|exists:users,id',
-            'product_variant_id' => 'sometimes|required|integer|exists:product_variants,id',
+            'product_variant_id' => 'nullable|exists:product_variants,id',
         ];
     }
 

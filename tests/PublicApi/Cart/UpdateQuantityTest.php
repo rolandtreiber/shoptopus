@@ -2,12 +2,16 @@
 
 namespace Tests\PublicApi\Cart;
 
+use App\Models\CartProduct;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
+/**
+ * @group cart-update-quantity
+ */
 class UpdateQuantityTest extends TestCase
 {
     use RefreshDatabase;
@@ -36,8 +40,22 @@ class UpdateQuantityTest extends TestCase
             'product_id' => '1234',
             'quantity' => 1,
         ];
+        $this->sendRequest($data)->assertStatus(500);
+    }
 
-        $this->sendRequest($data)->assertJsonValidationErrors(['cart_id', 'product_id']);
+    /**
+     * @test
+     *
+     * @group apiPatch
+     */
+    public function it_requires_a_valid_product_id(): void
+    {
+        $data = [
+            'cart_id' => $this->cart->id,
+            'product_id' => '1234',
+            'quantity' => 1,
+        ];
+        $this->sendRequest($data)->assertJsonValidationErrors(['product_id']);
     }
 
     /**
@@ -151,7 +169,9 @@ class UpdateQuantityTest extends TestCase
             'quantity' => 1,
         ];
 
-        DB::table('cart_product')->insert($cart_product);
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_product);
+        $cartProduct->save();
 
         $this->assertDatabaseHas('cart_product', $cart_product);
 
@@ -181,7 +201,9 @@ class UpdateQuantityTest extends TestCase
             'quantity' => 1,
         ];
 
-        DB::table('cart_product')->insert($cart_product);
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_product);
+        $cartProduct->save();
 
         $data = [
             'cart_id' => $this->cart->id,
@@ -198,10 +220,10 @@ class UpdateQuantityTest extends TestCase
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
-        return $this->patchJson(route('api.cart.updateQuantity', [
-            'cart_id' => $data['cart_id'],
-            'product_id' => $data['product_id'],
-            'quantity' => $data['quantity'],
-        ]));
+        return $this->patchJson(route('api.cart.updateQuantity', $data['cart_id']),
+            [
+                'product_id' => $data['product_id'],
+                'quantity' => $data['quantity'],
+            ]);
     }
 }

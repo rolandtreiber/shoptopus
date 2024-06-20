@@ -4,6 +4,7 @@ namespace Tests\PublicApi\Cart;
 
 use App\Events\UserInteraction;
 use App\Models\Cart;
+use App\Models\CartProduct;
 use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
@@ -139,12 +140,17 @@ class RemoveItemFromCartTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
         $cart = $user->cart;
+        $cartProduct = new CartProduct();
+        $cartProduct->product_id = $product->id;
+        $cartProduct->cart_id = $cart->id;
+        $cartProduct->quantity = 1;
+        $cartProduct->save();
         Event::fake();
         $this->signIn($user);
-        $cart->products()->attach($product->id);
 
         $data = [
             'product_id' => $product->id,
+            'procuct_variant_id' => null,
             'cart_id' => $cart->id,
         ];
         $user->last_seen = null;

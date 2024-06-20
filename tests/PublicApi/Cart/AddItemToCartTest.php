@@ -10,6 +10,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
+/**
+ * @group add-item-to-cart
+ */
 class AddItemToCartTest extends TestCase
 {
     use RefreshDatabase;
@@ -180,7 +183,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function existing_records_get_correctly_updated(): void
@@ -195,6 +197,7 @@ class AddItemToCartTest extends TestCase
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -209,7 +212,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function it_returns_all_required_data(): void
@@ -218,6 +220,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -230,20 +233,17 @@ class AddItemToCartTest extends TestCase
                     'user',
                     'products' => [
                         [
-                            'product_variant_id',
-                            'quantity',
-                            'id',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo',
-                            'rating',
+                            "id",
+                            "product_id",
+                            "product_variant_id",
+                            "name",
+                            "item_original_price",
+                            "item_final_price",
+                            "subtotal_original_price",
+                            "subtotal_final_price",
+                            "quantity",
+                            "remaining_stock",
+                            "in_other_carts"
                         ],
                     ],
                 ],
@@ -267,6 +267,7 @@ class AddItemToCartTest extends TestCase
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
         $user->last_seen = null;
@@ -293,6 +294,7 @@ class AddItemToCartTest extends TestCase
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
         $this->sendRequest($data)->json('data.0');

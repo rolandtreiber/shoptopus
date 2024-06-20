@@ -63,10 +63,14 @@ class Cart extends Model implements Auditable, Exportable
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class)->withPivot([
-            'quantity',
-            'product_variant_id',
-        ]);
+        return $this->belongsToMany(Product::class, 'cart_product')
+            ->withPivot(['quantity', 'product_variant_id'])
+            ->using(CartProduct::class);
+    }
+
+    public static function updateQuantitiesForCurrentAvailability()
+    {
+
     }
 
     public static function quantityValidationRule($productId): array

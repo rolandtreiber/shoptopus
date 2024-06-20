@@ -207,6 +207,17 @@ class User extends Authenticatable implements Auditable, Exportable
      */
     public function cart(): HasOne
     {
+        $carts = Cart::where('user_id', $this->id)->orderBy('created_at', 'DESC')->get();
+        if (count($carts) > 1) {
+            for ($i = 0; $i < count($carts)-1; $i++) {
+                $carts[$i]->delete();
+            }
+        }
+        if (count($carts) === 0) {
+            $cart = new Cart();
+            $cart->user_id = $this->id;
+            $cart->save();
+        }
         return $this->hasOne(Cart::class);
     }
 

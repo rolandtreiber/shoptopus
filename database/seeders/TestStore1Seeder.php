@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Address;
 use App\Models\Banner;
 use App\Models\Cart;
+use App\Models\CartProduct;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\DiscountRule;
@@ -306,7 +307,7 @@ class TestStore1Seeder extends Seeder
 
         // Import cart products
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/cart-products.json");
-        $this->importPivotRecords('cart_product', json_decode($data, true));
+        $this->importRecords(CartProduct::class, json_decode($data, true));
 
         // Import ratings
         $data = file_get_contents(__DIR__ . "/test-data/test-store-1/ratings.json");
