@@ -37,6 +37,11 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $cart_product_item = $cart_product_table
                 ->where('cart_id', $cart['id'])
                 ->where('product_id', $payload['product_id']);
+            if ($payload['product_variant_id']) {
+                $cart_product_item = $cart_product_table->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product_item = $cart_product_table->whereNull('product_variant_id');
+            }
 
             if ($cart_product_item->exists()) {
                 $current_quantity = (int) $cart_product_item->first('quantity')['quantity'];
