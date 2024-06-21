@@ -4,13 +4,18 @@ namespace Tests\PublicApi\Cart;
 
 use App\Events\UserInteraction;
 use App\Models\Cart;
+use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 
+/**
+ * @group remove-item-from-cart
+ */
 class RemoveItemFromCartTest extends TestCase
 {
     use RefreshDatabase;
@@ -95,6 +100,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
 
@@ -121,6 +127,7 @@ class RemoveItemFromCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
         $user->last_seen = null;
@@ -139,12 +146,17 @@ class RemoveItemFromCartTest extends TestCase
         $user = User::factory()->create();
         $product = Product::factory()->create();
         $cart = $user->cart;
+        $cartProduct = new CartProduct();
+        $cartProduct->product_id = $product->id;
+        $cartProduct->cart_id = $cart->id;
+        $cartProduct->quantity = 1;
+        $cartProduct->save();
         Event::fake();
         $this->signIn($user);
-        $cart->products()->attach($product->id);
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'cart_id' => $cart->id,
         ];
         $user->last_seen = null;
@@ -152,6 +164,59 @@ class RemoveItemFromCartTest extends TestCase
 
         $this->sendRequest($data)->json();
         Event::assertDispatched(UserInteraction::class);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiDelete
+     */
+    public function it_removes_the_appropriate_product_variant_from_the_cart(): void
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cart = Cart::factory()->create();
+        $cart->products()->attach($product->id, ['product_variant_id' => $productVariants[0]->id]);
+        $cart->products()->attach($product->id, ['product_variant_id' => $productVariants[1]->id]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+        ]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+        ]);
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'cart_id' => $cart->id,
+        ];
+
+        $this->sendRequest($data)->json();
+
+        $this->assertDatabaseMissing('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+        ]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+        ]);
+
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse

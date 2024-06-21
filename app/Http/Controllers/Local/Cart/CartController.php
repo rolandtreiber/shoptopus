@@ -9,8 +9,11 @@ use App\Http\Requests\Local\Cart\AddItemToCartRequest;
 use App\Http\Requests\Local\Cart\PatchRequest;
 use App\Http\Requests\Local\Cart\RemoveItemFromCartRequest;
 use App\Http\Requests\Local\Cart\UpdateQuantityRequest;
+use App\Http\Resources\Public\Product\CartProductResource;
+use App\Models\Cart;
 use App\Models\Product;
 use App\Services\Local\Cart\CartServiceInterface;
+use Illuminate\Http\JsonResponse;
 
 class CartController extends Controller
 {
@@ -24,7 +27,24 @@ class CartController extends Controller
     /**
      * Update a model
      */
-    public function update(PatchRequest $request, string $id): \Illuminate\Http\JsonResponse
+    public function show(Cart $cart): JsonResponse
+    {
+        try {
+            return response()->json(
+                [
+                    'id' => $cart->id,
+                    'products' => CartProductResource::collection($cart->products)
+                ]
+            );
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
+    }
+
+    /**
+     * Update a model
+     */
+    public function update(PatchRequest $request, string $id): JsonResponse
     {
         try {
             $data = $this->cartService->update($id, $request->validated());
@@ -38,10 +58,11 @@ class CartController extends Controller
     /**
      * Update quantity for a given product
      */
-    public function updateQuantity(UpdateQuantityRequest $request): \Illuminate\Http\JsonResponse
+    public function updateQuantity(Cart $cart, UpdateQuantityRequest $request): JsonResponse
     {
+        $payload = array_merge($request->validated(), ["cart_id" => $cart->id]);
         try {
-            $data = $this->cartService->updateQuantity($request->validated());
+            $data = $this->cartService->updateQuantity($payload);
 
             return response()->json($this->putResponse($data));
         } catch (\Exception|\Error $e) {
@@ -52,7 +73,7 @@ class CartController extends Controller
     /**
      * Add item to cart.
      */
-    public function addItem(AddItemToCartRequest $request): \Illuminate\Http\JsonResponse
+    public function addItem(AddItemToCartRequest $request): JsonResponse
     {
         try {
             $data = $this->cartService->addItem($request->validated());
@@ -67,7 +88,7 @@ class CartController extends Controller
     /**
      * Remove item from cart.
      */
-    public function removeItem(RemoveItemFromCartRequest $request): \Illuminate\Http\JsonResponse
+    public function removeItem(RemoveItemFromCartRequest $request): JsonResponse
     {
         try {
             $this->cartService->removeItem($request->validated());

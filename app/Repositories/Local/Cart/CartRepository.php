@@ -2,7 +2,11 @@
 
 namespace App\Repositories\Local\Cart;
 
+use App\Http\Resources\Public\Product\CartProductResource;
 use App\Models\Cart;
+use App\Models\CartProduct;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
 use Illuminate\Support\Facades\Config;
@@ -15,11 +19,15 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         parent::__construct($errorService, $model);
     }
 
+
     /**
      * Add item to cart.
      */
     public function addItem(array $payload): array
     {
+        if (!$payload['quantity']) {
+            $payload['quantity'] = 1;
+        }
         try {
             $cart = $payload['cart_id']
                 ? $this->get($payload['cart_id'])
@@ -29,21 +37,28 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $cart_product_item = $cart_product_table
                 ->where('cart_id', $cart['id'])
                 ->where('product_id', $payload['product_id']);
+            if ($payload['product_variant_id']) {
+                $cart_product_item = $cart_product_item->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product_item = $cart_product_item->whereNull('product_variant_id');
+            }
 
             if ($cart_product_item->exists()) {
                 $current_quantity = (int) $cart_product_item->first('quantity')['quantity'];
-
-                $cart_product_table->update([
-                    'quantity' => $current_quantity + (int) $payload['quantity'],
-                    'product_variant_id' => $payload['product_variant_id'] ?? null,
-                ]);
+                if (Product::checkStockAvailability($current_quantity + (int) $payload['quantity'], $payload['product_id'], $payload['product_variant_id'])) {
+                    $cart_product_table->update([
+                        'quantity' => $current_quantity + (int) $payload['quantity'],
+                        'product_variant_id' => $payload['product_variant_id'] ?? null,
+                    ]);
+                }
             } else {
-                $cart_product_table->insert([
-                    'cart_id' => $cart['id'],
-                    'product_id' => $payload['product_id'],
-                    'quantity' => $payload['quantity'],
-                    'product_variant_id' => $payload['product_variant_id'] ?? null,
-                ]);
+                $cartProduct = new CartProduct();
+                $cartProduct->id = "";
+                $cartProduct->cart_id = $cart['id'];
+                $cartProduct->product_id = $payload['product_id'];
+                $cartProduct->quantity = $payload['quantity'];
+                $cartProduct->product_variant_id = $payload['product_variant_id'] ?? null;
+                $cartProduct->save();
             }
 
             return $this->get(value: $cart['id'], excludeRelationships: ['user']);
@@ -61,10 +76,17 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         try {
             $cart = $this->get($payload['cart_id']);
 
-            DB::table('cart_product')
+            $cart_product_item = DB::table('cart_product')
                 ->where('cart_id', $cart['id'])
-                ->where('product_id', $payload['product_id'])
-                ->delete();
+                ->where('product_id', $payload['product_id']);
+
+            if ($payload['product_variant_id']) {
+                $cart_product_item = $cart_product_item->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product_item = $cart_product_item->whereNull('product_variant_id');
+            }
+
+            $cart_product_item->delete();
 
             return $this->get(value: $cart['id'], excludeRelationships: ['user']);
         } catch (\Exception|\Error $e) {
@@ -84,6 +106,13 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $cart_product = $cart_product_table
                 ->where('cart_id', $payload['cart_id'])
                 ->where('product_id', $payload['product_id']);
+
+            if ($payload['product_variant_id']) {
+                $cart_product = $cart_product->where('product_variant_id', $payload['product_variant_id']);
+            } else {
+                $cart_product = $cart_product->whereNull('product_variant_id');
+            }
+
 
             if (! $cart_product->exists()) {
                 throw new \Exception('Cart or product cannot be found.', Config::get('api_error_codes.services.cart.productNotFound'));
@@ -253,9 +282,9 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             }
 
             if (! in_array('products', $excludeRelationships)) {
-                $products = $this->getProducts($ids);
+                $cart = Cart::find($ids[0]);
+                $products = CartProductResource::collection($cart->products);
             }
-
             foreach ($result as &$model) {
                 $modelId = $model['id'];
 
@@ -269,10 +298,7 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
                 }
 
                 foreach ($products as $product) {
-                    if ($product['cart_id'] === $modelId) {
-                        unset($product['cart_id']);
-                        array_push($model['products'], $product);
-                    }
+                    array_push($model['products'], $product);
                 }
             }
 

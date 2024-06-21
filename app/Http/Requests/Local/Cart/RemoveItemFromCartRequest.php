@@ -28,6 +28,7 @@ class RemoveItemFromCartRequest extends FormRequest
     {
         return [
             'product_id' => 'bail|required|string|exists:products,id',
+            'product_variant_id' => 'nullable|string|exists:product_variants,id',
             'cart_id' => 'required|string|exists:carts,id',
             'user_id' => 'nullable|string|exists:users,id',
         ];

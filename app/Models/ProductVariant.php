@@ -103,7 +103,7 @@ class ProductVariant extends SearchableModel implements Auditable, Exportable
      */
     public function getFinalPriceAttribute()
     {
-        return $this->price;
+        return $this->product->getFinalPriceAttribute($this->price);
     }
 
     /**

@@ -3,13 +3,19 @@
 namespace Tests\PublicApi\Cart;
 
 use App\Events\UserInteraction;
+use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
+/**
+ * @group add-item-to-cart
+ */
 class AddItemToCartTest extends TestCase
 {
     use RefreshDatabase;
@@ -143,7 +149,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function it_creates_a_new_cart_and_adds_a_new_entry_to_the_cart_product_table_for_unauthenticated_users(): void
@@ -152,6 +157,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -180,7 +186,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function existing_records_get_correctly_updated(): void
@@ -189,12 +194,14 @@ class AddItemToCartTest extends TestCase
 
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -209,7 +216,6 @@ class AddItemToCartTest extends TestCase
 
     /**
      * @test
-     *
      * @group apiPost
      */
     public function it_returns_all_required_data(): void
@@ -218,6 +224,7 @@ class AddItemToCartTest extends TestCase
 
         $data = [
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
 
@@ -230,20 +237,17 @@ class AddItemToCartTest extends TestCase
                     'user',
                     'products' => [
                         [
-                            'product_variant_id',
-                            'quantity',
-                            'id',
-                            'name',
-                            'short_description',
-                            'description',
-                            'price',
-                            'status',
-                            'purchase_count',
-                            'stock',
-                            'backup_stock',
-                            'sku',
-                            'cover_photo',
-                            'rating',
+                            "id",
+                            "product_id",
+                            "product_variant_id",
+                            "name",
+                            "item_original_price",
+                            "item_final_price",
+                            "subtotal_original_price",
+                            "subtotal_final_price",
+                            "quantity",
+                            "remaining_stock",
+                            "in_other_carts"
                         ],
                     ],
                 ],
@@ -261,12 +265,14 @@ class AddItemToCartTest extends TestCase
         $this->signIn($user);
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
         $user->last_seen = null;
@@ -287,16 +293,104 @@ class AddItemToCartTest extends TestCase
         $this->signIn($user);
         $cartData = $this->sendRequest([
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ])->json('data.0');
 
         $data = [
             'cart_id' => $cartData['id'],
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 1,
         ];
         $this->sendRequest($data)->json('data.0');
         Event::assertDispatched(UserInteraction::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_adds_different_product_variations_correctly()
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+        ];
+
+        $cartId = $this->sendRequest($data)->json('data.0.id');
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+            'quantity' => 2,
+            'cart_id' => $cartId
+        ];
+
+        $response = $this->sendRequest($data);
+
+        $response->assertJson(fn(AssertableJson $json) => $json->where('data.0.id', $cartId)
+            ->where('data.0.products.0.quantity', 1)
+            ->where('data.0.products.0.product_id', $product->id)
+            ->where('data.0.products.0.product_variant_id', $productVariants[0]->id)
+            ->where('data.0.products.1.quantity', 2)
+            ->where('data.0.products.1.product_id', $product->id)
+            ->where('data.0.products.1.product_variant_id', $productVariants[1]->id)
+            ->etc());
+    }
+
+    /**
+     * @test
+     * @group apiPost
+     */
+    public function appropriate_variant_get_correctly_updated(): void
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cartId = $this->sendRequest([
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+        ])->json('data.0.id');
+
+        $data = [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+            'quantity' => 1,
+        ];
+
+        $this->sendRequest($data);
+
+        $data = [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 2,
+        ];
+
+        $this->sendRequest($data);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 3,
+        ]);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
