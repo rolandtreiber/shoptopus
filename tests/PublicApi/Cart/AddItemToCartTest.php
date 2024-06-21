@@ -3,11 +3,14 @@
 namespace Tests\PublicApi\Cart;
 
 use App\Events\UserInteraction;
+use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 /**
@@ -302,6 +305,92 @@ class AddItemToCartTest extends TestCase
         ];
         $this->sendRequest($data)->json('data.0');
         Event::assertDispatched(UserInteraction::class);
+    }
+
+    /**
+     * @test
+     */
+    public function it_adds_different_product_variations_correctly()
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+        ];
+
+        $cartId = $this->sendRequest($data)->json('data.0.id');
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+            'quantity' => 2,
+            'cart_id' => $cartId
+        ];
+
+        $response = $this->sendRequest($data);
+
+        $response->assertJson(fn(AssertableJson $json) => $json->where('data.0.id', $cartId)
+            ->where('data.0.products.0.quantity', 1)
+            ->where('data.0.products.0.product_id', $product->id)
+            ->where('data.0.products.0.product_variant_id', $productVariants[0]->id)
+            ->where('data.0.products.1.quantity', 2)
+            ->where('data.0.products.1.product_id', $product->id)
+            ->where('data.0.products.1.product_variant_id', $productVariants[1]->id)
+            ->etc());
+    }
+
+    /**
+     * @test
+     * @group apiPost
+     */
+    public function appropriate_variant_get_correctly_updated(): void
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cartId = $this->sendRequest([
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+        ])->json('data.0.id');
+
+        $data = [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+            'quantity' => 1,
+        ];
+
+        $this->sendRequest($data);
+
+        $data = [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 2,
+        ];
+
+        $this->sendRequest($data);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cartId,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 3,
+        ]);
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse

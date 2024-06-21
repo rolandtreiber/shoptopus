@@ -4,6 +4,7 @@ namespace Tests\PublicApi\Cart;
 
 use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
@@ -184,6 +185,60 @@ class UpdateQuantityTest extends TestCase
         $this->sendRequest($data)->json();
 
         $this->assertDatabaseHas('cart_product', $data);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiPatch
+     */
+    public function the_quantity_of_the_product_variant_updates_correctly(): void
+    {
+        $product = Product::factory()->create(['stock' => 10]);
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cart_products = [
+            [
+            'cart_id' => $this->cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+            ],
+            [
+                'cart_id' => $this->cart->id,
+                'product_id' => $product->id,
+                'product_variant_id' => $productVariants[1]->id,
+                'quantity' => 1,
+            ]
+        ];
+
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_products[0]);
+        $cartProduct->save();
+
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_products[1]);
+        $cartProduct->save();
+
+        $this->assertDatabaseHas('cart_product', $cart_products[0]);
+        $this->assertDatabaseHas('cart_product', $cart_products[1]);
+
+        $data = [
+            'cart_id' => $this->cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 4,
+        ];
+
+        $this->sendRequest($data)->json();
+
+        $this->assertDatabaseHas('cart_product', $data);
+        $this->assertDatabaseHas('cart_product', $cart_products[1]);
     }
 
     /**

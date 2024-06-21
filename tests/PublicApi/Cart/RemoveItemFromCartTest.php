@@ -6,6 +6,7 @@ use App\Events\UserInteraction;
 use App\Models\Cart;
 use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -163,6 +164,59 @@ class RemoveItemFromCartTest extends TestCase
 
         $this->sendRequest($data)->json();
         Event::assertDispatched(UserInteraction::class);
+    }
+
+    /**
+     * @test
+     *
+     * @group apiDelete
+     */
+    public function it_removes_the_appropriate_product_variant_from_the_cart(): void
+    {
+        $product = Product::factory()->create();
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cart = Cart::factory()->create();
+        $cart->products()->attach($product->id, ['product_variant_id' => $productVariants[0]->id]);
+        $cart->products()->attach($product->id, ['product_variant_id' => $productVariants[1]->id]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+        ]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+        ]);
+
+        $data = [
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'cart_id' => $cart->id,
+        ];
+
+        $this->sendRequest($data)->json();
+
+        $this->assertDatabaseMissing('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+        ]);
+
+        $this->assertDatabaseHas('cart_product', [
+            'cart_id' => $cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[1]->id,
+        ]);
+
     }
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
