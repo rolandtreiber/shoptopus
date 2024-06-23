@@ -22,4 +22,6 @@ final class UserInteractionType extends Enum
     const Browse = 7;
     const FavouritedProduct = 8;
     const UnfavouritedProduct = 9;
+    const EmptiedCart = 10;
+
 }
