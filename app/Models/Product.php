@@ -277,8 +277,8 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
                 if ($productVariantId[$i] !== null) {
                     $productVariant = ProductVariant::find($productVariantId[$i]);
                     if ($productVariant) {
-                        $stock = $productVariant->stock;
-                        if ($stock < $quantity) {
+                        $stock = (int) $productVariant->stock;
+                        if ($stock < $quantity[$i]) {
                             return false;
                         }
                     }
@@ -286,7 +286,7 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
                     $product = Product::find($productId[$i]);
                     if ($product) {
                         $stock = $product->stock;
-                        if ($stock < $quantity) {
+                        if ($stock < $quantity[$i]) {
                             return false;
                         }
                     }

@@ -2,10 +2,18 @@
 
 namespace App\Http\Resources\Public\Product;
 
+use App\Models\CartProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @property CartProduct $pivot
+ * @property float $price
+ * @property float $final_price
+ * @property string $id
+ */
 class CartProductResource extends JsonResource
 {
     /**

@@ -20,6 +20,11 @@ interface CartServiceInterface
     public function removeItem(array $payload): array;
 
     /**
+     * Remove all items from cart.
+     */
+    public function removeAll(array $payload): array;
+
+    /**
      * Update quantity for a given product
      *
      *
