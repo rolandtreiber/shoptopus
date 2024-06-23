@@ -63,6 +63,22 @@ class CartService extends ModelService implements CartServiceInterface
     }
 
     /**
+     * Remove item from cart.
+     *
+     *
+     * @throws \Exception
+     */
+    public function removeAll(array $payload): array
+    {
+        try {
+            return $this->modelRepository->removeAll($payload);
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.removeAll'));
+        }
+    }
+
+    /**
      * Update quantity for a given product
      *
      *

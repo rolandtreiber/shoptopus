@@ -7,6 +7,7 @@ use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Cart\AddItemToCartRequest;
 use App\Http\Requests\Local\Cart\PatchRequest;
+use App\Http\Requests\Local\Cart\RemoveAllItemsFromCartRequest;
 use App\Http\Requests\Local\Cart\RemoveItemFromCartRequest;
 use App\Http\Requests\Local\Cart\UpdateQuantityRequest;
 use App\Http\Resources\Public\Product\CartProductResource;
@@ -99,4 +100,20 @@ class CartController extends Controller
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
     }
+
+    /**
+     * Remove item from cart.
+     */
+    public function removeAll(RemoveAllItemsFromCartRequest $request): JsonResponse
+    {
+        try {
+            $this->cartService->removeAll($request->validated());
+            event(new UserInteraction(UserInteractionType::EmptiedCart, Cart::class, $request->cart_id));
+
+            return response()->json($this->deleteResponse());
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
+    }
+
 }

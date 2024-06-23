@@ -54,6 +54,7 @@ return [
             'getCartForUser' => 1505,
             'updateQuantity' => 1506,
             'productNotFound' => 1507,
+            'removeAll' => 1508,
         ],
         'notification' => [
             'getAllUnreadNotificationsForUser' => 1900,

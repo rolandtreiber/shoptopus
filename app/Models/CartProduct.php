@@ -18,8 +18,10 @@ use Spatie\Translatable\HasTranslations;
  * @property string $product_id
  * @property string|null $product_variant_id
  * @property int $quantity
- *
- */
+ * @property int $remaining_stock
+ * @property int $in_other_carts
+ * @property ProductVariant|null $productVariant
+ * @property Product|null $product */
 class CartProduct extends MorphPivot implements Exportable, Auditable
 {
     use HasTranslations;

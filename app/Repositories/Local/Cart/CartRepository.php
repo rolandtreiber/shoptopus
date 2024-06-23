@@ -96,6 +96,24 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
     }
 
     /**
+     * Remove item from cart.
+     */
+    public function removeAll(array $payload): array
+    {
+        try {
+            $cart = $this->get($payload['cart_id']);
+
+            DB::table('cart_product')
+                ->where('cart_id', $cart['id'])->delete();
+
+            return $this->get(value: $cart['id'], excludeRelationships: ['user']);
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
+
+    /**
      * Update quantity for a given product
      */
     public function updateQuantity(array $payload): array
