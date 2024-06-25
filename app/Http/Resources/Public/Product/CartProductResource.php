@@ -3,7 +3,6 @@
 namespace App\Http\Resources\Public\Product;
 
 use App\Models\CartProduct;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -35,19 +34,19 @@ class CartProductResource extends JsonResource
                 ->first();
             if ($productVariantPhoto) {
                 $photo = [
-                    'url' => $productVariantPhoto->url,
-                    'file_name' => $productVariantPhoto->file_name
+                    'url' => $productVariantPhoto['url'],
+                    'file_name' => $productVariantPhoto['file_name']
                 ];
             } else {
                 $product = DB::table('products')->where('id', '=', $this->pivot->product_id)->first();
-                if ($product) {
-                    $photo = $product['cover_photo'];
+                if ($product && $product['cover_photo']) {
+                    $photo = json_decode($product['cover_photo']);
                 }
             }
         } else {
             $product = DB::table('products')->where('id', '=', $this->pivot->product_id)->first();
-            if ($product) {
-                $photo = $product['cover_photo'];
+            if ($product && $product['cover_photo']) {
+                $photo = json_decode($product['cover_photo']);
             }
         }
 
@@ -63,7 +62,7 @@ class CartProductResource extends JsonResource
             'quantity' => $quantity,
             'remaining_stock' => $this->pivot->remaining_stock,
             'in_other_carts' => $this->pivot->inOtherCarts,
-            'photo' => json_decode($photo)
+            'photo' => $photo
         ];
     }
 }
