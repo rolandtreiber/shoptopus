@@ -68,23 +68,44 @@ class Cart extends Model implements Auditable, Exportable
             ->using(CartProduct::class);
     }
 
-    public static function updateQuantitiesForCurrentAvailability()
+    public static function quantityValidationRule($productId, $productVariantId, $cartId, $quantity): array
     {
-
-    }
-
-    public static function quantityValidationRule($productId): array
-    {
-        return ['required', 'integer', 'min:1', function ($attribute, $value, $fail) use ($productId) {
-            $productQuery = DB::table('products')
-                ->whereNull('deleted_at')
-                ->where('id', $productId);
+        return ['required', 'integer', 'min:1', function ($attribute, $value, $fail) use ($productId, $productVariantId, $quantity, $cartId) {
+            if ($productVariantId !== null) {
+                $productQuery = DB::table('product_variants')
+                    ->whereNull('deleted_at')
+                    ->where('id', $productVariantId)
+                    ->where('product_id', $productId);
+            } else {
+                $productQuery = DB::table('products')
+                    ->whereNull('deleted_at')
+                    ->where('id', $productId);
+            }
 
             if (! $productQuery->exists()) {
                 $fail('Product is unavailable.');
             } else {
                 $stock = (int) $productQuery->select(['stock'])->first()['stock'];
 
+                $alreadyInCart = DB::table('cart_product')
+                    ->where('cart_id', '=', $cartId)
+                    ->where('product_id', '=', $productId);
+                if ($productVariantId) {
+                    $alreadyInCart = $alreadyInCart->where('product_variant_id', '=', $productVariantId);
+                }
+                $alreadyInCart = $alreadyInCart->first();
+                if ($alreadyInCart) {
+                    $alreadyInCart = $alreadyInCart['quantity'];
+                }
+                $desiredValue = $alreadyInCart;
+                if ($quantity === -1) {
+                    $desiredValue = $alreadyInCart + 1;
+                } else {
+                    $desiredValue = $quantity;
+                }
+                if ($alreadyInCart && ($desiredValue > $stock)) {
+                    $fail('Cannot add more of this product.');
+                }
                 if ($stock < $value) {
                     if ($stock === 0) {
                         $fail('Out of stock.');
