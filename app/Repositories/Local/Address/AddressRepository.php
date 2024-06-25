@@ -65,10 +65,10 @@ class AddressRepository extends ModelRepository implements AddressRepositoryInte
         try {
             if (! in_array('user', $excludeRelationships)) {
                 $users = $this->getUsers($ids);
+                $model['user'] = null;
             }
 
             foreach ($result as &$model) {
-                $model['user'] = null;
 
                 foreach ($users as $user) {
                     if ($user['id'] === $model['user_id']) {
