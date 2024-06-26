@@ -69,7 +69,7 @@ class OrderController extends Controller
             $user = auth()->user();
             $filters['user_id'] = $user?->id;
 
-            return response()->json($this->getResponse($page_formatting, $this->orderService->getAll($page_formatting, $filters, ['user', 'products']), $request));
+            return response()->json($this->getResponse($page_formatting, $this->orderService->getAll($page_formatting, $filters, ['invoice']), $request));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
