@@ -9,11 +9,16 @@ class CheckoutRepository implements CheckoutRepositoryInterface
 
     public function createPendingOrderFromCart(array $payload): array
     {
-        // TODO: Implement createPendingOrderFromCart() method.
+        return [];
     }
 
     public function revertOrder(array $payload): array
     {
-        // TODO: Implement revertOrder() method.
+        return [];
+    }
+
+    public function getAvailableDeliveryTypesForAddress(array $payload): array
+    {
+        return [];
     }
 }

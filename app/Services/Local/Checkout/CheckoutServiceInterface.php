@@ -8,4 +8,6 @@ interface CheckoutServiceInterface
 
     public function revertOrder(array $payload): array;
 
+    public function getAvailableDeliveryTypesForAddress(array $payload): array;
+
 }

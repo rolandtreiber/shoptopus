@@ -21,6 +21,11 @@ class RevertOrderRequest extends FormRequest
         $user = $this->user();
         $order_id = $this->order_id;
 
+        // If no order id was specified, then it is a validation error, therefore we are letting it through authorization phase on purpose.
+        if (!$order_id) {
+            return true;
+        }
+
         if ($user) {
             $userOrderIds = DB::table('orders')
                 ->where('user_id', $user->id)
