@@ -36,12 +36,13 @@ class CreatePendingOrderFromCartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'guest_checkout' => 'sometimes|boolean',
+            'guest_checkout' => 'required|boolean',
             'user' => 'nullable|array',
             'cart_id' => 'required|string|exists:carts,id',
             'address_id' => 'nullable|string|exists:addresses,id',
             'address' => 'nullable|array',
             'delivery_type_id' => 'nullable|string|exists:delivery_types,id',
+            'voucher_code_id' => 'nullable|string|exists:voucher_codes,id',
         ];
     }
 }

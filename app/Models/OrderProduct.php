@@ -102,4 +102,5 @@ class OrderProduct extends MorphPivot implements Exportable, Auditable
     {
         return $this->belongsTo(ProductVariant::class);
     }
+
 }

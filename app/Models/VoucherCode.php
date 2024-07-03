@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AvailabilityStatus;
+use App\Enums\DiscountType;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFile;
 use App\Traits\HasNote;
@@ -23,6 +24,7 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * @property mixed|string $code
  * @property int $type
+ * @property int $status
  * @property float $amount
  * @property mixed $valid_from
  * @property mixed $valid_until
@@ -171,5 +173,13 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     public function getValueAttribute(): string
     {
         return GeneralHelper::getDiscountValue($this->type, $this->amount);
+    }
+
+    public function apply(float $price): float
+    {
+        return match ($this->type) {
+            DiscountType::Amount => $price - $this->value > 0 ? $price - $this->value : 0,
+            default => $price - ($price * ($this->value / 100)),
+        };
     }
 }

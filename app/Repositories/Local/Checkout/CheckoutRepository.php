@@ -11,11 +11,36 @@ use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
+use App\Models\VoucherCode;
 use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
 
 class CheckoutRepository implements CheckoutRepositoryInterface
 {
+    private function getDetailedValidationErrorMessageOnNestedArrayFields($payload): string
+    {
+        if ($payload['guest_checkout'] === true && !array_key_exists('user', $payload)) return "No user details present at guest checkout.";
+        if ($payload['guest_checkout'] === true && !is_array($payload['user'])) return "Invalid user data";
+        if ($payload['guest_checkout'] === true && !array_key_exists('email', $payload['user'])) return "No email field present in the user object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('first_name', $payload['user'])) return "No first_name field present in the user object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('last_name', $payload['user'])) return "No last_name field present in the user object";
+        if ($payload['guest_checkout'] === true && (
+            !str_contains($payload['user']['email'], '@')
+            || str_contains($payload['user']['email'], '.')
+            || !strlen($payload['user']['email']) > 3
+            )) return "Invalid user email";
+        if ($payload['guest_checkout'] === true && !array_key_exists('address', $payload)) return "No address details present at guest checkout.";
+        if ($payload['guest_checkout'] === true && !is_array($payload['address'])) return "Invalid address data";
+        if ($payload['guest_checkout'] === true && !array_key_exists('town', $payload['address'])) return "No town field present in the address object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('post_code', $payload['address'])) return "No post_code field present in the address object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('address_line_1', $payload['address'])) return "No address_line_1 field present in the address object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('lat', $payload['address'])) return "No lat field present in the address object";
+        if ($payload['guest_checkout'] === true && !array_key_exists('lon', $payload['address'])) return "No lon field present in the address object";
+
+        return "Generic error";
+    }
 
     /**
      * @throws CheckoutException
@@ -25,14 +50,15 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         $user = null;
         $address = null;
         // Guest
-        if (array_key_exists('guest_checkout', $payload)
-            && $payload['guest_checkout'] === true
+        if ($payload['guest_checkout'] === true
             && array_key_exists('user', $payload)
             && is_array($payload['user'])
             && array_key_exists('email', $payload['user'])
             && array_key_exists('first_name', $payload['user'])
             && array_key_exists('last_name', $payload['user'])
             && str_contains($payload['user']['email'], '@')
+            && str_contains($payload['user']['email'], '.')
+            && strlen($payload['user']['email']) > 3
             && array_key_exists('address', $payload)
             && is_array($payload['address'])
             && array_key_exists('town', $payload['address'])
@@ -58,7 +84,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $user = auth()->user();
             $address = Address::find($payload['address_id']);
         } else {
-            throw new CheckoutException("Checkout error");
+            throw new CheckoutException("Checkout error: " . $this->getDetailedValidationErrorMessageOnNestedArrayFields($payload));
         }
 
         $cart = Cart::find($payload['cart_id']);
@@ -75,7 +101,14 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         $order->address_id = $address->id;
         $order->delivery_type_id = $deliveryType->id;
 
-        // TODO: voucher code support
+        // Apply voucher code if present
+        if (array_key_exists('voucher_code_id', $payload)) {
+            $voucherCode = VoucherCode::find($payload['voucher_code_id']);
+            if ($voucherCode && $voucherCode->status === 1) {
+                $order->voucher_code_id = $voucherCode->id;
+            }
+        }
+
         $order->save();
 
         foreach ($cart->products as $cartProduct) {
@@ -84,14 +117,40 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $orderProduct->product_id = $cartProduct->pivot->product_id;
             $orderProduct->product_variant_id = $cartProduct->pivot->product_variant_id;
             $orderProduct->amount = $cartProduct->pivot->quantity;
-
             $orderProduct->save();
         }
 
-        // Update stocks
+        // Updating the stock levels
+        foreach ($cart->products as $cartProduct) {
+            $productVariantId = $cartProduct->pivot->product_variant_id;
+            $productId = $cartProduct->pivot->product_id;
+            if ($productVariantId) {
+                /** @var ProductVariant $productVariant */
+                $productVariant = ProductVariant::find($productVariantId);
+                if ($productVariant) {
+                    $productVariant->stock = $productVariant->stock - $cartProduct->pivot->quantity;
+                } else {
+                    throw new CheckoutException("Product variant not found");
+                }
+            } elseif($productId) {
+                $product = Product::find($productId);
+                if ($product) {
+                    $product->stock = $product->stock - $cartProduct->pivot->quantity;
+                } else {
+                    throw new CheckoutException("Product not found");
+                }
+            } else {
+                throw new CheckoutException("Checkout error");
+            }
+        }
 
         // Delete products from cart
-        return [];
+        foreach ($cart->products as $cartProduct) {
+            $cartProduct->delete();
+        }
+        return [
+            'order_id' => $order->id
+        ];
     }
 
     public function revertOrder(array $payload): array
