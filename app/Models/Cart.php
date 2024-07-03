@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,8 @@ use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed $user_id
- *
+ * @property Collection<Product> $products
+ * @property int $total_weight
  * @method static count()
  * @method static find(int $selectedCartId)
  *
@@ -117,5 +119,14 @@ class Cart extends Model implements Auditable, Exportable
                 }
             }
         }];
+    }
+
+    public function getTotalWeightAttribute()
+    {
+        $products = $this->products;
+        // @phpstan-ignore-next-line
+        return $products->sum(function (Product $product) {
+            return $product->weight * $product->pivot->quantity;
+        });
     }
 }

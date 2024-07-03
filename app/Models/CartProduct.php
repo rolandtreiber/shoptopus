@@ -16,6 +16,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $id
  * @property string $cart_id
  * @property string $product_id
+ * @property string $weight
  * @property string|null $product_variant_id
  * @property int $quantity
  * @property int $remaining_stock

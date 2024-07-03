@@ -16,7 +16,7 @@ class GetAvailableDeliveryTypesRequest extends FormRequest
     {
         return [
             'cart_id' => 'required|exists:carts,id',
-            'address_id' => 'nullable|exists:addresses,id',
+            'address_id' => 'sometimes|nullable|exists:addresses,id',
             'address' => 'nullable|array'
         ];
     }

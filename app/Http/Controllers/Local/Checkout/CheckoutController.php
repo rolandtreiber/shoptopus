@@ -25,7 +25,7 @@ class CheckoutController extends Controller
         try {
             return response()->json($this->getResponse([], $this->checkoutService->createPendingOrderFromCart($request->validated()), $request));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
@@ -34,16 +34,18 @@ class CheckoutController extends Controller
         try {
             return response()->json($this->getResponse([], $this->checkoutService->revertOrder($request->validated()), $request));
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 
     public function getAvailableDeliveryTypes(GetAvailableDeliveryTypesRequest $request): JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->checkoutService->getAvailableDeliveryTypesForAddress($request->validated()), $request));
+            return response()->json([
+                'data' => $this->checkoutService->getAvailableDeliveryTypesForAddress($request->validated())
+            ]);
         } catch (\Exception|\Error $e) {
-            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
         }
     }
 

@@ -33,5 +33,13 @@
         "price": 11.99,
         "slug": "overnight-1",
         "enabled": 1
+    },
+    {
+        "name": "(T)Standard (catch all)",
+        "description": "(T)Standard delivery without delivery rules",
+        "price": 11.99,
+        "slug": "catch-all-1",
+        "enabled": 1
     }
+
 ]
