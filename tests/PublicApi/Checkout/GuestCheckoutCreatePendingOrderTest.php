@@ -3,11 +3,14 @@
 namespace PublicApi\Checkout;
 
 use App\Enums\DiscountType;
+use App\Enums\OrderStatus;
 use App\Models\Cart;
 use App\Models\DeliveryType;
 use App\Models\DiscountRule;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
+use App\Models\User;
 use App\Models\VoucherCode;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -112,7 +115,8 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
 
         $this->assertDatabaseHas("orders", [
             "id" => $orderId,
-            "total_price" => 94.07
+            "total_price" => 94.07,
+            "status" => OrderStatus::AwaitingPayment
         ]);
 
         $this->assertDatabaseCount('order_product', 4);
@@ -135,6 +139,11 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
             'product_variant_id' => $productVariants[1]->id,
             'amount' =>  5
         ]);
+
+        $user = User::find(Order::find($orderId)->user_id);
+        $this->assertStringContainsString($user->client_ref, $user->email);
+        $this->assertEquals($user->temporary, 1);
+
     }
 
     /**
