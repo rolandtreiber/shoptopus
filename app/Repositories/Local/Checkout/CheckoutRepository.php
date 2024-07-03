@@ -21,23 +21,24 @@ class CheckoutRepository implements CheckoutRepositoryInterface
 {
     private function getDetailedValidationErrorMessageOnNestedArrayFields($payload): string
     {
-        if ($payload['guest_checkout'] === true && !array_key_exists('user', $payload)) return "No user details present at guest checkout.";
-        if ($payload['guest_checkout'] === true && !is_array($payload['user'])) return "Invalid user data";
-        if ($payload['guest_checkout'] === true && !array_key_exists('email', $payload['user'])) return "No email field present in the user object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('first_name', $payload['user'])) return "No first_name field present in the user object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('last_name', $payload['user'])) return "No last_name field present in the user object";
-        if ($payload['guest_checkout'] === true && (
+        $guestCheckout = $payload['guest_checkout'] === true || $payload['guest_checkout'] === "1";
+        if ($guestCheckout === true && !array_key_exists('user', $payload)) return "No user details present at guest checkout";
+        if ($guestCheckout === true && !is_array($payload['user'])) return "Invalid user data";
+        if ($guestCheckout === true && !array_key_exists('email', $payload['user'])) return "No email field present in the user object";
+        if ($guestCheckout === true && !array_key_exists('first_name', $payload['user'])) return "No first_name field present in the user object";
+        if ($guestCheckout === true && !array_key_exists('last_name', $payload['user'])) return "No last_name field present in the user object";
+        if ($guestCheckout === true && (
             !str_contains($payload['user']['email'], '@')
-            || str_contains($payload['user']['email'], '.')
-            || !strlen($payload['user']['email']) > 3
+            || !str_contains($payload['user']['email'], '.')
+            || strlen($payload['user']['email']) < 4
             )) return "Invalid user email";
-        if ($payload['guest_checkout'] === true && !array_key_exists('address', $payload)) return "No address details present at guest checkout.";
-        if ($payload['guest_checkout'] === true && !is_array($payload['address'])) return "Invalid address data";
-        if ($payload['guest_checkout'] === true && !array_key_exists('town', $payload['address'])) return "No town field present in the address object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('post_code', $payload['address'])) return "No post_code field present in the address object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('address_line_1', $payload['address'])) return "No address_line_1 field present in the address object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('lat', $payload['address'])) return "No lat field present in the address object";
-        if ($payload['guest_checkout'] === true && !array_key_exists('lon', $payload['address'])) return "No lon field present in the address object";
+        if ($guestCheckout === true && !array_key_exists('address', $payload)) return "No address details present at guest checkout";
+        if ($guestCheckout === true && !is_array($payload['address'])) return "Invalid address data";
+        if ($guestCheckout === true && !array_key_exists('town', $payload['address'])) return "No town field present in the address object";
+        if ($guestCheckout === true && !array_key_exists('post_code', $payload['address'])) return "No post_code field present in the address object";
+        if ($guestCheckout === true && !array_key_exists('address_line_1', $payload['address'])) return "No address_line_1 field present in the address object";
+        if ($guestCheckout === true && !array_key_exists('lat', $payload['address'])) return "No lat field present in the address object";
+        if ($guestCheckout === true && !array_key_exists('lon', $payload['address'])) return "No lon field present in the address object";
 
         return "Generic error";
     }
@@ -50,7 +51,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         $user = null;
         $address = null;
         // Guest
-        if ($payload['guest_checkout'] === true
+        if (($payload['guest_checkout'] === true || $payload['guest_checkout'] === "1")
             && array_key_exists('user', $payload)
             && is_array($payload['user'])
             && array_key_exists('email', $payload['user'])
@@ -148,6 +149,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         foreach ($cart->products as $cartProduct) {
             $cartProduct->delete();
         }
+
         return [
             'order_id' => $order->id
         ];

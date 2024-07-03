@@ -589,7 +589,6 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
 
     /**
      * @test
-     * @group work
      */
     public function returns_the_correct_set_of_available_delivery_types_upon_complex_set_of_criteria(): void
     {
