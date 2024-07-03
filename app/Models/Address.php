@@ -15,6 +15,7 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * @property float $lat
  * @property float $lon
+ * @property string $user_id
  * @property string $post_code
  * @property string $town
  */

@@ -53,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $unreadNotifications
  * @property string $initials
  * @property string $name
+ * @property boolean $temporary
  */
 class User extends Authenticatable implements Auditable, Exportable
 {
@@ -143,6 +144,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'email_verified_at' => 'datetime',
         'avatar' => 'object',
         'is_favorite' => 'boolean',
+        'temporary' => 'boolean',
         'last_seen' => 'datetime',
     ];
 

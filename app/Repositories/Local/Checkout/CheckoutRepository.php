@@ -2,19 +2,95 @@
 
 namespace App\Repositories\Local\Checkout;
 
+use App\Enums\OrderStatus;
 use App\Exceptions\CheckoutException;
+use App\Helpers\GeneralHelper;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\Order;
+use App\Models\OrderProduct;
+use App\Models\User;
 use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
 
 class CheckoutRepository implements CheckoutRepositoryInterface
 {
 
+    /**
+     * @throws CheckoutException
+     */
     public function createPendingOrderFromCart(array $payload): array
     {
+        $user = null;
+        $address = null;
+        // Guest
+        if (array_key_exists('guest_checkout', $payload)
+            && $payload['guest_checkout'] === true
+            && array_key_exists('user', $payload)
+            && is_array($payload['user'])
+            && array_key_exists('email', $payload['user'])
+            && array_key_exists('first_name', $payload['user'])
+            && array_key_exists('last_name', $payload['user'])
+            && str_contains($payload['user']['email'], '@')
+            && array_key_exists('address', $payload)
+            && is_array($payload['address'])
+            && array_key_exists('town', $payload['address'])
+            && array_key_exists('post_code', $payload['address'])
+            && array_key_exists('address_line_1', $payload['address'])
+            && array_key_exists('lat', $payload['address'])
+            && array_key_exists('lon', $payload['address'])
+        ) {
+            // Let's create the user
+            $user = new User();
+            $user->email = $payload['user']['email'];
+            $user->first_name = $payload['user']['first_name'];
+            $user->last_name = $payload['user']['last_name'];
+            $user->temporary = true;
+            $user->save();
+
+            // Let's create and save the address
+            $address = new Address();
+            $address->fill($payload['address']);
+            $address->user_id = $user->id;
+            $address->save();
+        } elseif(auth()->user() !== null && array_key_exists('address_id', $payload)) {
+            $user = auth()->user();
+            $address = Address::find($payload['address_id']);
+        } else {
+            throw new CheckoutException("Checkout error");
+        }
+
+        $cart = Cart::find($payload['cart_id']);
+        $deliveryType = DeliveryType::find($payload['delivery_type_id']);
+
+        if (!$user || !$address || !$cart || !$deliveryType) {
+            throw new CheckoutException("Checkout error");
+        }
+
+        // Create order
+        $order = new Order();
+        $order->status = OrderStatus::AwaitingPayment;
+        $order->user_id = $user->id;
+        $order->address_id = $address->id;
+        $order->delivery_type_id = $deliveryType->id;
+
+        // TODO: voucher code support
+        $order->save();
+
+        foreach ($cart->products as $cartProduct) {
+            $orderProduct = new OrderProduct();
+            $orderProduct->order_id = $order->id;
+            $orderProduct->product_id = $cartProduct->pivot->product_id;
+            $orderProduct->product_variant_id = $cartProduct->pivot->product_variant_id;
+            $orderProduct->amount = $cartProduct->pivot->quantity;
+
+            $orderProduct->save();
+        }
+
+        // Update stocks
+
+        // Delete products from cart
         return [];
     }
 
