@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\VoucherCode;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -26,6 +27,7 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
 
     /**
      * @test
+     * @group work
      */
     public function guest_checkout_works_when_all_information_are_provided_and_correct()
     {
@@ -141,7 +143,7 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
         ]);
 
         $user = User::find(Order::find($orderId)->user_id);
-        $this->assertStringContainsString($user->client_ref, $user->email);
+        $this->assertStringContainsString($user->refresh()->client_ref, $user->refresh()->email);
         $this->assertEquals($user->temporary, 1);
 
     }

@@ -16,6 +16,7 @@ use App\Models\ProductVariant;
 use App\Models\User;
 use App\Models\VoucherCode;
 use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class CheckoutRepository implements CheckoutRepositoryInterface
 {
@@ -28,9 +29,9 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         if ($guestCheckout === true && !array_key_exists('first_name', $payload['user'])) return "No first_name field present in the user object";
         if ($guestCheckout === true && !array_key_exists('last_name', $payload['user'])) return "No last_name field present in the user object";
         if ($guestCheckout === true && (
-            !str_contains($payload['user']['email'], '@')
-            || !str_contains($payload['user']['email'], '.')
-            || strlen($payload['user']['email']) < 4
+                !str_contains($payload['user']['email'], '@')
+                || !str_contains($payload['user']['email'], '.')
+                || strlen($payload['user']['email']) < 4
             )) return "Invalid user email";
         if ($guestCheckout === true && !array_key_exists('address', $payload)) return "No address details present at guest checkout";
         if ($guestCheckout === true && !is_array($payload['address'])) return "Invalid address data";
@@ -50,6 +51,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
     {
         $user = null;
         $address = null;
+
         // Guest
         if (($payload['guest_checkout'] === true || $payload['guest_checkout'] === "1")
             && array_key_exists('user', $payload)
@@ -75,84 +77,96 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $user->last_name = $payload['user']['last_name'];
             $user->temporary = true;
             $user->save();
-
+            DB::commit();
             // Let's create and save the address
             $address = new Address();
             $address->fill($payload['address']);
             $address->user_id = $user->id;
             $address->save();
-        } elseif(auth()->user() !== null && array_key_exists('address_id', $payload)) {
+        } elseif (auth()->user() !== null && array_key_exists('address_id', $payload)) {
             $user = auth()->user();
             $address = Address::find($payload['address_id']);
         } else {
             throw new CheckoutException("Checkout error: " . $this->getDetailedValidationErrorMessageOnNestedArrayFields($payload));
         }
+        DB::beginTransaction();
 
-        $cart = Cart::find($payload['cart_id']);
-        $deliveryType = DeliveryType::find($payload['delivery_type_id']);
+        try {
+            $cart = Cart::find($payload['cart_id']);
+            $deliveryType = DeliveryType::find($payload['delivery_type_id']);
 
-        if (!$user || !$address || !$cart || !$deliveryType) {
-            throw new CheckoutException("Checkout error");
-        }
-
-        // Create order
-        $order = new Order();
-        $order->status = OrderStatus::AwaitingPayment;
-        $order->user_id = $user->id;
-        $order->address_id = $address->id;
-        $order->delivery_type_id = $deliveryType->id;
-
-        // Apply voucher code if present
-        if (array_key_exists('voucher_code_id', $payload)) {
-            $voucherCode = VoucherCode::find($payload['voucher_code_id']);
-            if ($voucherCode && $voucherCode->status === 1) {
-                $order->voucher_code_id = $voucherCode->id;
-            }
-        }
-
-        $order->save();
-
-        foreach ($cart->products as $cartProduct) {
-            $orderProduct = new OrderProduct();
-            $orderProduct->order_id = $order->id;
-            $orderProduct->product_id = $cartProduct->pivot->product_id;
-            $orderProduct->product_variant_id = $cartProduct->pivot->product_variant_id;
-            $orderProduct->amount = $cartProduct->pivot->quantity;
-            $orderProduct->save();
-        }
-
-        // Updating the stock levels
-        foreach ($cart->products as $cartProduct) {
-            $productVariantId = $cartProduct->pivot->product_variant_id;
-            $productId = $cartProduct->pivot->product_id;
-            if ($productVariantId) {
-                /** @var ProductVariant $productVariant */
-                $productVariant = ProductVariant::find($productVariantId);
-                if ($productVariant) {
-                    $productVariant->stock = $productVariant->stock - $cartProduct->pivot->quantity;
-                } else {
-                    throw new CheckoutException("Product variant not found");
-                }
-            } elseif($productId) {
-                $product = Product::find($productId);
-                if ($product) {
-                    $product->stock = $product->stock - $cartProduct->pivot->quantity;
-                } else {
-                    throw new CheckoutException("Product not found");
-                }
-            } else {
+            if (!$user || !$address || !$cart || !$deliveryType) {
                 throw new CheckoutException("Checkout error");
             }
-        }
 
-        // Delete products from cart
-        foreach ($cart->products as $cartProduct) {
-            $cartProduct->delete();
-        }
+            // Create order
+            $order = new Order();
+            $order->status = OrderStatus::AwaitingPayment;
+            $order->user_id = $user->id;
+            $order->address_id = $address->id;
+            $order->delivery_type_id = $deliveryType->id;
 
-        return [
-            'order_id' => $order->id
-        ];
+            // Apply voucher code if present
+            if (array_key_exists('voucher_code_id', $payload)) {
+                $voucherCode = VoucherCode::find($payload['voucher_code_id']);
+                if ($voucherCode && $voucherCode->status === 1) {
+                    $order->voucher_code_id = $voucherCode->id;
+                }
+            }
+
+            $order->save();
+
+            foreach ($cart->products as $cartProduct) {
+                $orderProduct = new OrderProduct();
+                $orderProduct->order_id = $order->id;
+                $orderProduct->product_id = $cartProduct->pivot->product_id;
+                $orderProduct->product_variant_id = $cartProduct->pivot->product_variant_id;
+                $orderProduct->amount = $cartProduct->pivot->quantity;
+                $orderProduct->save();
+            }
+
+            // Updating the stock levels
+            foreach ($cart->products as $cartProduct) {
+                $productVariantId = $cartProduct->pivot->product_variant_id;
+                $productId = $cartProduct->pivot->product_id;
+                if ($productVariantId) {
+                    /** @var ProductVariant $productVariant */
+                    $productVariant = ProductVariant::find($productVariantId);
+                    if ($productVariant) {
+                        $productVariant->stock = $productVariant->stock - $cartProduct->pivot->quantity;
+                    } else {
+                        throw new CheckoutException("Product variant not found");
+                    }
+                } elseif ($productId) {
+                    $product = Product::find($productId);
+                    if ($product) {
+                        $product->stock = $product->stock - $cartProduct->pivot->quantity;
+                    } else {
+                        throw new CheckoutException("Product not found");
+                    }
+                } else {
+                    throw new CheckoutException("Checkout error");
+                }
+            }
+
+            // Delete products from cart
+            foreach ($cart->products as $cartProduct) {
+                $cartProduct->delete();
+            }
+
+            DB::commit();
+            return [
+                'order_id' => $order->id
+            ];
+
+        } catch (\Exception|\Error $e) {
+            DB::rollBack();
+            if ($payload['guest_checkout'] === true) {
+                $address->delete();
+                $user->delete();
+            }
+            throw new CheckoutException($e->getMessage());
+        }
     }
 
     public function revertOrder(array $payload): array
@@ -169,7 +183,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         $address = null;
         if ($payload['address_id']) {
             $address = Address::find($payload['address_id']);
-        } elseif(is_array($payload['address'])) {
+        } elseif (is_array($payload['address'])) {
             if (array_key_exists('town', $payload['address'])
                 && array_key_exists('post_code', $payload['address'])
                 && array_key_exists('address_line_1', $payload['address'])
