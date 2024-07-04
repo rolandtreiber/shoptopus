@@ -178,8 +178,8 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     public function apply(float $price): float
     {
         return match ($this->type) {
-            DiscountType::Amount => $price - $this->value > 0 ? $price - $this->value : 0,
-            default => $price - ($price * ($this->value / 100)),
+            DiscountType::Amount => $price - $this->amount > 0 ? $price - $this->amount : 0,
+            default => $price - ($price * ($this->amount / 100)),
         };
     }
 }

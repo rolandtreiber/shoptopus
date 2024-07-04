@@ -95,6 +95,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $cart = Cart::find($payload['cart_id']);
             $deliveryType = DeliveryType::find($payload['delivery_type_id']);
 
+            // @phpstan-ignore-next-line
             if (!$user || !$address || !$cart || !$deliveryType) {
                 throw new CheckoutException("Checkout error");
             }
@@ -130,9 +131,9 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 $productVariantId = $cartProduct->pivot->product_variant_id;
                 $productId = $cartProduct->pivot->product_id;
                 if ($productVariantId) {
-                    /** @var ProductVariant $productVariant */
+                    /** @var ProductVariant|null $productVariant */
                     $productVariant = ProductVariant::find($productVariantId);
-                    if ($productVariant) {
+                    if ($productVariant !== null) {
                         $productVariant->stock = $productVariant->stock - $cartProduct->pivot->quantity;
                     } else {
                         throw new CheckoutException("Product variant not found");
