@@ -4,6 +4,7 @@ namespace PublicApi\Checkout;
 
 use App\Enums\DiscountType;
 use App\Enums\OrderStatus;
+use App\Models\Address;
 use App\Models\Cart;
 use App\Models\DeliveryType;
 use App\Models\DiscountRule;
@@ -27,7 +28,6 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
 
     /**
      * @test
-     * @group work
      */
     public function guest_checkout_works_when_all_information_are_provided_and_correct()
     {
@@ -743,6 +743,40 @@ class GuestCheckoutCreatePendingOrderTest extends TestCase
 
         $this->assertEquals("Checkout error: No lon field present in the address object", $errorMsg);
     }
+
+    /**
+     * @test
+     */
+    public function guest_checkout_attempting_to_checkout_empty_cart_fails_gracefully()
+    {
+        $cart = new Cart();
+        $cart->save();
+        $deliveryType = DeliveryType::factory()->state(['price' => 3])->create();
+        $voucherCode = VoucherCode::factory()->state([
+            'type' => DiscountType::Percentage,
+            'amount' => 8,
+            'enabled' => 1,
+            'valid_from' => Carbon::now()->addDay(),
+            'valid_until' => Carbon::now()->addDays(2)
+        ])->create();
+
+        $res = $this->sendRequest([
+            'cart_id' => $cart->id,
+            'address' => [
+                "town" => "Bristol",
+                "post_code" => "BS10 6RX",
+                "address_line_1" => "6. Forest Drive",
+                "lat" => 51.510041,
+                "country" => "UK"
+            ],
+            "delivery_type_id" => $deliveryType->id,
+            "guest_checkout" => true,
+            "voucher_code_id" => $voucherCode->id
+        ])->json('developer_message');
+
+        $this->assertEquals("Empty cart", $res);
+    }
+
 
     protected function sendRequest($data = []): TestResponse
     {

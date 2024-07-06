@@ -50,6 +50,12 @@ class CheckoutRepository implements CheckoutRepositoryInterface
      */
     public function createPendingOrderFromCart(array $payload): array
     {
+        $cart = Cart::find($payload['cart_id']);
+
+        if (!$cart || count($cart->products) === 0) {
+            throw new CheckoutException("Empty cart");
+        }
+
         $user = null;
         $address = null;
 
@@ -90,7 +96,6 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         } else {
             throw new CheckoutException("Checkout error: " . $this->getDetailedValidationErrorMessageOnNestedArrayFields($payload));
         }
-            $cart = Cart::find($payload['cart_id']);
             $deliveryType = DeliveryType::find($payload['delivery_type_id']);
 
             // @phpstan-ignore-next-line
@@ -166,8 +171,8 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         /** @var Order|null $order */
         $order = Order::find($payload['order_id']);
         $user = User::where('id', $payload['user_id'])->first();
+        $cart = Cart::where('user_id', $user->id)->first();
         if ($order && $user) {
-            $cart = Cart::where('user_id', $user->id)->first();
             if (!$cart) {
                 $cart = new Cart();
                 $cart->user_id = $user->id;

@@ -307,6 +307,35 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
         ]);
     }
 
+    /**
+     * @test
+     */
+    public function authenticated_checkout_attempting_to_checkout_empty_cart_fails_gracefully()
+    {
+        $cart = new Cart();
+        $cart->user_id = $this->user->id;
+        $cart->save();
+        $deliveryType = DeliveryType::factory()->state(['price' => 3])->create();
+        $voucherCode = VoucherCode::factory()->state([
+            'type' => DiscountType::Percentage,
+            'amount' => 8,
+            'enabled' => 1,
+            'valid_from' => Carbon::now()->addDay(),
+            'valid_until' => Carbon::now()->addDays(2)
+        ])->create();
+        $address = Address::factory()->state(['user_id' => $this->user->id])->create();
+
+        $res = $this->signIn($this->user)->sendRequest([
+            'cart_id' => $cart->id,
+            'address_id' => $address->id,
+            "delivery_type_id" => $deliveryType->id,
+            "guest_checkout" => false,
+            "voucher_code_id" => $voucherCode->id
+        ])->json('developer_message');
+
+        $this->assertEquals("Empty cart", $res);
+    }
+
     protected function sendRequest($data = []): TestResponse
     {
         return $this->postJson(route('api.checkout.create.pending-order', $data));
