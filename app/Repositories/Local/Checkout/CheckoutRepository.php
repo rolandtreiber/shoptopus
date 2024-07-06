@@ -7,6 +7,7 @@ use App\Exceptions\CheckoutException;
 use App\Helpers\GeneralHelper;
 use App\Models\Address;
 use App\Models\Cart;
+use App\Models\CartProduct;
 use App\Models\DeliveryRule;
 use App\Models\DeliveryType;
 use App\Models\Order;
@@ -89,9 +90,6 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         } else {
             throw new CheckoutException("Checkout error: " . $this->getDetailedValidationErrorMessageOnNestedArrayFields($payload));
         }
-        DB::beginTransaction();
-
-        try {
             $cart = Cart::find($payload['cart_id']);
             $deliveryType = DeliveryType::find($payload['delivery_type_id']);
 
@@ -155,24 +153,65 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 $cartProduct->delete();
             }
 
-            DB::commit();
             return [
-                'order_id' => $order->id
+                'order_id' => $order->id,
+                'user_id' => $user->id,
+                'cart_id' => $cart->id
             ];
 
-        } catch (\Exception|\Error $e) {
-            DB::rollBack();
-            if ($payload['guest_checkout'] === true) {
-                $address->delete();
-                $user->delete();
-            }
-            throw new CheckoutException($e->getMessage());
-        }
     }
 
     public function revertOrder(array $payload): array
     {
-        return [];
+        /** @var Order|null $order */
+        $order = Order::find($payload['order_id']);
+        $user = User::where('id', $payload['user_id'])->first();
+        if ($order && $user) {
+            $cart = Cart::where('user_id', $user->id)->first();
+            if (!$cart) {
+                $cart = new Cart();
+                $cart->user_id = $user->id;
+                $cart->save();
+            }
+            /** @var OrderProduct $orderProduct */
+            foreach ($order->products as $orderProduct) {
+                $cartProduct = new CartProduct();
+                $cartProduct->product_id = $orderProduct->product_id;
+                $cartProduct->product_variant_id = $orderProduct->product_variant_id;
+                $cartProduct->quantity = $orderProduct->amount;
+                $cartProduct->save();
+                if ($orderProduct->product_variant_id) {
+                    $productVariant = ProductVariant::find($orderProduct->product_variant_id);
+                    $productVariant->stock = $productVariant->stock + $orderProduct->amount;
+                    $productVariant->save();
+                } else {
+                    $product = Product::find($orderProduct->product_id);
+                    $product->stock = $product->stock + $orderProduct->amount;
+                    $product->save();
+                }
+                $orderProduct->delete();
+            }
+            $order->original_price = 0;
+            $order->subtotal = 0;
+            $order->total_price = 0;
+            $order->total_discount = 0;
+            $order->delivery_cost = 0;
+            $order->voucher_code_id = null;
+            $order->delivery_type_id = null;
+            $order->status = OrderStatus::Cancelled;
+            $order->save();
+            if ($user->temporary) {
+                $address = Address::find($order->address_id);
+                if ($address) {
+                    $address->delete();
+                }
+            }
+        }
+        return [
+            'user_id' => $user->id,
+            'cart_id' => $cart->id,
+            'order_id' => $order->id
+        ];
     }
 
     /**
