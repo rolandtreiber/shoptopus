@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Payment\ExecuteRequest;
 use App\Http\Requests\Local\Payment\GetClientSettingsRequest;
 use App\Services\Remote\Payment\PaymentServiceInterface;
+use Illuminate\Http\JsonResponse;
 
 class PaymentController extends Controller
 {
@@ -19,7 +20,7 @@ class PaymentController extends Controller
     /**
      * Pay the order
      */
-    public function execute(ExecuteRequest $request): \Illuminate\Http\JsonResponse
+    public function execute(ExecuteRequest $request): JsonResponse
     {
         try {
             return response()->json(
@@ -33,7 +34,7 @@ class PaymentController extends Controller
     /**
      * Get a single payment provider settings
      */
-    public function getClientSettings(GetClientSettingsRequest $request, string $provider): \Illuminate\Http\JsonResponse
+    public function getClientSettings(GetClientSettingsRequest $request, string $provider): JsonResponse
     {
         try {
             return response()->json(

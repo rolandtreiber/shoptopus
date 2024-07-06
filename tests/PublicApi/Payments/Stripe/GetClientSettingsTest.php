@@ -7,6 +7,9 @@ use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\PaymentTestCase;
 
+/**
+ * @group stripe
+ */
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;

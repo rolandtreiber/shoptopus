@@ -5,6 +5,8 @@ namespace App\Repositories\Local\Order;
 use App\Models\Order;
 use App\Repositories\Local\ModelRepository;
 use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\Order\OrderService;
+use Illuminate\Support\Facades\DB;
 
 class OrderRepository extends ModelRepository implements OrderRepositoryInterface
 {
@@ -13,21 +15,34 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
         parent::__construct($errorService, $model);
     }
 
-//    /**
-//     * Get the orders for the given voucher code
-//     *
-//     * @param array $voucherCodeIds
-//     * @return array
-//     * @throws \Exception
-//     */
-//    public function getOrders(array $voucherCodeIds = []) : array
-//    {
-//        $result = $this->orderService->getAll([], [
-//            'voucher_code_id' => implode(',', $voucherCodeIds)
-//        ]);
-//
-//        return !empty($result['data']) ? $result['data'] : [];
-//    }
+    /**
+     * Get the product attributes for the given products
+     *
+     *
+     * @throws \Exception
+     */
+    public function getInvoice(string $orderId): array
+    {
+        try {
+            return DB::select("
+                SELECT
+                    invoices.id,
+                    invoices.user_id,
+                    invoices.order_id,
+                    invoices.address,
+                    invoices.payment,
+                    invoices.products,
+                    invoices.voucher_code,
+                    invoices.delivery_type
+                FROM invoices AS invoices
+                WHERE invoices.order_id = \"" . $orderId . "\"
+                AND invoices.deleted_at IS NULL
+            ");
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
+    }
 
     /**
      * Get the required related models for the given parent
@@ -37,31 +52,29 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
      */
     public function getTheResultWithRelationships($result, array $excludeRelationships = []): array
     {
-//        try {
-//            $ids = collect($result)->pluck('user_id')->toArray();
-//
-//            foreach ($result as &$model) {
-//                $modelId = (int) $model['id'];
-//
-//                if (!in_array('orders', $excludeRelationships)) {
-//                    $model['orders'] = [];
-//
-//                    dd($this->getOrders($ids));
-//
-//                    foreach ($this->getOrders($ids) as $order) {
-//                        if ($order['voucher_code_id'] === $modelId) {
-//                            unset($order['voucher_code_id']);
-//                            array_push($model['orders'], $order);
-//                        }
-//                    }
-//                }
-//            }
+        try {
+            foreach ($result as &$model) {
+                if (!in_array('invoice', $excludeRelationships)) {
+                    $invoiceRawData = $this->getInvoice($model['id']);
+                    if (is_array($invoiceRawData) and count($invoiceRawData) > 0) {
+                        $invoice = $invoiceRawData[0];
+                        $invoice['address'] = json_decode($invoice['address']);
+                        $invoice['payment'] = json_decode($invoice['payment']);
+                        $invoice['products'] = json_decode($invoice['products']);
+                        $invoice['voucher_code'] = json_decode($invoice['voucher_code']);
+                        $invoice['delivery_type'] = json_decode($invoice['delivery_type']);
+                    } else {
+                        $invoice = null;
+                    }
+                    $model['invoice'] = $invoice;
+                }
+            }
 
             return $result;
-//        } catch (\Exception|\Error $e) {
-//            $this->errorService->logException($e);
-//            throw $e;
-//        }
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw $e;
+        }
     }
 
     /**
@@ -88,7 +101,7 @@ class OrderRepository extends ModelRepository implements OrderRepositoryInterfac
         return $withTableNamePrefix
             ? $columns
             : array_map(function ($column_name) {
-                return str_replace($this->model_table.'.', '', $column_name);
+                return str_replace($this->model_table . '.', '', $column_name);
             }, $columns);
     }
 }

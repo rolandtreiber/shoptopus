@@ -12,6 +12,8 @@ use App\Services\Local\Auth\SocialAccountService;
 use App\Services\Local\Auth\SocialAccountServiceInterface;
 use App\Services\Local\Cart\CartService;
 use App\Services\Local\Cart\CartServiceInterface;
+use App\Services\Local\Checkout\CheckoutService;
+use App\Services\Local\Checkout\CheckoutServiceInterface;
 use App\Services\Local\DeliveryRule\DeliveryRuleService;
 use App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface;
 use App\Services\Local\DeliveryType\DeliveryTypeService;
@@ -80,6 +82,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(PaymentServiceInterface::class, PaymentService::class);
         $this->app->bind(PaymentProviderServiceInterface::class, PaymentProviderService::class);
         $this->app->bind(VoucherCodeServiceInterface::class, VoucherCodeService::class);
+        $this->app->bind(CheckoutServiceInterface::class, CheckoutService::class);
 
         // remote
         $this->app->bind(StripePaymentServiceInterface::class, StripePaymentService::class);

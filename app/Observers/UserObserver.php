@@ -6,6 +6,7 @@ use App\Enums\RandomStringMode;
 use App\Helpers\GeneralHelper;
 use App\Models\Cart;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserObserver
 {
@@ -17,9 +18,13 @@ class UserObserver
     public function creating(User $user): void
     {
         do {
-            $reference = GeneralHelper::generateRandomString(8, RandomStringMode::UppercaseAndNumbers);
+            $reference = GeneralHelper::generateRandomString(12, RandomStringMode::UppercaseAndNumbers);
         } while (User::where('client_ref', $reference)->first());
         $user->client_ref = $reference;
+        if ($user->temporary) {
+            $user->email = $user->email."-".$reference;
+            $user->password = Hash::make($reference);
+        }
     }
 
     public function saving(User $user): void

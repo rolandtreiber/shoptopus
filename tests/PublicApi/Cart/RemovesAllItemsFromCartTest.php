@@ -113,7 +113,6 @@ class RemovesAllItemsFromCartTest extends TestCase
 
     /**
      * @test
-     * @group work
      */
     public function it_fails_if_cart_id_is_missing(): void
     {

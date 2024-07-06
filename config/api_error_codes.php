@@ -97,5 +97,10 @@ return [
             'getFavoritedProductIds' => 4007,
             'favorites' => 4008,
         ],
+        'checkout' => [
+            'getPendingOrderFromCart' => 5000,
+            'revertOrder' => 5001,
+            'getAvailableDeliveryTypesForAddress' => 5002
+        ]
     ],
 ];

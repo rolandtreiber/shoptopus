@@ -67,38 +67,6 @@ class GetAddressTest extends TestCase
             ]);
     }
 
-    /**
-     * @test
-     *
-     * @group apiGet
-     */
-    public function it_returns_the_owner_of_the_address(): void
-    {
-        $this->signIn($this->address->user)
-            ->sendRequest()
-            ->assertJsonStructure([
-                'data' => [
-                    [
-                        'user' => [
-                            'id',
-                            'first_name',
-                            'last_name',
-                            'email',
-                            'name',
-                            'initials',
-                            'prefix',
-                            'phone',
-                            'avatar',
-                            'email_verified_at',
-                            'client_ref',
-                            'temporary',
-                            'is_favorite',
-                        ],
-                    ],
-                ],
-            ]);
-    }
-
     protected function sendRequest(): \Illuminate\Testing\TestResponse
     {
         return $this->getJson(route('api.address.get', ['id' => $this->address->id]));

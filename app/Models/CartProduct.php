@@ -16,6 +16,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $id
  * @property string $cart_id
  * @property string $product_id
+ * @property string $weight
  * @property string|null $product_variant_id
  * @property int $quantity
  * @property int $remaining_stock
@@ -92,8 +93,8 @@ class CartProduct extends MorphPivot implements Exportable, Auditable
     public function getRemainingStockAttribute()
     {
         if ($this->productVariant) {
-            $remainingStock = $this->productVariant->stock - $this->quantity;
-            if ($remainingStock < 0) {
+            $remainingStock = $this->productVariant->stock;
+            if ($remainingStock - $this->quantity < 0) {
                 DB::table('cart_product')
                     ->where([
                         'cart_id' => $this->cart_id,
@@ -105,8 +106,8 @@ class CartProduct extends MorphPivot implements Exportable, Auditable
             }
         } else {
             $this->product = $this->product->refresh();
-            $remainingStock = $this->product->stock - $this->quantity;
-            if ($remainingStock < 0) {
+            $remainingStock = $this->product->stock;
+            if ($remainingStock - $this->quantity < 0) {
                 DB::table('cart_product')
                     ->where([
                         'cart_id' => $this->cart_id,

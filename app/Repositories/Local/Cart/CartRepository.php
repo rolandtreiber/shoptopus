@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Local\Cart;
 
+use App\Exceptions\CartException;
 use App\Http\Resources\Public\Product\CartProductResource;
 use App\Models\Cart;
 use App\Models\CartProduct;
@@ -29,6 +30,14 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
             $payload['quantity'] = 1;
         }
         try {
+            if ($payload['product_variant_id'] !== null) {
+                if (Product::find($payload['product_id']) === null || ProductVariant::find($payload['product_variant_id']) === null) {
+                    throw new CartException("Invalid product");
+                }
+            } elseif(Product::find($payload['product_id']) === null || Product::find($payload['product_id'])->deleted_at !== null) {
+                throw new CartException("Invalid product");
+            }
+
             $cart = $payload['cart_id']
                 ? $this->get($payload['cart_id'])
                 : $this->post([]);

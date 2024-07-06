@@ -105,4 +105,33 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     {
         return $this->belongsTo(DeliveryType::class);
     }
+
+    /**
+     * Calculates the great-circle distance between two points, with
+     * the Vincenty formula.
+     * @param Address $address
+     * @return float|int Distance between points in [m] (same as earthRadius)
+     */
+    public function getDistanceFromAddress(Address $address): float|int
+    {
+        $earthRadius = 6371000;
+        $latitudeFrom = $address->lat;
+        $longitudeFrom = $address->lon;
+
+        $latitudeTo = $this->lat;
+        $longitudeTo = $this->lon;
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitudeFrom);
+        $lonFrom = deg2rad($longitudeFrom);
+        $latTo = deg2rad($latitudeTo);
+        $lonTo = deg2rad($longitudeTo);
+
+        $lonDelta = $lonTo - $lonFrom;
+        $a = pow(cos($latTo) * sin($lonDelta), 2) +
+            pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+        $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+        $angle = atan2(sqrt($a), $b);
+        return $angle * $earthRadius;
+    }
 }
