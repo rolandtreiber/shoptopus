@@ -189,7 +189,7 @@ class ModelRepository implements ModelRepositoryInterface
 
     private function processJsonFields($data)
     {
-        $jsonFields = array_merge($this->model->translatable ?: [], ['cover_photo', 'menu_image', 'header_image', 'image']);
+        $jsonFields = array_merge($this->model->translatable ?: [], ['cover_photo', 'menu_image', 'header_image', 'image', 'background_image']);
         foreach ($jsonFields as $jsonField) {
             try {
                 $data = array_map(function ($model) use ($jsonField) {
