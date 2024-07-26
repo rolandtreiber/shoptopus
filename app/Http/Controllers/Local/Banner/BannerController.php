@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Local\Banner;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
 use App\Services\Local\Banner\BannerServiceInterface;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,4 +37,9 @@ class BannerController extends Controller
         }
     }
 
+    public function clicked(Banner $banner): void
+    {
+        $banner->total_clicks = $banner->total_clicks + 1;
+        $banner->save();
+    }
 }

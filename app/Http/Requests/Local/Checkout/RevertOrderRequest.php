@@ -27,6 +27,9 @@ class RevertOrderRequest extends FormRequest
         }
 
         if ($user) {
+            if ($user->temporary === true) {
+                return false;
+            }
             $userOrderIds = DB::table('orders')
                 ->where('user_id', $user->id)
                 ->where('status', OrderStatus::AwaitingPayment)

@@ -10,6 +10,7 @@ Route::group([
         'name' => 'banners.',
         'prefix' => 'banners'
     ], function () {
-        Route::get('/', [BannerController::class, 'getAll'])->name('api.banners.local.getAll');
+        Route::get('/', [BannerController::class, 'getAll'])->name('api.banners.getAll');
+        Route::post('/{banner}/click', [BannerController::class, 'clicked'])->name('api.banner.clicked');
     });
 });

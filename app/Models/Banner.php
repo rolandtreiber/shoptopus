@@ -16,6 +16,7 @@ use Spatie\Translatable\HasTranslations;
 
 /**
  * @property mixed|string[]|null $background_image
+ * @property integer $total_clicks
  */
 class Banner extends SearchableModel implements Auditable, Exportable
 {
