@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
  * @property float $price
  * @property float $final_price
  * @property string $id
+ * @property boolean $virtual
  */
 class CartProductResource extends JsonResource
 {
@@ -62,7 +63,8 @@ class CartProductResource extends JsonResource
             'quantity' => $quantity,
             'remaining_stock' => $this->pivot->remaining_stock,
             'in_other_carts' => $this->pivot->inOtherCarts,
-            'photo' => $photo
+            'photo' => $photo,
+            'virtual' => $this->virtual
         ];
     }
 }
