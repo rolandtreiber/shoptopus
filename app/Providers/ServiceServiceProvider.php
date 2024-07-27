@@ -43,6 +43,8 @@ use App\Services\Local\User\UserService;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\VoucherCode\VoucherCodeService;
 use App\Services\Local\VoucherCode\VoucherCodeServiceInterface;
+use App\Services\Local\Banner\BannerService;
+use App\Services\Local\Banner\BannerServiceInterface;
 use App\Services\Remote\Payment\Amazon\AmazonPaymentService;
 use App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface;
 use App\Services\Remote\Payment\PaymentService;
@@ -83,6 +85,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(PaymentProviderServiceInterface::class, PaymentProviderService::class);
         $this->app->bind(VoucherCodeServiceInterface::class, VoucherCodeService::class);
         $this->app->bind(CheckoutServiceInterface::class, CheckoutService::class);
+        $this->app->bind(BannerServiceInterface::class, BannerService::class);
 
         // remote
         $this->app->bind(StripePaymentServiceInterface::class, StripePaymentService::class);

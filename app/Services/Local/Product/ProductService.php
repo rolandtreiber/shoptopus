@@ -10,15 +10,11 @@ use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\Product;
 use App\Models\Rating;
-use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;
 use Exception;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Config;
-use JeroenG\Explorer\Domain\Syntax\Matching;
-use JeroenG\Explorer\Domain\Syntax\Nested;
 
 class ProductService extends ModelService implements ProductServiceInterface
 {

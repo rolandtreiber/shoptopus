@@ -77,6 +77,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface::class, \App\Repositories\Local\ProductCategory\ProductCategoryRepository::class);
         $this->app->bind(\App\Repositories\Local\ProductTag\ProductTagRepositoryInterface::class, \App\Repositories\Local\ProductTag\ProductTagRepository::class);
         $this->app->bind(\App\Repositories\Local\Rating\RatingRepositoryInterface::class, \App\Repositories\Local\Rating\RatingRepository::class);
+        $this->app->bind(\App\Repositories\Local\Banner\BannerRepositoryInterface::class, \App\Repositories\Local\Banner\BannerRepository::class);
         $this->app->bind(PaymentProviderRepositoryInterface::class, PaymentProviderRepository::class);
         $this->app->bind(StripeTransactionRepositoryInterface::class, StripeTransactionRepository::class);
         $this->app->bind(PayPalTransactionRepositoryInterface::class, PayPalTransactionRepository::class);
