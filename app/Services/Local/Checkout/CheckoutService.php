@@ -2,6 +2,7 @@
 
 namespace App\Services\Local\Checkout;
 
+use App\Models\Cart;
 use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\ModelService;
@@ -57,4 +58,16 @@ class CheckoutService extends ModelService implements CheckoutServiceInterface
         }
     }
 
+    /**
+     * @throws Exception
+     */
+    public function checkAvailabilities(Cart $cart): array
+    {
+        try {
+            return $this->checkoutRepository->checkAvailabilities($cart);
+        } catch (Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw new Exception($e->getMessage(), Config::get('api_error_codes.services.checkout.getProductAvailabilities'));
+        }
+    }
 }

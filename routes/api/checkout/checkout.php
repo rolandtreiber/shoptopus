@@ -12,6 +12,7 @@ Route::group([
         'prefix' => 'checkout'
     ], function () {
         Route::post('/get-available-delivery-types', [CheckoutController::class, 'getAvailableDeliveryTypes'])->name('api.checkout.get.available-delivery-types');
+        Route::get('/check-availabilities/{cart}', [CheckoutController::class, 'checkAvailabilities'])->name('api.checkout.get.check-availabilities');
         Route::post('/create-pending-order', [CheckoutController::class, 'createPendingOrderFromCart'])->name('api.checkout.create.pending-order');
         Route::post('/revert-order', [CheckoutController::class, 'revertOrder'])->name('api.checkout.revert.order');
     });

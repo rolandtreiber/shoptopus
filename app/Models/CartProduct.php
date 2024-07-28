@@ -11,6 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable;
 use Shoptopus\ExcelImportExport\Exportable;
 use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Translatable\HasTranslations;
+use stdClass;
 
 /**
  * @property string $id
@@ -19,6 +20,8 @@ use Spatie\Translatable\HasTranslations;
  * @property string $weight
  * @property string|null $product_variant_id
  * @property int $quantity
+ * @property int $stock
+ * @property StdClass $pivot
  * @property int $remaining_stock
  * @property int $in_other_carts
  * @property ProductVariant|null $productVariant
