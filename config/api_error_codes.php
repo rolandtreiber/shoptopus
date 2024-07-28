@@ -100,7 +100,8 @@ return [
         'checkout' => [
             'getPendingOrderFromCart' => 5000,
             'revertOrder' => 5001,
-            'getAvailableDeliveryTypesForAddress' => 5002
+            'getAvailableDeliveryTypesForAddress' => 5002,
+            'getProductAvailabilities' => 5003
         ]
     ],
 ];

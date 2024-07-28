@@ -312,4 +312,36 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         }
         return $result;
     }
+
+
+    public function checkAvailabilities(Cart $cart): array
+    {
+        $report = [
+            'status' => 'OK',
+            'products_to_review' => []
+        ];
+        /** @var CartProduct $cartProduct */
+        foreach ($cart->products as $cartProduct) {
+            if ($cartProduct->product_variant_id !== null) {
+                $availableStock = ProductVariant::find($cartProduct->product_variant_id)->stock;
+                $name = $cartProduct->productVariant->name;
+            } else {
+                $availableStock = $cartProduct->stock;
+                $name = $cartProduct->name;
+            }
+            if ($cartProduct->pivot->quantity > $availableStock) {
+                $report['products_to_review'][] = [
+                    'name' => $name,
+                    'available' => $availableStock,
+                    'requested' => $cartProduct->pivot->quantity,
+                    'product_id' => $cartProduct->pivot->product_id,
+                    'product_variant_id' => $cartProduct->pivot->product_variant_id
+                ];
+            }
+            if (count($report['products_to_review']) > 0) {
+                $report['status'] = 'REVIEW';
+            }
+        }
+        return $report;
+    }
 }
