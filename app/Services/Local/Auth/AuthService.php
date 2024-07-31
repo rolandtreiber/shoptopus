@@ -91,7 +91,12 @@ class AuthService implements AuthServiceInterface
                     ],
                 ];
             } else {
-                $response = Http::asForm()->post(config('app.env') === 'local' ? 'sh-site/oauth/token' : config('app.url').'/oauth/token', [
+                $baseUrl = match (config('app.env')) {
+                    'development' => config('app.token_base_url'),
+                    'production' => config('app.url'),
+                    default => 'sh-site',
+                };
+                $response = Http::asForm()->post($baseUrl . '/oauth/token', [
                     'grant_type' => 'password',
                     'client_id' => config('passport.grant_id'),
                     'client_secret' => config('passport.secret'),
