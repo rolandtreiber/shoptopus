@@ -12,23 +12,29 @@ use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
 /**
- * @group guest-checkout-revert-pending-order
+ * @group authenticated-checkout-revert-pending-order
  */
-class GuestCheckoutRevertPendingOrderTest extends TestCase
+
+class AuthenticatedCheckoutRevertPendingOrderTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $user = User::factory()->create();
+        $this->user = $user;
+    }
 
     /**
      * @test
      */
-    public function guest_checkout_revert_pending_order_works_when_all_information_are_provided_and_correct()
+    public function authenticated_checkout_revert_pending_order_works_when_all_information_are_provided_and_correct()
     {
-        $user = User::factory()->state([
-            'temporary' => 1
-        ])->create();
         $order = Order::factory()->state([
-            'user_id' => $user->id,
-            'status' => OrderStatus::AwaitingPayment
+            'status' => OrderStatus::AwaitingPayment,
+            'user_id' => $this->user->id
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
         foreach ($products as $product) {
@@ -47,8 +53,7 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
             'product_variant_id' => $productVariant1->id
         ]);
 
-        $res = $this->sendRequest([
-            "user_id" => $user->id,
+        $res = $this->signIn($this->user)->sendRequest([
             "order_id" => $order->id
         ]);
 
@@ -84,13 +89,13 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
     /**
      * @test
      */
-    public function guest_checkout_revert_pending_order_puts_products_back_into_cart()
+    public function authenticated_checkout_reverting_order_fails_when_user_is_temporary()
     {
-        $user = User::factory()->state([
-            'temporary' => 1
-        ])->create();
+        $this->user->temporary = 1;
+        $this->user->save();
+        $this->user->refresh();
         $order = Order::factory()->state([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'status' => OrderStatus::AwaitingPayment
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
@@ -98,47 +103,7 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
             $order->products()->attach($product->id, ['amount' => 4]);
         }
 
-        $productVariant1 = ProductVariant::factory()->state([
-            'stock' => 50
-        ])->create();
-        $order->products()->attach($productVariant1->product_id, [
-            'amount' => 7,
-            'product_variant_id' => $productVariant1->id
-        ]);
-
-        $this->sendRequest([
-            "user_id" => $user->id,
-            "order_id" => $order->id
-        ]);
-
-        $cart = $user->cart;
-
-        $this->assertDatabaseHas('cart_product', [
-            'cart_id' => $cart->id,
-            'product_id' => $products[0]->id,
-            'quantity' => 4
-        ]);
-    }
-
-    /**
-     * @test
-     */
-    public function guest_checkout_reverting_order_fails_when_user_is_not_temporary()
-    {
-        $user = User::factory()->state([
-            'temporary' => 0
-        ])->create();
-        $order = Order::factory()->state([
-            'user_id' => $user->id,
-            'status' => OrderStatus::AwaitingPayment
-        ])->create();
-        $products = Product::factory()->state(['stock' => 100])->count(2)->create();
-        foreach ($products as $product) {
-            $order->products()->attach($product->id, ['amount' => 4]);
-        }
-
-        $res = $this->sendRequest([
-            "user_id" => $user->id,
+        $res = $this->signIn($this->user)->sendRequest([
             "order_id" => $order->id
         ]);
 
@@ -148,13 +113,11 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
     /**
      * @test
      */
-    public function guest_checkout_reverting_order_fails_when_order_does_not_belong_to_user()
+    public function authenticated_checkout_reverting_order_fails_when_order_does_not_belong_to_user()
     {
-        $users = User::factory()->state([
-            'temporary' => 1
-        ])->count(2)->create();
+        $user = User::factory()->create();
         $order = Order::factory()->state([
-            'user_id' => $users[0]->id,
+            'user_id' => $user->id,
             'status' => OrderStatus::AwaitingPayment
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
@@ -162,8 +125,7 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
             $order->products()->attach($product->id, ['amount' => 4]);
         }
 
-        $res = $this->sendRequest([
-            "user_id" => $users[1]->id,
+        $res = $this->signIn($this->user)->sendRequest([
             "order_id" => $order->id
         ]);
 
@@ -175,11 +137,8 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
      */
     public function guest_checkout_reverting_order_fails_when_order_status_is_not_pending()
     {
-        $user = User::factory()->state([
-            'temporary' => 1
-        ])->create();
         $order = Order::factory()->state([
-            'user_id' => $user->id,
+            'user_id' => $this->user->id,
             'status' => OrderStatus::Cancelled
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
@@ -187,8 +146,7 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
             $order->products()->attach($product->id, ['amount' => 4]);
         }
 
-        $res = $this->sendRequest([
-            "user_id" => $user->id,
+        $res = $this->signIn($this->user)->sendRequest([
             "order_id" => $order->id
         ]);
 

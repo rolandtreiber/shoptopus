@@ -16,6 +16,7 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 /**
+ * @property string $id
  * @property string $user_id
  * @property Collection<Product> $products
  * @property int $total_weight

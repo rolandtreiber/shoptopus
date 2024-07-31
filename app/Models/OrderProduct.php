@@ -30,6 +30,7 @@ use Spatie\Translatable\HasTranslations;
  * @property float|mixed $total_discount
  * @property Carbon $created_at
  * @property Carbon|null $updated_at
+ * @property mixed $pivot
  */
 class OrderProduct extends MorphPivot implements Exportable, Auditable
 {

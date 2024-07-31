@@ -166,11 +166,20 @@ class CheckoutRepository implements CheckoutRepositoryInterface
 
     }
 
+    /**
+     * @throws CheckoutException
+     */
     public function revertOrder(array $payload): array
     {
         /** @var Order|null $order */
         $order = Order::find($payload['order_id']);
-        $user = User::where('id', $payload['user_id'])->first();
+        if (auth()->user()) {
+            $user = auth()->user();
+        } elseif(array_key_exists('user_id', $payload)) {
+            $user = User::where('id', $payload['user_id'])->first();
+        } else {
+            throw new CheckoutException('User not found');
+        }
         $cart = Cart::where('user_id', $user->id)->first();
         if ($order && $user) {
             if (!$cart) {
@@ -181,17 +190,18 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             /** @var OrderProduct $orderProduct */
             foreach ($order->products as $orderProduct) {
                 $cartProduct = new CartProduct();
-                $cartProduct->product_id = $orderProduct->product_id;
-                $cartProduct->product_variant_id = $orderProduct->product_variant_id;
-                $cartProduct->quantity = $orderProduct->amount;
+                $cartProduct->cart_id = $cart->id;
+                $cartProduct->product_id = $orderProduct->pivot->product_id;
+                $cartProduct->product_variant_id = $orderProduct->pivot->product_variant_id;
+                $cartProduct->quantity = $orderProduct->pivot->amount;
                 $cartProduct->save();
-                if ($orderProduct->product_variant_id) {
-                    $productVariant = ProductVariant::find($orderProduct->product_variant_id);
-                    $productVariant->stock = $productVariant->stock + $orderProduct->amount;
+                if ($orderProduct->pivot->product_variant_id) {
+                    $productVariant = ProductVariant::find($orderProduct->pivot->product_variant_id);
+                    $productVariant->stock = $productVariant->stock + $orderProduct->pivot->amount;
                     $productVariant->save();
                 } else {
-                    $product = Product::find($orderProduct->product_id);
-                    $product->stock = $product->stock + $orderProduct->amount;
+                    $product = Product::find($orderProduct->pivot->product_id);
+                    $product->stock = $product->stock + $orderProduct->pivot->amount;
                     $product->save();
                 }
                 $orderProduct->delete();
@@ -301,5 +311,37 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             }
         }
         return $result;
+    }
+
+
+    public function checkAvailabilities(Cart $cart): array
+    {
+        $report = [
+            'status' => 'OK',
+            'products_to_review' => []
+        ];
+        /** @var CartProduct $cartProduct */
+        foreach ($cart->products as $cartProduct) {
+            if ($cartProduct->product_variant_id !== null) {
+                $availableStock = ProductVariant::find($cartProduct->product_variant_id)->stock;
+                $name = $cartProduct->productVariant->name;
+            } else {
+                $availableStock = $cartProduct->stock;
+                $name = $cartProduct->name;
+            }
+            if ($cartProduct->pivot->quantity > $availableStock) {
+                $report['products_to_review'][] = [
+                    'name' => $name,
+                    'available' => $availableStock,
+                    'requested' => $cartProduct->pivot->quantity,
+                    'product_id' => $cartProduct->pivot->product_id,
+                    'product_variant_id' => $cartProduct->pivot->product_variant_id
+                ];
+            }
+            if (count($report['products_to_review']) > 0) {
+                $report['status'] = 'REVIEW';
+            }
+        }
+        return $report;
     }
 }
