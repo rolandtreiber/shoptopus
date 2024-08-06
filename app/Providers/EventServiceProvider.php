@@ -8,6 +8,7 @@ use App\Facades\Module;
 use App\Listeners\OrderCompletedListener;
 use App\Listeners\UpdateLastSeenUser;
 use App\Models\AccessToken;
+use App\Models\Address;
 use App\Models\Banner;
 use App\Models\FileContent;
 use App\Models\Order;
@@ -24,6 +25,7 @@ use App\Models\User;
 use App\Models\VariantAttribute;
 use App\Models\VoucherCode;
 use App\Observers\AccessTokenObserver;
+use App\Observers\AddressObserver;
 use App\Observers\BannerObserver;
 use App\Observers\FileContentObserver;
 use App\Observers\OrderObserver;
@@ -89,6 +91,7 @@ class EventServiceProvider extends ServiceProvider
         Banner::observe(BannerObserver::class);
         Module::enabled('ratings') && Rating::observe(RatingObserver::class);
         VariantAttribute::observe(VariantAttributeObserver::class);
+        Address::observe(AddressObserver::class);
     }
 
     /**
