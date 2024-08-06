@@ -87,6 +87,8 @@ return [
 
     'locale' => 'en',
 
+    'token_base_url' => env("APP_TOKEN_BASEURL", env("APP_URL", 'http://localhost')),
+
     'locales_supported' => [
         'en' => [
             'label' => 'English',
