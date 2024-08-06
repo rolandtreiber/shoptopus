@@ -42,7 +42,7 @@ class CreatePendingOrderFromCartRequest extends FormRequest
             'address_id' => 'nullable|string|exists:addresses,id',
             'address' => 'nullable|array',
             'delivery_type_id' => 'nullable|string|exists:delivery_types,id',
-            'voucher_code_id' => 'nullable|string|exists:voucher_codes,id',
+            'voucher_code' => 'nullable|string|exists:voucher_codes,code',
         ];
     }
 }

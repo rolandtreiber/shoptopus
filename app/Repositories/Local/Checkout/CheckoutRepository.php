@@ -111,8 +111,8 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $order->delivery_type_id = $deliveryType->id;
 
             // Apply voucher code if present
-            if (array_key_exists('voucher_code_id', $payload)) {
-                $voucherCode = VoucherCode::find($payload['voucher_code_id']);
+            if (array_key_exists('voucher_code', $payload)) {
+                $voucherCode = VoucherCode::where("code", $payload['voucher_code'])->first();
                 if ($voucherCode && $voucherCode->status === 1) {
                     $order->voucher_code_id = $voucherCode->id;
                 }
