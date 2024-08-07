@@ -70,4 +70,18 @@ class CheckoutService extends ModelService implements CheckoutServiceInterface
             throw new Exception($e->getMessage(), Config::get('api_error_codes.services.checkout.getProductAvailabilities'));
         }
     }
+
+    /**
+     * @throws Exception
+     */
+    public function applyVoucherCode(Cart $cart, string $code): array
+    {
+        try {
+            return $this->checkoutRepository->applyVoucherCode($cart, $code);
+        } catch (Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw new Exception($e->getMessage(), Config::get('api_error_codes.services.checkout.getProductAvailabilities'));
+        }
+    }
+
 }

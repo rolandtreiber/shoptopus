@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\GeneralHelper;
 use App\Traits\HasUUID;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -48,6 +49,34 @@ class Cart extends Model implements Auditable, Exportable
         'id' => 'string',
         'user_id' => 'string',
     ];
+
+    /**
+     * @param VoucherCode|null $voucherCode
+     * @return array
+     */
+    public function getTotals(VoucherCode|null $voucherCode)
+    {
+        $products = $this->products;
+        $originalPrice = $products->sum('price');
+        $finalPrice = $products->sum('final_price');
+
+        if ($voucherCode) {
+            $basis = match (config('shoptopus.voucher_code_basis')) {
+                'full_price' => $originalPrice,
+                'final_price' => $finalPrice,
+                default => $originalPrice,
+            };
+            $totalPrice = GeneralHelper::getDiscountedValue($voucherCode->type, $voucherCode->amount, $basis);
+        } else {
+            $totalPrice = $originalPrice;
+        }
+        $totalDiscount = $originalPrice - $totalPrice;
+        return [
+            'original_price' => $originalPrice,
+            'total_price' => $totalPrice,
+            'total_doscount' => $totalDiscount
+        ];
+    }
 
     /**
      * Get the options for generating the slug.
