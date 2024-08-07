@@ -57,8 +57,22 @@ class Cart extends Model implements Auditable, Exportable
     public function getTotals(VoucherCode|null $voucherCode)
     {
         $products = $this->products;
-        $originalPrice = $products->sum('price');
-        $finalPrice = $products->sum('final_price');
+
+        $originalPrice = $products->sum(function (Product $cp) {
+            if ($cp->pivot->product_variant_id) {
+                return $cp->pivot->quantity * ProductVariant::find($cp->pivot->product_variant_id)->price;
+            } else {
+                return $cp->pivot->quantity * $cp->price;
+            }
+        });
+        $finalPrice = $products->sum(function (Product $cp) {
+            if ($cp->pivot->product_variant_id) {
+                return $cp->pivot->quantity * ProductVariant::find($cp->pivot->product_variant_id)->final_price;
+            } else {
+                return $cp->pivot->quantity * $cp->final_price;
+            }
+
+        });
 
         if ($voucherCode) {
             $basis = match (config('shoptopus.voucher_code_basis')) {
@@ -74,7 +88,7 @@ class Cart extends Model implements Auditable, Exportable
         return [
             'original_price' => $originalPrice,
             'total_price' => $totalPrice,
-            'total_doscount' => $totalDiscount
+            'total_discount' => $totalDiscount
         ];
     }
 
@@ -96,6 +110,7 @@ class Cart extends Model implements Auditable, Exportable
     public function products(): BelongsToMany
     {
         return $this->belongsToMany(Product::class, 'cart_product')
+            ->view('active')
             ->withPivot(['quantity', 'product_variant_id'])
             ->using(CartProduct::class);
     }
