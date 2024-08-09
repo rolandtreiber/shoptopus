@@ -34,7 +34,8 @@ class CartController extends Controller
             return response()->json(
                 [
                     'id' => $cart->id,
-                    'products' => CartProductResource::collection($cart->products)
+                    'products' => CartProductResource::collection($cart->products),
+                    'totals' => $cart->getTotals(null)
                 ]
             );
         } catch (\Exception|\Error $e) {

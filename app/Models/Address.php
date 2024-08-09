@@ -30,7 +30,7 @@ class Address extends Model implements Auditable, Exportable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['user.name', 'name', 'town'])
+            ->generateSlugsFrom(['user.name', 'town'])
             ->saveSlugsTo('slug');
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Local\Checkout;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ApplyVoucherCodeToCartRequest;
 use App\Http\Requests\Local\Checkout\CreatePendingOrderFromCartRequest;
 use App\Http\Requests\Local\Checkout\GetAvailableDeliveryTypesRequest;
 use App\Http\Requests\Local\Checkout\RevertOrderRequest;
@@ -55,6 +56,17 @@ class CheckoutController extends Controller
         try {
             return response()->json([
                 'data' => $this->checkoutService->checkAvailabilities($cart)
+            ]);
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.' . $e->getCode()));
+        }
+    }
+
+    public function applyVoucherCode(ApplyVoucherCodeToCartRequest $request): JsonResponse
+    {
+        try {
+            return response()->json([
+                'data' => $this->checkoutService->applyVoucherCode(Cart::find($request->cart_id), $request->voucher_code)
             ]);
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.' . $e->getCode()));

@@ -108,7 +108,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
             'address_id' => $address->id,
             "delivery_type_id" => $deliveryType->id,
             "guest_checkout" => false,
-            "voucher_code_id" => $voucherCode->id
+            "voucher_code" => $voucherCode->code
         ])->json('data.0.order_id');
 
         $this->assertDatabaseHas("orders", [
@@ -214,7 +214,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
             'address_id' => $address->id,
             "delivery_type_id" => $deliveryType->id,
             "guest_checkout" => false,
-            "voucher_code_id" => $voucherCode->id
+            "voucher_code" => $voucherCode->code
         ])->json('data.0.order_id');
 
         $this->assertDatabaseHas("orders", [
@@ -298,7 +298,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
             'address_id' => $address->id,
             "delivery_type_id" => $deliveryType->id,
             "guest_checkout" => false,
-            "voucher_code_id" => $voucherCode->id
+            "voucher_code" => $voucherCode->code
         ])->json('data.0.order_id');
 
         $this->assertDatabaseHas("orders", [
@@ -330,7 +330,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
             'address_id' => $address->id,
             "delivery_type_id" => $deliveryType->id,
             "guest_checkout" => false,
-            "voucher_code_id" => $voucherCode->id
+            "voucher_code" => $voucherCode->code
         ])->json('developer_message');
 
         $this->assertEquals("Empty cart", $res);

@@ -14,4 +14,6 @@ interface CheckoutRepositoryInterface
 
     public function checkAvailabilities(Cart $cart): array;
 
+    public function applyVoucherCode(Cart $cart, string $code): array;
+
 }

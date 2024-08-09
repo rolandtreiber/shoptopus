@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Local\Checkout;
 
+use App\Enums\DiscountType;
 use App\Enums\OrderStatus;
 use App\Exceptions\CheckoutException;
 use App\Helpers\GeneralHelper;
@@ -111,8 +112,8 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $order->delivery_type_id = $deliveryType->id;
 
             // Apply voucher code if present
-            if (array_key_exists('voucher_code_id', $payload)) {
-                $voucherCode = VoucherCode::find($payload['voucher_code_id']);
+            if (array_key_exists('voucher_code', $payload)) {
+                $voucherCode = VoucherCode::where("code", $payload['voucher_code'])->first();
                 if ($voucherCode && $voucherCode->status === 1) {
                     $order->voucher_code_id = $voucherCode->id;
                 }
@@ -344,4 +345,35 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         }
         return $report;
     }
+
+    public function applyVoucherCode(Cart $cart, string $code): array
+    {
+        $report = [
+            'status' => 'OK',
+        ];
+
+        /** @var VoucherCode|null $voucherCode */
+        $voucherCode = VoucherCode::where("code", $code)->view('enabled')->view('active')->first();
+        if (!$voucherCode) {
+            $report['status'] = 'INVALID';
+            $report['voucher_code_details'] = null;
+        } else {
+            $type = "";
+            switch ($voucherCode->type) {
+                case DiscountType::Percentage:
+                    $type = "Percentage";
+                    break;
+                case DiscountType::Amount:
+                    $type = "Fix Amount";
+            }
+
+            $report['voucher_code_details'] = [
+                'type' => $type,
+                'value' => $voucherCode->amount,
+                'cart_totals' => $cart->getTotals($voucherCode)
+            ];
+        }
+        return $report;
+    }
+
 }
