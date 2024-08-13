@@ -94,14 +94,14 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
         $address = Address::factory()->state(['user_id' => $this->user->id])->create();
 
         // The order total without discounts:
-        // 10+15+30+50+3 = 108
+        // 10+15+30+50+3 = 108 (discounts don't apply to delivery, so it is 105)
         // Discount rule of 2.5 applied to product 1 (price: 5, quantity: 2) -> discount = 5
         // Discount rule of 5% applied to product 2 (price: 5, quantity: 3) -> discount = 0.75
         // Total discount applied = 5.75
-        // Total payable should be 102.25 at this point
+        // Total payable should be 99.25 (+3 delivery) at this point
         // ... however we are also applying a voucher code as per the following:
-        // Voucher code applied: 8%: 102.25 * (0.08) -> discount = 8.18
-        // Total payable with all included: 94.07
+        // Voucher code applied: 8%: 99.25 * (0.08) -> discount = 7.94
+        // Total payable with all included: 91.31 + 3 = 94.31
 
         $orderId = $this->signIn($this->user)->sendRequest([
             'cart_id' => $cart->id,
@@ -113,7 +113,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
 
         $this->assertDatabaseHas("orders", [
             "id" => $orderId,
-            "total_price" => 94.07,
+            "total_price" => 94.31,
             "status" => OrderStatus::AwaitingPayment
         ]);
 
@@ -201,13 +201,13 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
         ])->create();
 
         // The order total without discounts:
-        // 10+15+30+50+3 = 108
+        // 10+15+30+50+3 = 108 (discount doesn't apply to delivery, which is 3)
         // Discount rule of 2.5 applied to product 1 (price: 5, quantity: 2) -> discount = 5
         // Total discount applied = 5
-        // Total payable should be 103 at this point
+        // Total payable should be 100 at this point
         // ... however we are also applying a voucher code as per the following:
-        // Voucher code applied: 8%: 103 * (0.08) -> discount = 8.24
-        // Total payable with all included: 94.76
+        // Voucher code applied: 8%: 100 * (0.08) -> discount = 8
+        // Total payable with all included: 92+3 = 95
 
         $orderId = $this->signIn($this->user)->sendRequest([
             'cart_id' => $cart->id,
@@ -219,7 +219,7 @@ class AuthenticatedCheckoutCreatePendingOrderTest extends TestCase
 
         $this->assertDatabaseHas("orders", [
             "id" => $orderId,
-            "total_price" => 94.76
+            "total_price" => 95
         ]);
     }
 

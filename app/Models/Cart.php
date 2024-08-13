@@ -54,10 +54,11 @@ class Cart extends Model implements Auditable, Exportable
      * @param VoucherCode|null $voucherCode
      * @return array
      */
-    public function getTotals(VoucherCode|null $voucherCode)
+    public function getTotals(VoucherCode|null $voucherCode): array
     {
         $products = $this->products;
 
+        // @phpstan-ignore-next-line
         $originalPrice = $products->sum(function (Product $cp) {
             if ($cp->pivot->product_variant_id) {
                 return $cp->pivot->quantity * ProductVariant::find($cp->pivot->product_variant_id)->price;
@@ -65,6 +66,8 @@ class Cart extends Model implements Auditable, Exportable
                 return $cp->pivot->quantity * $cp->price;
             }
         });
+
+        // @phpstan-ignore-next-line
         $finalPrice = $products->sum(function (Product $cp) {
             if ($cp->pivot->product_variant_id) {
                 return $cp->pivot->quantity * ProductVariant::find($cp->pivot->product_variant_id)->final_price;
@@ -75,16 +78,17 @@ class Cart extends Model implements Auditable, Exportable
         });
 
         if ($voucherCode) {
-            $basis = match (config('shoptopus.voucher_code_basis')) {
-                'full_price' => $originalPrice,
+            $basis = match (config('shoptopus.discount_rules.voucher_code_basis')) {
+                'total_price' => $originalPrice,
                 'final_price' => $finalPrice,
                 default => $originalPrice,
             };
             $totalPrice = GeneralHelper::getDiscountedValue($voucherCode->type, $voucherCode->amount, $basis);
         } else {
-            $totalPrice = $originalPrice;
+            $totalPrice = $finalPrice;
         }
         $totalDiscount = $originalPrice - $totalPrice;
+
         return [
             'original_price' => $originalPrice,
             'total_price' => $totalPrice,

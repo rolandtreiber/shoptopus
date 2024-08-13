@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Public\Product;
 
 use App\Models\CartProduct;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\DB;
@@ -29,6 +30,9 @@ class CartProductResource extends JsonResource
 
         $photo = null;
         if ($this->pivot->product_variant_id) {
+            $productVariant = ProductVariant::find($this->pivot->product_variant_id);
+            $price = $productVariant->price;
+            $finalPrice = $productVariant->final_price;
             $productVariantPhoto = DB::table('product_variants')
                 ->join('file_contents', 'file_contents.fileable_id', '=', 'product_variants.id')
                 ->where('product_variants.id', '=', $this->pivot->product_variant_id)
