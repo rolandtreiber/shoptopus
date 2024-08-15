@@ -217,25 +217,33 @@ class Order extends SearchableModel implements Auditable, Exportable
         $dispatcher = Order::getEventDispatcher();
         Order::unsetEventDispatcher();
 
-        $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
-        $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
-//        $discount = DB::table('order_product')->where('order_id', $this->id)->sum('total_discount');
-        $total = $subTotal + $this->delivery_cost;
-
-        $this->subtotal = $subTotal;
-        $this->original_price = $originalPrice;
         $voucher_code = $this->voucher_code;
         if ($voucher_code) {
-            $basis = match (config('shoptopus.voucher_code_basis')) {
-                'full_price' => $originalPrice,
-                'final_price' => $total,
-                default => $total,
+            $sumField = match (config('shoptopus.discount_rules.voucher_code_basis')) {
+                'total_price' => 'full_price',
+                'final_price' => 'final_price',
+                default => 'final_price',
             };
-            $this->total_price = GeneralHelper::getDiscountedValue($voucher_code->type, $voucher_code->amount, $basis);
+            $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum($sumField);
+            $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
+            $total = $subTotal + $this->delivery_cost;
+
+            $basis = match (config('shoptopus.discount_rules.voucher_code_basis')) {
+                'total_price' => $originalPrice,
+                'final_price' => $subTotal,
+                default => $subTotal,
+            };
+
+            $this->total_price = GeneralHelper::getDiscountedValue($voucher_code->type, $voucher_code->amount, $basis) + $this->delivery_cost;
         } else {
+            $subTotal = DB::table('order_product')->where('order_id', $this->id)->sum('final_price');
+            $originalPrice = DB::table('order_product')->where('order_id', $this->id)->sum('full_price');
+            $total = $subTotal + $this->delivery_cost;
             $this->total_price = $total;
         }
-        $this->total_discount = $originalPrice - $this->total_price;
+        $this->subtotal = $subTotal;
+        $this->original_price = $originalPrice;
+        $this->total_discount = $this->original_price + $this->delivery_cost - $this->total_price;
         $this->save();
         Order::setEventDispatcher($dispatcher);
     }

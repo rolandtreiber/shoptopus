@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('return_reason')->nullable();
             $table->string('slug');
             $table->json('urls')->nullable();
-            $table->unique(['order_id', 'product_id']);
+            $table->unique(['order_id', 'product_id', 'product_variant_id']);
         });
     }
 
