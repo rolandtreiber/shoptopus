@@ -52,7 +52,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
     public function createPendingOrderFromCart(array $payload): array
     {
         $cart = Cart::find($payload['cart_id']);
-        if (!$cart || (count($cart->products) === 0 && !array_key_exists('order_id', $payload))) {
+        if (!$cart || (count($cart->products) === 0 && array_key_exists('order_id', $payload) === false)) {
             throw new CheckoutException("Empty cart");
         }
 
