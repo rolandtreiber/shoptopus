@@ -10,7 +10,7 @@ interface PaymentServiceInterface
      *
      * @throws \Exception
      */
-    public function getClientSettings(string $provider, string $orderId): array;
+    public function getClientSettings(string $provider, array $payload): array;
 
     /**
      * Execute a payment using the correct gateway
