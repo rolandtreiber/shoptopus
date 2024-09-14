@@ -4,8 +4,12 @@ namespace App\Services\Remote\Payment;
 
 //use App\Events\OrderCompleted;
 use App\Enums\OrderStatus;
+use App\Exceptions\CheckoutException;
 use App\Exceptions\Payment\PaymentException;
+use App\Models\Cart;
+use App\Models\DeliveryType;
 use App\Models\Order;
+use App\Models\VoucherCode;
 use App\Repositories\Local\Order\OrderRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface;
@@ -45,13 +49,51 @@ class PaymentService implements PaymentServiceInterface
      *
      * @throws \Exception
      */
-    public function getClientSettings(string $provider, string $orderId): array
+    public function getClientSettings(string $provider, array $payload): array
     {
         try {
+            $order = null;
+            $voucherCode = null;
+
+            // Scenario 1:
+            // We do not have an order created yet.
+            // It is the case for stripe whereby the widget creation requires a payment intent,
+            // however creating an order implies removing the products from the cart which in turn leads to erroneous
+            // behaviour if the user closes the browser without attempting the payment.
+            if ($provider === "stripe") {
+                if (!array_key_exists('cartId', $payload) || !array_key_exists('deliveryTypeId', $payload)) {
+                    throw new CheckoutException("Invalid payload for Stripe");
+                } else {
+                    $cart = Cart::find($payload['cartId']);
+                    $deliveryType = DeliveryType::find($payload['deliveryTypeId']);
+                    if (array_key_exists('voucherCode', $payload) && $payload['voucherCode'] !== null) {
+                        $voucherCode = VoucherCode::where('code', $payload['voucherCode'])->first();
+                    }
+                    if (!$cart) {
+                        throw new CheckoutException("Invalid cart");
+                    }
+                    if (!$deliveryType || !$deliveryType->enabled) {
+                        throw new CheckoutException("Invalid delivery type");
+                    }
+                    $totals = $cart->getTotals($voucherCode, $deliveryType);
+
+                    if (!array_key_exists('original_price', $totals) || !array_key_exists('total_price', $totals) || !array_key_exists('total_discount', $totals)) {
+                        throw new CheckoutException("Unable to get totals. Possibly corrupted data.");
+                    }
+                }
+            }
+
+            // Scenario 2:
+            // We do have an order. In this case the delivery type, voucher code and totals can all be derived from the order.
+
+            if (array_key_exists('orderId', $payload)) {
+                $order = $payload['orderId'];
+            }
+
             $public_settings = match ($provider) {
-                'stripe' => $this->stripePaymentService->getClientSettings($orderId),
-                'paypal' => $this->paypalPaymentService->getClientSettings($orderId),
-                'amazon' => $this->amazonPaymentService->getClientSettings($orderId),
+                'stripe' => $this->stripePaymentService->getClientSettings($totals, $cart, $deliveryType, $voucherCode),
+                'paypal' => $this->paypalPaymentService->getClientSettings($order),
+                'amazon' => $this->amazonPaymentService->getClientSettings($order),
                 default => throw new \Exception('Please pass in a valid payment provider'),
             };
 

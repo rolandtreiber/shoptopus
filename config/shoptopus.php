@@ -19,7 +19,7 @@ return [
         'applied_discount' => 'highest', // either highest or lowest
         'voucher_code_basis' => 'final_price', // final_price or total_price
         // When it is set to final_price, the basis of the price the voucher code discount is applied to, will be the already discounted price.
-        // When it is set to full_price, the basis of the price the voucher code discount is applied to, will be the products full price.
+        // When it is set to total_price, the basis of the price the voucher code discount is applied to, will be the products full price.
     ],
     'modules' => [
         'ratings' => true,

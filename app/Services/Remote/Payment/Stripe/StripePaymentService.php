@@ -2,7 +2,11 @@
 
 namespace App\Services\Remote\Payment\Stripe;
 
+use App\Models\Cart;
+use App\Models\DeliveryType;
+use App\Models\VoucherCode;
 use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
+use App\Services\Local\Cart\CartService;
 use App\Services\Local\Error\ErrorServiceInterface;
 use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
@@ -23,8 +27,6 @@ class StripePaymentService implements StripePaymentServiceInterface
 
     private PaymentProviderService $paymentProviderService;
 
-    private OrderServiceInterface $orderService;
-
     private StripeTransactionRepositoryInterface $transactionRepository;
 
     public function __construct(
@@ -37,7 +39,6 @@ class StripePaymentService implements StripePaymentServiceInterface
         $this->errorService = $errorService;
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
-        $this->orderService = $orderService;
 
         $this->config = collect($this->paymentProviderService->get('stripe', 'name')['payment_provider_configs'])
             ->keyBy('setting')
@@ -47,19 +48,22 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Get the settings for a payment provider
      */
-    public function getClientSettings(string $orderId): array
+    public function getClientSettings(array $totals, Cart $cart, DeliveryType $deliveryType, VoucherCode|null $voucherCode): array
     {
         try {
             $this->setApiKey();
 
-            $order = $this->orderService->get($orderId);
-
             $intent = PaymentIntent::create([
-                'amount' => $order['total_price'] * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
-                'currency' => strtolower($order['currency_code']),
+                'amount' => ($totals['total_price'] + $deliveryType->price) * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
+                'currency' => strtolower(config('app.default_currency.name')),
                 'payment_method_types' => ['card'],
                 'metadata' => [
-                    'order_id' => $order['id'],
+                    'user_id' => $cart->user_id,
+                    'delivery_type_id' => $deliveryType->id,
+                    'voucher_code_id' => $voucherCode?->id,
+                    'total_discount' => $totals['total_discount'],
+                    'original_price' => $totals['original_price'],
+                    'delivery' => $deliveryType->price
                 ],
             ]);
 

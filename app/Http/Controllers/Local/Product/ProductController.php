@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Local\Product;
 
+use App\Enums\ProductStatus;
 use App\Enums\UserInteractionType;
 use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
@@ -41,6 +42,10 @@ class ProductController extends Controller
                 $user = Auth()->user();
                 event(new UserInteraction(UserInteractionType::Browse, User::class, $user->id));
             }
+
+            $filters = array_merge($filters, [
+                'status' => ProductStatus::Active
+            ]);
 
             return response()->json(
                 $this->getResponse($page_formatting, $this->productService->getAll(

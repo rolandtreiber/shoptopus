@@ -38,7 +38,7 @@ class PaymentController extends Controller
     {
         try {
             return response()->json(
-                $this->getResponse([], $this->paymentService->getClientSettings($provider, $request->validated()['orderId']), $request)
+                $this->getResponse([], $this->paymentService->getClientSettings($provider, $request->toArray()), $request)
             );
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
