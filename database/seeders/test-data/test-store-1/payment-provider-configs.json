@@ -24,14 +24,14 @@
         "payment_provider_id": 2,
         "setting": "publishable_key",
         "value": "",
-        "test_value": "pk_test_F4SM8MqfiMvIuoKDH1gr41ip",
+        "test_value": "pk_test_tSjCHywFCFKKuHfD2hHilMsj",
         "public": 0
     },
     {
         "payment_provider_id": 2,
         "setting": "secret_key",
         "value": "",
-        "test_value": "sk_test_zFtEsC7sGxxJ9ZfFMc8DyYTJ",
+        "test_value": "sk_test_n3HLE5zEaR9o0shffPy5KeE7",
         "public": 0
     },
     {

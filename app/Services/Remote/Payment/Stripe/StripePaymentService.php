@@ -33,7 +33,6 @@ class StripePaymentService implements StripePaymentServiceInterface
         ErrorServiceInterface                $errorService,
         PaymentProviderService               $paymentProviderService,
         StripeTransactionRepositoryInterface $transactionRepository,
-        OrderServiceInterface                $orderService
     )
     {
         $this->errorService = $errorService;
@@ -51,7 +50,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     public function getClientSettings(array $totals, Cart $cart, DeliveryType $deliveryType, VoucherCode|null $voucherCode): array
     {
         try {
-            $this->setApiKey();
+            $this->setApiKey('secret_key');
 
             $intent = PaymentIntent::create([
                 'amount' => ($totals['total_price'] + $deliveryType->price) * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
@@ -68,7 +67,7 @@ class StripePaymentService implements StripePaymentServiceInterface
             ]);
 
             return [
-                'publishableKey' => $this->getApikey(),
+                'publishableKey' => $this->getApikey("publishable_key"),
                 'clientSecret' => $intent->client_secret,
                 'order_total' => $intent->amount,
             ];
@@ -111,7 +110,7 @@ class StripePaymentService implements StripePaymentServiceInterface
      *
      * @throws \Exception
      */
-    private function getApikey(string $type = 'publishable_key'): string
+    private function getApiKey(string $type): string
     {
         try {
             return app()->isProduction() ? $this->config[$type]['value'] : $this->config[$type]['test_value'];
@@ -126,10 +125,10 @@ class StripePaymentService implements StripePaymentServiceInterface
      *
      * @throws \Exception
      */
-    private function setApiKey()
+    private function setApiKey(string $type)
     {
         try {
-            Stripe::setApiKey($this->getApikey('secret_key'));
+            Stripe::setApiKey($this->getApikey($type));
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
