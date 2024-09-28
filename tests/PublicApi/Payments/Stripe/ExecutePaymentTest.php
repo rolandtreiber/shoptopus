@@ -2,12 +2,16 @@
 
 namespace Tests\PublicApi\Payments\Stripe;
 
+use App\Enums\OrderStatus;
 use App\Models\Cart;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\PaymentTestCase;
 
+/**
+ * @group execute-payment-stripe
+ */
 class ExecutePaymentTest extends PaymentTestCase
 {
     use RefreshDatabase;
@@ -30,10 +34,13 @@ class ExecutePaymentTest extends PaymentTestCase
      * @test
      *
      * @group apiPost
+     * @group work
      */
     public function it_throws_an_error_if_the_order_status_is_not_awaiting_payments(): void
     {
-        $order = Order::factory()->create(['user_id' => $this->user->id]);
+        $order = Order::factory()->state([
+            'status' => OrderStatus::AwaitingPayment
+        ])->create(['user_id' => $this->user->id]);
 
         $total = $order->total_price * 100;
 
@@ -60,6 +67,7 @@ class ExecutePaymentTest extends PaymentTestCase
     protected function dummyPaymentIntent($total): array
     {
         return [
+            'payment_intent_id' => 'MY_DUMMY_INTENT_ID',
             'allowed_source_types' => ['card'],
             'amount' => $total,
             'automatic_payment_methods' => null,
