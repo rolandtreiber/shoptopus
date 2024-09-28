@@ -34,7 +34,6 @@ class ExecutePaymentTest extends PaymentTestCase
      * @test
      *
      * @group apiPost
-     * @group work
      */
     public function it_throws_an_error_if_the_order_status_is_not_awaiting_payments(): void
     {
