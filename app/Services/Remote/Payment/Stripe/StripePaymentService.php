@@ -6,12 +6,11 @@ use App\Models\Cart;
 use App\Models\DeliveryType;
 use App\Models\VoucherCode;
 use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
-use App\Services\Local\Cart\CartService;
 use App\Services\Local\Error\ErrorServiceInterface;
-use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
+use Stripe\StripeClient;
 
 /** StripePaymentService
  * Limitations of finalising payments on the server see on below link
@@ -83,7 +82,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     public function executePayment(string $orderId, array $provider_payload): array
     {
         try {
-            return $this->transactionRepository->storeTransaction($provider_payload, $orderId);
+            return $this->transactionRepository->storeTransaction($provider_payload, $orderId, $this->getApiKey('secret_key'));
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
