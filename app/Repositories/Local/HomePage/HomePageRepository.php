@@ -7,6 +7,7 @@ use App\Http\Resources\HomePage\ProductResource;
 use App\Models\Product;
 use App\Models\User;
 use App\Repositories\Local\Product\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -25,9 +26,12 @@ class HomePageRepository implements HomePageRepositoryInterface
         $this->user = $user;
         $highlightedProducts = $this->getHighlightedProducts();
         return [
+            'discounted_categories' => $this->getActiveDiscountsForCategories(),
+            'discounted_products' => $this->getActiveDiscountsForproducts(),
             'banners' => $this->getBanners(),
             'highlighted_categories' => $this->getHighlightedCategories(),
-            'highlighted_products' => ProductResource::collection(Product::whereIn('id', $highlightedProducts)->get())
+            'highlighted_products' => ProductResource::collection(Product::whereIn('id', $highlightedProducts)->get()),
+            'new_products' => $this->getNewProducts(5),
         ];
     }
 
@@ -208,4 +212,86 @@ class HomePageRepository implements HomePageRepositoryInterface
         }
         return $resultFormatted;
     }
+
+    private function getNewProducts($limit): Collection
+    {
+        return Product::where('status', ProductStatus::Active)->where('stock', '>', 0)->limit($limit)->orderBy('created_at', 'desc')->get();
+    }
+
+    private function getActiveDiscountsForCategories()
+    {
+        $activeDiscounts = DB::table('discount_rule_product_category')
+        ->join('discount_rules', function ($join) {
+            $join->on('discount_rule_product_category.discount_rule_id', '=', 'discount_rules.id')
+                ->where('discount_rules.valid_from', '<', Carbon::now())
+                ->where('discount_rules.valid_until', '>', Carbon::now())
+                ->where('discount_rules.enabled', 1);
+        })->join('product_categories', function ($join) {
+            $join->on('product_categories.id', '=', 'discount_rule_product_category.product_category_id');
+            })
+            ->limit(3)->get([
+                'discount_rules.id as discount_rule_id',
+                'discount_rules.name as discount_rule_name',
+                'valid_from',
+                'valid_until',
+                'type',
+                'amount',
+                'product_categories.id as product_category_id',
+                'product_categories.name as product_category_name',
+                'product_categories.header_image as product_category_header_image',
+            ]);
+
+        return $activeDiscounts->map(function ($discount) {
+            return [
+                'id' => $discount['discount_rule_id'],
+                'name' => json_decode($discount['discount_rule_name']),
+                'valid_from' => $discount['valid_from'],
+                'valid_until' => $discount['valid_until'],
+                'type' => $discount['type'],
+                'amount' => $discount['amount'],
+                'category_id' => $discount['product_category_id'],
+                'category_header_image' => json_decode($discount['product_category_header_image']),
+            ];
+        });
+    }
+
+    private function getActiveDiscountsForProducts()
+    {
+        $activeDiscounts = DB::table('discount_rule_product')
+            ->join('discount_rules', function ($join) {
+                $join->on('discount_rule_product.discount_rule_id', '=', 'discount_rules.id')
+                    ->where('discount_rules.valid_from', '<', Carbon::now())
+                    ->where('discount_rules.valid_until', '>', Carbon::now())
+                    ->where('discount_rules.enabled', 1);
+            })->join('products', function ($join) {
+                $join->on('products.id', '=', 'discount_rule_product.product_id');
+            })
+            ->limit(5)->get([
+                'discount_rules.id as discount_rule_id',
+                'discount_rules.name as discount_rule_name',
+                'valid_from',
+                'valid_until',
+                'type',
+                'amount',
+                'products.id as product_id',
+                'products.name as product_name',
+                'products.stock as product_stock',
+                'products.cover_photo as product_cover_photo',
+            ]);
+
+        return $activeDiscounts->map(function ($discount) {
+            return [
+                'id' => $discount['discount_rule_id'],
+                'name' => json_decode($discount['discount_rule_name']),
+                'valid_from' => $discount['valid_from'],
+                'valid_until' => $discount['valid_until'],
+                'type' => $discount['type'],
+                'amount' => $discount['amount'],
+                'product_id' => $discount['product_id'],
+                'product_stock' => $discount['product_stock'],
+                'product_cover_photo' => json_decode($discount['product_cover_photo']),
+            ];
+        });
+    }
+
 }
