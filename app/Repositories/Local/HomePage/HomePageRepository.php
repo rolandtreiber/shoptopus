@@ -24,12 +24,12 @@ class HomePageRepository implements HomePageRepositoryInterface
     public function getHomePage(User|null $user): array
     {
         $this->user = $user;
-        $highlightedProducts = $this->getHighlightedProducts();
+        $highlightedProducts = $this->getHighlightedProducts(10);
         return [
-            'discounted_categories' => $this->getActiveDiscountsForCategories(),
-            'discounted_products' => $this->getActiveDiscountsForproducts(),
+            'discounted_categories' => $this->getActiveDiscountsForCategories(3),
+            'discounted_products' => $this->getActiveDiscountsForproducts(5),
             'banners' => $this->getBanners(),
-            'highlighted_categories' => $this->getHighlightedCategories(),
+            'highlighted_categories' => $this->getHighlightedCategories(3),
             'highlighted_products' => ProductResource::collection(Product::whereIn('id', $highlightedProducts)->get()),
             'new_products' => $this->getNewProducts(5),
         ];
@@ -52,11 +52,11 @@ class HomePageRepository implements HomePageRepositoryInterface
         })->toArray();
     }
 
-    private function getHighlightedProducts(): array
+    private function getHighlightedProducts($limit): array
     {
         $productIdsWithHighSalesVolume = DB::table('products')
             ->orderBy('purchase_count', 'desc')
-            ->select('id')->limit(20)
+            ->select('id')->limit($limit)
             ->pluck('id')
             ->toArray();
 
@@ -69,7 +69,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 ->where('products.status', '=', ProductStatus::Active)
                 ->where('products.stock', '>', 0);
         })
-            ->select('product_id')->limit(50)->pluck('product_id')->toArray();
+            ->select('product_id')->limit($limit)->pluck('product_id')->toArray();
 
         $discountedProductsDirectly = DB::table('discount_rule_product')->join('discount_rules', function ($join) {
             $join->on('discount_rule_product.discount_rule_id', '=', 'discount_rules.id')
@@ -84,7 +84,7 @@ class HomePageRepository implements HomePageRepositoryInterface
             $join->on('products.id', '=', 'discount_rule_product.product_id')
                 ->where('products.status', '=', ProductStatus::Active)
                 ->where('products.stock', '>', 0);
-        })->select('discount_rule_product.product_id')->limit(50)->pluck('product_id')->toArray();
+        })->select('discount_rule_product.product_id')->limit($limit)->pluck('product_id')->toArray();
 
         $likedProducts = [];
         if ($this->user) {
@@ -98,20 +98,21 @@ class HomePageRepository implements HomePageRepositoryInterface
 
         $allDisplayable = array_merge($productIdsWithHighSalesVolume, $discountedProductsByCategory, $discountedProductsDirectly, $likedProducts);
         $total = count($allDisplayable);
-        if ($total < 25) {
+        if ($total < $limit) {
             $totalRemainingProductsCount = DB::table('products')->where('status', ProductStatus::Active)->count() - $total;
             if ($totalRemainingProductsCount > 25 - $total) {
                 $remainingProductIds = DB::table('products')->where('status', ProductStatus::Active)->whereNotIn('id', $allDisplayable)->pluck('id')->toArray();
                 shuffle($remainingProductIds);
-                $allDisplayable = array_merge($allDisplayable, array_slice($remainingProductIds, 0, 25 - $total));
+                $allDisplayable = array_merge($allDisplayable, array_slice($remainingProductIds, 0, $limit - $total));
             }
         }
 
         shuffle($allDisplayable);
-        return $allDisplayable;
+
+        return array_slice($allDisplayable, 0, $limit);
     }
 
-    private function getHighlightedCategories()
+    private function getHighlightedCategories(int $limit)
     {
         $highlightedCategoryIds = DB::table('discount_rule_product_category')
             ->join('discount_rules', function ($join) {
@@ -127,7 +128,7 @@ class HomePageRepository implements HomePageRepositoryInterface
             ->where('enabled', 1)
             ->pluck('product_category_id')->toArray();
 
-        $missing = 5 - count($highlightedCategoryIds);
+        $missing = $limit - count($highlightedCategoryIds);
         if ($missing > 0) {
             $remainingCategoryIds = DB::table('product_categories')
                 ->where('enabled', 1)
@@ -167,38 +168,42 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'products.cover_photo as product_cover_photo',
             ]);
 
+        $count = 0;
         foreach ($items as $item) {
-            if (array_key_exists($item['category_id'], $result) && count($result[$item['category_id']]['best_sellers']) < 3) {
-                $result[$item['category_id']]['best_sellers'][] = [
-                    'id' => $item['bestseller_id'],
-                    'name' => json_decode($item['product_name']),
-                    'slug' => $item['product_slug'],
-                    'price' => $item['product_price'],
-                    'stock' => $item['product_stock'],
-                    'purchase_count' => $item['product_purchase_count'],
-                    'short_description' => json_decode($item['product_short_description']),
-                    'description' => json_decode($item['product_description']),
-                    'cover_photo' => json_decode($item['product_cover_photo'])
-                ];
-            } else {
-                $result[$item['category_id']] = [
-                    'name' => json_decode($item['category_name']),
-                    'description' => json_decode($item['category_description']),
-                    'header_image' => json_decode($item['category_header_image']),
-                    'best_sellers' => [
-                        [
-                            'id' => $item['bestseller_id'],
-                            'name' => json_decode($item['product_name']),
-                            'slug' => $item['product_slug'],
-                            'price' => $item['product_price'],
-                            'stock' => $item['product_stock'],
-                            'purchase_count' => $item['product_purchase_count'],
-                            'short_description' => json_decode($item['product_short_description']),
-                            'description' => json_decode($item['product_description']),
-                            'cover_photo' => json_decode($item['product_cover_photo'])
-                        ]
-                    ],
-                ];
+            if ($count <= $limit) {
+                if (array_key_exists($item['category_id'], $result) && count($result[$item['category_id']]['best_sellers']) < 3) {
+                    $result[$item['category_id']]['best_sellers'][] = [
+                        'id' => $item['bestseller_id'],
+                        'name' => json_decode($item['product_name']),
+                        'slug' => $item['product_slug'],
+                        'price' => $item['product_price'],
+                        'stock' => $item['product_stock'],
+                        'purchase_count' => $item['product_purchase_count'],
+                        'short_description' => json_decode($item['product_short_description']),
+                        'description' => json_decode($item['product_description']),
+                        'cover_photo' => json_decode($item['product_cover_photo'])
+                    ];
+                } else {
+                    $count++;
+                    $result[$item['category_id']] = [
+                        'name' => json_decode($item['category_name']),
+                        'description' => json_decode($item['category_description']),
+                        'header_image' => json_decode($item['category_header_image']),
+                        'best_sellers' => [
+                            [
+                                'id' => $item['bestseller_id'],
+                                'name' => json_decode($item['product_name']),
+                                'slug' => $item['product_slug'],
+                                'price' => $item['product_price'],
+                                'stock' => $item['product_stock'],
+                                'purchase_count' => $item['product_purchase_count'],
+                                'short_description' => json_decode($item['product_short_description']),
+                                'description' => json_decode($item['product_description']),
+                                'cover_photo' => json_decode($item['product_cover_photo'])
+                            ]
+                        ],
+                    ];
+                }
             }
         }
 
@@ -213,12 +218,15 @@ class HomePageRepository implements HomePageRepositoryInterface
         return $resultFormatted;
     }
 
-    private function getNewProducts($limit): Collection
+    private function getNewProducts(int $limit): Collection
     {
         return Product::where('status', ProductStatus::Active)->where('stock', '>', 0)->limit($limit)->orderBy('created_at', 'desc')->get();
     }
 
-    private function getActiveDiscountsForCategories()
+    /**
+     * @param int $limit
+     */
+    private function getActiveDiscountsForCategories(int $limit)
     {
         $activeDiscounts = DB::table('discount_rule_product_category')
         ->join('discount_rules', function ($join) {
@@ -229,7 +237,7 @@ class HomePageRepository implements HomePageRepositoryInterface
         })->join('product_categories', function ($join) {
             $join->on('product_categories.id', '=', 'discount_rule_product_category.product_category_id');
             })
-            ->limit(3)->get([
+            ->limit($limit)->get([
                 'discount_rules.id as discount_rule_id',
                 'discount_rules.name as discount_rule_name',
                 'valid_from',
@@ -255,7 +263,10 @@ class HomePageRepository implements HomePageRepositoryInterface
         });
     }
 
-    private function getActiveDiscountsForProducts()
+    /**
+     * @param int $limit
+     */
+    private function getActiveDiscountsForProducts(int $limit)
     {
         $activeDiscounts = DB::table('discount_rule_product')
             ->join('discount_rules', function ($join) {
@@ -266,7 +277,7 @@ class HomePageRepository implements HomePageRepositoryInterface
             })->join('products', function ($join) {
                 $join->on('products.id', '=', 'discount_rule_product.product_id');
             })
-            ->limit(5)->get([
+            ->limit($limit)->get([
                 'discount_rules.id as discount_rule_id',
                 'discount_rules.name as discount_rule_name',
                 'valid_from',
