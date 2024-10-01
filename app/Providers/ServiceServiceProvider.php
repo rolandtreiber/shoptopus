@@ -20,6 +20,8 @@ use App\Services\Local\DeliveryType\DeliveryTypeService;
 use App\Services\Local\DeliveryType\DeliveryTypeServiceInterface;
 use App\Services\Local\Error\ErrorService;
 use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\HomePage\HomePageService;
+use App\Services\Local\HomePage\HomePageServiceInterface;
 use App\Services\Local\ModelServiceInterface;
 use App\Services\Local\Notification\NotificationService;
 use App\Services\Local\Notification\NotificationServiceInterface;
@@ -86,6 +88,7 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(VoucherCodeServiceInterface::class, VoucherCodeService::class);
         $this->app->bind(CheckoutServiceInterface::class, CheckoutService::class);
         $this->app->bind(BannerServiceInterface::class, BannerService::class);
+        $this->app->bind(HomePageServiceInterface::class, HomePageService::class);
 
         // remote
         $this->app->bind(StripePaymentServiceInterface::class, StripePaymentService::class);
