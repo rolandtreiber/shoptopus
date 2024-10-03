@@ -42,6 +42,8 @@ use App\Repositories\Local\Checkout\CheckoutRepository;
 use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
 use App\Repositories\Local\DeliveryRule\DeliveryRuleRepository;
 use App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface;
+use App\Repositories\Local\HomePage\HomePageRepository;
+use App\Repositories\Local\HomePage\HomePageRepositoryInterface;
 use App\Repositories\Local\ModelRepositoryInterface;
 use App\Repositories\Local\PaymentProvider\PaymentProviderRepository;
 use App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface;
@@ -99,5 +101,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
         $this->app->bind(VoucherCodeRepositoryInterface::class, VoucherCodeRepository::class);
         $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
+        $this->app->bind(HomePageRepositoryInterface::class, HomePageRepository::class);
     }
 }
