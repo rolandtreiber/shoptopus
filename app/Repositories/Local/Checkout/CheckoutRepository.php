@@ -145,7 +145,6 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 $productVariant = ProductVariant::find($productVariantId);
                 if ($productVariant !== null) {
                     $productVariant->stock = $productVariant->stock - $cartProduct->pivot->quantity;
-                    // Save the changes
                     $productVariant->save();
                 } else {
                     throw new CheckoutException("Product variant not found");
@@ -154,7 +153,6 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 $product = Product::find($productId);
                 if ($product) {
                     $product->stock = $product->stock - $cartProduct->pivot->quantity;
-                    // Save the changes
                     $product->save();
                 } else {
                     throw new CheckoutException("Product not found");
@@ -164,21 +162,14 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             }
         }
 
-        // Empty the cart by detaching all products (removes records from the pivot table 'cart_product')
+        // Delete products from cart
         $cart->products()->detach();
-
-        // Delete products from cart (old logic but this is deleting the product from the product table)
-        //foreach ($cart->products as $cartProduct) {
-        //    $cartProduct->delete();
-        //}
-
 
         return [
             'order_id' => $order->id,
             'user_id' => $user->id,
             'cart_id' => $cart->id
         ];
-
     }
 
     /**

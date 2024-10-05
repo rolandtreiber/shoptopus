@@ -25,6 +25,9 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
             $stripe = new StripeClient($apiKey);
             $intent = $stripe->paymentIntents->retrieve($transaction['payment_intent_id']);
             try {
+                // total_count is not indicated in the third party library, but it is very much present.
+                // Not a lot to do apart from ignoring it in phpstan.
+                // @phpstan-ignore-next-line
                if ($intent->charges->total_count > 0) {
                     $transaction = $intent->toArray()['charges']['data'][0];
                }
@@ -61,6 +64,7 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
             'status' => array_key_exists('status', $intent) ? $intent['status'] : null,
         ]);
 
+        $paymentSource = new PaymentSource();
         if (config('app.env') !== 'testing') {
 
             if (array_key_exists('payment_method', $transaction) && array_key_exists('payment_method_details', $transaction)) {
@@ -72,20 +76,20 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
                 $paymentSourceDetails = $transaction['payment_method_details'];
                 if (array_key_exists('card', $paymentSourceDetails)) {
                     $cardDetails = $paymentSourceDetails['card'];
+                    $brand = array_key_exists('brand', $cardDetails) ? $cardDetails['brand'] : "UNKNOWN BRAND";
+                    $expMonth = array_key_exists('exp_month', $cardDetails) ? $cardDetails['exp_month'] : "UNKNOWN EXP MONTH";
+                    $expYear = array_key_exists('exp_year', $cardDetails) ? $cardDetails['exp_year'] : "UNKNOWN EXP YEAR";
+                    $lastFour = array_key_exists('last4', $cardDetails) ? $cardDetails['last4'] : "UNKNOWN LAST 4 DIGITS";
+                    $paymentSource->name = Auth()->user()->name . '-' . $brand;
+                    $paymentSource->stripe_user_id = '';
+                    $paymentSource->source_id = $transaction['payment_method'];
+                    $paymentSource->payment_method_id = PaymentMethod::Stripe;
+                    $paymentSource->brand = $brand;
+                    $paymentSource->exp_month = $expMonth;
+                    $paymentSource->exp_year = $expYear;
+                    $paymentSource->last_four = $lastFour;
+                    $paymentSource->save();
                 }
-                $brand = array_key_exists('brand', $cardDetails) ? $cardDetails['brand'] : "UNKNOWN BRAND";
-                $expMonth = array_key_exists('exp_month', $cardDetails) ? $cardDetails['exp_month'] : "UNKNOWN EXP MONTH";
-                $expYear = array_key_exists('exp_year', $cardDetails) ? $cardDetails['exp_year'] : "UNKNOWN EXP YEAR";
-                $lastFour = array_key_exists('last4', $cardDetails) ? $cardDetails['last4'] : "UNKNOWN LAST 4 DIGITS";
-                $paymentSource->name = Auth()->user()->name . '-' . $brand;
-                $paymentSource->stripe_user_id = '';
-                $paymentSource->source_id = $transaction['payment_method'];
-                $paymentSource->payment_method_id = PaymentMethod::Stripe;
-                $paymentSource->brand = $brand;
-                $paymentSource->exp_month = $expMonth;
-                $paymentSource->exp_year = $expYear;
-                $paymentSource->last_four = $lastFour;
-                $paymentSource->save();
             }
 
             $payment = new Payment();
