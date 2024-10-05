@@ -75,7 +75,7 @@ class PaymentService implements PaymentServiceInterface
                     if (!$deliveryType || !$deliveryType->enabled) {
                         throw new CheckoutException("Invalid delivery type");
                     }
-                    $totals = $cart->getTotals($voucherCode, $deliveryType);
+                    $totals = $cart->getTotals($voucherCode);
 
                     if (!array_key_exists('original_price', $totals) || !array_key_exists('total_price', $totals) || !array_key_exists('total_discount', $totals)) {
                         throw new CheckoutException("Unable to get totals. Possibly corrupted data.");
@@ -91,6 +91,7 @@ class PaymentService implements PaymentServiceInterface
             }
 
             $public_settings = match ($provider) {
+                // @phpstan-ignore-next-line (the logic is sound, the cart variable is only used if provider is stripe)
                 'stripe' => $this->stripePaymentService->getClientSettings($totals, $cart, $deliveryType, $voucherCode),
                 'paypal' => $this->paypalPaymentService->getClientSettings($order),
                 'amazon' => $this->amazonPaymentService->getClientSettings($order),

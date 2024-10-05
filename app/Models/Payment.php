@@ -29,6 +29,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property User $user
  * @property string $payment_ref
  * @property string $method_ref
+ * @property string $payment_source_id
  */
 class Payment extends SearchableModel implements Auditable, Exportable
 {

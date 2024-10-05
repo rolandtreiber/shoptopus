@@ -6,7 +6,6 @@ use App\Enums\ProductStatus;
 use App\Http\Resources\HomePage\ProductResource;
 use App\Models\Product;
 use App\Models\User;
-use App\Repositories\Local\Product\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,12 +13,6 @@ use Illuminate\Support\Facades\DB;
 class HomePageRepository implements HomePageRepositoryInterface
 {
     private User|null $user;
-    private ProductRepositoryInterface $productRepository;
-
-    public function __construct(ProductRepositoryInterface $productRepository)
-    {
-        $this->productRepository = $productRepository;
-    }
 
     public function getHomePage(User|null $user): array
     {
