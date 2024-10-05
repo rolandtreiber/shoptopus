@@ -107,8 +107,8 @@ class fresh extends Command
             $product->updateAvailableAttributeOptions();
         });
         $this->info('Indexing products in Elasticsearch');
-       // $this->call('scout:flush', ['model' => Product::class]);
-       // $this->call('scout:import', ['model' => Product::class]);
+        $this->call('scout:flush', ['model' => Product::class]);
+        $this->call('scout:import', ['model' => Product::class]);
         $this->info('Products indexed in Elasticsearch');
 
         Artisan::call('passport:install');

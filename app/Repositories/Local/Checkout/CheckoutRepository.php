@@ -210,7 +210,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                     $product->stock = $product->stock + $orderProduct->pivot->amount;
                     $product->save();
                 }
-                $orderProduct->delete();
+                $orderProduct->delete(); // todo ....
             }
             $order->original_price = 0;
             $order->subtotal = 0;
