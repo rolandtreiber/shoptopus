@@ -5,7 +5,6 @@ namespace App\Repositories\Local\Checkout;
 use App\Enums\DiscountType;
 use App\Enums\OrderStatus;
 use App\Exceptions\CheckoutException;
-use App\Helpers\GeneralHelper;
 use App\Models\Address;
 use App\Models\Cart;
 use App\Models\CartProduct;
@@ -17,7 +16,6 @@ use App\Models\Product;
 use App\Models\ProductVariant;
 use App\Models\User;
 use App\Models\VoucherCode;
-use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class CheckoutRepository implements CheckoutRepositoryInterface
