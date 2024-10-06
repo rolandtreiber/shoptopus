@@ -103,6 +103,7 @@ services:
       - traefik-enable=false
     volumes:
       - ./:/var/www/html:delegated
+      - ./docker-config/php-config/xdebug-coverage-php.ini:/usr/local/etc/php/conf.d/xdebug-coverage-php.ini
     networks:
       - app-network
       - traefik
@@ -196,10 +197,11 @@ services:
     container_name: sh-artisan
     labels:
       - traefik.enable=false
-    volumes:
-      - ./:/var/www/html:delegated
     depends_on:
       - sh-mysql
+    volumes:
+      - ./:/var/www/html:delegated
+      - ./docker-config/php-config/xdebug-coverage-php.ini:/usr/local/etc/php/conf.d/xdebug-coverage-php.ini
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:

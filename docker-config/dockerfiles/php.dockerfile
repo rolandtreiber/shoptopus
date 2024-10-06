@@ -22,12 +22,18 @@ RUN sed -i "s/user = www-data/user = ${USER}/g" /usr/local/etc/php-fpm.d/www.con
 RUN sed -i "s/group = www-data/group = ${USER}/g" /usr/local/etc/php-fpm.d/www.conf
 RUN echo "php_admin_flag[log_errors] = on" >> /usr/local/etc/php-fpm.d/www.conf
 
-RUN apk add --no-cache libpng libpng-dev jpeg-dev libwebp-dev
+RUN apk add --no-cache libpng libpng-dev jpeg-dev libwebp-dev g++ make
+RUN apk add --update linux-headers
 
 RUN docker-php-ext-configure gd --enable-gd --with-jpeg
 RUN docker-php-ext-install gd
 
 RUN docker-php-ext-install exif
+
+RUN apk add --no-cache --update --virtual buildDeps autoconf
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && apk del buildDeps
 
 RUN apk add --no-cache zip libzip-dev
 RUN docker-php-ext-configure zip
