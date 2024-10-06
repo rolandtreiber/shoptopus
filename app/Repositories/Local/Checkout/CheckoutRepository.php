@@ -185,7 +185,10 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         } else {
             throw new CheckoutException('User not found');
         }
+
         $cart = Cart::where('user_id', $user->id)->first();
+        $unavailableProducts = [];
+
         if ($order && $user) {
             if (!$cart) {
                 $cart = new Cart();
@@ -194,22 +197,64 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             }
             /** @var OrderProduct $orderProduct */
             foreach ($order->products as $orderProduct) {
-                $cartProduct = new CartProduct();
-                $cartProduct->cart_id = $cart->id;
-                $cartProduct->product_id = $orderProduct->pivot->product_id;
-                $cartProduct->product_variant_id = $orderProduct->pivot->product_variant_id;
-                $cartProduct->quantity = $orderProduct->pivot->amount;
-                $cartProduct->save();
+                /** Check if the product or/and variant is still available? Why? If website hase high traffic it can happen that we sale-out something even in the sort time window.
+                 * If no: don't try to put it back to cart! Signal front-end with missing item and reason.
+                 * If yes: Need to check if the amount we try to put back is still available?
+                 *    - if no: we not try to put it back to the cart as not enough stock, and signal front-end with missing item and reason.
+                 *    - if yes: put it back to the cart
+                 */
+                $isProductAvailable = true;
+                $productVariant = null;
+                $product = null;
+
+                // Check if it's a product variant
                 if ($orderProduct->pivot->product_variant_id) {
                     $productVariant = ProductVariant::find($orderProduct->pivot->product_variant_id);
-                    $productVariant->stock = $productVariant->stock + $orderProduct->pivot->amount;
-                    $productVariant->save();
+
+                    if (!$productVariant || $productVariant->stock < $orderProduct->pivot->amount) {
+                        $isProductAvailable = false;
+                        $unavailableProducts[] = [
+                            'product_id' => $orderProduct->pivot->product_id,
+                            'variant_id' => $orderProduct->pivot->product_variant_id,
+                            'name' => json_decode($orderProduct->pivot->name, true),
+                            'reason' => 'Not enough stock for variant'
+                        ];
+                    }
                 } else {
+                    // Otherwise, it's a standalone product
                     $product = Product::find($orderProduct->pivot->product_id);
-                    $product->stock = $product->stock + $orderProduct->pivot->amount;
-                    $product->save();
+
+                    if (!$product || $product->stock < $orderProduct->pivot->amount) {
+                        $isProductAvailable = false;
+                        $unavailableProducts[] = [
+                            'product_id' => $orderProduct->pivot->product_id,
+                            'name' => json_decode($orderProduct->pivot->name, true),
+                            'reason' => 'Not enough stock for product'
+                        ];
+                    }
                 }
-                $orderProduct->delete();
+
+                // Add to cart if product or variant is available
+                if ($isProductAvailable) {
+                    $cartProduct = new CartProduct();
+                    $cartProduct->cart_id = $cart->id;
+                    $cartProduct->product_id = $orderProduct->pivot->product_id;
+                    $cartProduct->product_variant_id = $orderProduct->pivot->product_variant_id;
+                    $cartProduct->quantity = $orderProduct->pivot->amount;
+                    $cartProduct->save();
+                    if ($orderProduct->pivot->product_variant_id) {
+                        $productVariant = ProductVariant::find($orderProduct->pivot->product_variant_id);
+                        $productVariant->stock = $productVariant->stock + $orderProduct->pivot->amount;
+                        $productVariant->save();
+                    } else {
+                        $product = Product::find($orderProduct->pivot->product_id);
+                        $product->stock = $product->stock + $orderProduct->pivot->amount;
+                        $product->save();
+                    }
+                }
+
+                // remove the order_product
+                $order->products()->detach();
             }
             $order->original_price = 0;
             $order->subtotal = 0;
@@ -230,7 +275,8 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         return [
             'user_id' => $user->id,
             'cart_id' => $cart->id,
-            'order_id' => $order->id
+            'order_id' => $order->id,
+            'unavailable_products' => $unavailableProducts
         ];
     }
 
