@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\OrderStatus;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,11 +21,11 @@ use Spatie\Translatable\HasTranslations;
  * @method static count()
  *
  * @property string $id
- * @property mixed $deliveryRules
  * @property mixed $status
  * @property mixed $enabled_by_default_on_creation
  * @property bool $enabled
  * @property mixed $price
+ * @property Collection<DeliveryRule> $deliveryRules
  */
 class DeliveryType extends SearchableModel implements Auditable, Exportable
 {

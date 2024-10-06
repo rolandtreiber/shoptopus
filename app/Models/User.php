@@ -10,9 +10,8 @@ use App\Traits\HasUUID;
 use App\Traits\NotificationTrait;
 use App\Traits\Searchable;
 use Carbon\Carbon;
-use Google\Collection;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -54,6 +53,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $unreadNotifications
  * @property string $initials
  * @property string $name
+ * @property boolean $temporary
  */
 class User extends Authenticatable implements Auditable, Exportable
 {
@@ -144,6 +144,7 @@ class User extends Authenticatable implements Auditable, Exportable
         'email_verified_at' => 'datetime',
         'avatar' => 'object',
         'is_favorite' => 'boolean',
+        'temporary' => 'boolean',
         'last_seen' => 'datetime',
     ];
 
@@ -207,6 +208,17 @@ class User extends Authenticatable implements Auditable, Exportable
      */
     public function cart(): HasOne
     {
+        $carts = Cart::where('user_id', $this->id)->orderBy('created_at', 'DESC')->get();
+        if (count($carts) > 1) {
+            for ($i = 0; $i < count($carts)-1; $i++) {
+                $carts[$i]->delete();
+            }
+        }
+        if (count($carts) === 0) {
+            $cart = new Cart();
+            $cart->user_id = $this->id;
+            $cart->save();
+        }
         return $this->hasOne(Cart::class);
     }
 
@@ -269,8 +281,8 @@ class User extends Authenticatable implements Auditable, Exportable
 
     public function getAllPermissionNames(): array
     {
-        // @phpstan-ignore-next-line - reaosn for ignoring is that the Role model is defined in the Spatie library, therefore we don't have control over it
         return $this->roles->map(function ($role) {
+            // @phpstan-ignore-next-line
             return $role->permissions;
         })->collapse()->pluck('name')->unique()->toArray();
     }

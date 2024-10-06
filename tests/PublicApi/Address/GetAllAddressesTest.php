@@ -67,22 +67,7 @@ class GetAllAddressesTest extends TestCase
                     'country',
                     'lat',
                     'lon',
-                    'deleted_at',
-                    'user' => [
-                        'id',
-                        'first_name',
-                        'last_name',
-                        'email',
-                        'name',
-                        'initials',
-                        'prefix',
-                        'phone',
-                        'avatar',
-                        'email_verified_at',
-                        'client_ref',
-                        'temporary',
-                        'is_favorite',
-                    ],
+                    'deleted_at'
                 ],
             ],
         ]);

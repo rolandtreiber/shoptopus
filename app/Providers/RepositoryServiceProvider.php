@@ -32,6 +32,29 @@ use App\Repositories\Admin\Report\ReportRepository;
 use App\Repositories\Admin\Report\ReportRepositoryInterface;
 use App\Repositories\Admin\VoucherCode\VoucherCodeRepository;
 use App\Repositories\Admin\VoucherCode\VoucherCodeRepositoryInterface;
+use App\Repositories\Local\AccessToken\AccessTokenRepository;
+use App\Repositories\Local\AccessToken\AccessTokenRepositoryInterface;
+use App\Repositories\Local\Address\AddressRepository;
+use App\Repositories\Local\Address\AddressRepositoryInterface;
+use App\Repositories\Local\Cart\CartRepository;
+use App\Repositories\Local\Cart\CartRepositoryInterface;
+use App\Repositories\Local\Checkout\CheckoutRepository;
+use App\Repositories\Local\Checkout\CheckoutRepositoryInterface;
+use App\Repositories\Local\DeliveryRule\DeliveryRuleRepository;
+use App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface;
+use App\Repositories\Local\HomePage\HomePageRepository;
+use App\Repositories\Local\HomePage\HomePageRepositoryInterface;
+use App\Repositories\Local\ModelRepositoryInterface;
+use App\Repositories\Local\PaymentProvider\PaymentProviderRepository;
+use App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface;
+use App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepository;
+use App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface;
+use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepository;
+use App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface;
+use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepository;
+use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
+use App\Repositories\Local\User\UserRepository;
+use App\Repositories\Local\User\UserRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -41,13 +64,14 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(\App\Repositories\Local\ModelRepositoryInterface::class, 'App\Repositories\ModelRepository');
+        $this->app->bind(ModelRepositoryInterface::class, 'App\Repositories\ModelRepository');
 
-        $this->app->bind(\App\Repositories\Local\User\UserRepositoryInterface::class, \App\Repositories\Local\User\UserRepository::class);
-        $this->app->bind(\App\Repositories\Local\AccessToken\AccessTokenRepositoryInterface::class, \App\Repositories\Local\AccessToken\AccessTokenRepository::class);
-        $this->app->bind(\App\Repositories\Local\Address\AddressRepositoryInterface::class, \App\Repositories\Local\Address\AddressRepository::class);
-        $this->app->bind(\App\Repositories\Local\Cart\CartRepositoryInterface::class, \App\Repositories\Local\Cart\CartRepository::class);
-        $this->app->bind(\App\Repositories\Local\DeliveryRule\DeliveryRuleRepositoryInterface::class, \App\Repositories\Local\DeliveryRule\DeliveryRuleRepository::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(AccessTokenRepositoryInterface::class, AccessTokenRepository::class);
+        $this->app->bind(AddressRepositoryInterface::class, AddressRepository::class);
+        $this->app->bind(CartRepositoryInterface::class, CartRepository::class);
+        $this->app->bind(DeliveryRuleRepositoryInterface::class, DeliveryRuleRepository::class);
+        $this->app->bind(CheckoutRepositoryInterface::class, CheckoutRepository::class);
         $this->app->bind(\App\Repositories\Local\DeliveryType\DeliveryTypeRepositoryInterface::class, \App\Repositories\Local\DeliveryType\DeliveryTypeRepository::class);
         $this->app->bind(\App\Repositories\Local\Order\OrderRepositoryInterface::class, \App\Repositories\Local\Order\OrderRepository::class);
         $this->app->bind(\App\Repositories\Local\Product\ProductRepositoryInterface::class, \App\Repositories\Local\Product\ProductRepository::class);
@@ -55,10 +79,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(\App\Repositories\Local\ProductCategory\ProductCategoryRepositoryInterface::class, \App\Repositories\Local\ProductCategory\ProductCategoryRepository::class);
         $this->app->bind(\App\Repositories\Local\ProductTag\ProductTagRepositoryInterface::class, \App\Repositories\Local\ProductTag\ProductTagRepository::class);
         $this->app->bind(\App\Repositories\Local\Rating\RatingRepositoryInterface::class, \App\Repositories\Local\Rating\RatingRepository::class);
-        $this->app->bind(\App\Repositories\Local\PaymentProvider\PaymentProviderRepositoryInterface::class, \App\Repositories\Local\PaymentProvider\PaymentProviderRepository::class);
-        $this->app->bind(\App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\Stripe\StripeTransactionRepository::class);
-        $this->app->bind(\App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\PayPal\PayPalTransactionRepository::class);
-        $this->app->bind(\App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepositoryInterface::class, \App\Repositories\Local\Transaction\Amazon\AmazonTransactionRepository::class);
+        $this->app->bind(\App\Repositories\Local\Banner\BannerRepositoryInterface::class, \App\Repositories\Local\Banner\BannerRepository::class);
+        $this->app->bind(PaymentProviderRepositoryInterface::class, PaymentProviderRepository::class);
+        $this->app->bind(StripeTransactionRepositoryInterface::class, StripeTransactionRepository::class);
+        $this->app->bind(PayPalTransactionRepositoryInterface::class, PayPalTransactionRepository::class);
+        $this->app->bind(AmazonTransactionRepositoryInterface::class, AmazonTransactionRepository::class);
 
         $this->app->bind(\App\Repositories\Local\VoucherCode\VoucherCodeRepositoryInterface::class, \App\Repositories\Local\VoucherCode\VoucherCodeRepository::class);
         $this->app->bind(EventLogRepositoryInterface::class, EventLogRepository::class);
@@ -76,5 +101,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(RatingRepositoryInterface::class, RatingRepository::class);
         $this->app->bind(VoucherCodeRepositoryInterface::class, VoucherCodeRepository::class);
         $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
+        $this->app->bind(HomePageRepositoryInterface::class, HomePageRepository::class);
     }
 }

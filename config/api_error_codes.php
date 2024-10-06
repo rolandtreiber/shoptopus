@@ -54,6 +54,7 @@ return [
             'getCartForUser' => 1505,
             'updateQuantity' => 1506,
             'productNotFound' => 1507,
+            'removeAll' => 1508,
         ],
         'notification' => [
             'getAllUnreadNotificationsForUser' => 1900,
@@ -96,5 +97,11 @@ return [
             'getFavoritedProductIds' => 4007,
             'favorites' => 4008,
         ],
+        'checkout' => [
+            'getPendingOrderFromCart' => 5000,
+            'revertOrder' => 5001,
+            'getAvailableDeliveryTypesForAddress' => 5002,
+            'getProductAvailabilities' => 5003
+        ]
     ],
 ];

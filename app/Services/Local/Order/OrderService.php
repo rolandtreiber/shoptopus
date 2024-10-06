@@ -12,4 +12,6 @@ class OrderService extends ModelService implements OrderServiceInterface
     {
         parent::__construct($errorService, $modelRepository, 'voucher_code');
     }
+
+
 }

@@ -5,6 +5,12 @@ namespace App\Http\Requests\Local\Cart;
 use App\Models\Cart;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property string $product_id
+ * @property string $product_variant_id
+ * @property string $cart_id
+ * @property int $quantity
+ */
 class UpdateQuantityRequest extends FormRequest
 {
     /**
@@ -26,9 +32,9 @@ class UpdateQuantityRequest extends FormRequest
     {
         return [
             'product_id' => 'bail|required|string|exists:products,id',
-            'cart_id' => 'required|string|exists:carts,id',
+            'product_variant_id' => 'nullable|string|exists:product_variants,id',
             'user_id' => 'nullable|string|exists:users,id',
-            'quantity' => Cart::quantityValidationRule($this->product_id),
+            'quantity' => Cart::quantityValidationRule($this->product_id, $this->product_variant_id, $this->cart_id, $this->quantity),
         ];
     }
 

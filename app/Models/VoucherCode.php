@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Enums\AvailabilityStatus;
+use App\Enums\DiscountType;
 use App\Helpers\GeneralHelper;
 use App\Traits\HasFile;
 use App\Traits\HasNote;
 use App\Traits\HasUUID;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,6 +23,7 @@ use Spatie\Sluggable\SlugOptions;
 /**
  * @property mixed|string $code
  * @property int $type
+ * @property int $status
  * @property float $amount
  * @property mixed $valid_from
  * @property mixed $valid_until
@@ -171,5 +172,13 @@ class VoucherCode extends SearchableModel implements Auditable, Exportable, Impo
     public function getValueAttribute(): string
     {
         return GeneralHelper::getDiscountValue($this->type, $this->amount);
+    }
+
+    public function apply(float $price): float
+    {
+        return match ($this->type) {
+            DiscountType::Amount => $price - $this->amount > 0 ? $price - $this->amount : 0,
+            default => $price - ($price * ($this->amount / 100)),
+        };
     }
 }

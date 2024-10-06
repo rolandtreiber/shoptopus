@@ -2,12 +2,15 @@
 
 namespace App\Services\Remote\Payment\Stripe;
 
+use App\Models\Cart;
+use App\Models\DeliveryType;
+use App\Models\VoucherCode;
 use App\Repositories\Local\Transaction\Stripe\StripeTransactionRepositoryInterface;
 use App\Services\Local\Error\ErrorServiceInterface;
-use App\Services\Local\Order\OrderServiceInterface;
 use App\Services\Local\PaymentProvider\PaymentProviderService;
 use Stripe\PaymentIntent;
 use Stripe\Stripe;
+use Stripe\StripeClient;
 
 /** StripePaymentService
  * Limitations of finalising payments on the server see on below link
@@ -23,21 +26,17 @@ class StripePaymentService implements StripePaymentServiceInterface
 
     private PaymentProviderService $paymentProviderService;
 
-    private OrderServiceInterface $orderService;
-
     private StripeTransactionRepositoryInterface $transactionRepository;
 
     public function __construct(
         ErrorServiceInterface                $errorService,
         PaymentProviderService               $paymentProviderService,
         StripeTransactionRepositoryInterface $transactionRepository,
-        OrderServiceInterface                $orderService
     )
     {
         $this->errorService = $errorService;
         $this->paymentProviderService = $paymentProviderService;
         $this->transactionRepository = $transactionRepository;
-        $this->orderService = $orderService;
 
         $this->config = collect($this->paymentProviderService->get('stripe', 'name')['payment_provider_configs'])
             ->keyBy('setting')
@@ -47,24 +46,27 @@ class StripePaymentService implements StripePaymentServiceInterface
     /**
      * Get the settings for a payment provider
      */
-    public function getClientSettings(string $orderId): array
+    public function getClientSettings(array $totals, Cart $cart, DeliveryType $deliveryType, VoucherCode|null $voucherCode): array
     {
         try {
-            $this->setApiKey();
-
-            $order = $this->orderService->get($orderId);
+            $this->setApiKey('secret_key');
 
             $intent = PaymentIntent::create([
-                'amount' => $order['total_price'] * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
-                'currency' => strtolower($order['currency_code']),
+                'amount' => ($totals['total_price'] + $deliveryType->price) * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
+                'currency' => strtolower(config('app.default_currency.name')),
                 'payment_method_types' => ['card'],
                 'metadata' => [
-                    'order_id' => $order['id'],
+                    'user_id' => $cart->user_id,
+                    'delivery_type_id' => $deliveryType->id,
+                    'voucher_code_id' => $voucherCode?->id,
+                    'total_discount' => $totals['total_discount'],
+                    'original_price' => $totals['original_price'],
+                    'delivery' => $deliveryType->price
                 ],
             ]);
 
             return [
-                'publishableKey' => $this->getApikey(),
+                'publishableKey' => $this->getApikey("publishable_key"),
                 'clientSecret' => $intent->client_secret,
                 'order_total' => $intent->amount,
             ];
@@ -80,7 +82,7 @@ class StripePaymentService implements StripePaymentServiceInterface
     public function executePayment(string $orderId, array $provider_payload): array
     {
         try {
-            return $this->transactionRepository->storeTransaction($provider_payload, $orderId);
+            return $this->transactionRepository->storeTransaction($provider_payload, $orderId, $this->getApiKey('secret_key'));
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;
@@ -107,7 +109,7 @@ class StripePaymentService implements StripePaymentServiceInterface
      *
      * @throws \Exception
      */
-    private function getApikey(string $type = 'publishable_key'): string
+    private function getApiKey(string $type): string
     {
         try {
             return app()->isProduction() ? $this->config[$type]['value'] : $this->config[$type]['test_value'];
@@ -122,10 +124,10 @@ class StripePaymentService implements StripePaymentServiceInterface
      *
      * @throws \Exception
      */
-    private function setApiKey()
+    private function setApiKey(string $type)
     {
         try {
-            Stripe::setApiKey($this->getApikey('secret_key'));
+            Stripe::setApiKey($this->getApikey($type));
         } catch (\Exception|\Error $e) {
             $this->errorService->logException($e);
             throw $e;

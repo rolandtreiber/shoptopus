@@ -4,23 +4,24 @@ namespace App\Http\Requests\Local\Payment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property string|null $orderId
+ * @property string|null $cartId
+ * @property string|null $voucherCode
+ * @property string|null $deliveryTypeId
+ */
 class GetClientSettingsRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      */
     public function rules(): array
     {
         return [
-            'orderId' => 'required|string|exists:orders,id',
+            'orderId' => 'string|exists:orders,id',
+            'cartId' => 'string|exists:carts,id',
+            'voucherCode' => 'string|exists:voucher_codes,code',
+            'deliveryTypeId' => 'string|exists:delivery_types,id',
         ];
     }
 }

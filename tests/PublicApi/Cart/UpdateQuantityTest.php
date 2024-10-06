@@ -2,12 +2,17 @@
 
 namespace Tests\PublicApi\Cart;
 
+use App\Models\CartProduct;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
+/**
+ * @group cart-update-quantity
+ */
 class UpdateQuantityTest extends TestCase
 {
     use RefreshDatabase;
@@ -36,8 +41,22 @@ class UpdateQuantityTest extends TestCase
             'product_id' => '1234',
             'quantity' => 1,
         ];
+        $this->sendRequest($data)->assertStatus(500);
+    }
 
-        $this->sendRequest($data)->assertJsonValidationErrors(['cart_id', 'product_id']);
+    /**
+     * @test
+     *
+     * @group apiPatch
+     */
+    public function it_requires_a_valid_product_id(): void
+    {
+        $data = [
+            'cart_id' => $this->cart->id,
+            'product_id' => '1234',
+            'quantity' => 1,
+        ];
+        $this->sendRequest($data)->assertJsonValidationErrors(['product_id']);
     }
 
     /**
@@ -151,7 +170,9 @@ class UpdateQuantityTest extends TestCase
             'quantity' => 1,
         ];
 
-        DB::table('cart_product')->insert($cart_product);
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_product);
+        $cartProduct->save();
 
         $this->assertDatabaseHas('cart_product', $cart_product);
 
@@ -171,6 +192,59 @@ class UpdateQuantityTest extends TestCase
      *
      * @group apiPatch
      */
+    public function the_quantity_of_the_product_variant_updates_correctly(): void
+    {
+        $product = Product::factory()->create(['stock' => 10]);
+        $productVariants = ProductVariant::factory()
+            ->state([
+                'product_id' => $product->id,
+                'stock' => 25
+            ])->count(2)
+            ->create();
+
+        $cart_products = [
+            [
+            'cart_id' => $this->cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 1,
+            ],
+            [
+                'cart_id' => $this->cart->id,
+                'product_id' => $product->id,
+                'product_variant_id' => $productVariants[1]->id,
+                'quantity' => 1,
+            ]
+        ];
+
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_products[0]);
+        $cartProduct->save();
+
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_products[1]);
+        $cartProduct->save();
+
+        $this->assertDatabaseHas('cart_product', $cart_products[0]);
+        $this->assertDatabaseHas('cart_product', $cart_products[1]);
+
+        $data = [
+            'cart_id' => $this->cart->id,
+            'product_id' => $product->id,
+            'product_variant_id' => $productVariants[0]->id,
+            'quantity' => 4,
+        ];
+
+        $this->sendRequest($data)->json();
+
+        $this->assertDatabaseHas('cart_product', $data);
+        $this->assertDatabaseHas('cart_product', $cart_products[1]);
+    }
+
+    /**
+     * @test
+     * @group apiPatch
+     */
     public function it_returns_the_full_cart(): void
     {
         $product = Product::factory()->create(['stock' => 10]);
@@ -181,11 +255,14 @@ class UpdateQuantityTest extends TestCase
             'quantity' => 1,
         ];
 
-        DB::table('cart_product')->insert($cart_product);
+        $cartProduct = new CartProduct();
+        $cartProduct->fill($cart_product);
+        $cartProduct->save();
 
         $data = [
             'cart_id' => $this->cart->id,
             'product_id' => $product->id,
+            'product_variant_id' => null,
             'quantity' => 4,
         ];
 
@@ -198,10 +275,11 @@ class UpdateQuantityTest extends TestCase
 
     protected function sendRequest($data = []): \Illuminate\Testing\TestResponse
     {
-        return $this->patchJson(route('api.cart.updateQuantity', [
-            'cart_id' => $data['cart_id'],
-            'product_id' => $data['product_id'],
-            'quantity' => $data['quantity'],
-        ]));
+        return $this->patchJson(route('api.cart.updateQuantity', $data['cart_id']),
+            [
+                'product_id' => $data['product_id'],
+                'product_variant_id' => array_key_exists('product_variant_id', $data) ? $data['product_variant_id'] : null,
+                'quantity' => $data['quantity'],
+            ]);
     }
 }

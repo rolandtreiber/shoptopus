@@ -7,6 +7,10 @@ use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\PaymentTestCase;
 
+/**
+ * @group get-payment-provider-settings-paypal
+ */
+
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;

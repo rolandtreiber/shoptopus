@@ -12,12 +12,16 @@ use App\Services\Local\Auth\SocialAccountService;
 use App\Services\Local\Auth\SocialAccountServiceInterface;
 use App\Services\Local\Cart\CartService;
 use App\Services\Local\Cart\CartServiceInterface;
+use App\Services\Local\Checkout\CheckoutService;
+use App\Services\Local\Checkout\CheckoutServiceInterface;
 use App\Services\Local\DeliveryRule\DeliveryRuleService;
 use App\Services\Local\DeliveryRule\DeliveryRuleServiceInterface;
 use App\Services\Local\DeliveryType\DeliveryTypeService;
 use App\Services\Local\DeliveryType\DeliveryTypeServiceInterface;
 use App\Services\Local\Error\ErrorService;
 use App\Services\Local\Error\ErrorServiceInterface;
+use App\Services\Local\HomePage\HomePageService;
+use App\Services\Local\HomePage\HomePageServiceInterface;
 use App\Services\Local\ModelServiceInterface;
 use App\Services\Local\Notification\NotificationService;
 use App\Services\Local\Notification\NotificationServiceInterface;
@@ -41,6 +45,8 @@ use App\Services\Local\User\UserService;
 use App\Services\Local\User\UserServiceInterface;
 use App\Services\Local\VoucherCode\VoucherCodeService;
 use App\Services\Local\VoucherCode\VoucherCodeServiceInterface;
+use App\Services\Local\Banner\BannerService;
+use App\Services\Local\Banner\BannerServiceInterface;
 use App\Services\Remote\Payment\Amazon\AmazonPaymentService;
 use App\Services\Remote\Payment\Amazon\AmazonPaymentServiceInterface;
 use App\Services\Remote\Payment\PaymentService;
@@ -80,6 +86,9 @@ class ServiceServiceProvider extends ServiceProvider
         $this->app->bind(PaymentServiceInterface::class, PaymentService::class);
         $this->app->bind(PaymentProviderServiceInterface::class, PaymentProviderService::class);
         $this->app->bind(VoucherCodeServiceInterface::class, VoucherCodeService::class);
+        $this->app->bind(CheckoutServiceInterface::class, CheckoutService::class);
+        $this->app->bind(BannerServiceInterface::class, BannerService::class);
+        $this->app->bind(HomePageServiceInterface::class, HomePageService::class);
 
         // remote
         $this->app->bind(StripePaymentServiceInterface::class, StripePaymentService::class);

@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
+/**
+ * @group addresses-unit
+ */
 class AddressTest extends TestCase
 {
     use RefreshDatabase;
@@ -25,7 +28,6 @@ class AddressTest extends TestCase
     public function it_has_a_generated_slug(): void
     {
         $string = $this->address->user?->name ?? '';
-        $string .= $this->address->name ? ' '.$this->address->name : '';
         $string .= $this->address->town ? ' '.$this->address->town.' ' : '';
 
         $this->assertEquals(Str::slug(trim($string)), $this->address->slug);
@@ -58,7 +60,7 @@ class AddressTest extends TestCase
     /** @test */
     public function it_has_a_name_field(): void
     {
-        $this->assertNull($this->address->name);
+        $this->assertNotNull($this->address->name);
     }
 
     /** @test */

@@ -7,6 +7,9 @@ use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\PaymentTestCase;
 
+/**
+ * @group get-payment-provider-settings-amazon
+ */
 class GetClientSettingsTest extends PaymentTestCase
 {
     use RefreshDatabase;
@@ -33,7 +36,6 @@ class GetClientSettingsTest extends PaymentTestCase
         ];
 
         $res = $this->sendRequest($data);
-
         $res->assertSuccessful();
 
         $res->assertJsonStructure([

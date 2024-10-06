@@ -33,7 +33,7 @@ class AddressController extends Controller
 
             $filters['user_id'] = $this->userService->getCurrentUser()['id'];
 
-            return response()->json($this->getResponse($page_formatting, $this->addressService->getAll($page_formatting, $filters), $request));
+            return response()->json($this->getResponse($page_formatting, $this->addressService->getAll($page_formatting, $filters, ['user']), $request));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
@@ -45,7 +45,7 @@ class AddressController extends Controller
     public function get(GetAddressForUserRequest $request): \Illuminate\Http\JsonResponse
     {
         try {
-            return response()->json($this->getResponse([], $this->addressService->get($request->validated()['id']), $request));
+            return response()->json($this->getResponse([], $this->addressService->get($request->validated()['id'], 'id', ['user']), $request));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }

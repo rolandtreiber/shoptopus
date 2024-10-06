@@ -270,6 +270,50 @@ class Product extends SearchableModel implements Auditable, Exportable, Importab
         return $this;
     }
 
+    public static function checkStockAvailability(array|int $quantity, array|string $productId, array|string|null $productVariantId = null): bool
+    {
+        if (is_array($quantity)) {
+            for ($i = 0;$i < count($quantity); $i++) {
+                if ($productVariantId[$i] !== null) {
+                    $productVariant = ProductVariant::find($productVariantId[$i]);
+                    if ($productVariant) {
+                        $stock = (int) $productVariant->stock;
+                        if ($stock < $quantity[$i]) {
+                            return false;
+                        }
+                    }
+                } else {
+                    $product = Product::find($productId[$i]);
+                    if ($product) {
+                        $stock = $product->stock;
+                        if ($stock < $quantity[$i]) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else {
+            if ($productVariantId !== null) {
+                $productVariant = ProductVariant::find($productVariantId);
+                if ($productVariant) {
+                    $stock = $productVariant->stock;
+                    if ($stock < $quantity) {
+                        return false;
+                    }
+                }
+            } else {
+                $product = Product::find($productId);
+                if ($product) {
+                    $stock = $product->stock;
+                    if ($stock < $quantity) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public function discount_rules(): BelongsToMany
     {
         return $this->belongsToMany(DiscountRule::class)->valid();

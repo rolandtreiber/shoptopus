@@ -12,6 +12,14 @@ use Shoptopus\ExcelImportExport\traits\HasExportable;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @property float $lat
+ * @property float $lon
+ * @property string $name
+ * @property string $user_id
+ * @property string $post_code
+ * @property string $town
+ */
 class Address extends Model implements Auditable, Exportable
 {
     use HasFactory, SoftDeletes, HasUUID, \OwenIt\Auditing\Auditable, HasSlug, HasExportable;
@@ -22,7 +30,7 @@ class Address extends Model implements Auditable, Exportable
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(['user.name', 'name', 'town'])
+            ->generateSlugsFrom(['user.name', 'town'])
             ->saveSlugsTo('slug');
     }
 
