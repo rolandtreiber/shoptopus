@@ -30,6 +30,8 @@ use App\Repositories\Admin\Rating\RatingRepository;
 use App\Repositories\Admin\Rating\RatingRepositoryInterface;
 use App\Repositories\Admin\Report\ReportRepository;
 use App\Repositories\Admin\Report\ReportRepositoryInterface;
+use App\Repositories\Admin\SystemService\SystemServiceRepository;
+use App\Repositories\Admin\SystemService\SystemServiceRepositoryInterface;
 use App\Repositories\Admin\VoucherCode\VoucherCodeRepository;
 use App\Repositories\Admin\VoucherCode\VoucherCodeRepositoryInterface;
 use App\Repositories\Local\AccessToken\AccessTokenRepository;
@@ -102,5 +104,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(VoucherCodeRepositoryInterface::class, VoucherCodeRepository::class);
         $this->app->bind(NoteRepositoryInterface::class, NoteRepository::class);
         $this->app->bind(HomePageRepositoryInterface::class, HomePageRepository::class);
+        $this->app->bind(SystemServiceRepositoryInterface::class, SystemServiceRepository::class);
     }
 }

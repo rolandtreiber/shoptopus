@@ -98,7 +98,7 @@ return [
         ],
         'fr' => [
             'label' => 'Francais',
-        ],
+        ]
     ],
 
     'auto_translate_test_data' => env("AUTO_TRANSLATE_TEST_DATA", false),
@@ -110,6 +110,8 @@ return [
     ],
 
     'google_maps_api_key' => env('GOOGLE_MAPS_API_KEY'),
+    'chatgpt-api-key' => env('CHATGPT_API_KEY'),
+    'chatgpt-openapi-model' => env('CHATGPT_MODEL', 'gpt-3.5-turbo-0125'),
 
     /*
     |--------------------------------------------------------------------------

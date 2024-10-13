@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\RatingController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RoleAndPermissionController;
+use App\Http\Controllers\Admin\SystemServiceController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VoucherCodeController;
 use Illuminate\Support\Facades\Route;
@@ -364,5 +365,10 @@ Route::middleware('auth:api', 'set.locale')->group(function () {
         // Emails
         Route::get('/get-users', [EmailController::class, 'getUserOptions']);
         Route::post('/send-email', [EmailController::class, 'sendEmail'])->middleware('permission:'. Permission::EmailsCanSend)->name('admin.customers.send-email');
+
+        // AI and translations
+        Route::post('/ai/translations', [SystemServiceController::class, 'getTranslations']);
+        Route::post('/ai/optimise-rewrite', [SystemServiceController::class, 'getOptimiseRewriteTextInMultipleLanguages']);
+
     });
 });
