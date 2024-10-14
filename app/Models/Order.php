@@ -37,7 +37,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property float $total_price
  * @property float $delivery_cost
  * @property mixed $created_at
- * @property Address $address
+ * @property Address|null $address
  * @property User $user
  * @property Invoice|null $invoice
  * @property Collection<Product> $products

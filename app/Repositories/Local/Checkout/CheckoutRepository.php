@@ -267,7 +267,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
             $order->delivery_cost = 0;
             $order->voucher_code_id = null;
             $order->delivery_type_id = null;
-            $order->status = OrderStatus::Cancelled;
+            $order->status = OrderStatus::PaymentFailed;
             $order->save();
             if ($user->temporary) {
                 $address = Address::find($order->address_id);

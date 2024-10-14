@@ -140,7 +140,7 @@ class AuthenticatedCheckoutRevertPendingOrderTest extends TestCase
     {
         $order = Order::factory()->state([
             'user_id' => $this->user->id,
-            'status' => OrderStatus::Cancelled
+            'status' => OrderStatus::PaymentFailed
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
         foreach ($products as $product) {
@@ -241,7 +241,7 @@ class AuthenticatedCheckoutRevertPendingOrderTest extends TestCase
             "order_id" => $order->id
         ]);
         $order->refresh(); // Refresh the order to get updated data
-        $this->assertEquals(OrderStatus::Cancelled, $order->status);
+        $this->assertEquals(OrderStatus::PaymentFailed, $order->status);
     }
 
     protected function sendRequest($data = []): TestResponse

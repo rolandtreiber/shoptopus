@@ -18,6 +18,7 @@ class EventLogRepository implements EventLogRepositoryInterface
             OrderStatus::Completed => "Completed",
             OrderStatus::Cancelled => "Cancelled",
             OrderStatus::OnHold => "On Hold",
+            OrderStatus::PaymentFailed => "Payment Failed",
         ];
 
         $eventLog = new EventLog();

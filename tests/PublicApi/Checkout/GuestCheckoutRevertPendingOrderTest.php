@@ -180,7 +180,7 @@ class GuestCheckoutRevertPendingOrderTest extends TestCase
         ])->create();
         $order = Order::factory()->state([
             'user_id' => $user->id,
-            'status' => OrderStatus::Cancelled
+            'status' => OrderStatus::PaymentFailed
         ])->create();
         $products = Product::factory()->state(['stock' => 100])->count(2)->create();
         foreach ($products as $product) {

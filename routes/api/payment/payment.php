@@ -17,7 +17,7 @@ Route::group([
     Route::group([
         'name' => 'payment.',
         'prefix' => 'payment',
-        'middleware' => 'auth:api'
+        'middleware' => 'api'
     ], function () {
         Route::post('/execute', [PaymentController::class, 'execute'])->name('api.payment.execute');
     });

@@ -19,4 +19,6 @@ final class OrderStatus extends Enum
     const OnHold = 6;
 
     const Cancelled = 7;
+    const PaymentFailed = 8;
+
 }

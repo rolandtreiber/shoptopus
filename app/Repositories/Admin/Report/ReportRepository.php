@@ -191,12 +191,13 @@ class ReportRepository implements ReportRepositoryInterface
         $bgColor = [];
         $labels = [];
         $statuses = [
-            1 => 'Paid',
-            2 => 'Processing',
-            3 => 'In Transit',
-            4 => 'Completed',
-            5 => 'On Hold',
-            6 => 'Cancelled',
+            1 => 'Awaiting Payment',
+            2 => 'Paid',
+            3 => 'Processing',
+            4 => 'In Transit',
+            5 => 'Completed',
+            6 => 'On Hold',
+            7 => 'Cancelled'
         ];
         $palette = $reportService->getPalette();
         foreach ($orders as $order) {

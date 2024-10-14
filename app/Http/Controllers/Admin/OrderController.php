@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\OrderStatus;
 use App\Exceptions\BulkOperationException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BulkOperation\BulkOrderStatusUpdateRequest;
@@ -27,7 +28,7 @@ class OrderController extends Controller
 
     public function index(ListRequest $request): AnonymousResourceCollection
     {
-        return OrderListResource::collection(Order::filtered([], $request)->search($request->search)->view($request->view)->join('users as user', 'orders.user_id', '=', 'user.id')->select('orders.*')->paginate($request->paginate));
+        return OrderListResource::collection(Order::filtered([['status', 'notEqual', OrderStatus::PaymentFailed]], $request)->search($request->search)->view($request->view)->join('users as user', 'orders.user_id', '=', 'user.id')->select('orders.*')->paginate($request->paginate));
     }
 
     /**

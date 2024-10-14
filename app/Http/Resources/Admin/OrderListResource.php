@@ -29,9 +29,9 @@ class OrderListResource extends JsonResource
             'total_discount' => GeneralHelper::displayPrice($this->total_discount),
             'status' => $this->status,
             'user' => $this->user->name,
-            'delivery_type' => $this->delivery_type->getTranslations('name'),
+            'delivery_type' => $this->delivery_type ? $this->delivery_type->getTranslations('name') : "N/A",
             'delivery_cost' => $this->delivery_cost,
-            'town' => $this->address->town,
+            'town' => $this->address ? $this->address->town : "N/A",
         ];
     }
 }

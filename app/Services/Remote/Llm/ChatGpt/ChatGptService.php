@@ -37,7 +37,7 @@ class ChatGptService implements LlmService
         ]);
 
         $res = $response->json();
-        if (array_key_exists('choices', $res) && count($res) > 0) {
+        if (array_key_exists('choices', $res) && count($res['choices']) > 0) {
             // Find assistant message
             $assistantMessage = '';
             foreach ($res['choices'] as $choice) {

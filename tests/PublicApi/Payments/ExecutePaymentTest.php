@@ -26,20 +26,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $this->cart = Cart::factory()->create();
         $this->user = $this->cart->user;
     }
-
-    /**
-     * @test
-     *
-     * @group apiPost
-     */
-    public function unauthenticated_users_are_not_allowed_to_execute_payments(): void
-    {
-        $res = $this->sendRequest()->json();
-
-        $this->assertEquals('Unauthenticated.', $res['developer_message']);
-        $this->assertEquals('Sorry there was a system error, the administrator has been informed.', $res['user_message']);
-    }
-
+    
     /**
      * @test
      *
