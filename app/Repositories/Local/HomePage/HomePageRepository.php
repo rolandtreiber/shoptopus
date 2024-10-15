@@ -4,6 +4,7 @@ namespace App\Repositories\Local\HomePage;
 
 use App\Enums\ProductStatus;
 use App\Http\Resources\HomePage\ProductResource;
+use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
@@ -30,10 +31,11 @@ class HomePageRepository implements HomePageRepositoryInterface
 
     private function getBanners(): array
     {
-        $banners = DB::table('banners')->where('enabled', 1)->select('title', 'description', 'background_image', 'show_button', 'button_text', 'button_url', 'enabled')->get();
+        $banners = DB::table('banners')->where('enabled', 1)->select('id', 'title', 'description', 'background_image', 'show_button', 'button_text', 'button_url', 'enabled')->get();
 
         return $banners->map(function ($banner) {
             return [
+                'id' => $banner['id'],
                 'title' => json_decode($banner['title']),
                 'description' => json_decode($banner['description']),
                 'background_image' => json_decode($banner['background_image']),
@@ -211,9 +213,26 @@ class HomePageRepository implements HomePageRepositoryInterface
         return $resultFormatted;
     }
 
-    private function getNewProducts(int $limit): Collection
+    private function getNewProducts(int $limit): \Illuminate\Support\Collection
     {
-        return Product::where('status', ProductStatus::Active)->where('stock', '>', 0)->limit($limit)->orderBy('created_at', 'desc')->get();
+        return Product::where('status', ProductStatus::Active)->where('stock', '>', 0)->limit($limit)->orderBy('created_at', 'desc')->get()->map(function (Product $product) {
+            return [
+                'id' => $product->id,
+                'slug' => $product->slug,
+                'name' => $product->getTranslations('name'),
+                'short_description' => $product->getTranslations('short_description'),
+                'description' => $product->getTranslations('description'),
+                'price' => (float) $product->price,
+                'final_price' => (float) $product->final_price,
+                'cover_photo' => $product->cover_photo,
+                'images' => $product->images()->map(function(FileContent $image) {
+                    return [
+                        'url' => $image->url,
+                        'file_name' => $image->file_name
+                    ];
+                })
+            ];
+        });
     }
 
     /**
@@ -237,6 +256,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'valid_until',
                 'type',
                 'amount',
+                'product_categories.slug as product_category_slug',
                 'product_categories.id as product_category_id',
                 'product_categories.name as product_category_name',
                 'product_categories.header_image as product_category_header_image',
@@ -251,6 +271,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'type' => $discount['type'],
                 'amount' => $discount['amount'],
                 'category_id' => $discount['product_category_id'],
+                'category_slug' => $discount['product_category_slug'],
                 'category_header_image' => json_decode($discount['product_category_header_image']),
             ];
         });
@@ -278,6 +299,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'type',
                 'amount',
                 'products.id as product_id',
+                'products.slug as product_slug',
                 'products.name as product_name',
                 'products.stock as product_stock',
                 'products.cover_photo as product_cover_photo',
@@ -292,6 +314,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'type' => $discount['type'],
                 'amount' => $discount['amount'],
                 'product_id' => $discount['product_id'],
+                'product_slug' => $discount['product_slug'],
                 'product_stock' => $discount['product_stock'],
                 'product_cover_photo' => json_decode($discount['product_cover_photo']),
             ];
