@@ -115,12 +115,13 @@ class PaymentService implements PaymentServiceInterface
         try {
             $provider = $payload['provider'];
             $orderId = $payload['orderId'];
+            $userId = $payload['userId'];
             $provider_payload = $payload['provider_payload'] ?? [];
 
             $order = $this->orderRepository->get($orderId, 'id', ['products']);
 
             $executed_payment_response = match ($provider) {
-                'stripe' => $this->stripePaymentService->executePayment($order['id'], $provider_payload),
+                'stripe' => $this->stripePaymentService->executePayment($userId, $order['id'], $provider_payload),
                 'paypal' => $this->paypalPaymentService->executePayment($order['id'], $provider_payload),
                 'amazon' => $this->amazonPaymentService->executePayment($order, $provider_payload),
                 default => throw new \Exception("Please pass in a valid payment provider, order id: $orderId"),
