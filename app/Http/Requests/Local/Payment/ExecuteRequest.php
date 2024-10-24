@@ -13,19 +13,6 @@ class ExecuteRequest extends FormRequest
      */
     public function authorize(): bool
     {
-//        if (auth()->user()) {
-//            return DB::table('orders')
-//                ->where('id', $this->orderId)
-//                ->where('user_id', $this->user()->id)
-//                ->where('status', OrderStatus::AwaitingPayment)
-//                ->exists();
-//        } else {
-//            return DB::table('orders')
-//                ->where('id', $this->orderId)
-//                ->where('user_id', $this->userId)
-//                ->where('status', OrderStatus::AwaitingPayment)
-//                ->exists();
-//        }
 
         return DB::table('orders')
             ->where('id', $this->orderId)

@@ -75,7 +75,6 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
                 if (!$paymentSource) {
                     $paymentSource = new PaymentSource();
                 }
-                //$paymentSource->user_id = Auth()->user()->id;
                 $paymentSource->user_id = $user->id;
                 $paymentSourceDetails = $transaction['payment_method_details'];
                 if (array_key_exists('card', $paymentSourceDetails)) {
