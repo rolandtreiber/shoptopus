@@ -18,7 +18,7 @@ class SharedOptionsResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $categories = ProductCategoryNestedTreeResource::collection(ProductCategory::availability(AvailabilityStatus::Enabled)->whereNull('parent_id')->select('id', 'name')->with('children.children.children.children.children.children')->get());
+        $categories = ProductCategoryNestedTreeResource::collection(ProductCategory::availability(AvailabilityStatus::Enabled)->whereNull('parent_id')->select('id', 'name', 'slug', 'menu_image', 'header_image')->with('children.children.children.children.children.children')->get());
         $tags = ProductTagSelectResource::collection(ProductTag::availability(AvailabilityStatus::Enabled)->select('id', 'name')->get());
         $attributes = ProductAttributeTreeResource::collection(ProductAttribute::availability(AvailabilityStatus::Enabled)->select('id', 'name', 'type', 'image')->with('options')->get());
 

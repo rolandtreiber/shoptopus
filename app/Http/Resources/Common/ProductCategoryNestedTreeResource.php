@@ -19,8 +19,11 @@ class ProductCategoryNestedTreeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->getTranslations('name'),
+            'menu_image' => $this->menu_image,
+            'header_image' => $this->header_image,
+            'slug' => $this->slug,
             'parent_id' => $this->parent_id,
-            'children' => ProductCategoryNestedTreeResource::collection($this->children),
+            'subcategories' => ProductCategoryNestedTreeResource::collection($this->children),
         ];
     }
 }

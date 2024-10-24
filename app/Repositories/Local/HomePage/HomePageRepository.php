@@ -152,6 +152,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'product_categories.description as category_description',
                 'product_categories.header_image as category_header_image',
                 'product_categories.id as category_id',
+                'product_categories.slug as category_slug',
                 'products.id as bestseller_id',
                 'products.name as product_name',
                 'products.slug as product_slug',
@@ -182,6 +183,7 @@ class HomePageRepository implements HomePageRepositoryInterface
                     $count++;
                     $result[$item['category_id']] = [
                         'name' => json_decode($item['category_name']),
+                        'slug' => $item['category_slug'],
                         'description' => json_decode($item['category_description']),
                         'header_image' => json_decode($item['category_header_image']),
                         'best_sellers' => [
