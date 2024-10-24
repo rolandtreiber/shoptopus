@@ -7,5 +7,5 @@ interface StripeTransactionRepositoryInterface
     /**
      * Store transaction
      */
-    public function storeTransaction(array $transaction, string $orderId, string $apiKey): array;
+    public function storeTransaction(array $transaction, string $userId, string $orderId, string $apiKey): array;
 }

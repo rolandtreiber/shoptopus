@@ -16,7 +16,7 @@ interface StripePaymentServiceInterface
     /**
      * Execute payment
      */
-    public function executePayment(string $orderId, array $provider_payload): array;
+    public function executePayment(string $userId, string $orderId, array $provider_payload): array;
 
     /**
      * Format payment response

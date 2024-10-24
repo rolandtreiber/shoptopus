@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\Payment;
 use App\Models\PaymentSource;
 use App\Models\Transaction\StripeTransaction;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Stripe\StripeClient;
 
@@ -19,7 +20,7 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
      * Store transaction
      * @throws CheckoutException
      */
-    public function storeTransaction(array $transaction, string $orderId, string $apiKey): array
+    public function storeTransaction(array $transaction, string $userId,  string $orderId, string $apiKey): array
     {
         if (config('app.env') !== 'testing') {
             $stripe = new StripeClient($apiKey);
@@ -67,12 +68,14 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
         $paymentSource = new PaymentSource();
         if (config('app.env') !== 'testing') {
 
+            $user = User::where('id', $userId)->first();
+
             if (array_key_exists('payment_method', $transaction) && array_key_exists('payment_method_details', $transaction)) {
                 $paymentSource = PaymentSource::where(['source_id' => $transaction['payment_method']])->first();
                 if (!$paymentSource) {
                     $paymentSource = new PaymentSource();
                 }
-                $paymentSource->user_id = Auth()->user()->id;
+                $paymentSource->user_id = $user->id;
                 $paymentSourceDetails = $transaction['payment_method_details'];
                 if (array_key_exists('card', $paymentSourceDetails)) {
                     $cardDetails = $paymentSourceDetails['card'];
@@ -80,7 +83,7 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
                     $expMonth = array_key_exists('exp_month', $cardDetails) ? $cardDetails['exp_month'] : "UNKNOWN EXP MONTH";
                     $expYear = array_key_exists('exp_year', $cardDetails) ? $cardDetails['exp_year'] : "UNKNOWN EXP YEAR";
                     $lastFour = array_key_exists('last4', $cardDetails) ? $cardDetails['last4'] : "UNKNOWN LAST 4 DIGITS";
-                    $paymentSource->name = Auth()->user()->name . '-' . $brand;
+                    $paymentSource->name = $user->name . '-' . $brand;
                     $paymentSource->stripe_user_id = '';
                     $paymentSource->source_id = $transaction['payment_method'];
                     $paymentSource->payment_method_id = PaymentMethod::Stripe;
@@ -96,7 +99,7 @@ class StripeTransactionRepository implements StripeTransactionRepositoryInterfac
             $payment->payable_type = Order::class;
             $payment->payable_id = $orderId;
             $payment->amount = array_key_exists("amount", $intent) ? round($intent['amount'] / 100, 2) : null;
-            $payment->user_id = Auth()->user()->id;
+            $payment->user_id = $user->id;
             $payment->payment_source_id = $paymentSource->id;
             $payment->proof = [
                 'processed_at' => Carbon::now()->format("Y-m-d H:i:s"),

@@ -4,6 +4,7 @@ namespace App\Http\Resources\HomePage;
 
 use App\Models\FileContent;
 use App\Models\Product;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -28,7 +29,8 @@ class ProductResource extends JsonResource
             'price' => (float) $this->price,
             'final_price' => (float) $this->final_price,
             'cover_photo' => $this->cover_photo,
-            'images' => $this->images()->map(function(FileContent $image) {
+            'images' => $this->images()->map(function(Model $image, $key) {
+                /** @var FileContent $image */
                 return [
                     'url' => $image->url,
                     'file_name' => $image->file_name

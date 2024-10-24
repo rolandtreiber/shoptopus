@@ -8,6 +8,7 @@ use App\Models\FileContent;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -227,7 +228,8 @@ class HomePageRepository implements HomePageRepositoryInterface
                 'price' => (float) $product->price,
                 'final_price' => (float) $product->final_price,
                 'cover_photo' => $product->cover_photo,
-                'images' => $product->images()->map(function(FileContent $image) {
+                'images' => $product->images()->map(function(Model $image, $key) {
+                    /** @var FileContent $image */
                     return [
                         'url' => $image->url,
                         'file_name' => $image->file_name

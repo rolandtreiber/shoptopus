@@ -46,6 +46,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'stripe',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
             'provider_payload' => $this->dummyPaymentIntent($total),
         ];
 

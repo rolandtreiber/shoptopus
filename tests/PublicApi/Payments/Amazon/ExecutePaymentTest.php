@@ -4,6 +4,7 @@ namespace Tests\PublicApi\Payments\Amazon;
 
 use Amazon\Pay\API\Client;
 use App\Models\Order;
+use App\Models\User;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
@@ -41,6 +42,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'amazon',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
             'provider_payload' => [
                 'checkout_session_id' => 'asdsaa',
             ],

@@ -26,7 +26,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $this->cart = Cart::factory()->create();
         $this->user = $this->cart->user;
     }
-    
+
     /**
      * @test
      *
@@ -52,6 +52,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'some provider',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
         ];
 
         $this->signIn($this->user)->sendRequest($data)->assertJsonValidationErrors(['provider']);

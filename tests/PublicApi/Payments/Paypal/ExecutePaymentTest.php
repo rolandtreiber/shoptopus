@@ -38,6 +38,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'paypal',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
             'provider_payload' => [
                 [
                     'paypal_order_id_token' => null,
@@ -63,6 +64,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $getClientSettingsData = [
             'provider' => 'paypal',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
         ];
 
         $res = $this->getJson(route('api.payment.get.settings.public', $getClientSettingsData));
@@ -71,6 +73,7 @@ class ExecutePaymentTest extends PaymentTestCase
         $data = [
             'provider' => 'paypal',
             'orderId' => $order->id,
+            'userId' => $order->user_id,
             'provider_payload' => [
                 [
                     'paypal_order_id_token' => $paypal_order_id,
