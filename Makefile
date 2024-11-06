@@ -11,4 +11,4 @@ export GID
 export USER
 
 up:
-	docker compose -f docker-compose-ci.yml up -d
+	sudo docker-compose -f docker-compose-ci.yml up -d
