@@ -49,7 +49,7 @@ trait ProcessRequest
         if (env('APP_ENV') === 'development' || env('APP_ENV') === 'local' || config('app.env') === 'testing') {
             Storage::disk('uploads')->delete($name);
         } else {
-            Storage::disk('digitalocean')->delete($name);
+            Storage::disk('uploads')->delete($name);
         }
     }
 
@@ -58,7 +58,7 @@ trait ProcessRequest
         if (env('APP_ENV') === 'development' || env('APP_ENV') === 'local' || config('app.env') === 'testing') {
             Storage::disk('paid')->delete($name);
         } else {
-            Storage::disk('digitalocean')->delete($name);
+            Storage::disk('paid')->delete($name);
         }
     }
 
@@ -82,8 +82,9 @@ trait ProcessRequest
                 Storage::disk('uploads')->put($fileName, $data);
                 $url = config('app.url').'/uploads/'.$fileName;
             } else {
-                Storage::disk('digitalocean')->put($fileName, $data, ['visibility' => 'public']);
-                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
+                Storage::disk('uploads')->put($fileName, $data, ['visibility' => 'public']);
+                $url = config('app.url').'/uploads/'.$fileName;
+//                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
             }
         } else {
             $fileName = Str::random(40).'.'.strtolower($file->extension());
@@ -93,8 +94,9 @@ trait ProcessRequest
                 Storage::disk('uploads')->put($fileName, $data->getContent());
                 $url = config('app.url').'/uploads/'.$fileName;
             } else {
-                Storage::disk('digitalocean')->put($fileName, $data->getContent(), ['visibility' => 'public']);
-                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
+                Storage::disk('uploads')->put($fileName, $data->getContent(), ['visibility' => 'public']);
+                $url = config('app.url').'/uploads/'.$fileName;
+//                $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
             }
         }
 
@@ -145,8 +147,9 @@ trait ProcessRequest
             $url = config('app.url').'/api/download-paid-file/'.$fileName.'?token=';
         } else {
             // TODO: optimize this for production
-            Storage::disk('digitalocean')->put($fileName, $data->getContent(), ['visibility' => 'public']);
-            $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
+            Storage::disk('paid')->put($fileName, $data->getContent(), ['visibility' => 'public']);
+            $url = config('app.url').'/api/download-paid-file/'.$fileName.'?token=';
+//            $url = config('filesystems.disks.digitalocean.endpoint').'/'.config('filesystems.disks.digitalocean.bucket').'/'.$fileName;
         }
 
         return [
