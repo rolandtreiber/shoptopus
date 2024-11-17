@@ -42,6 +42,7 @@
         "pusher/pusher-php-server": "^7.0",
         "s-ichikawa/laravel-sendgrid-driver": "^4.0",
         "sendgrid/sendgrid": "^7.9",
+        "sentry/sentry-laravel": "^4.10",
         "shoptopus/excel-import-export": "@dev",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-searchable": "^1.11",
