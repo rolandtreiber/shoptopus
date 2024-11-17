@@ -16,4 +16,6 @@ npm-debug.log
 yarn-error.log
 .idea/commandlinetools/schemas/frameworkDescriptionVersion1.1.4.xsd
 .idea/dataSources.
+.idea
+.idea/
 .DS_Store
