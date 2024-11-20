@@ -5,6 +5,11 @@
  *
  * @see https://docs.sentry.io/platforms/php/guides/laravel/configuration/options/
  */
+
+use League\OAuth2\Server\Exception\OAuthServerException;
+use Sentry\Event;
+use Sentry\EventHint;
+
 return [
 
     // @see https://docs.sentry.io/product/sentry-basics/dsn-explainer/
@@ -43,6 +48,16 @@ return [
         // Ignore Laravel's default health URL
         '/up',
     ],
+    'before_send' => function (Event $event, ?EventHint $hint): ?Event {
+        // Ignore the event if the original exception is an instance of OAuthServerException
+        // Reason is that every time a user enters an incorrect password, we'd get a notification,
+        // which is not only useless but annoying too.
+        if ($hint !== null && $hint->exception instanceof OAuthServerException) {
+            return null;
+        }
+
+        return $event;
+    },
 
     // Breadcrumb specific configuration
     'breadcrumbs' => [
