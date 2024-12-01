@@ -36,6 +36,11 @@ return [
             'throw' => false,
         ],
 
+        'snapshots' => [
+            'driver' => 'local',
+            'root' => database_path('snapshots'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -68,6 +73,12 @@ return [
             'url' => env('APP_URL').'/storage',
             'throw' => false,
         ],
+
+        'store-backups' => [
+            'driver' => 'local',
+            'root' => storage_path('app/store-backups'),
+        ],
+
 
     ],
 

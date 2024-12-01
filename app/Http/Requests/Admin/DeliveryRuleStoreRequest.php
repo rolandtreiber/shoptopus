@@ -13,6 +13,7 @@ class DeliveryRuleStoreRequest extends FormRequest
     {
         return [
             'postcodes' => ['sometimes', 'array'],
+            'countries' => ['sometimes', 'array'],
             'min_weight' => ['numeric', 'min:0'],
             'max_weight' => ['numeric', 'min:0'],
             'min_distance' => ['numeric', 'min:0'],

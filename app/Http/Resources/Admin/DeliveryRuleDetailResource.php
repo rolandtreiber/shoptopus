@@ -19,6 +19,7 @@ class DeliveryRuleDetailResource extends JsonResource
         return [
             'id' => $this->id,
             'postcodes' => $this->postcodes,
+            'countries' => $this->countries,
             'min_weight' => $this->min_weight,
             'max_weight' => $this->max_weight,
             'min_distance' => $this->min_distance,

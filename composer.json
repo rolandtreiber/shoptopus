@@ -44,12 +44,14 @@
         "sendgrid/sendgrid": "^7.9",
         "sentry/sentry-laravel": "^4.10",
         "shoptopus/excel-import-export": "@dev",
+        "spatie/laravel-db-snapshots": "^2.6",
         "spatie/laravel-permission": "^5.8",
         "spatie/laravel-searchable": "^1.11",
         "spatie/laravel-sluggable": "^3.4",
         "spatie/laravel-translatable": "^6.3",
         "stripe/stripe-php": "^8.0",
-        "symfony/finder": "^6.2"
+        "symfony/finder": "^6.2",
+        "ext-zip": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

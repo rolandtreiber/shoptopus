@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1d5bd86ffd4f2d3e6f2c0b36ef8003d",
+    "content-hash": "b0789796b353e4c3cca2ba0736de1742",
     "packages": [
         {
             "name": "amzn/amazon-pay-api-sdk-php",
@@ -7571,7 +7571,7 @@
         },
         {
             "name": "shoptopus/excel-import-export",
-            "version": "dev-feature/sentry",
+            "version": "dev-development",
             "dist": {
                 "type": "path",
                 "url": "packages/shoptopus/excel-import-export",
@@ -7604,6 +7604,143 @@
                 "symlink": true,
                 "relative": true
             }
+        },
+        {
+            "name": "spatie/db-dumper",
+            "version": "3.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/db-dumper.git",
+                "reference": "55d4d6710e1ab18c1e7ce2b22b8ad4bea2a30016"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/55d4d6710e1ab18c1e7ce2b22b8ad4bea2a30016",
+                "reference": "55d4d6710e1ab18c1e7ce2b22b8ad4bea2a30016",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "symfony/process": "^5.0|^6.0|^7.0"
+            },
+            "require-dev": {
+                "pestphp/pest": "^1.22"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DbDumper\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Dump databases",
+            "homepage": "https://github.com/spatie/db-dumper",
+            "keywords": [
+                "database",
+                "db-dumper",
+                "dump",
+                "mysqldump",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/db-dumper/tree/3.7.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-11-18T14:54:31+00:00"
+        },
+        {
+            "name": "spatie/laravel-db-snapshots",
+            "version": "2.6.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-db-snapshots.git",
+                "reference": "a5f72ca8a39c38238edd30d9f71749082da024d6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-db-snapshots/zipball/a5f72ca8a39c38238edd30d9f71749082da024d6",
+                "reference": "a5f72ca8a39c38238edd30d9f71749082da024d6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^7.0|^8.0|^9.0|^10.0|^11.0",
+                "league/flysystem": "^1.0.41|^2.0|^3.0",
+                "php": "^8.0",
+                "spatie/db-dumper": "^3.3",
+                "spatie/laravel-package-tools": "^1.6",
+                "spatie/temporary-directory": "^2.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.4",
+                "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0|^9.0",
+                "pestphp/pest-plugin-laravel": "^1.3|^2.3",
+                "phpunit/phpunit": "^9.5|^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\DbSnapshots\\DbSnapshotsServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\DbSnapshots\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Quickly dump and load databases",
+            "homepage": "https://github.com/spatie/laravel-db-snapshots",
+            "keywords": [
+                "laravel-db-snapshots",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-db-snapshots/tree/2.6.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-04-02T06:54:13+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -7953,6 +8090,67 @@
                 }
             ],
             "time": "2023-05-06T10:22:13+00:00"
+        },
+        {
+            "name": "spatie/temporary-directory",
+            "version": "2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/temporary-directory.git",
+                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/temporary-directory/zipball/76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
+                "reference": "76949fa18f8e1a7f663fd2eaa1d00e0bcea0752a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\TemporaryDirectory\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Vanderbist",
+                    "email": "alex@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily create, use and destroy temporary directories",
+            "homepage": "https://github.com/spatie/temporary-directory",
+            "keywords": [
+                "php",
+                "spatie",
+                "temporary-directory"
+            ],
+            "support": {
+                "issues": "https://github.com/spatie/temporary-directory/issues",
+                "source": "https://github.com/spatie/temporary-directory/tree/2.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-12-25T11:46:58+00:00"
         },
         {
             "name": "starkbank/ecdsa",

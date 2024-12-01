@@ -18,6 +18,9 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $name
  * @property string $user_id
  * @property string $post_code
+ * @property string $country
+ * @property string $address_line_1
+ * @property string $address_line_2
  * @property string $town
  */
 class Address extends Model implements Auditable, Exportable

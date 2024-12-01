@@ -296,6 +296,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         } elseif (is_array($payload['address'])) {
             if (array_key_exists('town', $payload['address'])
                 && array_key_exists('post_code', $payload['address'])
+                && array_key_exists('country', $payload['address'])
                 && array_key_exists('address_line_1', $payload['address'])
                 && array_key_exists('lat', $payload['address'])
                 && array_key_exists('lon', $payload['address'])
@@ -303,6 +304,7 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 $address = new Address();
                 $address->lat = $payload['address']['lat'];
                 $address->lon = $payload['address']['lon'];
+                $address->country = $payload['address']['country'];
                 $address->post_code = $payload['address']['post_code'];
             } else {
                 throw new CheckoutException('Missing address fields');
@@ -352,6 +354,17 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                         }
                     }
                     $eligible = $postcodeAppears;
+                }
+                if ($eligible === true && is_array($rule->countries) && count($rule->countries) > 0) {
+                    $countryAppears = false;
+                    foreach ($rule->countries as $countryCode) {
+                        if (trim(strtolower(str_replace(' ', '', $countryCode))) === trim(strtolower(str_replace(' ', '', $address->country)))) {
+                            $countryAppears = true;
+                        }
+                    }
+                    $eligible = $countryAppears;
+                } else {
+                    $eligible = false;
                 }
             }
             if ($eligible === true) {

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('distance_unit')->default('meter');
             $table->string('lat')->nullable();
             $table->string('lon')->nullable();
+            $table->json('countries')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->string('slug');
             $table->boolean('enabled')->default(true);

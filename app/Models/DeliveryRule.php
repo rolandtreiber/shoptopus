@@ -16,6 +16,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed|string $delivery_type_id
  * @property string $id
  * @property string|array $postcodes
+ * @property string|array $countries
  * @property int|null $min_weight
  * @property int|null $max_weight
  * @property int|null $min_distance
@@ -49,6 +50,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     protected $fillable = [
         'delivery_type_id',
         'postcodes',
+        'countries',
         'min_weight',
         'max_weight',
         'min_distance',
@@ -69,6 +71,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'id' => 'string',
         'delivery_type_id' => 'string',
         'postcodes' => 'array',
+        'countries' => 'array',
         'min_weight' => 'integer',
         'max_weight' => 'integer',
         'min_distance' => 'float',
@@ -84,6 +87,7 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
     protected $exportableFields = [
         'slug',
         'postcodes',
+        'countries',
         'min_weight',
         'max_weight',
         'min_distance',

@@ -39,6 +39,7 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
         $bigBen->town = "London";
         $bigBen->address_line_1 = "Big Ben";
         $bigBen->post_code = "SW1A 0AA";
+        $bigBen->country = "GB";
         $bigBen->lat = 51.5007325;
         $bigBen->lon = -0.1272003;
 
@@ -46,6 +47,7 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
         $rafflesHotel->town = "London";
         $rafflesHotel->address_line_1 = "Raffles Hotel";
         $rafflesHotel->post_code = "SW1A 2BX";
+        $rafflesHotel->country = "GB";
         $rafflesHotel->lat = 51.504379;
         $rafflesHotel->lon = -0.1287421;
 
@@ -53,26 +55,32 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
         $tenDowningStreet->town = "London";
         $tenDowningStreet->address_line_1 = "10 Downing Street";
         $tenDowningStreet->post_code = "SW1A 2AB";
+        $tenDowningStreet->country = "GB";
         $tenDowningStreet->lat = 51.5032198;
         $tenDowningStreet->lon = -0.1335334;
 
         $ruleMinDistanceFromBigBen = new DeliveryRule();
         $ruleMinDistanceFromBigBen->lat = $bigBen->lat;
         $ruleMinDistanceFromBigBen->lon = $bigBen->lon;
+        $ruleMinDistanceFromBigBen->countries = ["GB"];
         $ruleMinDistanceFromBigBen->min_distance = 50;
 
         $ruleMaxDistanceFromBigBen = new DeliveryRule();
         $ruleMaxDistanceFromBigBen->lat = $bigBen->lat;
         $ruleMaxDistanceFromBigBen->lon = $bigBen->lon;
+        $ruleMaxDistanceFromBigBen->countries = ["GB"];
         $ruleMaxDistanceFromBigBen->max_distance = 600;
 
         $ruleMinWeight = new DeliveryRule();
+        $ruleMinWeight->countries = ["GB"];
         $ruleMinWeight->min_weight = 1000;
 
         $ruleMaxWeight = new DeliveryRule();
+        $ruleMaxWeight->countries = ["GB"];
         $ruleMaxWeight->max_weight = 5000;
 
         $rulePostCodeRaffleHotelAndDowningStreet = new DeliveryRule();
+        $rulePostCodeRaffleHotelAndDowningStreet->countries = ["GB"];
         $rulePostCodeRaffleHotelAndDowningStreet->postcodes = [$tenDowningStreet->post_code, $rafflesHotel->post_code];
 
         $this->bigBen = $bigBen;
@@ -109,6 +117,38 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
             ]);
 
         $this->assertEquals($deliveryType->id, $res->json('data.0.id'));
+    }
+
+    /**
+     * @test
+     * @group work
+     */
+    public function does_not_return_if_a_rule_is_outside_of_country(): void
+    {
+        $this->rafflesHotel->user_id = $this->user->id;
+        $this->rafflesHotel->save();
+
+        $deliveryType = DeliveryType::factory()->create();
+        $this->ruleMinDistanceFromBigBen->delivery_type_id = $deliveryType->id;
+        $this->ruleMinDistanceFromBigBen->save();
+
+        $ruleForGermany = new DeliveryRule();
+        $ruleForGermany->countries = ["DE"];
+        $ruleForGermany->delivery_type_id = $deliveryType->id;
+        $ruleForGermany->save();
+
+        $product = Product::factory()->state(['weight' => 1500])->create();
+        $cart = new Cart();
+        $cart->save();
+        $cart->products()->attach($product->id, ['quantity' => 2]);
+
+        $res = $this->signIn($this->user)
+            ->sendRequest([
+                'address_id' => $this->rafflesHotel->id,
+                'cart_id' => $cart->id
+            ]);
+
+        $this->assertCount(0, $res->json('data'));
     }
 
     /**

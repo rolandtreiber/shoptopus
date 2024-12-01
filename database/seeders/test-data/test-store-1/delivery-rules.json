@@ -9,7 +9,8 @@
         "max_distance": 4500,
         "slug": "local-small-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "local-small-1",
@@ -21,7 +22,8 @@
         "max_distance": 4500,
         "slug": "local-small-rule-2",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "local-heavy-1",
@@ -33,7 +35,8 @@
         "max_distance": 4500,
         "slug": "local-heavy-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "local-heavy-1",
@@ -45,7 +48,8 @@
         "max_distance": 4500,
         "slug": "local-heavy-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "standard-small-1",
@@ -57,7 +61,8 @@
         "max_distance": null,
         "slug": "standard-small-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "standard-heavy-1",
@@ -69,7 +74,8 @@
         "max_distance": null,
         "slug": "standard-heavy-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     },
     {
         "delivery_type_id": "overnight-1",
@@ -81,7 +87,8 @@
         "max_distance": null,
         "slug": "overnight-rule-1",
         "enabled": 1,
-        "postcodes": []
+        "postcodes": [],
+        "countries": ["GB"]
     }
 
 ]

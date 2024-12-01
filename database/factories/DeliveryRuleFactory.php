@@ -32,6 +32,7 @@ class DeliveryRuleFactory extends Factory
         return [
             'delivery_type_id' => DeliveryType::factory(),
             'postcodes' => $postcodes,
+            'countries' => ['GB'],
             'min_weight' => $minWeight,
             'max_weight' => $maxWeight,
             'min_distance' => $minDistance,

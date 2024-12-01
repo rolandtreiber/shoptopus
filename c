@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose run sh-composer $1 $2 $3
+docker compose run sh-composer $1 $2 $3

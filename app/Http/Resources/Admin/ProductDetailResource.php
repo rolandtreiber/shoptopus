@@ -41,7 +41,8 @@ class ProductDetailResource extends JsonResource
             'images' => FileContentResource::collection($this->images()),
             'pdfs' => $this->pdfs(),
             'notes' => NoteResource::collection($this->notes),
-            'virtual' => $this->virtual
+            'virtual' => $this->virtual,
+            'weight' => $this->weight
         ];
     }
 }
