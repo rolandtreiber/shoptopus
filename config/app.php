@@ -60,6 +60,7 @@ return [
     'frontend_url_public' => env('FRONTEND_URL_PUBLIC', 'http://localhost'),
 
     'asset_url' => env('ASSET_URL'),
+    'backups_folder' => env('BACKUPS_FOLDER', env('APP_NAME', 'Laravel')),
 
     /*
     |--------------------------------------------------------------------------
@@ -98,7 +99,16 @@ return [
         ],
         'fr' => [
             'label' => 'Francais',
-        ]
+        ],
+//        'cn' => [
+//            'label' => 'Chinese',
+//        ],
+//        'ar' => [
+//            'label' => 'Arabic',
+//        ],
+//        'ua' => [
+//            'label' => 'Ukranian',
+//        ]
     ],
 
     'auto_translate_test_data' => env("AUTO_TRANSLATE_TEST_DATA", false),

@@ -61,6 +61,18 @@ return [
             'throw' => false,
         ],
 
+        's3-backups' => [
+            'driver' => 's3',
+            'key' => env('AWS_ADMIN_ACCESS_KEY_ID'),
+            'secret' => env('AWS_ADMIN_SECRET_ACCESS_KEY'),
+            'region' => env('AWS_ADMIN_DEFAULT_REGION'),
+            'bucket' => env('AWS_BACKUPS_BUCKET'),
+            'url' => env('AWS_URL'),
+            'endpoint' => env('AWS_ENDPOINT'),
+            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+            'throw' => false,
+        ],
+
         'uploads' => [
             'driver' => 'local',
             'root' => public_path().'/uploads',
