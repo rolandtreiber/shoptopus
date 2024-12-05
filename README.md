@@ -177,3 +177,57 @@ Ideally you should see **[OK] No errors** displayed at the end like so:
 In case there is any error, either correct it or ignore it by adding ```// @phpstan-ignore-next-line``` above the problematic line.\
 In the latter case, it would be nice to also provide a short explanation why the error was not fixable.
 
+# Take and restore full store snapshot
+
+## Overview
+Shoptopus has the capability of taking full store snapshots and uploading them into S3 automagically.
+Any snapshot can be restored into your development environment with similar ease.
+
+### Steps performed when taking a snapshot
+- Database dumps are created for both the main and the logs databases
+- The database is scanned for files that are used in the /public/upload folder
+- The files then copied into a temporary folder
+- The Database dump files are scanned for the store base url, which will be replaced by the text `[APP_BASE_URL]`
+- Both the database dump files and the media files will be compressed into their respective zip files (databases.zip, media.zip)
+- A new snapshot folder is created in /storage/store-backups
+- Running the command with the --upload flag trigger the snapshot folder being compressed and then uploaded into the S3 bucket specified in the configs.
+
+### Steps performed when restoring a snapshot
+- The store's own folder in the backups S3 folder is scanned and presented to the user to select a snapshot
+- Upon selection, the zip file is downloaded into a temporary location *(/storage/store-backups//restore-temp)*
+- The contents of both `media.zip` and `databases.zip` are extracted
+- The database dumps are scanned for the text `[APP_BASE_URL]`, which is replaced by the store's base url
+- Both dumps are executed as raw sql - restoring the databases to the state of the snapshot
+- The `/public/uploads` folder is cleared out (yes all contents will be gone!)
+- All files from the `media/zip` file are copied over to the `/public/uploads` folder
+- Elasticsearch flushing and indexing
+- Laravel Passport install and Client ID and Client Secret updated in the .env file
+
+## The command
+In order to perform the snapshot operations, use the `$ php artisan shop:snapshot` command. 
+Running through docker, it is `$ ./a shop:snapshot`.
+
+### Full interactive mode
+```
+    $ php artisan shop:snapshot         <-- direct
+    $ ./a shop:snapshot                 <-- docker
+```
+
+### Options
+`--take` : Skip the interactive part and preselect taking a snapshot.
+`--restore` : Skip the interactive part and preselect taking a snapshot.
+`--nointeraction` : Only to be used with the `--take` flag. It will skip the option to add name interactively.
+`--name=` : Uses the name given for either store or restore a snapshot
+`--upload` : Triggers the step to upload the snapshot to S3. Without it, the snapshot will only be stored in the local filesystem!
+`--trace-level=DEBUG` : Currently the only available trace level option is DEBUG. It adds additional logging.
+
+#### Recipes
+
+##### Take and upload a snapshot without user interaction (Used in a cron job for example)
+`php artisan shop:snapshot --take --nointeraction --upload`
+
+##### Take and upload a snapshot without user interaction with a predefined name
+`php artisan shop:snapshot --take --nointeraction --upload --name=my-test`
+
+##### Restore the exact snapshot taken in the previous step 
+`php artisan shop:snapshot --restore --name=my-test`

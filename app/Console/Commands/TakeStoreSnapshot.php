@@ -14,7 +14,9 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
 
@@ -25,7 +27,7 @@ class TakeStoreSnapshot extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:snapshot {--take} {--upload} {--nointeraction} {--trace-level=} {--name=}';
+    protected $signature = 'shop:snapshot {--take} {--restore} {--upload} {--nointeraction} {--trace-level=} {--name=}';
 
     /**
      * The console command description.
@@ -219,13 +221,57 @@ class TakeStoreSnapshot extends Command
             $file->cleanDirectory('public/uploads');
 
             $files = Storage::disk('store-backups')->allFiles("/restore-temp/media");
-//            var_dump($files);
-//            return 0;
             foreach ($files as $file) {
                 Storage::disk('uploads')->writeStream(str_replace("restore-temp/media/", "", $file), Storage::disk('store-backups')->readStream($file));
             }
 
+            File::deleteDirectory(storage_path('app/store-backups') . "/restore-temp");
+
+            $this->postRestoreSteps();
         }
+    }
+
+    private function postRestoreSteps(): void
+    {
+
+        Product::all()->each(function (Product $product) {
+            $product->updateAvailableAttributeOptions();
+        });
+        try {
+            $this->info('Indexing products in Elasticsearch');
+            $this->call('scout:flush', ['model' => Product::class]);
+            $this->call('scout:import', ['model' => Product::class]);
+            $this->info('Products indexed in Elasticsearch');
+        } catch(\Exception $e) {
+            $this->error("Elasticsearch flushing or importing failed.");
+            $this->info("It does happen sometimes running through Docker. Not sure why.");
+            $this->info("Running the following commands does the same and tend to work perfectly fine running directly:");
+            $this->info("scout:flush App\\\Models\\\Product");
+            $this->info("scout:import App\\\Models\\\Product");
+            $this->info("------ If you are running the application through docker, run this ---------");
+            $this->info("");
+            $this->info("./a scout:flush App\\\Models\\\Product && ./a scout:import App\\\Models\\\Product");
+            $this->info("----------------------------------------------------------------------------");
+        }
+
+        Artisan::call('passport:install');
+        $output = Artisan::output();
+        $this->info($output);
+
+        preg_match_all('/^Client ID: (.+)$/m', $output, $clientIDMatches);
+        preg_match_all('/^Client secret: (.+)$/m', $output, $matches);
+
+        $id = $clientIDMatches[1][1];
+        $secret = $matches[1][1];
+
+        $envFile = file_get_contents('.env');
+
+        $envFile = preg_replace('/^PASSPORT_GRANT_ID=(.*)$/m', 'PASSPORT_GRANT_ID=' . $id, $envFile);
+        $envFile = preg_replace('/^PASSPORT_SECRET=(.*)$/m', 'PASSPORT_SECRET=' . $secret, $envFile);
+
+        file_put_contents('.env', $envFile);
+        $this->info('.env file updated with new id / secret: ' . $id . ' / ' . $secret);
+
     }
 
     /**
@@ -234,11 +280,12 @@ class TakeStoreSnapshot extends Command
     public function handle()
     {
         $take = $this->option('take');
+        $restore = $this->option('restore');
         $nointeraction = $this->option('nointeraction');
         $upload = $this->option('upload');
         $name = $this->option('name');
         $traceLevel = $this->option('trace-level');
-        if (!$take) {
+        if (!$take && !$restore) {
             $operation = $this->choice("What would you like to do?", [
                 "Take a snapshot locally",
                 "Take a snapshot and upload it to S3",
@@ -249,19 +296,22 @@ class TakeStoreSnapshot extends Command
             switch ($operation) {
                 case "Take a snapshot locally":
                     $take = true;
+                    $restore = false;
                     break;
                 case "Take a snapshot and upload it to S3":
                     $take = true;
+                    $restore = false;
                     $upload = true;
                     break;
                 case "Restore a snapshot from S3":
                     $take = false;
+                    $restore = true;
                     break;
             }
         }
         if ($take) {
             $this->take($nointeraction, $upload, $name, $traceLevel);
-        } else {
+        } else if ($restore){
             $this->restore($name);
         }
         return 0;
