@@ -36,12 +36,13 @@ class TakeStoreSnapshot extends Command
      */
     protected $description = 'Either takes or restores full store snapshots.';
 
-    private function take(bool $nointeraction, bool $upload, string|null $name, string|null $traceLevel) {
+    private function take(bool $nointeraction, bool $upload, string|null $name, string|null $traceLevel)
+    {
         // Take snapshot of the databases
         $date = Carbon::now();
         $snapshotPrefix = $date->format("Y-m-d H:i:s");
         if (!$name && !$nointeraction) {
-            $name = $this->ask("Please enter a name or leave it empty to use the name: \"".$snapshotPrefix."\"");
+            $name = $this->ask("Please enter a name or leave it empty to use the name: \"" . $snapshotPrefix . "\"");
         }
         if ($name !== null) {
             $snapshotPrefix = $name;
@@ -50,11 +51,11 @@ class TakeStoreSnapshot extends Command
         foreach ($connections as $connection) {
             $snapshotName = config("app.name") . "-" . $connection . "-" . $snapshotPrefix;
             if ($traceLevel === "DEBUG") {
-                $this->line("Creating a DB snapshot for the database: ".$snapshotName);
+                $this->line("Creating a DB snapshot for the database: " . $snapshotName);
             }
             $this->call('snapshot:create', ["name" => $snapshotName, "--connection" => $connection]);
             if ($traceLevel === "DEBUG") {
-                $this->line("DB snapshot for the database: ".$snapshotName." was successfully created.");
+                $this->line("DB snapshot for the database: " . $snapshotName . " was successfully created.");
             }
         }
 
@@ -124,9 +125,9 @@ class TakeStoreSnapshot extends Command
 
         if ($upload) {
             if ($traceLevel === "DEBUG") {
-                $this->line("Creating folder in S3: ".config('app.backups_folder')."/".$snapshotPrefix);
+                $this->line("Creating folder in S3: " . config('app.backups_folder') . "/" . $snapshotPrefix);
             }
-            Storage::disk('s3-backups')->makeDirectory(config('app.backups_folder')."/".$snapshotPrefix);
+            Storage::disk('s3-backups')->makeDirectory(config('app.backups_folder') . "/" . $snapshotPrefix);
         }
         if (true === ($zip->open(storage_path('app/store-backups') . "/" . $snapshotPrefix . "/media.zip", ZipArchive::CREATE | ZipArchive::OVERWRITE))) {
             foreach (Storage::disk($to)->allFiles($snapshotPrefix . '-tmp-img') as $file) {
@@ -140,9 +141,9 @@ class TakeStoreSnapshot extends Command
         }
         if ($upload) {
             if ($traceLevel === "DEBUG") {
-                $this->line("Uploading the media zip file to following location in the s3 bucket: ".config('app.backups_folder') . "/" . $snapshotPrefix . "/media.zip");
+                $this->line("Uploading the media zip file to following location in the s3 bucket: " . config('app.backups_folder') . "/" . $snapshotPrefix . "/media.zip");
             }
-            Storage::disk($s3)->writeStream(config('app.backups_folder')."/".$snapshotPrefix."/media.zip", Storage::disk('store-backups')->readStream($snapshotPrefix . "/media.zip"));
+            Storage::disk($s3)->writeStream(config('app.backups_folder') . "/" . $snapshotPrefix . "/media.zip", Storage::disk('store-backups')->readStream($snapshotPrefix . "/media.zip"));
             if ($traceLevel === "DEBUG") {
                 $this->line("Done, operation successful.");
             }
@@ -152,20 +153,20 @@ class TakeStoreSnapshot extends Command
         if (true === ($zip->open(storage_path('app/store-backups') . "/" . $snapshotPrefix . "/databases.zip", ZipArchive::CREATE | ZipArchive::OVERWRITE))) {
             foreach ($connections as $connection) {
                 $fileName = config("app.name") . "-" . $connection . "-" . $snapshotPrefix . ".sql";
-                $file = database_path('snapshots')."/".$fileName;
+                $file = database_path('snapshots') . "/" . $fileName;
                 file_put_contents($file, implode('',
-                    array_map(function($data) {
+                    array_map(function ($data) {
                         return str_replace(config("app.url"), "[APP_BASE_URL]", $data);
                     }, file($file))
                 ));
 
-                $zip->addFile(database_path('snapshots')."/".$fileName, $fileName);
+                $zip->addFile(database_path('snapshots') . "/" . $fileName, $fileName);
             }
             $zip->close();
         }
         if ($upload) {
             if ($traceLevel === "DEBUG") {
-                $this->line("Uploading the databases zip file to following location in the s3 bucket: ".config('app.backups_folder') . "/" . $snapshotPrefix . "/databases.zip");
+                $this->line("Uploading the databases zip file to following location in the s3 bucket: " . config('app.backups_folder') . "/" . $snapshotPrefix . "/databases.zip");
             }
             Storage::disk($s3)->writeStream(config('app.backups_folder') . "/" . $snapshotPrefix . "/databases.zip", Storage::disk('store-backups')->readStream($snapshotPrefix . "/databases.zip"));
             if ($traceLevel === "DEBUG") {
@@ -174,13 +175,14 @@ class TakeStoreSnapshot extends Command
         }
     }
 
-    private function restore(string|null $name) {
+    private function restore(string|null $name)
+    {
         if ($name && $name !== "") {
             $selected = $name;
         } else {
             $files = Storage::disk('s3-backups')->allFiles(config('app.backups_folder'));
-            $files = array_map(function($file) {
-                $folder = str_replace(config('app.backups_folder')."/", "", $file);
+            $files = array_map(function ($file) {
+                $folder = str_replace(config('app.backups_folder') . "/", "", $file);
                 $folder = str_replace("/databases.zip", "", $folder);
                 $folder = str_replace("/media.zip", "", $folder);
                 return $folder;
@@ -189,8 +191,8 @@ class TakeStoreSnapshot extends Command
         }
         if ($selected !== "None, exit") {
             $zip = new ZipArchive;
-            Storage::disk('store-backups')->writeStream("/restore-temp/media.zip", Storage::disk('s3-backups')->readStream(config('app.backups_folder'). "/" . $selected . "/media.zip"));
-            Storage::disk('store-backups')->writeStream("/restore-temp/databases.zip", Storage::disk('s3-backups')->readStream(config('app.backups_folder'). "/" . $selected . "/databases.zip"));
+            Storage::disk('store-backups')->writeStream("/restore-temp/media.zip", Storage::disk('s3-backups')->readStream(config('app.backups_folder') . "/" . $selected . "/media.zip"));
+            Storage::disk('store-backups')->writeStream("/restore-temp/databases.zip", Storage::disk('s3-backups')->readStream(config('app.backups_folder') . "/" . $selected . "/databases.zip"));
             $res = $zip->open(storage_path('app/store-backups') . "/restore-temp/databases.zip");
             if ($res === TRUE) {
                 $zip->extractTo(storage_path('app/store-backups') . "/restore-temp/databases/");
@@ -199,15 +201,21 @@ class TakeStoreSnapshot extends Command
 
             $files = Storage::disk('store-backups')->allFiles("/restore-temp/databases");
             foreach ($files as $file) {
-                $file = storage_path('app/store-backups')."/".$file;
-                file_put_contents($file, implode('',
-                    array_map(function($data) {
-                        return str_replace("[APP_BASE_URL]", config("app.url"), $data);
-                    }, file($file))
-                ));
-                $sql = file_get_contents($file);
-                if ($sql) {
-                    DB::unprepared($sql);
+                if (str_contains("sql", $file)) {
+                    $file = storage_path('app/store-backups') . "/" . $file;
+                    file_put_contents($file, implode('',
+                        array_map(function ($data) {
+                            return str_replace("[APP_BASE_URL]", config("app.url"), $data);
+                        }, file($file))
+                    ));
+                    $sql = file_get_contents($file);
+                    if ($sql) {
+                        try {
+                            DB::unprepared($sql);
+                        } catch (\Exception $exception) {
+                            $this->error("An sql statement failed to execute. File: " . $file);
+                        }
+                    }
                 }
             }
 
@@ -242,7 +250,7 @@ class TakeStoreSnapshot extends Command
             $this->call('scout:flush', ['model' => Product::class]);
             $this->call('scout:import', ['model' => Product::class]);
             $this->info('Products indexed in Elasticsearch');
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->error("Elasticsearch flushing or importing failed.");
             $this->info("It does happen sometimes running through Docker. Not sure why.");
             $this->info("Running the following commands does the same and tend to work perfectly fine running directly:");
@@ -311,7 +319,7 @@ class TakeStoreSnapshot extends Command
         }
         if ($take) {
             $this->take($nointeraction, $upload, $name, $traceLevel);
-        } else if ($restore){
+        } else if ($restore) {
             $this->restore($name);
         }
         return 0;

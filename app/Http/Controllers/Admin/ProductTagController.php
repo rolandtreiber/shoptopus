@@ -44,7 +44,7 @@ class ProductTagController extends Controller
         $data = $this->getProcessed($request, [], ['name', 'description']);
         $productTag = new ProductTag();
         $productTag->fill($data);
-        $request->hasFile('badge') && $productTag->badge = $this->saveFileAndGetUrl($request->badge, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1]);
+        $request->hasFile('badge') && $productTag->badge = $this->saveFileAndGetUrl($request->badge, config('shoptopus.menu_image_dimensions')[0], config('shoptopus.menu_image_dimensions')[1], true);
         $productTag->save();
 
         return new ProductTagListResource($productTag);

@@ -62,16 +62,16 @@ trait ProcessRequest
         }
     }
 
-    public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768): ?array
+    public function saveFileAndGetUrl($file, int $sizeX = 1024, int $sizeY = 768, $preservePng = false): ?array
     {
         // Images
-        $imageFormats = ['jpg', 'jpeg', 'gif', 'png', 'webp'];
+        $imageFormats = ['jpg', 'jpeg', 'gif', 'webp'];
         $spreadsheetFormats = ['xls', 'xlsx', 'csv'];
         $textFormats = ['txt', 'doc', 'docx'];
         $audioFormats = ['mp3', 'wma', 'wav', 'ogg'];
         $videoFormats = ['avi', 'mpg', 'mpeg'];
         $fileType = FileType::Other;
-        if (in_array($file->extension(), $imageFormats, true)) {
+        if (in_array($file->extension(), $imageFormats, true) || ($file->extension() === "png" && !$preservePng)) {
             $img = Image::make($file->path());
             $img->orientate();
             $fileName = Str::random(40).'.jpg';
