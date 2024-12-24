@@ -16,5 +16,6 @@ final class AccessTokenType extends Enum
     public const Review = 2;
 
     public const PaidFileAccess = 3;
+    public const SignupRequest = 4;
 
 }

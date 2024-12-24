@@ -18,6 +18,6 @@
     <p>Please confirm your new email!</p>
     <p>We need to know that your email address is valid as part of our services, you'll receive important updates regarding to your orders via email.</p>
     <p>Click on the link below to confirm your email:</p>
-    <a href="{{ $emailConfirmationLink }}">Confirm my email</a>
+    <a href="{{ env('APP_URL')}} / {{ $emailConfirmationLink }}">Confirm my email</a>
     @include('email.layout.partials.signature')
 @endsection

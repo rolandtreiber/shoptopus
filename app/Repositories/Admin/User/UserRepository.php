@@ -2,9 +2,15 @@
 
 namespace App\Repositories\Admin\User;
 
+use App\Enums\AccessTokenType;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Mail\SystemUserInviteEmail;
+use App\Models\AccessToken;
 use App\Models\User;
 use App\Notifications\UserSignup;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Exceptions\RoleDoesNotExist;
 
 class UserRepository implements UserRepositoryInterface
@@ -32,4 +38,25 @@ class UserRepository implements UserRepositoryInterface
 
         return $result;
     }
+
+    public function invite(string $email, string $role): bool
+    {
+        /** @var User $user */
+        $user = auth()->user();
+        $accessToken = new AccessToken();
+        $accessToken->user_id = $user->id;
+        $accessToken->issuer_user_id = $user->id;
+        $accessToken->accessable_type = User::class;
+        $accessToken->accessable_id = "NEW USER";
+        $accessToken->expiry = Carbon::now()->addHours(24);
+        $accessToken->type = AccessTokenType::SignupRequest;
+        $accessToken->content = json_encode([
+            "role" => $role,
+            "email" => $email
+        ]);
+        $accessToken->save();
+        Mail::to($email)->send(new SystemUserInviteEmail($accessToken, $user));
+        return true;
+    }
+
 }

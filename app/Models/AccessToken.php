@@ -13,6 +13,7 @@ use Illuminate\Support\Carbon;
  * @property string $accessable_type
  * @property string $accessable_id
  * @property int $type
+ * @property string $content
  * @property User $issuer
  * @property User $user
  * @property string $token

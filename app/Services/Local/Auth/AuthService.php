@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class AuthService implements AuthServiceInterface
 {
@@ -142,9 +143,12 @@ class AuthService implements AuthServiceInterface
      *
      * @throws \Exception
      */
-    public function register(array $payload): array
+    public function register(array $payload, Role $role = null): array
     {
         try {
+            if (!$role) {
+                $role = Role::findOrCreate('customer');
+            }
             $user = $this->userService->getCurrentUser(false);
 
             if (! $user) {
@@ -156,8 +160,10 @@ class AuthService implements AuthServiceInterface
                     'phone' => $payload['phone'] ?? null,
                 ];
 
+                /** @var User $user */
                 $user = $this->userService->post($data, false);
 
+                $user->roles()->attach($role);
                 $this->userRepository->triggerNewUserRegistrationNotification($user);
             }
 

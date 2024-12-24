@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
+/**
+ * @group register
+ */
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;

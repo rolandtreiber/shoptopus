@@ -2,24 +2,42 @@
 
 namespace App\Http\Controllers\Admin;
 
+use _PHPStan_690619d82\Symfony\Component\Finder\Exception\AccessDeniedException;
+use App\Enums\AccessTokenType;
 use App\Enums\RandomStringMode;
 use App\Helpers\GeneralHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\InviteSystemUserRequest;
+use App\Http\Requests\Admin\RegisterByInviteRequest;
 use App\Http\Requests\Admin\UpdateUserProfilePhotoRequest;
 use App\Http\Requests\Admin\UserStoreRequest;
 use App\Http\Requests\Admin\UserUpdateRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\ListRequest;
 use App\Http\Resources\Admin\UserDetailResource;
 use App\Http\Resources\Admin\UserListResource;
+use App\Models\AccessToken;
 use App\Models\User;
+use App\Repositories\Admin\User\UserRepository;
+use App\Services\Local\Auth\AuthServiceInterface;
 use App\Traits\ProcessRequest;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class UserController extends Controller
 {
     use ProcessRequest;
+
+    private UserRepository $userRepository;
+    private AuthServiceInterface $authService;
+
+    public function __construct(UserRepository $userRepository, AuthServiceInterface $authService)
+    {
+        $this->authService = $authService;
+        $this->userRepository = $userRepository;
+    }
 
     public function index(ListRequest $request): AnonymousResourceCollection
     {
@@ -97,5 +115,47 @@ class UserController extends Controller
         $user->delete();
 
         return ['status' => 'Success'];
+    }
+
+    /**
+     * @param InviteSystemUserRequest $request
+     * @return string[]
+     */
+    public function invite(InviteSystemUserRequest $request): array
+    {
+        if ($this->userRepository->invite($request->email, $request->role)) {
+            return [
+                'status' => 'success',
+                'message' => "User invited"
+            ];
+        } else {
+            return [
+                'status' => 'error',
+                'message' => "User could not be invited. Please try again."
+            ];
+        }
+    }
+
+    /**
+     * Register
+     */
+    public function registerByInvite(RegisterByInviteRequest $request, string $token): \Illuminate\Http\JsonResponse
+    {
+        /** @var AccessToken $token */
+        $token = AccessToken::where('token', $token)->first();
+
+        try {
+            if (!$token || $token->type !== AccessTokenType::SignupRequest) {
+                throw new AccessDeniedException("Invalid or expired token.");
+            }
+
+            $content = json_decode($token->content);
+
+            /** @var Role $role */
+            $role = Role::findByName($content->role);
+            return response()->json($this->authService->register(array_merge($request->validated(), ['email' => $content->email]), $role));
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
     }
 }

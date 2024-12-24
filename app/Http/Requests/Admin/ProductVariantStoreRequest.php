@@ -16,6 +16,7 @@ class ProductVariantStoreRequest extends FormRequest
     {
         return [
             'price' => ['required', 'numeric'],
+            'product_id' => ['exists:products,id']
         ];
     }
 }

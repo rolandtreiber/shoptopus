@@ -3,6 +3,7 @@
 namespace App\Services\Local\Auth;
 
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 interface AuthServiceInterface
 {
@@ -14,7 +15,7 @@ interface AuthServiceInterface
     /**
      * Register
      */
-    public function register(array $payload): array;
+    public function register(array $payload, Role $role): array;
 
     /**
      * Resend the verification email

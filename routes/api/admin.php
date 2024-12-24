@@ -253,6 +253,7 @@ Route::middleware('auth:api', 'set.locale')->group(function () {
         Route::prefix('user')->group(function () {
             Route::post('/', [UserController::class, 'create'])->middleware(['role:super_admin'])->middleware('permission:'. Permission::UsersCanInvite)->name('admin.api.create.user');
             Route::patch('/avatar', [UserController::class, 'changeProfileImage'])->name('admin.api.update.avatar');
+            Route::post('/invite', [UserController::class, 'invite'])->middleware('permission:'. Permission::UsersCanInvite)->name('admin.api.invite.user');
             Route::prefix('{user}')->group(function () {
                 Route::get('/', [UserController::class, 'show'])->middleware('permission:'. Permission::UsersCanSee)->name('admin.api.show.user');
                 Route::delete('/', [UserController::class, 'delete'])->middleware(['own_or_super_admin'])->name('admin.api.delete.user');

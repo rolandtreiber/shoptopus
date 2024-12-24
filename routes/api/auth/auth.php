@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -11,6 +12,8 @@ Route::group([
         'prefix' => 'auth',
         'middleware' => 'api'
     ], function () {
+        Route::post('register-by-invite/{token}', [UserController::class, 'registerByInvite'])->name('admin.api.invite.user');
+
         Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
         Route::post('register', [AuthController::class, 'register'])->name('api.auth.register');
 
