@@ -121,7 +121,6 @@ class EligibleDeliveryTypesForAddressTest extends TestCase
 
     /**
      * @test
-     * @group work
      */
     public function does_not_return_if_a_rule_is_outside_of_country(): void
     {

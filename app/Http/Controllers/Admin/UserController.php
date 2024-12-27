@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Repositories\Admin\User\UserRepository;
 use App\Services\Local\Auth\AuthServiceInterface;
 use App\Traits\ProcessRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -145,7 +146,7 @@ class UserController extends Controller
         $token = AccessToken::where('token', $token)->first();
 
         try {
-            if (!$token || $token->type !== AccessTokenType::SignupRequest) {
+            if (!$token || $token->type !== AccessTokenType::SignupRequest || $token->expiry < Carbon::now()) {
                 throw new AccessDeniedException("Invalid or expired token.");
             }
 

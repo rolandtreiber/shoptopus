@@ -12,7 +12,7 @@ Route::group([
         'prefix' => 'auth',
         'middleware' => 'api'
     ], function () {
-        Route::post('register-by-invite/{token}', [UserController::class, 'registerByInvite'])->name('admin.api.invite.user');
+        Route::post('register-by-invite/{token}', [UserController::class, 'registerByInvite'])->name('api.auth.register-by-invite');
 
         Route::post('login', [AuthController::class, 'login'])->name('api.auth.login');
         Route::post('register', [AuthController::class, 'register'])->name('api.auth.register');

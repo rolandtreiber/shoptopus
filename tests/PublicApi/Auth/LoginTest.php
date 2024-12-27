@@ -3,7 +3,6 @@
 namespace Tests\PublicApi\Auth;
 
 use App\Events\UserInteraction;
-use App\Models\Product;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
