@@ -8,6 +8,7 @@ use App\Mail\DigitalDeliveryEmail;
 use App\Mail\ReviewRequestEmail;
 use App\Models\AccessToken;
 use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 
@@ -28,9 +29,10 @@ class OrderCompletedListener
             $token->issuer_user_id = $event->order->user->id;
             $token->expiry = $now->addYear();
             $token->save();
-            Mail::to($event->order->user->email)->send(new ReviewRequestEmail($token, $event->order, $event->order->user));
+            $email = str_replace("-".$event->order->user->client_ref, "", $event->order->user->email);
+            Mail::to($email)->send(new ReviewRequestEmail($token, $event->order, $event->order->user));
             if ($event->order->hasVirtualProduct()) {
-                Mail::to($event->order->user->email)->send(new DigitalDeliveryEmail($event->order, $event->order->user));
+                Mail::to($email)->send(new DigitalDeliveryEmail($event->order, $event->order->user));
             }
         }
     }
