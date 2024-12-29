@@ -18,7 +18,7 @@ class SuperUserSeeder extends Seeder
             'name' => config('shoptopus.super_user.name'),
             'email' => config('shoptopus.super_user.email'),
             'email_verified_at' => now(),
-            'password' => Hash::make('shop'),
+            'password' => Hash::make('Afgr45jh2238@'),
         ])->create();
 
         //$superUser = User::where('email', config('shoptopus.super_user.email'))->first();

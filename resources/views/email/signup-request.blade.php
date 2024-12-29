@@ -4,7 +4,7 @@
     You've been invited!
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Complete your signup @endsection
 @section('hero-subtitle') You've been invited to work with {{env('APP_NAME')}} @endsection
 @section('hero-button-url') {{env('APP_URL')}}/{{ $secureSignupUrl }} @endsection

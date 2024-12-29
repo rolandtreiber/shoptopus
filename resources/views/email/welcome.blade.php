@@ -4,7 +4,7 @@
     Hello! I am the email subject!
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Welcome to {{config('app.name')}} @endsection
 @section('hero-subtitle') Click on the button to confirm your email @endsection
 @section('hero-button-url'){{ $emailConfirmationLink }}@endsection

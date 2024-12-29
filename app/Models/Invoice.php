@@ -14,6 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 use stdClass;
 
 /**
+ * @property string $id
  * @property string $user_id
  * @property string $order_id
  * @property Address $address

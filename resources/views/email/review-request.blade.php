@@ -4,7 +4,7 @@
     Please leave a review of your order
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Leave a review @endsection
 @section('hero-subtitle') Your feedback matters! @endsection
 @section('hero-button-url') {{env('APP_URL')}} @endsection

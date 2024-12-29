@@ -3,9 +3,13 @@
 namespace App\Providers;
 
 use App\Events\OrderCompletedEvent;
+use App\Events\OrderPlacedEvent;
+use App\Events\OrderStatusUpdatedEvent;
 use App\Events\UserInteraction;
 use App\Facades\Module;
 use App\Listeners\OrderCompletedListener;
+use App\Listeners\OrderPlacedEventListener;
+use App\Listeners\OrderStatusUpdatedEventListener;
 use App\Listeners\UpdateLastSeenUser;
 use App\Models\AccessToken;
 use App\Models\Address;
@@ -63,6 +67,12 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderCompletedEvent::class => [
             OrderCompletedListener::class
+        ],
+        OrderPlacedEvent::class => [
+            OrderPlacedEventListener::class
+        ],
+        OrderStatusUpdatedEvent::class => [
+            OrderStatusUpdatedEventListener::class
         ]
     ];
 

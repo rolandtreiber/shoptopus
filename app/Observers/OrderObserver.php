@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Enums\EventLogType;
 use App\Enums\OrderStatus;
 use App\Events\OrderCompletedEvent;
+use App\Events\OrderPlacedEvent;
+use App\Events\OrderStatusUpdatedEvent;
 use App\Models\DeliveryType;
 use App\Models\Order;
 use App\Repositories\Admin\Eventlog\EventLogRepository;
@@ -59,8 +61,18 @@ class OrderObserver
 
         if ($order->isDirty('status')) {
             $this->eventLogRepository->create(Order::class, $order, EventLogType::StatusChange, ['status' => $order->status]);
-            if ($order->status === OrderStatus::Completed) {
-                event(new OrderCompletedEvent($order));
+            switch ($order->status) {
+                case OrderStatus::Paid:
+                    if ($order->invoice) {
+                        event(new OrderPlacedEvent($order->invoice));
+                    }
+                    break;
+                case OrderStatus::Completed:
+                    event(new OrderCompletedEvent($order));
+                    break;
+                default:
+                    event(new OrderStatusUpdatedEvent($order));
+                    break;
             }
         }
     }

@@ -252,4 +252,10 @@ class Order extends SearchableModel implements Auditable, Exportable
     {
         return $this->products->where('virtual', true)->count() > 0;
     }
+
+    public function hasOnlyVirtualProducts()
+    {
+        return $this->products->where('virtual', false)->count() === 0 && $this->products->where('virtual', true)->count() > 0;
+    }
+
 }

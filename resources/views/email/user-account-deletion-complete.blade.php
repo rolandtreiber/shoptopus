@@ -4,7 +4,7 @@
     Your account has been deactivated
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Your account has been deactivated @endsection
 @section('hero-subtitle') We're sorry to see you go :( @endsection
 @section('hero-button-url') {{env('APP_URL')}} @endsection

@@ -17,8 +17,16 @@
             <td>{{$product['name']}}</td>
             <td>{{$product['sku']}}</td>
             <td>{{$product['amount']}}</td>
-            <td>£{{$product['unit_price']}}</td>
-            <td>£{{$product['final_price']}}</td>
+            @if(config('app.default_currency')['side'] === "left")
+                <td>{{config('app.default_currency')['symbol']}}{{$product['unit_price']}}</td>
+            @else
+                <td>{{$product['unit_price']}}{{config('app.default_currency')['symbol']}}</td>
+            @endif
+            @if(config('app.default_currency')['side'] === "left")
+                <td>{{config('app.default_currency')['symbol']}}{{$product['final_price']}}</td>
+            @else
+                <td>{{$product['final_price']}}{{config('app.default_currency')['symbol']}}</td>
+            @endif
         </tr>
     @endforeach
     <tr>

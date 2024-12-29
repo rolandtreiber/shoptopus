@@ -7,6 +7,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use Database\Seeders\PaymentProviderSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
 use Tests\PaymentTestCase;
 
 /**
@@ -28,6 +29,7 @@ class ExecutePaymentTest extends PaymentTestCase
 
         $this->cart = Cart::factory()->create();
         $this->user = $this->cart->user;
+        Mail::fake();
     }
 
     /**

@@ -4,7 +4,7 @@
     Hello! I am the email subject!
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Please confirm your email @endsection
 @section('hero-subtitle') You have updated your email in your profile @endsection
 @section('hero-button-url') {{env('APP_URL')}}/{{ $emailConfirmationLink }} @endsection

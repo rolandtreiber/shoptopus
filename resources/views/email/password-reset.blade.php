@@ -4,7 +4,7 @@
     Reset your password
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Reset your password @endsection
 @section('hero-subtitle') You have requested your password to be reset @endsection
 @section('hero-button-url') {{ $resetUrl }} @endsection

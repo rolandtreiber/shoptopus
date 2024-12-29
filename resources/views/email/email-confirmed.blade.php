@@ -4,7 +4,7 @@
     Your email is now confirmed.
 @endsection
 
-@section('hero-background-image', 'email-header-1.jpg')
+@section('hero-background-image', 'email-header.jpg')
 @section('hero-title') Your email is now confirmed @endsection
 @section('hero-subtitle') Thank you for confirming your email address. Now we know it's yours. @endsection
 @section('hero-button-url') {{env('APP_URL')}} @endsection
