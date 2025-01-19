@@ -16,16 +16,16 @@ class UpdateUserAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'prefix' => ['sometimes', 'in:'.implode(",", config('users.available_prefixes'))],
+            'prefix' => ['nullable', 'in:' . implode(',', config('users.available_prefixes'))],
             'password' => ['sometimes', 'confirmed', Password::min(5)->mixedCase()->numbers()->symbols()],
             'avatar' => ['max:2048']
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'in' => "The prefix needs to be one of the following: ".implode(",", config('users.available_prefixes'))
+            'prefix.in' => 'The prefix needs to be one of the following: ' . implode(',', config('users.available_prefixes')),
         ];
     }
 }

@@ -29,6 +29,7 @@ class OrderPlacedEventListener
             $token->issuer_user_id = $event->invoice->user_id;
             $token->expiry = $now->addYears(5);
             $token->save();
+
             $email = str_replace("-".$event->invoice->user->client_ref, "", $event->invoice->user->email);
             Mail::to($email)->send(new OrderCreatedEmail($token, $event->invoice, $event->invoice->user));
         }
