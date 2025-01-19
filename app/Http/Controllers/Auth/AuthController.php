@@ -41,7 +41,9 @@ class AuthController extends Controller
     public function register(RegisterRequest $request): \Illuminate\Http\JsonResponse
     {
         try {
-            return response()->json($this->authService->register($request->validated()));
+            $validatedData = $request->validated();
+            $role = $validatedData['role'] ?? null; // Access 'role' as an array key and default to null if not set
+            return response()->json($this->authService->register($validatedData, $role)); // passing optional param role, as It's expected in register.
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }
