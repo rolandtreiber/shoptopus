@@ -144,9 +144,8 @@ class UserController extends Controller
     {
         /** @var AccessToken $token */
         $token = AccessToken::where('token', $token)->first();
-
         try {
-            if (!$token || $token->type !== AccessTokenType::SignupRequest || $token->expiry < Carbon::now()) {
+            if ($token == null || $token->type !== AccessTokenType::SignupRequest || $token->expiry < Carbon::now()) {
                 throw new AccessDeniedException("Invalid or expired token.");
             }
 
