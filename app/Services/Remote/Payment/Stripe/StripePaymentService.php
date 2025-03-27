@@ -54,7 +54,7 @@ class StripePaymentService implements StripePaymentServiceInterface
             $intent = PaymentIntent::create([
                 'amount' => ($totals['total_price'] + $deliveryType->price) * 100, // A positive integer representing how much to charge in the smallest currency unit (e.g., 100 cents to charge $1.00 or 100 to charge ¥100, a zero-decimal currency).
                 'currency' => strtolower(config('app.default_currency.name')),
-                'payment_method_types' => ['card'],
+                'payment_method_types' => ['card', 'paypal'],
                 'metadata' => [
                     'user_id' => $cart->user_id,
                     'delivery_type_id' => $deliveryType->id,

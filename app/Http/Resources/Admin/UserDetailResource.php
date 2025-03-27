@@ -28,6 +28,7 @@ class UserDetailResource extends JsonResource
             'email_verified' => $this->email_verified_at !== null,
             'last_seen' => $this->last_seen,
             'roles' => $this->getRoleNames(),
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
             'permissions' => $this->getAllPermissionNames(),
         ];
     }
