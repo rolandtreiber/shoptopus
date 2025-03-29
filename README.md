@@ -18,6 +18,9 @@ IMMMMMMMMMMMMMMMMMMMMMM      .  .                  .       MMM                  
 # Introduction
 Welcome to Shoptopus. It is a multi-purpose e-commerce platform based on Laravel.
 
+# Postman
+https://www.postman.com/interstellar-space-5755/shoptopus-api/overview
+
 # Installation
 ## Docker
 - Use the official [guide](https://docs.docker.com/engine/install/) to install docker on your system

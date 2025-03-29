@@ -243,10 +243,10 @@ class ReportRepository implements ReportRepositoryInterface
             ])->first();
 
         return [
-            'unrealized_revenue' => $unsold,
-            'total_revenue' => $ordersTotal['revenue'],
-            'total_delivery' => $ordersTotal['delivery'],
-            'total_discount' => $ordersTotal['discount'],
+            'unrealized_revenue' => round($unsold, 2),
+            'total_revenue' => round($ordersTotal['revenue'], 2),
+            'total_delivery' => round($ordersTotal['delivery'], 2),
+            'total_discount' => round($ordersTotal['discount'], 2),
         ];
     }
 
