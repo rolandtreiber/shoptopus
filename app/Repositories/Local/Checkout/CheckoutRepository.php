@@ -333,17 +333,23 @@ class CheckoutRepository implements CheckoutRepositoryInterface
                 if ($rule->lat !== null
                     && $rule->lon !== null
                 ) {
-                    if ($rule->max_distance !== null && $distance > $rule->max_distance) {
+                    if ($rule->max_distance !== null && $rule->max_distance !== 0 && $distance > $rule->max_distance) {
                         $eligible = false;
                     }
                     if ($rule->min_distance !== null && $distance < $rule->min_distance) {
                         $eligible = false;
                     }
                 }
-                if ($rule->max_weight !== null && $totalWeight > $rule->max_weight) {
+                if ($rule->max_weight !== null && $rule->max_weight !== 0 && $totalWeight > $rule->max_weight) {
                     $eligible = false;
                 }
                 if ($rule->min_weight !== null && $totalWeight < $rule->min_weight) {
+                    $eligible = false;
+                }
+                if ($rule->min_cart_price !== null && $rule->min_cart_price !== 0 && $cart->getTotals(null)['total_price'] < $rule->min_cart_price) {
+                    $eligible = false;
+                }
+                if ($rule->max_cart_price !== null && $rule->max_cart_price !== 0 && $cart->getTotals(null)['total_price'] > $rule->max_cart_price) {
                     $eligible = false;
                 }
                 if (is_array($rule->postcodes) && count($rule->postcodes) > 0) {

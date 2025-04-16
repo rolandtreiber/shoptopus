@@ -25,6 +25,7 @@ class ProductCategoryController extends Controller
             [$filters, $page_formatting] = $this->getFiltersAndPageFormatting($request);
 
             $filters['parent_id'] = 'null';
+            $filters['enabled'] = 1;
 
             return response()->json($this->getResponse($page_formatting, $this->productCategoryService->getAll($page_formatting, $filters), $request));
         } catch (\Exception|\Error $e) {

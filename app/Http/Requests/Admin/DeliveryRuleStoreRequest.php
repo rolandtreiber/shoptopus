@@ -18,6 +18,8 @@ class DeliveryRuleStoreRequest extends FormRequest
             'max_weight' => ['numeric', 'min:0'],
             'min_distance' => ['numeric', 'min:0'],
             'max_distance' => ['numeric', 'min:0'],
+            'min_cart_price' => ['numeric', 'min:0'],
+            'max_cart_price' => ['numeric', 'min:0'],
             'lat' => ['numeric'],
             'lon' => ['numeric'],
             'status' => ['sometimes'],

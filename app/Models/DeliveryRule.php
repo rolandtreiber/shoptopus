@@ -21,6 +21,8 @@ use Spatie\Sluggable\SlugOptions;
  * @property int|null $max_weight
  * @property int|null $min_distance
  * @property int|null $max_distance
+ * @property int|null $min_cart_price
+ * @property int|null $max_cart_price
  * @property string $distance_unit
  * @property boolean $enabled
  * @property float|null $lat
@@ -55,6 +57,8 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'max_weight',
         'min_distance',
         'max_distance',
+        'min_cart_price',
+        'max_cart_price',
         'distance_unit',
         'lat',
         'lon',
@@ -76,6 +80,8 @@ class DeliveryRule extends SearchableModel implements Auditable, Exportable
         'max_weight' => 'integer',
         'min_distance' => 'float',
         'max_distance' => 'float',
+        'min_cart_price' => 'integer',
+        'max_cart_price' => 'integer',
         'lat' => 'decimal:6',
         'lon' => 'decimal:6',
         'enabled' => 'boolean',

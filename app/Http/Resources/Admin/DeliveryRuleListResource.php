@@ -24,6 +24,8 @@ class DeliveryRuleListResource extends JsonResource
             'max_weight' => $this->max_weight,
             'min_distance' => $this->min_distance,
             'max_distance' => $this->max_distance,
+            'min_cart_price' => $this->min_cart_price,
+            'max_cart_price' => $this->max_cart_price,
             'distance_unit' => $this->distance_unit,
             'lat' => $this->lat,
             'lon' => $this->lon,
