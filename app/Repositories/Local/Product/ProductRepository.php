@@ -272,7 +272,8 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                     fc.url,
                     fc.title,
                     fc.description,
-                    fc.fileable_type
+                    fc.fileable_type,
+                    fc.fileable_id
                 FROM file_contents AS fc
                 WHERE fc.product_id IN ($dynamic_placeholders)
                 AND fc.fileable_type = "."\"App\\\Models\\\Product\""."
@@ -403,7 +404,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 $model['product_categories'] = [];
                 $model['product_tags'] = [];
                 $model['product_variants'] = [];
-                $model['images'] = $images;
+                $model['images'] = array_filter($images, function($img) use ($modelId) {
+                    return $img['fileable_id'] === $modelId;
+                });
 
                 foreach ($product_attributes as $product_attribute) {
                     if ($product_attribute['product_id'] === $modelId) {
