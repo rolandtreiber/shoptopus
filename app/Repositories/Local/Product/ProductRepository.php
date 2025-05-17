@@ -404,9 +404,9 @@ class ProductRepository extends ModelRepository implements ProductRepositoryInte
                 $model['product_categories'] = [];
                 $model['product_tags'] = [];
                 $model['product_variants'] = [];
-                $model['images'] = array_filter($images, function($img) use ($modelId) {
+                $model['images'] = array_values(array_filter($images, function($img) use ($modelId) {
                     return $img['fileable_id'] === $modelId;
-                });
+                }));
 
                 foreach ($product_attributes as $product_attribute) {
                     if ($product_attribute['product_id'] === $modelId) {
