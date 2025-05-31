@@ -17,7 +17,7 @@ services:
         - USER=${USER:-youruser}
     container_name: sh-site
     ports:
-      - 9091:80
+      - 9092:80
     volumes:
       - ./:/var/www/html:delegated
     working_dir: /var/www/html
