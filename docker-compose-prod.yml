@@ -1,0 +1,136 @@
+version: '3.5'
+
+networks:
+  app-network:
+    external: false
+    name: app-network
+    driver: bridge
+
+services:
+  sh-site:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: nginx.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-site
+    volumes:
+      - ./:/var/www/html:delegated
+    working_dir: /var/www/html
+    depends_on:
+      - sh-php
+      - sh-redis
+      - sh-mysql
+    networks:
+      - app-network
+
+  sh-mysql:
+    image: mysql:8.2
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: sh-mysql
+    tty: true
+    ports:
+      - 3306:3306
+    volumes:
+      - ./init:/docker-entrypoint-initdb.d
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sh-mysql.rule:Host(`mysql.shoptopus.test`)
+      - traefik.http.routers.sh-mysql.priority=100
+      - traefik.http.services.sh-mysql.loadbalancer.server.port:3306
+    environment:
+      MYSQL_DATABASE: shoptopus
+      MYSQL_USER: homestead
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - app-network
+
+  sh-php:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-php
+    volumes:
+      - ./:/var/www/html:delegated
+    networks:
+      - app-network
+
+  sh-redis:
+    image: redis:alpine
+    container_name: sh-redis
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
+
+  sh-elasticsearch:
+    container_name: sh-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    environment:
+      - xpack.security.enabled=false
+      - "discovery.type=single-node"
+    networks:
+      - app-network
+      - traefik
+    ports:
+      - 9200:9200
+    volumes:
+      - ./elasticsearch_data:/usr/share/elasticsearch/data
+
+  sh-kibana:
+    container_name: sh-kibana
+    image: docker.elastic.co/kibana/kibana:7.11.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://sh-elasticsearch:9200
+      - LOGGING_TIMEZONE=Europe/London
+    networks:
+      - app-network
+    depends_on:
+      - sh-elasticsearch
+    ports:
+      - 5601:5601
+
+  sh-composer:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: composer.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-composer
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - sh-php
+    entrypoint: ['composer']
+    networks:
+      - app-network
+
+  sh-artisan:
+    build:
+      context: docker-config/dockerfiles
+      dockerfile: php.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+        - USER=${USER:-youruser}
+    container_name: sh-artisan
+    volumes:
+      - ./:/var/www/html:delegated
+    depends_on:
+      - sh-mysql
+    working_dir: /var/www/html
+    entrypoint: ['php', '/var/www/html/artisan']
+    networks:
+      - app-network
