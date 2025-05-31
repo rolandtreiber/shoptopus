@@ -36,7 +36,7 @@ services:
     volumes:
       - ./init:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: shoptopus
+      MYSQL_DATABASE: shoptopus_mazeshop_main
       MYSQL_USER: homestead
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
