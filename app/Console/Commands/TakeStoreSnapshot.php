@@ -201,7 +201,7 @@ class TakeStoreSnapshot extends Command
 
             $files = Storage::disk('store-backups')->allFiles("/restore-temp/databases");
             foreach ($files as $file) {
-                if (str_contains("sql", $file)) {
+                if (str_contains($file, "sql")) {
                     $file = storage_path('app/store-backups') . "/" . $file;
                     file_put_contents($file, implode('',
                         array_map(function ($data) {
