@@ -35,11 +35,6 @@ services:
       - 3306:3306
     volumes:
       - ./init:/docker-entrypoint-initdb.d
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.sh-mysql.rule:Host(`mysql.shoptopus.test`)
-      - traefik.http.routers.sh-mysql.priority=100
-      - traefik.http.services.sh-mysql.loadbalancer.server.port:3306
     environment:
       MYSQL_DATABASE: shoptopus
       MYSQL_USER: homestead
@@ -80,7 +75,6 @@ services:
       - "discovery.type=single-node"
     networks:
       - app-network
-      - traefik
     ports:
       - 9200:9200
     volumes:
