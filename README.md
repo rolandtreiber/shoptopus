@@ -234,3 +234,6 @@ Running through docker, it is `$ ./a shop:snapshot`.
 
 ##### Restore the exact snapshot taken in the previous step 
 `php artisan shop:snapshot --restore --name=my-test`
+
+## Manually creating index in elastic through the api
+curl -XPUT "http://localhost:9200/your-index-name"
