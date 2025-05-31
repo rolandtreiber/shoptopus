@@ -83,6 +83,7 @@ services:
   sh-kibana:
     container_name: sh-kibana
     image: docker.elastic.co/kibana/kibana:7.11.0
+    platform: linux/amd64
     environment:
       - ELASTICSEARCH_HOSTS=http://sh-elasticsearch:9200
       - LOGGING_TIMEZONE=Europe/London
