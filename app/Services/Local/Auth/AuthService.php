@@ -94,7 +94,7 @@ class AuthService implements AuthServiceInterface
             } else {
                 $baseUrl = match (config('app.env')) {
                     'development' => config('app.token_base_url'),
-                    'production' => config('app.url'),
+                    'production' => config('app.token_base_url'), // only for mazeshop as it runs on docker in prod
                     default => 'sh-site',
                 };
                 $response = Http::asForm()->post($baseUrl . '/oauth/token', [
