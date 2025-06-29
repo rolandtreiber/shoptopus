@@ -48,6 +48,7 @@ return [
         // Ignore Laravel's default health URL
         '/up',
     ],
+    // TODO: this is not the best place as we can not cache the config: ./a config:cache  (may be refactor later to be in the code this logic)
     'before_send' => function (Event $event, ?EventHint $hint): ?Event {
         // Ignore the event if the original exception is an instance of OAuthServerException
         // Reason is that every time a user enters an incorrect password, we'd get a notification,
