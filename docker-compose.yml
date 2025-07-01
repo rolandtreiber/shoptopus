@@ -71,7 +71,7 @@ services:
     container_name: sh-mysql
     tty: true
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
       - ./init:/docker-entrypoint-initdb.d
     labels:
@@ -139,6 +139,7 @@ services:
   sh-kibana:
     container_name: sh-kibana
     image: docker.elastic.co/kibana/kibana:7.11.0
+    platform: linux/amd64   # ← Add this line
     environment:
       - ELASTICSEARCH_HOSTS=http://sh-elasticsearch:9200
       - LOGGING_TIMEZONE=Europe/London
@@ -158,7 +159,7 @@ services:
   sh-composer:
     build:
       context: docker-config/dockerfiles
-      dockerfile: composer.dockerfile
+      dockerfile: composer.prod.dockerfile
       args:
         - UID=${UID:-1000}
         - GID=${GID:-1000}
@@ -207,6 +208,7 @@ services:
 
   sh-mailhog:
     image: mailhog/mailhog:latest
+    platform: linux/amd64   # ← Add this line
     container_name: sh-mailhog
     labels:
       - traefik.enable=false
