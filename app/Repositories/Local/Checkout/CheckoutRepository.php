@@ -315,9 +315,11 @@ class CheckoutRepository implements CheckoutRepositoryInterface
         if ($cart == null) {
             throw new CheckoutException('Cart not found');
         }
+        /* disabled as we need to let user check delivery option even with no item in cart, if that option is enabled on front end!
         if (count($cart->products) === 0) {
             throw new CheckoutException('No products found in cart');
         }
+        */
         $totalWeight = $cart->total_weight;
         $products = $cart->products;
 
