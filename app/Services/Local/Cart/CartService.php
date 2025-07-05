@@ -31,6 +31,21 @@ class CartService extends ModelService implements CartServiceInterface
     }
 
     /**
+     * Create new empty cart
+     *
+     * @throws \Exception
+     */
+    public function makeNewEmptyCart(array $payload) : array
+    {
+        try {
+            return $this->modelRepository->makeNewEmptyCart($payload);
+        } catch (\Exception|\Error $e) {
+            $this->errorService->logException($e);
+            throw new \Exception($e->getMessage(), Config::get('api_error_codes.services.cart.createEmptyCart'));
+        }
+    }
+
+    /**
      * Add item to cart.
      *
      *
