@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use ZipArchive;
+use Druidfi\Mysqldump\Mysqldump;
 
 class TakeStoreSnapshot extends Command
 {
@@ -27,7 +28,7 @@ class TakeStoreSnapshot extends Command
      *
      * @var string
      */
-    protected $signature = 'shop:snapshot {--take} {--restore} {--upload} {--nointeraction} {--trace-level=} {--name=}';
+    protected $signature = 'shop:snapshot {--take} {--restore} {--upload} {--nointeraction} {--trace-level=} {--name=} {--use-alternative}';
 
     /**
      * The console command description.
@@ -36,11 +37,14 @@ class TakeStoreSnapshot extends Command
      */
     protected $description = 'Either takes or restores full store snapshots.';
 
-    private function take(bool $nointeraction, bool $upload, string|null $name, string|null $traceLevel)
+    /**
+     * @throws \Exception
+     */
+    private function take(bool $nointeraction, bool $upload, string|null $name, string|null $traceLevel, bool $useAlternative): void
     {
         // Take snapshot of the databases
         $date = Carbon::now();
-        $snapshotPrefix = $date->format("Y-m-d H:i:s");
+        $snapshotPrefix = $date->format("Y-m-d_H-i-s");
         if (!$name && !$nointeraction) {
             $name = $this->ask("Please enter a name or leave it empty to use the name: \"" . $snapshotPrefix . "\"");
         }
@@ -53,7 +57,31 @@ class TakeStoreSnapshot extends Command
             if ($traceLevel === "DEBUG") {
                 $this->line("Creating a DB snapshot for the database: " . $snapshotName);
             }
-            $this->call('snapshot:create', ["name" => $snapshotName, "--connection" => $connection]);
+            // CHANGED: choose dumper based on flag
+            if ($useAlternative) {
+                $config = config('database.connections.' . $connection);
+                $dsn = "mysql:host={$config['host']};dbname={$config['database']};port={$config['port']}";
+                $user = $config['username'];
+                $pass = $config['password'];
+                $fileName = database_path('snapshots/' . config('app.name') . "-{$connection}-{$snapshotPrefix}.sql");
+                try {
+                    $dump = new Mysqldump(
+                        $dsn,
+                        $user,
+                        $pass,
+                        [
+                            'add-drop-table'       => true,
+                            'single-transaction'   => true,
+                        ]
+                    );
+                    $dump->start($fileName);
+                } catch (\Exception $e) {
+                    $this->error("Alternative dump failed for {$connection}: {$e->getMessage()}");
+                    return;
+                }
+            } else {
+                $this->call('snapshot:create', ['name' => $snapshotName, '--connection' => $connection]);
+            }
             if ($traceLevel === "DEBUG") {
                 $this->line("DB snapshot for the database: " . $snapshotName . " was successfully created.");
             }
@@ -102,6 +130,9 @@ class TakeStoreSnapshot extends Command
         $filesInUse = array_merge($filesInUse, $fileNames);
 
         $filesInUse = array_filter($filesInUse);
+        // just to see files
+        $toLog = $filesInUse;
+        $this->line('File in use: ' . json_encode($toLog));
 
         // Copying and zipping media files
         $from = "uploads";
@@ -200,6 +231,32 @@ class TakeStoreSnapshot extends Command
             }
 
             $files = Storage::disk('store-backups')->allFiles("/restore-temp/databases");
+
+            foreach ($files as $file) {
+                // >>> CHANGED: ensure we detect SQL files correctly and execute them
+                if (! str_ends_with($file, '.sql')) {
+                    continue;
+                }
+
+                // Build the full filesystem path to the dump
+                $fullPath = storage_path('app/store-backups') . '/' . ltrim($file, '/');
+
+                // Read the file and replace placeholders
+                $lines = file($fullPath);
+                $sql = implode('', array_map(function($line) {
+                    return str_replace('[APP_BASE_URL]', config('app.url'), $line);
+                }, $lines));
+
+                // Execute the SQL
+                try {
+                    $this->line("Restoring database dump: {$file}");
+                    DB::unprepared($sql);
+                } catch (\Exception $e) {
+                    $this->error("Failed to execute SQL from {$file}: " . $e->getMessage());
+                }
+                // <<< END CHANGED
+            }
+            /*
             foreach ($files as $file) {
                 if (str_contains($file, "sql")) {
                     $file = storage_path('app/store-backups') . "/" . $file;
@@ -211,6 +268,7 @@ class TakeStoreSnapshot extends Command
                     $sql = file_get_contents($file);
                     if ($sql) {
                         try {
+                            $this->line("Database dump is used.");
                             DB::unprepared($sql);
                         } catch (\Exception $exception) {
                             $this->error("An sql statement failed to execute. File: " . $file);
@@ -218,6 +276,7 @@ class TakeStoreSnapshot extends Command
                     }
                 }
             }
+            */
 
             $res = $zip->open(storage_path('app/store-backups') . "/restore-temp/media.zip");
             if ($res === TRUE) {
@@ -284,6 +343,7 @@ class TakeStoreSnapshot extends Command
 
     /**
      * Execute the console command.
+     * @throws \Exception
      */
     public function handle()
     {
@@ -293,6 +353,8 @@ class TakeStoreSnapshot extends Command
         $upload = $this->option('upload');
         $name = $this->option('name');
         $traceLevel = $this->option('trace-level');
+        $useAlternative = $this->option('use-alternative');
+
         if (!$take && !$restore) {
             $operation = $this->choice("What would you like to do?", [
                 "Take a snapshot locally",
@@ -318,7 +380,7 @@ class TakeStoreSnapshot extends Command
             }
         }
         if ($take) {
-            $this->take($nointeraction, $upload, $name, $traceLevel);
+            $this->take($nointeraction, $upload, $name, $traceLevel, $useAlternative);
         } else if ($restore) {
             $this->restore($name);
         }

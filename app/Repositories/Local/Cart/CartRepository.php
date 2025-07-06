@@ -20,6 +20,17 @@ class CartRepository extends ModelRepository implements CartRepositoryInterface
         parent::__construct($errorService, $model);
     }
 
+    /**
+     * Create cart with no products, we crate an empty cart only to have a cart id in the front-end.
+     * Why? If we allow uer to look up available delivery options, and user logout. The cart is get deleted, and we don't have
+     * cart id until the user put an item in the cart. So the get delivery option endpoint will not function correct without a cart id.
+     * Solution we have theis method, so we can request to create a new empty cart.
+     */
+    public function makeNewEmptyCart(array $payload) : array
+    {
+        return $this->post([]);
+    }
+
 
     /**
      * Add item to cart.

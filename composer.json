@@ -25,6 +25,7 @@
         "amzn/amazon-pay-api-sdk-php": "^2.3",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.3",
+        "druidfi/mysqldump-php": "^2.0",
         "elasticsearch/elasticsearch": "7.16",
         "google/apiclient": "^2.12",
         "google/cloud-translate": "^1.15",

@@ -14,6 +14,7 @@ Route::group([
         Route::post('/addItem', [CartController::class, 'addItem'])->name('api.cart.addItem');
         Route::delete('/removeItem', [CartController::class, 'removeItem'])->name('api.cart.removeItem');
         Route::delete('/all', [CartController::class, 'removeAll'])->name('api.cart.removeAll');
+        Route::post('/createEmptyCart', [CartController::class, 'makeNewEmptyCart'])->name('api.cart.makeNewEmptyCart');
 
         Route::patch('/{cart}/product/quantity', [CartController::class, 'updateQuantity'])
             ->name('api.cart.updateQuantity');

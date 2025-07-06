@@ -6,6 +6,7 @@ use App\Enums\UserInteractionType;
 use App\Events\UserInteraction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Local\Cart\AddItemToCartRequest;
+use App\Http\Requests\Local\Cart\CreateNewEmptyCart;
 use App\Http\Requests\Local\Cart\PatchRequest;
 use App\Http\Requests\Local\Cart\RemoveAllItemsFromCartRequest;
 use App\Http\Requests\Local\Cart\RemoveItemFromCartRequest;
@@ -67,6 +68,19 @@ class CartController extends Controller
             $data = $this->cartService->updateQuantity($payload);
 
             return response()->json($this->putResponse($data));
+        } catch (\Exception|\Error $e) {
+            return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
+        }
+    }
+
+    /**
+     * Create new empty cart
+     */
+    public function makeNewEmptyCart(CreateNewEmptyCart $request) : JsonResponse
+    {
+        try {
+            $data = $this->cartService->makeNewEmptyCart($request->validated());
+            return response()->json($this->postResponse($data));
         } catch (\Exception|\Error $e) {
             return $this->errorResponse($e, __('error_messages.'.$e->getCode()));
         }

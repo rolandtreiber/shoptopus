@@ -55,6 +55,7 @@ return [
             'updateQuantity' => 1506,
             'productNotFound' => 1507,
             'removeAll' => 1508,
+            'createEmptyCart' => 1509
         ],
         'notification' => [
             'getAllUnreadNotificationsForUser' => 1900,
