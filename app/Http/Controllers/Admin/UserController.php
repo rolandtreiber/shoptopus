@@ -142,7 +142,7 @@ class UserController extends Controller
      */
     public function registerByInvite(RegisterByInviteRequest $request, string $token): \Illuminate\Http\JsonResponse
     {
-        /** @var AccessToken $token */
+        /** @var AccessToken|null $token */
         $token = AccessToken::where('token', $token)->first();
 
         try {

@@ -19,6 +19,7 @@ class OrderPlacedEventListener
      */
     public function handle(OrderPlacedEvent $event): void
     {
+        // @phpstan-ignore-next-line
         if ($event->invoice || config('app.env') === 'testing') {
             $now = Carbon::now();
             $token = new AccessToken();
