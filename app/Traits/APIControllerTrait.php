@@ -121,6 +121,10 @@ trait APIControllerTrait
      */
     protected function errorResponse(mixed $e, string $user_message, int $error_code = null, int $status_code = 500): \Illuminate\Http\JsonResponse
     {
+
+        /** TODO: may be extend the error logging by selective what we like to send to sentry from this layer, but refer to ERROR_SENTRY_FLOW.txt */
+        //report($e);
+
         if ($e instanceof \Illuminate\Validation\ValidationException) {
             return response()->json([
                 'error_code' => 422,

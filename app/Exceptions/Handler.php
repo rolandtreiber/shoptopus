@@ -6,9 +6,11 @@ use App\Traits\APIControllerTrait;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 use Sentry\Laravel\Integration;
 
@@ -44,7 +46,7 @@ class Handler extends ExceptionHandler
      *
      * @throws \Exception|Throwable
      */
-    public function report(Throwable $e)
+    public function report(Throwable $e): void
     {
         $error_message = $e instanceof \Illuminate\Validation\ValidationException
             ? $e->validator->getMessageBag()
@@ -58,12 +60,13 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param Throwable $e
+     * @return Response
      *
-     * @throws \Throwable
+     * @throws Throwable
      */
-    public function render($request, Throwable $e)
+    public function render($request, Throwable $e): Response
     {
         if (env('APP_ENV') === 'local') {
             return parent::render($request, $e);

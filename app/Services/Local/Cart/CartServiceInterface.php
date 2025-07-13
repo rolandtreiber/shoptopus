@@ -4,6 +4,15 @@ namespace App\Services\Local\Cart;
 
 interface CartServiceInterface
 {
+
+   /**
+    * Create and return a new, empty cart.
+    *
+    * @param  array  $data
+    * @return array
+    */
+    public function makeNewEmptyCart(array $data): array;
+
     /**
      * Get the user's cart
      */

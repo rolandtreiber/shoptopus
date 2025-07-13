@@ -17,9 +17,13 @@ class ErrorService implements ErrorServiceInterface
      *
      * @todo - write critical error code
      */
-    public function logException($exception, bool $critical = false)
+    public function logException($exception, bool $critical = false): void
     {
-        Log::error('Exception Class:'.get_class($exception).' Error:'.$exception->getMessage().' File:'.$exception->getFile().' Line:'.$exception->getLine());
+        /** Send to sentry as we need all error from repository and service layer */
+        report($exception);
+
+        /** Log to local file (DISABLED: as we call the report() function here that lead to Handler.php tha will do the logging to Laravel.log file anyway) */
+        //Log::error('Exception Class:'.get_class($exception).' Error:'.$exception->getMessage().' File:'.$exception->getFile().' Line:'.$exception->getLine());
         //Log::channel('logstash')->debug('Exception Class:'.get_class($exception).' Error:'.$exception->getMessage().' File:'.$exception->getFile().' Line:'.$exception->getLine());
         if ($critical) {
             $this->alertCriticalError($exception);

@@ -1,0 +1,153 @@
+## Error Flow in Our Laravel Application
+
+This document outlines how exceptions move through our application’s layers, where they are handled, modified, and reported (to Sentry and/or log files), and finally how they are masked for API clients.
+
+---
+
+### 1. Repository Layer
+
+* **Purpose**: Direct interaction with persistence or third‑party SDKs (e.g. models, Stripe).
+* **Exception Handling**:
+
+  ```php
+  try {
+      // e.g. StripeTransaction::create(), DB operations
+  } catch (Throwable $e) {
+      // Wrap in a domain-specific exception and rethrow
+      throw new CheckoutException(
+        'Error formatting transaction: ' . $e->getMessage(),
+        0,
+        $e
+      );
+  }
+  ```
+* **Reporting**: **None here**. All logging and Sentry integration is centralized in the service layer.
+
+---
+
+### 2. Service Layer
+
+* **Purpose**: Apply business logic and call repositories.
+* **Exception Handling & Reporting**:
+
+  ```php
+  try {
+      return $this->checkoutRepository->createPendingOrderFromCart($payload);
+  } catch (Throwable $e) {
+      // ★ All repo/service errors surface here
+      $this->errorService->logException($e);
+
+      // Rethrow as a generic Exception with a numeric error code
+      throw new Exception(
+        $e->getMessage(),
+        Config::get('api_error_codes.services.checkout.getPendingOrderFromCart')
+      );
+  }
+  ```
+* **ErrorService**:
+
+  * Calls `report($exception)` internally, which invokes:
+
+    1. `Handler::report()` → `Log::error(...)` → local `laravel.log`
+    2. `reportable()` callback → `Integration::captureUnhandledException()` → Sentry
+  * Does **not** write additional logs to avoid duplication.
+
+---
+
+### 3. Controller Layer
+
+* **Purpose**: Handle HTTP requests and form responses.
+* **Exception Handling**:
+
+  ```php
+  try {
+      $data = $this->checkoutService->createPendingOrderFromCart($request->validated());
+      return $this->postResponse($data);
+  } catch (Exception $e) {
+      // Masked for client; *no* Sentry/report() call here
+      return $this->errorResponse(
+        $e,
+        __('error_messages.checkout_failed'),
+        $e->getCode(),
+        400
+      );
+  }
+  ```
+* **Reporting**: **None**—we rely on the service layer having already reported deep errors.
+
+---
+
+### 4. Masking Layer (`errorResponse` in `APIControllerTrait`)
+
+This is the single point that builds every API error response:
+
+```php
+protected function errorResponse(
+    Throwable $e,
+    string    $user_message,
+    int       $error_code   = null,
+    int       $status_code  = 500
+): JsonResponse {
+    if ($e instanceof ValidationException) {
+        return response()->json([/* validation payload */], 422);
+    }
+
+    $error_code  = $error_code ?? $e->getCode() ?: Config::get('api_error_codes.controllers.response.generic');
+    $user_message = __('error_messages.' . $error_code);
+
+    return response()->json([
+        'error_code'        => $error_code,
+        'developer_message' => str_starts_with($e->getMessage(), 'SQLSTATE')
+            ? 'SQL ERROR - see logs' : $e->getMessage(),
+        'user_message'      => $user_message,
+        'more_info'         => $this->siteURL() . 'error_codes/' . $error_code,
+    ], $status_code);
+}
+```
+
+* **Reporting Option**: Can selectively call `report($e)` here if you need to catch additional error types.
+
+---
+
+### 5. Global Exception Handler (`App\Exceptions\Handler`)
+
+**Only invoked for uncaught exceptions** (when controllers do not catch them):
+
+1. **`register()` → `reportable()`**
+
+   ```php
+   $this->reportable(function (Throwable $e) {
+     // Skip domain/service errors (already reported) (optional...)
+     if ($e instanceof CheckoutException) {
+       return false;
+     }
+     Integration::captureUnhandledException($e);
+   });
+   ```
+2. **`report(Throwable $e)`**
+
+   * Called for all exceptions not returned early by `reportable`.
+   * Logs once via `Log::error(...)` then calls `parent::report()`.
+3. **`render()`**
+
+   * Maps exception to appropriate HTTP status (401,403,422,500).
+   * Delegates to the same `errorResponse()` mask.
+
+---
+
+## Summary
+
+| Layer                  | Sentry Event                     | File Log      | Masked Response         |
+| ---------------------- | -------------------------------- | ------------- | ----------------------- |
+| Repository             | ❌ None                           | ❌ None        | ❌                       |
+| Service (ErrorService) | ★ via `report($exception)`       | ★ via Handler | ❌                       |
+| Controller             | ❌                                | ❌             | ★ via `errorResponse()` |
+| Global Handler         | ★ for uncaught via `Integration` | ★ via Handler | ★ via `errorResponse()` |
+
+* **Deep issues** (repo/service) report immediately once.
+* **Controller‐handled errors** only mask—no Sentry noise.
+* **Unexpected bugs** bubble to the handler as a safety net.
+
+Keep this as your reference for how and where we handle, report, and mask errors in our current setup.
+
+// TODO: Implement critical error reporting if needed in ErrorService
