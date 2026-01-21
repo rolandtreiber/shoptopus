@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\GoogleGmailOAuthController;
 use App\Http\Controllers\BrowserTest\BrowserTestController;
 use App\Http\Controllers\Common\InvoiceController;
 use Illuminate\Support\Facades\File;
@@ -22,6 +23,12 @@ if (config('app.env') === 'local') {
 }
 
 Route::get('/invoice/{token}', [InvoiceController::class, 'download'])->name('invoice.download');
+
+Route::get('/google/oauth/start', [GoogleGmailOAuthController::class, 'start'])
+    ->name('google.oauth.start');
+
+Route::get('/google/oauth/callback', [GoogleGmailOAuthController::class, 'callback'])
+    ->name('google.oauth.callback');
 
 Route::get('/admin/{argOne?}/{argTwo?}/{argThree?}/{argFour?}/{argFive?}', function () {
     return File::get(public_path() . '/admin/index.html');

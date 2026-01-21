@@ -47,6 +47,12 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URL'),
     ],
 
+    'google_gmail' => [
+        'client_id' => env('GOOGLE_OAUTH_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_OAUTH_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_OAUTH_REDIRECT_URI'),
+    ],
+
     'linkedin-openid' => [
         'client_id' => env('LINKEDIN_CLIENT_ID'),
         'client_secret' => env('LINKEDIN_CLIENT_SECRET'),

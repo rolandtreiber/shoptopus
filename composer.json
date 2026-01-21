@@ -21,11 +21,12 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "ext-zip": "*",
         "amzn/amazon-pay-api-sdk-php": "^2.3",
         "barryvdh/laravel-dompdf": "^2.0",
         "bensampo/laravel-enum": "^6.3",
         "elasticsearch/elasticsearch": "7.16",
-        "google/apiclient": "^2.12",
+        "google/apiclient": "^2.0",
         "google/cloud-translate": "^1.15",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.6",
@@ -50,8 +51,7 @@
         "spatie/laravel-sluggable": "^3.4",
         "spatie/laravel-translatable": "^6.3",
         "stripe/stripe-php": "^8.0",
-        "symfony/finder": "^6.2",
-        "ext-zip": "*"
+        "symfony/finder": "^6.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
